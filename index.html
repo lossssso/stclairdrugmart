@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>St. Clair Drug Mart Pharmacy</title>
-  <meta name="description" content="St. Clair Drug Mart Pharmacy at 1203 St. Clair Avenue West, Toronto — prescriptions, vaccines, blister packs, MedsCheck, and more." />
+  <title>St. Clair Drug Mart Pharmacy — Toronto</title>
+  <meta name="description" content="St. Clair Drug Mart Pharmacy at 1203 St. Clair Avenue West, Toronto — prescriptions, vaccines, blister packs, MedsCheck, minor ailments, and more." />
   <style>
     /* ── Reset & base ─────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -76,8 +76,6 @@
       color: var(--white);
     }
     .nav__links .nav__cta a:hover { background: #4e9c92; }
-
-    /* hamburger — mobile only */
     .nav__toggle { display: none; background: none; border: none; cursor: pointer; padding: .4rem; }
     .nav__toggle span {
       display: block; width: 22px; height: 2px;
@@ -113,7 +111,8 @@
     .hero__socials {
       display: flex;
       justify-content: center;
-      gap: 1rem;
+      gap: .75rem;
+      flex-wrap: wrap;
     }
     .hero__socials a {
       display: flex;
@@ -165,24 +164,10 @@
     .welcome__photo {
       border-radius: var(--radius);
       overflow: hidden;
-      box-shadow: var(--shadow);
+      box-shadow: 0 4px 24px rgba(30,107,99,.18);
       aspect-ratio: 4/3;
-      background: var(--teal-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px dashed var(--border);
     }
     .welcome__photo img { width: 100%; height: 100%; object-fit: cover; }
-    .welcome__photo--placeholder {
-      flex-direction: column;
-      gap: .5rem;
-      color: var(--text-muted);
-      font-size: .875rem;
-      text-align: center;
-      padding: 2rem;
-    }
-    .welcome__photo--placeholder svg { width: 48px; height: 48px; opacity: .4; }
 
     /* ── Services ─────────────────────────────────────── */
     #services { background: var(--teal-light); }
@@ -256,10 +241,36 @@
     }
     .btn--outline:hover { background: var(--teal-dark); color: var(--white); }
 
-    /* ── Booking ──────────────────────────────────────── */
+    /* ── Booking / PharmAssess ────────────────────────── */
     #booking { background: var(--teal-light); }
-    .browser-shell {
+    .pa-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .75rem;
       margin-top: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .pa-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.25rem 1rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border-top: 3px solid var(--teal-mid);
+      display: block;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .pa-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(30,107,99,.18); }
+    .pa-card__icon { font-size: 1.75rem; margin-bottom: .5rem; }
+    .pa-card__label {
+      display: block;
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--teal-deeper);
+      margin-bottom: .25rem;
+    }
+    .pa-card__desc { font-size: .78rem; color: var(--text-muted); line-height: 1.4; }
+    .browser-shell {
       border-radius: var(--radius);
       overflow: hidden;
       box-shadow: 0 4px 24px rgba(30,107,99,.18);
@@ -272,9 +283,7 @@
       gap: .75rem;
     }
     .browser-shell__dots { display: flex; gap: 6px; }
-    .browser-shell__dots span {
-      width: 12px; height: 12px; border-radius: 50%;
-    }
+    .browser-shell__dots span { width: 12px; height: 12px; border-radius: 50%; }
     .browser-shell__dots span:nth-child(1) { background: #fc5f57; }
     .browser-shell__dots span:nth-child(2) { background: #fdbc2c; }
     .browser-shell__dots span:nth-child(3) { background: #2bc840; }
@@ -290,7 +299,7 @@
     .browser-shell iframe {
       display: block;
       width: 100%;
-      height: 620px;
+      height: 640px;
       border: none;
       background: var(--white);
     }
@@ -301,8 +310,25 @@
       text-align: center;
     }
 
+    /* ── Shop / Order Online ──────────────────────────── */
+    #shop { background: var(--white); }
+    .shop__card {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      background: var(--teal-light);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-top: 2rem;
+      border: 1.5px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .shop__card__icon { font-size: 3.5rem; flex-shrink: 0; }
+    .shop__card__body h3 { font-size: 1.1rem; font-weight: 700; color: var(--teal-deeper); margin-bottom: .4rem; }
+    .shop__card__body p  { font-size: .9rem; color: var(--text-muted); margin-bottom: 1rem; max-width: 520px; }
+
     /* ── Contact ──────────────────────────────────────── */
-    #contact { background: var(--white); }
+    #contact { background: var(--teal-light); }
     .contact__grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -310,18 +336,15 @@
       margin-top: 2rem;
     }
     .contact__info { display: flex; flex-direction: column; gap: 1.25rem; }
-    .contact__row {
-      display: flex;
-      align-items: flex-start;
-      gap: .9rem;
-    }
+    .contact__row { display: flex; align-items: flex-start; gap: .9rem; }
     .contact__row__icon {
       width: 40px; height: 40px;
       border-radius: 50%;
-      background: var(--teal-light);
+      background: var(--white);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
       font-size: 1.1rem;
+      box-shadow: var(--shadow);
     }
     .contact__row__body h4 { font-size: .875rem; font-weight: 600; color: var(--teal-deeper); }
     .contact__row__body p, .contact__row__body a {
@@ -337,10 +360,33 @@
       border-radius: var(--radius);
       overflow: hidden;
       box-shadow: var(--shadow);
-      height: 340px;
+      height: 360px;
       background: var(--teal-light);
     }
     .contact__map iframe { width: 100%; height: 100%; border: none; }
+
+    /* ── About + Gallery ──────────────────────────────── */
+    #about { background: var(--white); }
+    .about__text { max-width: 760px; }
+    .about__text p { color: var(--text-muted); margin-top: 1rem; }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .gallery__item {
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      box-shadow: var(--shadow);
+    }
+    .gallery__item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .35s;
+    }
+    .gallery__item:hover img { transform: scale(1.05); }
 
     /* ── Footer ───────────────────────────────────────── */
     footer {
@@ -352,18 +398,38 @@
     }
     footer a { color: rgba(255,255,255,.65); }
     footer a:hover { color: var(--white); }
-    footer .footer__links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: .75rem; flex-wrap: wrap; }
+    .footer__links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: .75rem; flex-wrap: wrap; }
+    .footer__socials { display: flex; justify-content: center; gap: .75rem; margin-top: 1rem; }
+    .footer__socials a {
+      display: flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.20);
+      transition: background .15s;
+    }
+    .footer__socials a:hover { background: rgba(255,255,255,.22); }
+    .footer__socials svg { width: 16px; height: 16px; fill: rgba(255,255,255,.75); }
 
     /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 900px) {
+      .pa-cards { grid-template-columns: repeat(2, 1fr); }
+      .gallery  { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 768px) {
       .nav__links { display: none; position: absolute; top: 56px; left: 0; right: 0; background: var(--teal-deeper); flex-direction: column; padding: .5rem 1rem 1rem; gap: .1rem; }
       .nav__links.open { display: flex; }
       .nav__toggle { display: block; }
       .welcome__grid,
       .schedule__layout,
-      .contact__grid,
+      .contact__grid { grid-template-columns: 1fr; }
       .services__grid { grid-template-columns: 1fr; }
       .welcome__photo { order: -1; }
+      .pa-cards { grid-template-columns: 1fr 1fr; }
+      .gallery  { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .pa-cards { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -379,7 +445,7 @@
     <ul class="nav__links" id="navLinks">
       <li><a href="#welcome">Home</a></li>
       <li><a href="#services">Services</a></li>
-      <li><a href="#schedule">Schedule</a></li>
+      <li><a href="#shop">Shop</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><a href="#about">About</a></li>
       <li class="nav__cta"><a href="#booking">Book Appointment</a></li>
@@ -390,20 +456,22 @@
 <!-- ── Hero ─────────────────────────────────────────────── -->
 <header class="hero" id="home">
   <img src="logo.png" alt="St. Clair Drug Mart Pharmacy logo" class="hero__logo" />
-
   <h1 class="hero__name">St. Clair Drug Mart Pharmacy</h1>
-  <p class="hero__sub">Your neighbourhood pharmacy at 1203 St. Clair Ave W, Toronto</p>
+  <p class="hero__sub">Your neighbourhood pharmacy at 1203 St. Clair Ave W, Toronto &nbsp;·&nbsp; (416) 654-8181</p>
 
   <div class="hero__socials">
-    <!-- Facebook -->
-    <a href="#" aria-label="Facebook">
+    <a href="https://www.facebook.com/p/St-Clair-Drug-Mart-Pharmacy-100089068174445/" target="_blank" rel="noopener" aria-label="Facebook">
       <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
     </a>
-    <!-- Instagram -->
-    <a href="#" aria-label="Instagram">
+    <a href="https://www.instagram.com/stclairdrugmart/" target="_blank" rel="noopener" aria-label="Instagram">
       <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="white" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="2"/></svg>
     </a>
-    <!-- Google Maps -->
+    <a href="https://ca.linkedin.com/company/stclairdrugmart" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    </a>
+    <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" aria-label="Order on Uber Eats">
+      <svg viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+    </a>
     <a href="https://maps.google.com/?q=1203+St+Clair+Avenue+West+Toronto" target="_blank" rel="noopener" aria-label="Find us on Google Maps">
       <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
     </a>
@@ -417,9 +485,9 @@
     <div class="welcome__grid">
       <div class="welcome__text">
         <p>
-          St. Clair Drug Mart Pharmacy has served the St. Clair West community for years, providing
-          personalized pharmacy care you can count on. We're more than just a drugstore — we're your
-          health partners right in the neighbourhood.
+          St. Clair Drug Mart Pharmacy has been proudly serving the St. Clair West community,
+          providing personalized pharmacy care you can count on. We're more than just a drugstore —
+          we're your health partners right in the neighbourhood.
         </p>
         <p>
           From prescription dispensing and blister packaging to travel vaccines and MedsCheck reviews,
@@ -427,21 +495,16 @@
           care, every time.
         </p>
         <p>
-          Walk in, call us, or book online — we're always happy to help.
+          Walk in, call us at <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">(416) 654-8181</a>,
+          or book online — we're always happy to help.
         </p>
         <div style="margin-top:1.5rem; display:flex; gap:.75rem; flex-wrap:wrap;">
           <a href="#booking" class="btn">Book an Appointment</a>
           <a href="#services" class="btn btn--outline">Our Services</a>
         </div>
       </div>
-      <!-- Replace the placeholder div below with <img src="storefront.jpg" alt="St. Clair Drug Mart storefront" /> once photo is ready -->
-      <div class="welcome__photo welcome__photo--placeholder">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
-          <polyline points="21 15 16 10 5 21"/>
-        </svg>
-        <span>Storefront photo coming soon</span>
-        <span style="font-size:.75rem;opacity:.7;">Replace with real image</span>
+      <div class="welcome__photo">
+        <img src="storefront_front.jpg" alt="St. Clair Drug Mart storefront at 1203 St. Clair Ave W, Toronto" />
       </div>
     </div>
   </div>
@@ -451,7 +514,7 @@
 <section id="services">
   <div class="section__inner">
     <h2 class="section__title">Our Services</h2>
-    <p class="section__lead">We offer a full range of pharmacy and health services to keep you and your family well.</p>
+    <p class="section__lead">A full range of pharmacy and health services to keep you and your family well.</p>
     <div class="services__grid">
       <div class="service-card">
         <div class="service-card__icon">💊</div>
@@ -477,7 +540,7 @@
       <div class="service-card">
         <div class="service-card__icon">📋</div>
         <div class="service-card__body">
-          <h3>MedsCheck</h3>
+          <h3>MedsCheck &amp; Medication Reviews</h3>
           <p>Annual medication review to optimize your therapy and catch potential interactions.</p>
         </div>
       </div>
@@ -492,28 +555,28 @@
         <div class="service-card__icon">🩺</div>
         <div class="service-card__body">
           <h3>Minor Ailment Prescribing</h3>
-          <p>Ontario pharmacists can now assess and prescribe for 19 minor ailments.</p>
+          <p>Ontario pharmacists can now assess and prescribe for 19 minor ailments — no doctor visit needed.</p>
         </div>
       </div>
       <div class="service-card">
         <div class="service-card__icon">🔄</div>
         <div class="service-card__body">
           <h3>Prescription Transfers</h3>
-          <p>Switching pharmacies? We make it seamless — just bring your Rx.</p>
+          <p>Switching pharmacies? We make it seamless — just bring your Rx or request online.</p>
         </div>
       </div>
       <div class="service-card">
         <div class="service-card__icon">🚚</div>
         <div class="service-card__body">
-          <h3>Free Delivery</h3>
-          <p>Local prescription delivery available — ask us about eligibility.</p>
+          <h3>Free Local Delivery &amp; Uber Eats</h3>
+          <p>Get prescriptions and health essentials delivered to your door — locally or via Uber Eats.</p>
         </div>
       </div>
       <div class="service-card">
         <div class="service-card__icon">📞</div>
         <div class="service-card__body">
-          <h3>Medication Refill Reminders</h3>
-          <p>We'll reach out when your refills are due so you never run out.</p>
+          <h3>Refill Reminders &amp; Requests</h3>
+          <p>We'll remind you when refills are due — or request them online anytime.</p>
         </div>
       </div>
     </div>
@@ -532,7 +595,7 @@
         <li><span class="icon">🔔</span> <span>Automated reminder before your appointment</span></li>
         <li><span class="icon">🔒</span> <span>Secure patient portal powered by PharmAssess</span></li>
         <li><span class="icon">📱</span> <span>Works on any device — phone, tablet, or desktop</span></li>
-        <li><span class="icon">💬</span> <span>Prefer to call? Reach us at <a href="tel:+14169997777" style="color:var(--teal-dark);font-weight:600;">(416) 999-7777</a></span></li>
+        <li><span class="icon">💬</span> <span>Prefer to call? Reach us at <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">(416) 654-8181</a></span></li>
       </ul>
       <div class="schedule__cta">
         <p>Ready to book? Click below to open the secure scheduling portal or scroll down to book inline.</p>
@@ -545,27 +608,79 @@
 <!-- ── Booking ────────────────────────────────────────────── -->
 <section id="booking">
   <div class="section__inner">
-    <h2 class="section__title">Online Booking</h2>
-    <p class="section__lead">Use the portal below to schedule your appointment directly.</p>
+    <h2 class="section__title">Patient Portal &amp; Online Services</h2>
+    <p class="section__lead">Access all our PharmAssess services directly — available anytime, on any device.</p>
+
+    <div class="pa-cards">
+      <a class="pa-card" href="https://app.pharmassess.ca/appointment/306667" target="_blank" rel="noopener">
+        <div class="pa-card__icon">📅</div>
+        <span class="pa-card__label">Book Appointment</span>
+        <span class="pa-card__desc">Schedule a vaccine, consultation, or check-up</span>
+      </a>
+      <a class="pa-card" href="https://app.pharmassess.ca/self-assessment/306667" target="_blank" rel="noopener">
+        <div class="pa-card__icon">🩺</div>
+        <span class="pa-card__label">Minor Ailment</span>
+        <span class="pa-card__desc">Get assessed and prescribed for minor conditions</span>
+      </a>
+      <a class="pa-card" href="https://app.pharmassess.ca/patient/meds/306667" target="_blank" rel="noopener">
+        <div class="pa-card__icon">📋</div>
+        <span class="pa-card__label">Medication Review</span>
+        <span class="pa-card__desc">MedsCheck and annual medication review</span>
+      </a>
+      <a class="pa-card" href="https://app.pharmassess.ca/refill/306667" target="_blank" rel="noopener">
+        <div class="pa-card__icon">🔁</div>
+        <span class="pa-card__label">Refill Request</span>
+        <span class="pa-card__desc">Request a prescription refill online</span>
+      </a>
+      <a class="pa-card" href="https://app.pharmassess.ca/transfer-rx/306667" target="_blank" rel="noopener">
+        <div class="pa-card__icon">🔀</div>
+        <span class="pa-card__label">Transfer Your Rx</span>
+        <span class="pa-card__desc">Move your prescription to St. Clair Drug Mart</span>
+      </a>
+      <a class="pa-card" href="https://app.pharmassess.ca/login/306667" target="_blank" rel="noopener">
+        <div class="pa-card__icon">🔑</div>
+        <span class="pa-card__label">Patient Login</span>
+        <span class="pa-card__desc">Sign in to your PharmAssess patient portal</span>
+      </a>
+    </div>
+
     <div class="browser-shell">
       <div class="browser-shell__bar">
         <div class="browser-shell__dots">
           <span></span><span></span><span></span>
         </div>
-        <!-- Update the URL text once the real PharmAssess portal ID is known -->
-        <div class="browser-shell__url">pharmassess.com/book/YOUR_PORTAL_ID</div>
+        <div class="browser-shell__url">app.pharmassess.ca/appointment/306667</div>
       </div>
-      <!-- ⚠️  Replace YOUR_PORTAL_ID with your real PharmAssess embed ID -->
       <iframe
-        src="https://pharmassess.com/book/YOUR_PORTAL_ID"
+        src="https://app.pharmassess.ca/appointment/306667"
         title="PharmAssess Online Booking"
         loading="lazy"
         allow="payment"
       ></iframe>
     </div>
     <p class="booking__note">
-      Having trouble? Call us at <a href="tel:+14169997777" style="color:var(--teal-dark);">(416) 999-7777</a> and we'll book you in directly.
+      Having trouble? Call us at <a href="tel:+14166548181" style="color:var(--teal-dark);">(416) 654-8181</a> and we'll book you in directly.
     </p>
+  </div>
+</section>
+
+<!-- ── Shop ──────────────────────────────────────────────── -->
+<section id="shop">
+  <div class="section__inner">
+    <h2 class="section__title">Order Online</h2>
+    <p class="section__lead">Get your prescriptions and health essentials delivered right to your door.</p>
+    <div class="shop__card">
+      <div class="shop__card__icon">🛵</div>
+      <div class="shop__card__body">
+        <h3>Order on Uber Eats</h3>
+        <p>
+          St. Clair Drug Mart Pharmacy is on Uber Eats! Order OTC medications, vitamins, personal care
+          products, and more for fast delivery to your home.
+        </p>
+        <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ"
+           target="_blank" rel="noopener" class="btn">Order on Uber Eats →</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -588,16 +703,14 @@
           <div class="contact__row__icon">📞</div>
           <div class="contact__row__body">
             <h4>Phone</h4>
-            <!-- Update with real phone number -->
-            <a href="tel:+14169997777">(416) 999-7777</a>
+            <a href="tel:+14166548181">(416) 654-8181</a>
           </div>
         </div>
         <div class="contact__row">
           <div class="contact__row__icon">✉️</div>
           <div class="contact__row__body">
             <h4>Email</h4>
-            <!-- Update with real email -->
-            <a href="mailto:info@stclairdrugmart.ca">info@stclairdrugmart.ca</a>
+            <a href="mailto:stclairdrugmart@gmail.com">stclairdrugmart@gmail.com</a>
           </div>
         </div>
         <div class="contact__row">
@@ -612,9 +725,8 @@
           </div>
         </div>
         <div class="contact__actions">
-          <!-- Update href with real phone number -->
-          <a href="tel:+14169997777" class="btn">📞 Call Us</a>
-          <a href="mailto:info@stclairdrugmart.ca" class="btn btn--outline">✉️ Email Us</a>
+          <a href="tel:+14166548181" class="btn">📞 Call Us</a>
+          <a href="mailto:stclairdrugmart@gmail.com" class="btn btn--outline">✉️ Email Us</a>
         </div>
       </div>
       <div class="contact__map">
@@ -631,19 +743,36 @@
 </section>
 
 <!-- ── About ──────────────────────────────────────────────── -->
-<section id="about" style="background:var(--teal-light);">
-  <div class="section__inner" style="max-width:720px;">
+<section id="about">
+  <div class="section__inner">
     <h2 class="section__title">About Us</h2>
-    <p style="margin-top:1rem;color:var(--text-muted);">
-      St. Clair Drug Mart Pharmacy is an independent community pharmacy proudly serving the St. Clair
-      West neighbourhood in Toronto. We believe in building real relationships with our patients —
-      taking time to listen, explain, and ensure every person leaves with the information and medication
-      they need to thrive.
-    </p>
-    <p style="margin-top:1rem;color:var(--text-muted);">
-      As an independent pharmacy, every decision we make is guided by what's best for our community,
-      not a corporate bottom line. Come in and experience the difference.
-    </p>
+    <div class="about__text">
+      <p>
+        St. Clair Drug Mart Pharmacy is an independent community pharmacy proudly serving the St. Clair
+        West neighbourhood in Toronto. We believe in building real relationships with our patients —
+        taking time to listen, explain, and ensure every person leaves with the information and
+        medication they need to thrive.
+      </p>
+      <p>
+        As an independent pharmacy, every decision we make is guided by what's best for our community,
+        not a corporate bottom line. Come in and experience the difference.
+      </p>
+    </div>
+
+    <div class="gallery">
+      <div class="gallery__item">
+        <img src="storefront_angle.jpg" alt="St. Clair Drug Mart exterior view" />
+      </div>
+      <div class="gallery__item">
+        <img src="interior_wide.jpg" alt="Inside the pharmacy — full store view" />
+      </div>
+      <div class="gallery__item">
+        <img src="interior_counter.png" alt="Pharmacy counter and entrance" />
+      </div>
+      <div class="gallery__item">
+        <img src="interior_shelves.png" alt="OTC and health product shelves" />
+      </div>
+    </div>
   </div>
 </section>
 
@@ -653,15 +782,31 @@
     <a href="#welcome">Home</a>
     <a href="#services">Services</a>
     <a href="#booking">Book Appointment</a>
+    <a href="#shop">Shop</a>
     <a href="#contact">Contact</a>
     <a href="#about">About</a>
   </div>
-  <p>1203 St. Clair Avenue West, Toronto, ON &nbsp;|&nbsp; <a href="tel:+14169997777">(416) 999-7777</a></p>
-  <p style="margin-top:.5rem;opacity:.55;">&copy; 2025 St. Clair Drug Mart Pharmacy. All rights reserved.</p>
+  <p>1203 St. Clair Avenue West, Toronto, ON &nbsp;·&nbsp; <a href="tel:+14166548181">(416) 654-8181</a> &nbsp;·&nbsp; <a href="mailto:stclairdrugmart@gmail.com">stclairdrugmart@gmail.com</a></p>
+
+  <div class="footer__socials">
+    <a href="https://www.facebook.com/p/St-Clair-Drug-Mart-Pharmacy-100089068174445/" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+    </a>
+    <a href="https://www.instagram.com/stclairdrugmart/" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="rgba(255,255,255,.75)" stroke-width="2"/></svg>
+    </a>
+    <a href="https://ca.linkedin.com/company/stclairdrugmart" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    </a>
+    <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" aria-label="Uber Eats">
+      <svg viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+    </a>
+  </div>
+
+  <p style="margin-top:.75rem;opacity:.45;">&copy; 2025 St. Clair Drug Mart Pharmacy. All rights reserved.</p>
 </footer>
 
 <script>
-  // Close mobile nav on link click
   document.querySelectorAll('.nav__links a').forEach(link => {
     link.addEventListener('click', () => {
       document.querySelector('.nav__links').classList.remove('open');
