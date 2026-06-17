@@ -256,34 +256,6 @@
     .service-card__body h3 { font-size: .95rem; font-weight: 600; color: var(--teal-deeper); }
     .service-card__body p  { font-size: .82rem; color: var(--text-muted); margin-top: .15rem; }
 
-    /* ── Schedule ─────────────────────────────────────── */
-    #schedule { background: var(--white); }
-    .schedule__layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: start;
-      margin-top: 2rem;
-    }
-    .schedule__features { list-style: none; }
-    .schedule__features li {
-      display: flex;
-      align-items: flex-start;
-      gap: .75rem;
-      padding: .6rem 0;
-      border-bottom: 1px solid var(--border);
-      font-size: .95rem;
-    }
-    .schedule__features li:last-child { border-bottom: none; }
-    .schedule__features .icon { font-size: 1.2rem; flex-shrink: 0; margin-top: .1rem; }
-    .schedule__cta {
-      background: var(--teal-light);
-      border-radius: var(--radius);
-      padding: 2rem;
-      text-align: center;
-      border: 1.5px solid var(--border);
-    }
-    .schedule__cta p { font-size: .95rem; color: var(--text-muted); margin-bottom: 1.25rem; }
     .btn {
       display: inline-block;
       background: var(--teal-dark);
@@ -321,9 +293,18 @@
       box-shadow: var(--shadow);
       border-top: 3px solid var(--teal-bright);
       display: block;
-      transition: transform .15s, box-shadow .15s;
+      transition: transform .15s, box-shadow .15s, background .15s;
+      cursor: pointer;
+      font: inherit;
+      border-left: none; border-right: none; border-bottom: none;
+      width: 100%;
     }
     .pa-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(30,107,99,.18); }
+    .pa-card.active {
+      border-top-color: var(--teal-dark);
+      background: var(--teal-ice);
+      box-shadow: 0 0 0 2px var(--teal-bright), 0 4px 16px rgba(30,107,99,.15);
+    }
     .pa-card__icon { font-size: 1.75rem; margin-bottom: .5rem; }
     .pa-card__label {
       display: block;
@@ -333,36 +314,17 @@
       margin-bottom: .25rem;
     }
     .pa-card__desc { font-size: .78rem; color: var(--text-muted); line-height: 1.4; }
-    .browser-shell {
+    .pa-iframe-wrap {
       border-radius: var(--radius);
       overflow: hidden;
       box-shadow: 0 4px 24px rgba(30,107,99,.18);
+      border: 2px solid var(--border);
+      margin-top: .5rem;
     }
-    .browser-shell__bar {
-      background: #2d3748;
-      padding: .6rem 1rem;
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-    }
-    .browser-shell__dots { display: flex; gap: 6px; }
-    .browser-shell__dots span { width: 12px; height: 12px; border-radius: 50%; }
-    .browser-shell__dots span:nth-child(1) { background: #fc5f57; }
-    .browser-shell__dots span:nth-child(2) { background: #fdbc2c; }
-    .browser-shell__dots span:nth-child(3) { background: #2bc840; }
-    .browser-shell__url {
-      flex: 1;
-      background: rgba(255,255,255,.1);
-      border-radius: 6px;
-      padding: .3rem .75rem;
-      font-size: .8rem;
-      color: rgba(255,255,255,.7);
-      font-family: monospace;
-    }
-    .browser-shell iframe {
+    .pa-iframe-wrap iframe {
       display: block;
       width: 100%;
-      height: 640px;
+      height: 700px;
       border: none;
       background: var(--white);
     }
@@ -511,7 +473,6 @@
       .nav__links.open { display: flex; }
       .nav__toggle { display: block; }
       .welcome__grid,
-      .schedule__layout,
       .contact__grid,
       .blog-grid { grid-template-columns: 1fr; }
       .services__grid { grid-template-columns: 1fr; }
@@ -603,6 +564,59 @@
   </div>
 </section>
 
+<!-- ── Booking ────────────────────────────────────────────── -->
+<section id="booking">
+  <div class="section__inner">
+    <h2 class="section__title">Book Online &amp; Patient Services</h2>
+    <p class="section__lead">Select a service — the form loads right here, no new window needed.</p>
+
+    <div class="pa-cards">
+      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667">
+        <div class="pa-card__icon">📅</div>
+        <span class="pa-card__label">Book Appointment</span>
+        <span class="pa-card__desc">Schedule a vaccine, consultation, or check-up</span>
+      </button>
+      <button class="pa-card" data-url="https://app.pharmassess.ca/self-assessment/306667">
+        <div class="pa-card__icon">🩺</div>
+        <span class="pa-card__label">Minor Ailment</span>
+        <span class="pa-card__desc">Get assessed and prescribed for minor conditions</span>
+      </button>
+      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667">
+        <div class="pa-card__icon">📋</div>
+        <span class="pa-card__label">Medication Review</span>
+        <span class="pa-card__desc">MedsCheck and annual medication review</span>
+      </button>
+      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667">
+        <div class="pa-card__icon">🔁</div>
+        <span class="pa-card__label">Refill Request</span>
+        <span class="pa-card__desc">Request a prescription refill online</span>
+      </button>
+      <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667">
+        <div class="pa-card__icon">🔀</div>
+        <span class="pa-card__label">Transfer Your Rx</span>
+        <span class="pa-card__desc">Move your prescription to St. Clair Drug Mart</span>
+      </button>
+      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667">
+        <div class="pa-card__icon">🔑</div>
+        <span class="pa-card__label">Patient Login</span>
+        <span class="pa-card__desc">Sign in to your PharmAssess patient portal</span>
+      </button>
+    </div>
+
+    <div class="pa-iframe-wrap">
+      <iframe
+        id="pa-iframe"
+        src="https://app.pharmassess.ca/appointment/306667"
+        title="PharmAssess Online Booking"
+        allow="payment"
+      ></iframe>
+    </div>
+    <p class="booking__note">
+      Having trouble? Call us at <a href="tel:+14166548181" style="color:var(--teal-dark);">(416) 654-8181</a> and we'll book you in directly.
+    </p>
+  </div>
+</section>
+
 <!-- ── Services ──────────────────────────────────────────── -->
 <section id="services">
   <div class="section__inner">
@@ -673,87 +687,6 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ── Schedule ───────────────────────────────────────────── -->
-<section id="schedule">
-  <div class="section__inner">
-    <h2 class="section__title">Book an Appointment</h2>
-    <p class="section__lead">Scheduling is fast and easy with our online portal — available 24/7.</p>
-    <div class="schedule__layout">
-      <ul class="schedule__features">
-        <li><span class="icon">🗓️</span> <span>Book vaccines, MedsCheck, minor ailment visits, and more</span></li>
-        <li><span class="icon">⚡</span> <span>Confirmation sent instantly to your email</span></li>
-        <li><span class="icon">🔔</span> <span>Automated reminder before your appointment</span></li>
-        <li><span class="icon">🔒</span> <span>Secure patient portal powered by PharmAssess</span></li>
-        <li><span class="icon">📱</span> <span>Works on any device — phone, tablet, or desktop</span></li>
-        <li><span class="icon">💬</span> <span>Prefer to call? Reach us at <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">(416) 654-8181</a></span></li>
-      </ul>
-      <div class="schedule__cta">
-        <p>Ready to book? Click below to open the secure scheduling portal or scroll down to book inline.</p>
-        <a href="#booking" class="btn">Open Booking Portal ↓</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── Booking ────────────────────────────────────────────── -->
-<section id="booking">
-  <div class="section__inner">
-    <h2 class="section__title">Patient Portal &amp; Online Services</h2>
-    <p class="section__lead">Access all our PharmAssess services directly — available anytime, on any device.</p>
-
-    <div class="pa-cards">
-      <a class="pa-card" href="https://app.pharmassess.ca/appointment/306667" target="_blank" rel="noopener">
-        <div class="pa-card__icon">📅</div>
-        <span class="pa-card__label">Book Appointment</span>
-        <span class="pa-card__desc">Schedule a vaccine, consultation, or check-up</span>
-      </a>
-      <a class="pa-card" href="https://app.pharmassess.ca/self-assessment/306667" target="_blank" rel="noopener">
-        <div class="pa-card__icon">🩺</div>
-        <span class="pa-card__label">Minor Ailment</span>
-        <span class="pa-card__desc">Get assessed and prescribed for minor conditions</span>
-      </a>
-      <a class="pa-card" href="https://app.pharmassess.ca/patient/meds/306667" target="_blank" rel="noopener">
-        <div class="pa-card__icon">📋</div>
-        <span class="pa-card__label">Medication Review</span>
-        <span class="pa-card__desc">MedsCheck and annual medication review</span>
-      </a>
-      <a class="pa-card" href="https://app.pharmassess.ca/refill/306667" target="_blank" rel="noopener">
-        <div class="pa-card__icon">🔁</div>
-        <span class="pa-card__label">Refill Request</span>
-        <span class="pa-card__desc">Request a prescription refill online</span>
-      </a>
-      <a class="pa-card" href="https://app.pharmassess.ca/transfer-rx/306667" target="_blank" rel="noopener">
-        <div class="pa-card__icon">🔀</div>
-        <span class="pa-card__label">Transfer Your Rx</span>
-        <span class="pa-card__desc">Move your prescription to St. Clair Drug Mart</span>
-      </a>
-      <a class="pa-card" href="https://app.pharmassess.ca/login/306667" target="_blank" rel="noopener">
-        <div class="pa-card__icon">🔑</div>
-        <span class="pa-card__label">Patient Login</span>
-        <span class="pa-card__desc">Sign in to your PharmAssess patient portal</span>
-      </a>
-    </div>
-
-    <div class="browser-shell">
-      <div class="browser-shell__bar">
-        <div class="browser-shell__dots">
-          <span></span><span></span><span></span>
-        </div>
-        <div class="browser-shell__url">app.pharmassess.ca/appointment/306667</div>
-      </div>
-      <iframe
-        src="https://app.pharmassess.ca/appointment/306667"
-        title="PharmAssess Online Booking"
-        loading="lazy"
-        allow="payment"
-      ></iframe>
-    </div>
-    <p class="booking__note">
-      Having trouble? Call us at <a href="tel:+14166548181" style="color:var(--teal-dark);">(416) 654-8181</a> and we'll book you in directly.
-    </p>
   </div>
 </section>
 
@@ -924,6 +857,16 @@
   document.querySelectorAll('.nav__links a').forEach(link => {
     link.addEventListener('click', () => {
       document.querySelector('.nav__links').classList.remove('open');
+    });
+  });
+
+  // PharmAssess tab switching
+  const paIframe = document.getElementById('pa-iframe');
+  document.querySelectorAll('.pa-card').forEach(card => {
+    card.addEventListener('click', function() {
+      document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      paIframe.src = this.dataset.url;
     });
   });
 </script>
