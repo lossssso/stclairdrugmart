@@ -1,0 +1,48 @@
+name: Generate Blog Post
+
+on:
+  schedule:
+    # Every Monday at 9 AM Eastern (1 PM UTC in summer / 2 PM UTC in winter)
+    - cron: '0 13 * * 1'
+  workflow_dispatch:
+    # Also triggerable manually from the Actions tab — useful for testing
+
+jobs:
+  generate-post:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to push the new post commit
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install anthropic
+
+      - name: Generate blog post
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/generate_blog.py
+
+      - name: Commit and push
+        run: |
+          git config user.name  "St. Clair Blog Bot"
+          git config user.email "bot@stclairdrugmart.ca"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "Nothing new to commit."
+          else
+            TITLE=$(python3 -c "
+          import json, pathlib
+          posts = json.loads(pathlib.Path('blog/posts.json').read_text())
+          print(posts[-1]['title'])
+          ")
+            git commit -m "Blog: ${TITLE}"
+            git push
+          fi
