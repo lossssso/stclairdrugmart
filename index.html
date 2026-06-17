@@ -5,20 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>St. Clair Drug Mart Pharmacy — Toronto</title>
   <meta name="description" content="St. Clair Drug Mart Pharmacy at 1203 St. Clair Avenue West, Toronto — prescriptions, vaccines, blister packs, MedsCheck, minor ailments, and more." />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
   <style>
     /* ── Reset & base ─────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --teal-light:  #e6f4f2;
-      --teal-mid:    #5aada3;
-      --teal-dark:   #1e6b63;
-      --teal-deeper: #134f49;
+      /* ── Brand palette — matched to logo ── */
+      --teal-ice:    #E8F8F7;   /* near-white page background          */
+      --teal-pale:   #C5EBF0;   /* logo horizontal arm (ice blue)      */
+      --teal-bright: #2EC5BC;   /* logo main pill — primary accent     */
+      --teal-mid:    #1AA8A0;   /* hover / mid shade                   */
+      --teal-dark:   #0D7A72;   /* logo letter outline — dark teal     */
+      --teal-deeper: #08524C;   /* nav, footer — deepest               */
+      /* ── Aliases used throughout ── */
+      --teal-light:  var(--teal-ice);
       --white:       #ffffff;
-      --text:        #1a2e2c;
-      --text-muted:  #4a6360;
-      --border:      #c2dedd;
+      --text:        #132624;
+      --text-muted:  #426260;
+      --border:      #ACD9D8;
       --radius:      10px;
-      --shadow:      0 2px 12px rgba(30,107,99,.10);
+      --shadow:      0 2px 12px rgba(13,122,114,.10);
     }
     html { scroll-behavior: smooth; }
     body {
@@ -72,10 +78,10 @@
       color: var(--white);
     }
     .nav__links .nav__cta a {
-      background: var(--teal-mid);
+      background: var(--teal-bright);
       color: var(--white);
     }
-    .nav__links .nav__cta a:hover { background: #4e9c92; }
+    .nav__links .nav__cta a:hover { background: var(--teal-mid); }
     .nav__toggle { display: none; background: none; border: none; cursor: pointer; padding: .4rem; }
     .nav__toggle span {
       display: block; width: 22px; height: 2px;
@@ -85,28 +91,39 @@
 
     /* ── Hero ─────────────────────────────────────────── */
     .hero {
-      background: linear-gradient(160deg, var(--teal-deeper) 0%, var(--teal-dark) 55%, var(--teal-mid) 100%);
+      background: linear-gradient(150deg, var(--teal-deeper) 0%, var(--teal-dark) 55%, var(--teal-bright) 100%);
       padding: 4rem 1.5rem 3.5rem;
       text-align: center;
       color: var(--white);
     }
     .hero__logo {
-      width: 160px;
-      height: 160px;
+      width: 170px;
+      height: 170px;
       object-fit: contain;
-      margin: 0 auto 1.5rem;
-      filter: drop-shadow(0 4px 16px rgba(0,0,0,.30));
+      margin: 0 auto 1.25rem;
+      filter: drop-shadow(0 4px 20px rgba(0,0,0,.35));
     }
     .hero__name {
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
-      font-weight: 800;
-      letter-spacing: .01em;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 400;
+      letter-spacing: .06em;
+      line-height: 1;
       margin-bottom: .4rem;
     }
+    .hero__pharmacy-label {
+      font-size: .95rem;
+      font-weight: 600;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      opacity: .75;
+      margin-bottom: 1rem;
+    }
     .hero__sub {
-      font-size: 1rem;
-      opacity: .85;
+      font-size: .9rem;
+      opacity: .75;
       margin-bottom: 1.8rem;
+      letter-spacing: .02em;
     }
     .hero__socials {
       display: flex;
@@ -140,7 +157,7 @@
       content: '';
       display: block;
       width: 48px; height: 4px;
-      background: var(--teal-mid);
+      background: var(--teal-bright);
       border-radius: 2px;
       margin-top: .4rem;
     }
@@ -185,7 +202,7 @@
       align-items: flex-start;
       gap: .85rem;
       box-shadow: var(--shadow);
-      border-left: 4px solid var(--teal-mid);
+      border-left: 4px solid var(--teal-bright);
       transition: box-shadow .15s, transform .15s;
     }
     .service-card:hover { box-shadow: 0 4px 20px rgba(30,107,99,.15); transform: translateY(-2px); }
@@ -256,7 +273,7 @@
       padding: 1.25rem 1rem;
       text-align: center;
       box-shadow: var(--shadow);
-      border-top: 3px solid var(--teal-mid);
+      border-top: 3px solid var(--teal-bright);
       display: block;
       transition: transform .15s, box-shadow .15s;
     }
@@ -328,7 +345,7 @@
     .shop__card__body p  { font-size: .9rem; color: var(--text-muted); margin-bottom: 1rem; max-width: 520px; }
 
     /* ── Contact ──────────────────────────────────────── */
-    #contact { background: var(--teal-light); }
+    #contact { background: var(--teal-ice); }
     .contact__grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -456,8 +473,9 @@
 <!-- ── Hero ─────────────────────────────────────────────── -->
 <header class="hero" id="home">
   <img src="logo.png" alt="St. Clair Drug Mart Pharmacy logo" class="hero__logo" />
-  <h1 class="hero__name">St. Clair Drug Mart Pharmacy</h1>
-  <p class="hero__sub">Your neighbourhood pharmacy at 1203 St. Clair Ave W, Toronto &nbsp;·&nbsp; (416) 654-8181</p>
+  <h1 class="hero__name">St. Clair Drug Mart</h1>
+  <p class="hero__pharmacy-label">Pharmacy</p>
+  <p class="hero__sub">1203 St. Clair Ave W, Toronto &nbsp;·&nbsp; (416) 654-8181</p>
 
   <div class="hero__socials">
     <a href="https://www.facebook.com/p/St-Clair-Drug-Mart-Pharmacy-100089068174445/" target="_blank" rel="noopener" aria-label="Facebook">
