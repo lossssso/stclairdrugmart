@@ -5,6 +5,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>St. Clair Drug Mart Pharmacy — Toronto</title>
   <meta name="description" content="St. Clair Drug Mart Pharmacy at 1203 St. Clair Avenue West, Toronto — prescriptions, vaccines, blister packs, MedsCheck, minor ailments, and more." />
+  <link rel="canonical" href="https://www.stclairdrugmart.ca/" />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://www.stclairdrugmart.ca/" />
+  <meta property="og:title"       content="St. Clair Drug Mart Pharmacy — Toronto" />
+  <meta property="og:description" content="Your neighbourhood pharmacy on St. Clair West — prescriptions, vaccines, blister packs, MedsCheck, minor ailments, and more." />
+  <meta property="og:image"       content="https://www.stclairdrugmart.ca/logo.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Pharmacy",
+    "name": "St. Clair Drug Mart Pharmacy",
+    "url": "https://www.stclairdrugmart.ca/",
+    "logo": "https://www.stclairdrugmart.ca/logo.png",
+    "image": "https://www.stclairdrugmart.ca/storefront_front.jpg",
+    "description": "Full-service pharmacy at 1203 St. Clair Avenue West, Toronto, ON. Prescriptions, vaccines, blister packs, MedsCheck, minor ailments, and more.",
+    "telephone": "+14166548181",
+    "email": "stclairdrugmart@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "1203 St. Clair Avenue West",
+      "addressLocality": "Toronto",
+      "addressRegion": "ON",
+      "postalCode": "M6E 1B8",
+      "addressCountry": "CA"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 43.6779,
+      "longitude": -79.4395
+    },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "18:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "14:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "00:00", "closes": "00:00" }
+    ],
+    "sameAs": [
+      "https://www.facebook.com/profile.php?id=100089068174445",
+      "https://www.instagram.com/stclairdrugmart/",
+      "https://ca.linkedin.com/company/stclairdrugmart"
+    ],
+    "hasMap": "https://maps.google.com/?q=1203+St+Clair+Ave+W,+Toronto,+ON",
+    "currenciesAccepted": "CAD",
+    "paymentAccepted": "Cash, Credit Card, Debit",
+    "priceRange": "$$"
+  }
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
   <style>
     /* ── Reset & base ─────────────────────────────────── */
@@ -428,6 +474,33 @@
     .footer__socials a:hover { background: rgba(255,255,255,.22); }
     .footer__socials svg { width: 16px; height: 16px; fill: rgba(255,255,255,.75); }
 
+    /* ── Blog latest posts ────────────────────────────── */
+    #blog { background: var(--white); }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .blog-card {
+      background: var(--teal-ice);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border-top: 3px solid var(--teal-bright);
+      display: flex;
+      flex-direction: column;
+      gap: .55rem;
+    }
+    .blog-card__date { font-size: .78rem; color: var(--text-muted); }
+    .blog-card__title { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .blog-card__title a { color: var(--teal-deeper); transition: color .15s; }
+    .blog-card__title a:hover { color: var(--teal-bright); }
+    .blog-card__excerpt { font-size: .855rem; color: var(--text-muted); flex: 1; line-height: 1.55; }
+    .blog-card__link { font-size: .82rem; font-weight: 600; color: var(--teal-dark); transition: color .15s; margin-top: auto; }
+    .blog-card__link:hover { color: var(--teal-bright); }
+    .blog__footer { text-align: center; margin-top: 2rem; }
+
     /* ── Responsive ───────────────────────────────────── */
     @media (max-width: 900px) {
       .pa-cards { grid-template-columns: repeat(2, 1fr); }
@@ -439,7 +512,8 @@
       .nav__toggle { display: block; }
       .welcome__grid,
       .schedule__layout,
-      .contact__grid { grid-template-columns: 1fr; }
+      .contact__grid,
+      .blog-grid { grid-template-columns: 1fr; }
       .services__grid { grid-template-columns: 1fr; }
       .welcome__photo { order: -1; }
       .pa-cards { grid-template-columns: 1fr 1fr; }
@@ -464,6 +538,7 @@
       <li><a href="#services">Services</a></li>
       <li><a href="#shop">Shop</a></li>
       <li><a href="#contact">Contact</a></li>
+      <li><a href="blog/index.html">Blog</a></li>
       <li><a href="#about">About</a></li>
       <li class="nav__cta"><a href="#booking">Book Appointment</a></li>
     </ul>
@@ -790,6 +865,27 @@
       <div class="gallery__item">
         <img src="interior_shelves.png" alt="OTC and health product shelves" />
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Blog ──────────────────────────────────────────────── -->
+<section id="blog">
+  <div class="section__inner">
+    <h2 class="section__title">From Our Blog</h2>
+    <p class="section__lead">Health tips and pharmacy news from our team — updated weekly.</p>
+    <div class="blog-grid">
+      <!-- BLOG_LATEST_START -->
+      <article class="blog-card">
+        <span class="blog-card__date">Coming soon</span>
+        <h3 class="blog-card__title"><a href="blog/index.html">Our first posts are on the way!</a></h3>
+        <p class="blog-card__excerpt">We're publishing weekly health tips and pharmacy news. Check back soon, or visit our blog page.</p>
+        <a href="blog/index.html" class="blog-card__link">Visit the blog →</a>
+      </article>
+      <!-- BLOG_LATEST_END -->
+    </div>
+    <div class="blog__footer">
+      <a href="blog/index.html" class="btn">View All Posts →</a>
     </div>
   </div>
 </section>
