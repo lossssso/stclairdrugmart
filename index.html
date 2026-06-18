@@ -233,28 +233,42 @@
     .welcome__photo img { width: 100%; height: 100%; object-fit: cover; }
 
     /* ── Services ─────────────────────────────────────── */
-    #services { background: var(--teal-light); }
+    #services { background: var(--white); }
     .services__grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: .75rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .85rem;
       margin-top: 2rem;
     }
     .service-card {
       background: var(--white);
       border-radius: var(--radius);
-      padding: 1rem 1.25rem;
+      padding: 1.25rem 1.4rem;
       display: flex;
-      align-items: flex-start;
-      gap: .85rem;
-      box-shadow: var(--shadow);
-      border-left: 4px solid var(--teal-bright);
-      transition: box-shadow .15s, transform .15s;
+      align-items: center;
+      gap: 1rem;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color .2s, box-shadow .2s, transform .15s;
     }
-    .service-card:hover { box-shadow: 0 4px 20px rgba(30,107,99,.15); transform: translateY(-2px); }
-    .service-card__icon { font-size: 1.6rem; line-height: 1; flex-shrink: 0; margin-top: .1rem; }
-    .service-card__body h3 { font-size: .95rem; font-weight: 600; color: var(--teal-deeper); }
-    .service-card__body p  { font-size: .82rem; color: var(--text-muted); margin-top: .15rem; }
+    .service-card:hover {
+      border-color: var(--teal-bright);
+      box-shadow: 0 4px 16px rgba(45,197,187,.12);
+      transform: translateY(-1px);
+    }
+    .service-card__body { flex: 1; }
+    .service-card__body h3 { font-size: .9rem; font-weight: 600; color: var(--teal-deeper); margin-bottom: .2rem; }
+    .service-card__body p  { font-size: .8rem; color: var(--text-muted); line-height: 1.5; }
+    .service-card__arrow {
+      color: var(--teal-bright);
+      font-size: 1rem;
+      flex-shrink: 0;
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity .2s, transform .2s;
+    }
+    .service-card:hover .service-card__arrow { opacity: 1; transform: translateX(0); }
 
     .btn {
       display: inline-block;
@@ -475,7 +489,8 @@
       .welcome__grid,
       .contact__grid,
       .blog-grid { grid-template-columns: 1fr; }
-      .services__grid { grid-template-columns: 1fr; }
+      .services__grid { grid-template-columns: 1fr 1fr; }
+      .services__grid .service-card:last-child { grid-column: 1 / -1; max-width: 50%; margin: 0 auto; }
       .welcome__photo { order: -1; }
       .pa-cards { grid-template-columns: 1fr 1fr; }
       .gallery  { grid-template-columns: 1fr 1fr; }
@@ -643,6 +658,7 @@
       <li><a href="#contact">Contact</a></li>
       <li><a href="blog/index.html">Blog</a></li>
       <li><a href="#about">About</a></li>
+      <li><a href="portal.html">Patient Portal</a></li>
       <li class="nav__cta"><a href="#booking">Book Appointment</a></li>
     </ul>
   </div>
@@ -753,7 +769,7 @@
       <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667">
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review</span>
-        <span class="pa-card__desc">Annual medication review with your pharmacist</span>
+        <span class="pa-card__desc">One-on-one review of all your medications</span>
       </button>
       <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667">
         <div class="pa-card__icon">🔁</div>
@@ -792,76 +808,76 @@
     <h2 class="section__title">Our Services</h2>
     <p class="section__lead">A full range of pharmacy and health services to keep you and your family well.</p>
     <div class="services__grid">
-      <div class="service-card">
-        <div class="service-card__icon">💊</div>
+      <a class="service-card" href="#booking">
         <div class="service-card__body">
           <h3>Prescription Dispensing</h3>
-          <p>Fast, accurate dispensing with counselling from our pharmacists.</p>
+          <p>Fast, accurate dispensing with personal counselling from your pharmacist.</p>
         </div>
-      </div>
-      <div class="service-card">
-        <div class="service-card__icon">📦</div>
+        <span class="service-card__arrow">→</span>
+      </a>
+      <a class="service-card" href="tel:+14166548181">
         <div class="service-card__body">
           <h3>Blister Packs</h3>
-          <p>Organized weekly blister packaging to simplify complex medication schedules.</p>
+          <p>Weekly blister packaging to simplify complex medication schedules.</p>
         </div>
-      </div>
-      <div class="service-card">
-        <div class="service-card__icon">💉</div>
+        <span class="service-card__arrow">→</span>
+      </a>
+      <a class="service-card" href="https://app.pharmassess.ca/appointment/306667" target="_blank" rel="noopener">
         <div class="service-card__body">
           <h3>Vaccines &amp; Immunizations</h3>
-          <p>Flu, COVID, shingles, travel vaccines, and more — no appointment needed for most.</p>
+          <p>Flu, COVID, shingles, travel vaccines — walk in or book online.</p>
         </div>
-      </div>
-      <div class="service-card">
-        <div class="service-card__icon">📋</div>
+        <span class="service-card__arrow">→</span>
+      </a>
+      <a class="service-card" href="https://app.pharmassess.ca/patient/meds/306667" target="_blank" rel="noopener">
         <div class="service-card__body">
           <h3>Medication Reviews</h3>
-          <p>Annual medication review to optimize your therapy and catch potential interactions.</p>
+          <p>A one-on-one review of all your medications to optimize your therapy.</p>
         </div>
-      </div>
-      <div class="service-card">
-        <div class="service-card__icon">✈️</div>
+        <span class="service-card__arrow">→</span>
+      </a>
+      <a class="service-card" href="https://app.pharmassess.ca/appointment/306667" target="_blank" rel="noopener">
         <div class="service-card__body">
           <h3>Travel Health</h3>
           <p>Pre-travel consultations, vaccines, and medication for your destination.</p>
         </div>
-      </div>
-      <div class="service-card">
-        <div class="service-card__icon">🩺</div>
+        <span class="service-card__arrow">→</span>
+      </a>
+      <a class="service-card" href="https://app.pharmassess.ca/self-assessment/306667" target="_blank" rel="noopener">
         <div class="service-card__body">
           <h3>Minor Ailment Prescribing</h3>
-          <p>Ontario pharmacists can now assess and prescribe for 19 minor ailments — no doctor visit needed.</p>
+          <p>Our pharmacist can assess and prescribe for 19 common conditions — no doctor needed.</p>
         </div>
-      </div>
-      <div class="service-card">
-        <div class="service-card__icon">🔄</div>
+        <span class="service-card__arrow">→</span>
+      </a>
+      <a class="service-card" href="https://app.pharmassess.ca/transfer-rx/306667" target="_blank" rel="noopener">
         <div class="service-card__body">
           <h3>Prescription Transfers</h3>
-          <p>Switching pharmacies? We make it seamless — just bring your Rx or request online.</p>
+          <p>Switching from another pharmacy? We make it seamless — request online.</p>
         </div>
-      </div>
-      <div class="service-card">
-        <div class="service-card__icon">🚚</div>
+        <span class="service-card__arrow">→</span>
+      </a>
+      <a class="service-card" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">
         <div class="service-card__body">
-          <h3>Free Local Delivery &amp; Uber Eats</h3>
-          <p>Get prescriptions and health essentials delivered to your door — locally or via Uber Eats.</p>
+          <h3>Free Local Delivery</h3>
+          <p>Prescriptions and health essentials delivered to your door, free locally or via Uber Eats.</p>
         </div>
-      </div>
-      <div class="service-card">
-        <div class="service-card__icon">📞</div>
+        <span class="service-card__arrow">→</span>
+      </a>
+      <a class="service-card" href="https://app.pharmassess.ca/refill/306667" target="_blank" rel="noopener">
         <div class="service-card__body">
-          <h3>Refill Reminders &amp; Requests</h3>
-          <p>We'll remind you when refills are due — or request them online anytime.</p>
+          <h3>Refill Requests</h3>
+          <p>Request a prescription refill online anytime — we'll have it ready for pickup or delivery.</p>
         </div>
-      </div>
-      <div class="service-card">
-        <div class="service-card__icon">🔍</div>
+        <span class="service-card__arrow">→</span>
+      </a>
+      <a class="service-card" href="https://www.drugs.com/drug_interactions.html" target="_blank" rel="noopener">
         <div class="service-card__body">
           <h3>Drug Lookup &amp; Interactions</h3>
-          <p>Check drug interactions, dosing, and side effects using the trusted <a href="https://www.drugs.com/drug_interactions.html" target="_blank" rel="noopener" style="color:var(--teal-dark);font-weight:600;">Drugs.com checker</a> — or just ask your pharmacist.</p>
+          <p>Check drug interactions, dosing, and side effects — or just ask your pharmacist.</p>
         </div>
-      </div>
+        <span class="service-card__arrow">→</span>
+      </a>
     </div>
   </div>
 </section>
