@@ -51,7 +51,7 @@
     "priceRange": "$$"
   }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ── Reset & base ─────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -74,7 +74,7 @@
     }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: var(--teal-light);
       color: var(--text);
       line-height: 1.65;
@@ -97,17 +97,18 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 1.5rem;
-      height: 56px;
+      height: 64px;
     }
     .nav__brand {
       display: flex;
       align-items: center;
-      gap: .55rem;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 400;
+      gap: .6rem;
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
       color: var(--white);
-      letter-spacing: .06em;
+      letter-spacing: .08em;
+      text-transform: uppercase;
       white-space: nowrap;
       text-decoration: none;
     }
@@ -147,39 +148,53 @@
 
     /* ── Hero ─────────────────────────────────────────── */
     .hero {
-      background: linear-gradient(150deg, var(--teal-deeper) 0%, var(--teal-dark) 55%, var(--teal-bright) 100%);
-      padding: 4rem 1.5rem 3.5rem;
+      background: linear-gradient(155deg, #003f44 0%, var(--teal-deeper) 45%, var(--teal-bright) 100%);
+      padding: 5rem 1.5rem 4.5rem;
       text-align: center;
       color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, rgba(33,161,168,.18) 0%, transparent 70%);
+      pointer-events: none;
     }
     .hero__logo {
-      width: 170px;
-      height: 170px;
+      width: 180px;
+      height: 180px;
       object-fit: contain;
-      margin: 0 auto 1.25rem;
-      filter: drop-shadow(0 4px 20px rgba(0,0,0,.35));
+      margin: 0 auto 1.5rem;
+      filter: drop-shadow(0 6px 28px rgba(0,0,0,.45));
+      position: relative;
     }
     .hero__name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.9rem, 5vw, 3.8rem);
-      font-weight: 400;
-      letter-spacing: .06em;
-      line-height: 1.05;
-      margin-bottom: .75rem;
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: .5rem;
+      position: relative;
     }
     .hero__pharmacy-label {
-      font-size: .95rem;
+      font-size: 1rem;
       font-weight: 600;
-      letter-spacing: .28em;
+      letter-spacing: .35em;
       text-transform: uppercase;
-      opacity: .75;
-      margin-bottom: 1rem;
+      opacity: .65;
+      margin-bottom: 1.25rem;
+      position: relative;
     }
     .hero__sub {
-      font-size: .9rem;
-      opacity: .75;
-      margin-bottom: 1.8rem;
+      font-size: .95rem;
+      opacity: .8;
+      margin-bottom: 2rem;
       letter-spacing: .02em;
+      position: relative;
     }
     .hero__socials {
       display: flex;
@@ -204,18 +219,22 @@
     section { padding: 4rem 1.5rem; }
     .section__inner { max-width: 1100px; margin: 0 auto; }
     .section__title {
-      font-size: clamp(1.35rem, 3vw, 1.9rem);
-      font-weight: 700;
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 900;
+      letter-spacing: .07em;
+      text-transform: uppercase;
       color: var(--teal-deeper);
       margin-bottom: .5rem;
+      line-height: 1;
     }
     .section__title::after {
       content: '';
       display: block;
-      width: 48px; height: 4px;
+      width: 56px; height: 4px;
       background: var(--teal-bright);
       border-radius: 2px;
-      margin-top: .4rem;
+      margin-top: .5rem;
     }
     .section__lead {
       font-size: 1rem;
@@ -284,15 +303,18 @@
       display: inline-block;
       background: var(--teal-dark);
       color: var(--white);
-      font-weight: 600;
-      font-size: .95rem;
-      padding: .7rem 1.8rem;
-      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: .9rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      padding: .8rem 2rem;
+      border-radius: 6px;
       border: none;
       cursor: pointer;
-      transition: background .15s, transform .1s;
+      transition: background .15s, transform .1s, box-shadow .15s;
     }
-    .btn:hover { background: var(--teal-deeper); transform: translateY(-1px); }
+    .btn:hover { background: #003f44; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,63,68,.25); }
     .btn--outline {
       background: transparent;
       color: var(--teal-dark);
@@ -493,7 +515,7 @@
       .gallery  { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
-      .nav__links { display: none; position: absolute; top: 56px; left: 0; right: 0; background: var(--teal-deeper); flex-direction: column; padding: .5rem 1rem 1rem; gap: .1rem; }
+      .nav__links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: var(--teal-deeper); flex-direction: column; padding: .5rem 1rem 1rem; gap: .1rem; }
       .nav__links.open { display: flex; }
       .nav__toggle { display: block; }
       .welcome__grid,
