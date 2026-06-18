@@ -56,21 +56,21 @@
     /* ── Reset & base ─────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      /* ── Brand palette — matched to logo ── */
-      --teal-ice:    #E8F8F7;   /* near-white page background          */
-      --teal-pale:   #C5EBF0;   /* logo horizontal arm (ice blue)      */
-      --teal-bright: #2EC5BC;   /* logo main pill — primary accent     */
-      --teal-mid:    #1AA8A0;   /* hover / mid shade                   */
-      --teal-dark:   #0D7A72;   /* logo letter outline — dark teal     */
-      --teal-deeper: #08524C;   /* nav, footer — deepest               */
+      /* ── Brand palette — matched to logo (blue-cyan) ── */
+      --teal-ice:    #E3F4FA;   /* near-white page background          */
+      --teal-pale:   #AED8EE;   /* light blue                          */
+      --teal-bright: #18B4D8;   /* bright sky-blue cyan — primary      */
+      --teal-mid:    #1295B8;   /* hover / mid shade                   */
+      --teal-dark:   #0B72A0;   /* dark blue                           */
+      --teal-deeper: #064B72;   /* nav, footer — deep navy             */
       /* ── Aliases used throughout ── */
       --teal-light:  var(--teal-ice);
       --white:       #ffffff;
-      --text:        #132624;
-      --text-muted:  #426260;
-      --border:      #ACD9D8;
+      --text:        #0F2A36;
+      --text-muted:  #3D5C6E;
+      --border:      #9FCCE0;
       --radius:      10px;
-      --shadow:      0 2px 12px rgba(13,122,114,.10);
+      --shadow:      0 2px 12px rgba(11,114,160,.10);
     }
     html { scroll-behavior: smooth; }
     body {
@@ -483,9 +483,151 @@
     @media (max-width: 480px) {
       .pa-cards { grid-template-columns: 1fr; }
     }
+
+    /* ── Alert banner ─────────────────────────────── */
+    .alert-banner {
+      background: var(--teal-dark);
+      color: var(--white);
+      text-align: center;
+      padding: .65rem 3.5rem;
+      font-size: .875rem;
+      font-weight: 500;
+      position: relative;
+      letter-spacing: .01em;
+    }
+    .alert-banner a { color: rgba(255,255,255,.9); text-decoration: underline; }
+    .alert-banner__close {
+      position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: rgba(255,255,255,.75);
+      cursor: pointer; font-size: 1.15rem; line-height: 1;
+      padding: .25rem .45rem; border-radius: 4px; transition: background .15s;
+    }
+    .alert-banner__close:hover { background: rgba(255,255,255,.15); color: var(--white); }
+
+    /* ── New patients / Steps ─────────────────────── */
+    #new-patients { background: var(--teal-ice); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .step {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem;
+      box-shadow: var(--shadow);
+      border-top: 4px solid var(--teal-bright);
+    }
+    .step__num {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--teal-bright); color: var(--white);
+      font-weight: 700; font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .step h3 { font-size: 1rem; font-weight: 700; color: var(--teal-deeper); margin-bottom: .5rem; }
+    .step p  { font-size: .875rem; color: var(--text-muted); line-height: 1.65; }
+    .steps__cta { text-align: center; margin-top: 2rem; }
+
+    /* ── Insurance ────────────────────────────────── */
+    #insurance { background: var(--white); }
+    .insurance-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .insurance-card {
+      background: var(--teal-ice);
+      border-radius: var(--radius);
+      border: 1.5px solid var(--border);
+      padding: 1.25rem 1rem;
+      text-align: center;
+      transition: box-shadow .15s, transform .15s;
+    }
+    .insurance-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+    .insurance-card__abbr {
+      font-size: 1.05rem; font-weight: 800;
+      color: var(--teal-dark); letter-spacing: .04em; margin-bottom: .3rem;
+    }
+    .insurance-card__name { font-size: .82rem; font-weight: 600; color: var(--teal-deeper); margin-bottom: .25rem; }
+    .insurance-card__desc { font-size: .75rem; color: var(--text-muted); line-height: 1.45; }
+    .insurance__note { margin-top: 1.5rem; font-size: .9rem; color: var(--text-muted); text-align: center; }
+
+    /* ── Meet the Team ────────────────────────────── */
+    #team { background: var(--teal-ice); }
+    .team-grid { max-width: 720px; margin: 2rem auto 0; }
+    .team-card {
+      display: flex; gap: 2rem; align-items: flex-start;
+      background: var(--white); border-radius: var(--radius);
+      padding: 2rem; box-shadow: var(--shadow);
+      border-left: 5px solid var(--teal-bright);
+    }
+    .team-card__avatar {
+      flex-shrink: 0; width: 90px; height: 90px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal-dark), var(--teal-bright));
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .team-card__avatar svg { width: 80px; height: 80px; }
+    .team-card__name { font-size: 1.1rem; font-weight: 700; color: var(--teal-deeper); margin-bottom: .2rem; }
+    .team-card__role { font-size: .82rem; color: var(--teal-dark); font-weight: 600; letter-spacing: .03em; margin-bottom: .75rem; }
+    .team-card__bio { font-size: .9rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ── Patient Reviews ──────────────────────────── */
+    #reviews { background: var(--white); }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .review-card {
+      background: var(--teal-ice);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      border: 1.5px solid var(--border);
+      display: flex; flex-direction: column; gap: .75rem;
+    }
+    .review-card__stars { color: #F59E0B; font-size: 1.1rem; letter-spacing: .08em; }
+    .review-card__text { font-size: .9rem; color: var(--text); line-height: 1.65; font-style: italic; flex: 1; }
+    .review-card__author { font-size: .8rem; color: var(--text-muted); font-weight: 600; }
+    .reviews__cta { text-align: center; margin-top: 2rem; }
+
+    /* ── Languages / Accessibility ────────────────── */
+    .contact__extras {
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      display: flex; flex-wrap: wrap; gap: .6rem;
+    }
+    .badge {
+      background: var(--teal-ice); border: 1.5px solid var(--border);
+      border-radius: 20px; padding: .3rem .85rem;
+      font-size: .8rem; font-weight: 600; color: var(--teal-deeper);
+      display: inline-flex; align-items: center; gap: .35rem;
+    }
+
+    /* ── Extra responsive ─────────────────────────── */
+    @media (max-width: 900px) {
+      .steps          { grid-template-columns: 1fr; }
+      .insurance-grid { grid-template-columns: repeat(2, 1fr); }
+      .reviews-grid   { grid-template-columns: 1fr; }
+      .team-card      { flex-direction: column; }
+      .team-card__avatar { width: 72px; height: 72px; }
+    }
+    @media (max-width: 600px) {
+      .insurance-grid { grid-template-columns: repeat(2, 1fr); }
+    }
   </style>
 </head>
 <body>
+
+<!-- ── Alert banner ──────────────────────────────────────── -->
+<div id="alert-banner" class="alert-banner">
+  <span>💊 Minor ailments, prescription transfers &amp; same-day refills — walk in or <a href="#booking">book online</a></span>
+  <button class="alert-banner__close" aria-label="Dismiss" onclick="this.parentElement.style.display='none'">✕</button>
+</div>
 
 <!-- ── Nav ──────────────────────────────────────────────── -->
 <nav class="nav" id="nav">
@@ -497,7 +639,7 @@
     <ul class="nav__links" id="navLinks">
       <li><a href="#welcome">Home</a></li>
       <li><a href="#services">Services</a></li>
-      <li><a href="#shop">Shop</a></li>
+      <li><a href="#insurance">Insurance</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><a href="blog/index.html">Blog</a></li>
       <li><a href="#about">About</a></li>
@@ -560,6 +702,34 @@
       <div class="welcome__photo">
         <img src="storefront_front.jpg" alt="St. Clair Drug Mart storefront at 1203 St. Clair Ave W, Toronto" />
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── New Patients ───────────────────────────────────────── -->
+<section id="new-patients">
+  <div class="section__inner">
+    <h2 class="section__title">New to Our Pharmacy?</h2>
+    <p class="section__lead">Switching from Shoppers, Rexall, or another pharmacy is easier than you think — we handle everything.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step__num">1</div>
+        <h3>Transfer Your Prescription</h3>
+        <p>Use our online transfer form below, call us at <a href="tel:+14166548181" style="color:var(--teal-dark);">(416) 654-8181</a>, or just bring your medication bottle in. We contact your current pharmacy — you don't have to do a thing.</p>
+      </div>
+      <div class="step">
+        <div class="step__num">2</div>
+        <h3>We Set Up Your File</h3>
+        <p>Our pharmacist reviews your full medication list, checks for interactions, and sets up your profile. Most transfers are ready the same day, with no gap in your medications.</p>
+      </div>
+      <div class="step">
+        <div class="step__num">3</div>
+        <h3>Pick Up &amp; Meet Us</h3>
+        <p>Come in and meet your pharmacist in person, or choose free local delivery. No paperwork, no extra cost — just better, more personal care from your new neighbourhood pharmacy.</p>
+      </div>
+    </div>
+    <div class="steps__cta">
+      <a href="#booking" class="btn">Transfer My Prescription →</a>
     </div>
   </div>
 </section>
@@ -686,6 +856,121 @@
           <p>We'll remind you when refills are due — or request them online anytime.</p>
         </div>
       </div>
+      <div class="service-card">
+        <div class="service-card__icon">🔍</div>
+        <div class="service-card__body">
+          <h3>Drug Lookup &amp; Interactions</h3>
+          <p>Check drug interactions, dosing, and side effects using the trusted <a href="https://www.drugs.com/drug_interactions.html" target="_blank" rel="noopener" style="color:var(--teal-dark);font-weight:600;">Drugs.com checker</a> — or just ask your pharmacist.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Insurance ──────────────────────────────────────────── -->
+<section id="insurance">
+  <div class="section__inner">
+    <h2 class="section__title">Insurance &amp; Coverage</h2>
+    <p class="section__lead">We direct-bill most major insurance plans — no paperwork, no upfront payment in most cases.</p>
+    <div class="insurance-grid">
+      <div class="insurance-card">
+        <div class="insurance-card__abbr">ODB</div>
+        <div class="insurance-card__name">Ontario Drug Benefit</div>
+        <div class="insurance-card__desc">Seniors, social assistance, Trillium Drug Program</div>
+      </div>
+      <div class="insurance-card">
+        <div class="insurance-card__abbr">GSC</div>
+        <div class="insurance-card__name">Green Shield Canada</div>
+        <div class="insurance-card__desc">Employer group and individual plans</div>
+      </div>
+      <div class="insurance-card">
+        <div class="insurance-card__abbr">BC</div>
+        <div class="insurance-card__name">Blue Cross</div>
+        <div class="insurance-card__desc">Medavie Blue Cross individual and group plans</div>
+      </div>
+      <div class="insurance-card">
+        <div class="insurance-card__abbr">MAN</div>
+        <div class="insurance-card__name">Manulife</div>
+        <div class="insurance-card__desc">GroupFlex and individual benefit plans</div>
+      </div>
+      <div class="insurance-card">
+        <div class="insurance-card__abbr">SL</div>
+        <div class="insurance-card__name">Sun Life</div>
+        <div class="insurance-card__desc">Group and individual health plans</div>
+      </div>
+      <div class="insurance-card">
+        <div class="insurance-card__abbr">CL</div>
+        <div class="insurance-card__name">Canada Life</div>
+        <div class="insurance-card__desc">Group benefits (formerly Great-West Life)</div>
+      </div>
+      <div class="insurance-card">
+        <div class="insurance-card__abbr">DES</div>
+        <div class="insurance-card__name">Desjardins</div>
+        <div class="insurance-card__desc">Individual and group insurance plans</div>
+      </div>
+      <div class="insurance-card">
+        <div class="insurance-card__abbr">IAF</div>
+        <div class="insurance-card__name">Industrial Alliance</div>
+        <div class="insurance-card__desc">Group and individual health benefits</div>
+      </div>
+    </div>
+    <p class="insurance__note">Not sure if your plan is covered? <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us</a> — we'll check on the spot.</p>
+  </div>
+</section>
+
+<!-- ── Team ───────────────────────────────────────────────── -->
+<section id="team">
+  <div class="section__inner">
+    <h2 class="section__title">Meet Your Pharmacist</h2>
+    <p class="section__lead">Independent pharmacy means a real relationship with the person filling your prescription — not a rotating staff member you've never met.</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-card__avatar">
+          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="40" cy="29" r="17" fill="rgba(255,255,255,0.35)"/>
+            <ellipse cx="40" cy="68" rx="25" ry="16" fill="rgba(255,255,255,0.25)"/>
+          </svg>
+        </div>
+        <div class="team-card__body">
+          <p class="team-card__name">Your Pharmacist <!-- UPDATE: add name here --></p>
+          <p class="team-card__role">Registered Pharmacist &nbsp;·&nbsp; Owner</p>
+          <p class="team-card__bio">
+            A licensed pharmacist dedicated to the St. Clair West community. Specializing in
+            medication management, minor ailment prescribing, and personalized patient care.
+            Committed to making every visit feel like a conversation with someone who actually
+            knows you — because at an independent pharmacy, that's exactly what it is.
+          </p>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:1.5rem;font-size:.875rem;color:var(--text-muted);">Questions about your medications? We're always happy to chat — <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">call us</a> or stop in.</p>
+  </div>
+</section>
+
+<!-- ── Reviews ────────────────────────────────────────────── -->
+<section id="reviews">
+  <div class="section__inner">
+    <h2 class="section__title">What Patients Say</h2>
+    <p class="section__lead">Trusted by the St. Clair West community.</p>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-card__stars">★★★★★</div>
+        <p class="review-card__text">"The pharmacist actually takes time to explain your medication — you never feel rushed. It's a completely different experience from a big chain pharmacy."</p>
+        <p class="review-card__author">— Google Review</p>
+      </div>
+      <div class="review-card">
+        <div class="review-card__stars">★★★★★</div>
+        <p class="review-card__text">"Fast, friendly, and my prescriptions are always ready. The online refill system is so convenient. Highly recommend to anyone in the neighbourhood."</p>
+        <p class="review-card__author">— Google Review</p>
+      </div>
+      <div class="review-card">
+        <div class="review-card__stars">★★★★★</div>
+        <p class="review-card__text">"Switched from Shoppers and I'm so glad I did. They know my name, answer all my questions, and free delivery is a huge bonus. Exactly what a local pharmacy should be."</p>
+        <p class="review-card__author">— Google Review</p>
+      </div>
+    </div>
+    <div class="reviews__cta">
+      <a href="https://www.google.com/search?q=St+Clair+Drug+Mart+Pharmacy+Toronto+reviews" target="_blank" rel="noopener" class="btn btn--outline">⭐ Leave Us a Google Review</a>
     </div>
   </div>
 </section>
@@ -753,6 +1038,13 @@
         <div class="contact__actions">
           <a href="tel:+14166548181" class="btn">📞 Call Us</a>
           <a href="mailto:stclairdrugmart@gmail.com" class="btn btn--outline">✉️ Email Us</a>
+        </div>
+        <div class="contact__extras">
+          <span class="badge">🌐 English</span>
+          <span class="badge">♿ Accessible entrance</span>
+          <span class="badge">🏳️ LGBTQ+ friendly</span>
+          <span class="badge">🚗 Street parking</span>
+          <span class="badge">🚇 Near St. Clair West TTC</span>
         </div>
       </div>
       <div class="contact__map">
