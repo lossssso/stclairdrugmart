@@ -688,7 +688,7 @@
       <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
     </a>
     <a href="https://www.instagram.com/stclairdrugmart/" target="_blank" rel="noopener" aria-label="Instagram">
-      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="white" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="2"/></svg>
+      <svg viewBox="0 0 24 24"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="white" stroke-width="1.8"/><circle cx="12" cy="12" r="4.4" fill="none" stroke="white" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.3" fill="white" stroke="none"/></svg>
     </a>
     <a href="https://ca.linkedin.com/company/stclairdrugmart" target="_blank" rel="noopener" aria-label="LinkedIn">
       <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
@@ -757,7 +757,7 @@
       </div>
     </div>
     <div class="steps__cta">
-      <a href="#booking" class="btn">Transfer My Prescription →</a>
+      <a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667">Transfer My Prescription →</a>
     </div>
   </div>
 </section>
@@ -776,8 +776,8 @@
       </button>
       <button class="pa-card" data-url="https://app.pharmassess.ca/self-assessment/306667">
         <div class="pa-card__icon">🩺</div>
-        <span class="pa-card__label">Minor Ailment</span>
-        <span class="pa-card__desc">Get assessed and prescribed for minor conditions</span>
+        <span class="pa-card__label">Common Conditions</span>
+        <span class="pa-card__desc">Get assessed &amp; prescribed for common &amp; minor ailments</span>
       </button>
       <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667">
         <div class="pa-card__icon">📋</div>
@@ -858,8 +858,8 @@
       </a>
       <a class="service-card" href="https://app.pharmassess.ca/self-assessment/306667" target="_blank" rel="noopener">
         <div class="service-card__body">
-          <h3>Minor Ailment Prescribing</h3>
-          <p>Our pharmacist can assess and prescribe for 19 common conditions — no doctor needed.</p>
+          <h3>Common Conditions</h3>
+          <p>Our pharmacist can assess &amp; prescribe for common &amp; minor ailments — 28 conditions as of July 2026, no doctor needed.</p>
         </div>
         <span class="service-card__arrow">→</span>
       </a>
@@ -1130,7 +1130,7 @@
       <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
     </a>
     <a href="https://www.instagram.com/stclairdrugmart/" target="_blank" rel="noopener" aria-label="Instagram">
-      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="rgba(255,255,255,.75)" stroke-width="2"/></svg>
+      <svg viewBox="0 0 24 24"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="1.8"/><circle cx="12" cy="12" r="4.4" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.3" fill="rgba(255,255,255,.75)" stroke="none"/></svg>
     </a>
     <a href="https://ca.linkedin.com/company/stclairdrugmart" target="_blank" rel="noopener" aria-label="LinkedIn">
       <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
@@ -1157,6 +1157,14 @@
       document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
       this.classList.add('active');
       paIframe.src = this.dataset.url;
+    });
+  });
+
+  // Buttons elsewhere that jump to booking and pre-select a service tab
+  document.querySelectorAll('.js-pa-select').forEach(el => {
+    el.addEventListener('click', function() {
+      const target = document.querySelector('.pa-card[data-url="' + this.dataset.url + '"]');
+      if (target) target.click();   // switches iframe + active state; href="#booking" handles the scroll
     });
   });
 </script>
