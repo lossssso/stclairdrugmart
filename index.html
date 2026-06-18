@@ -348,7 +348,7 @@
     .pa-iframe-wrap iframe {
       display: block;
       width: 100%;
-      height: 700px;
+      height: 1500px;
       border: none;
       background: var(--white);
     }
@@ -402,8 +402,8 @@
     }
     .contact__row__body a:hover { color: var(--teal-dark); }
     .hours__table { width: 100%; border-collapse: collapse; margin-top: .5rem; }
-    .hours__table td { padding: .3rem 0; font-size: .875rem; color: var(--text-muted); }
-    .hours__table td:first-child { font-weight: 500; color: var(--text); width: 50%; }
+    .hours__table td { padding: .3rem 0; font-size: .875rem; color: var(--text-muted); white-space: nowrap; }
+    .hours__table td:first-child { font-weight: 500; color: var(--text); width: 55%; }
     .contact__actions { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1.5rem; }
     .contact__map {
       border-radius: var(--radius);
@@ -635,14 +635,52 @@
 
     /* ── Drug Interaction Checker ─────────────────── */
     #drug-checker { background: var(--white); }
+    .dc-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      align-items: start;
+    }
     .dc-card {
       background: var(--white);
       border-radius: var(--radius);
       border: 1.5px solid var(--border);
       box-shadow: var(--shadow);
       padding: 2rem;
-      margin-top: 2rem;
-      max-width: 760px;
+    }
+    .dc-summary {
+      background: var(--teal-deeper);
+      color: var(--white);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.5rem;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 72px;
+    }
+    .dc-summary__icon { font-size: 2.2rem; margin-bottom: .6rem; }
+    .dc-summary__title { font-size: 1.1rem; font-weight: 700; margin-bottom: .6rem; }
+    .dc-summary__hint { font-size: .85rem; opacity: .75; line-height: 1.6; }
+    .dc-summary__body { font-size: .88rem; line-height: 1.65; }
+    .dc-summary__status {
+      border-radius: 8px; padding: .85rem 1rem; margin-bottom: .85rem;
+      font-size: .88rem; font-weight: 600; line-height: 1.5;
+    }
+    .dc-summary__status--ok { background: rgba(255,255,255,.12); }
+    .dc-summary__status--warn { background: rgba(232,163,61,.25); border-left: 3px solid #E8A33D; }
+    .dc-summary__detail { font-size: .82rem; opacity: .85; margin-bottom: .6rem; line-height: 1.6; }
+    .dc-summary__cta {
+      margin-top: 1.25rem; padding-top: 1.25rem;
+      border-top: 1px solid rgba(255,255,255,.2);
+      font-size: .85rem; line-height: 1.6;
+    }
+    .dc-summary__cta .btn { margin-top: .75rem; width: 100%; text-align: center; background: var(--teal-bright); }
+    .dc-summary__cta .btn:hover { background: var(--teal-mid); }
+    .dc-summary .dc-pharmacist { color: rgba(255,255,255,.8); font-size: .82rem; border-top: 1px solid rgba(255,255,255,.15); }
+    .dc-summary .dc-pharmacist a { color: rgba(255,255,255,.9); }
+    @media (max-width: 900px) {
+      .dc-layout { grid-template-columns: 1fr; }
+      .dc-summary { position: static; }
     }
     .dc-input-row { display: flex; gap: .6rem; align-items: stretch; }
     .dc-autocomplete { position: relative; flex: 1; }
@@ -742,7 +780,7 @@
 
 <!-- ── Alert banner ──────────────────────────────────────── -->
 <div id="alert-banner" class="alert-banner">
-  <span>🩺 💊 Our pharmacist can assess, prescribe and dispense medications for many common conditions — walk in or <a href="#booking">book online</a></span>
+  <span>🩺 💊 Our pharmacists can assess, prescribe and dispense medications for many common conditions — walk in or <a href="#booking">book online</a></span>
   <button class="alert-banner__close" aria-label="Dismiss" onclick="this.parentElement.style.display='none'">✕</button>
 </div>
 
@@ -830,7 +868,7 @@
 <section id="new-patients">
   <div class="section__inner">
     <h2 class="section__title">New to Our Pharmacy?</h2>
-    <p class="section__lead">Switching from Shoppers, Rexall, or another pharmacy is easier than you think — we handle everything.</p>
+    <p class="section__lead">Switching from another pharmacy or chain is easier than you think — we handle everything.</p>
     <div class="steps">
       <div class="step">
         <div class="step__num">1</div>
@@ -993,38 +1031,51 @@
     <h2 class="section__title">Drug Interaction Checker</h2>
     <p class="section__lead">Add two or more medications to check for possible interactions — right here, no sign-up needed.</p>
 
-    <div class="dc-card">
-      <div class="dc-input-row">
-        <div class="dc-autocomplete">
-          <input type="text" id="dc-input" class="dc-input" placeholder="Type a medication name…" autocomplete="off" aria-label="Medication name" />
-          <ul id="dc-suggestions" class="dc-suggestions" role="listbox"></ul>
+    <div class="dc-layout">
+      <!-- left: input + detailed results -->
+      <div class="dc-card">
+        <div class="dc-input-row">
+          <div class="dc-autocomplete">
+            <input type="text" id="dc-input" class="dc-input" placeholder="Type a medication name…" autocomplete="off" aria-label="Medication name" />
+            <ul id="dc-suggestions" class="dc-suggestions" role="listbox"></ul>
+          </div>
+          <button type="button" id="dc-add" class="btn">Add</button>
         </div>
-        <button type="button" id="dc-add" class="btn">Add</button>
+
+        <div id="dc-chips" class="dc-chips" aria-live="polite"></div>
+
+        <div class="dc-actions">
+          <button type="button" id="dc-check" class="btn" disabled>Check Interactions →</button>
+          <button type="button" id="dc-clear" class="btn btn--outline">Clear</button>
+        </div>
+
+        <div id="dc-results" class="dc-results"></div>
+
+        <p class="dc-disclaimer">
+          ⚠️ This tool is for general information only and may not capture every interaction.
+          Always confirm with our pharmacists before starting, stopping, or combining medications.
+        </p>
+
+        <div class="dc-credit">
+          <span>For a complete report, visit</span>
+          <a href="https://www.drugs.com/drug_interactions.html" target="_blank" rel="noopener" class="dc-credit__logo">Drugs<span>.com</span></a>
+          <span class="dc-credit__data">· In-page data: openFDA (U.S. FDA)</span>
+        </div>
       </div>
 
-      <div id="dc-chips" class="dc-chips" aria-live="polite"></div>
-
-      <div class="dc-actions">
-        <button type="button" id="dc-check" class="btn" disabled>Check Interactions →</button>
-        <button type="button" id="dc-clear" class="btn btn--outline">Clear</button>
-      </div>
-
-      <div id="dc-results" class="dc-results"></div>
-
-      <p class="dc-disclaimer">
-        ⚠️ This tool is for general information only and may not capture every interaction.
-        Always confirm with your pharmacist before starting, stopping, or combining medications.
-      </p>
-
-      <div class="dc-credit">
-        <span>For a complete report, visit</span>
-        <a href="https://www.drugs.com/drug_interactions.html" target="_blank" rel="noopener" class="dc-credit__logo">Drugs<span>.com</span></a>
-        <span class="dc-credit__data">· In-page data: openFDA (U.S. FDA)</span>
-      </div>
-
-      <div class="dc-pharmacist">
-        Not sure about a combination? <strong>Ask Elizabeth, our pharmacist</strong> —
-        <a href="tel:+14166548181">call (416) 654-8181</a>.
+      <!-- right: summary takeaway box -->
+      <div class="dc-summary" id="dc-summary">
+        <div class="dc-summary__icon">💊</div>
+        <h3 class="dc-summary__title">Your Summary</h3>
+        <p class="dc-summary__hint">Add your medications on the left, then click <strong>Check Interactions</strong> to see a summary here.</p>
+        <div id="dc-summary-body" class="dc-summary__body"></div>
+        <div class="dc-summary__cta" id="dc-summary-cta" style="display:none">
+          <p>We recommend booking a <strong>Medication Review</strong> with our pharmacists — it's free and covered by OHIP.</p>
+          <a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/patient/meds/306667">Book a Medication Review →</a>
+          <div class="dc-pharmacist" style="margin-top:.85rem;">
+            Or call us: <a href="tel:+14166548181">(416) 654-8181</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1110,17 +1161,17 @@
       <div class="review-card">
         <div class="review-card__stars">★★★★★</div>
         <p class="review-card__text">"The pharmacist actually takes time to explain your medication — you never feel rushed. It's a completely different experience from a big chain pharmacy."</p>
-        <p class="review-card__author">— Google Review</p>
+        <p class="review-card__author">— Google Review · St. Clair Drug Mart Pharmacy</p>
       </div>
       <div class="review-card">
         <div class="review-card__stars">★★★★★</div>
         <p class="review-card__text">"Fast, friendly, and my prescriptions are always ready. The online refill system is so convenient. Highly recommend to anyone in the neighbourhood."</p>
-        <p class="review-card__author">— Google Review</p>
+        <p class="review-card__author">— Google Review · St. Clair Drug Mart Pharmacy</p>
       </div>
       <div class="review-card">
         <div class="review-card__stars">★★★★★</div>
-        <p class="review-card__text">"Switched from Shoppers and I'm so glad I did. They know my name, answer all my questions, and free delivery is a huge bonus. Exactly what a local pharmacy should be."</p>
-        <p class="review-card__author">— Google Review</p>
+        <p class="review-card__text">"Switched from a chain pharmacy and I'm so glad I did. They know my name, answer all my questions, and the free delivery is a huge bonus. Exactly what a local pharmacy should be."</p>
+        <p class="review-card__author">— Google Review · St. Clair Drug Mart Pharmacy</p>
       </div>
     </div>
     <div class="reviews__cta">
@@ -1461,11 +1512,11 @@
       }
       if (flags.length) {
         html += '<div class="dc-result dc-result--flag"><div class="dc-result__title">⚠️ Possible interaction(s) found</div>' +
-          '<div class="dc-result__text">FDA labelling mentions these combinations — please review with your pharmacist:<br>' +
+          '<div class="dc-result__text">FDA labelling mentions these combinations — please review with our pharmacists:<br>' +
           flags.map(f => '• ' + escapeHtml(f)).join('<br>') + '</div></div>';
       } else {
         html += '<div class="dc-result"><div class="dc-result__title">No interactions flagged in FDA labelling</div>' +
-          '<div class="dc-result__text">This does not guarantee these medications are safe to combine. Always confirm with your pharmacist.</div></div>';
+          '<div class="dc-result__text">This does not guarantee these medications are safe to combine. Always confirm with our pharmacists.</div></div>';
       }
       names.forEach(n => {
         const t = map[n];
@@ -1476,10 +1527,39 @@
             '<details><summary>Full FDA interaction text</summary>' + escapeHtml(t) + '</details></div></div>';
         } else {
           html += '<div class="dc-result"><div class="dc-result__title">' + escapeHtml(cap(n)) + '</div>' +
-            '<div class="dc-result__text">No FDA interaction text found for this entry — ask your pharmacist about this medication.</div></div>';
+            '<div class="dc-result__text">No FDA interaction text found for this entry — ask our pharmacists about this medication.</div></div>';
         }
       });
       results.innerHTML = html;
+      renderSummary(names, flags, map);
+    }
+
+    function renderSummary(names, flags, map) {
+      const summaryBody = document.getElementById('dc-summary-body');
+      const summaryCta = document.getElementById('dc-summary-cta');
+      const summaryHint = document.querySelector('.dc-summary__hint');
+      if (!summaryBody) return;
+      summaryHint.style.display = 'none';
+      let html = '';
+      if (flags.length) {
+        html += '<div class="dc-summary__status dc-summary__status--warn">⚠️ ' + flags.length + ' possible interaction' + (flags.length > 1 ? 's' : '') + ' detected</div>';
+        html += '<div class="dc-summary__detail">Your medications <strong>' + names.map(n => escapeHtml(cap(n))).join(' and ') + '</strong> may interact based on FDA labelling data.<br><br>';
+        flags.forEach(f => { html += '• ' + escapeHtml(f) + '<br>'; });
+        html += '<br>This combination may affect how your medications work or increase the risk of side effects. A Medication Review with our pharmacists is recommended.</div>';
+        summaryCta.style.display = 'block';
+      } else {
+        html += '<div class="dc-summary__status dc-summary__status--ok">✅ No interactions found in FDA data</div>';
+        html += '<div class="dc-summary__detail">Based on available FDA labelling, no interactions between <strong>' + names.map(n => escapeHtml(cap(n))).join(' and ') + '</strong> were flagged.<br><br>This is not a guarantee of safety. Always confirm with our pharmacists, especially if you are on multiple medications.</div>';
+        summaryCta.style.display = 'none';
+      }
+      summaryBody.innerHTML = html;
+      // wire up the CTA button inside summary since it was just rendered
+      summaryBody.closest('.dc-summary').querySelectorAll('.js-pa-select').forEach(el => {
+        el.addEventListener('click', function() {
+          const target = document.querySelector('.pa-card[data-url="' + this.dataset.url + '"]');
+          if (target) target.click();
+        });
+      });
     }
   })();
 </script>
