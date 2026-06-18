@@ -56,21 +56,21 @@
     /* ── Reset & base ─────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      /* ── Brand palette — exact logo turquoise ── */
-      --teal-ice:    #E0F5F3;   /* near-white page background          */
-      --teal-pale:   #BDEAF2;   /* horizontal pill arm — ice aqua      */
-      --teal-bright: #2DC5BB;   /* main pill body — true turquoise     */
-      --teal-mid:    #22AAA0;   /* hover / mid shade                   */
-      --teal-dark:   #0D7A78;   /* letter outlines — dark teal         */
-      --teal-deeper: #0A5450;   /* nav, footer — deepest               */
+      /* ── Brand palette — exact brand colors ── */
+      --teal-ice:    #d7fbfc;   /* page background, light card fills   */
+      --teal-pale:   #d7fbfc;   /* same                                */
+      --teal-bright: #21a1a8;   /* main accent — buttons, highlights   */
+      --teal-mid:    #5cb9bc;   /* lighter mid — secondary accents     */
+      --teal-dark:   #00737c;   /* dark teal — nav, footer, CTAs       */
+      --teal-deeper: #00737c;   /* same (brand has 4 colors)           */
       /* ── Aliases used throughout ── */
       --teal-light:  var(--teal-ice);
       --white:       #ffffff;
-      --text:        #0F2E2C;
-      --text-muted:  #3D6160;
-      --border:      #A8DDD8;
+      --text:        #0d2d2e;
+      --text-muted:  #3a6062;
+      --border:      #b8e8ea;
       --radius:      10px;
-      --shadow:      0 2px 12px rgba(13,122,120,.10);
+      --shadow:      0 2px 12px rgba(0,115,124,.10);
     }
     html { scroll-behavior: smooth; }
     body {
