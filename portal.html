@@ -48,9 +48,13 @@
       padding: 0 1.5rem; height: 56px;
     }
     .nav__brand {
-      font-weight: 700; font-size: .82rem;
-      color: var(--white); letter-spacing: .01em; white-space: nowrap;
+      display: flex; align-items: center; gap: .55rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.15rem; font-weight: 400;
+      color: var(--white); letter-spacing: .06em; white-space: nowrap;
+      text-decoration: none;
     }
+    .nav__brand__logo { height: 34px; width: auto; display: block; }
     .nav__links { display: flex; list-style: none; gap: .25rem; }
     .nav__links a {
       color: rgba(255,255,255,.85); font-size: .875rem; font-weight: 500;
@@ -104,13 +108,13 @@
       border: 2px solid var(--border);
       box-shadow: var(--shadow);
       background: var(--white);
-      min-height: 780px;
+      min-height: 1400px;
     }
     .portal-frame iframe {
       display: block;
       width: 100%;
       height: 100%;
-      min-height: 780px;
+      min-height: 1400px;
       border: none;
     }
 
@@ -137,7 +141,7 @@
       .nav__links { display: none; position: absolute; top: 56px; left: 0; right: 0; background: var(--teal-deeper); flex-direction: column; padding: .5rem 1rem 1rem; gap: .1rem; }
       .nav__links.open { display: flex; }
       .nav__toggle { display: block; }
-      .portal-frame, .portal-frame iframe { min-height: 600px; }
+      .portal-frame, .portal-frame iframe { min-height: 1200px; }
     }
   </style>
 </head>
@@ -145,14 +149,17 @@
 
 <nav class="nav">
   <div class="nav__inner">
-    <a href="index.html" class="nav__brand">St. Clair Drug Mart Pharmacy</a>
+    <a href="index.html" class="nav__brand">
+      <img src="logo.png" alt="" class="nav__brand__logo" />
+      <span>St. Clair Drug Mart Pharmacy</span>
+    </a>
     <button class="nav__toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav__links">
       <li><a href="index.html#welcome">Home</a></li>
       <li><a href="index.html#services">Services</a></li>
-      <li><a href="index.html#insurance">Insurance</a></li>
+      <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a></li>
       <li><a href="index.html#contact">Contact</a></li>
       <li><a href="blog/index.html">Blog</a></li>
       <li><a href="index.html#about">About</a></li>
@@ -181,7 +188,7 @@
   <div class="footer__links">
     <a href="index.html#welcome">Home</a>
     <a href="index.html#services">Services</a>
-    <a href="index.html#insurance">Insurance</a>
+    <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
     <a href="index.html#contact">Contact</a>
     <a href="index.html#about">About</a>
     <a href="blog/index.html">Blog</a>
