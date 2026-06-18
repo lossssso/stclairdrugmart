@@ -100,11 +100,21 @@
       height: 56px;
     }
     .nav__brand {
-      font-weight: 700;
-      font-size: .82rem;
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 400;
       color: var(--white);
-      letter-spacing: .01em;
+      letter-spacing: .06em;
       white-space: nowrap;
+      text-decoration: none;
+    }
+    .nav__brand__logo {
+      height: 34px;
+      width: auto;
+      display: block;
     }
     .nav__links {
       display: flex;
@@ -647,7 +657,10 @@
 <!-- ── Nav ──────────────────────────────────────────────── -->
 <nav class="nav" id="nav">
   <div class="nav__inner">
-    <span class="nav__brand">St. Clair Drug Mart Pharmacy</span>
+    <a href="#home" class="nav__brand">
+      <img src="logo.png" alt="" class="nav__brand__logo" />
+      <span>St. Clair Drug Mart Pharmacy</span>
+    </a>
     <button class="nav__toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
