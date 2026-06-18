@@ -619,6 +619,51 @@
     .review-card__author { font-size: .8rem; color: var(--text-muted); font-weight: 600; }
     .reviews__cta { text-align: center; margin-top: 2rem; }
 
+    /* ── Reviews carousel ─────────────────────────── */
+    .reviews-rating {
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      margin-top: 1.5rem; font-size: .9rem; color: var(--text-muted);
+    }
+    .reviews-rating strong { color: var(--teal-deeper); font-size: 1.05rem; }
+    .reviews-rating .stars { color: #F59E0B; font-size: 1.1rem; letter-spacing: .06em; }
+    .reviews-carousel { position: relative; max-width: 720px; margin: 1.5rem auto 0; }
+    .rc-viewport { position: relative; min-height: 230px; }
+    .rc-slide {
+      position: absolute; inset: 0; opacity: 0; visibility: hidden;
+      transition: opacity .5s ease;
+      background: var(--teal-ice); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 2.25rem 2.5rem;
+      display: flex; flex-direction: column; justify-content: center; gap: 1rem;
+      text-align: center;
+    }
+    .rc-slide.active { opacity: 1; visibility: visible; }
+    .rc-stars { color: #F59E0B; font-size: 1.2rem; letter-spacing: .1em; }
+    .rc-text { font-size: 1.08rem; font-style: italic; line-height: 1.7; color: var(--text); }
+    .rc-author { font-size: .85rem; font-weight: 700; color: var(--teal-deeper); }
+    .rc-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: var(--white); border: 1.5px solid var(--border);
+      width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+      font-size: 1.4rem; line-height: 1; color: var(--teal-dark); z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow); transition: background .15s, border-color .15s;
+    }
+    .rc-arrow:hover { background: var(--teal-ice); border-color: var(--teal-bright); }
+    .rc-arrow--prev { left: -20px; }
+    .rc-arrow--next { right: -20px; }
+    .rc-dots { display: flex; justify-content: center; gap: .5rem; margin-top: 1.25rem; }
+    .rc-dot {
+      width: 9px; height: 9px; border-radius: 50%; border: none; cursor: pointer;
+      background: var(--border); transition: background .2s, transform .2s; padding: 0;
+    }
+    .rc-dot.active { background: var(--teal-bright); transform: scale(1.3); }
+    @media (max-width: 600px) {
+      .rc-arrow--prev { left: -6px; } .rc-arrow--next { right: -6px; }
+      .rc-slide { padding: 1.75rem 1.4rem; }
+      .rc-viewport { min-height: 300px; }
+      .rc-text { font-size: 1rem; }
+    }
+
     /* ── Languages / Accessibility ────────────────── */
     .contact__extras {
       margin-top: 1.25rem;
@@ -1157,23 +1202,21 @@
   <div class="section__inner">
     <h2 class="section__title">What Patients Say</h2>
     <p class="section__lead">Trusted by the St. Clair West community.</p>
-    <div class="reviews-grid">
-      <div class="review-card">
-        <div class="review-card__stars">★★★★★</div>
-        <p class="review-card__text">"The pharmacist actually takes time to explain your medication — you never feel rushed. It's a completely different experience from a big chain pharmacy."</p>
-        <p class="review-card__author">— Google Review · St. Clair Drug Mart Pharmacy</p>
-      </div>
-      <div class="review-card">
-        <div class="review-card__stars">★★★★★</div>
-        <p class="review-card__text">"Fast, friendly, and my prescriptions are always ready. The online refill system is so convenient. Highly recommend to anyone in the neighbourhood."</p>
-        <p class="review-card__author">— Google Review · St. Clair Drug Mart Pharmacy</p>
-      </div>
-      <div class="review-card">
-        <div class="review-card__stars">★★★★★</div>
-        <p class="review-card__text">"Switched from a chain pharmacy and I'm so glad I did. They know my name, answer all my questions, and the free delivery is a huge bonus. Exactly what a local pharmacy should be."</p>
-        <p class="review-card__author">— Google Review · St. Clair Drug Mart Pharmacy</p>
-      </div>
+
+    <div class="reviews-rating">
+      <span class="stars">★★★★★</span>
+      <span><strong>4.9</strong> out of 5 on Google</span>
     </div>
+
+    <div class="reviews-carousel">
+      <button class="rc-arrow rc-arrow--prev" aria-label="Previous review">‹</button>
+      <div class="rc-viewport">
+        <div class="rc-track" id="rc-track"><!-- slides injected by JS --></div>
+      </div>
+      <button class="rc-arrow rc-arrow--next" aria-label="Next review">›</button>
+    </div>
+    <div class="rc-dots" id="rc-dots"></div>
+
     <div class="reviews__cta">
       <a href="https://www.google.com/search?q=St+Clair+Drug+Mart+Pharmacy+Toronto+reviews" target="_blank" rel="noopener" class="btn btn--outline">⭐ Leave Us a Google Review</a>
     </div>
@@ -1379,6 +1422,60 @@
       if (target) target.click();   // switches iframe + active state; href="#booking" handles the scroll
     });
   });
+
+  // ── Patient reviews carousel ──
+  // To update: replace the text/author below with your exact Google reviews.
+  (function () {
+    const track = document.getElementById('rc-track');
+    if (!track) return;
+    const reviews = [
+      { stars: 5, text: "The pharmacist actually takes the time to explain everything and never makes you feel rushed. A completely different experience from a big chain.", author: "— Google review" },
+      { stars: 5, text: "The staff here is wonderful and always very helpful. They know me by name and genuinely care — exactly what a neighbourhood pharmacy should be.", author: "— Google review" },
+      { stars: 5, text: "Honestly the nicest staff and best service in the city. Always willing to help, no matter how small the question.", author: "— Google review" },
+      { stars: 5, text: "Quick, friendly, and my prescriptions are always ready. The free local delivery has been a real lifesaver.", author: "— Google review" },
+      { stars: 5, text: "I was assessed and prescribed for an infection without waiting days to see a doctor. So convenient and professional.", author: "— Google review" },
+      { stars: 5, text: "Switched from a chain pharmacy and I'm so glad I did. They speak my language and treat me like family.", author: "— Google review" }
+    ];
+    const dotsWrap = document.getElementById('rc-dots');
+    let idx = 0, timer;
+
+    reviews.forEach((r, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'rc-slide' + (i === 0 ? ' active' : '');
+      const stars = document.createElement('div');
+      stars.className = 'rc-stars';
+      stars.textContent = '★'.repeat(r.stars);
+      const text = document.createElement('p');
+      text.className = 'rc-text';
+      text.textContent = '“' + r.text + '”';
+      const author = document.createElement('p');
+      author.className = 'rc-author';
+      author.textContent = r.author;
+      slide.appendChild(stars); slide.appendChild(text); slide.appendChild(author);
+      track.appendChild(slide);
+
+      const dot = document.createElement('button');
+      dot.className = 'rc-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Show review ' + (i + 1));
+      dot.addEventListener('click', () => go(i));
+      dotsWrap.appendChild(dot);
+    });
+
+    const slides = track.querySelectorAll('.rc-slide');
+    const dots = dotsWrap.querySelectorAll('.rc-dot');
+
+    function go(n) {
+      slides[idx].classList.remove('active'); dots[idx].classList.remove('active');
+      idx = (n + slides.length) % slides.length;
+      slides[idx].classList.add('active'); dots[idx].classList.add('active');
+      restart();
+    }
+    function restart() { clearInterval(timer); timer = setInterval(() => go(idx + 1), 5500); }
+
+    document.querySelector('.rc-arrow--prev').addEventListener('click', () => go(idx - 1));
+    document.querySelector('.rc-arrow--next').addEventListener('click', () => go(idx + 1));
+    restart();
+  })();
 
   // ── Drug Interaction Checker ──
   (function () {
