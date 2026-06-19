@@ -365,10 +365,31 @@
     #booking { background: var(--teal-light); }
     .pa-cards {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
       gap: .75rem;
       margin-top: 2rem;
-      margin-bottom: 2.5rem;
+    }
+    .pa-cards--primary {
+      grid-template-columns: 1fr 1fr;
+      margin-bottom: 0;
+    }
+    .pa-cards--secondary {
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: .75rem;
+      margin-bottom: 2rem;
+    }
+    .pa-conditions-arrow {
+      display: inline-block;
+      font-style: normal;
+      transition: transform .2s;
+      font-size: .85em;
+    }
+    .pa-card.conditions-open .pa-conditions-arrow { transform: rotate(180deg); }
+    .services-within__title {
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-size: 1.3rem; font-weight: 900;
+      text-transform: uppercase; letter-spacing: .07em;
+      color: var(--teal-deeper);
+      margin: 2.5rem 0 .75rem;
     }
     .pa-card {
       background: var(--white);
@@ -551,7 +572,7 @@
 
     /* ── Responsive ───────────────────────────────────── */
     @media (max-width: 900px) {
-      .pa-cards { grid-template-columns: repeat(2, 1fr); }
+      .pa-cards--secondary { grid-template-columns: repeat(2, 1fr); }
       .gallery  { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
@@ -564,11 +585,11 @@
       .services__grid { grid-template-columns: 1fr 1fr; }
       .services__grid .service-card:last-child { grid-column: 1 / -1; max-width: 50%; margin: 0 auto; }
       .welcome__photo { order: -1; }
-      .pa-cards { grid-template-columns: 1fr 1fr; }
       .gallery  { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 480px) {
-      .pa-cards { grid-template-columns: 1fr; }
+      .pa-cards--primary   { grid-template-columns: 1fr; }
+      .pa-cards--secondary { grid-template-columns: 1fr 1fr; }
     }
 
     /* ── Alert banner ─────────────────────────────── */
@@ -986,9 +1007,9 @@
   var launch = new Date('2026-07-01');
   if (now < launch) {
     var days = Math.ceil((launch - now) / 86400000);
-    el.innerHTML = '🎉 <strong>July 1st (' + days + ' days away):</strong> We\'re expanding to <strong>28 minor ailments</strong> — pharmacist prescribing, no referral needed! &nbsp;<a href="#services">See all conditions →</a>';
+    el.innerHTML = '🎉 <strong>July 1st (' + days + ' days away):</strong> We\'re expanding to <strong>28 minor ailments</strong> — pharmacist prescribing, no referral needed! &nbsp;<a href="#booking">See all conditions →</a>';
   } else {
-    el.innerHTML = '✅ <strong>New:</strong> Our pharmacist can now assess &amp; prescribe for <strong>28 minor ailments</strong> — no doctor\'s referral needed. &nbsp;<a href="#services">Start your assessment →</a>';
+    el.innerHTML = '✅ <strong>New:</strong> Our pharmacist can now assess &amp; prescribe for <strong>28 minor ailments</strong> — no doctor\'s referral needed. &nbsp;<a href="#booking">Start your assessment →</a>';
   }
 })();
 </script>
@@ -1005,7 +1026,7 @@
     </button>
     <ul class="nav__links" id="navLinks">
       <li><a href="#welcome">Home</a></li>
-      <li><a href="#services">Services</a></li>
+      <li><a href="#booking">Services</a></li>
       <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><a href="blog/index.html">Blog</a></li>
@@ -1063,7 +1084,7 @@
         </p>
         <div style="margin-top:1.5rem; display:flex; gap:.75rem; flex-wrap:wrap;">
           <a href="#booking" class="btn">Book an Appointment</a>
-          <a href="#services" class="btn btn--outline">Our Services</a>
+          <a href="#booking" class="btn btn--outline">Our Services</a>
         </div>
       </div>
       <div class="welcome__photo">
@@ -1133,39 +1154,80 @@
   </div>
 </section>
 
-<!-- ── Booking ────────────────────────────────────────────── -->
+<!-- ── Services & Booking (merged) ───────────────────────── -->
 <section id="booking">
   <div class="section__inner">
-    <h2 class="section__title">Book Online &amp; Patient Services</h2>
-    <p class="section__lead">Select a service — the form loads right here, no new window needed.</p>
+    <h2 class="section__title">Services &amp; Book Online</h2>
+    <p class="section__lead">Select a service — everything loads right here, no new window needed.</p>
 
-    <div class="pa-cards">
+    <!-- Row 1: primary booking actions -->
+    <div class="pa-cards pa-cards--primary">
       <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1900">
         <div class="pa-card__icon">📅</div>
         <span class="pa-card__label">Book Appointment</span>
         <span class="pa-card__desc">Schedule a vaccine, consultation, or check-up</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1900">
+      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1900">
         <div class="pa-card__icon">🩺</div>
-        <span class="pa-card__label">Common Conditions</span>
-        <span class="pa-card__desc">Get assessed &amp; prescribed for common &amp; minor ailments</span>
+        <span class="pa-card__label">Common Conditions &nbsp;<span class="pa-conditions-arrow">▼</span></span>
+        <span class="pa-card__desc">Pharmacist prescribing for 28 minor ailments — no referral needed</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="720">
+    </div>
+
+    <!-- Conditions dropdown — sits right below Common Conditions -->
+    <div class="conditions-panel" id="conditions-panel">
+      <div class="conditions-panel__hd">Select a condition to start your assessment</div>
+      <div class="conditions-grid">
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=13"><span class="condition-chip__icon">💊</span>Acne</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=25"><span class="condition-chip__icon">🤧</span>Allergic Rhinitis</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=18"><span class="condition-chip__icon">👄</span>Oral Thrush</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=22"><span class="condition-chip__icon">👁️</span>Pink Eye</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=26"><span class="condition-chip__icon">🖐️</span>Eczema / Dermatitis</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=20"><span class="condition-chip__icon">🩸</span>Period Pain</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=24"><span class="condition-chip__icon">🔥</span>Heartburn / GERD</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=4"><span class="condition-chip__icon">🩹</span>Hemorrhoids</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=3"><span class="condition-chip__icon">💋</span>Cold Sores</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=2"><span class="condition-chip__icon">🦠</span>Impetigo</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=19"><span class="condition-chip__icon">🐝</span>Insect Bites &amp; Stings</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=21"><span class="condition-chip__icon">🦴</span>Sprains &amp; Strains</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=49"><span class="condition-chip__icon">🕷️</span>Tick Bites</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=10"><span class="condition-chip__icon">🦶</span>Athlete's Foot</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=23"><span class="condition-chip__icon">💧</span>Urinary Tract Infection</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=30"><span class="condition-chip__icon">🤢</span>Nausea in Pregnancy</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=6"><span class="condition-chip__icon">🫦</span>Canker Sores</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=43"><span class="condition-chip__icon">🪱</span>Pinworms</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=42"><span class="condition-chip__icon">🌸</span>Vaginal Yeast Infection</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=45"><span class="condition-chip__icon">👣</span>Calluses &amp; Corns<span class="condition-chip__new">NEW</span></a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=44"><span class="condition-chip__icon">❄️</span>Dandruff<span class="condition-chip__new">NEW</span></a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=41"><span class="condition-chip__icon">👁️</span>Dry Eye<span class="condition-chip__new">NEW</span></a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=39"><span class="condition-chip__icon">🤒</span>Sore Throat<span class="condition-chip__new">NEW</span></a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=8"><span class="condition-chip__icon">🏃</span>Jock Itch<span class="condition-chip__new">NEW</span></a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=12"><span class="condition-chip__icon">🤕</span>Mild Headache<span class="condition-chip__new">NEW</span></a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=38"><span class="condition-chip__icon">😤</span>Nasal Congestion<span class="condition-chip__new">NEW</span></a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=9"><span class="condition-chip__icon">⭕</span>Ringworm<span class="condition-chip__new">NEW</span></a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=46"><span class="condition-chip__icon">🌱</span>Warts<span class="condition-chip__new">NEW</span></a>
+      </div>
+      <p class="conditions-panel__note">All 28 conditions available as of July 1, 2026 · Walk in or start your online assessment above · <strong>No doctor's referral needed</strong></p>
+    </div>
+
+    <!-- Row 2: patient account actions -->
+    <div class="pa-cards pa-cards--secondary">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1000">
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review</span>
         <span class="pa-card__desc">One-on-one review of all your medications</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="620">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="900">
         <div class="pa-card__icon">🔁</div>
         <span class="pa-card__label">Refill Request</span>
         <span class="pa-card__desc">Request a prescription refill online</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="720">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="1000">
         <div class="pa-card__icon">🔀</div>
         <span class="pa-card__label">Transfer Your Rx</span>
         <span class="pa-card__desc">Move your prescription to St. Clair Drug Mart</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="520">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="750">
         <div class="pa-card__icon">🔑</div>
         <span class="pa-card__label">Patient Login</span>
         <span class="pa-card__desc">Sign in to your PharmAssess patient portal</span>
@@ -1183,14 +1245,9 @@
     <p class="booking__note">
       Having trouble? Call us at <a href="tel:+14166548181" style="color:var(--teal-dark);">(416) 654-8181</a> and we'll book you in directly.
     </p>
-  </div>
-</section>
 
-<!-- ── Services ──────────────────────────────────────────── -->
-<section id="services">
-  <div class="section__inner">
-    <h2 class="section__title">Our Services</h2>
-    <p class="section__lead">A full range of pharmacy and health services to keep you and your family well.</p>
+    <!-- What we offer -->
+    <h3 class="services-within__title">What We Offer</h3>
     <div class="services__grid">
       <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">
         <div class="service-card__body">
@@ -1227,13 +1284,6 @@
         </div>
         <span class="service-card__arrow">→</span>
       </a>
-      <button class="service-card service-card--toggle" id="conditions-toggle" onclick="toggleConditions(this)">
-        <div class="service-card__body">
-          <h3>Common Conditions</h3>
-          <p>Our pharmacist can assess &amp; prescribe for 28 common &amp; minor ailments — no doctor needed.</p>
-        </div>
-        <span class="service-card__arrow">▼</span>
-      </button>
       <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/transfer-rx/306667">
         <div class="service-card__body">
           <h3>Prescription Transfers</h3>
@@ -1248,13 +1298,6 @@
         </div>
         <span class="service-card__arrow">→</span>
       </a>
-      <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/refill/306667">
-        <div class="service-card__body">
-          <h3>Refill Requests</h3>
-          <p>Request a prescription refill online anytime — we'll have it ready for pickup or delivery.</p>
-        </div>
-        <span class="service-card__arrow">→</span>
-      </a>
       <a class="service-card" href="#drug-checker">
         <div class="service-card__body">
           <h3>Drug Interaction Checker</h3>
@@ -1263,43 +1306,6 @@
         <span class="service-card__arrow">→</span>
       </a>
     </div>
-
-    <!-- ── Conditions expandable panel ── -->
-    <div class="conditions-panel" id="conditions-panel">
-      <div class="conditions-panel__hd">Select a condition to start your assessment</div>
-      <div class="conditions-grid">
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=13"><span class="condition-chip__icon">💊</span>Acne</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=25"><span class="condition-chip__icon">🤧</span>Allergic Rhinitis</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=18"><span class="condition-chip__icon">👄</span>Oral Thrush</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=22"><span class="condition-chip__icon">👁️</span>Pink Eye</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=26"><span class="condition-chip__icon">🖐️</span>Eczema / Dermatitis</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=20"><span class="condition-chip__icon">🩸</span>Period Pain</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=24"><span class="condition-chip__icon">🔥</span>Heartburn / GERD</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=4"><span class="condition-chip__icon">🩹</span>Hemorrhoids</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=3"><span class="condition-chip__icon">💋</span>Cold Sores</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=2"><span class="condition-chip__icon">🦠</span>Impetigo</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=19"><span class="condition-chip__icon">🐝</span>Insect Bites &amp; Stings</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=21"><span class="condition-chip__icon">🦴</span>Sprains &amp; Strains</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=49"><span class="condition-chip__icon">🕷️</span>Tick Bites</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=10"><span class="condition-chip__icon">🦶</span>Athlete's Foot</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=23"><span class="condition-chip__icon">💧</span>Urinary Tract Infection</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=30"><span class="condition-chip__icon">🤢</span>Nausea in Pregnancy</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=6"><span class="condition-chip__icon">🫦</span>Canker Sores</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=43"><span class="condition-chip__icon">🪱</span>Pinworms</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=42"><span class="condition-chip__icon">🌸</span>Vaginal Yeast Infection</a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=45"><span class="condition-chip__icon">👣</span>Calluses &amp; Corns<span class="condition-chip__new">NEW</span></a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=44"><span class="condition-chip__icon">❄️</span>Dandruff<span class="condition-chip__new">NEW</span></a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=41"><span class="condition-chip__icon">👁️</span>Dry Eye<span class="condition-chip__new">NEW</span></a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=39"><span class="condition-chip__icon">🤒</span>Sore Throat<span class="condition-chip__new">NEW</span></a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=8"><span class="condition-chip__icon">🏃</span>Jock Itch<span class="condition-chip__new">NEW</span></a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=12"><span class="condition-chip__icon">🤕</span>Mild Headache<span class="condition-chip__new">NEW</span></a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=38"><span class="condition-chip__icon">😤</span>Nasal Congestion<span class="condition-chip__new">NEW</span></a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=9"><span class="condition-chip__icon">⭕</span>Ringworm<span class="condition-chip__new">NEW</span></a>
-        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=46"><span class="condition-chip__icon">🌱</span>Warts<span class="condition-chip__new">NEW</span></a>
-      </div>
-      <p class="conditions-panel__note">All 28 conditions available as of July 1, 2026 · Walk in or start your online assessment above · <strong>No doctor's referral needed</strong></p>
-    </div>
-
   </div>
 </section>
 
@@ -1605,7 +1611,7 @@
 <footer>
   <div class="footer__links">
     <a href="#welcome">Home</a>
-    <a href="#services">Services</a>
+    <a href="#booking">Services</a>
     <a href="#booking">Book Appointment</a>
     <a href="#shop">Shop</a>
     <a href="#contact">Contact</a>
@@ -1678,35 +1684,39 @@
     }, 80);
   }
 
-  document.querySelectorAll('.pa-card').forEach(card => {
-    card.addEventListener('click', function() { switchPaTab(this); });
-  });
+  const conditionsCard = document.getElementById('pa-card-conditions');
+  const conditionsPanel = document.getElementById('conditions-panel');
 
-  // Common Conditions toggle
-  function toggleConditions(btn) {
-    const panel = document.getElementById('conditions-panel');
-    const open = panel.classList.toggle('open');
-    btn.classList.toggle('open', open);
-    btn.querySelector('.service-card__arrow').textContent = open ? '▲' : '▼';
-  }
+  document.querySelectorAll('.pa-card').forEach(card => {
+    card.addEventListener('click', function() {
+      if (this === conditionsCard) {
+        // Toggle the conditions dropdown; don't load iframe yet
+        const isOpen = conditionsPanel.classList.toggle('open');
+        this.classList.toggle('conditions-open', isOpen);
+        // If opening, activate this card visually but don't scroll to iframe
+        document.querySelectorAll('.pa-card').forEach(c => { if (c !== conditionsCard) c.classList.remove('active'); });
+        this.classList.add('active');
+      } else {
+        // Close conditions panel when switching to another tab
+        conditionsPanel.classList.remove('open');
+        conditionsCard.classList.remove('conditions-open');
+        switchPaTab(this);
+      }
+    });
+  });
 
   // Condition chip clicks — load specific condition in iframe, scroll to booking
   document.querySelectorAll('.js-condition').forEach(chip => {
     chip.addEventListener('click', function(e) {
       e.preventDefault();
       const url = this.dataset.url;
-      // close panel
-      document.getElementById('conditions-panel').classList.remove('open');
-      const toggleBtn = document.getElementById('conditions-toggle');
-      toggleBtn.classList.remove('open');
-      toggleBtn.querySelector('.service-card__arrow').textContent = '▼';
-      // activate Common Conditions pa-card visually, load specific condition URL
+      // Close the conditions dropdown
+      conditionsPanel.classList.remove('open');
+      conditionsCard.classList.remove('conditions-open');
+      // Activate Common Conditions pa-card visually, load specific condition URL
       document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
-      var saCard = document.querySelector('.pa-card[data-url="https://app.pharmassess.ca/self-assessment/306667"]');
-      if (saCard) {
-        saCard.classList.add('active');
-        paIframe.style.height = (saCard.dataset.iframeheight || '1900') + 'px';
-      }
+      conditionsCard.classList.add('active');
+      paIframe.style.height = (conditionsCard.dataset.iframeheight || '1900') + 'px';
       paIframe.src = url;
       setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
     });
