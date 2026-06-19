@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 90" width="200" height="90">
+  <!-- starburst icon -->
+  <g transform="translate(42,40)">
+    <!-- rays alternating dark and light green -->
+    <line x1="0" y1="-32" x2="0" y2="-20" stroke="#1B5E1B" stroke-width="5" stroke-linecap="round"/>
+    <line x1="15.3" y1="-27.7" x2="9.5" y2="-17.2" stroke="#4CAF50" stroke-width="5" stroke-linecap="round"/>
+    <line x1="27.7" y1="-15.3" x2="17.2" y2="-9.5" stroke="#1B5E1B" stroke-width="5" stroke-linecap="round"/>
+    <line x1="32" y1="0" x2="20" y2="0" stroke="#4CAF50" stroke-width="5" stroke-linecap="round"/>
+    <line x1="27.7" y1="15.3" x2="17.2" y2="9.5" stroke="#1B5E1B" stroke-width="5" stroke-linecap="round"/>
+    <line x1="15.3" y1="27.7" x2="9.5" y2="17.2" stroke="#4CAF50" stroke-width="5" stroke-linecap="round"/>
+    <line x1="0" y1="32" x2="0" y2="20" stroke="#1B5E1B" stroke-width="5" stroke-linecap="round"/>
+    <line x1="-15.3" y1="27.7" x2="-9.5" y2="17.2" stroke="#4CAF50" stroke-width="5" stroke-linecap="round"/>
+    <line x1="-27.7" y1="15.3" x2="-17.2" y2="9.5" stroke="#1B5E1B" stroke-width="5" stroke-linecap="round"/>
+    <line x1="-32" y1="0" x2="-20" y2="0" stroke="#4CAF50" stroke-width="5" stroke-linecap="round"/>
+    <line x1="-27.7" y1="-15.3" x2="-17.2" y2="-9.5" stroke="#1B5E1B" stroke-width="5" stroke-linecap="round"/>
+    <line x1="-15.3" y1="-27.7" x2="-9.5" y2="-17.2" stroke="#4CAF50" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <!-- medSask text -->
+  <text x="88" y="38" font-family="Arial, sans-serif" font-size="26" font-weight="900" font-style="italic" fill="#1B5E1B">med</text>
+  <text x="88" y="38" font-family="Arial, sans-serif" font-size="26" font-weight="900" font-style="italic" fill="#1B5E1B">
+    <tspan dx="52" fill="#4CAF50">S</tspan><tspan fill="#1B5E1B">ask</tspan>
+  </text>
+  <!-- tagline -->
+  <text x="88" y="52" font-family="Arial, sans-serif" font-size="7.5" fill="#1B5E1B" letter-spacing="0.5">YOUR MEDICATION INFORMATION SERVICE</text>
+</svg>

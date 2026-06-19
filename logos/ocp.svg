@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- white background circle with green border ring -->
+  <circle cx="60" cy="60" r="58" fill="white" stroke="#2D7A2D" stroke-width="5"/>
+  <!-- green cross: horizontal bar -->
+  <rect x="18" y="42" width="84" height="36" rx="5" fill="#2D7A2D"/>
+  <!-- green cross: vertical bar -->
+  <rect x="42" y="18" width="36" height="84" rx="5" fill="#2D7A2D"/>
+  <!-- white center circle to cut mortar/pestle area -->
+  <circle cx="60" cy="60" r="22" fill="white"/>
+  <!-- mortar (bowl) - dark green -->
+  <path d="M42 60 Q42 78 60 78 Q78 78 78 60" fill="#1A5C1A"/>
+  <!-- mortar rim line -->
+  <line x1="42" y1="60" x2="78" y2="60" stroke="#1A5C1A" stroke-width="3.5"/>
+  <!-- pestle vertical rod -->
+  <rect x="57.5" y="42" width="5" height="22" rx="2.5" fill="#1A5C1A"/>
+  <!-- pestle top knob -->
+  <ellipse cx="60" cy="43" rx="6.5" ry="4" fill="#1A5C1A"/>
+</svg>

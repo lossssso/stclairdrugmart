@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- outer teal ring -->
+  <circle cx="60" cy="60" r="58" fill="#00BCD4"/>
+  <!-- inner dark teal fill -->
+  <circle cx="60" cy="60" r="48" fill="#004D4D"/>
+  <!-- white checkmark -->
+  <polyline points="30,62 48,80 88,38" fill="none" stroke="white" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- handle -->
+  <rect x="82" y="85" width="14" height="28" rx="7" fill="#004D4D" transform="rotate(45 89 99)"/>
+  <rect x="82" y="85" width="14" height="28" rx="7" fill="#00BCD4" transform="rotate(45 89 99)" opacity="0.35"/>
+</svg>

@@ -1028,27 +1028,19 @@
     }
     .wa-float:hover .wa-float__tip { opacity: 1; }
 
-    /* ── OCP Compliance block ─────────────────────── */
-    .footer__trust { margin-top: 1.25rem; display: flex; flex-direction: column; align-items: center; gap: .5rem; }
-    .ocp-compliance {
-      display: inline-flex; align-items: center; gap: .85rem;
-      padding: .6rem 1.3rem; border-radius: 8px;
-      border: 1px solid rgba(255,255,255,.15);
-      background: rgba(255,255,255,.06);
+    /* ── Footer trust badges ──────────────────────── */
+    .footer__trust { margin-top: 1.25rem; display: flex; flex-direction: column; align-items: center; gap: .55rem; }
+    .footer__badges { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .trust-badge {
+      display: flex; flex-direction: column; align-items: center; gap: .28rem;
+      background: #fff; border-radius: 8px; padding: .55rem .85rem;
+      min-width: 80px;
     }
-    .ocp-compliance__symbol {
-      width: 52px; height: 52px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .ocp-compliance__symbol img { width: 52px; height: 52px; object-fit: contain; }
-    .ocp-compliance__symbol--placeholder {
-      border: 1.5px dashed rgba(255,255,255,.3); border-radius: 6px;
-      font-size: .55rem; color: rgba(255,255,255,.35); text-align: center; line-height: 1.3;
-      padding: 4px;
-    }
-    .ocp-compliance__text { display: flex; flex-direction: column; line-height: 1.4; text-align: left; }
-    .ocp-compliance__text strong { font-size: .78rem; color: rgba(255,255,255,.88); }
-    .ocp-compliance__text span { font-size: .68rem; color: rgba(255,255,255,.48); }
+    .trust-badge__img { height: 46px; width: auto; display: block; }
+    .trust-badge__img--sm { height: 46px; width: 46px; }
+    .trust-badge__img--wide { height: 38px; width: auto; max-width: 160px; }
+    .trust-badge__caption { font-size: .6rem; color: #374151; font-weight: 600; text-align: center; line-height: 1.3; }
+    .footer__reg { font-size: .65rem; color: rgba(255,255,255,.42); text-align: center; max-width: 580px; line-height: 1.5; }
     /* ── Privacy Policy modal ─────────────────────── */
     .pp-overlay {
       display: none; position: fixed; inset: 0; z-index: 9999;
@@ -1906,18 +1898,23 @@
   </div>
 
   <div class="footer__trust">
-    <!-- OCP Point of Care Symbol: obtain image file from OCP at 416-962-4861 / [email protected] and replace the placeholder below -->
-    <div class="ocp-compliance">
-      <div class="ocp-compliance__symbol">
-        <img src="ocp-point-of-care.png" alt="OCP Point of Care Symbol" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:block;">
-        <div class="ocp-compliance__symbol--placeholder" style="display:none;">OCP Point of Care Symbol</div>
+    <div class="footer__badges">
+      <!-- OCP logo + licence number (no link) -->
+      <div class="trust-badge">
+        <img src="logos/ocp.svg" alt="Ontario College of Pharmacists" class="trust-badge__img">
+        <span class="trust-badge__caption">OCP Accreditation<br>No. 306667</span>
       </div>
-      <div class="ocp-compliance__text">
-        <strong>Ontario College of Pharmacists</strong>
-        <span>Accreditation No. 306667 &nbsp;·&nbsp; Designated Manager: Elizabeth Da Silva, BScPharm, RPh</span>
-        <span>Pharmacist on duty during all operating hours</span>
+      <!-- PharmAssess -->
+      <div class="trust-badge">
+        <img src="logos/pharmassess.svg" alt="PharmAssess — Online Pharmacy Booking" class="trust-badge__img--sm">
+        <span class="trust-badge__caption">PharmAssess<br>Online Booking</span>
+      </div>
+      <!-- MedSask -->
+      <div class="trust-badge">
+        <img src="logos/medsask.svg" alt="MedSask — Your Medication Information Service" class="trust-badge__img--wide">
       </div>
     </div>
+    <p class="footer__reg">Regulated by the Ontario College of Pharmacists &nbsp;·&nbsp; Designated Manager: Elizabeth Da Silva, BScPharm, RPh &nbsp;·&nbsp; Pharmacist on duty during all operating hours</p>
     <button class="pp-link" onclick="document.getElementById('pp-overlay').classList.add('open')">Privacy Policy</button>
   </div>
 
