@@ -147,7 +147,7 @@
     }
     /* ── Services dropdown ───────────────────────── */
     .nav__has-dropdown { position: relative; }
-    .nav__has-dropdown > a { display: flex; align-items: center; gap: .3rem; }
+    .nav__has-dropdown > a { display: inline-flex; align-items: center; gap: .3rem; }
     .nav__has-dropdown > a::after { content: '▾'; font-size: .7rem; opacity: .7; }
     .nav__dropdown {
       display: none;
@@ -172,27 +172,38 @@
 
     /* ── Hero ─────────────────────────────────────────── */
     .hero {
-      background: linear-gradient(155deg, #003f44 0%, var(--teal-deeper) 45%, var(--teal-bright) 100%);
+      background: linear-gradient(180deg, #aed6ee 0%, #c6e5f5 22%, #daeef8 50%, #f2f9fd 78%, #ffffff 100%);
       padding: 5rem 1.5rem 4.5rem;
       text-align: center;
-      color: var(--white);
+      color: var(--teal-deeper);
       position: relative;
       overflow: hidden;
     }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 60% 40%, rgba(33,161,168,.18) 0%, transparent 70%);
-      pointer-events: none;
+    /* CSS cloud shapes */
+    .hero__cloud {
+      position: absolute; pointer-events: none; z-index: 0;
+      border-radius: 100px; background: #fff;
     }
+    .hero__cloud::before,
+    .hero__cloud::after { content: ''; position: absolute; border-radius: 50%; background: inherit; }
+    .hero__cloud--1 { width: 280px; height: 72px; bottom: -10px; left: -3%; }
+    .hero__cloud--1::before { width: 135px; height: 135px; top: -68px; left: 42px; }
+    .hero__cloud--1::after  { width: 102px; height: 102px; top: -51px; left: 128px; }
+    .hero__cloud--2 { width: 215px; height: 60px; bottom: -10px; right: -2%; }
+    .hero__cloud--2::before { width: 108px; height: 108px; top: -54px; left: 26px; }
+    .hero__cloud--2::after  { width: 80px;  height: 80px;  top: -40px; left: 105px; }
+    .hero__cloud--3 { width: 160px; height: 46px; top: 13%; right: 7%; background: rgba(255,255,255,.62); }
+    .hero__cloud--3::before { width: 80px; height: 80px; top: -40px; left: 24px; }
+    .hero__cloud--3::after  { width: 58px; height: 58px; top: -29px; left: 80px; }
+    .hero__cloud--4 { width: 122px; height: 38px; top: 8%; left: 7%; background: rgba(255,255,255,.5); }
+    .hero__cloud--4::before { width: 62px; height: 62px; top: -31px; left: 18px; }
+    .hero__cloud--4::after  { width: 46px; height: 46px; top: -23px; left: 60px; }
     .hero__logo {
-      width: 180px;
-      height: 180px;
+      width: 180px; height: 180px;
       object-fit: contain;
       margin: 0 auto 1.5rem;
-      filter: drop-shadow(0 6px 28px rgba(0,0,0,.45));
-      position: relative;
+      filter: drop-shadow(0 4px 18px rgba(0,80,90,.14));
+      position: relative; z-index: 1;
     }
     .hero__name {
       font-family: 'Big Shoulders Display', sans-serif;
@@ -202,42 +213,35 @@
       text-transform: uppercase;
       line-height: 1;
       margin-bottom: .5rem;
-      position: relative;
+      position: relative; z-index: 1;
     }
     .hero__pharmacy-label {
-      font-size: 1rem;
-      font-weight: 600;
-      letter-spacing: .35em;
-      text-transform: uppercase;
-      opacity: .65;
-      margin-bottom: 1.25rem;
-      position: relative;
+      font-size: 1rem; font-weight: 600;
+      letter-spacing: .35em; text-transform: uppercase;
+      opacity: .6; margin-bottom: 1.25rem;
+      position: relative; z-index: 1;
     }
     .hero__sub {
       font-size: .95rem;
-      opacity: .8;
+      color: rgba(0,63,68,.72);
       margin-bottom: 2rem;
       letter-spacing: .02em;
-      position: relative;
+      position: relative; z-index: 1;
     }
     .hero__socials {
-      display: flex;
-      justify-content: center;
-      gap: .75rem;
-      flex-wrap: wrap;
+      display: flex; justify-content: center;
+      gap: .75rem; flex-wrap: wrap;
+      position: relative; z-index: 1;
     }
     .hero__socials a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 42px; height: 42px;
-      border-radius: 50%;
-      background: rgba(255,255,255,.15);
-      border: 1.5px solid rgba(255,255,255,.30);
+      display: flex; align-items: center; justify-content: center;
+      width: 42px; height: 42px; border-radius: 50%;
+      background: rgba(0,115,124,.09);
+      border: 1.5px solid rgba(0,115,124,.24);
       transition: background .15s, transform .15s;
     }
-    .hero__socials a:hover { background: rgba(255,255,255,.28); transform: translateY(-2px); }
-    .hero__socials svg { width: 20px; height: 20px; fill: white; }
+    .hero__socials a:hover { background: rgba(0,115,124,.18); transform: translateY(-2px); }
+    .hero__socials svg { width: 20px; height: 20px; fill: var(--teal-deeper); color: var(--teal-deeper); }
 
     /* ── Sections shared ──────────────────────────────── */
     section { padding: 4rem 1.5rem; }
@@ -666,6 +670,86 @@
     .step h3 { font-size: 1rem; font-weight: 700; color: var(--teal-deeper); margin-bottom: .5rem; }
     .step p  { font-size: .875rem; color: var(--text-muted); line-height: 1.65; }
     .steps__cta { text-align: center; margin-top: 2rem; }
+
+    /* ── Medication Reviews ───────────────────────── */
+    #medication-reviews { background: var(--teal-ice); }
+    .medscheck-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.25rem; margin-top: 2rem;
+    }
+    .medscheck-card {
+      background: var(--white); border-radius: var(--radius);
+      border: 1.5px solid var(--border); border-left: 4px solid var(--teal-bright);
+      padding: 1.4rem 1.2rem;
+      display: flex; flex-direction: column; gap: .45rem;
+      transition: box-shadow .15s;
+    }
+    .medscheck-card:hover { box-shadow: var(--shadow); }
+    .medscheck-card__icon { font-size: 1.55rem; line-height: 1; }
+    .medscheck-card__title {
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-size: .95rem; font-weight: 900;
+      color: var(--teal-deeper); text-transform: uppercase; letter-spacing: .04em;
+    }
+    .medscheck-card__desc { font-size: .83rem; color: var(--text-muted); line-height: 1.6; flex: 1; }
+    .medscheck-card__tag {
+      display: inline-block; font-size: .72rem; font-weight: 700;
+      background: rgba(33,161,168,.1); color: var(--teal-dark);
+      border-radius: 20px; padding: .2rem .62rem; margin-top: .15rem;
+    }
+
+    /* ── Vaccinations ─────────────────────────────── */
+    #vaccines { background: var(--white); }
+    .vaccines__intro { max-width: 720px; margin: 0 auto 2rem; text-align: center; }
+    .vaccines__intro p { color: var(--text-muted); font-size: .95rem; line-height: 1.75; }
+    .vaccines__sub-heading {
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-size: 1.15rem; font-weight: 800;
+      letter-spacing: .05em; text-transform: uppercase;
+      color: var(--teal-deeper); margin: 2rem 0 1rem;
+    }
+    .vaccine-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
+      gap: 1.1rem;
+    }
+    .vaccine-card {
+      background: var(--white); border-radius: var(--radius);
+      border: 1.5px solid var(--border);
+      padding: 1.2rem 1.15rem;
+      display: flex; flex-direction: column; gap: .4rem;
+      transition: box-shadow .15s, transform .15s;
+    }
+    .vaccine-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+    .vaccine-card__header { display: flex; align-items: flex-start; justify-content: space-between; gap: .5rem; }
+    .vaccine-card__name {
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-size: .95rem; font-weight: 900;
+      color: var(--teal-deeper); text-transform: uppercase; letter-spacing: .04em;
+    }
+    .vaccine-card__badge {
+      flex-shrink: 0; font-size: .67rem; font-weight: 800;
+      padding: .18rem .5rem; border-radius: 20px; white-space: nowrap;
+      letter-spacing: .04em;
+    }
+    .badge--funded { background: #d1fae5; color: #065f46; }
+    .badge--private { background: #fef3c7; color: #92400e; }
+    .vaccine-card__who { font-size: .81rem; color: var(--text); font-weight: 600; line-height: 1.4; }
+    .vaccine-card__desc { font-size: .79rem; color: var(--text-muted); line-height: 1.55; }
+    .vaccines__cta-block {
+      margin-top: 2.5rem; text-align: center;
+      background: var(--teal-ice); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem;
+    }
+    .vaccines__cta-block p { font-size: .9rem; color: var(--text-muted); margin-bottom: 1rem; }
+    .vaccines__disclaimer {
+      margin-top: 1.5rem; font-size: .77rem;
+      color: var(--text-muted); text-align: center;
+      max-width: 740px; margin-left: auto; margin-right: auto;
+      line-height: 1.55; font-style: italic;
+    }
+    @media (max-width: 700px) { .vaccine-grid { grid-template-columns: 1fr; } }
 
     /* ── Insurance ────────────────────────────────── */
     #insurance { background: var(--white); }
@@ -1132,6 +1216,8 @@
         <ul class="nav__dropdown">
           <li><a href="#booking">Book Appointment</a></li>
           <li><a href="#conditions">Minor Ailments</a></li>
+          <li><a href="#medication-reviews">Medication Reviews</a></li>
+          <li><a href="#vaccines">Vaccinations</a></li>
           <li><a href="#drug-checker">Drug Checker</a></li>
           <li><a href="#insurance">Insurance</a></li>
         </ul>
@@ -1146,6 +1232,12 @@
 
 <!-- ── Hero ─────────────────────────────────────────────── -->
 <header class="hero" id="home">
+  <!-- decorative cloud shapes -->
+  <div class="hero__cloud hero__cloud--1" aria-hidden="true"></div>
+  <div class="hero__cloud hero__cloud--2" aria-hidden="true"></div>
+  <div class="hero__cloud hero__cloud--3" aria-hidden="true"></div>
+  <div class="hero__cloud hero__cloud--4" aria-hidden="true"></div>
+
   <img src="logo.png" alt="St. Clair Drug Mart Pharmacy logo" class="hero__logo" />
   <h1 class="hero__name">St. Clair Drug Mart Pharmacy</h1>
   <p class="hero__sub">1203 St. Clair Ave W, Toronto &nbsp;·&nbsp; (416) 654-8181</p>
@@ -1155,13 +1247,13 @@
       <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
     </a>
     <a href="https://www.instagram.com/stclairdrugmart/" target="_blank" rel="noopener" aria-label="Instagram">
-      <svg viewBox="0 0 24 24"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="white" stroke-width="1.8"/><circle cx="12" cy="12" r="4.4" fill="none" stroke="white" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.3" fill="white" stroke="none"/></svg>
+      <svg viewBox="0 0 24 24"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor" stroke="none"/></svg>
     </a>
     <a href="https://ca.linkedin.com/company/stclairdrugmart" target="_blank" rel="noopener" aria-label="LinkedIn">
       <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
     </a>
     <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" aria-label="Order on Uber Eats">
-      <svg viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M6 3v10a6 6 0 0 0 12 0V3h-2.5v10a3.5 3.5 0 0 1-7 0V3H6z"/></svg>
     </a>
     <a href="https://www.google.com/maps/place/St.+Clair+Drug+Mart+Pharmacy/@43.6773961,-79.4468996,17z/data=!3m1!4b1!4m6!3m5!1s0x882b35d5e572114b:0x899add08acb1e556!8m2!3d43.6773551!4d-79.4443087!16s%2Fg%2F11f716bxm1" target="_blank" rel="noopener" aria-label="Find us on Google Maps">
       <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
@@ -1608,6 +1700,137 @@
         <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=46">Start Assessment →</a>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ── Medication Reviews ──────────────────────────────── -->
+<section id="medication-reviews">
+  <div class="section__inner">
+    <h2 class="section__title">Medication Reviews</h2>
+    <p class="section__lead">Our pharmacist takes the time to review all your medications — catching interactions, simplifying regimens, and making sure every pill you take is working for you.</p>
+    <div class="medscheck-grid">
+      <div class="medscheck-card">
+        <div class="medscheck-card__icon">📋</div>
+        <div class="medscheck-card__title">Annual Medication Review</div>
+        <p class="medscheck-card__desc">A face-to-face or phone consultation covering all your prescriptions, over-the-counter medications, vitamins, and supplements. We identify interactions, duplications, and medications that may no longer be appropriate for you.</p>
+        <span class="medscheck-card__tag">Eligible if taking 3 or more chronic medications</span>
+      </div>
+      <div class="medscheck-card">
+        <div class="medscheck-card__icon">🩺</div>
+        <div class="medscheck-card__title">Diabetes Medication Review</div>
+        <p class="medscheck-card__desc">A specialized review for patients living with Type 2 diabetes. We assess your diabetes medications, discuss blood sugar targets, and help coordinate care with your healthcare team.</p>
+        <span class="medscheck-card__tag">For patients with Type 2 diabetes on any medication</span>
+      </div>
+      <div class="medscheck-card">
+        <div class="medscheck-card__icon">🏥</div>
+        <div class="medscheck-card__title">Post-Hospital Reconciliation</div>
+        <p class="medscheck-card__desc">Coming home from the hospital? We'll compare your discharge medications with your existing prescriptions to prevent dangerous errors, duplications, or gaps in your care during this critical transition.</p>
+        <span class="medscheck-card__tag">Following hospital discharge or a care transition</span>
+      </div>
+      <div class="medscheck-card">
+        <div class="medscheck-card__icon">🔄</div>
+        <div class="medscheck-card__title">Follow-Up Review</div>
+        <p class="medscheck-card__desc">When your medications change significantly — a new diagnosis, a new prescription, or a concern about side effects — we schedule a focused follow-up to make sure your therapy stays on track.</p>
+        <span class="medscheck-card__tag">After a significant medication change or concern</span>
+      </div>
+    </div>
+    <p class="insurance__note" style="margin-top:1.75rem;">Medication reviews are <strong>covered at no cost</strong> for eligible Ontario residents through the provincial drug benefit program. <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us</a> to book your review — walk-ins also welcome.</p>
+  </div>
+</section>
+
+<!-- ── Vaccinations ─────────────────────────────────────── -->
+<section id="vaccines">
+  <div class="section__inner">
+    <h2 class="section__title">Vaccines at Our Pharmacy</h2>
+    <div class="vaccines__intro">
+      <p>Our pharmacist is trained to administer vaccines right in the pharmacy — no doctor's visit required. We offer Ontario's publicly funded vaccines at <strong>no cost</strong> to eligible patients, as well as travel and private vaccines. Walk-ins welcome; appointments recommended for busy periods.</p>
+    </div>
+
+    <div class="vaccines__sub-heading">Publicly Funded — Free with a Valid Ontario Health Card</div>
+    <div class="vaccine-grid">
+      <div class="vaccine-card">
+        <div class="vaccine-card__header">
+          <div class="vaccine-card__name">Influenza (Flu Shot)</div>
+          <span class="vaccine-card__badge badge--funded">FREE</span>
+        </div>
+        <div class="vaccine-card__who">All Ontarians 6 months and older — annual</div>
+        <p class="vaccine-card__desc">Updated each fall to match circulating strains. Especially recommended for seniors, children, pregnant individuals, and people with chronic health conditions such as asthma, heart disease, or diabetes.</p>
+      </div>
+      <div class="vaccine-card">
+        <div class="vaccine-card__header">
+          <div class="vaccine-card__name">COVID-19</div>
+          <span class="vaccine-card__badge badge--funded">FREE</span>
+        </div>
+        <div class="vaccine-card__who">All Ontarians — updated doses as recommended</div>
+        <p class="vaccine-card__desc">Ontario offers updated COVID-19 vaccines seasonally. Recommended doses vary by age and health status. Ask our pharmacist whether you're due for an updated dose — eligibility guidance is updated regularly by Ontario Public Health.</p>
+      </div>
+      <div class="vaccine-card">
+        <div class="vaccine-card__header">
+          <div class="vaccine-card__name">Shingles (Shingrix)</div>
+          <span class="vaccine-card__badge badge--funded">FREE</span>
+        </div>
+        <div class="vaccine-card__who">Adults 65 and older · Adults 50+ who are immunocompromised</div>
+        <p class="vaccine-card__desc">Two-dose series (second dose 2–6 months after the first). Highly effective at preventing shingles (herpes zoster) and its painful long-term complication, post-herpetic neuralgia. Even if you've had shingles before, this vaccine is recommended.</p>
+      </div>
+      <div class="vaccine-card">
+        <div class="vaccine-card__header">
+          <div class="vaccine-card__name">Pneumococcal</div>
+          <span class="vaccine-card__badge badge--funded">FREE</span>
+        </div>
+        <div class="vaccine-card__who">Adults 65 and older · High-risk individuals at any age</div>
+        <p class="vaccine-card__desc">Protects against pneumococcal pneumonia and invasive pneumococcal disease. High-risk groups include those with heart disease, diabetes, lung disease, kidney disease, liver disease, cochlear implants, or a compromised immune system.</p>
+      </div>
+      <div class="vaccine-card">
+        <div class="vaccine-card__header">
+          <div class="vaccine-card__name">RSV (Respiratory Syncytial Virus)</div>
+          <span class="vaccine-card__badge badge--funded">FREE</span>
+        </div>
+        <div class="vaccine-card__who">Adults 60 and older · Available seasonally (fall &amp; winter)</div>
+        <p class="vaccine-card__desc">A single dose that protects against RSV-related lower respiratory illness — a leading cause of hospitalization in older adults. Particularly important for those with chronic cardiorespiratory or immunocompromising conditions.</p>
+      </div>
+    </div>
+
+    <div class="vaccines__sub-heading">Travel &amp; Private Vaccines</div>
+    <div class="vaccine-grid">
+      <div class="vaccine-card">
+        <div class="vaccine-card__header">
+          <div class="vaccine-card__name">Hepatitis A &amp; B</div>
+          <span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span>
+        </div>
+        <div class="vaccine-card__who">Travellers · At-risk individuals</div>
+        <p class="vaccine-card__desc">Available individually or as Twinrix (combined A+B). Recommended for travel to many regions of Asia, Africa, Latin America, and the Middle East. Check your extended health plan — many benefit programs cover travel vaccines.</p>
+      </div>
+      <div class="vaccine-card">
+        <div class="vaccine-card__header">
+          <div class="vaccine-card__name">Typhoid</div>
+          <span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span>
+        </div>
+        <div class="vaccine-card__who">Travellers to endemic regions</div>
+        <p class="vaccine-card__desc">Injectable typhoid vaccine recommended for travel to parts of South Asia, sub-Saharan Africa, and Latin America where typhoid fever is common. Provides approximately 2–3 years of protection.</p>
+      </div>
+      <div class="vaccine-card">
+        <div class="vaccine-card__header">
+          <div class="vaccine-card__name">Meningococcal (ACYW)</div>
+          <span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span>
+        </div>
+        <div class="vaccine-card__who">Travellers · Students · Adult catch-up</div>
+        <p class="vaccine-card__desc">Protects against four strains of meningococcal bacteria. Recommended for travel to sub-Saharan Africa's "meningitis belt," Hajj pilgrimage, and for adults who did not receive the publicly funded school-program dose.</p>
+      </div>
+      <div class="vaccine-card">
+        <div class="vaccine-card__header">
+          <div class="vaccine-card__name">HPV (Gardasil 9)</div>
+          <span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span>
+        </div>
+        <div class="vaccine-card__who">Adult catch-up · Up to age 45</div>
+        <p class="vaccine-card__desc">Protects against 9 strains of human papillomavirus linked to cervical, throat, anal, and other cancers, as well as genital warts. Effective even if partially vaccinated in the past. Many extended health plans cover this series.</p>
+      </div>
+    </div>
+
+    <div class="vaccines__cta-block">
+      <p>Not sure which vaccines are right for you? Our pharmacist will review your immunization history, health conditions, and travel plans to give you personalized recommendations — at no charge.</p>
+      <a href="#booking" class="btn">Book a Vaccine Consultation</a>
+    </div>
+    <p class="vaccines__disclaimer">Publicly funded vaccines require a valid Ontario health card (OHIP). Eligibility criteria apply and are subject to provincial guideline updates — our pharmacist will confirm your eligibility at the time of your visit. Vaccine availability may vary; call ahead at (416) 654-8181 for current stock. Travel vaccines not listed above may also be available — ask our pharmacist.</p>
   </div>
 </section>
 
