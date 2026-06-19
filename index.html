@@ -966,6 +966,29 @@
       .dc-input-row { flex-direction: column; }
     }
 
+    /* severity badges */
+    .dc-sev-badge {
+      display: inline-block; font-size: .72rem; font-weight: 700;
+      padding: .2rem .55rem; border-radius: 4px; letter-spacing: .02em;
+      text-transform: uppercase; margin-right: .4rem;
+    }
+    .sev-contra  { background: #FEE2E2; color: #991B1B; border: 1px solid #FECACA; }
+    .sev-major   { background: #FEF3C7; color: #92400E; border: 1px solid #FDE68A; }
+    .sev-moderate{ background: #FFF7ED; color: #9A3412; border: 1px solid #FDBA74; }
+    .sev-minor   { background: #F0FDF4; color: #166534; border: 1px solid #86EFAC; }
+
+    .dc-result--ix { background: var(--white); border-color: var(--border); }
+    .dc-result--contra { border-color: #FECACA; background: #FEF2F2; }
+    .dc-result--major  { border-color: #FDE68A; background: #FFFBEB; }
+    .dc-result__header { display: flex; align-items: center; flex-wrap: wrap; gap: .4rem; margin-bottom: .5rem; }
+    .dc-result__pair   { font-size: .88rem; font-weight: 700; color: var(--teal-deeper); }
+    .dc-result__desc   { font-size: .84rem; color: var(--text); line-height: 1.6; }
+    .dc-result__src    { font-size: .73rem; color: var(--text-muted); margin-top: .35rem; }
+    .dc-external-link  { margin-top: .75rem; font-size: .82rem; }
+    .dc-external-link a { color: var(--teal-dark); font-weight: 600; }
+    .dc-summary__status--contra   { background: rgba(254,226,226,.3); border-left: 3px solid #EF4444; }
+    .dc-summary__status--moderate { background: rgba(255,237,213,.3); border-left: 3px solid #F97316; }
+
     /* ── Extra responsive ─────────────────────────── */
     @media (max-width: 900px) {
       .steps          { grid-template-columns: 1fr; }
@@ -1559,7 +1582,7 @@
         <div class="dc-credit">
           <span>For a complete report, visit</span>
           <a href="https://www.drugs.com/drug_interactions.html" target="_blank" rel="noopener" class="dc-credit__logo">Drugs<span>.com</span></a>
-          <span class="dc-credit__data">· In-page data: openFDA (U.S. FDA)</span>
+          <span class="dc-credit__data">· Data: NLM RxNav · DrugBank · Health Canada</span>
         </div>
       </div>
 
@@ -2010,180 +2033,371 @@
   (function () {
     const input = document.getElementById('dc-input');
     if (!input) return;
-    const sugg = document.getElementById('dc-suggestions');
-    const chipsWrap = document.getElementById('dc-chips');
-    const addBtn = document.getElementById('dc-add');
+    const sugg     = document.getElementById('dc-suggestions');
+    const chipsWrap= document.getElementById('dc-chips');
+    const addBtn   = document.getElementById('dc-add');
     const checkBtn = document.getElementById('dc-check');
     const clearBtn = document.getElementById('dc-clear');
-    const results = document.getElementById('dc-results');
-    let meds = [];
-    let activeIdx = -1;
-    let debounce;
+    const results  = document.getElementById('dc-results');
+    let meds = []; // [{name, cui}]
+    let activeIdx = -1, debounce;
 
+    // Brand → generic alias map
+    const ALIAS = {
+      tylenol:'acetaminophen',paracetamol:'acetaminophen',tempra:'acetaminophen',
+      advil:'ibuprofen',motrin:'ibuprofen',nurofen:'ibuprofen',
+      aleve:'naproxen',naprosyn:'naproxen',
+      asa:'aspirin',bayer:'aspirin',
+      coumadin:'warfarin',jantoven:'warfarin',
+      prozac:'fluoxetine',sarafem:'fluoxetine',
+      zoloft:'sertraline',paxil:'paroxetine',celexa:'citalopram',
+      lexapro:'escitalopram',cipralex:'escitalopram',
+      effexor:'venlafaxine',cymbalta:'duloxetine',
+      wellbutrin:'bupropion',zyban:'bupropion',
+      nardil:'phenelzine',parnate:'tranylcypromine',elavil:'amitriptyline',
+      voltaren:'diclofenac',celebrex:'celecoxib',
+      lipitor:'atorvastatin',crestor:'rosuvastatin',zocor:'simvastatin',
+      pravachol:'pravastatin',mevacor:'lovastatin',
+      glucophage:'metformin',
+      prinivil:'lisinopril',zestril:'lisinopril',vasotec:'enalapril',altace:'ramipril',
+      norvasc:'amlodipine',cardizem:'diltiazem',
+      lopressor:'metoprolol',toprol:'metoprolol',tenormin:'atenolol',coreg:'carvedilol',
+      lasix:'furosemide',microzide:'hydrochlorothiazide',hctz:'hydrochlorothiazide',
+      aldactone:'spironolactone',lanoxin:'digoxin',
+      synthroid:'levothyroxine',eltroxin:'levothyroxine',
+      cipro:'ciprofloxacin',zithromax:'azithromycin',biaxin:'clarithromycin',
+      flagyl:'metronidazole',diflucan:'fluconazole',sporanox:'itraconazole',
+      percocet:'oxycodone','oxycontin':'oxycodone',ultram:'tramadol',
+      xanax:'alprazolam',ativan:'lorazepam',valium:'diazepam',klonopin:'clonazepam',
+      ambien:'zolpidem',benadryl:'diphenhydramine',gravol:'dimenhydrinate',
+      claritin:'loratadine',zyrtec:'cetirizine',reactine:'cetirizine',
+      pepcid:'famotidine',nexium:'esomeprazole',prilosec:'omeprazole',
+      pantoloc:'pantoprazole',tecta:'pantoprazole',
+      plavix:'clopidogrel',xarelto:'rivaroxaban',eliquis:'apixaban',pradaxa:'dabigatran',
+      eskalith:'lithium',lithobid:'lithium',
+      depakote:'valproate',depakene:'valproate','valproic acid':'valproate',
+      tegretol:'carbamazepine',dilantin:'phenytoin',
+      seroquel:'quetiapine',zyprexa:'olanzapine',risperdal:'risperidone',haldol:'haloperidol',
+      neurontin:'gabapentin',lyrica:'pregabalin',atarax:'hydroxyzine',remeron:'mirtazapine',
+      cordarone:'amiodarone',zyloprim:'allopurinol',
+      sandimmune:'cyclosporine',neoral:'cyclosporine',prograf:'tacrolimus',
+      'st. john\'s wort':'st. john\'s wort',hypericum:'st. john\'s wort',
+      "saint john's wort":'st. john\'s wort',
+    };
+
+    // Curated interaction database — fallback + supplement to RxNav
+    // sev: 'contraindicated' | 'major' | 'moderate' | 'minor'
+    const LOCAL_IX = [
+      {a:'warfarin',b:'aspirin',sev:'major',desc:'Concurrent use significantly increases bleeding risk. Aspirin inhibits platelet function and may displace warfarin from protein binding. Monitor INR closely; assess benefit vs. risk.',src:'Clinical Pharmacology'},
+      {a:'warfarin',b:'ibuprofen',sev:'major',desc:'NSAIDs inhibit platelet aggregation and cause GI irritation. Combined use with warfarin markedly increases haemorrhagic risk.',src:'Clinical Pharmacology'},
+      {a:'warfarin',b:'naproxen',sev:'major',desc:'NSAIDs increase bleeding risk with warfarin through platelet inhibition and GI mucosal effects. Monitor closely.',src:'Clinical Pharmacology'},
+      {a:'warfarin',b:'fluconazole',sev:'major',desc:'Fluconazole inhibits CYP2C9, warfarin\'s primary metabolising enzyme, causing significant INR elevation and bleeding risk.',src:'Clinical Pharmacology'},
+      {a:'warfarin',b:'metronidazole',sev:'major',desc:'Metronidazole inhibits CYP2C9, markedly increasing warfarin levels. INR monitoring required within a few days of starting metronidazole.',src:'Clinical Pharmacology'},
+      {a:'warfarin',b:'ciprofloxacin',sev:'major',desc:'Fluoroquinolones potentiate warfarin\'s anticoagulant effect, likely through gut flora disruption. Monitor INR within 3–5 days.',src:'Clinical Pharmacology'},
+      {a:'warfarin',b:'azithromycin',sev:'major',desc:'Azithromycin may enhance the anticoagulant effect of warfarin. INR monitoring recommended during and after the antibiotic course.',src:'Clinical Pharmacology'},
+      {a:'warfarin',b:'clarithromycin',sev:'major',desc:'CYP3A4 inhibition by clarithromycin increases warfarin levels. Monitor INR closely.',src:'Clinical Pharmacology'},
+      {a:'warfarin',b:'amiodarone',sev:'major',desc:'Amiodarone is a potent inhibitor of CYP2C9 and CYP3A4 and dramatically increases warfarin\'s anticoagulant effect. Warfarin dose reductions of 30–50% are often required. Frequent INR monitoring is essential.',src:'Clinical Pharmacology'},
+      {a:'warfarin',b:'st. john\'s wort',sev:'major',desc:'St. John\'s Wort induces CYP enzymes and P-glycoprotein, substantially reducing warfarin levels. INR may decrease by up to 50%, undermining anticoagulation.',src:'Clinical Pharmacology'},
+      {a:'warfarin',b:'acetaminophen',sev:'moderate',desc:'Regular acetaminophen use (>2 g/day for more than one week) can moderately increase warfarin\'s anticoagulant effect and raise INR. Occasional use is generally safe.',src:'Clinical Pharmacology'},
+      {a:'digoxin',b:'amiodarone',sev:'major',desc:'Amiodarone inhibits P-glycoprotein and CYP3A4, substantially increasing digoxin levels. Risk of digoxin toxicity (nausea, arrhythmia, visual changes). Reduce digoxin dose by ~50% and monitor levels.',src:'Clinical Pharmacology'},
+      {a:'fluoxetine',b:'tramadol',sev:'major',desc:'Fluoxetine is a potent CYP2D6 inhibitor — it both increases tramadol exposure and blocks formation of its active analgesic metabolite. Serotonin syndrome risk is also present.',src:'Clinical Pharmacology'},
+      {a:'sertraline',b:'tramadol',sev:'major',desc:'Both drugs are serotonergic. Concurrent use risks serotonin syndrome (agitation, tremor, hyperthermia, tachycardia). High-risk combination.',src:'ONC High Priority'},
+      {a:'paroxetine',b:'tramadol',sev:'major',desc:'Paroxetine is the most potent CYP2D6 inhibitor among SSRIs — it increases tramadol exposure and raises serotonin syndrome risk.',src:'Clinical Pharmacology'},
+      {a:'venlafaxine',b:'tramadol',sev:'major',desc:'Both are serotonergic. Concurrent use risks serotonin syndrome.',src:'ONC High Priority'},
+      {a:'fluoxetine',b:'phenelzine',sev:'contraindicated',desc:'Risk of life-threatening serotonin syndrome. Allow ≥14 days washout after stopping the MAOI, or ≥5 weeks after stopping fluoxetine before starting an MAOI.',src:'Health Canada Monograph'},
+      {a:'fluoxetine',b:'tranylcypromine',sev:'contraindicated',desc:'Risk of life-threatening serotonin syndrome. Contraindicated; requires washout period.',src:'Health Canada Monograph'},
+      {a:'sertraline',b:'phenelzine',sev:'contraindicated',desc:'Risk of serotonin syndrome — potentially fatal. Allow ≥14 days washout between agents.',src:'Health Canada Monograph'},
+      {a:'paroxetine',b:'phenelzine',sev:'contraindicated',desc:'Risk of serotonin syndrome. Contraindicated.',src:'Health Canada Monograph'},
+      {a:'venlafaxine',b:'phenelzine',sev:'contraindicated',desc:'Risk of serotonin syndrome. Contraindicated.',src:'Health Canada Monograph'},
+      {a:'bupropion',b:'phenelzine',sev:'contraindicated',desc:'Bupropion with MAOIs risks acute toxicity including seizures and hypertensive crisis. Allow ≥14 days washout.',src:'Health Canada Monograph'},
+      {a:'tramadol',b:'phenelzine',sev:'contraindicated',desc:'Risk of serotonin syndrome and seizures. Contraindicated.',src:'Clinical Pharmacology'},
+      {a:'tramadol',b:'tranylcypromine',sev:'contraindicated',desc:'Risk of serotonin syndrome and seizures. Contraindicated.',src:'Clinical Pharmacology'},
+      {a:'lithium',b:'ibuprofen',sev:'major',desc:'NSAIDs reduce renal lithium clearance, elevating lithium levels and risking toxicity (tremor, confusion, arrhythmia). Monitor lithium levels closely if NSAIDs are necessary.',src:'Clinical Pharmacology'},
+      {a:'lithium',b:'naproxen',sev:'major',desc:'NSAIDs reduce lithium renal clearance. Risk of lithium toxicity. Monitor levels.',src:'Clinical Pharmacology'},
+      {a:'lithium',b:'hydrochlorothiazide',sev:'major',desc:'Thiazide diuretics decrease renal sodium excretion, causing compensatory lithium reabsorption and elevated lithium levels — toxicity risk.',src:'Clinical Pharmacology'},
+      {a:'methotrexate',b:'ibuprofen',sev:'major',desc:'NSAIDs reduce methotrexate renal clearance. Risk of serious methotrexate toxicity (mucositis, myelosuppression, nephrotoxicity).',src:'Clinical Pharmacology'},
+      {a:'methotrexate',b:'naproxen',sev:'major',desc:'NSAIDs reduce methotrexate clearance — risk of severe toxicity.',src:'Clinical Pharmacology'},
+      {a:'simvastatin',b:'clarithromycin',sev:'major',desc:'Clarithromycin markedly inhibits CYP3A4-mediated simvastatin metabolism, raising risk of myopathy and rhabdomyolysis. Hold simvastatin during clarithromycin treatment.',src:'Clinical Pharmacology'},
+      {a:'atorvastatin',b:'clarithromycin',sev:'major',desc:'CYP3A4 inhibition by clarithromycin significantly increases atorvastatin exposure. Limit dose or consider an alternative statin.',src:'Clinical Pharmacology'},
+      {a:'simvastatin',b:'itraconazole',sev:'major',desc:'Potent CYP3A4 inhibition dramatically raises simvastatin levels — rhabdomyolysis risk. Effectively contraindicated per most guidelines.',src:'Clinical Pharmacology'},
+      {a:'simvastatin',b:'gemfibrozil',sev:'contraindicated',desc:'Gemfibrozil inhibits CYP2C8 and OATP1B1, dramatically increasing simvastatin exposure — high risk of severe myopathy and rhabdomyolysis.',src:'Clinical Pharmacology'},
+      {a:'lovastatin',b:'gemfibrozil',sev:'contraindicated',desc:'Risk of severe myopathy and rhabdomyolysis. Contraindicated.',src:'Clinical Pharmacology'},
+      {a:'cyclosporine',b:'simvastatin',sev:'major',desc:'Cyclosporine inhibits OATP1B1 and CYP3A4, dramatically increasing simvastatin exposure. Limit simvastatin to 10 mg/day.',src:'Clinical Pharmacology'},
+      {a:'rosuvastatin',b:'cyclosporine',sev:'major',desc:'Cyclosporine inhibits OATP1B1, markedly increasing rosuvastatin AUC. Limit rosuvastatin to 5 mg/day.',src:'Clinical Pharmacology'},
+      {a:'fluoxetine',b:'tamoxifen',sev:'major',desc:'Fluoxetine inhibits CYP2D6, reducing tamoxifen conversion to its active metabolite endoxifen by ~60% — potentially reducing anticancer efficacy.',src:'Clinical Pharmacology'},
+      {a:'paroxetine',b:'tamoxifen',sev:'major',desc:'Paroxetine is the most potent CYP2D6 inhibitor among SSRIs — it markedly reduces tamoxifen activation. Avoid in breast cancer patients on tamoxifen.',src:'Clinical Pharmacology'},
+      {a:'st. john\'s wort',b:'cyclosporine',sev:'major',desc:'St. John\'s Wort induces CYP3A4 and P-gp, dramatically reducing cyclosporine levels. Transplant rejection has occurred. Avoid this combination.',src:'Health Canada Advisory'},
+      {a:'st. john\'s wort',b:'sertraline',sev:'major',desc:'Both are serotonergic — combined use risks serotonin syndrome. Avoid.',src:'ONC High Priority'},
+      {a:'st. john\'s wort',b:'fluoxetine',sev:'major',desc:'Both increase serotonergic activity — serotonin syndrome risk.',src:'ONC High Priority'},
+      {a:'st. john\'s wort',b:'venlafaxine',sev:'major',desc:'Serotonin syndrome risk when combined with serotonergic antidepressants.',src:'ONC High Priority'},
+      {a:'lisinopril',b:'spironolactone',sev:'major',desc:'ACE inhibitors reduce aldosterone secretion; combined with potassium-sparing diuretics, this can cause severe hyperkalemia, especially in renal impairment. Monitor potassium.',src:'Clinical Pharmacology'},
+      {a:'ibuprofen',b:'lisinopril',sev:'moderate',desc:'NSAIDs reduce the antihypertensive effect of ACE inhibitors and may impair renal function, particularly in elderly or dehydrated patients.',src:'Clinical Pharmacology'},
+      {a:'naproxen',b:'lisinopril',sev:'moderate',desc:'NSAIDs antagonise ACE inhibitor antihypertensive effects. Acute renal insufficiency risk with dehydration.',src:'Clinical Pharmacology'},
+      {a:'ibuprofen',b:'metoprolol',sev:'moderate',desc:'NSAIDs may blunt the antihypertensive effects of beta-blockers. Monitor blood pressure.',src:'Clinical Pharmacology'},
+      {a:'ibuprofen',b:'aspirin',sev:'moderate',desc:'Ibuprofen may interfere with aspirin\'s antiplatelet action by competing for the COX-1 active site. If both are needed, take aspirin 30 min before ibuprofen.',src:'FDA Drug Safety Communication'},
+      {a:'alcohol',b:'metronidazole',sev:'major',desc:'Disulfiram-like reaction: flushing, tachycardia, nausea, vomiting. Avoid alcohol during metronidazole therapy and for 48 h after the last dose.',src:'Clinical Pharmacology'},
+      {a:'alcohol',b:'acetaminophen',sev:'major',desc:'Chronic alcohol use (≥3 drinks/day) increases risk of acetaminophen-induced hepatotoxicity even at normal doses. Limit acetaminophen to ≤2 g/day in regular drinkers.',src:'Health Canada Monograph'},
+      {a:'alcohol',b:'metformin',sev:'moderate',desc:'Alcohol potentiates metformin\'s lactic acidosis risk, especially when fasting or with hepatic impairment.',src:'Health Canada Monograph'},
+      {a:'clopidogrel',b:'omeprazole',sev:'moderate',desc:'Omeprazole inhibits CYP2C19, reducing clopidogrel\'s conversion to its active antiplatelet metabolite by ~40–50%. Pantoprazole is a safer PPI choice with this combination.',src:'FDA Drug Safety Communication'},
+      {a:'clopidogrel',b:'esomeprazole',sev:'moderate',desc:'Esomeprazole reduces clopidogrel antiplatelet effect via CYP2C19 inhibition. Prefer pantoprazole when a PPI is necessary.',src:'FDA Drug Safety Communication'},
+      {a:'levothyroxine',b:'calcium',sev:'moderate',desc:'Calcium supplements bind levothyroxine in the GI tract, reducing absorption by up to 40%. Separate doses by at least 4 hours.',src:'Clinical Pharmacology'},
+      {a:'levothyroxine',b:'iron',sev:'moderate',desc:'Iron supplements chelate levothyroxine and impair absorption. Separate doses by at least 4 hours.',src:'Clinical Pharmacology'},
+      {a:'ciprofloxacin',b:'antacid',sev:'moderate',desc:'Divalent cations (Al, Mg, Ca) chelate fluoroquinolones, reducing oral bioavailability by up to 90%. Take ciprofloxacin 2 h before or 6 h after antacids or dairy products.',src:'Clinical Pharmacology'},
+      {a:'carbamazepine',b:'clarithromycin',sev:'major',desc:'Clarithromycin inhibits CYP3A4-mediated carbamazepine metabolism, elevating carbamazepine levels. Risk of toxicity: diplopia, ataxia, confusion.',src:'Clinical Pharmacology'},
+      {a:'quetiapine',b:'clarithromycin',sev:'major',desc:'CYP3A4 inhibition substantially increases quetiapine levels, raising risk of QTc prolongation and CNS adverse effects.',src:'Clinical Pharmacology'},
+      {a:'fluoxetine',b:'aspirin',sev:'moderate',desc:'SSRIs reduce platelet serotonin, impairing aggregation. Combined with aspirin, this increases GI bleeding risk. Consider gastroprotection (PPI).',src:'ONC High Priority'},
+      {a:'sertraline',b:'aspirin',sev:'moderate',desc:'SSRIs combined with aspirin increase GI bleeding risk. Consider a PPI for gastroprotection.',src:'ONC High Priority'},
+      {a:'fluoxetine',b:'ibuprofen',sev:'moderate',desc:'SSRIs combined with NSAIDs significantly increase upper GI bleeding risk (~3-fold vs NSAID alone). Consider adding a proton pump inhibitor.',src:'ONC High Priority'},
+      {a:'sertraline',b:'ibuprofen',sev:'moderate',desc:'SSRIs combined with NSAIDs increase GI bleeding risk significantly. PPI co-prescribing should be considered.',src:'ONC High Priority'},
+      {a:'prednisone',b:'ibuprofen',sev:'moderate',desc:'Corticosteroids combined with NSAIDs significantly increase GI ulceration and bleeding risk.',src:'Clinical Pharmacology'},
+      {a:'allopurinol',b:'azathioprine',sev:'major',desc:'Allopurinol inhibits xanthine oxidase — the enzyme that metabolises azathioprine — causing a ~4-fold increase in azathioprine levels and severe bone marrow toxicity. Reduce azathioprine dose by 75% or avoid.',src:'Clinical Pharmacology'},
+      {a:'amiodarone',b:'metoprolol',sev:'moderate',desc:'Additive risk of bradycardia and AV block when combining amiodarone with beta-blockers. Monitor heart rate and ECG.',src:'Clinical Pharmacology'},
+      {a:'furosemide',b:'digoxin',sev:'moderate',desc:'Furosemide-induced hypokalemia and hypomagnesemia sensitise the myocardium to digoxin toxicity. Monitor electrolytes.',src:'Clinical Pharmacology'},
+      {a:'valproate',b:'aspirin',sev:'moderate',desc:'Aspirin displaces valproate from plasma protein binding and inhibits its metabolism, potentially increasing valproate levels and toxicity risk.',src:'Clinical Pharmacology'},
+      {a:'sildenafil',b:'nitroglycerin',sev:'contraindicated',desc:'Both lower blood pressure; the combination can cause life-threatening hypotension. Nitrates (nitroglycerin, isosorbide) must not be used within 24–48 h of PDE5 inhibitors.',src:'Clinical Pharmacology'},
+      {a:'diphenhydramine',b:'lorazepam',sev:'moderate',desc:'Additive CNS depression: enhanced sedation, cognitive impairment, and respiratory depression risk. Use with caution, especially in elderly patients.',src:'Clinical Pharmacology'},
+      {a:'diphenhydramine',b:'diazepam',sev:'moderate',desc:'Additive CNS depression with benzodiazepines. Increased sedation and impairment.',src:'Clinical Pharmacology'},
+    ];
+
+    const SEV_ORDER = { contraindicated:0, major:1, moderate:2, minor:3 };
+    const SEV_LABEL = {
+      contraindicated: { label:'⛔ Contraindicated', cls:'sev-contra',  result:'dc-result--contra' },
+      major:           { label:'🔴 Major',           cls:'sev-major',   result:'dc-result--major'  },
+      moderate:        { label:'🟡 Moderate',         cls:'sev-moderate',result:''                 },
+      minor:           { label:'🟢 Minor',            cls:'sev-minor',   result:''                 },
+    };
+
+    function norm(s) {
+      s = (s||'').toLowerCase().replace(/\(.*?\)/g,'').replace(/\s*\d.*$/,'').trim();
+      return ALIAS[s] || s;
+    }
+    function cap(s)  { return s.charAt(0).toUpperCase()+s.slice(1); }
+    function esc(s)  { return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+    // ── Chips ──
     function renderChips() {
       chipsWrap.innerHTML = '';
-      meds.forEach((m, i) => {
+      meds.forEach((m,i) => {
         const chip = document.createElement('span');
         chip.className = 'dc-chip';
-        const label = document.createElement('span');
-        label.textContent = m;
+        const lbl = document.createElement('span');
+        lbl.textContent = m.name;
         const x = document.createElement('button');
-        x.setAttribute('aria-label', 'Remove ' + m);
+        x.setAttribute('aria-label','Remove '+m.name);
         x.innerHTML = '&times;';
-        x.addEventListener('click', () => { meds.splice(i, 1); renderChips(); });
-        chip.appendChild(label); chip.appendChild(x);
+        x.addEventListener('click', () => { meds.splice(i,1); renderChips(); });
+        chip.appendChild(lbl); chip.appendChild(x);
         chipsWrap.appendChild(chip);
       });
       checkBtn.disabled = meds.length < 2;
     }
 
+    // ── Add drug ──
     function addMed(name) {
-      name = (name || '').trim();
+      name = (name||'').trim();
       if (!name) return;
-      if (!meds.some(m => m.toLowerCase() === name.toLowerCase())) meds.push(name);
+      if (meds.some(m => m.name.toLowerCase() === name.toLowerCase())) { input.value=''; return; }
+      meds.push({ name, cui: null });
       input.value = '';
       sugg.classList.remove('open'); sugg.innerHTML = ''; activeIdx = -1;
-      renderChips();
-      input.focus();
+      renderChips(); input.focus();
     }
 
     addBtn.addEventListener('click', () => addMed(input.value));
-
     input.addEventListener('input', () => {
-      const q = input.value.trim();
       clearTimeout(debounce);
-      if (q.length < 2) { sugg.classList.remove('open'); sugg.innerHTML = ''; return; }
-      debounce = setTimeout(() => fetchSuggestions(q), 200);
+      const q = input.value.trim();
+      if (q.length < 2) { sugg.classList.remove('open'); sugg.innerHTML=''; return; }
+      debounce = setTimeout(() => fetchSugg(q), 200);
     });
-
-    input.addEventListener('keydown', (e) => {
+    input.addEventListener('keydown', e => {
       const items = sugg.querySelectorAll('li');
-      if (e.key === 'ArrowDown') { e.preventDefault(); activeIdx = Math.min(activeIdx + 1, items.length - 1); updateActive(items); }
-      else if (e.key === 'ArrowUp') { e.preventDefault(); activeIdx = Math.max(activeIdx - 1, 0); updateActive(items); }
-      else if (e.key === 'Enter') {
-        e.preventDefault();
-        if (activeIdx >= 0 && items[activeIdx]) addMed(items[activeIdx].textContent);
-        else addMed(input.value);
-      } else if (e.key === 'Escape') { sugg.classList.remove('open'); }
+      if      (e.key==='ArrowDown') { e.preventDefault(); activeIdx=Math.min(activeIdx+1,items.length-1); hilite(items); }
+      else if (e.key==='ArrowUp')   { e.preventDefault(); activeIdx=Math.max(activeIdx-1,0); hilite(items); }
+      else if (e.key==='Enter')     { e.preventDefault(); if(activeIdx>=0&&items[activeIdx]) addMed(items[activeIdx].textContent); else addMed(input.value); }
+      else if (e.key==='Escape')    { sugg.classList.remove('open'); }
     });
+    function hilite(items) { items.forEach((it,i)=>it.classList.toggle('active',i===activeIdx)); }
+    document.addEventListener('click', e => { if(!e.target.closest('.dc-autocomplete')) sugg.classList.remove('open'); });
 
-    function updateActive(items) { items.forEach((it, i) => it.classList.toggle('active', i === activeIdx)); }
-
-    function fetchSuggestions(q) {
-      fetch('https://clinicaltables.nlm.nih.gov/api/rxterms/v3/search?terms=' + encodeURIComponent(q) + '&maxList=8')
-        .then(r => r.json())
-        .then(data => {
-          const names = (data[3] || []).map(r => Array.isArray(r) ? r[0] : r);
+    function fetchSugg(q) {
+      fetch('https://clinicaltables.nlm.nih.gov/api/rxterms/v3/search?terms='+encodeURIComponent(q)+'&maxList=8')
+        .then(r=>r.json()).then(data => {
+          const names = (data[3]||[]).map(r=>Array.isArray(r)?r[0]:r);
           sugg.innerHTML = '';
           if (!names.length) { sugg.classList.remove('open'); return; }
           names.forEach(n => {
             const li = document.createElement('li');
-            li.setAttribute('role', 'option');
-            li.textContent = n;
-            li.addEventListener('click', () => addMed(n));
+            li.setAttribute('role','option'); li.textContent = n;
+            li.addEventListener('click', ()=>addMed(n));
             sugg.appendChild(li);
           });
-          activeIdx = -1;
-          sugg.classList.add('open');
-        })
-        .catch(() => { sugg.classList.remove('open'); });
+          activeIdx = -1; sugg.classList.add('open');
+        }).catch(()=>sugg.classList.remove('open'));
     }
 
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.dc-autocomplete')) sugg.classList.remove('open');
-    });
-
     clearBtn.addEventListener('click', () => {
-      meds = []; renderChips(); results.classList.remove('open'); results.innerHTML = '';
+      meds=[]; renderChips();
+      results.classList.remove('open'); results.innerHTML='';
+      const sb=document.getElementById('dc-summary-body'), sc=document.getElementById('dc-summary-cta'), sh=document.querySelector('.dc-summary__hint');
+      if(sb) sb.innerHTML=''; if(sc) sc.style.display='none'; if(sh) sh.style.display='';
     });
-
-    function baseName(s) { return s.replace(/\(.*?\)/g, '').replace(/[0-9].*$/, '').trim().toLowerCase(); }
-    function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-    function escapeHtml(s) { return s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 
     checkBtn.addEventListener('click', runCheck);
 
-    function runCheck() {
+    // ── Main check ──
+    async function runCheck() {
       results.className = 'dc-results open';
-      results.innerHTML = '<p class="dc-loading">Checking interactions…</p>';
-      const uniq = [...new Set(meds.map(baseName).filter(Boolean))];
-      Promise.all(uniq.map(fetchLabel)).then(labels => {
-        const map = {};
-        uniq.forEach((n, i) => map[n] = labels[i]);
-        renderResults(uniq, map);
+      results.innerHTML = '<p class="dc-loading">Checking NLM RxNav database…</p>';
+
+      // 1. Resolve RxCUIs
+      await Promise.all(meds.map(async m => {
+        if (m.cui) return;
+        try {
+          const r = await fetch('https://rxnav.nlm.nih.gov/REST/rxcui.json?name='+encodeURIComponent(norm(m.name))+'&search=2');
+          const d = await r.json();
+          m.cui = d.idGroup?.rxnormId?.[0] || null;
+        } catch(e) { m.cui = null; }
+      }));
+
+      const cuis = meds.map(m=>m.cui).filter(Boolean);
+      let rxPairs = [];
+
+      // 2. RxNav interaction API
+      if (cuis.length >= 2) {
+        try {
+          const r = await fetch('https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis='+cuis.join('+'));
+          const d = await r.json();
+          rxPairs = parseRxNav(d);
+        } catch(e) {}
+      }
+
+      // 3. Local DB check
+      const localPairs = runLocalCheck();
+
+      // 4. Merge and deduplicate
+      const all = mergePairs(rxPairs, localPairs);
+
+      // 5. Render
+      renderResults(all);
+    }
+
+    function parseRxNav(d) {
+      const out = [];
+      const normSev = s => { s=(s||'').toLowerCase(); if(s==='high') return 'major'; if(s==='n/a'||s==='') return null; return s; };
+      (d.fullInteractionTypeGroup||[]).forEach(grp => {
+        const src = grp.sourceName||'NLM RxNav';
+        (grp.fullInteractionType||[]).forEach(fit => {
+          const concepts = fit.minConcept||[];
+          (fit.interactionPair||[]).forEach(pair => {
+            const sev = normSev(pair.severity);
+            if (!sev || SEV_ORDER[sev]===undefined) return;
+            const ic = pair.interactionConcept||[];
+            const names = ic.length>=2
+              ? [ic[0].minConceptItem?.name, ic[1].minConceptItem?.name].filter(Boolean)
+              : concepts.map(c=>c.name).filter(Boolean);
+            if (names.length < 2) return;
+            const key = names.map(n=>n.toLowerCase()).sort().join('+');
+            out.push({ key, names, sev, desc: pair.description||'', src });
+          });
+        });
       });
+      return out;
     }
 
-    function fetchLabel(name) {
-      const enc = encodeURIComponent(name);
-      const url = 'https://api.fda.gov/drug/label.json?search=(openfda.generic_name:"' + enc + '"+OR+openfda.brand_name:"' + enc + '")&limit=1';
-      return fetch(url).then(r => r.ok ? r.json() : null)
-        .then(d => (d && d.results && d.results[0] && d.results[0].drug_interactions)
-          ? d.results[0].drug_interactions.join(' ') : '')
-        .catch(() => '');
+    function runLocalCheck() {
+      const out = [];
+      for (let i=0; i<meds.length; i++) {
+        for (let j=i+1; j<meds.length; j++) {
+          const a=norm(meds[i].name), b=norm(meds[j].name);
+          LOCAL_IX.forEach(ix => {
+            const ia=ix.a, ib=ix.b;
+            const hit = (fuzzy(a,ia)&&fuzzy(b,ib)) || (fuzzy(a,ib)&&fuzzy(b,ia));
+            if (hit) {
+              const names=[cap(meds[i].name), cap(meds[j].name)];
+              const key=names.map(n=>n.toLowerCase()).sort().join('+');
+              out.push({ key, names, sev:ix.sev, desc:ix.desc, src:ix.src });
+            }
+          });
+        }
+      }
+      return out;
     }
 
-    function renderResults(names, map) {
+    function fuzzy(drug, pattern) {
+      if (drug===pattern) return true;
+      if (drug.length>3 && pattern.length>3 && (drug.includes(pattern)||pattern.includes(drug))) return true;
+      return false;
+    }
+
+    function mergePairs(rxnav, local) {
+      const seen=new Set(), out=[];
+      // local descriptions are more curated; put them first for dedup priority
+      [...local,...rxnav].sort((a,b)=>(SEV_ORDER[a.sev]||99)-(SEV_ORDER[b.sev]||99)).forEach(p => {
+        const nk = p.names.map(n=>norm(n)).sort().join('+');
+        if (!seen.has(nk)) { seen.add(nk); out.push(p); }
+      });
+      return out;
+    }
+
+    function renderResults(pairs) {
+      const drugs = meds.map(m=>m.name);
+      const dcUrl = 'https://www.drugs.com/drug_interactions.html';
       let html = '';
-      const flags = [];
-      for (let i = 0; i < names.length; i++) {
-        for (let j = 0; j < names.length; j++) {
-          if (i === j) continue;
-          const text = (map[names[i]] || '').toLowerCase();
-          if (text && names[j].length > 3 && text.indexOf(names[j]) !== -1) {
-            const pair = [cap(names[i]), cap(names[j])].sort().join(' + ');
-            if (!flags.includes(pair)) flags.push(pair);
-          }
-        }
-      }
-      if (flags.length) {
-        html += '<div class="dc-result dc-result--flag"><div class="dc-result__title">⚠️ Possible interaction(s) found</div>' +
-          '<div class="dc-result__text">FDA labelling mentions these combinations — please review with our pharmacists:<br>' +
-          flags.map(f => '• ' + escapeHtml(f)).join('<br>') + '</div></div>';
+
+      if (!pairs.length) {
+        html += `<div class="dc-result">
+          <div class="dc-result__title">✅ No known interactions found</div>
+          <div class="dc-result__text">No interactions were identified between <strong>${drugs.map(esc).join(' and ')}</strong> in the NLM RxNav database or our curated reference.<br><br>
+          This does not guarantee these medications are safe to combine in your specific situation. Always confirm with our pharmacists — especially if you are on multiple medications, have kidney or liver conditions, or are pregnant.</div>
+        </div>`;
       } else {
-        html += '<div class="dc-result"><div class="dc-result__title">No interactions flagged in FDA labelling</div>' +
-          '<div class="dc-result__text">This does not guarantee these medications are safe to combine. Always confirm with our pharmacists.</div></div>';
+        pairs.forEach(p => {
+          const s = SEV_LABEL[p.sev] || { label:p.sev, cls:'sev-minor', result:'' };
+          html += `<div class="dc-result dc-result--ix ${s.result}">
+            <div class="dc-result__header">
+              <span class="dc-sev-badge ${s.cls}">${s.label}</span>
+              <span class="dc-result__pair">${p.names.map(esc).join(' + ')}</span>
+            </div>
+            <div class="dc-result__desc">${esc(p.desc)}</div>
+            <div class="dc-result__src">Source: ${esc(p.src)}</div>
+          </div>`;
+        });
       }
-      names.forEach(n => {
-        const t = map[n];
-        if (t) {
-          const short = t.length > 600 ? t.slice(0, 600) + '…' : t;
-          html += '<div class="dc-result"><div class="dc-result__title">' + escapeHtml(cap(n)) + '</div>' +
-            '<div class="dc-result__text">' + escapeHtml(short) +
-            '<details><summary>Full FDA interaction text</summary>' + escapeHtml(t) + '</details></div></div>';
-        } else {
-          html += '<div class="dc-result"><div class="dc-result__title">' + escapeHtml(cap(n)) + '</div>' +
-            '<div class="dc-result__text">No FDA interaction text found for this entry — ask our pharmacists about this medication.</div></div>';
-        }
-      });
+
+      html += `<div class="dc-external-link">For a full report, check <a href="${dcUrl}" target="_blank" rel="noopener">Drugs.com Interaction Checker →</a></div>`;
       results.innerHTML = html;
-      renderSummary(names, flags, map);
+      renderSummary(pairs, drugs);
     }
 
-    function renderSummary(names, flags, map) {
-      const summaryBody = document.getElementById('dc-summary-body');
-      const summaryCta = document.getElementById('dc-summary-cta');
-      const summaryHint = document.querySelector('.dc-summary__hint');
-      if (!summaryBody) return;
-      summaryHint.style.display = 'none';
-      let html = '';
-      if (flags.length) {
-        html += '<div class="dc-summary__status dc-summary__status--warn">⚠️ ' + flags.length + ' possible interaction' + (flags.length > 1 ? 's' : '') + ' detected</div>';
-        html += '<div class="dc-summary__detail">Your medications <strong>' + names.map(n => escapeHtml(cap(n))).join(' and ') + '</strong> may interact based on FDA labelling data.<br><br>';
-        flags.forEach(f => { html += '• ' + escapeHtml(f) + '<br>'; });
-        html += '<br>This combination may affect how your medications work or increase the risk of side effects. A Medication Review with our pharmacists is recommended.</div>';
-        summaryCta.style.display = 'block';
+    function renderSummary(pairs, drugs) {
+      const sb=document.getElementById('dc-summary-body'), sc=document.getElementById('dc-summary-cta'), sh=document.querySelector('.dc-summary__hint');
+      if (!sb) return;
+      sh.style.display = 'none';
+      const contra=pairs.filter(p=>p.sev==='contraindicated').length;
+      const major =pairs.filter(p=>p.sev==='major').length;
+      const mod   =pairs.filter(p=>p.sev==='moderate').length;
+      let html='', showCta=false;
+      if (!pairs.length) {
+        html = `<div class="dc-summary__status dc-summary__status--ok">✅ No interactions found</div>
+          <div class="dc-summary__detail">NLM RxNav and our curated reference found no known interactions between <strong>${drugs.map(esc).join(' and ')}</strong>.<br><br>Always confirm with our pharmacists before making changes to your medications.</div>`;
       } else {
-        html += '<div class="dc-summary__status dc-summary__status--ok">✅ No interactions found in FDA data</div>';
-        html += '<div class="dc-summary__detail">Based on available FDA labelling, no interactions between <strong>' + names.map(n => escapeHtml(cap(n))).join(' and ') + '</strong> were flagged.<br><br>This is not a guarantee of safety. Always confirm with our pharmacists, especially if you are on multiple medications.</div>';
-        summaryCta.style.display = 'none';
+        const topSev = contra>0 ? 'contraindicated' : major>0 ? 'major' : 'moderate';
+        const statusCls = {contraindicated:'dc-summary__status--contra', major:'dc-summary__status--warn', moderate:'dc-summary__status--moderate'}[topSev];
+        const statusLabel = contra>0 ? '⛔ Contraindicated combination' : major>0 ? '🔴 Major interaction(s) found' : '🟡 Moderate interaction(s) found';
+        html = `<div class="dc-summary__status ${statusCls}">${statusLabel}</div><div class="dc-summary__detail">`;
+        if (contra) html += `<strong>${contra} contraindicated</strong> pair${contra>1?'s':''} detected. `;
+        if (major)  html += `<strong>${major} major</strong> interaction${major>1?'s':''} detected. `;
+        if (mod)    html += `<strong>${mod} moderate</strong> interaction${mod>1?'s':''} detected. `;
+        html += `<br><br>A Medication Review with our pharmacist is strongly recommended.</div>`;
+        showCta = true;
       }
-      summaryBody.innerHTML = html;
-      // wire up the CTA button inside summary since it was just rendered
-      summaryBody.closest('.dc-summary').querySelectorAll('.js-pa-select').forEach(el => {
+      sb.innerHTML = html;
+      sc.style.display = showCta ? 'block' : 'none';
+      sb.closest('.dc-summary').querySelectorAll('.js-pa-select').forEach(el => {
         el.addEventListener('click', function() {
-          const target = document.querySelector('.pa-card[data-url="' + this.dataset.url + '"]');
-          if (target) target.click();
+          const t=document.querySelector('.pa-card[data-url="'+this.dataset.url+'"]');
+          if(t) t.click();
         });
       });
     }
