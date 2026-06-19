@@ -145,6 +145,30 @@
       background: var(--white); margin: 4px 0; border-radius: 2px;
       transition: transform .2s, opacity .2s;
     }
+    /* ── Services dropdown ───────────────────────── */
+    .nav__has-dropdown { position: relative; }
+    .nav__has-dropdown > a { display: flex; align-items: center; gap: .3rem; }
+    .nav__has-dropdown > a::after { content: '▾'; font-size: .7rem; opacity: .7; }
+    .nav__dropdown {
+      display: none;
+      position: absolute; top: calc(100% + 4px); left: 0;
+      background: var(--teal-deeper);
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.30);
+      padding: .4rem 0;
+      min-width: 190px;
+      z-index: 200;
+    }
+    .nav__has-dropdown:hover .nav__dropdown,
+    .nav__has-dropdown.open .nav__dropdown { display: block; }
+    .nav__dropdown a {
+      display: block; padding: .5rem 1rem;
+      font-size: .85rem; font-weight: 500;
+      color: rgba(255,255,255,.85);
+      border-radius: 0;
+      white-space: nowrap;
+    }
+    .nav__dropdown a:hover { background: rgba(255,255,255,.12); color: #fff; }
 
     /* ── Hero ─────────────────────────────────────────── */
     .hero {
@@ -580,6 +604,10 @@
       .nav__links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: var(--teal-deeper); flex-direction: column; padding: .5rem 1rem 1rem; gap: .1rem; }
       .nav__links.open { display: flex; }
       .nav__toggle { display: block; }
+      .nav__dropdown { position: static; box-shadow: none; border-radius: 0; padding: 0; background: rgba(255,255,255,.06); margin: .2rem 0 .2rem .75rem; }
+      .nav__has-dropdown .nav__dropdown { display: none; }
+      .nav__has-dropdown.open .nav__dropdown { display: block; }
+      .nav__has-dropdown > a::after { margin-left: auto; }
       .welcome__grid,
       .contact__grid,
       .blog-grid { grid-template-columns: 1fr; }
@@ -1099,14 +1127,19 @@
     </button>
     <ul class="nav__links" id="navLinks">
       <li><a href="#welcome">Home</a></li>
-      <li><a href="#booking">Services</a></li>
-      <li><a href="#conditions">Minor Ailments</a></li>
+      <li class="nav__has-dropdown">
+        <a href="#booking">Services</a>
+        <ul class="nav__dropdown">
+          <li><a href="#booking">Book Appointment</a></li>
+          <li><a href="#conditions">Minor Ailments</a></li>
+          <li><a href="#drug-checker">Drug Checker</a></li>
+          <li><a href="#insurance">Insurance</a></li>
+        </ul>
+      </li>
       <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="blog/index.html">Blog</a></li>
       <li><a href="#about">About</a></li>
-      <li><a href="portal.html">Patient Portal</a></li>
-      <li class="nav__cta"><a href="#booking">Book Appointment</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li class="nav__cta"><a href="#booking">Book Now</a></li>
     </ul>
   </div>
 </nav>
@@ -1933,9 +1966,17 @@
 </a>
 
 <script>
+  // Close mobile menu on any link click (except the Services dropdown toggle)
   document.querySelectorAll('.nav__links a').forEach(link => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (e) => {
+      const parent = link.closest('.nav__has-dropdown');
+      if (parent && link === parent.querySelector(':scope > a') && window.innerWidth <= 768) {
+        e.preventDefault();
+        parent.classList.toggle('open');
+        return;
+      }
       document.querySelector('.nav__links').classList.remove('open');
+      document.querySelectorAll('.nav__has-dropdown').forEach(d => d.classList.remove('open'));
     });
   });
 
