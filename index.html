@@ -732,6 +732,56 @@
       border-top: 1px solid var(--border);
       display: flex; flex-wrap: wrap; gap: .6rem;
     }
+
+    /* ── Flags carousel ────────────────────────────── */
+    .flags-section {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .flags-section__tagline {
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-size: 1.3rem; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase;
+      color: var(--teal-deeper); margin-bottom: .4rem;
+    }
+    .flags-section__sub {
+      font-size: .875rem; color: var(--text-muted); margin-bottom: 1.5rem;
+    }
+    .flags-viewport {
+      overflow: hidden; position: relative;
+    }
+    .flags-viewport::before,
+    .flags-viewport::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2;
+      pointer-events: none;
+    }
+    .flags-viewport::before { left: 0; background: linear-gradient(to right, var(--teal-ice), transparent); }
+    .flags-viewport::after  { right: 0; background: linear-gradient(to left, var(--teal-ice), transparent); }
+    .flags-track {
+      display: flex; gap: 2rem; align-items: flex-end;
+      animation: scroll-flags 22s linear infinite;
+      width: max-content;
+    }
+    .flags-track:hover { animation-play-state: paused; }
+    @keyframes scroll-flags {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .flag-item {
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      flex-shrink: 0;
+    }
+    .flag-item img {
+      width: 72px; height: auto; border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.18);
+      display: block;
+    }
+    .flag-item__label {
+      font-size: .72rem; font-weight: 600; color: var(--text-muted);
+      letter-spacing: .03em; text-transform: uppercase;
+    }
     .badge {
       background: var(--teal-ice); border: 1.5px solid var(--border);
       border-radius: 20px; padding: .3rem .85rem;
@@ -1408,6 +1458,37 @@
         ></iframe>
       </div>
     </div>
+
+    <!-- ── Flags carousel ── -->
+    <div class="flags-section">
+      <div class="flags-section__tagline">Celebrating Our Multicultural Community</div>
+      <p class="flags-section__sub">Our pharmacists serve patients in English, Spanish, Italian, Portuguese, Turkish, Polish, and more — because everyone deserves care in their language.</p>
+      <div class="flags-viewport">
+        <div class="flags-track">
+          <!-- set 1 -->
+          <div class="flag-item"><img src="https://flagcdn.com/w80/ca.png" alt="Canada" loading="lazy"><span class="flag-item__label">Canada</span></div>
+          <div class="flag-item"><img src="https://flagcdn.com/w80/cu.png" alt="Cuba" loading="lazy"><span class="flag-item__label">Cuba</span></div>
+          <div class="flag-item"><img src="https://flagcdn.com/w80/pl.png" alt="Poland" loading="lazy"><span class="flag-item__label">Poland</span></div>
+          <div class="flag-item"><img src="https://flagcdn.com/w80/pt.png" alt="Portugal" loading="lazy"><span class="flag-item__label">Portugal</span></div>
+          <div class="flag-item"><img src="https://flagcdn.com/w80/ve.png" alt="Venezuela" loading="lazy"><span class="flag-item__label">Venezuela</span></div>
+          <div class="flag-item"><img src="https://flagcdn.com/w80/sv.png" alt="El Salvador" loading="lazy"><span class="flag-item__label">El Salvador</span></div>
+          <div class="flag-item"><img src="https://flagcdn.com/w80/es.png" alt="Spain" loading="lazy"><span class="flag-item__label">Spain</span></div>
+          <div class="flag-item"><img src="https://flagcdn.com/w80/tr.png" alt="Turkey" loading="lazy"><span class="flag-item__label">Turkey</span></div>
+          <div class="flag-item"><img src="https://flagcdn.com/w80/ph.png" alt="Philippines" loading="lazy"><span class="flag-item__label">Philippines</span></div>
+          <!-- set 2 (duplicate for seamless loop) -->
+          <div class="flag-item"><img src="https://flagcdn.com/w80/ca.png" alt="Canada" loading="lazy"><span class="flag-item__label">Canada</span></div>
+          <div class="flag-item"><img src="https://flagcdn.com/w80/cu.png" alt="Cuba" loading="lazy"><span class="flag-item__label">Cuba</span></div>
+          <div class="flag-item"><img src="https://flagcdn.com/w80/pl.png" alt="Poland" loading="lazy"><span class="flag-item__label">Poland</span></div>
+          <div class="flag-item"><img src="https://flagcdn.com/w80/pt.png" alt="Portugal" loading="lazy"><span class="flag-item__label">Portugal</span></div>
+          <div class="flag-item"><img src="https://flagcdn.com/w80/ve.png" alt="Venezuela" loading="lazy"><span class="flag-item__label">Venezuela</span></div>
+          <div class="flag-item"><img src="https://flagcdn.com/w80/sv.png" alt="El Salvador" loading="lazy"><span class="flag-item__label">El Salvador</span></div>
+          <div class="flag-item"><img src="https://flagcdn.com/w80/es.png" alt="Spain" loading="lazy"><span class="flag-item__label">Spain</span></div>
+          <div class="flag-item"><img src="https://flagcdn.com/w80/tr.png" alt="Turkey" loading="lazy"><span class="flag-item__label">Turkey</span></div>
+          <div class="flag-item"><img src="https://flagcdn.com/w80/ph.png" alt="Philippines" loading="lazy"><span class="flag-item__label">Philippines</span></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
