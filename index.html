@@ -409,9 +409,10 @@
     .pa-iframe-wrap iframe {
       display: block;
       width: 100%;
-      height: 1500px;
+      height: 900px;
       border: none;
       background: var(--white);
+      transition: height .25s ease;
     }
     .booking__note {
       margin-top: 1rem;
@@ -1139,32 +1140,32 @@
     <p class="section__lead">Select a service — the form loads right here, no new window needed.</p>
 
     <div class="pa-cards">
-      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667">
+      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1900">
         <div class="pa-card__icon">📅</div>
         <span class="pa-card__label">Book Appointment</span>
         <span class="pa-card__desc">Schedule a vaccine, consultation, or check-up</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/self-assessment/306667">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1900">
         <div class="pa-card__icon">🩺</div>
         <span class="pa-card__label">Common Conditions</span>
         <span class="pa-card__desc">Get assessed &amp; prescribed for common &amp; minor ailments</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="720">
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review</span>
         <span class="pa-card__desc">One-on-one review of all your medications</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="620">
         <div class="pa-card__icon">🔁</div>
         <span class="pa-card__label">Refill Request</span>
         <span class="pa-card__desc">Request a prescription refill online</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="720">
         <div class="pa-card__icon">🔀</div>
         <span class="pa-card__label">Transfer Your Rx</span>
         <span class="pa-card__desc">Move your prescription to St. Clair Drug Mart</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="520">
         <div class="pa-card__icon">🔑</div>
         <span class="pa-card__label">Patient Login</span>
         <span class="pa-card__desc">Sign in to your PharmAssess patient portal</span>
@@ -1659,12 +1660,26 @@
 
   // PharmAssess tab switching
   const paIframe = document.getElementById('pa-iframe');
+  const paWrap   = document.querySelector('.pa-iframe-wrap');
+  // set initial height from the default active card
+  (function() {
+    var active = document.querySelector('.pa-card.active');
+    if (active) paIframe.style.height = (active.dataset.iframeheight || '900') + 'px';
+  })();
+
+  function switchPaTab(card) {
+    document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    paIframe.style.height = (card.dataset.iframeheight || '900') + 'px';
+    paIframe.src = card.dataset.url;
+    // scroll iframe into view so it appears right below the clicked button
+    setTimeout(function() {
+      paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 80);
+  }
+
   document.querySelectorAll('.pa-card').forEach(card => {
-    card.addEventListener('click', function() {
-      document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
-      this.classList.add('active');
-      paIframe.src = this.dataset.url;
-    });
+    card.addEventListener('click', function() { switchPaTab(this); });
   });
 
   // Common Conditions toggle
@@ -1687,18 +1702,22 @@
       toggleBtn.querySelector('.service-card__arrow').textContent = '▼';
       // activate Common Conditions pa-card visually, load specific condition URL
       document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
-      const saCard = document.querySelector('.pa-card[data-url="https://app.pharmassess.ca/self-assessment/306667"]');
-      if (saCard) saCard.classList.add('active');
+      var saCard = document.querySelector('.pa-card[data-url="https://app.pharmassess.ca/self-assessment/306667"]');
+      if (saCard) {
+        saCard.classList.add('active');
+        paIframe.style.height = (saCard.dataset.iframeheight || '1900') + 'px';
+      }
       paIframe.src = url;
-      document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+      setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
     });
   });
 
   // Buttons elsewhere that jump to booking and pre-select a service tab
   document.querySelectorAll('.js-pa-select').forEach(el => {
-    el.addEventListener('click', function() {
-      const target = document.querySelector('.pa-card[data-url="' + this.dataset.url + '"]');
-      if (target) target.click();   // switches iframe + active state; href="#booking" handles the scroll
+    el.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.querySelector('.pa-card[data-url="' + this.dataset.url + '"]');
+      if (target) switchPaTab(target);
     });
   });
 
