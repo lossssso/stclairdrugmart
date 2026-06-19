@@ -1028,21 +1028,49 @@
     }
     .wa-float:hover .wa-float__tip { opacity: 1; }
 
-    /* ── OCP badge ────────────────────────────────── */
-    .footer__trust { margin-top: 1.25rem; display: flex; justify-content: center; }
-    .ocp-badge {
-      display: inline-flex; align-items: center; gap: .7rem;
-      padding: .55rem 1.2rem; border-radius: 8px;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.07);
-      text-decoration: none; color: inherit;
-      transition: background .15s;
+    /* ── OCP Compliance block ─────────────────────── */
+    .footer__trust { margin-top: 1.25rem; display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+    .ocp-compliance {
+      display: inline-flex; align-items: center; gap: .85rem;
+      padding: .6rem 1.3rem; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.06);
     }
-    .ocp-badge:hover { background: rgba(255,255,255,.14); }
-    .ocp-badge__icon { font-size: 1.45rem; line-height: 1; }
-    .ocp-badge__text { display: flex; flex-direction: column; line-height: 1.35; text-align: left; }
-    .ocp-badge__text strong { font-size: .78rem; color: rgba(255,255,255,.9); }
-    .ocp-badge__text span { font-size: .7rem; color: rgba(255,255,255,.5); }
+    .ocp-compliance__symbol {
+      width: 52px; height: 52px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ocp-compliance__symbol img { width: 52px; height: 52px; object-fit: contain; }
+    .ocp-compliance__symbol--placeholder {
+      border: 1.5px dashed rgba(255,255,255,.3); border-radius: 6px;
+      font-size: .55rem; color: rgba(255,255,255,.35); text-align: center; line-height: 1.3;
+      padding: 4px;
+    }
+    .ocp-compliance__text { display: flex; flex-direction: column; line-height: 1.4; text-align: left; }
+    .ocp-compliance__text strong { font-size: .78rem; color: rgba(255,255,255,.88); }
+    .ocp-compliance__text span { font-size: .68rem; color: rgba(255,255,255,.48); }
+    /* ── Privacy Policy modal ─────────────────────── */
+    .pp-overlay {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,.55); align-items: center; justify-content: center;
+    }
+    .pp-overlay.open { display: flex; }
+    .pp-modal {
+      background: #fff; border-radius: 12px; max-width: 680px; width: 92%;
+      max-height: 88vh; overflow-y: auto; padding: 2rem 2rem 1.5rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,.35); position: relative;
+    }
+    .pp-modal h2 { font-size: 1.35rem; color: var(--teal-deeper); margin-bottom: 1rem; }
+    .pp-modal h3 { font-size: 1rem; color: var(--teal-dark); margin: 1.25rem 0 .4rem; }
+    .pp-modal p, .pp-modal li { font-size: .88rem; color: #374151; line-height: 1.7; margin-bottom: .5rem; }
+    .pp-modal ul { padding-left: 1.25rem; margin-bottom: .5rem; }
+    .pp-close {
+      position: absolute; top: 1rem; right: 1rem;
+      background: none; border: none; font-size: 1.5rem; cursor: pointer;
+      color: #6B7280; line-height: 1;
+    }
+    .pp-close:hover { color: #111; }
+    .pp-link { color: rgba(255,255,255,.55); font-size: .7rem; text-decoration: underline; cursor: pointer; background: none; border: none; }
   </style>
 </head>
 <body>
@@ -1303,6 +1331,9 @@
     </div>
     <p class="booking__note">
       Having trouble? Call us at <a href="tel:+14166548181" style="color:var(--teal-dark);">(416) 654-8181</a> and we'll book you in directly.
+    </p>
+    <p class="booking__note" style="font-size:.74rem;opacity:.65;margin-top:.35rem;">
+      Online booking and patient assessments are processed through <strong>PharmAssess</strong>, a secure third-party pharmacy software platform. By completing a booking or assessment, you agree to PharmAssess's terms of service and privacy practices. St. Clair Drug Mart Pharmacy is not responsible for the privacy practices of PharmAssess.
     </p>
 
     <!-- What we offer -->
@@ -1577,6 +1608,7 @@
         <p class="dc-disclaimer">
           ⚠️ This tool is for general information only and may not capture every interaction.
           Always confirm with our pharmacists before starting, stopping, or combining medications.
+          Medication names are sent anonymously to the U.S. National Library of Medicine (NLM RxNav API) to retrieve interaction data — no personal health information is collected or stored by this website.
         </p>
 
         <div class="dc-credit">
@@ -1660,7 +1692,7 @@
         </div>
         <div class="team-card__body">
           <p class="team-card__name">Elizabeth Da Silva, BScPharm, RPh</p>
-          <p class="team-card__role">Registered Pharmacist &nbsp;·&nbsp; Owner</p>
+          <p class="team-card__role">Registered Pharmacist &nbsp;·&nbsp; Designated Manager &nbsp;·&nbsp; Owner</p>
           <p class="team-card__bio">
             Elizabeth is a licensed pharmacist and owner dedicated to the St. Clair West community.
             Specializing in medication management, minor ailment prescribing, and personalized patient care,
@@ -1874,16 +1906,22 @@
   </div>
 
   <div class="footer__trust">
-    <a class="ocp-badge" href="https://ocpinfo.com/public/find-a-pharmacy/" target="_blank" rel="noopener" title="Verify our registration with the Ontario College of Pharmacists">
-      <span class="ocp-badge__icon">⚕️</span>
-      <span class="ocp-badge__text">
+    <!-- OCP Point of Care Symbol: obtain image file from OCP at 416-962-4861 / [email protected] and replace the placeholder below -->
+    <div class="ocp-compliance">
+      <div class="ocp-compliance__symbol">
+        <img src="ocp-point-of-care.png" alt="OCP Point of Care Symbol" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:block;">
+        <div class="ocp-compliance__symbol--placeholder" style="display:none;">OCP Point of Care Symbol</div>
+      </div>
+      <div class="ocp-compliance__text">
         <strong>Ontario College of Pharmacists</strong>
-        <span>Registered Member Pharmacy</span>
-      </span>
-    </a>
+        <span>Accreditation No. 306667 &nbsp;·&nbsp; Designated Manager: Elizabeth Da Silva, BScPharm, RPh</span>
+        <span>Pharmacist on duty during all operating hours</span>
+      </div>
+    </div>
+    <button class="pp-link" onclick="document.getElementById('pp-overlay').classList.add('open')">Privacy Policy</button>
   </div>
 
-  <p style="margin-top:.75rem;opacity:.45;">&copy; 2025 St. Clair Drug Mart Pharmacy. All rights reserved.</p>
+  <p style="margin-top:.75rem;opacity:.45;">&copy; 2026 St. Clair Drug Mart Pharmacy. All rights reserved.</p>
 </footer>
 
 <!-- ── WhatsApp floating button ──────────────────────────── -->
@@ -2402,6 +2440,69 @@
       });
     }
   })();
+</script>
+<!-- ── Privacy Policy Modal ──────────────────────────── -->
+<div class="pp-overlay" id="pp-overlay" role="dialog" aria-modal="true" aria-labelledby="pp-title">
+  <div class="pp-modal">
+    <button class="pp-close" onclick="document.getElementById('pp-overlay').classList.remove('open')" aria-label="Close">&times;</button>
+    <h2 id="pp-title">Privacy Policy</h2>
+    <p><strong>Effective Date:</strong> July 1, 2026 &nbsp;·&nbsp; <strong>Last Updated:</strong> June 2026</p>
+
+    <h3>1. About Us</h3>
+    <p>St. Clair Drug Mart Pharmacy (&#8220;the Pharmacy&#8221;) is located at 1203 St. Clair Avenue West, Toronto, ON M6E 1B6. We are a <strong>health information custodian</strong> as defined under the <em>Personal Health Information Protection Act, 2004</em> (PHIPA). Our Designated Manager and Privacy Officer is Elizabeth Da Silva, BScPharm, RPh. Contact: <a href="mailto:stclairdrugmart@gmail.com">stclairdrugmart@gmail.com</a> &nbsp;·&nbsp; (416) 654-8181.</p>
+
+    <h3>2. What This Policy Covers</h3>
+    <p>This policy applies to personal health information (PHI) and other personal information we collect through this website and in the course of providing pharmacy services. It does not govern information collected directly by third-party platforms (see Section 6).</p>
+
+    <h3>3. Information We Collect</h3>
+    <ul>
+      <li><strong>Pharmacy services:</strong> Name, date of birth, health card number, medication history, prescriptions, and other PHI necessary to dispense medications and provide clinical services.</li>
+      <li><strong>Drug Interaction Checker:</strong> Medication names you enter are sent anonymously to the U.S. National Library of Medicine (NLM RxNav API). No name, health card, or identifying information is sent. This website does not store any information you enter in the checker.</li>
+      <li><strong>Contact &amp; inquiries:</strong> Name, email, and phone number when you contact us voluntarily.</li>
+      <li><strong>Website usage:</strong> This website does not use tracking cookies, analytics cookies, or advertising cookies. No personal data is collected through cookies.</li>
+    </ul>
+
+    <h3>4. Purposes of Collection</h3>
+    <p>We collect PHI only for the purposes of providing healthcare — dispensing prescriptions, clinical assessments, medication reviews, and pharmacist consultations — or as required by law. We do not sell, rent, or trade your personal information.</p>
+
+    <h3>5. Legal Authority</h3>
+    <p>Collection, use, and disclosure of PHI is governed by PHIPA (Ontario) and, where applicable, the <em>Personal Information Protection and Electronic Documents Act</em> (PIPEDA). We comply with Ontario College of Pharmacists standards for patient record retention and confidentiality.</p>
+
+    <h3>6. Third-Party Platforms</h3>
+    <p><strong>PharmAssess:</strong> Online booking, refill requests, prescription transfers, and minor ailment assessments are processed through PharmAssess (Kroll Computer Systems Inc.), a secure pharmacy software platform. Information you submit through the PharmAssess portal is subject to their privacy policy. St. Clair Drug Mart Pharmacy is not responsible for the privacy practices of PharmAssess.</p>
+    <p><strong>NLM RxNav:</strong> The Drug Interaction Checker sends anonymous drug names only to the U.S. National Library of Medicine public API. No identifying information is transmitted.</p>
+
+    <h3>7. Disclosure</h3>
+    <p>We may disclose PHI without your consent only as permitted or required by PHIPA — for example, to another health information custodian involved in your circle of care, or as required by law. We will not disclose PHI to third parties for marketing purposes.</p>
+
+    <h3>8. Security</h3>
+    <p>We implement physical, administrative, and technical safeguards appropriate to the sensitivity of the information, including secure storage of patient records and restricted access by pharmacy staff.</p>
+
+    <h3>9. Your Rights</h3>
+    <ul>
+      <li>Request access to your PHI held by the Pharmacy.</li>
+      <li>Request correction of inaccurate PHI.</li>
+      <li>Withdraw consent where consent is the legal basis for collection or use.</li>
+      <li>File a complaint with the <a href="https://www.ipc.on.ca" target="_blank" rel="noopener">Information and Privacy Commissioner of Ontario</a>.</li>
+    </ul>
+
+    <h3>10. Contact Our Privacy Officer</h3>
+    <p>For privacy questions, requests, or complaints, contact our Privacy Officer:<br>
+    <strong>Elizabeth Da Silva, BScPharm, RPh</strong><br>
+    1203 St. Clair Avenue West, Toronto, ON M6E 1B6<br>
+    <a href="tel:+14166548181">(416) 654-8181</a> &nbsp;·&nbsp; <a href="mailto:stclairdrugmart@gmail.com">stclairdrugmart@gmail.com</a></p>
+
+    <h3>11. Changes to This Policy</h3>
+    <p>We may update this policy from time to time. The effective date at the top of this page reflects the most recent version.</p>
+  </div>
+</div>
+<script>
+  document.getElementById('pp-overlay').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') document.getElementById('pp-overlay').classList.remove('open');
+  });
 </script>
 </body>
 </html>
