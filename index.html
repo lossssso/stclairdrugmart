@@ -45,7 +45,7 @@
       "https://www.instagram.com/stclairdrugmart/",
       "https://ca.linkedin.com/company/stclairdrugmart"
     ],
-    "hasMap": "https://maps.google.com/?q=1203+St+Clair+Ave+W,+Toronto,+ON",
+    "hasMap": "https://www.google.com/maps/place/St.+Clair+Drug+Mart+Pharmacy/@43.6773961,-79.4468996,17z/data=!3m1!4b1!4m6!3m5!1s0x882b35d5e572114b:0x899add08acb1e556!8m2!3d43.6773551!4d-79.4443087!16s%2Fg%2F11f716bxm1",
     "currenciesAccepted": "CAD",
     "paymentAccepted": "Cash, Credit Card, Debit",
     "priceRange": "$$"
@@ -298,6 +298,45 @@
       transition: opacity .2s, transform .2s;
     }
     .service-card:hover .service-card__arrow { opacity: 1; transform: translateX(0); }
+    .service-card--toggle { background: none; width: 100%; text-align: left; font: inherit; }
+    .service-card--toggle .service-card__arrow { opacity: 1; transform: none; font-size: 1.1rem; transition: transform .2s; }
+    .service-card--toggle.open .service-card__arrow { transform: rotate(90deg); }
+
+    /* ── Conditions panel ─────────────────────────────── */
+    .conditions-panel {
+      display: none; margin-top: 1.25rem;
+      background: var(--teal-ice); border-radius: var(--radius);
+      border: 1.5px solid var(--border); padding: 1.5rem;
+    }
+    .conditions-panel.open { display: block; }
+    .conditions-panel__hd {
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-size: 1rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--teal-deeper); margin-bottom: 1rem;
+    }
+    .conditions-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem;
+    }
+    .condition-chip {
+      display: flex; align-items: center; gap: .45rem;
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: 8px; padding: .55rem .7rem;
+      font-size: .78rem; font-weight: 600; color: var(--teal-deeper);
+      cursor: pointer; text-decoration: none;
+      transition: border-color .15s, box-shadow .15s, transform .1s;
+      position: relative;
+    }
+    .condition-chip:hover { border-color: var(--teal-bright); box-shadow: 0 2px 10px rgba(33,161,168,.15); transform: translateY(-1px); }
+    .condition-chip__icon { font-size: 1.05rem; flex-shrink: 0; }
+    .condition-chip__new {
+      position: absolute; top: -6px; right: -4px;
+      font-size: .6rem; font-weight: 700;
+      background: var(--teal-bright); color: #fff;
+      border-radius: 4px; padding: .05rem .3rem; letter-spacing: .03em;
+    }
+    .conditions-panel__note { margin-top: 1rem; font-size: .78rem; color: var(--text-muted); text-align: center; }
+    @media (max-width: 900px) { .conditions-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 600px) { .conditions-grid { grid-template-columns: repeat(2, 1fr); } }
 
     .btn {
       display: inline-block;
@@ -893,7 +932,7 @@
     <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" aria-label="Order on Uber Eats">
       <svg viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
     </a>
-    <a href="https://maps.google.com/?q=1203+St+Clair+Avenue+West+Toronto" target="_blank" rel="noopener" aria-label="Find us on Google Maps">
+    <a href="https://www.google.com/maps/place/St.+Clair+Drug+Mart+Pharmacy/@43.6773961,-79.4468996,17z/data=!3m1!4b1!4m6!3m5!1s0x882b35d5e572114b:0x899add08acb1e556!8m2!3d43.6773551!4d-79.4443087!16s%2Fg%2F11f716bxm1" target="_blank" rel="noopener" aria-label="Find us on Google Maps">
       <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
     </a>
   </div>
@@ -1053,13 +1092,13 @@
         </div>
         <span class="service-card__arrow">→</span>
       </a>
-      <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667">
+      <button class="service-card service-card--toggle" id="conditions-toggle" onclick="toggleConditions(this)">
         <div class="service-card__body">
           <h3>Common Conditions</h3>
           <p>Our pharmacist can assess &amp; prescribe for 28 common &amp; minor ailments — no doctor needed.</p>
         </div>
-        <span class="service-card__arrow">→</span>
-      </a>
+        <span class="service-card__arrow">▼</span>
+      </button>
       <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/transfer-rx/306667">
         <div class="service-card__body">
           <h3>Prescription Transfers</h3>
@@ -1089,6 +1128,43 @@
         <span class="service-card__arrow">→</span>
       </a>
     </div>
+
+    <!-- ── Conditions expandable panel ── -->
+    <div class="conditions-panel" id="conditions-panel">
+      <div class="conditions-panel__hd">Select a condition to start your assessment</div>
+      <div class="conditions-grid">
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">💊</span>Acne</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🤧</span>Allergic Rhinitis</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">👄</span>Oral Thrush</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">👁️</span>Pink Eye</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🖐️</span>Eczema / Dermatitis</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🩸</span>Period Pain</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🔥</span>Heartburn / GERD</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🩹</span>Hemorrhoids</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">💋</span>Cold Sores</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🦠</span>Impetigo</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🐝</span>Insect Bites &amp; Hives</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🦴</span>Sprains &amp; Strains</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🕷️</span>Tick Bites</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🦶</span>Athlete's Foot</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">💧</span>Urinary Tract Infection</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🤢</span>Nausea in Pregnancy</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🫦</span>Canker Sores</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🪱</span>Pinworms</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🌸</span>Vaginal Yeast Infection</a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">👣</span>Calluses &amp; Corns<span class="condition-chip__new">NEW</span></a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">❄️</span>Dandruff<span class="condition-chip__new">NEW</span></a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">👁️</span>Dry Eye<span class="condition-chip__new">NEW</span></a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🦟</span>Head Lice<span class="condition-chip__new">NEW</span></a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🏃</span>Jock Itch<span class="condition-chip__new">NEW</span></a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🤕</span>Mild Headache<span class="condition-chip__new">NEW</span></a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">😤</span>Nasal Congestion<span class="condition-chip__new">NEW</span></a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">⭕</span>Ringworm<span class="condition-chip__new">NEW</span></a>
+        <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667"><span class="condition-chip__icon">🌱</span>Warts<span class="condition-chip__new">NEW</span></a>
+      </div>
+      <p class="conditions-panel__note">All 28 conditions available as of July 1, 2026 · Walk in or start your online assessment above · <strong>No doctor's referral needed</strong></p>
+    </div>
+
   </div>
 </section>
 
@@ -1277,7 +1353,7 @@
             <h4>Address</h4>
             <p>1203 St. Clair Avenue West</p>
             <p>Toronto, ON</p>
-            <a href="https://maps.google.com/?q=1203+St+Clair+Avenue+West+Toronto" target="_blank" rel="noopener" style="margin-top:.35rem;color:var(--teal-dark);">Get Directions →</a>
+            <a href="https://www.google.com/maps/place/St.+Clair+Drug+Mart+Pharmacy/@43.6773961,-79.4468996,17z/data=!3m1!4b1!4m6!3m5!1s0x882b35d5e572114b:0x899add08acb1e556!8m2!3d43.6773551!4d-79.4443087!16s%2Fg%2F11f716bxm1" target="_blank" rel="noopener" style="margin-top:.35rem;color:var(--teal-dark);">Get Directions →</a>
           </div>
         </div>
         <div class="contact__row">
@@ -1324,7 +1400,7 @@
       </div>
       <div class="contact__map">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2884.0!2d-79.4536!3d43.6795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b34b7b7b7b7b7%3A0x0!2s1203+St+Clair+Ave+W%2C+Toronto%2C+ON!5e0!3m2!1sen!2sca!4v1"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.234!2d-79.4468996!3d43.6773961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b35d5e572114b%3A0x899add08acb1e556!2sSt.+Clair+Drug+Mart+Pharmacy!5e0!3m2!1sen!2sca!4v1700000000000"
           allowfullscreen=""
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
@@ -1434,6 +1510,31 @@
       document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
       this.classList.add('active');
       paIframe.src = this.dataset.url;
+    });
+  });
+
+  // Common Conditions toggle
+  function toggleConditions(btn) {
+    const panel = document.getElementById('conditions-panel');
+    const open = panel.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.querySelector('.service-card__arrow').textContent = open ? '▲' : '▼';
+  }
+
+  // Condition chip clicks — load self-assessment, scroll to booking
+  document.querySelectorAll('.js-condition').forEach(chip => {
+    chip.addEventListener('click', function(e) {
+      e.preventDefault();
+      const url = this.dataset.url;
+      // close panel
+      document.getElementById('conditions-panel').classList.remove('open');
+      const toggleBtn = document.getElementById('conditions-toggle');
+      toggleBtn.classList.remove('open');
+      toggleBtn.querySelector('.service-card__arrow').textContent = '▼';
+      // activate Common Conditions pa-card and load iframe
+      const target = document.querySelector('.pa-card[data-url="https://app.pharmassess.ca/self-assessment/306667"]');
+      if (target) target.click();
+      document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
     });
   });
 
