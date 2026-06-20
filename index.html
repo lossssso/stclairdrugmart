@@ -267,27 +267,27 @@
     }
     .hero__status .status-board { margin-top: 0; gap: .5rem; }
     .hero__status .status-row {
-      background: rgba(255,255,255,.14);
-      border: 1px solid rgba(255,255,255,.32);
+      background: rgba(255,255,255,.92);
+      border: 1.5px solid rgba(33,161,168,.18);
       border-radius: 100px;
-      box-shadow: 0 4px 18px rgba(0,50,60,.18), inset 0 1px 0 rgba(255,255,255,.18);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      padding: .55rem 1.15rem;
-      gap: .6rem;
+      box-shadow: 0 4px 20px rgba(0,80,90,.13), 0 1px 3px rgba(0,80,90,.07);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: .6rem 1.25rem;
+      gap: .65rem;
     }
     .hero__status .status-dot { width: 10px; height: 10px; }
     .hero__status .status-row__label {
-      font-size: .78rem; font-weight: 700; color: #fff;
+      font-size: .78rem; font-weight: 700; color: var(--teal-deeper);
       min-width: 0; letter-spacing: .02em;
     }
     .hero__status .status-row__val {
-      font-size: .75rem; color: rgba(255,255,255,.75);
+      font-size: .75rem; color: var(--text-muted);
     }
-    .hero__status .status-row__val::before { content: '·'; margin-right: .35rem; opacity: .6; }
-    .hero__status .status-row__val--open  { color: #86efac; font-weight: 600; }
-    .hero__status .status-row__val--soon  { color: #fcd34d; font-weight: 600; }
-    .hero__status .status-row__val--closed { color: rgba(255,255,255,.65); font-weight: 400; }
+    .hero__status .status-row__val::before { content: '·'; margin-right: .35rem; opacity: .5; }
+    .hero__status .status-row__val--open  { color: #166534; font-weight: 600; }
+    .hero__status .status-row__val--soon  { color: #92400e; font-weight: 600; }
+    .hero__status .status-row__val--closed { color: #991b1b; font-weight: 400; }
 
     /* ── Sections shared ──────────────────────────────── */
     section { padding: 5rem 1.5rem; }
