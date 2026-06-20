@@ -1,0 +1,52 @@
+/* Shared styles for blog posts — St. Clair Drug Mart */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --teal-bright:#21a1a8; --teal-mid:#5cb9bc; --teal-dark:#00737c; --teal-deeper:#00737c;
+  --teal-ice:#d7fbfc; --white:#fff; --text:#0d2d2e; --text-muted:#3a6062; --border:#b8e8ea;
+  --radius:12px; --shadow:0 2px 14px rgba(0,115,124,.10);
+}
+html { scroll-behavior:smooth; }
+body { font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif; background:var(--teal-ice); color:var(--text); line-height:1.75; }
+a { color:var(--teal-dark); }
+img { display:block; max-width:100%; }
+
+/* Nav */
+.nav { position:sticky; top:0; z-index:100; background:var(--teal-deeper); box-shadow:0 2px 8px rgba(0,0,0,.20); }
+.nav__inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:0 1.5rem; height:56px; }
+.nav__brand { font-weight:800; font-size:.98rem; color:#fff; letter-spacing:.02em; }
+.nav__links { display:flex; list-style:none; gap:.25rem; }
+.nav__links a { color:rgba(255,255,255,.85); font-size:.875rem; font-weight:500; padding:.45rem .75rem; border-radius:6px; transition:background .15s; }
+.nav__links a:hover { background:rgba(255,255,255,.12); color:#fff; }
+.nav__links .nav__cta a { background:var(--teal-bright); color:#fff; }
+.nav__links .nav__cta a:hover { background:var(--teal-mid); }
+@media (max-width:640px){ .nav__links { display:none; } }
+
+/* Post body */
+.post { max-width:740px; margin:2.5rem auto 3rem; padding:0 1.5rem; }
+.post__breadcrumb { font-size:.8rem; color:var(--text-muted); margin-bottom:1rem; }
+.post__breadcrumb a { color:var(--teal-dark); text-decoration:none; }
+.post__breadcrumb a:hover { text-decoration:underline; }
+.post h1 { font-size:clamp(1.7rem,4vw,2.4rem); font-weight:800; color:var(--teal-deeper); line-height:1.2; margin-bottom:.6rem; }
+.post__meta { font-size:.82rem; color:var(--text-muted); margin-bottom:1.5rem; }
+.post__lead { font-size:1.1rem; background:var(--white); border-left:4px solid var(--teal-bright); padding:1rem 1.25rem; border-radius:8px; box-shadow:var(--shadow); margin-bottom:1.75rem; }
+.post h2 { font-size:1.3rem; font-weight:700; color:var(--teal-deeper); margin:2rem 0 .6rem; }
+.post h3 { font-size:1.1rem; font-weight:700; color:var(--teal-deeper); margin:1.5rem 0 .5rem; }
+.post p { margin-bottom:1rem; }
+.post ul, .post ol { margin:0 0 1.1rem 1.25rem; }
+.post li { margin-bottom:.45rem; }
+.post strong { color:var(--text); }
+
+/* CTA box */
+.post__cta { background:var(--white); border:1.5px solid var(--border); border-radius:var(--radius); padding:1.75rem; text-align:center; margin:2.5rem 0 1.5rem; box-shadow:var(--shadow); }
+.post__cta h3 { margin-top:0; }
+.post__cta p { color:var(--text-muted); margin-bottom:1.25rem; }
+.btn { display:inline-block; background:var(--teal-dark); color:#fff; font-weight:700; font-size:.9rem; padding:.7rem 1.3rem; border-radius:100px; text-decoration:none; margin:.25rem; transition:background .15s, transform .15s; }
+.btn:hover { background:var(--teal-deeper); transform:translateY(-1px); }
+.btn--outline { background:transparent; color:var(--teal-dark); border:1.5px solid var(--teal-dark); }
+.btn--outline:hover { background:var(--teal-ice); }
+.post__disclaimer { font-size:.78rem; color:var(--text-muted); font-style:italic; border-top:1px solid var(--border); padding-top:1rem; margin-top:1.5rem; }
+
+/* Footer */
+footer { background:var(--teal-deeper); color:rgba(255,255,255,.8); text-align:center; padding:2rem 1.5rem; font-size:.85rem; }
+footer a { color:rgba(255,255,255,.7); }
+footer a:hover { color:#fff; }

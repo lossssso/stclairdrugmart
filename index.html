@@ -2454,17 +2454,37 @@ window.FAQS = [
 <section id="blog">
   <div class="section__inner">
     <h2 class="section__title">From Our Blog</h2>
-    <p class="section__lead">Health tips and pharmacy news from our team — updated weekly.</p>
-    <div class="blog-grid">
-      <!-- BLOG_LATEST_START -->
+    <p class="section__lead">Health tips and pharmacy news from our team.</p>
+    <div class="blog-grid" id="blog-latest">
       <article class="blog-card">
-        <span class="blog-card__date">Coming soon</span>
-        <h3 class="blog-card__title"><a href="blog/index.html">Our first posts are on the way!</a></h3>
-        <p class="blog-card__excerpt">We're publishing weekly health tips and pharmacy news. Check back soon, or visit our blog page.</p>
+        <span class="blog-card__date">Loading…</span>
+        <h3 class="blog-card__title"><a href="blog/index.html">Visit our blog</a></h3>
+        <p class="blog-card__excerpt">Health tips and pharmacy news from our team.</p>
         <a href="blog/index.html" class="blog-card__link">Visit the blog →</a>
       </article>
-      <!-- BLOG_LATEST_END -->
     </div>
+    <script>
+    (function(){
+      var grid = document.getElementById('blog-latest');
+      if (!grid) return;
+      fetch('blog/posts.json', { cache: 'no-cache' })
+        .then(function(r){ return r.json(); })
+        .then(function(posts){
+          if (!posts || !posts.length) return;
+          posts.sort(function(a,b){ return new Date(b.date) - new Date(a.date); });
+          grid.innerHTML = posts.slice(0,3).map(function(p){
+            var url = 'blog/posts/' + p.slug + '.html';
+            return '<article class="blog-card">'
+              + '<span class="blog-card__date">'+(p.dateLabel||p.date)+'</span>'
+              + '<h3 class="blog-card__title"><a href="'+url+'">'+p.title+'</a></h3>'
+              + '<p class="blog-card__excerpt">'+p.excerpt+'</p>'
+              + '<a href="'+url+'" class="blog-card__link">Read more →</a>'
+              + '</article>';
+          }).join('');
+        })
+        .catch(function(){});
+    })();
+    </script>
     <div class="blog__footer">
       <a href="blog/index.html" class="btn">View All Posts →</a>
     </div>

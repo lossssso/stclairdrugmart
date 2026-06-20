@@ -1,35 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Health &amp; Pharmacy Blog | St. Clair Drug Mart Pharmacy</title>
-  <meta name="description" content="Health tips, pharmacy news, and wellness advice from St. Clair Drug Mart Pharmacy in Toronto."/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Health &amp; Pharmacy Blog | St. Clair Drug Mart Pharmacy, Toronto</title>
+  <meta name="description" content="Health tips, pharmacy news, and wellness advice from St. Clair Drug Mart Pharmacy in Toronto — minor ailments, vaccines, prescriptions, and more."/>
+  <link rel="canonical" href="https://www.stclairdrugmart.ca/blog/index.html"/>
+  <meta name="robots" content="index, follow, max-image-preview:large"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Health &amp; Pharmacy Blog | St. Clair Drug Mart Pharmacy"/>
+  <meta property="og:description" content="Health tips, pharmacy news, and wellness advice from your neighbourhood pharmacists in Toronto."/>
+  <meta property="og:url" content="https://www.stclairdrugmart.ca/blog/index.html"/>
+  <meta property="og:image" content="https://www.stclairdrugmart.ca/storefront_new_1.webp"/>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="post.css"/>
   <style>
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --teal-bright:#2EC5BC;--teal-mid:#1AA8A0;--teal-dark:#0D7A72;--teal-deeper:#08524C;--teal-ice:#E8F8F7;--white:#fff;--text:#132624;--text-muted:#426260;--border:#ACD9D8;--radius:10px;--shadow:0 2px 12px rgba(13,122,114,.10); }
-    html{scroll-behavior:smooth} body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--teal-ice);color:var(--text);line-height:1.7} a{color:inherit;text-decoration:none} img{display:block;max-width:100%}
-    .nav{position:sticky;top:0;z-index:100;background:var(--teal-deeper);box-shadow:0 2px 8px rgba(0,0,0,.20)} .nav__inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:56px} .nav__brand{font-weight:700;font-size:.95rem;color:#fff;letter-spacing:.02em} .nav__links{display:flex;list-style:none;gap:.25rem} .nav__links a{color:rgba(255,255,255,.85);font-size:.875rem;font-weight:500;padding:.45rem .75rem;border-radius:6px;transition:background .15s} .nav__links a:hover{background:rgba(255,255,255,.12);color:#fff} .nav__links .nav__cta a{background:var(--teal-bright);color:#fff} .nav__links .nav__cta a:hover{background:var(--teal-mid)}
-    footer{background:var(--teal-deeper);color:rgba(255,255,255,.8);text-align:center;padding:2rem 1.5rem;font-size:.85rem} footer a{color:rgba(255,255,255,.65)} footer a:hover{color:#fff}
-    @media(max-width:600px){.nav__links{display:none}}
-    .blog-hero{background:linear-gradient(150deg,var(--teal-deeper) 0%,var(--teal-dark) 55%,var(--teal-bright) 100%);padding:3rem 1.5rem 2.5rem;color:#fff;text-align:center}
-    .blog-hero h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;margin-bottom:.5rem}
-    .blog-hero p{opacity:.8;font-size:.95rem}
-    .blog-main{max-width:1100px;margin:3rem auto;padding:0 1.5rem 4rem}
-    .posts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
-    .post-card{background:var(--white);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow);border-top:3px solid var(--teal-bright);display:flex;flex-direction:column;gap:.6rem}
-    .post-card__meta{display:flex;gap:1rem;font-size:.78rem;color:var(--text-muted)}
-    .post-card__title{font-size:1.05rem;font-weight:700;line-height:1.3}
-    .post-card__title a{color:var(--teal-deeper);transition:color .15s}
-    .post-card__title a:hover{color:var(--teal-bright)}
-    .post-card__excerpt{font-size:.875rem;color:var(--text-muted);flex:1;line-height:1.55}
-    .post-card__footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
-    .post-card__tags{display:flex;gap:.35rem;flex-wrap:wrap}
-    .ptag{background:var(--teal-ice);border:1px solid var(--border);border-radius:20px;padding:.15rem .6rem;font-size:.72rem;color:var(--teal-dark)}
-    .read-more{font-size:.82rem;font-weight:600;color:var(--teal-dark);transition:color .15s}
-    .read-more:hover{color:var(--teal-bright)}
-    @media(max-width:900px){.posts-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:600px){.posts-grid{grid-template-columns:1fr}}
+    .blog-hero { background:linear-gradient(150deg,var(--teal-deeper) 0%,var(--teal-dark) 55%,var(--teal-bright) 100%); padding:3rem 1.5rem 2.5rem; color:#fff; text-align:center; }
+    .blog-hero h1 { font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; margin-bottom:.5rem; }
+    .blog-hero p { opacity:.85; font-size:.98rem; max-width:560px; margin:0 auto; }
+    .blog-main { max-width:1100px; margin:3rem auto; padding:0 1.5rem 4rem; }
+    .posts-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
+    .post-card { background:var(--white); border-radius:var(--radius); padding:1.5rem; box-shadow:var(--shadow); border-top:3px solid var(--teal-bright); display:flex; flex-direction:column; gap:.6rem; }
+    .post-card__meta { display:flex; gap:1rem; font-size:.78rem; color:var(--text-muted); }
+    .post-card__title { font-size:1.05rem; font-weight:700; line-height:1.3; }
+    .post-card__title a { color:var(--teal-deeper); text-decoration:none; transition:color .15s; }
+    .post-card__title a:hover { color:var(--teal-bright); }
+    .post-card__excerpt { font-size:.875rem; color:var(--text-muted); flex:1; line-height:1.55; }
+    .post-card__footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.5rem; }
+    .post-card__tags { display:flex; gap:.35rem; flex-wrap:wrap; }
+    .ptag { background:var(--teal-ice); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem; font-size:.72rem; color:var(--teal-dark); }
+    .read-more { font-size:.82rem; font-weight:600; color:var(--teal-dark); text-decoration:none; transition:color .15s; }
+    .read-more:hover { color:var(--teal-bright); }
+    .blog-empty { color:var(--text-muted); grid-column:1/-1; text-align:center; padding:3rem 0; }
+    @media (max-width:900px){ .posts-grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:600px){ .posts-grid { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
@@ -38,25 +45,57 @@
     <a href="../index.html" class="nav__brand">St. Clair Drug Mart</a>
     <ul class="nav__links">
       <li><a href="../index.html">Home</a></li>
-      <li><a href="../index.html#services">Services</a></li>
-      <li><a href="../blog/index.html">Blog</a></li>
+      <li><a href="../index.html#booking">Services</a></li>
+      <li><a href="index.html">Blog</a></li>
       <li><a href="../index.html#contact">Contact</a></li>
       <li class="nav__cta"><a href="https://app.pharmassess.ca/appointment/306667" target="_blank" rel="noopener">Book Appointment</a></li>
     </ul>
   </div>
 </nav>
+
 <div class="blog-hero">
   <h1>Health &amp; Pharmacy Blog</h1>
   <p>Tips, news, and wellness advice from your neighbourhood pharmacists at St. Clair Drug Mart.</p>
 </div>
+
 <main class="blog-main">
-  <div class="posts-grid">
-<p style="color:var(--text-muted);grid-column:1/-1;text-align:center;padding:3rem 0">Our first posts are coming soon — check back next week!</p>
+  <div class="posts-grid" id="posts-grid">
+    <p class="blog-empty">Loading posts…</p>
   </div>
 </main>
+
 <footer>
   <p>1203 St. Clair Avenue West, Toronto, ON &nbsp;·&nbsp; <a href="tel:+14166548181">(416) 654-8181</a> &nbsp;·&nbsp; <a href="mailto:stclairdrugmart@gmail.com">stclairdrugmart@gmail.com</a></p>
   <p style="margin-top:.5rem;opacity:.45;">&copy; 2026 St. Clair Drug Mart Pharmacy. All rights reserved.</p>
 </footer>
+
+<script>
+(function(){
+  var grid = document.getElementById('posts-grid');
+  fetch('posts.json', { cache: 'no-cache' })
+    .then(function(r){ return r.json(); })
+    .then(function(posts){
+      if (!posts || !posts.length) {
+        grid.innerHTML = '<p class="blog-empty">Our first posts are coming soon — check back next week!</p>';
+        return;
+      }
+      posts.sort(function(a,b){ return new Date(b.date) - new Date(a.date); });
+      grid.innerHTML = posts.map(function(p){
+        var tags = (p.tags||[]).map(function(t){ return '<span class="ptag">'+t+'</span>'; }).join('');
+        var url = 'posts/' + p.slug + '.html';
+        return '<article class="post-card">'
+          + '<div class="post-card__meta"><span>'+(p.dateLabel||p.date)+'</span><span>'+(p.readTime||'')+'</span></div>'
+          + '<h2 class="post-card__title"><a href="'+url+'">'+p.title+'</a></h2>'
+          + '<p class="post-card__excerpt">'+p.excerpt+'</p>'
+          + '<div class="post-card__footer"><div class="post-card__tags">'+tags+'</div>'
+          + '<a class="read-more" href="'+url+'">Read more →</a></div>'
+          + '</article>';
+      }).join('');
+    })
+    .catch(function(){
+      grid.innerHTML = '<p class="blog-empty">Posts are temporarily unavailable. Please try again soon.</p>';
+    });
+})();
+</script>
 </body>
 </html>
