@@ -1527,22 +1527,22 @@
 
     <!-- Row 2: patient account actions -->
     <div class="pa-cards pa-cards--secondary">
-      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1000">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="2200">
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review</span>
         <span class="pa-card__desc">One-on-one review of all your medications</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="900">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="2200">
         <div class="pa-card__icon">🔁</div>
         <span class="pa-card__label">Refill Request</span>
         <span class="pa-card__desc">Request a prescription refill online</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="1000">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="2200">
         <div class="pa-card__icon">🔀</div>
         <span class="pa-card__label">Transfer Your Rx</span>
         <span class="pa-card__desc">Move your prescription to St. Clair Drug Mart</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="750">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="1400">
         <div class="pa-card__icon">🔑</div>
         <span class="pa-card__label">Patient Login</span>
         <span class="pa-card__desc">Sign in to your PharmAssess patient portal</span>
@@ -2178,6 +2178,16 @@
       paIframe.src = url;
       setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
     });
+  });
+
+  // Auto-resize iframe if PharmAssess emits a postMessage with the page height
+  window.addEventListener('message', function(e) {
+    if (!e.origin.includes('pharmassess.ca')) return;
+    var d = e.data;
+    var h = (typeof d === 'object' && d !== null)
+      ? (d.height || d.frameHeight || d.iframeHeight || null)
+      : (typeof d === 'number' ? d : null);
+    if (h && h > 400) paIframe.style.height = h + 'px';
   });
 
   // Buttons elsewhere that jump to booking and pre-select a service tab
