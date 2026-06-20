@@ -248,14 +248,14 @@
     section { padding: 4rem 1.5rem; }
     .section__inner { max-width: 1100px; margin: 0 auto; }
     .section__title {
-      font-family: 'Big Shoulders Display', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 900;
-      letter-spacing: .07em;
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: .015em;
       text-transform: uppercase;
       color: var(--teal-deeper);
       margin-bottom: .5rem;
-      line-height: 1;
+      line-height: 1.04;
     }
     .section__title::after {
       content: '';
@@ -339,7 +339,7 @@
     }
     .conditions-panel.open { display: block; }
     .conditions-panel__hd {
-      font-family: 'Big Shoulders Display', sans-serif;
+      font-family: var(--font-display);
       font-size: 1rem; font-weight: 700; letter-spacing: .06em;
       text-transform: uppercase; color: var(--teal-deeper); margin-bottom: 1rem;
     }
@@ -414,7 +414,7 @@
     }
     .pa-card.conditions-open .pa-conditions-arrow { transform: rotate(180deg); }
     .services-within__title {
-      font-family: 'Big Shoulders Display', sans-serif;
+      font-family: var(--font-display);
       font-size: 1.3rem; font-weight: 900;
       text-transform: uppercase; letter-spacing: .07em;
       color: var(--teal-deeper);
@@ -689,7 +689,7 @@
     .medscheck-card:hover { box-shadow: var(--shadow); }
     .medscheck-card__icon { font-size: 1.55rem; line-height: 1; }
     .medscheck-card__title {
-      font-family: 'Big Shoulders Display', sans-serif;
+      font-family: var(--font-display);
       font-size: .95rem; font-weight: 900;
       color: var(--teal-deeper); text-transform: uppercase; letter-spacing: .04em;
     }
@@ -705,7 +705,7 @@
     .vaccines__intro { max-width: 720px; margin: 0 auto 2rem; text-align: center; }
     .vaccines__intro p { color: var(--text-muted); font-size: .95rem; line-height: 1.75; }
     .vaccines__sub-heading {
-      font-family: 'Big Shoulders Display', sans-serif;
+      font-family: var(--font-display);
       font-size: 1.15rem; font-weight: 800;
       letter-spacing: .05em; text-transform: uppercase;
       color: var(--teal-deeper); margin: 2rem 0 1rem;
@@ -725,7 +725,7 @@
     .vaccine-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
     .vaccine-card__header { display: flex; align-items: flex-start; justify-content: space-between; gap: .5rem; }
     .vaccine-card__name {
-      font-family: 'Big Shoulders Display', sans-serif;
+      font-family: var(--font-display);
       font-size: .95rem; font-weight: 900;
       color: var(--teal-deeper); text-transform: uppercase; letter-spacing: .04em;
     }
@@ -873,7 +873,7 @@
     #flags { background: var(--white); padding: 2.5rem 1.5rem; }
     .flags-section { text-align: center; max-width: 1100px; margin: 0 auto; }
     .flags-section__tagline {
-      font-family: 'Big Shoulders Display', sans-serif;
+      font-family: var(--font-display);
       font-size: 1.3rem; font-weight: 700;
       letter-spacing: .07em; text-transform: uppercase;
       color: var(--teal-deeper); margin-bottom: .4rem;
@@ -937,7 +937,7 @@
     .ailment-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.1); border-color: var(--teal); }
     .ailment-card__icon { font-size: 1.4rem; line-height: 1; }
     .ailment-card__name {
-      font-family: 'Big Shoulders Display', sans-serif; font-size: .95rem;
+      font-family: var(--font-display); font-size: .95rem;
       font-weight: 900; color: var(--teal-deeper); margin: 0;
       text-transform: uppercase; letter-spacing: .04em;
     }
@@ -1142,6 +1142,48 @@
     }
     .wa-float:hover .wa-float__tip { opacity: 1; }
 
+    /* ── Service Tabs ────────────────────────────────── */
+    .svc-tabs { margin-top: 2.75rem; }
+    .svc-tabs__nav {
+      display: flex; gap: .25rem; flex-wrap: wrap;
+      border-bottom: 2px solid #deeef0;
+      margin-bottom: 1.75rem;
+    }
+    .svc-tab__btn {
+      padding: .6rem 1.15rem; font-size: .78rem; font-weight: 600;
+      border: none; background: none; cursor: pointer;
+      color: var(--text-muted);
+      border-bottom: 2.5px solid transparent;
+      margin-bottom: -2px;
+      transition: color .15s, border-color .15s;
+      font-family: var(--font-display); letter-spacing: .02em;
+      text-transform: uppercase; white-space: nowrap;
+    }
+    .svc-tab__btn.active,
+    .svc-tab__btn:hover { color: var(--teal-deeper); }
+    .svc-tab__btn.active { border-bottom-color: var(--teal-bright); }
+    .svc-tab__panel { display: none; }
+    .svc-tab__panel.active { display: block; }
+
+    /* ── FAQ ────────────────────────────────────────── */
+    .faq { background: #f5fafa; }
+    .faq-list { margin-top: 1.75rem; border-top: 1px solid var(--border); }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item__q {
+      width: 100%; text-align: left; background: none; border: none;
+      cursor: pointer; padding: 1.1rem 0;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      font-family: var(--font-display); font-weight: 600; font-size: .95rem;
+      color: var(--teal-deeper); letter-spacing: .01em;
+    }
+    .faq-item__q svg { width: 18px; height: 18px; flex-shrink: 0; transition: transform .2s; stroke: var(--teal-bright); }
+    .faq-item.open .faq-item__q svg { transform: rotate(45deg); }
+    .faq-item__a {
+      display: none; padding: 0 2rem 1.1rem 0;
+      color: var(--text-muted); line-height: 1.72; font-size: .9rem;
+    }
+    .faq-item.open .faq-item__a { display: block; }
+
     /* ── Footer trust badges ──────────────────────── */
     .footer__trust { margin-top: 1.75rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
     .footer__badges {
@@ -1233,11 +1275,11 @@
         <a href="#booking">Services</a>
         <ul class="nav__dropdown">
           <li><a href="#booking">Book Appointment</a></li>
-          <li><a href="#conditions">Minor Ailments</a></li>
-          <li><a href="#medication-reviews">Medication Reviews</a></li>
-          <li><a href="#vaccines">Vaccinations</a></li>
-          <li><a href="#drug-checker">Drug Checker</a></li>
-          <li><a href="#insurance">Insurance</a></li>
+          <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)">Minor Ailments</a></li>
+          <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=overview]').click()},80)">Medication Reviews</a></li>
+          <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)">Vaccinations</a></li>
+          <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=drug-check]').click()},80)">Drug Checker</a></li>
+          <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=insurance]').click()},80)">Insurance</a></li>
         </ul>
       </li>
       <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a></li>
@@ -1472,475 +1514,236 @@
       Online booking and patient assessments are processed through <strong>PharmAssess</strong>, a secure third-party pharmacy software platform. By completing a booking or assessment, you agree to PharmAssess's terms of service and privacy practices. St. Clair Drug Mart Pharmacy is not responsible for the privacy practices of PharmAssess.
     </p>
 
-    <!-- What we offer -->
-    <h3 class="services-within__title">What We Offer</h3>
-    <div class="services__grid">
-      <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">
-        <div class="service-card__body">
-          <h3>Prescription Dispensing</h3>
-          <p>Fast, accurate dispensing with personal counselling from your pharmacist.</p>
-        </div>
-        <span class="service-card__arrow">→</span>
-      </a>
-      <a class="service-card" href="tel:+14166548181">
-        <div class="service-card__body">
-          <h3>Blister Packs</h3>
-          <p>Weekly blister packaging to simplify complex medication schedules — call to set up.</p>
-        </div>
-        <span class="service-card__arrow">→</span>
-      </a>
-      <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">
-        <div class="service-card__body">
-          <h3>Vaccines &amp; Immunizations</h3>
-          <p>Flu, COVID, shingles, travel vaccines — walk in or book online.</p>
-        </div>
-        <span class="service-card__arrow">→</span>
-      </a>
-      <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/patient/meds/306667">
-        <div class="service-card__body">
-          <h3>Medication Reviews</h3>
-          <p>A one-on-one review of all your medications to optimize your therapy.</p>
-        </div>
-        <span class="service-card__arrow">→</span>
-      </a>
-      <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">
-        <div class="service-card__body">
-          <h3>Travel Health</h3>
-          <p>Pre-travel consultations, vaccines, and medication for your destination.</p>
-        </div>
-        <span class="service-card__arrow">→</span>
-      </a>
-      <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/transfer-rx/306667">
-        <div class="service-card__body">
-          <h3>Prescription Transfers</h3>
-          <p>Switching from another pharmacy? We make it seamless — request online.</p>
-        </div>
-        <span class="service-card__arrow">→</span>
-      </a>
-      <a class="service-card" href="#shop">
-        <div class="service-card__body">
-          <h3>Free Local Delivery</h3>
-          <p>Prescriptions and health essentials delivered to your door, free locally or via Uber Eats.</p>
-        </div>
-        <span class="service-card__arrow">→</span>
-      </a>
-      <a class="service-card" href="#drug-checker">
-        <div class="service-card__body">
-          <h3>Drug Interaction Checker</h3>
-          <p>Check your medications for possible interactions right here on our site.</p>
-        </div>
-        <span class="service-card__arrow">→</span>
-      </a>
-    </div>
-  </div>
-</section>
+    <!-- ── Service Tabs ─────────────────────────────── -->
+    <div class="svc-tabs" id="svc-tabs">
+      <nav class="svc-tabs__nav" role="tablist" aria-label="Services">
+        <button class="svc-tab__btn active" data-tab="overview" role="tab" aria-selected="true">Our Services</button>
+        <button class="svc-tab__btn" data-tab="ailments" role="tab" aria-selected="false">Minor Ailments (28)</button>
+        <button class="svc-tab__btn" data-tab="vaccines" role="tab" aria-selected="false">Vaccines</button>
+        <button class="svc-tab__btn" data-tab="drug-check" role="tab" aria-selected="false">Drug Checker</button>
+        <button class="svc-tab__btn" data-tab="insurance" role="tab" aria-selected="false">Insurance</button>
+      </nav>
 
-<!-- ── Minor Ailments We Treat ─────────────────────────────── -->
-<section id="conditions">
-  <div class="section__inner">
-    <h2 class="section__title">28 Minor Ailments — Pharmacist Prescribing, No Referral Needed</h2>
-    <div class="ailments__intro">
-      <p>Under Ontario's Minor Ailments Program, our pharmacist at St. Clair Drug Mart on St. Clair Avenue West can assess your condition and prescribe treatment on the spot — no doctor's appointment, no referral, no waiting. Walk in or start your online assessment below.</p>
-    </div>
-    <div class="ailments-grid">
-      <div class="ailment-card">
-        <div class="ailment-card__icon">💊</div>
-        <h3 class="ailment-card__name">Acne</h3>
-        <p class="ailment-card__desc">Prescription topical or oral acne treatment — no GP appointment needed.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=13">Start Assessment →</a>
+      <!-- TAB: Our Services overview -->
+      <div class="svc-tab__panel active" data-panel="overview">
+        <div class="services__grid">
+          <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">
+            <div class="service-card__body"><h3>Prescription Dispensing</h3><p>Fast, accurate dispensing with personal counselling from your pharmacist.</p></div>
+            <span class="service-card__arrow">→</span>
+          </a>
+          <a class="service-card" href="tel:+14166548181">
+            <div class="service-card__body"><h3>Blister Packs</h3><p>Weekly blister packaging to simplify complex medication schedules — call to set up.</p></div>
+            <span class="service-card__arrow">→</span>
+          </a>
+          <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">
+            <div class="service-card__body"><h3>Vaccines &amp; Immunizations</h3><p>Flu, COVID, shingles, travel vaccines — walk in or book online.</p></div>
+            <span class="service-card__arrow">→</span>
+          </a>
+          <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/patient/meds/306667">
+            <div class="service-card__body"><h3>Medication Reviews</h3><p>A one-on-one review of all your medications — covered at no cost for eligible Ontario residents.</p></div>
+            <span class="service-card__arrow">→</span>
+          </a>
+          <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">
+            <div class="service-card__body"><h3>Travel Health</h3><p>Pre-travel consultations, vaccines, and medication for your destination.</p></div>
+            <span class="service-card__arrow">→</span>
+          </a>
+          <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/transfer-rx/306667">
+            <div class="service-card__body"><h3>Prescription Transfers</h3><p>Switching from another pharmacy? We make it seamless — request online.</p></div>
+            <span class="service-card__arrow">→</span>
+          </a>
+          <a class="service-card" href="#shop">
+            <div class="service-card__body"><h3>Free Local Delivery</h3><p>Prescriptions and health essentials delivered to your door, free locally or via Uber Eats.</p></div>
+            <span class="service-card__arrow">→</span>
+          </a>
+          <a class="service-card" href="#booking" onclick="document.querySelector('[data-tab=drug-check]').click()">
+            <div class="service-card__body"><h3>Drug Interaction Checker</h3><p>Check your medications for possible interactions — no sign-up needed.</p></div>
+            <span class="service-card__arrow">→</span>
+          </a>
+        </div>
       </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🤧</div>
-        <h3 class="ailment-card__name">Allergic Rhinitis</h3>
-        <p class="ailment-card__desc">Prescription nasal sprays and antihistamines for seasonal hay fever or year-round allergies.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=25">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🦶</div>
-        <h3 class="ailment-card__name">Athlete's Foot</h3>
-        <p class="ailment-card__desc">Prescription antifungal creams or oral tablets for persistent tinea pedis.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=10">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">👣</div>
-        <h3 class="ailment-card__name">Calluses &amp; Corns</h3>
-        <p class="ailment-card__desc">Prescription keratolytic agents for thick, painful skin buildup on the feet.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=45">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🫦</div>
-        <h3 class="ailment-card__name">Canker Sores</h3>
-        <p class="ailment-card__desc">Prescription rinses or gels to speed healing and reduce mouth ulcer pain.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=6">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">💋</div>
-        <h3 class="ailment-card__name">Cold Sores</h3>
-        <p class="ailment-card__desc">Antiviral prescription (herpes labialis) to shorten outbreaks and reduce recurrence.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=3">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">❄️</div>
-        <h3 class="ailment-card__name">Dandruff</h3>
-        <p class="ailment-card__desc">Prescription-strength medicated shampoos for seborrheic dermatitis and scalp flaking.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=44">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">👁️</div>
-        <h3 class="ailment-card__name">Dry Eye</h3>
-        <p class="ailment-card__desc">Prescription eye drops for chronic dry eye disease when OTC lubricants aren't enough.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=41">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🖐️</div>
-        <h3 class="ailment-card__name">Eczema / Dermatitis</h3>
-        <p class="ailment-card__desc">Prescription corticosteroid creams for eczema flare-ups and chronic skin inflammation.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=26">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🔥</div>
-        <h3 class="ailment-card__name">Heartburn / GERD</h3>
-        <p class="ailment-card__desc">Prescription proton pump inhibitors for frequent acid reflux and heartburn.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=24">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🩹</div>
-        <h3 class="ailment-card__name">Hemorrhoids</h3>
-        <p class="ailment-card__desc">Prescription suppositories or creams to relieve pain, swelling, and bleeding.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=4">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🦠</div>
-        <h3 class="ailment-card__name">Impetigo</h3>
-        <p class="ailment-card__desc">Antibiotic cream or oral antibiotics for this contagious bacterial skin infection.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=2">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🐝</div>
-        <h3 class="ailment-card__name">Insect Bites &amp; Stings</h3>
-        <p class="ailment-card__desc">Prescription antihistamines or steroids for severe local reactions to bites or stings.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=19">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🏃</div>
-        <h3 class="ailment-card__name">Jock Itch</h3>
-        <p class="ailment-card__desc">Prescription antifungal treatment for tinea cruris (fungal groin infection).</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=8">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🤕</div>
-        <h3 class="ailment-card__name">Mild Headache</h3>
-        <p class="ailment-card__desc">Prescription-strength relief for tension headaches and recurring headache pain.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=12">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">😤</div>
-        <h3 class="ailment-card__name">Nasal Congestion</h3>
-        <p class="ailment-card__desc">Prescription nasal steroid sprays and decongestants when OTC products fall short.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=38">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🤢</div>
-        <h3 class="ailment-card__name">Nausea in Pregnancy</h3>
-        <p class="ailment-card__desc">Safe prescription antiemetics for morning sickness during pregnancy.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=30">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">👄</div>
-        <h3 class="ailment-card__name">Oral Thrush</h3>
-        <p class="ailment-card__desc">Antifungal medication for white mouth patches and soreness caused by Candida.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=18">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🩸</div>
-        <h3 class="ailment-card__name">Period Pain</h3>
-        <p class="ailment-card__desc">Prescription-strength pain relief for dysmenorrhea when OTC options aren't enough.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=20">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">👁️</div>
-        <h3 class="ailment-card__name">Pink Eye</h3>
-        <p class="ailment-card__desc">Antibiotic eye drops for bacterial conjunctivitis — same-day prescription available.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=22">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🪱</div>
-        <h3 class="ailment-card__name">Pinworms</h3>
-        <p class="ailment-card__desc">Single-dose antiparasitic treatment for pinworm infections in children and adults.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=43">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">⭕</div>
-        <h3 class="ailment-card__name">Ringworm</h3>
-        <p class="ailment-card__desc">Prescription antifungal treatment for tinea corporis on skin, scalp, or nails.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=9">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🤒</div>
-        <h3 class="ailment-card__name">Sore Throat</h3>
-        <p class="ailment-card__desc">Strep throat assessment and antibiotic prescription if bacterial pharyngitis is confirmed.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=39">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🦴</div>
-        <h3 class="ailment-card__name">Sprains &amp; Strains</h3>
-        <p class="ailment-card__desc">Prescription anti-inflammatory medication for muscle, tendon, and ligament injuries.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=21">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🕷️</div>
-        <h3 class="ailment-card__name">Tick Bites</h3>
-        <p class="ailment-card__desc">Preventive doxycycline after a tick bite to reduce the risk of Lyme disease.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=49">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">💧</div>
-        <h3 class="ailment-card__name">Urinary Tract Infection</h3>
-        <p class="ailment-card__desc">Antibiotic prescription for uncomplicated UTI — quick relief without a doctor's appointment.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=23">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🌸</div>
-        <h3 class="ailment-card__name">Vaginal Yeast Infection</h3>
-        <p class="ailment-card__desc">Prescription antifungals for recurrent or stubborn vaginal candidiasis.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=42">Start Assessment →</a>
-      </div>
-      <div class="ailment-card">
-        <div class="ailment-card__icon">🌱</div>
-        <h3 class="ailment-card__name">Warts</h3>
-        <p class="ailment-card__desc">Prescription-strength treatments for warts (verruca) on hands, feet, or body.</p>
-        <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=46">Start Assessment →</a>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ── Medication Reviews ──────────────────────────────── -->
-<section id="medication-reviews">
-  <div class="section__inner">
-    <h2 class="section__title">Medication Reviews</h2>
-    <p class="section__lead">Our pharmacist takes the time to review all your medications — catching interactions, simplifying regimens, and making sure every pill you take is working for you.</p>
-    <div class="medscheck-grid">
-      <div class="medscheck-card">
-        <div class="medscheck-card__icon">📋</div>
-        <div class="medscheck-card__title">Annual Medication Review</div>
-        <p class="medscheck-card__desc">A face-to-face or phone consultation covering all your prescriptions, over-the-counter medications, vitamins, and supplements. We identify interactions, duplications, and medications that may no longer be appropriate for you.</p>
-        <span class="medscheck-card__tag">Eligible if taking 3 or more chronic medications</span>
+      <!-- TAB: Minor Ailments -->
+      <div class="svc-tab__panel" data-panel="ailments">
+        <p class="section__lead" style="margin-bottom:1.5rem;">Our pharmacist can assess your condition and prescribe treatment on the spot — no doctor's appointment, no referral, no waiting. Walk in or start your online assessment.</p>
+        <div class="conditions-grid" style="margin-bottom:1.25rem;">
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=13"><span class="condition-chip__icon">💊</span>Acne</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=25"><span class="condition-chip__icon">🤧</span>Allergic Rhinitis</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=10"><span class="condition-chip__icon">🦶</span>Athlete's Foot</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=45"><span class="condition-chip__icon">👣</span>Calluses &amp; Corns</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=6"><span class="condition-chip__icon">🫦</span>Canker Sores</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=3"><span class="condition-chip__icon">💋</span>Cold Sores</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=44"><span class="condition-chip__icon">❄️</span>Dandruff</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=41"><span class="condition-chip__icon">👁️</span>Dry Eye</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=26"><span class="condition-chip__icon">🖐️</span>Eczema / Dermatitis</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=24"><span class="condition-chip__icon">🔥</span>Heartburn / GERD</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=4"><span class="condition-chip__icon">🩹</span>Hemorrhoids</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=2"><span class="condition-chip__icon">🦠</span>Impetigo</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=19"><span class="condition-chip__icon">🐝</span>Insect Bites &amp; Stings</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=8"><span class="condition-chip__icon">🏃</span>Jock Itch</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=12"><span class="condition-chip__icon">🤕</span>Mild Headache</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=38"><span class="condition-chip__icon">😤</span>Nasal Congestion</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=30"><span class="condition-chip__icon">🤢</span>Nausea in Pregnancy</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=18"><span class="condition-chip__icon">👄</span>Oral Thrush</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=20"><span class="condition-chip__icon">🩸</span>Period Pain</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=22"><span class="condition-chip__icon">👁️</span>Pink Eye</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=43"><span class="condition-chip__icon">🪱</span>Pinworms</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=9"><span class="condition-chip__icon">⭕</span>Ringworm</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=39"><span class="condition-chip__icon">🤒</span>Sore Throat</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=21"><span class="condition-chip__icon">🦴</span>Sprains &amp; Strains</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=49"><span class="condition-chip__icon">🕷️</span>Tick Bites</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=23"><span class="condition-chip__icon">💧</span>Urinary Tract Infection</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=42"><span class="condition-chip__icon">🌸</span>Vaginal Yeast Infection</a>
+          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=46"><span class="condition-chip__icon">🌱</span>Warts</a>
+        </div>
+        <p style="font-size:.8rem;color:var(--text-muted);text-align:center;">All 28 conditions available as of July 1, 2026 &nbsp;·&nbsp; Walk in or click any condition to start your online assessment &nbsp;·&nbsp; <strong>No doctor's referral needed</strong></p>
       </div>
-      <div class="medscheck-card">
-        <div class="medscheck-card__icon">🩺</div>
-        <div class="medscheck-card__title">Diabetes Medication Review</div>
-        <p class="medscheck-card__desc">A specialized review for patients living with Type 2 diabetes. We assess your diabetes medications, discuss blood sugar targets, and help coordinate care with your healthcare team.</p>
-        <span class="medscheck-card__tag">For patients with Type 2 diabetes on any medication</span>
-      </div>
-      <div class="medscheck-card">
-        <div class="medscheck-card__icon">🏥</div>
-        <div class="medscheck-card__title">Post-Hospital Reconciliation</div>
-        <p class="medscheck-card__desc">Coming home from the hospital? We'll compare your discharge medications with your existing prescriptions to prevent dangerous errors, duplications, or gaps in your care during this critical transition.</p>
-        <span class="medscheck-card__tag">Following hospital discharge or a care transition</span>
-      </div>
-      <div class="medscheck-card">
-        <div class="medscheck-card__icon">🔄</div>
-        <div class="medscheck-card__title">Follow-Up Review</div>
-        <p class="medscheck-card__desc">When your medications change significantly — a new diagnosis, a new prescription, or a concern about side effects — we schedule a focused follow-up to make sure your therapy stays on track.</p>
-        <span class="medscheck-card__tag">After a significant medication change or concern</span>
-      </div>
-    </div>
-    <p class="insurance__note" style="margin-top:1.75rem;">Medication reviews are <strong>covered at no cost</strong> for eligible Ontario residents through the provincial drug benefit program. <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us</a> to book your review — walk-ins also welcome.</p>
-  </div>
-</section>
 
-<!-- ── Vaccinations ─────────────────────────────────────── -->
-<section id="vaccines">
-  <div class="section__inner">
-    <h2 class="section__title">Vaccines at Our Pharmacy</h2>
-    <div class="vaccines__intro">
-      <p>Our pharmacist is trained to administer vaccines right in the pharmacy — no doctor's visit required. We offer Ontario's publicly funded vaccines at <strong>no cost</strong> to eligible patients, as well as travel and private vaccines. Walk-ins welcome; appointments recommended for busy periods.</p>
-    </div>
+      <!-- TAB: Vaccines -->
+      <div class="svc-tab__panel" data-panel="vaccines">
+        <p class="section__lead" style="margin-bottom:1.5rem;">Our pharmacist administers vaccines right in the pharmacy — no doctor's visit required. Walk-ins welcome; appointments recommended for busy periods.</p>
+        <div class="vaccines__sub-heading" style="margin-bottom:.75rem;">Publicly Funded — Free with a Valid Ontario Health Card</div>
+        <div class="vaccine-grid" style="margin-bottom:1.75rem;">
+          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Influenza (Flu Shot)</div><span class="vaccine-card__badge badge--funded">FREE</span></div><div class="vaccine-card__who">All Ontarians 6 months+ — annual</div><p class="vaccine-card__desc">Updated each fall. Recommended for seniors, children, pregnant individuals, and those with chronic conditions.</p></div>
+          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">COVID-19</div><span class="vaccine-card__badge badge--funded">FREE</span></div><div class="vaccine-card__who">All Ontarians — updated doses as recommended</div><p class="vaccine-card__desc">Ask our pharmacist whether you're due for an updated dose — eligibility updated regularly by Ontario Public Health.</p></div>
+          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Shingles (Shingrix)</div><span class="vaccine-card__badge badge--funded">FREE</span></div><div class="vaccine-card__who">Adults 65+ · Adults 50+ who are immunocompromised</div><p class="vaccine-card__desc">Two-dose series, highly effective at preventing shingles and post-herpetic neuralgia.</p></div>
+          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Pneumococcal</div><span class="vaccine-card__badge badge--funded">FREE</span></div><div class="vaccine-card__who">Adults 65+ · High-risk individuals</div><p class="vaccine-card__desc">Protects against pneumococcal pneumonia. Recommended for those with heart disease, diabetes, lung or kidney disease.</p></div>
+          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">RSV</div><span class="vaccine-card__badge badge--funded">FREE</span></div><div class="vaccine-card__who">Adults 60+ — available seasonally</div><p class="vaccine-card__desc">Single dose protecting against RSV-related lower respiratory illness in older adults.</p></div>
+        </div>
+        <div class="vaccines__sub-heading" style="margin-bottom:.75rem;">Travel &amp; Private Vaccines</div>
+        <div class="vaccine-grid" style="margin-bottom:1.5rem;">
+          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Hepatitis A &amp; B (Twinrix)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Travellers · At-risk individuals</div><p class="vaccine-card__desc">Recommended for travel to Asia, Africa, Latin America, and the Middle East. Many benefit plans cover travel vaccines.</p></div>
+          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Typhoid</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Travellers to endemic regions</div><p class="vaccine-card__desc">Recommended for South Asia, sub-Saharan Africa, and Latin America travel. ~2–3 years of protection.</p></div>
+          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Meningococcal (ACYW)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Travellers · Students</div><p class="vaccine-card__desc">Recommended for sub-Saharan Africa travel, Hajj, and adult catch-up.</p></div>
+          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">HPV (Gardasil 9)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Adult catch-up · Up to age 45</div><p class="vaccine-card__desc">Protects against 9 HPV strains linked to cancers and genital warts. Many extended health plans cover this series.</p></div>
+        </div>
+        <p style="text-align:center;margin-bottom:.75rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667">Book a Vaccine Appointment</a></p>
+        <p style="font-size:.74rem;color:var(--text-muted);text-align:center;">Publicly funded vaccines require a valid Ontario health card. Eligibility criteria apply. Call (416) 654-8181 for current stock.</p>
+      </div>
 
-    <div class="vaccines__sub-heading">Publicly Funded — Free with a Valid Ontario Health Card</div>
-    <div class="vaccine-grid">
-      <div class="vaccine-card">
-        <div class="vaccine-card__header">
-          <div class="vaccine-card__name">Influenza (Flu Shot)</div>
-          <span class="vaccine-card__badge badge--funded">FREE</span>
-        </div>
-        <div class="vaccine-card__who">All Ontarians 6 months and older — annual</div>
-        <p class="vaccine-card__desc">Updated each fall to match circulating strains. Especially recommended for seniors, children, pregnant individuals, and people with chronic health conditions such as asthma, heart disease, or diabetes.</p>
-      </div>
-      <div class="vaccine-card">
-        <div class="vaccine-card__header">
-          <div class="vaccine-card__name">COVID-19</div>
-          <span class="vaccine-card__badge badge--funded">FREE</span>
-        </div>
-        <div class="vaccine-card__who">All Ontarians — updated doses as recommended</div>
-        <p class="vaccine-card__desc">Ontario offers updated COVID-19 vaccines seasonally. Recommended doses vary by age and health status. Ask our pharmacist whether you're due for an updated dose — eligibility guidance is updated regularly by Ontario Public Health.</p>
-      </div>
-      <div class="vaccine-card">
-        <div class="vaccine-card__header">
-          <div class="vaccine-card__name">Shingles (Shingrix)</div>
-          <span class="vaccine-card__badge badge--funded">FREE</span>
-        </div>
-        <div class="vaccine-card__who">Adults 65 and older · Adults 50+ who are immunocompromised</div>
-        <p class="vaccine-card__desc">Two-dose series (second dose 2–6 months after the first). Highly effective at preventing shingles (herpes zoster) and its painful long-term complication, post-herpetic neuralgia. Even if you've had shingles before, this vaccine is recommended.</p>
-      </div>
-      <div class="vaccine-card">
-        <div class="vaccine-card__header">
-          <div class="vaccine-card__name">Pneumococcal</div>
-          <span class="vaccine-card__badge badge--funded">FREE</span>
-        </div>
-        <div class="vaccine-card__who">Adults 65 and older · High-risk individuals at any age</div>
-        <p class="vaccine-card__desc">Protects against pneumococcal pneumonia and invasive pneumococcal disease. High-risk groups include those with heart disease, diabetes, lung disease, kidney disease, liver disease, cochlear implants, or a compromised immune system.</p>
-      </div>
-      <div class="vaccine-card">
-        <div class="vaccine-card__header">
-          <div class="vaccine-card__name">RSV (Respiratory Syncytial Virus)</div>
-          <span class="vaccine-card__badge badge--funded">FREE</span>
-        </div>
-        <div class="vaccine-card__who">Adults 60 and older · Available seasonally (fall &amp; winter)</div>
-        <p class="vaccine-card__desc">A single dose that protects against RSV-related lower respiratory illness — a leading cause of hospitalization in older adults. Particularly important for those with chronic cardiorespiratory or immunocompromising conditions.</p>
-      </div>
-    </div>
-
-    <div class="vaccines__sub-heading">Travel &amp; Private Vaccines</div>
-    <div class="vaccine-grid">
-      <div class="vaccine-card">
-        <div class="vaccine-card__header">
-          <div class="vaccine-card__name">Hepatitis A &amp; B</div>
-          <span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span>
-        </div>
-        <div class="vaccine-card__who">Travellers · At-risk individuals</div>
-        <p class="vaccine-card__desc">Available individually or as Twinrix (combined A+B). Recommended for travel to many regions of Asia, Africa, Latin America, and the Middle East. Check your extended health plan — many benefit programs cover travel vaccines.</p>
-      </div>
-      <div class="vaccine-card">
-        <div class="vaccine-card__header">
-          <div class="vaccine-card__name">Typhoid</div>
-          <span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span>
-        </div>
-        <div class="vaccine-card__who">Travellers to endemic regions</div>
-        <p class="vaccine-card__desc">Injectable typhoid vaccine recommended for travel to parts of South Asia, sub-Saharan Africa, and Latin America where typhoid fever is common. Provides approximately 2–3 years of protection.</p>
-      </div>
-      <div class="vaccine-card">
-        <div class="vaccine-card__header">
-          <div class="vaccine-card__name">Meningococcal (ACYW)</div>
-          <span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span>
-        </div>
-        <div class="vaccine-card__who">Travellers · Students · Adult catch-up</div>
-        <p class="vaccine-card__desc">Protects against four strains of meningococcal bacteria. Recommended for travel to sub-Saharan Africa's "meningitis belt," Hajj pilgrimage, and for adults who did not receive the publicly funded school-program dose.</p>
-      </div>
-      <div class="vaccine-card">
-        <div class="vaccine-card__header">
-          <div class="vaccine-card__name">HPV (Gardasil 9)</div>
-          <span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span>
-        </div>
-        <div class="vaccine-card__who">Adult catch-up · Up to age 45</div>
-        <p class="vaccine-card__desc">Protects against 9 strains of human papillomavirus linked to cervical, throat, anal, and other cancers, as well as genital warts. Effective even if partially vaccinated in the past. Many extended health plans cover this series.</p>
-      </div>
-    </div>
-
-    <div class="vaccines__cta-block">
-      <p>Not sure which vaccines are right for you? Our pharmacist will review your immunization history, health conditions, and travel plans to give you personalized recommendations — at no charge.</p>
-      <a href="#booking" class="btn">Book a Vaccine Consultation</a>
-    </div>
-    <p class="vaccines__disclaimer">Publicly funded vaccines require a valid Ontario health card (OHIP). Eligibility criteria apply and are subject to provincial guideline updates — our pharmacist will confirm your eligibility at the time of your visit. Vaccine availability may vary; call ahead at (416) 654-8181 for current stock. Travel vaccines not listed above may also be available — ask our pharmacist.</p>
-  </div>
-</section>
-
-<!-- ── Drug Interaction Checker ───────────────────────────── -->
-<section id="drug-checker">
-  <div class="section__inner">
-    <h2 class="section__title">Drug Interaction Checker</h2>
-    <p class="section__lead">Add two or more medications to check for possible interactions — right here, no sign-up needed.</p>
-
-    <div class="dc-layout">
-      <!-- left: input + detailed results -->
-      <div class="dc-card">
-        <div class="dc-input-row">
-          <div class="dc-autocomplete">
-            <input type="text" id="dc-input" class="dc-input" placeholder="Type a medication name…" autocomplete="off" aria-label="Medication name" />
-            <ul id="dc-suggestions" class="dc-suggestions" role="listbox"></ul>
+      <!-- TAB: Drug Checker -->
+      <div class="svc-tab__panel" data-panel="drug-check">
+        <p class="section__lead" style="margin-bottom:1.5rem;">Add two or more medications to check for possible interactions — right here, no sign-up needed.</p>
+        <div class="dc-layout">
+          <div class="dc-card">
+            <div class="dc-input-row">
+              <div class="dc-autocomplete">
+                <input type="text" id="dc-input" class="dc-input" placeholder="Type a medication name…" autocomplete="off" aria-label="Medication name" />
+                <ul id="dc-suggestions" class="dc-suggestions" role="listbox"></ul>
+              </div>
+              <button type="button" id="dc-add" class="btn">Add</button>
+            </div>
+            <div id="dc-chips" class="dc-chips" aria-live="polite"></div>
+            <div class="dc-actions">
+              <button type="button" id="dc-check" class="btn" disabled>Check Interactions →</button>
+              <button type="button" id="dc-clear" class="btn btn--outline">Clear</button>
+            </div>
+            <div id="dc-results" class="dc-results"></div>
+            <p class="dc-disclaimer">⚠️ This tool is for general information only and may not capture every interaction. Always confirm with our pharmacists before starting, stopping, or combining medications. Medication names are sent anonymously to the U.S. National Library of Medicine (NLM RxNav API) — no personal health information is collected or stored by this website.</p>
+            <div class="dc-credit"><span>For a complete report, visit</span><a href="https://www.drugs.com/drug_interactions.html" target="_blank" rel="noopener" class="dc-credit__logo">Drugs<span>.com</span></a><span class="dc-credit__data">· Data: NLM RxNav · DrugBank · Health Canada</span></div>
           </div>
-          <button type="button" id="dc-add" class="btn">Add</button>
-        </div>
-
-        <div id="dc-chips" class="dc-chips" aria-live="polite"></div>
-
-        <div class="dc-actions">
-          <button type="button" id="dc-check" class="btn" disabled>Check Interactions →</button>
-          <button type="button" id="dc-clear" class="btn btn--outline">Clear</button>
-        </div>
-
-        <div id="dc-results" class="dc-results"></div>
-
-        <p class="dc-disclaimer">
-          ⚠️ This tool is for general information only and may not capture every interaction.
-          Always confirm with our pharmacists before starting, stopping, or combining medications.
-          Medication names are sent anonymously to the U.S. National Library of Medicine (NLM RxNav API) to retrieve interaction data — no personal health information is collected or stored by this website.
-        </p>
-
-        <div class="dc-credit">
-          <span>For a complete report, visit</span>
-          <a href="https://www.drugs.com/drug_interactions.html" target="_blank" rel="noopener" class="dc-credit__logo">Drugs<span>.com</span></a>
-          <span class="dc-credit__data">· Data: NLM RxNav · DrugBank · Health Canada</span>
-        </div>
-      </div>
-
-      <!-- right: summary takeaway box -->
-      <div class="dc-summary" id="dc-summary">
-        <div class="dc-summary__icon">💊</div>
-        <h3 class="dc-summary__title">Your Summary</h3>
-        <p class="dc-summary__hint">Add your medications on the left, then click <strong>Check Interactions</strong> to see a summary here.</p>
-        <div id="dc-summary-body" class="dc-summary__body"></div>
-        <div class="dc-summary__cta" id="dc-summary-cta" style="display:none">
-          <p>We recommend booking a <strong>Medication Review</strong> with our pharmacists — it's free and covered by OHIP.</p>
-          <a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/patient/meds/306667">Book a Medication Review →</a>
-          <div class="dc-pharmacist" style="margin-top:.85rem;">
-            Or call us: <a href="tel:+14166548181">(416) 654-8181</a>
+          <div class="dc-summary" id="dc-summary">
+            <div class="dc-summary__icon">💊</div>
+            <h3 class="dc-summary__title">Your Summary</h3>
+            <p class="dc-summary__hint">Add your medications on the left, then click <strong>Check Interactions</strong> to see a summary here.</p>
+            <div id="dc-summary-body" class="dc-summary__body"></div>
+            <div class="dc-summary__cta" id="dc-summary-cta" style="display:none">
+              <p>We recommend booking a <strong>Medication Review</strong> with our pharmacists — it's free and covered by OHIP.</p>
+              <a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/patient/meds/306667">Book a Medication Review →</a>
+              <div class="dc-pharmacist" style="margin-top:.85rem;">Or call us: <a href="tel:+14166548181">(416) 654-8181</a></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <!-- TAB: Insurance -->
+      <div class="svc-tab__panel" data-panel="insurance">
+        <p class="section__lead" style="margin-bottom:1.5rem;">We direct-bill most major insurance plans — no paperwork, no upfront payment in most cases.</p>
+        <div class="insurance-grid">
+          <div class="insurance-card"><div class="insurance-card__abbr">ODB</div><div class="insurance-card__name">Ontario Drug Benefit</div><div class="insurance-card__desc">Seniors, social assistance, Trillium Drug Program</div></div>
+          <div class="insurance-card"><div class="insurance-card__abbr">GSC</div><div class="insurance-card__name">Green Shield Canada</div><div class="insurance-card__desc">Employer group and individual plans</div></div>
+          <div class="insurance-card"><div class="insurance-card__abbr">BC</div><div class="insurance-card__name">Blue Cross</div><div class="insurance-card__desc">Medavie Blue Cross individual and group plans</div></div>
+          <div class="insurance-card"><div class="insurance-card__abbr">MAN</div><div class="insurance-card__name">Manulife</div><div class="insurance-card__desc">GroupFlex and individual benefit plans</div></div>
+          <div class="insurance-card"><div class="insurance-card__abbr">DES</div><div class="insurance-card__name">Desjardins</div><div class="insurance-card__desc">Individual and group insurance plans</div></div>
+          <div class="insurance-card"><div class="insurance-card__abbr">IAF</div><div class="insurance-card__name">Industrial Alliance</div><div class="insurance-card__desc">Group and individual health benefits</div></div>
+        </div>
+        <p class="insurance__note" style="margin-top:1.25rem;">Not sure if your plan is covered? <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us</a> — we'll check on the spot.</p>
+      </div>
+    </div><!-- /svc-tabs -->
   </div>
 </section>
 
-<!-- ── Insurance ──────────────────────────────────────────── -->
-<section id="insurance">
+<!-- ── FAQ ─────────────────────────────────────────────────── -->
+<section id="faq" class="faq">
   <div class="section__inner">
-    <h2 class="section__title">Insurance &amp; Coverage</h2>
-    <p class="section__lead">We direct-bill most major insurance plans — no paperwork, no upfront payment in most cases.</p>
-    <div class="insurance-grid">
-      <div class="insurance-card">
-        <div class="insurance-card__abbr">ODB</div>
-        <div class="insurance-card__name">Ontario Drug Benefit</div>
-        <div class="insurance-card__desc">Seniors, social assistance, Trillium Drug Program</div>
+    <h2 class="section__title">Frequently Asked Questions</h2>
+    <p class="section__lead">Quick answers to common questions about our pharmacy.</p>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-item__q" aria-expanded="false">
+          Do I need a doctor's referral to get a prescription?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-item__a">Not for minor ailments. Under Ontario's Minor Ailments Program, our pharmacist can assess and prescribe for 28 common conditions — no doctor's appointment, no referral needed. For other prescriptions, you'll still need a prescription from a physician or nurse practitioner, which you can bring to us to fill.</div>
       </div>
-      <div class="insurance-card">
-        <div class="insurance-card__abbr">GSC</div>
-        <div class="insurance-card__name">Green Shield Canada</div>
-        <div class="insurance-card__desc">Employer group and individual plans</div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" aria-expanded="false">
+          Do you accept walk-ins?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-item__a">Yes! Walk-ins are always welcome for prescription drop-offs, vaccine appointments, and minor ailment assessments. For busier periods or medication reviews, we recommend calling ahead or booking online through PharmAssess so we can give you our full attention.</div>
       </div>
-      <div class="insurance-card">
-        <div class="insurance-card__abbr">BC</div>
-        <div class="insurance-card__name">Blue Cross</div>
-        <div class="insurance-card__desc">Medavie Blue Cross individual and group plans</div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" aria-expanded="false">
+          Can you fill prescriptions from doctors outside Ontario?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-item__a">We can fill prescriptions written by Canadian physicians licensed in any province. Prescriptions from outside Canada cannot be filled directly, but our pharmacist can often help you find an interim solution while you establish care with an Ontario provider. Call us at (416) 654-8181 to discuss your situation.</div>
       </div>
-      <div class="insurance-card">
-        <div class="insurance-card__abbr">MAN</div>
-        <div class="insurance-card__name">Manulife</div>
-        <div class="insurance-card__desc">GroupFlex and individual benefit plans</div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" aria-expanded="false">
+          How do I transfer my prescriptions to your pharmacy?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-item__a">Transferring is easy. You can request a transfer online using the "Transfer Your Rx" button in the Services section above, call us at (416) 654-8181, or simply come in. We'll contact your current pharmacy on your behalf — there's nothing more you need to do. Most transfers take about 15 minutes.</div>
       </div>
-      <div class="insurance-card">
-        <div class="insurance-card__abbr">DES</div>
-        <div class="insurance-card__name">Desjardins</div>
-        <div class="insurance-card__desc">Individual and group insurance plans</div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" aria-expanded="false">
+          Do you offer delivery?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-item__a">Yes — we offer free local delivery for prescriptions and health products in the St. Clair West neighbourhood. We're also available on Uber Eats for convenient on-demand delivery of over-the-counter products. Call (416) 654-8181 to arrange a prescription delivery.</div>
       </div>
-      <div class="insurance-card">
-        <div class="insurance-card__abbr">IAF</div>
-        <div class="insurance-card__name">Industrial Alliance</div>
-        <div class="insurance-card__desc">Group and individual health benefits</div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" aria-expanded="false">
+          Is a medication review free?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-item__a">Yes — medication reviews are covered at no cost for eligible Ontario residents through the provincial drug benefit program. You're typically eligible if you're taking 3 or more chronic medications, or following a hospital discharge. Book online or call us to confirm your eligibility.</div>
       </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" aria-expanded="false">
+          Do you do blister packs?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-item__a">Yes. We prepare weekly blister (bubble) packs to organize complex medication schedules — ideal for patients taking multiple medications or caring for a family member who needs help staying on track. Call us at (416) 654-8181 to get started; setup is straightforward and usually takes one visit.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" aria-expanded="false">
+          What languages do you serve patients in?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-item__a">Our team serves patients in English, Spanish, Portuguese, Italian, Turkish, Tagalog, Polish, and more. The St. Clair West community is wonderfully diverse — we're proud to offer care in the languages our patients are most comfortable with. See the language flags on our homepage or call to check availability.</div>
+      </div>
+
     </div>
-    <p class="insurance__note">Not sure if your plan is covered? <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us</a> — we'll check on the spot.</p>
   </div>
 </section>
 
@@ -2784,6 +2587,35 @@
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') document.getElementById('pp-overlay').classList.remove('open');
   });
+
+  // ── Service Tabs ──────────────────────────────────────────
+  (function(){
+    var nav = document.querySelector('.svc-tabs__nav');
+    if (!nav) return;
+    nav.addEventListener('click', function(e){
+      var btn = e.target.closest('.svc-tab__btn');
+      if (!btn) return;
+      var target = btn.dataset.tab;
+      document.querySelectorAll('.svc-tab__btn').forEach(function(b){ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+      document.querySelectorAll('.svc-tab__panel').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+      var panel = document.querySelector('[data-panel="'+target+'"]');
+      if (panel) panel.classList.add('active');
+      if (target === 'drug-check') { var inp = document.getElementById('dc-input'); if (inp) setTimeout(function(){ inp.focus(); }, 50); }
+    });
+  })();
+
+  // ── FAQ Accordion ─────────────────────────────────────────
+  (function(){
+    document.querySelectorAll('.faq-item__q').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var item = btn.closest('.faq-item');
+        var isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); i.querySelector('.faq-item__q').setAttribute('aria-expanded','false'); });
+        if (!isOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+      });
+    });
+  })();
 </script>
 </body>
 </html>
