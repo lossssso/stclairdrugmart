@@ -788,10 +788,15 @@
       gap: 1rem;
     }
     .info-strip__card--wide { grid-column: 1 / -1; }
-    .transit__map-wrap { border-radius: 10px; overflow: hidden; border: 1.5px solid var(--border); margin-top: .5rem; }
-    .transit__map-wrap iframe { display: block; width: 100%; height: 260px; border: none; }
-    .transit__map-credit { font-size: .7rem; color: var(--text-muted); padding: .3rem .6rem; }
-    .transit__map-credit a { color: var(--teal-dark); }
+    .transit-address { display:flex; align-items:flex-start; gap:.6rem; font-size:.875rem; color:var(--text); margin-bottom:1rem; }
+    .transit-address__pin { font-size:1rem; flex-shrink:0; }
+    .transit-routes { display:flex; flex-direction:column; gap:.75rem; }
+    .transit-route { display:flex; align-items:flex-start; gap:.85rem; }
+    .transit-route__dot { width:13px; height:13px; border-radius:50%; flex-shrink:0; margin-top:.28rem; }
+    .transit-route__line { font-size:.85rem; font-weight:700; color:var(--text); }
+    .transit-route__step { font-size:.78rem; color:var(--text-muted); margin-top:.18rem; line-height:1.4; }
+    .transit-btn { display:block; width:100%; text-align:center; margin-top:1.4rem; padding:.8rem 1.25rem; font-size:.9rem; border-radius:100px; background:var(--teal-dark); color:#fff; font-weight:700; text-decoration:none; transition:background .15s, transform .15s; }
+    .transit-btn:hover { background:var(--teal-deeper); transform:translateY(-1px); }
     .info-strip__card {
       background: #fff; border-radius: 14px; padding: 1.25rem 1.2rem 1.1rem;
       border: 1.5px solid rgba(255,255,255,.12);
@@ -929,8 +934,6 @@
       /* reduced section padding on mobile */
       section { padding: 2.75rem 1rem; }
       .hero { padding: 2.75rem 1rem 3rem; }
-      /* transit map: slightly shorter on mobile */
-      .transit__map-wrap iframe { height: 200px; }
       /* collapse steps to single column */
       .steps { grid-template-columns: 1fr; }
       /* shrink staff to 3 columns */
@@ -2421,22 +2424,34 @@ window.FAQS = [
       <!-- Transit — full width -->
       <div class="info-strip__card info-strip__card--wide">
         <div class="info-strip__title">🚇 Getting Here by Transit</div>
-        <div class="transit__map-wrap">
-          <iframe
-            src="https://www.openstreetmap.org/export/embed.html?bbox=-79.4650%2C43.6650%2C-79.4280%2C43.6950&layer=transportmap&marker=43.6774%2C-79.4469"
-            title="TTC transit map — St. Clair Ave W &amp; Dufferin, Toronto"
-            loading="lazy"
-            allowfullscreen
-          ></iframe>
-          <p class="transit__map-credit">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors · Transit data from TTC</p>
+        <div class="transit-address">
+          <span class="transit-address__pin">📍</span>
+          <span><strong>1203 St. Clair Ave W</strong> — corner of St. Clair &amp; Dufferin, Toronto</span>
         </div>
-        <div class="info-strip__chips" style="margin-top:.85rem;">
-          <div class="info-chip"><span class="info-chip__icon">🟡</span><span>Take <strong>Line 1 (Yellow)</strong> to <strong>St. Clair West Station</strong>, board the <strong>512 St. Clair streetcar</strong> westbound to Dufferin</span></div>
-          <div class="info-chip"><span class="info-chip__icon">🟢</span><span>Take <strong>Line 2 (Green)</strong> to <strong>Dufferin Station</strong>, board the <strong>29 / 929 Dufferin bus</strong> northbound to St. Clair</span></div>
-          <div class="info-chip"><span class="info-chip__icon">🟠</span><span>Take <strong>Line 5 Eglinton Crosstown</strong> to <strong>Dufferin Station</strong>, board the <strong>29 / 929 Dufferin bus</strong> northbound to St. Clair</span></div>
-          <div class="info-chip"><span class="info-chip__icon">📍</span><span>We're at <strong>1203 St. Clair Ave W</strong> — corner of St. Clair &amp; Dufferin</span></div>
+        <div class="transit-routes">
+          <div class="transit-route">
+            <div class="transit-route__dot" style="background:#F5A623;"></div>
+            <div>
+              <div class="transit-route__line">Line 1 (Yellow) → St. Clair West Station</div>
+              <div class="transit-route__step">Board the <strong>512 St. Clair</strong> streetcar westbound — exit at Dufferin</div>
+            </div>
+          </div>
+          <div class="transit-route">
+            <div class="transit-route__dot" style="background:#008C4A;"></div>
+            <div>
+              <div class="transit-route__line">Line 2 (Green) → Dufferin Station</div>
+              <div class="transit-route__step">Board the <strong>29 / 929 Dufferin</strong> bus northbound — exit at St. Clair</div>
+            </div>
+          </div>
+          <div class="transit-route">
+            <div class="transit-route__dot" style="background:#F5821F;"></div>
+            <div>
+              <div class="transit-route__line">Line 5 Eglinton → Dufferin Station</div>
+              <div class="transit-route__step">Board the <strong>29 / 929 Dufferin</strong> bus northbound — exit at St. Clair</div>
+            </div>
+          </div>
         </div>
-        <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=transit" target="_blank" rel="noopener" style="display:inline-block;margin-top:.9rem;font-size:.85rem;">🗺️ Get Transit Directions on Google Maps →</a>
+        <a class="transit-btn" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=transit" target="_blank" rel="noopener">🗺️ Get Transit Directions on Google Maps →</a>
       </div>
     </div>
 
