@@ -122,14 +122,19 @@
     }
     .nav__links {
       display: flex;
+      align-items: center;
       list-style: none;
       gap: .25rem;
     }
+    .nav__links > li { display: flex; align-items: center; }
     .nav__links a {
+      display: inline-flex;
+      align-items: center;
       color: #2c5457;
       font-size: .875rem;
       font-weight: 500;
-      padding: .45rem .8rem;
+      line-height: 1;
+      padding: .5rem .8rem;
       border-radius: 7px;
       transition: background .15s, color .15s;
     }
@@ -152,11 +157,20 @@
     }
     /* ── Services dropdown ───────────────────────── */
     .nav__has-dropdown { position: relative; }
-    .nav__has-dropdown > a { display: inline-flex; align-items: center; gap: .3rem; }
-    .nav__has-dropdown > a::after { content: '▾'; font-size: .7rem; opacity: .7; }
+    .nav__has-dropdown > a { gap: .3rem; }
+    .nav__has-dropdown > a::after {
+      content: '▾'; font-size: .65rem; opacity: .65;
+      transition: transform .2s; line-height: 1;
+    }
+    .nav__has-dropdown:hover > a::after { transform: rotate(180deg); }
+    /* invisible bridge spanning the gap so hover doesn't drop */
+    .nav__has-dropdown::after {
+      content: ''; position: absolute;
+      left: 0; right: 0; top: 100%; height: 10px;
+    }
     .nav__dropdown {
       display: none;
-      position: absolute; top: calc(100% + 8px); left: 0;
+      position: absolute; top: calc(100% + 9px); left: 0;
       background: #fff;
       border: 1px solid #e9f4f5;
       border-radius: 10px;
@@ -726,13 +740,18 @@
       .gallery  { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
-      .nav__links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e9f4f5; box-shadow: 0 8px 20px rgba(0,60,66,.08); flex-direction: column; padding: .5rem 1rem 1rem; gap: .1rem; }
+      .nav__links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e9f4f5; box-shadow: 0 8px 20px rgba(0,60,66,.08); flex-direction: column; align-items: stretch; padding: .5rem 1rem 1rem; gap: .1rem; }
       .nav__links.open { display: flex; }
+      .nav__links > li { display: block; }
+      .nav__links a { display: flex; width: 100%; }
       .nav__toggle { display: block; }
-      .nav__dropdown { position: static; border: none; box-shadow: none; border-radius: 0; padding: 0; background: #f3fafb; margin: .2rem 0 .2rem .75rem; }
+      .nav__has-dropdown::after { display: none; } /* no hover bridge on mobile */
+      .nav__dropdown { position: static; border: none; box-shadow: none; border-radius: 0; padding: 0; background: #f3fafb; margin: .2rem 0 .2rem .75rem; min-width: 0; }
       .nav__has-dropdown .nav__dropdown { display: none; }
       .nav__has-dropdown.open .nav__dropdown { display: block; }
       .nav__has-dropdown > a::after { margin-left: auto; }
+      .nav__has-dropdown:hover > a::after { transform: none; }
+      .nav__has-dropdown.open > a::after { transform: rotate(180deg); }
       .welcome__grid,
       .contact__grid,
       .blog-grid { grid-template-columns: 1fr; }
@@ -849,6 +868,7 @@
       font-size: .95rem; font-weight: 900;
       color: var(--teal-deeper); text-transform: uppercase; letter-spacing: .04em;
     }
+    .vaccine-card__badges { display: flex; gap: .3rem; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
     .vaccine-card__badge {
       flex-shrink: 0; font-size: .67rem; font-weight: 800;
       padding: .18rem .5rem; border-radius: 20px; white-space: nowrap;
@@ -856,6 +876,13 @@
     }
     .badge--funded { background: #d1fae5; color: #065f46; }
     .badge--private { background: #fef3c7; color: #92400e; }
+    .badge--new { background: var(--teal-bright); color: #fff; }
+    .vaccines__new-note {
+      font-size: .82rem; color: var(--text-muted); line-height: 1.55;
+      background: #eef9fa; border: 1.5px solid var(--border);
+      border-radius: 10px; padding: .7rem .95rem; margin-bottom: 1.25rem;
+    }
+    .vaccines__new-note strong { color: var(--teal-deeper); }
     .vaccine-card__who { font-size: .81rem; color: var(--text); font-weight: 600; line-height: 1.4; }
     .vaccine-card__desc { font-size: .79rem; color: var(--text-muted); line-height: 1.55; }
     .vaccines__cta-block {
@@ -1846,12 +1873,14 @@
       <div class="svc-tab__panel" data-panel="vaccines">
         <p class="section__lead" style="margin-bottom:1.5rem;">Our pharmacist administers vaccines right in the pharmacy — no doctor's visit required. Walk-ins welcome; appointments recommended for busy periods.</p>
         <div class="vaccines__sub-heading" style="margin-bottom:.75rem;">Publicly Funded — Free with a Valid Ontario Health Card</div>
+        <p class="vaccines__new-note">🆕 <strong>New as of July 1, 2026:</strong> Ontario pharmacists can now administer the publicly funded <strong>Tdap, shingles, pneumococcal &amp; RSV</strong> vaccines — get them right here at the pharmacy, no doctor's visit needed.</p>
         <div class="vaccine-grid" style="margin-bottom:1.75rem;">
-          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Influenza (Flu Shot)</div><span class="vaccine-card__badge badge--funded">FREE</span></div><div class="vaccine-card__who">All Ontarians 6 months+ — annual</div><p class="vaccine-card__desc">Updated each fall. Recommended for seniors, children, pregnant individuals, and those with chronic conditions.</p></div>
-          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">COVID-19</div><span class="vaccine-card__badge badge--funded">FREE</span></div><div class="vaccine-card__who">All Ontarians — updated doses as recommended</div><p class="vaccine-card__desc">Ask our pharmacist whether you're due for an updated dose — eligibility updated regularly by Ontario Public Health.</p></div>
-          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Shingles (Shingrix)</div><span class="vaccine-card__badge badge--funded">FREE</span></div><div class="vaccine-card__who">Adults 65+ · Adults 50+ who are immunocompromised</div><p class="vaccine-card__desc">Two-dose series, highly effective at preventing shingles and post-herpetic neuralgia.</p></div>
-          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Pneumococcal</div><span class="vaccine-card__badge badge--funded">FREE</span></div><div class="vaccine-card__who">Adults 65+ · High-risk individuals</div><p class="vaccine-card__desc">Protects against pneumococcal pneumonia. Recommended for those with heart disease, diabetes, lung or kidney disease.</p></div>
-          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">RSV</div><span class="vaccine-card__badge badge--funded">FREE</span></div><div class="vaccine-card__who">Adults 60+ — available seasonally</div><p class="vaccine-card__desc">Single dose protecting against RSV-related lower respiratory illness in older adults.</p></div>
+          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Influenza (Flu Shot)</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--funded">FREE</span></span></div><div class="vaccine-card__who">All Ontarians 6 months+ — annual</div><p class="vaccine-card__desc">Updated each fall. Recommended for seniors, children, pregnant individuals, and those with chronic conditions.</p></div>
+          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">COVID-19</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--funded">FREE</span></span></div><div class="vaccine-card__who">All Ontarians 6 months+ — updated doses as recommended</div><p class="vaccine-card__desc">Ask our pharmacist whether you're due for an updated dose — eligibility updated regularly by Ontario Public Health.</p></div>
+          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Tdap (Tetanus · Diphtheria · Pertussis)</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--new">NEW JUL 1</span><span class="vaccine-card__badge badge--funded">FREE</span></span></div><div class="vaccine-card__who">Adults — one dose in adulthood · Every pregnancy · Tetanus booster every 10 years</div><p class="vaccine-card__desc">Protects against tetanus, diphtheria, and whooping cough (pertussis). Publicly funded once in adulthood, in every pregnancy (ideally 27–32 weeks to protect newborns), and as a booster every 10 years or after an injury.</p></div>
+          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Shingles (Shingrix)</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--new">NEW JUL 1</span><span class="vaccine-card__badge badge--funded">FREE</span></span></div><div class="vaccine-card__who">Adults 65–70 — two-dose series</div><p class="vaccine-card__desc">Highly effective at preventing shingles and post-herpetic neuralgia. Publicly funded for ages 65–70 who haven't had a funded dose; available privately outside that range.</p></div>
+          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Pneumococcal</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--new">NEW JUL 1</span><span class="vaccine-card__badge badge--funded">FREE</span></span></div><div class="vaccine-card__who">Adults 65+ · Younger adults at high risk</div><p class="vaccine-card__desc">Protects against pneumococcal pneumonia. Recommended for those with heart disease, diabetes, lung or kidney disease.</p></div>
+          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">RSV</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--new">NEW JUL 1</span><span class="vaccine-card__badge badge--funded">FREE</span></span></div><div class="vaccine-card__who">Adults 75+ · Adults 60+ at high risk · Long-term care residents</div><p class="vaccine-card__desc">Single dose protecting against RSV-related lower respiratory illness. Publicly funded for older adults at highest risk; available privately for others 60+.</p></div>
         </div>
         <div class="vaccines__sub-heading" style="margin-bottom:.75rem;">Travel &amp; Private Vaccines</div>
         <div class="vaccine-grid" style="margin-bottom:1.5rem;">
