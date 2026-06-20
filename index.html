@@ -261,6 +261,17 @@
     .hero__socials a:hover { background: rgba(0,115,124,.18); transform: translateY(-2px); }
     .hero__socials svg { width: 20px; height: 20px; fill: var(--teal-deeper); color: var(--teal-deeper); }
     .hero__socials .uber-word { width: 30px; height: auto; object-fit: contain; }
+    .hero__status {
+      position: relative; z-index: 1;
+      max-width: 460px; margin: 1.85rem auto 0;
+    }
+    .hero__status .status-board { margin-top: 0; gap: .45rem; }
+    .hero__status .status-row {
+      background: rgba(255,255,255,.78);
+      border-color: rgba(255,255,255,.9);
+      box-shadow: 0 2px 10px rgba(0,80,90,.06);
+      backdrop-filter: blur(3px);
+    }
 
     /* ── Sections shared ──────────────────────────────── */
     section { padding: 5rem 1.5rem; }
@@ -1445,6 +1456,27 @@
       <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
     </a>
   </div>
+
+  <!-- Live status board -->
+  <div class="hero__status">
+    <div class="status-board">
+      <div class="status-row">
+        <span class="status-dot" data-sb-dot="store"></span>
+        <span class="status-row__label">Pharmacy</span>
+        <span class="status-row__val" data-sb-val="store">Loading…</span>
+      </div>
+      <div class="status-row">
+        <span class="status-dot" data-sb-dot="appt"></span>
+        <span class="status-row__label">Appointments &amp; Walk-ins</span>
+        <span class="status-row__val" data-sb-val="appt">Loading…</span>
+      </div>
+      <div class="status-row">
+        <span class="status-dot" data-sb-dot="uber"></span>
+        <span class="status-row__label">Uber Eats Orders</span>
+        <span class="status-row__val" data-sb-val="uber">Loading…</span>
+      </div>
+    </div>
+  </div>
 </header>
 
 <!-- ── Welcome ───────────────────────────────────────────── -->
@@ -2156,19 +2188,19 @@
             </table>
             <div class="status-board">
               <div class="status-row">
-                <span class="status-dot" id="sb-store-dot"></span>
+                <span class="status-dot" data-sb-dot="store"></span>
                 <span class="status-row__label">Pharmacy</span>
-                <span class="status-row__val" id="sb-store-val">Loading…</span>
+                <span class="status-row__val" data-sb-val="store">Loading…</span>
               </div>
               <div class="status-row">
-                <span class="status-dot" id="sb-appt-dot"></span>
+                <span class="status-dot" data-sb-dot="appt"></span>
                 <span class="status-row__label">Appointments &amp; Walk-ins</span>
-                <span class="status-row__val" id="sb-appt-val">Loading…</span>
+                <span class="status-row__val" data-sb-val="appt">Loading…</span>
               </div>
               <div class="status-row">
-                <span class="status-dot" id="sb-uber-dot"></span>
+                <span class="status-dot" data-sb-dot="uber"></span>
                 <span class="status-row__label">Uber Eats Orders</span>
-                <span class="status-row__val" id="sb-uber-val">Loading…</span>
+                <span class="status-row__val" data-sb-val="uber">Loading…</span>
               </div>
             </div>
           </div>
@@ -2960,35 +2992,39 @@
       return 'Opens Monday at ' + fmt(openMin);
     }
 
-    function render(dotId, valId, openMin, closeMin, verb) {
-      var dot = document.getElementById(dotId);
-      var val = document.getElementById(valId);
-      if (!dot || !val) return;
+    function render(key, openMin, closeMin, verb) {
+      var dots = document.querySelectorAll('[data-sb-dot="' + key + '"]');
+      var vals = document.querySelectorAll('[data-sb-val="' + key + '"]');
+      if (!dots.length && !vals.length) return;
       var isOpen = openMin >= 0 && mins >= openMin && mins < closeMin;
       var left = isOpen ? closeMin - mins : 0;
+      var dotClass, valClass, text;
 
       if (openMin < 0 || !isOpen) {
-        dot.className = 'status-dot status-dot--closed';
-        val.className = 'status-row__val status-row__val--closed';
+        dotClass = 'status-dot status-dot--closed';
+        valClass = 'status-row__val status-row__val--closed';
         if (openMin >= 0 && mins < openMin) {
-          val.textContent = 'Closed · Opens today at ' + fmt(openMin);
+          text = 'Closed · Opens today at ' + fmt(openMin);
         } else {
-          val.textContent = 'Closed · ' + nextOpen(day, openMin >= 0 ? openMin : 8*60+30);
+          text = 'Closed · ' + nextOpen(day, openMin >= 0 ? openMin : 8*60+30);
         }
       } else if (left <= 30) {
-        dot.className = 'status-dot status-dot--soon';
-        val.className = 'status-row__val status-row__val--soon';
-        val.textContent = verb + ' · Closing in ' + left + ' min';
+        dotClass = 'status-dot status-dot--soon';
+        valClass = 'status-row__val status-row__val--soon';
+        text = verb + ' · Closing in ' + left + ' min';
       } else if (left <= 120) {
-        dot.className = 'status-dot status-dot--open';
-        val.className = 'status-row__val status-row__val--open';
+        dotClass = 'status-dot status-dot--open';
+        valClass = 'status-row__val status-row__val--open';
         var hrs = Math.floor(left/60), mn2 = left%60;
-        val.textContent = verb + ' · Closing in ' + hrs + 'h' + (mn2 ? ' ' + mn2 + 'm' : '') + ' (at ' + fmt(closeMin) + ')';
+        text = verb + ' · Closing in ' + hrs + 'h' + (mn2 ? ' ' + mn2 + 'm' : '') + ' (at ' + fmt(closeMin) + ')';
       } else {
-        dot.className = 'status-dot status-dot--open';
-        val.className = 'status-row__val status-row__val--open';
-        val.textContent = verb + ' · Closes at ' + fmt(closeMin);
+        dotClass = 'status-dot status-dot--open';
+        valClass = 'status-row__val status-row__val--open';
+        text = verb + ' · Closes at ' + fmt(closeMin);
       }
+
+      dots.forEach(function(dot){ dot.className = dotClass; dot.setAttribute('data-sb-dot', key); });
+      vals.forEach(function(val){ val.className = valClass; val.setAttribute('data-sb-val', key); val.textContent = text; });
     }
 
     // Store: Mon-Fri 9:00–18:00, Sat 9:00–14:00, Sun closed
@@ -3001,9 +3037,9 @@
     if (day >= 1 && day <= 5) { apO = 8*60+30; apC = 18*60+30; }
     else if (day === 6) { apO = 8*60+30; apC = 15*60; }
 
-    render('sb-store-dot', 'sb-store-val', stO, stC, 'Open Now');
-    render('sb-appt-dot',  'sb-appt-val',  apO, apC, 'Accepting');
-    render('sb-uber-dot',  'sb-uber-val',  apO, apC, 'Accepting Orders');
+    render('store', stO, stC, 'Open Now');
+    render('appt',  apO, apC, 'Accepting');
+    render('uber',  apO, apC, 'Accepting Orders');
   })();
 
   // ── Service Tabs ──────────────────────────────────────────
