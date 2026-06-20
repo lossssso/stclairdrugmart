@@ -793,18 +793,26 @@
       .nav__links > li { display: block; }
       .nav__links a { display: flex; width: 100%; }
       .nav__toggle { display: block; }
-      .nav__has-dropdown::after { display: none; } /* no hover bridge on mobile */
+      .nav__has-dropdown::after { display: none; }
       .nav__dropdown { position: static; border: none; box-shadow: none; border-radius: 0; padding: 0; background: #f3fafb; margin: .2rem 0 .2rem .75rem; min-width: 0; }
-      .nav__has-dropdown .nav__dropdown { display: none; }
+      .nav__has-dropdown .nav__dropdown,
+      .nav__has-dropdown:hover .nav__dropdown { display: none; } /* kill hover on iOS */
       .nav__has-dropdown.open .nav__dropdown { display: block; }
       .nav__has-dropdown > a::after { margin-left: auto; }
       .nav__has-dropdown:hover > a::after { transform: none; }
       .nav__has-dropdown.open > a::after { transform: rotate(180deg); }
+      /* shrink brand on small phones */
+      .nav__brand span { font-size: .8rem; letter-spacing: .01em; }
+      @media (max-width: 420px) { .nav__brand span { display: none; } }
+      /* hamburger → × */
+      .nav__toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+      .nav__toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+      .nav__toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
       .welcome__grid,
       .contact__grid,
       .blog-grid { grid-template-columns: 1fr; }
       .services__grid { grid-template-columns: 1fr 1fr; }
-      .services__grid .service-card:last-child { grid-column: 1 / -1; max-width: 50%; margin: 0 auto; }
+      .services__grid .service-card:last-child { grid-column: unset; max-width: unset; margin: 0; }
       .welcome__photo { order: -1; }
       .gallery  { grid-template-columns: 1fr 1fr; }
     }
@@ -1444,7 +1452,7 @@
       <img src="logo.png" alt="" class="nav__brand__logo" />
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
-    <button class="nav__toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
+    <button class="nav__toggle" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav__links" id="navLinks">
@@ -1604,7 +1612,7 @@
       <div class="step">
         <div class="step__num">3</div>
         <h3>Pick Up &amp; Meet Us</h3>
-        <p>Come in and meet your pharmacist in person, or choose free local delivery. No paperwork, no extra cost — just better, more personal care from your new neighbourhood pharmacy.</p>
+        <p>Come in and meet your pharmacist in person, or choose free GTA-wide delivery. No paperwork, no extra cost — just better, more personal care from your new neighbourhood pharmacy.</p>
       </div>
     </div>
     <div class="steps__cta">
@@ -1746,7 +1754,7 @@
             <span class="service-card__arrow">→</span>
           </a>
           <a class="service-card" href="#shop">
-            <div class="service-card__body"><h3>Free Local Delivery</h3><p>Prescriptions and health essentials delivered to your door, free locally or via Uber Eats.</p></div>
+            <div class="service-card__body"><h3>Free Delivery</h3><p>We deliver prescriptions and health essentials free anywhere in the GTA — or order on Uber Eats.</p></div>
             <span class="service-card__arrow">→</span>
           </a>
           <a class="service-card" href="#booking" onclick="document.querySelector('[data-tab=drug-check]').click()">
@@ -2052,7 +2060,7 @@
           Do you offer delivery?
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </button>
-        <div class="faq-item__a">Yes — we offer free local delivery for prescriptions and health products in the St. Clair West neighbourhood. We're also available on Uber Eats for convenient on-demand delivery of over-the-counter products. Call <a href="tel:+14166548181">(416) 654-8181</a> to arrange a prescription delivery.</div>
+        <div class="faq-item__a">Yes — we deliver prescriptions and health products free anywhere in the GTA. We're also available on Uber Eats for on-demand delivery of over-the-counter products. Call <a href="tel:+14166548181">(416) 654-8181</a> to arrange delivery.</div>
       </div>
 
       <div class="faq-item">
@@ -2185,10 +2193,10 @@
           <div class="shop__card__icon-wrap shop__card__icon-wrap--delivery">
             <span>🚴</span>
           </div>
-          <div class="shop__card__title">Free Local Delivery</div>
+          <div class="shop__card__title">Free GTA Delivery</div>
         </div>
         <p class="shop__card__desc">
-          We offer complimentary local delivery for prescription medications within the St. Clair West neighbourhood. No minimums, no fees — just give us a call.
+          We deliver prescriptions and health essentials free anywhere in the GTA. No minimums, no fees — just give us a call.
         </p>
         <a href="tel:+14166548181" class="btn btn--outline">📞 Call to Arrange Delivery</a>
       </div>
@@ -2435,8 +2443,18 @@
         return;
       }
       document.querySelector('.nav__links').classList.remove('open');
+      document.querySelector('.nav__toggle').classList.remove('open');
       document.querySelectorAll('.nav__has-dropdown').forEach(d => d.classList.remove('open'));
     });
+  });
+  // Close mobile nav on tap outside
+  document.addEventListener('click', (e) => {
+    const nav = document.querySelector('nav');
+    if (!nav.contains(e.target)) {
+      document.querySelector('.nav__links').classList.remove('open');
+      document.querySelector('.nav__toggle').classList.remove('open');
+      document.querySelectorAll('.nav__has-dropdown').forEach(d => d.classList.remove('open'));
+    }
   });
 
   // PharmAssess tab switching
