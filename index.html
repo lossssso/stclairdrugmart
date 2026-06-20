@@ -816,6 +816,10 @@
     .info-chip__icon { font-size: .9rem; flex-shrink: 0; width: 18px; text-align: center; margin-top: .05rem; }
     .info-chip strong { color: var(--text); font-weight: 600; }
     .info-chip a { color: var(--teal-dark); font-weight: 500; }
+    a.info-chip { text-decoration: none; transition: color .15s; }
+    a.info-chip:hover { color: var(--teal-dark); }
+    a.info-chip:hover strong { color: var(--teal-dark); }
+    .info-chip__map { color: var(--teal-dark); font-weight: 700; white-space: nowrap; }
     @media (max-width: 768px) {
       .contact__info-strip { grid-template-columns: 1fr; }
     }
@@ -1039,6 +1043,35 @@
       display: inline-block; font-size: .72rem; font-weight: 700;
       background: rgba(33,161,168,.1); color: var(--teal-dark);
       border-radius: 20px; padding: .2rem .62rem; margin-top: .15rem;
+    }
+
+    /* ── Our Services accordion ───────────────────── */
+    #services { background: var(--white); }
+    .svc-acc { max-width: 780px; margin: 2rem auto 0; display: flex; flex-direction: column; gap: .7rem; }
+    .svc-acc-item {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: box-shadow .18s, border-color .18s;
+    }
+    .svc-acc-item.open { border-color: var(--teal-bright); box-shadow: 0 6px 22px rgba(30,107,99,.12); }
+    .svc-acc__head {
+      width: 100%; display: flex; align-items: center; gap: .9rem;
+      padding: 1.05rem 1.25rem; background: none; border: none;
+      cursor: pointer; text-align: left; font: inherit;
+    }
+    .svc-acc__icon { font-size: 1.5rem; line-height: 1; flex-shrink: 0; }
+    .svc-acc__title { flex: 1; font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--teal-deeper); letter-spacing: .01em; }
+    .svc-acc__chev { flex-shrink: 0; color: var(--teal-bright); font-size: 1.4rem; line-height: 1; font-weight: 400; transition: transform .22s; }
+    .svc-acc-item.open .svc-acc__chev { transform: rotate(45deg); }
+    .svc-acc__body { display: none; padding: 0 1.25rem 1.2rem 3.65rem; }
+    .svc-acc-item.open .svc-acc__body { display: block; animation: svcFade .22s ease; }
+    @keyframes svcFade { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+    .svc-acc__body p { font-size: .9rem; color: var(--text-muted); line-height: 1.7; margin: 0 0 .85rem; }
+    .svc-acc__link { display: inline-block; font-size: .82rem; font-weight: 700; color: var(--teal-dark); letter-spacing: .02em; text-decoration: none; }
+    .svc-acc__link:hover { color: var(--teal-bright); }
+    @media (max-width: 600px) {
+      .svc-acc__body { padding-left: 1.25rem; }
+      .svc-acc__title { font-size: .95rem; }
     }
 
     /* ── Vaccinations ─────────────────────────────── */
@@ -1559,7 +1592,8 @@
         <ul class="nav__dropdown">
           <li><a href="#booking">Book Appointment</a></li>
           <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)">Minor Ailments</a></li>
-          <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=overview]').click()},80)">Medication Reviews</a></li>
+          <li><a href="#medication-reviews">Medication Reviews</a></li>
+          <li><a href="#services">Our Services</a></li>
           <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)">Vaccinations</a></li>
           <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=drug-check]').click()},80)">Drug Checker</a></li>
           <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=insurance]').click()},80)">Insurance</a></li>
@@ -1638,7 +1672,7 @@
         </p>
         <div style="margin-top:1.5rem; display:flex; gap:.75rem; flex-wrap:wrap;">
           <a href="#booking" class="btn">Book an Appointment</a>
-          <a href="#booking" class="btn btn--outline">Our Services</a>
+          <a href="#services" class="btn btn--outline">Our Services</a>
         </div>
       </div>
       <div class="welcome__photo">
@@ -1821,60 +1855,18 @@
     <p class="booking__note">
       Having trouble? Call us at <a href="tel:+14166548181" style="color:var(--teal-dark);">(416) 654-8181</a> and we'll book you in directly.
     </p>
-    <p class="booking__note" style="font-size:.74rem;opacity:.65;margin-top:.35rem;">
-      Online booking and patient assessments are processed through <strong>PharmAssess</strong>, a secure third-party pharmacy software platform. By completing a booking or assessment, you agree to PharmAssess's terms of service and privacy practices. St. Clair Drug Mart Pharmacy is not responsible for the privacy practices of PharmAssess.
-    </p>
 
     <!-- ── Service Tabs ─────────────────────────────── -->
     <div class="svc-tabs" id="svc-tabs">
       <nav class="svc-tabs__nav" role="tablist" aria-label="Services">
-        <button class="svc-tab__btn active" data-tab="overview" role="tab" aria-selected="true">Our Services</button>
-        <button class="svc-tab__btn" data-tab="ailments" role="tab" aria-selected="false">Minor Ailments (28)</button>
+        <button class="svc-tab__btn active" data-tab="ailments" role="tab" aria-selected="true">Minor Ailments (28)</button>
         <button class="svc-tab__btn" data-tab="vaccines" role="tab" aria-selected="false">Vaccines</button>
         <button class="svc-tab__btn" data-tab="drug-check" role="tab" aria-selected="false">Drug Checker</button>
         <button class="svc-tab__btn" data-tab="insurance" role="tab" aria-selected="false">Insurance</button>
       </nav>
 
-      <!-- TAB: Our Services overview -->
-      <div class="svc-tab__panel active" data-panel="overview">
-        <div class="services__grid">
-          <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">
-            <div class="service-card__body"><h3>Prescription Dispensing</h3><p>Fast, accurate dispensing with personal counselling from your pharmacist.</p></div>
-            <span class="service-card__arrow">→</span>
-          </a>
-          <a class="service-card" href="tel:+14166548181">
-            <div class="service-card__body"><h3>Blister Packs</h3><p>Weekly blister packaging to simplify complex medication schedules — call to set up.</p></div>
-            <span class="service-card__arrow">→</span>
-          </a>
-          <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">
-            <div class="service-card__body"><h3>Vaccines &amp; Immunizations</h3><p>Flu, COVID, shingles, travel vaccines — walk in or book online.</p></div>
-            <span class="service-card__arrow">→</span>
-          </a>
-          <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/patient/meds/306667">
-            <div class="service-card__body"><h3>Medication Reviews</h3><p>A one-on-one review of all your medications — covered at no cost for eligible Ontario residents.</p></div>
-            <span class="service-card__arrow">→</span>
-          </a>
-          <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">
-            <div class="service-card__body"><h3>Travel Health</h3><p>Pre-travel consultations, vaccines, and medication for your destination.</p></div>
-            <span class="service-card__arrow">→</span>
-          </a>
-          <a class="service-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/transfer-rx/306667">
-            <div class="service-card__body"><h3>Prescription Transfers</h3><p>Switching from another pharmacy? We make it seamless — request online.</p></div>
-            <span class="service-card__arrow">→</span>
-          </a>
-          <a class="service-card" href="#shop">
-            <div class="service-card__body"><h3>Free Delivery</h3><p>We deliver prescriptions and health essentials free anywhere in the GTA — or order on Uber Eats.</p></div>
-            <span class="service-card__arrow">→</span>
-          </a>
-          <a class="service-card" href="#booking" onclick="document.querySelector('[data-tab=drug-check]').click()">
-            <div class="service-card__body"><h3>Drug Interaction Checker</h3><p>Check your medications for possible interactions — no sign-up needed.</p></div>
-            <span class="service-card__arrow">→</span>
-          </a>
-        </div>
-      </div>
-
       <!-- TAB: Minor Ailments -->
-      <div class="svc-tab__panel" data-panel="ailments">
+      <div class="svc-tab__panel active" data-panel="ailments">
         <p class="section__lead" style="margin-bottom:1.5rem;">Our clinical pharmacists can assess your condition and prescribe treatment on the spot — no doctor's appointment, no walk-in clinic, no referral, no waiting. Walk in or start your online assessment.</p>
         <div class="ailments-grid">
           <div class="ailment-card">
@@ -2122,6 +2114,139 @@
         <p class="insurance__note" style="margin-top:1.25rem;">Not sure if your plan is covered? <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us</a> — we'll check on the spot.</p>
       </div>
     </div><!-- /svc-tabs -->
+  </div>
+</section>
+
+<!-- ── Our Services (accordion) ───────────────────────────── -->
+<section id="services">
+  <div class="section__inner">
+    <h2 class="section__title">Our Services</h2>
+    <p class="section__lead">Everything we offer under one roof. Tap any service to learn more.</p>
+    <div class="svc-acc">
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">💊</span>
+          <span class="svc-acc__title">Prescription Dispensing &amp; Refills</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Fast, accurate dispensing with one-on-one counselling from your pharmacist. New here? Bring your prescription in, or we'll transfer it from your old pharmacy for you.</p>
+          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/transfer-rx/306667">Transfer or refill your prescription →</a>
+        </div>
+      </div>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">📦</span>
+          <span class="svc-acc__title">Blister Packs (Compliance Packaging)</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>We sort your medications into easy-to-follow weekly packs organized by day and time — so you never miss a dose or lose track of a complicated schedule. A great help for caregivers, too.</p>
+          <a class="svc-acc__link" href="tel:+14166548181">Call us to set it up — (416) 654-8181 →</a>
+        </div>
+      </div>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">💉</span>
+          <span class="svc-acc__title">Vaccines &amp; Immunizations</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Flu, COVID-19, shingles, pneumococcal, RSV, and travel vaccines — given right here, no doctor's visit needed. Walk in or book ahead during busy periods.</p>
+          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">Book a vaccine appointment →</a>
+        </div>
+      </div>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">📋</span>
+          <span class="svc-acc__title">Medication Reviews</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>A relaxed sit-down with your pharmacist to go over everything you take — catching interactions, simplifying your routine, and answering your questions. Covered at no cost for eligible Ontario residents.</p>
+          <a class="svc-acc__link" href="#medication-reviews">See the types of reviews we offer →</a>
+        </div>
+      </div>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">✈️</span>
+          <span class="svc-acc__title">Travel Health</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Heading abroad? We'll review your destinations, recommend the right vaccines and medications, and get you travel-ready — all in one visit.</p>
+          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">Book a travel consultation →</a>
+        </div>
+      </div>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🔀</span>
+          <span class="svc-acc__title">Prescription Transfers</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Switching from another pharmacy is simple — just tell us where your prescriptions are now and we'll handle the rest. Most transfers are ready in about 15 minutes.</p>
+          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/transfer-rx/306667">Start your transfer online →</a>
+        </div>
+      </div>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🚚</span>
+          <span class="svc-acc__title">Free Local Delivery</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>We deliver prescriptions and health essentials free anywhere in the GTA — or order over-the-counter items and personal care products through Uber Eats.</p>
+          <a class="svc-acc__link" href="#shop">See delivery &amp; shop options →</a>
+        </div>
+      </div>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🔎</span>
+          <span class="svc-acc__title">Free Drug Interaction Checker</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Check your own medications for possible interactions in seconds — no sign-up, no personal information needed. Always confirm with our pharmacist before making any changes.</p>
+          <a class="svc-acc__link" href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=drug-check]').click()},80)">Open the interaction checker →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Medication Reviews ─────────────────────────────────── -->
+<section id="medication-reviews">
+  <div class="section__inner">
+    <h2 class="section__title">Medication Reviews</h2>
+    <p class="section__lead">Our pharmacist takes the time to review all your medications — catching interactions, simplifying regimens, and making sure every medication you take is working for you.</p>
+    <div class="medscheck-grid">
+      <div class="medscheck-card">
+        <div class="medscheck-card__icon">📋</div>
+        <div class="medscheck-card__title">Annual Medication Review</div>
+        <p class="medscheck-card__desc">A face-to-face or phone consultation covering all your prescriptions, over-the-counter medications, vitamins, and supplements. We identify interactions, duplications, and medications that may no longer be appropriate for you.</p>
+        <span class="medscheck-card__tag">Eligible if taking 3 or more chronic medications</span>
+      </div>
+      <div class="medscheck-card">
+        <div class="medscheck-card__icon">🩺</div>
+        <div class="medscheck-card__title">Diabetes Medication Review</div>
+        <p class="medscheck-card__desc">A specialized review for patients living with Type 2 diabetes. We assess your diabetes medications, discuss blood sugar targets, and help coordinate care with your healthcare team.</p>
+        <span class="medscheck-card__tag">For patients with Type 2 diabetes on any medication</span>
+      </div>
+      <div class="medscheck-card">
+        <div class="medscheck-card__icon">🏥</div>
+        <div class="medscheck-card__title">Post-Hospital Reconciliation</div>
+        <p class="medscheck-card__desc">Coming home from the hospital? We'll compare your discharge medications with your existing prescriptions to prevent dangerous errors, duplications, or gaps in your care during this critical transition.</p>
+        <span class="medscheck-card__tag">Following hospital discharge or a care transition</span>
+      </div>
+      <div class="medscheck-card">
+        <div class="medscheck-card__icon">🔄</div>
+        <div class="medscheck-card__title">Follow-Up Review</div>
+        <p class="medscheck-card__desc">When your medications change significantly — a new diagnosis, a new prescription, or a concern about side effects — we schedule a focused follow-up to make sure your therapy stays on track.</p>
+        <span class="medscheck-card__tag">After a significant medication change or concern</span>
+      </div>
+    </div>
+    <p class="insurance__note" style="margin-top:1.75rem;">Medication reviews are <strong>covered at no cost</strong> for eligible Ontario residents through the provincial drug benefit program. <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us</a> to book your review — walk-ins also welcome.</p>
   </div>
 </section>
 
@@ -2383,7 +2508,7 @@ window.FAQS = [
         <div class="info-strip__title">🅿️ Parking</div>
         <div class="info-strip__chips">
           <div class="info-chip"><span class="info-chip__icon">🚗</span><span><strong>Street parking</strong> directly in front on St. Clair Ave W — free on evenings &amp; weekends</span></div>
-          <div class="info-chip"><span class="info-chip__icon">🏢</span><span><strong>Green P Lot</strong> — St. Clair Ave W &amp; Via Italia (near Dufferin), paid public parking</span></div>
+          <a class="info-chip" href="https://www.google.com/maps/search/?api=1&query=Green+P+Parking+St+Clair+Ave+W+Via+Italia+Toronto" target="_blank" rel="noopener"><span class="info-chip__icon">🏢</span><span><strong>Green P Lot</strong> — St. Clair Ave W &amp; Via Italia (near Dufferin), paid public parking <span class="info-chip__map">· View on Maps →</span></span></a>
           <div class="info-chip"><span class="info-chip__icon">♿</span><span>Accessible entrance &amp; parking spaces available</span></div>
         </div>
       </div>
@@ -2408,22 +2533,22 @@ window.FAQS = [
           <div class="transit-route">
             <div class="transit-route__dot" style="background:#F5A623;"></div>
             <div>
-              <div class="transit-route__line">Line 1 (Yellow) → St. Clair West Station</div>
+              <div class="transit-route__line">Line 1 → St. Clair West Station</div>
               <div class="transit-route__step">Board the <strong>512 St. Clair</strong> streetcar westbound — exit at Dufferin</div>
             </div>
           </div>
           <div class="transit-route">
             <div class="transit-route__dot" style="background:#008C4A;"></div>
             <div>
-              <div class="transit-route__line">Line 2 (Green) → Dufferin Station</div>
+              <div class="transit-route__line">Line 2 → Dufferin Station</div>
               <div class="transit-route__step">Board the <strong>29 / 929 Dufferin</strong> bus northbound — exit at St. Clair</div>
             </div>
           </div>
           <div class="transit-route">
             <div class="transit-route__dot" style="background:#F5821F;"></div>
             <div>
-              <div class="transit-route__line">Line 5 Eglinton (Orange) → Dufferin Station</div>
-              <div class="transit-route__step">Board the <strong>29 / 929 Dufferin</strong> bus northbound — exit at St. Clair</div>
+              <div class="transit-route__line">Line 5 Eglinton → Fairbank Station (Dufferin)</div>
+              <div class="transit-route__step">Board the <strong>29 / 929 Dufferin</strong> bus southbound — exit at St. Clair</div>
             </div>
           </div>
         </div>
@@ -3290,6 +3415,17 @@ window.FAQS = [
       var panel = document.querySelector('[data-panel="'+target+'"]');
       if (panel) panel.classList.add('active');
       if (target === 'drug-check') { var inp = document.getElementById('dc-input'); if (inp) setTimeout(function(){ inp.focus(); }, 50); }
+    });
+  })();
+
+  // ── Our Services accordion ────────────────────────────────
+  (function(){
+    document.querySelectorAll('.svc-acc__head').forEach(function(head){
+      head.addEventListener('click', function(){
+        var item = head.closest('.svc-acc-item');
+        var isOpen = item.classList.toggle('open');
+        head.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
     });
   })();
 
