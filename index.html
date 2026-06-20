@@ -370,6 +370,38 @@
     @media (max-width: 900px) { .conditions-grid { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 600px) { .conditions-grid { grid-template-columns: repeat(2, 1fr); } }
 
+    /* ── Minor Ailment cards (descriptive, SEO-rich) ──── */
+    .ailments-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .ailment-card {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: 12px; padding: 1.15rem 1.1rem;
+      display: flex; flex-direction: column; gap: .4rem;
+      transition: box-shadow .2s, border-color .2s, transform .15s;
+    }
+    .ailment-card:hover {
+      box-shadow: 0 6px 20px rgba(33,161,168,.14);
+      border-color: var(--teal-bright); transform: translateY(-2px);
+    }
+    .ailment-card__icon { font-size: 1.5rem; line-height: 1; }
+    .ailment-card__name {
+      font-family: var(--font-display); font-size: .92rem;
+      font-weight: 700; color: var(--teal-deeper); margin: 0;
+      letter-spacing: .01em; line-height: 1.2;
+    }
+    .ailment-card__desc { font-size: .78rem; color: var(--text-muted); line-height: 1.55; flex: 1; margin: 0; }
+    .ailment-card__link {
+      font-size: .76rem; font-weight: 700; color: var(--teal-bright);
+      text-decoration: none; margin-top: .35rem; display: inline-block;
+      transition: color .15s;
+    }
+    .ailment-card__link:hover { color: var(--teal-deeper); }
+    @media (max-width: 1100px) { .ailments-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 760px)  { .ailments-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 440px)  { .ailments-grid { grid-template-columns: 1fr; } }
+
     .btn {
       display: inline-block;
       background: var(--teal-dark);
@@ -1638,35 +1670,175 @@
       <!-- TAB: Minor Ailments -->
       <div class="svc-tab__panel" data-panel="ailments">
         <p class="section__lead" style="margin-bottom:1.5rem;">Our pharmacist can assess your condition and prescribe treatment on the spot — no doctor's appointment, no referral, no waiting. Walk in or start your online assessment.</p>
-        <div class="conditions-grid" style="margin-bottom:1.25rem;">
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=13"><span class="condition-chip__icon">💊</span>Acne</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=25"><span class="condition-chip__icon">🤧</span>Allergic Rhinitis</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=10"><span class="condition-chip__icon">🦶</span>Athlete's Foot</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=45"><span class="condition-chip__icon">👣</span>Calluses &amp; Corns</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=6"><span class="condition-chip__icon">🫦</span>Canker Sores</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=3"><span class="condition-chip__icon">💋</span>Cold Sores</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=44"><span class="condition-chip__icon">❄️</span>Dandruff</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=41"><span class="condition-chip__icon">👁️</span>Dry Eye</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=26"><span class="condition-chip__icon">🖐️</span>Eczema / Dermatitis</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=24"><span class="condition-chip__icon">🔥</span>Heartburn / GERD</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=4"><span class="condition-chip__icon">🩹</span>Hemorrhoids</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=2"><span class="condition-chip__icon">🦠</span>Impetigo</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=19"><span class="condition-chip__icon">🐝</span>Insect Bites &amp; Stings</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=8"><span class="condition-chip__icon">🏃</span>Jock Itch</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=12"><span class="condition-chip__icon">🤕</span>Mild Headache</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=38"><span class="condition-chip__icon">😤</span>Nasal Congestion</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=30"><span class="condition-chip__icon">🤢</span>Nausea in Pregnancy</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=18"><span class="condition-chip__icon">👄</span>Oral Thrush</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=20"><span class="condition-chip__icon">🩸</span>Period Pain</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=22"><span class="condition-chip__icon">👁️</span>Pink Eye</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=43"><span class="condition-chip__icon">🪱</span>Pinworms</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=9"><span class="condition-chip__icon">⭕</span>Ringworm</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=39"><span class="condition-chip__icon">🤒</span>Sore Throat</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=21"><span class="condition-chip__icon">🦴</span>Sprains &amp; Strains</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=49"><span class="condition-chip__icon">🕷️</span>Tick Bites</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=23"><span class="condition-chip__icon">💧</span>Urinary Tract Infection</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=42"><span class="condition-chip__icon">🌸</span>Vaginal Yeast Infection</a>
-          <a class="condition-chip js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=46"><span class="condition-chip__icon">🌱</span>Warts</a>
+        <div class="ailments-grid">
+          <div class="ailment-card">
+            <div class="ailment-card__icon">💊</div>
+            <h3 class="ailment-card__name">Acne</h3>
+            <p class="ailment-card__desc">Prescription topical or oral acne treatment — no GP appointment needed.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=13">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🤧</div>
+            <h3 class="ailment-card__name">Allergic Rhinitis</h3>
+            <p class="ailment-card__desc">Prescription nasal sprays and antihistamines for seasonal hay fever or year-round allergies.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=25">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🦶</div>
+            <h3 class="ailment-card__name">Athlete's Foot</h3>
+            <p class="ailment-card__desc">Prescription antifungal creams or oral tablets for persistent tinea pedis.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=10">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">👣</div>
+            <h3 class="ailment-card__name">Calluses &amp; Corns</h3>
+            <p class="ailment-card__desc">Prescription keratolytic agents for thick, painful skin buildup on the feet.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=45">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🫦</div>
+            <h3 class="ailment-card__name">Canker Sores</h3>
+            <p class="ailment-card__desc">Prescription rinses or gels to speed healing and reduce mouth ulcer pain.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=6">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">💋</div>
+            <h3 class="ailment-card__name">Cold Sores</h3>
+            <p class="ailment-card__desc">Antiviral prescription (herpes labialis) to shorten outbreaks and reduce recurrence.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=3">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">❄️</div>
+            <h3 class="ailment-card__name">Dandruff</h3>
+            <p class="ailment-card__desc">Prescription-strength medicated shampoos for seborrheic dermatitis and scalp flaking.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=44">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">👁️</div>
+            <h3 class="ailment-card__name">Dry Eye</h3>
+            <p class="ailment-card__desc">Prescription eye drops for chronic dry eye disease when OTC lubricants aren't enough.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=41">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🖐️</div>
+            <h3 class="ailment-card__name">Eczema / Dermatitis</h3>
+            <p class="ailment-card__desc">Prescription corticosteroid creams for eczema flare-ups and chronic skin inflammation.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=26">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🔥</div>
+            <h3 class="ailment-card__name">Heartburn / GERD</h3>
+            <p class="ailment-card__desc">Prescription proton pump inhibitors for frequent acid reflux and heartburn.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=24">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🩹</div>
+            <h3 class="ailment-card__name">Hemorrhoids</h3>
+            <p class="ailment-card__desc">Prescription suppositories or creams to relieve pain, swelling, and bleeding.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=4">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🦠</div>
+            <h3 class="ailment-card__name">Impetigo</h3>
+            <p class="ailment-card__desc">Antibiotic cream or oral antibiotics for this contagious bacterial skin infection.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=2">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🐝</div>
+            <h3 class="ailment-card__name">Insect Bites &amp; Stings</h3>
+            <p class="ailment-card__desc">Prescription antihistamines or steroids for severe local reactions to bites or stings.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=19">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🏃</div>
+            <h3 class="ailment-card__name">Jock Itch</h3>
+            <p class="ailment-card__desc">Prescription antifungal treatment for tinea cruris (fungal groin infection).</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=8">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🤕</div>
+            <h3 class="ailment-card__name">Mild Headache</h3>
+            <p class="ailment-card__desc">Prescription-strength relief for tension headaches and recurring headache pain.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=12">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">😤</div>
+            <h3 class="ailment-card__name">Nasal Congestion</h3>
+            <p class="ailment-card__desc">Prescription nasal steroid sprays and decongestants when OTC products fall short.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=38">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🤢</div>
+            <h3 class="ailment-card__name">Nausea in Pregnancy</h3>
+            <p class="ailment-card__desc">Safe prescription antiemetics for morning sickness during pregnancy.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=30">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">👄</div>
+            <h3 class="ailment-card__name">Oral Thrush</h3>
+            <p class="ailment-card__desc">Antifungal medication for white mouth patches and soreness caused by Candida.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=18">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🩸</div>
+            <h3 class="ailment-card__name">Period Pain</h3>
+            <p class="ailment-card__desc">Prescription-strength pain relief for dysmenorrhea when OTC options aren't enough.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=20">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">👁️</div>
+            <h3 class="ailment-card__name">Pink Eye</h3>
+            <p class="ailment-card__desc">Antibiotic eye drops for bacterial conjunctivitis — same-day prescription available.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=22">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🪱</div>
+            <h3 class="ailment-card__name">Pinworms</h3>
+            <p class="ailment-card__desc">Single-dose antiparasitic treatment for pinworm infections in children and adults.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=43">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">⭕</div>
+            <h3 class="ailment-card__name">Ringworm</h3>
+            <p class="ailment-card__desc">Prescription antifungal treatment for tinea corporis on skin, scalp, or nails.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=9">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🤒</div>
+            <h3 class="ailment-card__name">Sore Throat</h3>
+            <p class="ailment-card__desc">Strep throat assessment and antibiotic prescription if bacterial pharyngitis is confirmed.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=39">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🦴</div>
+            <h3 class="ailment-card__name">Sprains &amp; Strains</h3>
+            <p class="ailment-card__desc">Prescription anti-inflammatory medication for muscle, tendon, and ligament injuries.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=21">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🕷️</div>
+            <h3 class="ailment-card__name">Tick Bites</h3>
+            <p class="ailment-card__desc">Preventive doxycycline after a tick bite to reduce the risk of Lyme disease.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=49">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">💧</div>
+            <h3 class="ailment-card__name">Urinary Tract Infection</h3>
+            <p class="ailment-card__desc">Antibiotic prescription for uncomplicated UTI — quick relief without a doctor's appointment.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=23">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🌸</div>
+            <h3 class="ailment-card__name">Vaginal Yeast Infection</h3>
+            <p class="ailment-card__desc">Prescription antifungals for recurrent or stubborn vaginal candidiasis.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=42">Start Assessment →</a>
+          </div>
+          <div class="ailment-card">
+            <div class="ailment-card__icon">🌱</div>
+            <h3 class="ailment-card__name">Warts</h3>
+            <p class="ailment-card__desc">Prescription-strength treatments for warts (verruca) on hands, feet, or body.</p>
+            <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=46">Start Assessment →</a>
+          </div>
         </div>
         <p style="font-size:.8rem;color:var(--text-muted);text-align:center;">All 28 conditions available as of July 1, 2026 &nbsp;·&nbsp; Walk in or click any condition to start your online assessment &nbsp;·&nbsp; <strong>No doctor's referral needed</strong></p>
       </div>
