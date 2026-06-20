@@ -2190,79 +2190,80 @@
 </section>
 
 <!-- ── FAQ ─────────────────────────────────────────────────── -->
+<!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  FAQ DATA — add, remove, or edit questions here only.       ║
+  ║  Both the visible accordion AND Google structured data      ║
+  ║  (FAQPage schema) update automatically from this array.     ║
+  ╚══════════════════════════════════════════════════════════════╝
+-->
+<script>
+window.FAQS = [
+  {
+    q: "Do I need a doctor's referral to get a prescription?",
+    a: "Not for minor ailments. Under Ontario's Minor Ailments Program, our pharmacist can assess and prescribe for 28 common conditions — no doctor's appointment, no referral needed. For other prescriptions, you'll still need a prescription from a physician or nurse practitioner, which you can bring to us to fill."
+  },
+  {
+    q: "Do you accept walk-ins?",
+    a: "Yes! Walk-ins are always welcome for prescription drop-offs, vaccine appointments, and minor ailment assessments. For busier periods or medication reviews, we recommend calling ahead or booking online through PharmAssess so we can give you our full attention."
+  },
+  {
+    q: "Can you fill prescriptions from doctors outside Ontario?",
+    a: "We can fill prescriptions written by Canadian physicians licensed in any province. Prescriptions from outside Canada cannot be filled directly, but our pharmacist can often help you find an interim solution while you establish care with an Ontario provider. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to discuss your situation."
+  },
+  {
+    q: "How do I transfer my prescriptions to your pharmacy?",
+    a: "Transferring is easy. You can request a transfer online using the \"Transfer Your Rx\" button in the Services section above, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a>, or simply come in. We'll contact your current pharmacy on your behalf — there's nothing more you need to do. Most transfers take about 15 minutes."
+  },
+  {
+    q: "Do you offer delivery?",
+    a: "Yes — we deliver prescriptions and health products free anywhere in the GTA. We're also available on Uber Eats for on-demand delivery of over-the-counter products. Call <a href=\"tel:+14166548181\">(416) 654-8181</a> to arrange delivery."
+  },
+  {
+    q: "Is a medication review free?",
+    a: "Yes — medication reviews are covered at no cost for eligible Ontario residents through the provincial drug benefit program. You're typically eligible if you're taking 3 or more chronic medications, or following a hospital discharge. Book online or call us to confirm your eligibility."
+  },
+  {
+    q: "Do you do blister packs?",
+    a: "Yes. We prepare weekly blister (bubble) packs to organize complex medication schedules — ideal for patients taking multiple medications or caring for a family member who needs help staying on track. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to get started; setup is straightforward and usually takes one visit."
+  },
+  {
+    q: "What languages do you serve patients in?",
+    a: "Our team serves patients in English, Spanish, Portuguese, Italian, Turkish, Tagalog, Polish, and more. The St. Clair West community is wonderfully diverse — we're proud to offer care in the languages our patients are most comfortable with. See the language flags on our homepage or call to check availability."
+  }
+  /* ── add new FAQs here, following the same { q: "…", a: "…" } format ── */
+];
+</script>
+
 <section id="faq" class="faq">
   <div class="section__inner">
     <h2 class="section__title">Frequently Asked Questions</h2>
     <p class="section__lead">Quick answers to common questions about our pharmacy.</p>
-    <div class="faq-list">
-
-      <div class="faq-item">
-        <button class="faq-item__q" aria-expanded="false">
-          Do I need a doctor's referral to get a prescription?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </button>
-        <div class="faq-item__a">Not for minor ailments. Under Ontario's Minor Ailments Program, our pharmacist can assess and prescribe for 28 common conditions — no doctor's appointment, no referral needed. For other prescriptions, you'll still need a prescription from a physician or nurse practitioner, which you can bring to us to fill.</div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-item__q" aria-expanded="false">
-          Do you accept walk-ins?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </button>
-        <div class="faq-item__a">Yes! Walk-ins are always welcome for prescription drop-offs, vaccine appointments, and minor ailment assessments. For busier periods or medication reviews, we recommend calling ahead or booking online through PharmAssess so we can give you our full attention.</div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-item__q" aria-expanded="false">
-          Can you fill prescriptions from doctors outside Ontario?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </button>
-        <div class="faq-item__a">We can fill prescriptions written by Canadian physicians licensed in any province. Prescriptions from outside Canada cannot be filled directly, but our pharmacist can often help you find an interim solution while you establish care with an Ontario provider. Call us at <a href="tel:+14166548181">(416) 654-8181</a> to discuss your situation.</div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-item__q" aria-expanded="false">
-          How do I transfer my prescriptions to your pharmacy?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </button>
-        <div class="faq-item__a">Transferring is easy. You can request a transfer online using the "Transfer Your Rx" button in the Services section above, call us at <a href="tel:+14166548181">(416) 654-8181</a>, or simply come in. We'll contact your current pharmacy on your behalf — there's nothing more you need to do. Most transfers take about 15 minutes.</div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-item__q" aria-expanded="false">
-          Do you offer delivery?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </button>
-        <div class="faq-item__a">Yes — we deliver prescriptions and health products free anywhere in the GTA. We're also available on Uber Eats for on-demand delivery of over-the-counter products. Call <a href="tel:+14166548181">(416) 654-8181</a> to arrange delivery.</div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-item__q" aria-expanded="false">
-          Is a medication review free?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </button>
-        <div class="faq-item__a">Yes — medication reviews are covered at no cost for eligible Ontario residents through the provincial drug benefit program. You're typically eligible if you're taking 3 or more chronic medications, or following a hospital discharge. Book online or call us to confirm your eligibility.</div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-item__q" aria-expanded="false">
-          Do you do blister packs?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </button>
-        <div class="faq-item__a">Yes. We prepare weekly blister (bubble) packs to organize complex medication schedules — ideal for patients taking multiple medications or caring for a family member who needs help staying on track. Call us at <a href="tel:+14166548181">(416) 654-8181</a> to get started; setup is straightforward and usually takes one visit.</div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-item__q" aria-expanded="false">
-          What languages do you serve patients in?
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </button>
-        <div class="faq-item__a">Our team serves patients in English, Spanish, Portuguese, Italian, Turkish, Tagalog, Polish, and more. The St. Clair West community is wonderfully diverse — we're proud to offer care in the languages our patients are most comfortable with. See the language flags on our homepage or call to check availability.</div>
-      </div>
-
-    </div>
+    <div class="faq-list" id="faq-list"><!-- populated by script below --></div>
   </div>
 </section>
+
+<script>
+(function(){
+  var svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+  var list = document.getElementById('faq-list');
+  if (!list || !window.FAQS) return;
+  window.FAQS.forEach(function(faq){
+    var item = document.createElement('div');
+    item.className = 'faq-item';
+    var btn = document.createElement('button');
+    btn.className = 'faq-item__q';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = faq.q + ' ' + svg;
+    var ans = document.createElement('div');
+    ans.className = 'faq-item__a';
+    ans.innerHTML = faq.a;
+    item.appendChild(btn);
+    item.appendChild(ans);
+    list.appendChild(item);
+  });
+})();
+</script>
 
 <!-- ── Shop ──────────────────────────────────────────────── -->
 <section id="shop">
@@ -3241,24 +3242,19 @@
   })();
 </script>
 
-<!-- Auto-builds FAQPage structured data from .faq-item HTML — add new FAQs to the HTML only, this stays in sync -->
+<!-- FAQPage structured data is generated from window.FAQS array defined above the FAQ section -->
 <script>
 (function(){
-  var items = document.querySelectorAll('#faq .faq-item');
-  if (!items.length) return;
-  var entities = Array.from(items).map(function(item){
-    var q = item.querySelector('.faq-item__q');
-    var a = item.querySelector('.faq-item__a');
-    if (!q || !a) return null;
-    var qText = q.childNodes[0] && q.childNodes[0].nodeType === 3
-      ? q.childNodes[0].textContent.trim()
-      : q.textContent.replace(/[+\-×✕]/g,'').trim();
+  if (!window.FAQS || !window.FAQS.length) return;
+  var entities = window.FAQS.map(function(faq){
+    var tmp = document.createElement('div');
+    tmp.innerHTML = faq.a;
     return {
       '@type': 'Question',
-      'name': qText,
-      'acceptedAnswer': { '@type': 'Answer', 'text': a.textContent.trim() }
+      'name': faq.q,
+      'acceptedAnswer': { '@type': 'Answer', 'text': tmp.textContent.trim() }
     };
-  }).filter(Boolean);
+  });
   var s = document.createElement('script');
   s.type = 'application/ld+json';
   s.textContent = JSON.stringify({'@context':'https://schema.org','@type':'FAQPage','mainEntity':entities});
