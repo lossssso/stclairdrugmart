@@ -1002,8 +1002,12 @@
       margin-bottom: 1rem;
     }
     .step h3 { font-size: 1rem; font-weight: 700; color: var(--teal-deeper); margin-bottom: .5rem; }
-    .step p  { font-size: .875rem; color: var(--text-muted); line-height: 1.65; }
-    .steps__cta { text-align: center; margin-top: 2rem; }
+    .step p  { font-size: .875rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 0; }
+    .step--clickable { transition: box-shadow .15s, transform .15s; display:flex; flex-direction:column; }
+    .step--clickable:hover { box-shadow: 0 6px 24px rgba(30,107,99,.18); transform: translateY(-2px); }
+    .step__btn { display:inline-block; margin-top:1.1rem; font-size:.8rem; font-weight:700; color:var(--teal-dark); letter-spacing:.02em; }
+    .step--clickable:hover .step__btn { color: var(--teal-bright); }
+    .steps__cta { text-align: center; margin-top: 2rem; display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap; }
 
     /* ── Medication Reviews ───────────────────────── */
     #medication-reviews { background: var(--teal-ice); }
@@ -1708,24 +1712,28 @@
     <h2 class="section__title">New to Our Pharmacy?</h2>
     <p class="section__lead">Switching from another pharmacy or chain is easier than you think — we handle everything.</p>
     <div class="steps">
-      <div class="step">
+      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Start prescription transfer">
         <div class="step__num">1</div>
         <h3>Transfer Your Prescription</h3>
-        <p>Use our online transfer form below, call us at <a href="tel:+14166548181" style="color:var(--teal-dark);">(416) 654-8181</a>, or just bring your medication bottle in. We contact your current pharmacy — you don't have to do a thing.</p>
+        <p>We contact your current pharmacy for you — you don't have to do a thing. Call us, bring your bottle in, or use the online form.</p>
+        <span class="step__btn">Start Transfer →</span>
       </div>
-      <div class="step">
+      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Start prescription transfer">
         <div class="step__num">2</div>
         <h3>We Set Up Your File</h3>
-        <p>Our pharmacist reviews your full medication list, checks for interactions, and sets up your profile. Most transfers are ready the same day, with no gap in your medications.</p>
+        <p>Our pharmacist reviews your full medication list, checks for interactions, and sets up your profile. Most transfers are ready the same day.</p>
+        <span class="step__btn">Get Started →</span>
       </div>
-      <div class="step">
+      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Start prescription transfer">
         <div class="step__num">3</div>
         <h3>Pick Up &amp; Meet Us</h3>
-        <p>Come in and meet your pharmacist in person, or choose free GTA-wide delivery. No paperwork, no extra cost — just better, more personal care from your new neighbourhood pharmacy.</p>
+        <p>Come in and meet your pharmacist in person, or choose free GTA-wide delivery. No paperwork, no extra cost.</p>
+        <span class="step__btn">Transfer Now →</span>
       </div>
     </div>
     <div class="steps__cta">
       <a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667">Transfer My Prescription →</a>
+      <a href="tel:+14166548181" class="btn btn--outline">Call (416) 654-8181</a>
     </div>
   </div>
 </section>
@@ -1738,12 +1746,12 @@
 
     <!-- Row 1: primary booking actions -->
     <div class="pa-cards pa-cards--primary">
-      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1100" data-label="Book an Appointment">
+      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="2000" data-label="Book an Appointment">
         <div class="pa-card__icon">📅</div>
         <span class="pa-card__label">Book Appointment</span>
         <span class="pa-card__desc">Schedule a vaccine, consultation, or check-up</span>
       </button>
-      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1100" data-label="Minor Ailment Assessment">
+      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1600" data-label="Minor Ailment Assessment">
         <div class="pa-card__icon">🩺</div>
         <span class="pa-card__label">Common Conditions &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Pharmacist prescribing for 28 minor ailments — no referral needed</span>
@@ -1788,12 +1796,12 @@
 
     <!-- Row 2: patient account actions -->
     <div class="pa-cards pa-cards--secondary">
-      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1400" data-label="Medication Review">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="2800" data-label="Medication Review">
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review</span>
         <span class="pa-card__desc">One-on-one review of all your medications</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="1600" data-label="Medication Refill Request">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="2200" data-label="Medication Refill Request">
         <div class="pa-card__icon">🔁</div>
         <span class="pa-card__label">Refill Request</span>
         <span class="pa-card__desc">Request a prescription refill online</span>
@@ -1803,7 +1811,7 @@
         <span class="pa-card__label">Transfer Your Rx</span>
         <span class="pa-card__desc">Move your prescription to St. Clair Drug Mart</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="820" data-label="Patient Login — PharmAssess Portal">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="1000" data-label="Patient Login — PharmAssess Portal">
         <div class="pa-card__icon">🔑</div>
         <span class="pa-card__label">Patient Login</span>
         <span class="pa-card__desc">Sign in to your PharmAssess patient portal</span>
@@ -1813,7 +1821,10 @@
     <div class="pa-iframe-wrap">
       <div class="pa-iframe-label">
         <span id="pa-iframe-label-text">📅 Book an Appointment</span>
-        <button class="pa-iframe-label__close" id="pa-iframe-close" aria-label="Collapse" title="Collapse">✕</button>
+        <div style="display:flex;gap:.6rem;align-items:center;">
+          <button class="pa-iframe-label__close" id="pa-iframe-fit" aria-label="Reset height" title="Fit to content">↕</button>
+          <button class="pa-iframe-label__close" id="pa-iframe-close" aria-label="Collapse" title="Collapse">✕</button>
+        </div>
       </div>
       <iframe
         id="pa-iframe"
@@ -2615,18 +2626,16 @@ window.FAQS = [
     }
   })();
 
-  // Auto-resize from PharmAssess postMessage events
-  window.addEventListener('message', function(e) {
-    if (!e.origin.includes('pharmassess.ca')) return;
-    var d = e.data;
-    var h = (d && (d.height || d.iframeHeight || d.frameHeight));
-    if (h && +h > 200) paIframe.style.height = (+h + 40) + 'px';
-  });
-
   // Close/collapse button
   document.getElementById('pa-iframe-close').addEventListener('click', function() {
     paWrap.style.display = paWrap.style.display === 'none' ? '' : 'none';
     this.textContent = paWrap.style.display === 'none' ? '▼' : '✕';
+  });
+
+  // Fit/reset button — snaps iframe back to the active card's fallback height
+  document.getElementById('pa-iframe-fit').addEventListener('click', function() {
+    var active = document.querySelector('.pa-card.active');
+    if (active) paIframe.style.height = (active.dataset.iframeheight || '1600') + 'px';
   });
 
   function switchPaTab(card) {
@@ -2681,14 +2690,25 @@ window.FAQS = [
     });
   });
 
-  // Auto-resize iframe if PharmAssess emits a postMessage with the page height
+  // Auto-resize iframe from PharmAssess postMessage — catches expand AND collapse
   window.addEventListener('message', function(e) {
-    if (!e.origin.includes('pharmassess.ca')) return;
-    var d = e.data;
-    var h = (typeof d === 'object' && d !== null)
-      ? (d.height || d.frameHeight || d.iframeHeight || null)
-      : (typeof d === 'number' ? d : null);
-    if (h && h > 100) paIframe.style.height = h + 'px';
+    try {
+      if (!String(e.origin).includes('pharmassess')) return;
+      var d = e.data, h = null;
+      if (typeof d === 'number') {
+        h = d;
+      } else if (typeof d === 'string') {
+        var n = parseFloat(d);
+        if (!isNaN(n) && n > 0) h = n;
+      } else if (d && typeof d === 'object') {
+        h = d.height || d.iframeHeight || d.frameHeight ||
+            d.scrollHeight || d.contentHeight || d.documentHeight ||
+            d.bodyHeight || d.value ||
+            (d.data && d.data.height) ||
+            (d.size && typeof d.size === 'number' ? d.size : null) || null;
+      }
+      if (h && +h > 50) paIframe.style.height = Math.round(+h) + 'px';
+    } catch (_) {}
   });
 
   // Buttons elsewhere that jump to booking and pre-select a service tab
