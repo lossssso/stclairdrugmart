@@ -523,18 +523,6 @@
       font-weight: 700; color: var(--teal-deeper); margin: 0;
       letter-spacing: .01em; line-height: 1.2;
     }
-    .ailment-card__name::after {
-      content: 'Rx ± OTC';
-      display: block;
-      font-family: var(--font-body);
-      font-size: .65rem;
-      font-weight: 600;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: var(--teal-bright);
-      opacity: .75;
-      margin-top: .25rem;
-    }
     .ailment-card__desc { font-size: .78rem; color: var(--text-muted); line-height: 1.55; flex: 1; margin: 0; }
     .ailment-card__link {
       font-size: .76rem; font-weight: 700; color: var(--teal-bright);
@@ -660,8 +648,8 @@
       height: 500px;
       border: none;
       background: var(--white);
-      transition: height .25s ease;
-      /* prevent iframe content from capturing page scroll on touch */
+      transition: height .3s ease;
+      overflow: hidden;
       overscroll-behavior: contain;
     }
     .booking__note {
@@ -1234,18 +1222,6 @@
       font-weight: 900; color: var(--teal-deeper); margin: 0;
       text-transform: uppercase; letter-spacing: .04em;
     }
-    .ailment-card__name::after {
-      content: 'Rx ± OTC';
-      display: block;
-      font-family: var(--font-body);
-      font-size: .65rem;
-      font-weight: 600;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: var(--teal-bright);
-      opacity: .75;
-      margin-top: .25rem;
-    }
     .ailment-card__desc { font-size: .78rem; color: var(--text-muted); line-height: 1.55; flex: 1; margin: 0; }
     .ailment-card__link {
       font-size: .75rem; font-weight: 700; color: var(--teal);
@@ -1756,12 +1732,12 @@
 
     <!-- Row 1: primary booking actions -->
     <div class="pa-cards pa-cards--primary">
-      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1100" data-label="Book an Appointment">
+      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="820" data-label="Book an Appointment">
         <div class="pa-card__icon">📅</div>
         <span class="pa-card__label">Book Appointment</span>
         <span class="pa-card__desc">Schedule a vaccine, consultation, or check-up</span>
       </button>
-      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1100" data-label="Minor Ailment Assessment">
+      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="820" data-label="Minor Ailment Assessment">
         <div class="pa-card__icon">🩺</div>
         <span class="pa-card__label">Common Conditions &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Pharmacist prescribing for 28 minor ailments — no referral needed</span>
@@ -1806,22 +1782,22 @@
 
     <!-- Row 2: patient account actions -->
     <div class="pa-cards pa-cards--secondary">
-      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1100" data-label="Medication Review">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="760" data-label="Medication Review">
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review</span>
         <span class="pa-card__desc">One-on-one review of all your medications</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="1100" data-label="Medication Refill Request">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="720" data-label="Medication Refill Request">
         <div class="pa-card__icon">🔁</div>
         <span class="pa-card__label">Refill Request</span>
         <span class="pa-card__desc">Request a prescription refill online</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="1100" data-label="Transfer Your Prescription">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="820" data-label="Transfer Your Prescription">
         <div class="pa-card__icon">🔀</div>
         <span class="pa-card__label">Transfer Your Rx</span>
         <span class="pa-card__desc">Move your prescription to St. Clair Drug Mart</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="750" data-label="Patient Login — PharmAssess Portal">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="500" data-label="Patient Login — PharmAssess Portal">
         <div class="pa-card__icon">🔑</div>
         <span class="pa-card__label">Patient Login</span>
         <span class="pa-card__desc">Sign in to your PharmAssess patient portal</span>
@@ -2636,7 +2612,7 @@ window.FAQS = [
   (function() {
     var active = document.querySelector('.pa-card.active');
     if (active) {
-      paIframe.style.height = (active.dataset.iframeheight || '1100') + 'px';
+      paIframe.style.height = (active.dataset.iframeheight || '800') + 'px';
       if (active.dataset.label) paLabelText.textContent = active.dataset.label;
     }
   })();
@@ -2666,7 +2642,7 @@ window.FAQS = [
   function switchPaTab(card) {
     document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
     card.classList.add('active');
-    paIframe.style.height = (card.dataset.iframeheight || '1100') + 'px';
+    paIframe.style.height = (card.dataset.iframeheight || '800') + 'px';
     paIframe.src = card.dataset.url;
     paExpanded = false;
     var expandBtn = document.getElementById('pa-iframe-expand');
@@ -2712,13 +2688,14 @@ window.FAQS = [
       // Activate Common Conditions pa-card visually, load specific condition URL
       document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
       conditionsCard.classList.add('active');
-      paIframe.style.height = (conditionsCard.dataset.iframeheight || '1100') + 'px';
+      paIframe.style.height = (conditionsCard.dataset.iframeheight || '800') + 'px';
       paIframe.src = url;
       setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
     });
   });
 
-  // Auto-resize iframe from PharmAssess postMessage — catches expand AND collapse
+  // Auto-resize iframe from PharmAssess postMessage
+  var paHeightReceived = false;
   window.addEventListener('message', function(e) {
     try {
       if (!String(e.origin).includes('pharmassess')) return;
@@ -2735,8 +2712,34 @@ window.FAQS = [
             (d.data && d.data.height) ||
             (d.size && typeof d.size === 'number' ? d.size : null) || null;
       }
-      if (h && +h > 50) paIframe.style.height = Math.round(+h) + 'px';
+      if (h && +h > 50) {
+        paIframe.style.height = (Math.round(+h) + 32) + 'px'; // +32px keeps submit button clear
+        paHeightReceived = true;
+        // If content shrunk back, reset expand state
+        paExpanded = false;
+        var expBtn = document.getElementById('pa-iframe-expand');
+        if (expBtn) expBtn.textContent = 'Need more room? Expand ↓';
+      }
     } catch (_) {}
+  });
+
+  // On iframe load, probe PharmAssess for height at multiple intervals
+  paIframe.addEventListener('load', function() {
+    paHeightReceived = false;
+    var card = document.querySelector('.pa-card.active');
+    var fallback = parseInt(card ? card.dataset.iframeheight : 800);
+    // Attempt to nudge PharmAssess into sending a height message
+    [250, 700, 1400, 2500].forEach(function(ms) {
+      setTimeout(function() {
+        if (paHeightReceived) return;
+        try { paIframe.contentWindow.postMessage({ event: 'resize', type: 'resize', action: 'height' }, '*'); } catch(e) {}
+        try { paIframe.contentWindow.postMessage('resize', '*'); } catch(e) {}
+      }, ms);
+    });
+    // Hard fallback: if PharmAssess never responds, use data-iframeheight
+    setTimeout(function() {
+      if (!paHeightReceived) paIframe.style.height = fallback + 'px';
+    }, 3200);
   });
 
   // Buttons elsewhere that jump to booking and pre-select a service tab
