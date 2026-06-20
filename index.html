@@ -84,7 +84,7 @@
       "@type": "AggregateRating",
       "ratingValue": "4.9",
       "bestRating": "5",
-      "ratingCount": "11"
+      "ratingCount": "59"
     },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
@@ -110,54 +110,7 @@
     "priceRange": "$$"
   }
   </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Do I need a doctor's referral to get a prescription?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Not for minor ailments. Under Ontario's Minor Ailments Program, our pharmacist can assess and prescribe for 28 common conditions — no doctor's appointment, no referral needed. For other prescriptions, you'll still need a prescription from a physician or nurse practitioner, which you can bring to us to fill." }
-      },
-      {
-        "@type": "Question",
-        "name": "Do you accept walk-ins?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes! Walk-ins are always welcome for prescription drop-offs, vaccine appointments, and minor ailment assessments. For busier periods or medication reviews, we recommend calling ahead or booking online so we can give you our full attention." }
-      },
-      {
-        "@type": "Question",
-        "name": "Can you fill prescriptions from doctors outside Ontario?",
-        "acceptedAnswer": { "@type": "Answer", "text": "We can fill prescriptions written by Canadian physicians licensed in any province. Prescriptions from outside Canada cannot be filled directly, but our pharmacist can often help you find an interim solution while you establish care with an Ontario provider. Call us at (416) 654-8181 to discuss your situation." }
-      },
-      {
-        "@type": "Question",
-        "name": "How do I transfer my prescriptions to your pharmacy?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Transferring is easy. You can request a transfer online using the Transfer Your Rx button in the Services section, call us at (416) 654-8181, or simply come in. We'll contact your current pharmacy on your behalf — there's nothing more you need to do. Most transfers take about 15 minutes." }
-      },
-      {
-        "@type": "Question",
-        "name": "Do you offer delivery?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes — we deliver prescriptions and health products free anywhere in the GTA. We're also available on Uber Eats for on-demand delivery of over-the-counter products. Call (416) 654-8181 to arrange delivery." }
-      },
-      {
-        "@type": "Question",
-        "name": "Is a medication review free?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes — medication reviews are covered at no cost for eligible Ontario residents through the provincial drug benefit program. You're typically eligible if you're taking 3 or more chronic medications, or following a hospital discharge. Book online or call us to confirm your eligibility." }
-      },
-      {
-        "@type": "Question",
-        "name": "Do you do blister packs?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. We prepare weekly blister (bubble) packs to organize complex medication schedules — ideal for patients taking multiple medications or caring for a family member who needs help staying on track. Call us at (416) 654-8181 to get started; setup is straightforward and usually takes one visit." }
-      },
-      {
-        "@type": "Question",
-        "name": "What languages do you serve patients in?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Our team serves patients in English, Spanish, Portuguese, Italian, Turkish, Tagalog, Polish, and more. The St. Clair West community is wonderfully diverse — we're proud to offer care in the languages our patients are most comfortable with." }
-      }
-    ]
-  }
-  </script>
+  <!-- FAQPage structured data is generated automatically from .faq-item elements — see script at end of body -->
   <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ── Reset & base ─────────────────────────────────── */
@@ -3286,6 +3239,31 @@
       });
     });
   })();
+</script>
+
+<!-- Auto-builds FAQPage structured data from .faq-item HTML — add new FAQs to the HTML only, this stays in sync -->
+<script>
+(function(){
+  var items = document.querySelectorAll('#faq .faq-item');
+  if (!items.length) return;
+  var entities = Array.from(items).map(function(item){
+    var q = item.querySelector('.faq-item__q');
+    var a = item.querySelector('.faq-item__a');
+    if (!q || !a) return null;
+    var qText = q.childNodes[0] && q.childNodes[0].nodeType === 3
+      ? q.childNodes[0].textContent.trim()
+      : q.textContent.replace(/[+\-×✕]/g,'').trim();
+    return {
+      '@type': 'Question',
+      'name': qText,
+      'acceptedAnswer': { '@type': 'Answer', 'text': a.textContent.trim() }
+    };
+  }).filter(Boolean);
+  var s = document.createElement('script');
+  s.type = 'application/ld+json';
+  s.textContent = JSON.stringify({'@context':'https://schema.org','@type':'FAQPage','mainEntity':entities});
+  document.head.appendChild(s);
+})();
 </script>
 </body>
 </html>
