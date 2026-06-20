@@ -290,6 +290,25 @@
     .hero__status .status-row__val--open  { color: #166534; font-weight: 600; }
     .hero__status .status-row__val--soon  { color: #92400e; font-weight: 600; }
     .hero__status .status-row__val--closed { color: #991b1b; font-weight: 400; }
+    /* ── Hours status pills (contact section) — same pill style as hero ── */
+    .hours__status { margin-top: .85rem; gap: .5rem; }
+    .hours__status .status-row {
+      background: rgba(255,255,255,.92);
+      border: 1.5px solid rgba(33,161,168,.18);
+      border-radius: 100px;
+      box-shadow: 0 4px 20px rgba(0,80,90,.13), 0 1px 3px rgba(0,80,90,.07);
+      padding: .6rem 1.25rem;
+      gap: .65rem;
+    }
+    .hours__status .status-dot { width: 10px; height: 10px; }
+    .hours__status .status-row__label {
+      font-size: .78rem; font-weight: 700; color: var(--teal-deeper); min-width: 0;
+    }
+    .hours__status .status-row__val { font-size: .75rem; color: var(--text-muted); }
+    .hours__status .status-row__val::before { content: '·'; margin-right: .35rem; opacity: .5; }
+    .hours__status .status-row__val--open  { color: #166534; font-weight: 600; }
+    .hours__status .status-row__val--soon  { color: #92400e; font-weight: 600; }
+    .hours__status .status-row__val--closed { color: #991b1b; font-weight: 400; }
 
     /* ── Sections shared ──────────────────────────────── */
     section { padding: 5rem 1.5rem; }
@@ -2216,7 +2235,7 @@
               <tr id="hours-row-6"><td>Saturday</td><td>9:00 am – 2:00 pm</td></tr>
               <tr id="hours-row-0"><td>Sunday</td><td>Closed</td></tr>
             </table>
-            <div class="status-board">
+            <div class="status-board hours__status">
               <div class="status-row">
                 <span class="status-dot" data-sb-dot="store"></span>
                 <span class="status-row__label">Pharmacy</span>
