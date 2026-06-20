@@ -622,7 +622,11 @@
       box-shadow: 0 8px 40px rgba(30,107,99,.22);
       border: 2px solid var(--teal-bright);
       margin-top: 1rem;
+      transition: opacity .2s;
     }
+    .pa-iframe-wrap.collapsed iframe,
+    .pa-iframe-wrap.collapsed .pa-iframe-expand { display: none; }
+    .pa-iframe-wrap.collapsed .pa-iframe-label__close { opacity: .7; }
     .pa-iframe-label {
       display: flex; align-items: center; justify-content: space-between;
       padding: .55rem 1rem;
@@ -1766,12 +1770,12 @@
 
     <!-- Row 1: primary booking actions -->
     <div class="pa-cards pa-cards--primary">
-      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1100" data-label="Book an Appointment">
+      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Book an Appointment">
         <div class="pa-card__icon">📅</div>
         <span class="pa-card__label">Book Appointment</span>
         <span class="pa-card__desc">Schedule a vaccine, consultation, or check-up</span>
       </button>
-      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1100" data-label="Minor Ailment Assessment">
+      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1500" data-label="Minor Ailment Assessment">
         <div class="pa-card__icon">🩺</div>
         <span class="pa-card__label">Common Conditions &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Pharmacist prescribing for 28 minor ailments — no referral needed</span>
@@ -1816,17 +1820,17 @@
 
     <!-- Row 2: patient account actions -->
     <div class="pa-cards pa-cards--secondary">
-      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1100" data-label="Medication Review">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1600" data-label="Medication Review">
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review</span>
         <span class="pa-card__desc">One-on-one review of all your medications</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="1100" data-label="Medication Refill Request">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="1400" data-label="Medication Refill Request">
         <div class="pa-card__icon">🔁</div>
         <span class="pa-card__label">Refill Request</span>
         <span class="pa-card__desc">Request a prescription refill online</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="1100" data-label="Transfer Your Prescription">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="1800" data-label="Transfer Your Prescription">
         <div class="pa-card__icon">🔀</div>
         <span class="pa-card__label">Transfer Your Rx</span>
         <span class="pa-card__desc">Move your prescription to St. Clair Drug Mart</span>
@@ -2737,24 +2741,32 @@ window.FAQS = [
   (function() {
     var active = document.querySelector('.pa-card.active');
     if (active) {
-      paIframe.style.height = (active.dataset.iframeheight || '800') + 'px';
+      paIframe.style.height = (active.dataset.iframeheight || '1200') + 'px';
       if (active.dataset.label) paLabelText.textContent = active.dataset.label;
     }
   })();
 
-  // Close/collapse button
-  document.getElementById('pa-iframe-close').addEventListener('click', function() {
-    paWrap.style.display = paWrap.style.display === 'none' ? '' : 'none';
-    this.textContent = paWrap.style.display === 'none' ? '▼' : '✕';
+  // Collapse/expand the iframe panel
+  var paCloseBtn = document.getElementById('pa-iframe-close');
+  function paOpen() {
+    paWrap.classList.remove('collapsed');
+    paCloseBtn.textContent = '✕';
+  }
+  function paClose() {
+    paWrap.classList.add('collapsed');
+    paCloseBtn.textContent = '▼';
+  }
+  paCloseBtn.addEventListener('click', function() {
+    paWrap.classList.contains('collapsed') ? paOpen() : paClose();
   });
 
-  // Expand / collapse bar at the bottom of the iframe
+  // Expand bar (safety valve for very long forms)
   var paExpanded = false;
   document.getElementById('pa-iframe-expand').addEventListener('click', function() {
     var active = document.querySelector('.pa-card.active');
-    var base = parseInt(active ? active.dataset.iframeheight : 1400);
+    var base = parseInt(active ? active.dataset.iframeheight : 1600);
     if (!paExpanded) {
-      paIframe.style.height = (base + 900) + 'px';
+      paIframe.style.height = (base + 800) + 'px';
       this.textContent = 'Collapse ↑';
       paExpanded = true;
     } else {
@@ -2767,15 +2779,13 @@ window.FAQS = [
   function switchPaTab(card) {
     document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
     card.classList.add('active');
-    paIframe.style.height = (card.dataset.iframeheight || '800') + 'px';
+    paIframe.style.height = (card.dataset.iframeheight || '1200') + 'px';
     paIframe.src = card.dataset.url;
     paExpanded = false;
     var expandBtn = document.getElementById('pa-iframe-expand');
     if (expandBtn) expandBtn.textContent = 'Need more room? Expand ↓';
     if (card.dataset.label) paLabelText.textContent = card.dataset.label;
-    paWrap.style.display = '';
-    document.getElementById('pa-iframe-close').textContent = '✕';
-    // Scroll so the label bar is at the top of the viewport
+    paOpen(); // always ensure the panel is visible
     setTimeout(function() {
       paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 80);
@@ -2787,14 +2797,11 @@ window.FAQS = [
   document.querySelectorAll('.pa-card').forEach(card => {
     card.addEventListener('click', function() {
       if (this === conditionsCard) {
-        // Toggle the conditions dropdown; don't load iframe yet
         const isOpen = conditionsPanel.classList.toggle('open');
         this.classList.toggle('conditions-open', isOpen);
-        // If opening, activate this card visually but don't scroll to iframe
         document.querySelectorAll('.pa-card').forEach(c => { if (c !== conditionsCard) c.classList.remove('active'); });
         this.classList.add('active');
       } else {
-        // Close conditions panel when switching to another tab
         conditionsPanel.classList.remove('open');
         conditionsCard.classList.remove('conditions-open');
         switchPaTab(this);
@@ -2802,19 +2809,18 @@ window.FAQS = [
     });
   });
 
-  // Condition chip clicks — load specific condition in iframe, scroll to booking
+  // Condition chip clicks
   document.querySelectorAll('.js-condition').forEach(chip => {
     chip.addEventListener('click', function(e) {
       e.preventDefault();
       const url = this.dataset.url;
-      // Close the conditions dropdown
       conditionsPanel.classList.remove('open');
       conditionsCard.classList.remove('conditions-open');
-      // Activate Common Conditions pa-card visually, load specific condition URL
       document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
       conditionsCard.classList.add('active');
-      paIframe.style.height = (conditionsCard.dataset.iframeheight || '800') + 'px';
+      paIframe.style.height = (conditionsCard.dataset.iframeheight || '1200') + 'px';
       paIframe.src = url;
+      paOpen(); // always show the panel, even if previously closed
       setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
     });
   });
