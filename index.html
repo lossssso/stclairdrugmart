@@ -355,25 +355,30 @@
     .hero__status .status-row__val--open  { color: #166534; font-weight: 600; }
     .hero__status .status-row__val--soon  { color: #92400e; font-weight: 600; }
     .hero__status .status-row__val--closed { color: #991b1b; font-weight: 400; }
-    /* ── Hours status pills (contact section) — same pill style as hero ── */
-    .hours__status { margin-top: .85rem; gap: .5rem; }
-    .hours__status .status-row {
+    /* ── Live status pills in contact section — same pill style as hero ── */
+    .contact__status-board {
+      display: flex; flex-direction: column; gap: .5rem;
+      max-width: 420px; margin: 1.5rem auto 0;
+    }
+    .contact__status-board .status-row {
       background: rgba(255,255,255,.92);
       border: 1.5px solid rgba(33,161,168,.18);
       border-radius: 100px;
-      box-shadow: 0 4px 20px rgba(0,80,90,.13), 0 1px 3px rgba(0,80,90,.07);
+      box-shadow: 0 4px 20px rgba(0,80,90,.18), 0 1px 3px rgba(0,80,90,.08);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       padding: .6rem 1.25rem;
       gap: .65rem;
     }
-    .hours__status .status-dot { width: 10px; height: 10px; }
-    .hours__status .status-row__label {
+    .contact__status-board .status-dot { width: 10px; height: 10px; }
+    .contact__status-board .status-row__label {
       font-size: .78rem; font-weight: 700; color: var(--teal-deeper); min-width: 0;
     }
-    .hours__status .status-row__val { font-size: .75rem; color: var(--text-muted); }
-    .hours__status .status-row__val::before { content: '·'; margin-right: .35rem; opacity: .5; }
-    .hours__status .status-row__val--open  { color: #166534; font-weight: 600; }
-    .hours__status .status-row__val--soon  { color: #92400e; font-weight: 600; }
-    .hours__status .status-row__val--closed { color: #991b1b; font-weight: 400; }
+    .contact__status-board .status-row__val { font-size: .75rem; color: var(--text-muted); }
+    .contact__status-board .status-row__val::before { content: '·'; margin-right: .35rem; opacity: .5; }
+    .contact__status-board .status-row__val--open  { color: #166534; font-weight: 600; }
+    .contact__status-board .status-row__val--soon  { color: #92400e; font-weight: 600; }
+    .contact__status-board .status-row__val--closed { color: #991b1b; font-weight: 400; }
 
     /* ── Sections shared ──────────────────────────────── */
     section { padding: 5rem 1.5rem; }
@@ -641,6 +646,14 @@
       font-size: 1.1rem; cursor: pointer; line-height: 1; padding: 0;
     }
     .pa-iframe-label__close:hover { color: #fff; }
+    .pa-iframe-expand {
+      display: block; width: 100%; border: none; outline: none;
+      background: var(--teal-ice); color: var(--teal-dark);
+      font-size: .75rem; font-weight: 600; padding: .55rem 1rem;
+      cursor: pointer; text-align: center; letter-spacing: .02em;
+      border-top: 1px solid var(--border); transition: background .15s;
+    }
+    .pa-iframe-expand:hover { background: var(--border); }
     .pa-iframe-wrap iframe {
       display: block;
       width: 100%;
@@ -820,7 +833,7 @@
     }
 
     .contact__actions { display: flex; gap: .75rem; flex-wrap: wrap; padding-top: 1.1rem; }
-    .hours__status .status-row__label { min-width: 0; }
+    .contact__status-board .status-row__label { min-width: 0; }
 
     /* ── About + Gallery ──────────────────────────────── */
     #about { background: var(--white); }
@@ -1749,12 +1762,12 @@
 
     <!-- Row 1: primary booking actions -->
     <div class="pa-cards pa-cards--primary">
-      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="2000" data-label="Book an Appointment">
+      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1400" data-label="Book an Appointment">
         <div class="pa-card__icon">📅</div>
         <span class="pa-card__label">Book Appointment</span>
         <span class="pa-card__desc">Schedule a vaccine, consultation, or check-up</span>
       </button>
-      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1600" data-label="Minor Ailment Assessment">
+      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1400" data-label="Minor Ailment Assessment">
         <div class="pa-card__icon">🩺</div>
         <span class="pa-card__label">Common Conditions &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Pharmacist prescribing for 28 minor ailments — no referral needed</span>
@@ -1799,12 +1812,12 @@
 
     <!-- Row 2: patient account actions -->
     <div class="pa-cards pa-cards--secondary">
-      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="2800" data-label="Medication Review">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1800" data-label="Medication Review">
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review</span>
         <span class="pa-card__desc">One-on-one review of all your medications</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="2200" data-label="Medication Refill Request">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="1800" data-label="Medication Refill Request">
         <div class="pa-card__icon">🔁</div>
         <span class="pa-card__label">Refill Request</span>
         <span class="pa-card__desc">Request a prescription refill online</span>
@@ -1814,7 +1827,7 @@
         <span class="pa-card__label">Transfer Your Rx</span>
         <span class="pa-card__desc">Move your prescription to St. Clair Drug Mart</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="1000" data-label="Patient Login — PharmAssess Portal">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="900" data-label="Patient Login — PharmAssess Portal">
         <div class="pa-card__icon">🔑</div>
         <span class="pa-card__label">Patient Login</span>
         <span class="pa-card__desc">Sign in to your PharmAssess patient portal</span>
@@ -1824,10 +1837,7 @@
     <div class="pa-iframe-wrap">
       <div class="pa-iframe-label">
         <span id="pa-iframe-label-text">📅 Book an Appointment</span>
-        <div style="display:flex;gap:.6rem;align-items:center;">
-          <button class="pa-iframe-label__close" id="pa-iframe-fit" aria-label="Reset height" title="Fit to content">↕</button>
-          <button class="pa-iframe-label__close" id="pa-iframe-close" aria-label="Collapse" title="Collapse">✕</button>
-        </div>
+        <button class="pa-iframe-label__close" id="pa-iframe-close" aria-label="Collapse" title="Collapse">✕</button>
       </div>
       <iframe
         id="pa-iframe"
@@ -1836,6 +1846,7 @@
         allow="payment"
         scrolling="no"
       ></iframe>
+      <button class="pa-iframe-expand" id="pa-iframe-expand">Need more room? Expand ↓</button>
     </div>
     <p class="booking__note">
       Having trouble? Call us at <a href="tel:+14166548181" style="color:var(--teal-dark);">(416) 654-8181</a> and we'll book you in directly.
@@ -2366,20 +2377,6 @@ window.FAQS = [
               <tr id="hours-row-6"><td>Saturday</td><td>9:00 am – 2:00 pm</td></tr>
               <tr id="hours-row-0"><td>Sunday</td><td>Closed</td></tr>
             </table>
-            <div class="status-board hours__status">
-              <a class="status-row" href="tel:+14166548181" style="text-decoration:none;">
-                <span class="status-dot" data-sb-dot="store"></span>
-                <span class="status-row__label">Pharmacy</span>
-                <span class="status-row__val" data-sb-val="store">Loading…</span>
-                <span style="font-size:.65rem;opacity:.4;flex-shrink:0;">📞</span>
-              </a>
-              <a class="status-row" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" style="text-decoration:none;">
-                <span class="status-dot" data-sb-dot="uber"></span>
-                <span class="status-row__label">Uber Orders</span>
-                <span class="status-row__val" data-sb-val="uber">Loading…</span>
-                <span style="font-size:.65rem;opacity:.4;flex-shrink:0;">↗</span>
-              </a>
-            </div>
           </div>
         </div>
         <div class="contact__actions">
@@ -2398,6 +2395,22 @@ window.FAQS = [
           title="St. Clair Drug Mart map"
         ></iframe>
       </div>
+    </div>
+
+    <!-- Live status — floats on dark teal like the hero -->
+    <div class="contact__status-board">
+      <a class="status-row" href="tel:+14166548181" style="text-decoration:none;">
+        <span class="status-dot" data-sb-dot="store"></span>
+        <span class="status-row__label">Pharmacy</span>
+        <span class="status-row__val" data-sb-val="store">Loading…</span>
+        <span style="font-size:.65rem;opacity:.5;flex-shrink:0;">📞</span>
+      </a>
+      <a class="status-row" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" style="text-decoration:none;">
+        <span class="status-dot" data-sb-dot="uber"></span>
+        <span class="status-row__label">Uber Orders</span>
+        <span class="status-row__val" data-sb-val="uber">Loading…</span>
+        <span style="font-size:.65rem;opacity:.5;flex-shrink:0;">↗</span>
+      </a>
     </div>
 
     <!-- Info strip: Parking · Languages · Transit (full-width) -->
@@ -2647,17 +2660,30 @@ window.FAQS = [
     this.textContent = paWrap.style.display === 'none' ? '▼' : '✕';
   });
 
-  // Fit/reset button — snaps iframe back to the active card's fallback height
-  document.getElementById('pa-iframe-fit').addEventListener('click', function() {
+  // Expand / collapse bar at the bottom of the iframe
+  var paExpanded = false;
+  document.getElementById('pa-iframe-expand').addEventListener('click', function() {
     var active = document.querySelector('.pa-card.active');
-    if (active) paIframe.style.height = (active.dataset.iframeheight || '1600') + 'px';
+    var base = parseInt(active ? active.dataset.iframeheight : 1400);
+    if (!paExpanded) {
+      paIframe.style.height = (base + 900) + 'px';
+      this.textContent = 'Collapse ↑';
+      paExpanded = true;
+    } else {
+      paIframe.style.height = base + 'px';
+      this.textContent = 'Need more room? Expand ↓';
+      paExpanded = false;
+    }
   });
 
   function switchPaTab(card) {
     document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
     card.classList.add('active');
-    paIframe.style.height = (card.dataset.iframeheight || '1100') + 'px';
+    paIframe.style.height = (card.dataset.iframeheight || '1400') + 'px';
     paIframe.src = card.dataset.url;
+    paExpanded = false;
+    var expandBtn = document.getElementById('pa-iframe-expand');
+    if (expandBtn) expandBtn.textContent = 'Need more room? Expand ↓';
     if (card.dataset.label) paLabelText.textContent = card.dataset.label;
     paWrap.style.display = '';
     document.getElementById('pa-iframe-close').textContent = '✕';
