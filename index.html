@@ -556,10 +556,10 @@
     .pa-iframe-wrap iframe {
       display: block;
       width: 100%;
-      height: 900px;
+      height: 500px;
       border: none;
       background: var(--white);
-      transition: height .25s ease;
+      transition: height .3s ease;
     }
     .booking__note {
       margin-top: 1rem;
@@ -1629,12 +1629,12 @@
 
     <!-- Row 1: primary booking actions -->
     <div class="pa-cards pa-cards--primary">
-      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1900">
+      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1100">
         <div class="pa-card__icon">📅</div>
         <span class="pa-card__label">Book Appointment</span>
         <span class="pa-card__desc">Schedule a vaccine, consultation, or check-up</span>
       </button>
-      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1900">
+      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1100">
         <div class="pa-card__icon">🩺</div>
         <span class="pa-card__label">Common Conditions &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Pharmacist prescribing for 28 minor ailments — no referral needed</span>
@@ -1679,22 +1679,22 @@
 
     <!-- Row 2: patient account actions -->
     <div class="pa-cards pa-cards--secondary">
-      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1450">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="900">
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review</span>
         <span class="pa-card__desc">One-on-one review of all your medications</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="1300">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="750">
         <div class="pa-card__icon">🔁</div>
         <span class="pa-card__label">Refill Request</span>
         <span class="pa-card__desc">Request a prescription refill online</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="1450">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="900">
         <div class="pa-card__icon">🔀</div>
         <span class="pa-card__label">Transfer Your Rx</span>
         <span class="pa-card__desc">Move your prescription to St. Clair Drug Mart</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="850">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="500">
         <div class="pa-card__icon">🔑</div>
         <span class="pa-card__label">Patient Login</span>
         <span class="pa-card__desc">Sign in to your PharmAssess patient portal</span>
@@ -2462,13 +2462,13 @@
   // set initial height from the default active card
   (function() {
     var active = document.querySelector('.pa-card.active');
-    if (active) paIframe.style.height = (active.dataset.iframeheight || '900') + 'px';
+    if (active) paIframe.style.height = (active.dataset.iframeheight || '500') + 'px';
   })();
 
   function switchPaTab(card) {
     document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
     card.classList.add('active');
-    paIframe.style.height = (card.dataset.iframeheight || '900') + 'px';
+    paIframe.style.height = (card.dataset.iframeheight || '500') + 'px';
     paIframe.src = card.dataset.url;
     // scroll iframe into view so it appears right below the clicked button
     setTimeout(function() {
@@ -2508,7 +2508,7 @@
       // Activate Common Conditions pa-card visually, load specific condition URL
       document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
       conditionsCard.classList.add('active');
-      paIframe.style.height = (conditionsCard.dataset.iframeheight || '1900') + 'px';
+      paIframe.style.height = (conditionsCard.dataset.iframeheight || '1100') + 'px';
       paIframe.src = url;
       setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
     });
@@ -2521,7 +2521,7 @@
     var h = (typeof d === 'object' && d !== null)
       ? (d.height || d.frameHeight || d.iframeHeight || null)
       : (typeof d === 'number' ? d : null);
-    if (h && h > 400) paIframe.style.height = h + 'px';
+    if (h && h > 100) paIframe.style.height = h + 'px';
   });
 
   // Buttons elsewhere that jump to booking and pre-select a service tab
