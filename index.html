@@ -763,9 +763,15 @@
 
     /* Parking + Transit + Languages info strip */
     .contact__info-strip {
-      margin-top: 2rem; display: grid; grid-template-columns: 1fr 1fr 1fr;
+      margin-top: 2rem; display: grid; grid-template-columns: 1fr 1fr;
       gap: 1rem;
     }
+    .info-strip__card--wide { grid-column: 1 / -1; }
+    .transit__body {
+      display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: flex-start;
+    }
+    .transit__routes { flex: 1; min-width: 240px; }
+    .transit__cta    { flex: 0 0 auto; min-width: 200px; display: flex; flex-direction: column; gap: .65rem; }
     .info-strip__card {
       background: #fff; border-radius: 14px; padding: 1.25rem 1.2rem 1.1rem;
       border: 1.5px solid #d8eef0;
@@ -2379,7 +2385,7 @@ window.FAQS = [
       </div>
     </div>
 
-    <!-- Info strip: Parking · Transit · Languages -->
+    <!-- Info strip: Parking · Languages · Transit (full-width) -->
     <div class="contact__info-strip">
       <!-- Parking -->
       <div class="info-strip__card">
@@ -2390,64 +2396,6 @@ window.FAQS = [
           <div class="info-chip"><span class="info-chip__icon">♿</span><span>Accessible entrance &amp; parking spaces available</span></div>
         </div>
       </div>
-      <!-- Transit -->
-      <div class="info-strip__card">
-        <div class="info-strip__title">🚇 Getting Here by TTC</div>
-        <div class="info-strip__chips">
-          <div class="info-chip"><span class="info-chip__icon">🚋</span><span><strong>512 St. Clair streetcar</strong> — runs east–west along St. Clair Ave W, stopping right at our corner. Connect from <strong>Line 1 (Yellow)</strong> at St. Clair West Station.</span></div>
-          <div class="info-chip"><span class="info-chip__icon">🚌</span><span><strong>29 / 929 Dufferin bus</strong> — runs north–south on Dufferin St. Connects south to <strong>Line 2 (Green)</strong> at Dufferin Station; north to <strong>Line 5 Eglinton Crosstown</strong> and <strong>Line 1</strong> at Wilson Station.</span></div>
-        </div>
-        <svg viewBox="0 0 360 252" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;margin-top:.75rem;border-radius:8px;" role="img" aria-label="TTC transit diagram — 512 St. Clair streetcar and 29/929 Dufferin bus routes to St. Clair Drug Mart">
-          <rect width="360" height="252" fill="#f0fafa" rx="10"/>
-          <!-- Line 5 Crosstown (gold) y=52 -->
-          <line x1="15" y1="52" x2="345" y2="52" stroke="#DBAA00" stroke-width="6" stroke-linecap="round"/>
-          <!-- Line 2 Green y=220 -->
-          <line x1="15" y1="220" x2="345" y2="220" stroke="#007A3D" stroke-width="6" stroke-linecap="round"/>
-          <!-- Line 1 Yellow x=270 -->
-          <line x1="270" y1="22" x2="270" y2="240" stroke="#F5A623" stroke-width="6" stroke-linecap="round"/>
-          <!-- 512 Streetcar red y=140 -->
-          <line x1="15" y1="140" x2="345" y2="140" stroke="#DA291C" stroke-width="5" stroke-linecap="round"/>
-          <!-- 29/929 Dufferin Bus blue x=100 -->
-          <line x1="100" y1="18" x2="100" y2="240" stroke="#0072CE" stroke-width="5" stroke-linecap="round"/>
-          <!-- Route pills -->
-          <rect x="16" y="29" width="78" height="14" fill="#DBAA00" rx="7"/>
-          <text x="55" y="40" text-anchor="middle" fill="white" font-size="7.5" font-weight="700" font-family="sans-serif">Line 5 Crosstown</text>
-          <rect x="16" y="204" width="56" height="14" fill="#007A3D" rx="7"/>
-          <text x="44" y="215" text-anchor="middle" fill="white" font-size="7.5" font-weight="700" font-family="sans-serif">Line 2 Green</text>
-          <rect x="240" y="14" width="60" height="14" fill="#F5A623" rx="7"/>
-          <text x="270" y="25" text-anchor="middle" fill="white" font-size="7.5" font-weight="700" font-family="sans-serif">Line 1 Yellow</text>
-          <!-- Stations -->
-          <circle cx="100" cy="52"  r="8" fill="white" stroke="#DBAA00" stroke-width="3.5"/>
-          <circle cx="270" cy="140" r="8" fill="white" stroke="#F5A623" stroke-width="3.5"/>
-          <circle cx="100" cy="220" r="8" fill="white" stroke="#007A3D" stroke-width="3.5"/>
-          <!-- Pharmacy -->
-          <circle cx="100" cy="140" r="14" fill="#00737c" stroke="white" stroke-width="2.5"/>
-          <line x1="100" y1="131" x2="100" y2="149" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="91"  y1="140" x2="109" y2="140" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-          <!-- Route labels -->
-          <text x="185" y="130" text-anchor="middle" fill="#DA291C" font-size="9" font-weight="700" font-family="sans-serif">512 St. Clair Streetcar</text>
-          <text x="93" y="91"  text-anchor="end" fill="#0072CE" font-size="9"   font-weight="700" font-family="sans-serif">29 / 929</text>
-          <text x="93" y="103" text-anchor="end" fill="#0072CE" font-size="8.5" font-family="sans-serif">Dufferin Bus</text>
-          <!-- Pharmacy label -->
-          <text x="116" y="158" fill="#00737c" font-size="9"   font-weight="700" font-family="sans-serif">St. Clair Drug Mart</text>
-          <text x="116" y="170" fill="#00737c" font-size="8"   font-family="sans-serif">1203 St. Clair Ave W</text>
-          <!-- Station labels -->
-          <text x="110" y="63"  fill="#7a5500" font-size="8"   font-weight="600" font-family="sans-serif">Eglinton &amp; Dufferin</text>
-          <text x="110" y="74"  fill="#7a5500" font-size="7.5" font-family="sans-serif">↔ Line 5 Crosstown</text>
-          <text x="280" y="133" fill="#7a5500" font-size="8"   font-weight="600" font-family="sans-serif">St. Clair West</text>
-          <text x="280" y="144" fill="#7a5500" font-size="7.5" font-family="sans-serif">Station</text>
-          <text x="110" y="232" fill="#004d26" font-size="8"   font-weight="600" font-family="sans-serif">Dufferin Station</text>
-          <text x="110" y="243" fill="#004d26" font-size="7.5" font-family="sans-serif">↔ Line 2 Green</text>
-          <!-- Direction hints -->
-          <text x="104" y="16"  fill="#0072CE" font-size="7.5" font-family="sans-serif">↑ Wilson Stn. (Line 1)</text>
-          <text x="17"  y="133" fill="#DA291C" font-size="7.5" font-family="sans-serif">← Gunns Loop</text>
-          <!-- North arrow -->
-          <polygon points="347,12 341,24 353,24" fill="#888"/>
-          <text x="347" y="34" text-anchor="middle" fill="#888" font-size="8" font-family="sans-serif">N</text>
-          <!-- Disclaimer -->
-          <text x="180" y="250" text-anchor="middle" fill="#bbb" font-size="6.5" font-family="sans-serif">Not to scale · TTC routes only</text>
-        </svg>
-      </div>
       <!-- Languages -->
       <div class="info-strip__card">
         <div class="info-strip__title">🌐 Languages &amp; Accessibility</div>
@@ -2456,6 +2404,22 @@ window.FAQS = [
           <div class="info-chip"><span class="info-chip__icon">💬</span><span><strong>Turkish · Polish</strong> &amp; more — ask our staff</span></div>
           <div class="info-chip"><span class="info-chip__icon">♿</span><span>Fully accessible entrance</span></div>
           <div class="info-chip"><span class="info-chip__icon">🏳️‍🌈</span><span>LGBTQ+ friendly &amp; welcoming space</span></div>
+        </div>
+      </div>
+      <!-- Transit — full width -->
+      <div class="info-strip__card info-strip__card--wide">
+        <div class="info-strip__title">🚇 Getting Here by TTC</div>
+        <div class="transit__body">
+          <div class="transit__routes info-strip__chips">
+            <div class="info-chip"><span class="info-chip__icon">🟡</span><span>Take <strong>Line 1 (Yellow)</strong> to <strong>St. Clair West Station</strong>, then board the <strong>512 St. Clair streetcar</strong> westbound — exit at Dufferin &amp; St. Clair</span></div>
+            <div class="info-chip"><span class="info-chip__icon">🟢</span><span>Take <strong>Line 2 (Green)</strong> to <strong>Dufferin Station</strong>, then board the <strong>29 / 929 Dufferin bus</strong> northbound — exit at St. Clair &amp; Dufferin</span></div>
+            <div class="info-chip"><span class="info-chip__icon">🟠</span><span>Take <strong>Line 5 Eglinton Crosstown</strong> to <strong>Dufferin Station</strong> (at Eglinton &amp; Dufferin), then board the <strong>29 / 929 Dufferin bus</strong> southbound — a few stops to St. Clair &amp; Dufferin</span></div>
+            <div class="info-chip"><span class="info-chip__icon">📍</span><span>We're at <strong>1203 St. Clair Ave W</strong> — corner of St. Clair &amp; Dufferin</span></div>
+          </div>
+          <div class="transit__cta">
+            <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=transit" target="_blank" rel="noopener">🗺️ Get TTC Directions →</a>
+            <p style="font-size:.78rem;color:var(--text-muted);line-height:1.5;margin:0;">Opens Google Maps in transit mode — enter your starting point and it shows the best TTC route to our door.</p>
+          </div>
         </div>
       </div>
     </div>
