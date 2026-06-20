@@ -263,15 +263,31 @@
     .hero__socials .uber-word { width: 30px; height: auto; object-fit: contain; }
     .hero__status {
       position: relative; z-index: 1;
-      max-width: 460px; margin: 1.85rem auto 0;
+      max-width: 400px; margin: 1.85rem auto 0;
     }
-    .hero__status .status-board { margin-top: 0; gap: .45rem; }
+    .hero__status .status-board { margin-top: 0; gap: .5rem; }
     .hero__status .status-row {
-      background: rgba(255,255,255,.78);
-      border-color: rgba(255,255,255,.9);
-      box-shadow: 0 2px 10px rgba(0,80,90,.06);
-      backdrop-filter: blur(3px);
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.32);
+      border-radius: 100px;
+      box-shadow: 0 4px 18px rgba(0,50,60,.18), inset 0 1px 0 rgba(255,255,255,.18);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: .55rem 1.15rem;
+      gap: .6rem;
     }
+    .hero__status .status-dot { width: 10px; height: 10px; }
+    .hero__status .status-row__label {
+      font-size: .78rem; font-weight: 700; color: #fff;
+      min-width: 0; letter-spacing: .02em;
+    }
+    .hero__status .status-row__val {
+      font-size: .75rem; color: rgba(255,255,255,.75);
+    }
+    .hero__status .status-row__val::before { content: '·'; margin-right: .35rem; opacity: .6; }
+    .hero__status .status-row__val--open  { color: #86efac; font-weight: 600; }
+    .hero__status .status-row__val--soon  { color: #fcd34d; font-weight: 600; }
+    .hero__status .status-row__val--closed { color: rgba(255,255,255,.65); font-weight: 400; }
 
     /* ── Sections shared ──────────────────────────────── */
     section { padding: 5rem 1.5rem; }
