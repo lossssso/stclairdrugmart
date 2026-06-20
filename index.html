@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
   <title>St. Clair Drug Mart Pharmacy | Toronto Walk-In Pharmacy</title>
   <meta name="description" content="Independent Toronto pharmacy on St. Clair West — walk-ins welcome, online appointments, vaccines, free prescription delivery & pharmacist care for 28 common conditions. Call (416) 654-8181." />
   <meta name="keywords" content="pharmacy Toronto, St. Clair West pharmacy, walk-in pharmacy Toronto, pharmacy near me, minor ailments pharmacy, prescription refill Toronto, flu shot Toronto, vaccines pharmacy, medication review, blister packs, UTI treatment pharmacist, independent pharmacy Toronto, pharmacy 1203 St Clair Ave W" />
@@ -137,11 +137,16 @@
       --font-display: 'Helvetica Neue', Helvetica, 'Arial', 'Inter', sans-serif;
     }
     html { scroll-behavior: smooth; }
+    html {
+      -webkit-text-size-adjust: 100%;
+      overflow-x: hidden;
+    }
     body {
       font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: var(--teal-light);
       color: var(--text);
       line-height: 1.65;
+      overflow-x: hidden;
     }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
@@ -161,7 +166,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 1.5rem;
+      padding: 0 max(1.5rem, env(safe-area-inset-right)) 0 max(1.5rem, env(safe-area-inset-left));
       height: 64px;
     }
     .nav__brand {
@@ -211,7 +216,7 @@
       box-shadow: 0 3px 10px rgba(33,161,168,.25);
     }
     .nav__links .nav__cta a:hover { background: var(--teal-dark); color: var(--white); }
-    .nav__toggle { display: none; background: none; border: none; cursor: pointer; padding: .4rem; }
+    .nav__toggle { display: none; background: none; border: none; cursor: pointer; padding: .4rem; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
     .nav__toggle span {
       display: block; width: 22px; height: 2px;
       background: var(--teal-deeper); margin: 4px 0; border-radius: 2px;
@@ -838,7 +843,7 @@
       background: var(--teal-deeper);
       color: rgba(255,255,255,.8);
       text-align: center;
-      padding: 2rem 1.5rem;
+      padding: 2rem max(1.5rem, env(safe-area-inset-right)) max(2rem, env(safe-area-inset-bottom)) max(1.5rem, env(safe-area-inset-left));
       font-size: .85rem;
     }
     footer a { color: rgba(255,255,255,.65); }
@@ -893,7 +898,7 @@
       .nav__links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e9f4f5; box-shadow: 0 8px 20px rgba(0,60,66,.08); flex-direction: column; align-items: stretch; padding: .5rem 1rem 1rem; gap: .1rem; }
       .nav__links.open { display: flex; }
       .nav__links > li { display: block; }
-      .nav__links a { display: flex; width: 100%; }
+      .nav__links a { display: flex; width: 100%; min-height: 44px; }
       .nav__toggle { display: block; }
       .nav__has-dropdown::after { display: none; }
       .nav__dropdown { position: static; border: none; box-shadow: none; border-radius: 0; padding: 0; background: #f3fafb; margin: .2rem 0 .2rem .75rem; min-width: 0; }
@@ -917,10 +922,32 @@
       .services__grid .service-card:last-child { grid-column: unset; max-width: unset; margin: 0; }
       .welcome__photo { order: -1; }
       .gallery  { grid-template-columns: 1fr 1fr; }
+      /* reduced section padding on mobile */
+      section { padding: 2.75rem 1rem; }
+      .hero { padding: 2.75rem 1rem 3rem; }
+      /* prevent transit flex items from overflowing viewport */
+      .transit__cta, .transit__routes { min-width: 0; width: 100%; }
+      /* collapse steps to single column */
+      .steps { grid-template-columns: 1fr; }
+      /* shrink staff to 3 columns */
+      .staff-grid { grid-template-columns: repeat(3, 1fr); }
+      /* shrink insurance to 2 columns */
+      .insurance-grid { grid-template-columns: 1fr 1fr; }
+      /* reviews to single column */
+      .reviews-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
       .pa-cards--primary   { grid-template-columns: 1fr; }
       .pa-cards--secondary { grid-template-columns: 1fr 1fr; }
+      /* staff to 2 columns on very small screens */
+      .staff-grid { grid-template-columns: 1fr 1fr; }
+      /* insurance to 1 column on very small screens */
+      .insurance-grid { grid-template-columns: 1fr; }
+      /* hero logo slightly smaller */
+      .hero__logo { width: 130px; height: 130px; }
+      /* tighten section padding further */
+      section { padding: 2rem .875rem; }
+      .hero { padding: 2rem .875rem 2.5rem; }
     }
 
     /* ── Alert banner ─────────────────────────────── */
@@ -2439,7 +2466,7 @@ window.FAQS = [
               <a class="btn btn--outline" href="https://www.ttc.ca/routes-and-schedules/maps" target="_blank" rel="noopener" style="font-size:.8rem;padding:.5rem .9rem;">TTC System Map →</a>
             </div>
           </div>
-          <div class="transit__cta" style="min-width:260px;flex:1;">
+          <div class="transit__cta">
             <a href="https://www.ttc.ca/routes-and-schedules/maps" target="_blank" rel="noopener" title="View full TTC System Map">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/TTC_subway_system_map.svg/1200px-TTC_subway_system_map.svg.png"
