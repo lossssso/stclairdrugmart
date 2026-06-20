@@ -1022,7 +1022,7 @@
     .steps__cta { text-align: center; margin-top: 2rem; display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap; }
 
     /* ── Medication Reviews ───────────────────────── */
-    #medication-reviews { background: var(--teal-ice); }
+    .svc-tab__panel[data-panel="med-reviews"] { background: var(--teal-ice); border-radius: var(--radius); padding: 1.25rem; margin-top: .5rem; }
     .medscheck-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -1596,8 +1596,8 @@
         <ul class="nav__dropdown">
           <li><a href="#booking">Book Appointment</a></li>
           <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)">Minor Ailments</a></li>
-          <li><a href="#medication-reviews">Medication Reviews</a></li>
-          <li><a href="#services">Our Services</a></li>
+          <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">Medication Reviews</a></li>
+          <li><a href="#services">What We Offer</a></li>
           <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)">Vaccinations</a></li>
           <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=drug-check]').click()},80)">Drug Checker</a></li>
           <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=insurance]').click()},80)">Insurance</a></li>
@@ -1765,8 +1765,8 @@
 <!-- ── Services & Booking (merged) ───────────────────────── -->
 <section id="booking">
   <div class="section__inner">
-    <h2 class="section__title">Services &amp; Book Online</h2>
-    <p class="section__lead">Select a service — everything loads right here, no new window needed.</p>
+    <h2 class="section__title">Clinical Service Appointments</h2>
+    <p class="section__lead">Select a service below — everything loads right here, no new tab needed.</p>
 
     <!-- Row 1: primary booking actions -->
     <div class="pa-cards pa-cards--primary">
@@ -1865,6 +1865,7 @@
       <nav class="svc-tabs__nav" role="tablist" aria-label="Services">
         <button class="svc-tab__btn active" data-tab="ailments" role="tab" aria-selected="true">Minor Ailments (28)</button>
         <button class="svc-tab__btn" data-tab="vaccines" role="tab" aria-selected="false">Vaccines</button>
+        <button class="svc-tab__btn" data-tab="med-reviews" role="tab" aria-selected="false">Medication Reviews</button>
         <button class="svc-tab__btn" data-tab="drug-check" role="tab" aria-selected="false">Drug Checker</button>
         <button class="svc-tab__btn" data-tab="insurance" role="tab" aria-selected="false">Insurance</button>
       </nav>
@@ -2069,6 +2070,38 @@
         <p style="font-size:.74rem;color:var(--text-muted);text-align:center;">Publicly funded vaccines require a valid Ontario health card. Eligibility criteria apply. Call (416) 654-8181 for current stock.</p>
       </div>
 
+      <!-- TAB: Medication Reviews -->
+      <div class="svc-tab__panel" data-panel="med-reviews">
+        <p class="section__lead" style="margin-bottom:1.5rem;">Our pharmacist takes the time to review all your medications — catching interactions, simplifying regimens, and making sure every medication you take is working for you.</p>
+        <div class="medscheck-grid">
+          <div class="medscheck-card">
+            <div class="medscheck-card__icon">📋</div>
+            <div class="medscheck-card__title">Annual Medication Review</div>
+            <p class="medscheck-card__desc">A face-to-face or phone consultation covering all your prescriptions, over-the-counter medications, vitamins, and supplements. We identify interactions, duplications, and medications that may no longer be appropriate for you.</p>
+            <span class="medscheck-card__tag">Eligible if taking 3 or more chronic medications</span>
+          </div>
+          <div class="medscheck-card">
+            <div class="medscheck-card__icon">🩺</div>
+            <div class="medscheck-card__title">Diabetes Medication Review</div>
+            <p class="medscheck-card__desc">A specialized review for patients living with Type 2 diabetes. We assess your diabetes medications, discuss blood sugar targets, and help coordinate care with your healthcare team.</p>
+            <span class="medscheck-card__tag">For patients with Type 2 diabetes on any medication</span>
+          </div>
+          <div class="medscheck-card">
+            <div class="medscheck-card__icon">🏥</div>
+            <div class="medscheck-card__title">Post-Hospital Reconciliation</div>
+            <p class="medscheck-card__desc">Coming home from the hospital? We'll compare your discharge medications with your existing prescriptions to prevent dangerous errors, duplications, or gaps in your care during this critical transition.</p>
+            <span class="medscheck-card__tag">Following hospital discharge or a care transition</span>
+          </div>
+          <div class="medscheck-card">
+            <div class="medscheck-card__icon">🔄</div>
+            <div class="medscheck-card__title">Follow-Up Review</div>
+            <p class="medscheck-card__desc">When your medications change significantly — a new diagnosis, a new prescription, or a concern about side effects — we schedule a focused follow-up to make sure your therapy stays on track.</p>
+            <span class="medscheck-card__tag">After a significant medication change or concern</span>
+          </div>
+        </div>
+        <p class="insurance__note" style="margin-top:1.75rem;">Medication reviews are <strong>covered at no cost</strong> for eligible Ontario residents. <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us</a> to book — walk-ins welcome.</p>
+      </div>
+
       <!-- TAB: Drug Checker -->
       <div class="svc-tab__panel" data-panel="drug-check">
         <p class="section__lead" style="margin-bottom:1.5rem;">Add two or more medications to check for possible interactions — right here, no sign-up needed.</p>
@@ -2124,8 +2157,8 @@
 <!-- ── Our Services (accordion) ───────────────────────────── -->
 <section id="services">
   <div class="section__inner">
-    <h2 class="section__title">Our Services</h2>
-    <p class="section__lead">Everything we offer under one roof. Tap any service to learn more.</p>
+    <h2 class="section__title">What We Offer</h2>
+    <p class="section__lead">Everything under one roof — tap any service to learn more.</p>
     <div class="svc-acc">
       <div class="svc-acc-item">
         <button class="svc-acc__head" aria-expanded="false">
@@ -2168,7 +2201,7 @@
         </button>
         <div class="svc-acc__body">
           <p>A relaxed sit-down with your pharmacist to go over everything you take — catching interactions, simplifying your routine, and answering your questions. Covered at no cost for eligible Ontario residents.</p>
-          <a class="svc-acc__link" href="#medication-reviews">See the types of reviews we offer →</a>
+          <a class="svc-acc__link" href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">See the types of reviews we offer →</a>
         </div>
       </div>
       <div class="svc-acc-item">
@@ -2220,40 +2253,6 @@
 </section>
 
 <!-- ── Medication Reviews ─────────────────────────────────── -->
-<section id="medication-reviews">
-  <div class="section__inner">
-    <h2 class="section__title">Medication Reviews</h2>
-    <p class="section__lead">Our pharmacist takes the time to review all your medications — catching interactions, simplifying regimens, and making sure every medication you take is working for you.</p>
-    <div class="medscheck-grid">
-      <div class="medscheck-card">
-        <div class="medscheck-card__icon">📋</div>
-        <div class="medscheck-card__title">Annual Medication Review</div>
-        <p class="medscheck-card__desc">A face-to-face or phone consultation covering all your prescriptions, over-the-counter medications, vitamins, and supplements. We identify interactions, duplications, and medications that may no longer be appropriate for you.</p>
-        <span class="medscheck-card__tag">Eligible if taking 3 or more chronic medications</span>
-      </div>
-      <div class="medscheck-card">
-        <div class="medscheck-card__icon">🩺</div>
-        <div class="medscheck-card__title">Diabetes Medication Review</div>
-        <p class="medscheck-card__desc">A specialized review for patients living with Type 2 diabetes. We assess your diabetes medications, discuss blood sugar targets, and help coordinate care with your healthcare team.</p>
-        <span class="medscheck-card__tag">For patients with Type 2 diabetes on any medication</span>
-      </div>
-      <div class="medscheck-card">
-        <div class="medscheck-card__icon">🏥</div>
-        <div class="medscheck-card__title">Post-Hospital Reconciliation</div>
-        <p class="medscheck-card__desc">Coming home from the hospital? We'll compare your discharge medications with your existing prescriptions to prevent dangerous errors, duplications, or gaps in your care during this critical transition.</p>
-        <span class="medscheck-card__tag">Following hospital discharge or a care transition</span>
-      </div>
-      <div class="medscheck-card">
-        <div class="medscheck-card__icon">🔄</div>
-        <div class="medscheck-card__title">Follow-Up Review</div>
-        <p class="medscheck-card__desc">When your medications change significantly — a new diagnosis, a new prescription, or a concern about side effects — we schedule a focused follow-up to make sure your therapy stays on track.</p>
-        <span class="medscheck-card__tag">After a significant medication change or concern</span>
-      </div>
-    </div>
-    <p class="insurance__note" style="margin-top:1.75rem;">Medication reviews are <strong>covered at no cost</strong> for eligible Ontario residents through the provincial drug benefit program. <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us</a> to book your review — walk-ins also welcome.</p>
-  </div>
-</section>
-
 <!-- ── Reviews ────────────────────────────────────────────── -->
 <section id="reviews">
   <div class="section__inner">
