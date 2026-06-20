@@ -725,7 +725,7 @@
     .about__text p { color: var(--text-muted); margin-top: 1rem; }
     .gallery {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 1rem;
       margin-top: 2.5rem;
     }
@@ -1308,9 +1308,13 @@
       .insurance-grid { grid-template-columns: repeat(2, 1fr); }
       .reviews-grid   { grid-template-columns: 1fr; }
       .staff-grid { grid-template-columns: repeat(3, 1fr); }
+      .staff-card__name { font-size: .82rem; }
+      .staff-card__role { font-size: .7rem; }
     }
     @media (max-width: 600px) {
       .insurance-grid { grid-template-columns: repeat(2, 1fr); }
+      .staff-grid { grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+      .staff-card:last-child { grid-column: 1 / -1; max-width: calc(50% - .375rem); margin: 0 auto; }
     }
 
     /* ── WhatsApp floating button ─────────────────── */
@@ -1523,7 +1527,7 @@
         <span class="status-dot" data-sb-dot="uber"></span>
         <span class="status-row__label">Uber Orders</span>
         <span class="status-row__val" data-sb-val="uber">Loading…</span>
-        <span style="margin-left:auto;font-size:.7rem;opacity:.5;">↗</span>
+        <span style="font-size:.65rem;opacity:.4;flex-shrink:0;">↗</span>
       </a>
     </div>
   </div>
@@ -2267,7 +2271,7 @@
                 <span class="status-dot" data-sb-dot="uber"></span>
                 <span class="status-row__label">Uber Orders</span>
                 <span class="status-row__val" data-sb-val="uber">Loading…</span>
-                <span style="margin-left:auto;font-size:.7rem;opacity:.5;">↗</span>
+                <span style="font-size:.65rem;opacity:.4;flex-shrink:0;">↗</span>
               </a>
             </div>
           </div>
@@ -2350,7 +2354,10 @@
         <img src="storefront_new_1.webp" alt="St. Clair Drug Mart storefront on St. Clair Ave W" />
       </div>
       <div class="gallery__item">
-        <img src="interior_counter.png" alt="Pharmacy counter and entrance" />
+        <img src="interior_wide.jpg" alt="Inside St. Clair Drug Mart — pharmacy counter and full store" />
+      </div>
+      <div class="gallery__item">
+        <img src="interior_counter.png" alt="Pharmacy entrance and front counter" />
       </div>
       <div class="gallery__item">
         <img src="interior_shelves.png" alt="OTC and health product shelves" />
