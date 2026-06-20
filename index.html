@@ -612,29 +612,39 @@
       align-items: start;
     }
     .contact__info {
-      display: flex; flex-direction: column; gap: 1.25rem;
+      display: flex; flex-direction: column; gap: 0;
       background: var(--white); border-radius: 16px;
-      padding: 2rem 1.75rem;
+      padding: 1.75rem;
       border: 1.5px solid #d8eef0;
       box-shadow: 0 4px 20px rgba(0,80,90,.05);
     }
-    .contact__row { display: flex; align-items: flex-start; gap: .85rem; }
-    .contact__row__icon {
-      width: 36px; height: 36px; border-radius: 10px;
-      background: var(--teal-ice); display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; font-size: .95rem;
+    .contact__row {
+      display: flex; align-items: flex-start; gap: .8rem;
+      padding: 1rem 0; border-bottom: 1px solid #eef7f8;
     }
-    .contact__row__body h4 { font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--teal-bright); margin-bottom: .25rem; }
+    .contact__row:first-child { padding-top: 0; }
+    .contact__row--split {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: .5rem; padding: 1rem 0; border-bottom: 1px solid #eef7f8;
+    }
+    .contact__row__split-item { display: flex; align-items: flex-start; gap: .6rem; }
+    .contact__row__icon {
+      width: 32px; height: 32px; border-radius: 9px;
+      background: var(--teal-ice); display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: .85rem;
+    }
+    .contact__row__body h4 { font-size: .67rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--teal-bright); margin-bottom: .18rem; }
     .contact__row__body p, .contact__row__body a {
-      font-size: .875rem; color: var(--text-muted); margin: 0; display: block; line-height: 1.55;
+      font-size: .86rem; color: var(--text-muted); margin: 0; display: block; line-height: 1.5;
     }
     .contact__row__body a:hover { color: var(--teal-dark); }
+    .contact__row__split-item .contact__row__body a { font-size: .82rem; word-break: break-all; }
 
     /* Hours table */
-    .hours__table { width: 100%; border-collapse: collapse; margin-top: .6rem; }
-    .hours__table td { padding: .3rem .15rem; font-size: .84rem; color: var(--text-muted); }
-    .hours__table td:first-child { font-weight: 500; color: var(--text); width: 55%; }
-    .hours__table td:last-child { text-align: right; }
+    .hours__table { width: 100%; border-collapse: collapse; margin-top: .5rem; }
+    .hours__table td { padding: .28rem .1rem; font-size: .83rem; color: var(--text-muted); }
+    .hours__table td:first-child { font-weight: 500; color: var(--text); white-space: nowrap; padding-right: .5rem; }
+    .hours__table td:last-child { text-align: right; white-space: nowrap; }
     .hours__table .today td { color: var(--teal-deeper); font-weight: 700; }
     .hours__table .today td:first-child { position: relative; padding-left: .9rem; }
     .hours__table .today td:first-child::before {
@@ -706,7 +716,8 @@
       .contact__info-strip { grid-template-columns: 1fr; }
     }
 
-    .contact__actions { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: .5rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+    .contact__actions { display: flex; gap: .75rem; flex-wrap: wrap; padding-top: 1.1rem; }
+    .hours__status .status-row__label { min-width: 0; }
 
     /* ── About + Gallery ──────────────────────────────── */
     #about { background: var(--white); }
@@ -2220,26 +2231,28 @@
             <a href="https://www.google.com/maps/place/St.+Clair+Drug+Mart+Pharmacy/@43.6773961,-79.4468996,17z/data=!3m1!4b1!4m6!3m5!1s0x882b35d5e572114b:0x899add08acb1e556!8m2!3d43.6773551!4d-79.4443087!16s%2Fg%2F11f716bxm1" target="_blank" rel="noopener" style="margin-top:.35rem;color:var(--teal-dark);font-weight:600;">Get Directions →</a>
           </div>
         </div>
-        <div class="contact__row">
-          <div class="contact__row__icon">📞</div>
-          <div class="contact__row__body">
-            <h4>Phone</h4>
-            <a href="tel:+14166548181">(416) 654-8181</a>
+        <div class="contact__row--split">
+          <div class="contact__row__split-item">
+            <div class="contact__row__icon">📞</div>
+            <div class="contact__row__body">
+              <h4>Phone</h4>
+              <a href="tel:+14166548181">(416) 654-8181</a>
+            </div>
+          </div>
+          <div class="contact__row__split-item">
+            <div class="contact__row__icon">✉️</div>
+            <div class="contact__row__body">
+              <h4>Email</h4>
+              <a href="mailto:stclairdrugmart@gmail.com">stclairdrugmart@gmail.com</a>
+            </div>
           </div>
         </div>
-        <div class="contact__row">
-          <div class="contact__row__icon">✉️</div>
-          <div class="contact__row__body">
-            <h4>Email</h4>
-            <a href="mailto:stclairdrugmart@gmail.com">stclairdrugmart@gmail.com</a>
-          </div>
-        </div>
-        <div class="contact__row">
+        <div class="contact__row" style="border-bottom:none; padding-bottom:0;">
           <div class="contact__row__icon">🕐</div>
           <div class="contact__row__body">
             <h4>Hours</h4>
             <table class="hours__table" id="hours-table">
-              <tr id="hours-row-1"><td>Monday – Friday</td><td>9:00 am – 6:00 pm</td></tr>
+              <tr id="hours-row-1"><td>Mon – Fri</td><td>9:00 am – 6:00 pm</td></tr>
               <tr id="hours-row-6"><td>Saturday</td><td>9:00 am – 2:00 pm</td></tr>
               <tr id="hours-row-0"><td>Sunday</td><td>Closed</td></tr>
             </table>
