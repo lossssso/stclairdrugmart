@@ -1762,12 +1762,12 @@
 
     <!-- Row 1: primary booking actions -->
     <div class="pa-cards pa-cards--primary">
-      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1400" data-label="Book an Appointment">
+      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1100" data-label="Book an Appointment">
         <div class="pa-card__icon">📅</div>
         <span class="pa-card__label">Book Appointment</span>
         <span class="pa-card__desc">Schedule a vaccine, consultation, or check-up</span>
       </button>
-      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1400" data-label="Minor Ailment Assessment">
+      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1100" data-label="Minor Ailment Assessment">
         <div class="pa-card__icon">🩺</div>
         <span class="pa-card__label">Common Conditions &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Pharmacist prescribing for 28 minor ailments — no referral needed</span>
@@ -1812,12 +1812,12 @@
 
     <!-- Row 2: patient account actions -->
     <div class="pa-cards pa-cards--secondary">
-      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1800" data-label="Medication Review">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1100" data-label="Medication Review">
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review</span>
         <span class="pa-card__desc">One-on-one review of all your medications</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="1800" data-label="Medication Refill Request">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="1100" data-label="Medication Refill Request">
         <div class="pa-card__icon">🔁</div>
         <span class="pa-card__label">Refill Request</span>
         <span class="pa-card__desc">Request a prescription refill online</span>
@@ -1827,7 +1827,7 @@
         <span class="pa-card__label">Transfer Your Rx</span>
         <span class="pa-card__desc">Move your prescription to St. Clair Drug Mart</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="900" data-label="Patient Login — PharmAssess Portal">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="750" data-label="Patient Login — PharmAssess Portal">
         <div class="pa-card__icon">🔑</div>
         <span class="pa-card__label">Patient Login</span>
         <span class="pa-card__desc">Sign in to your PharmAssess patient portal</span>
@@ -2679,7 +2679,7 @@ window.FAQS = [
   function switchPaTab(card) {
     document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
     card.classList.add('active');
-    paIframe.style.height = (card.dataset.iframeheight || '1400') + 'px';
+    paIframe.style.height = (card.dataset.iframeheight || '1100') + 'px';
     paIframe.src = card.dataset.url;
     paExpanded = false;
     var expandBtn = document.getElementById('pa-iframe-expand');
