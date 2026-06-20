@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Not Found — St. Clair Drug Mart Pharmacy</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --teal-bright: #21a1a8;
+      --teal-deeper: #00737c;
+      --teal-dark:   #2c5457;
+      --teal-ice:    #d7fbfc;
+      --text:        #1a2e30;
+      --text-muted:  #5a7a7d;
+      --white:       #ffffff;
+      --font-display: 'Big Shoulders Display', 'Helvetica Neue', Arial, sans-serif;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #b6ecef 0%, #cdf5f6 45%, #e4fbfc 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      color: var(--teal-deeper);
+    }
+    .logo {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 4px 12px rgba(0,115,124,.18));
+    }
+    .code {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 18vw, 9rem);
+      font-weight: 900;
+      line-height: 1;
+      color: var(--teal-bright);
+      letter-spacing: -.02em;
+      margin-bottom: .25rem;
+    }
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      color: var(--teal-deeper);
+      margin-bottom: .75rem;
+    }
+    p {
+      font-size: .95rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      max-width: 400px;
+      margin-bottom: 2rem;
+    }
+    .actions {
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      display: inline-block;
+      background: var(--teal-bright);
+      color: #fff;
+      font-size: .9rem;
+      font-weight: 700;
+      padding: .7rem 1.5rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background .15s;
+    }
+    .btn:hover { background: var(--teal-deeper); }
+    .btn--outline {
+      background: transparent;
+      color: var(--teal-deeper);
+      border: 2px solid var(--teal-bright);
+    }
+    .btn--outline:hover { background: var(--teal-ice); }
+    footer {
+      margin-top: 3rem;
+      font-size: .8rem;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--teal-dark); text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <img src="logo.png" alt="St. Clair Drug Mart logo" class="logo" />
+  <div class="code">404</div>
+  <h1>Page Not Found</h1>
+  <p>Looks like this page went out of stock. Let's get you back to the pharmacy.</p>
+  <div class="actions">
+    <a href="/" class="btn">Go to Home</a>
+    <a href="/#contact" class="btn btn--outline">Contact Us</a>
+  </div>
+  <footer>
+    <p>St. Clair Drug Mart Pharmacy &nbsp;·&nbsp; 1203 St. Clair Ave W, Toronto &nbsp;·&nbsp; <a href="tel:+14166548181">(416) 654-8181</a></p>
+  </footer>
+</body>
+</html>
