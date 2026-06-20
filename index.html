@@ -162,9 +162,12 @@
       border-radius: 10px;
       box-shadow: 0 12px 32px rgba(0,60,66,.12);
       padding: .4rem;
-      min-width: 200px;
+      min-width: 210px;
       z-index: 200;
+      list-style: none;
+      margin: 0;
     }
+    .nav__dropdown li { list-style: none; }
     .nav__has-dropdown:hover .nav__dropdown,
     .nav__has-dropdown.open .nav__dropdown { display: block; }
     .nav__dropdown a {
@@ -245,7 +248,7 @@
     .hero__socials svg { width: 20px; height: 20px; fill: var(--teal-deeper); color: var(--teal-deeper); }
 
     /* ── Sections shared ──────────────────────────────── */
-    section { padding: 4rem 1.5rem; }
+    section { padding: 5rem 1.5rem; }
     .section__inner { max-width: 1100px; margin: 0 auto; }
     .section__title {
       font-family: var(--font-display);
@@ -509,87 +512,107 @@
     #contact { background: var(--teal-ice); }
     .contact__grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1.1fr;
       gap: 2.5rem;
-      margin-top: 2rem;
+      margin-top: 2.25rem;
       align-items: start;
     }
-    .contact__info { display: flex; flex-direction: column; gap: 1.15rem; }
+    .contact__info {
+      display: flex; flex-direction: column; gap: 1.25rem;
+      background: var(--white); border-radius: 16px;
+      padding: 2rem 1.75rem;
+      border: 1.5px solid #d8eef0;
+      box-shadow: 0 4px 20px rgba(0,80,90,.05);
+    }
     .contact__row { display: flex; align-items: flex-start; gap: .85rem; }
     .contact__row__icon {
-      width: 38px; height: 38px; border-radius: 50%;
-      background: var(--white); display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; font-size: 1rem; box-shadow: var(--shadow);
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--teal-ice); display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: .95rem;
     }
-    .contact__row__body h4 { font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--teal-deeper); margin-bottom: .2rem; }
+    .contact__row__body h4 { font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--teal-bright); margin-bottom: .25rem; }
     .contact__row__body p, .contact__row__body a {
-      font-size: .875rem; color: var(--text-muted); margin: 0; display: block; line-height: 1.5;
+      font-size: .875rem; color: var(--text-muted); margin: 0; display: block; line-height: 1.55;
     }
     .contact__row__body a:hover { color: var(--teal-dark); }
 
     /* Hours table */
-    .hours__table { width: 100%; border-collapse: collapse; margin-top: .5rem; }
-    .hours__table tr:hover { background: rgba(0,115,124,.04); }
-    .hours__table td { padding: .32rem .2rem; font-size: .875rem; color: var(--text-muted); }
-    .hours__table td:first-child { font-weight: 500; color: var(--text); width: 58%; }
-    .hours__table .today td { color: var(--teal-deeper); font-weight: 600; }
-    .hours__table .today td:first-child::after { content: ' ·'; }
+    .hours__table { width: 100%; border-collapse: collapse; margin-top: .6rem; }
+    .hours__table td { padding: .3rem .15rem; font-size: .84rem; color: var(--text-muted); }
+    .hours__table td:first-child { font-weight: 500; color: var(--text); width: 55%; }
+    .hours__table td:last-child { text-align: right; }
+    .hours__table .today td { color: var(--teal-deeper); font-weight: 700; }
+    .hours__table .today td:first-child { position: relative; padding-left: .9rem; }
+    .hours__table .today td:first-child::before {
+      content: ''; position: absolute; left: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 5px; height: 5px; border-radius: 50%; background: #16a34a;
+    }
 
-    /* Smart status pills */
-    .hours__status { display: flex; gap: .55rem; margin-top: .75rem; flex-wrap: wrap; align-items: center; }
-    .hours__pill {
-      display: inline-flex; align-items: center; gap: .4rem;
-      font-size: .78rem; font-weight: 600; padding: .35rem .85rem;
-      border-radius: 100px; white-space: nowrap;
+    /* Live status board */
+    .status-board { margin-top: 1rem; display: flex; flex-direction: column; gap: .4rem; }
+    .status-row {
+      display: flex; align-items: center; gap: .6rem;
+      padding: .5rem .7rem;
+      background: #fff; border-radius: 8px;
+      border: 1.5px solid #e5f4f5;
     }
-    .hours__pill::before { content: ''; width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-    .hours__pill--open { background: #dcfce7; color: #166534; }
-    .hours__pill--open::before { background: #16a34a; }
-    .hours__pill--soon { background: #fef3c7; color: #92400e; }
-    .hours__pill--soon::before { background: #d97706; }
-    .hours__pill--closed { background: #fee2e2; color: #991b1b; }
-    .hours__pill--closed::before { background: #dc2626; }
-    .hours__pill--orders { background: #d1fae5; color: #065f46; }
-    .hours__pill--orders::before { background: #059669; animation: pulse-dot 1.6s ease-in-out infinite; }
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; }
-      50% { opacity: .35; }
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
     }
+    .status-dot--open { background: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.18); animation: sb-pulse 2s ease-in-out infinite; }
+    .status-dot--soon { background: #d97706; box-shadow: 0 0 0 3px rgba(217,119,6,.18); }
+    .status-dot--closed { background: #dc2626; }
+    @keyframes sb-pulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(22,163,74,.18); }
+      50% { box-shadow: 0 0 0 5px rgba(22,163,74,.06); }
+    }
+    .status-row__label {
+      font-size: .73rem; font-weight: 700; color: var(--text);
+      min-width: 140px; flex-shrink: 0; letter-spacing: .01em;
+    }
+    .status-row__val { font-size: .73rem; color: var(--text-muted); }
+    .status-row__val--open { color: #166534; font-weight: 600; }
+    .status-row__val--soon { color: #92400e; font-weight: 600; }
+    .status-row__val--closed { color: #991b1b; }
 
     /* Map */
     .contact__map {
-      border-radius: 14px; overflow: hidden;
-      box-shadow: 0 6px 24px rgba(0,60,66,.12); height: 100%; min-height: 360px;
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,60,66,.14);
+      border: 1.5px solid #d8eef0;
+      min-height: 420px; height: 100%;
     }
-    .contact__map iframe { width: 100%; height: 100%; min-height: 360px; border: none; }
+    .contact__map iframe { width: 100%; height: 100%; min-height: 420px; border: none; }
 
     /* Parking + Transit + Languages info strip */
     .contact__info-strip {
       margin-top: 2rem; display: grid; grid-template-columns: 1fr 1fr 1fr;
-      gap: 1.25rem;
+      gap: 1rem;
     }
     .info-strip__card {
-      background: #fff; border-radius: 12px; padding: 1.1rem 1.2rem;
-      border: 1.5px solid #d4eef0;
+      background: #fff; border-radius: 14px; padding: 1.25rem 1.2rem 1.1rem;
+      border: 1.5px solid #d8eef0;
+      border-left: 3.5px solid var(--teal-bright);
+      box-shadow: 0 2px 12px rgba(0,80,90,.04);
     }
     .info-strip__title {
-      font-size: .72rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: .07em; color: var(--teal-deeper); margin-bottom: .75rem;
-      display: flex; align-items: center; gap: .45rem;
+      font-size: .68rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--teal-bright); margin-bottom: .85rem;
     }
-    .info-strip__chips { display: flex; flex-direction: column; gap: .42rem; }
+    .info-strip__chips { display: flex; flex-direction: column; gap: .5rem; }
     .info-chip {
-      display: flex; align-items: center; gap: .5rem;
-      font-size: .82rem; color: var(--text-muted); line-height: 1.35;
+      display: flex; align-items: flex-start; gap: .55rem;
+      font-size: .81rem; color: var(--text-muted); line-height: 1.45;
     }
-    .info-chip__icon { font-size: .95rem; flex-shrink: 0; width: 20px; text-align: center; }
+    .info-chip__icon { font-size: .9rem; flex-shrink: 0; width: 18px; text-align: center; margin-top: .05rem; }
     .info-chip strong { color: var(--text); font-weight: 600; }
     .info-chip a { color: var(--teal-dark); font-weight: 500; }
     @media (max-width: 768px) {
       .contact__info-strip { grid-template-columns: 1fr; }
     }
 
-    .contact__actions { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1.25rem; }
+    .contact__actions { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: .5rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
 
     /* ── About + Gallery ──────────────────────────────── */
     #about { background: var(--white); }
@@ -1930,9 +1953,22 @@
               <tr id="hours-row-6"><td>Saturday</td><td>9:00 am – 2:00 pm</td></tr>
               <tr id="hours-row-0"><td>Sunday</td><td>Closed</td></tr>
             </table>
-            <div class="hours__status" id="hours-status">
-              <span class="hours__pill hours__pill--closed" id="hours-open-pill">...</span>
-              <span class="hours__pill hours__pill--orders" id="hours-orders-pill" style="display:none">Accepting Orders</span>
+            <div class="status-board">
+              <div class="status-row">
+                <span class="status-dot" id="sb-store-dot"></span>
+                <span class="status-row__label">Pharmacy</span>
+                <span class="status-row__val" id="sb-store-val">Loading…</span>
+              </div>
+              <div class="status-row">
+                <span class="status-dot" id="sb-appt-dot"></span>
+                <span class="status-row__label">Appointments &amp; Walk-ins</span>
+                <span class="status-row__val" id="sb-appt-val">Loading…</span>
+              </div>
+              <div class="status-row">
+                <span class="status-dot" id="sb-uber-dot"></span>
+                <span class="status-row__label">Uber Eats Orders</span>
+                <span class="status-row__val" id="sb-uber-val">Loading…</span>
+              </div>
             </div>
           </div>
         </div>
@@ -2695,68 +2731,78 @@
     if (e.key === 'Escape') document.getElementById('pp-overlay').classList.remove('open');
   });
 
-  // ── Smart Hours Status ───────────────────────────────────
+  // ── Live Status Board ───────────────────────────────────
   (function(){
-    var openPill = document.getElementById('hours-open-pill');
-    var ordersPill = document.getElementById('hours-orders-pill');
-    if (!openPill) return;
-
-    // Hours: Mon-Fri rows get class today highlight
-    // hours-row-1 = Mon-Fri (JS day 1-5), hours-row-6 = Sat, hours-row-0 = Sun
     var d = new Date();
-    var day = d.getDay(); // 0=Sun, 1=Mon...6=Sat
+    var day = d.getDay(); // 0=Sun, 1-5=Mon-Fri, 6=Sat
+    var mins = d.getHours() * 60 + d.getMinutes();
+
+    // Highlight today's row
     var rowId = (day >= 1 && day <= 5) ? 'hours-row-1' : (day === 6 ? 'hours-row-6' : 'hours-row-0');
     var todayRow = document.getElementById(rowId);
     if (todayRow) todayRow.classList.add('today');
 
-    var h = d.getHours(), m = d.getMinutes();
-    var mins = h * 60 + m;
+    function fmt(m) {
+      var h = Math.floor(m / 60), mn = m % 60, ap = h >= 12 ? 'pm' : 'am';
+      if (h > 12) h -= 12; if (h === 0) h = 12;
+      return h + (mn ? ':' + String(mn).padStart(2,'0') : '') + ' ' + ap;
+    }
 
-    // Business hours in minutes from midnight
-    // Mon-Fri: 9:00-18:00, Sat: 9:00-14:00, Sun: closed
-    var open, close;
-    if (day >= 1 && day <= 5) { open = 9*60; close = 18*60; }
-    else if (day === 6) { open = 9*60; close = 14*60; }
-    else { open = -1; close = -1; }
-
-    var ordersOpen = 8*60+30, ordersClose = 18*60+30;
-
-    var isOpen = (open >= 0 && mins >= open && mins < close);
-    var closingSoon = isOpen && (close - mins) <= 30;
-
-    if (open < 0 || mins < open || mins >= close) {
-      // Closed — figure out next open
-      var nextOpenDay, nextOpenTime;
-      if (open >= 0 && mins < open) {
-        nextOpenDay = 'today'; nextOpenTime = '9:00 am';
-      } else {
-        // find next day
-        var nd = (day + 1) % 7;
-        var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-        if (nd >= 1 && nd <= 5) { nextOpenDay = days[nd]; nextOpenTime = '9:00 am'; }
-        else if (nd === 6) { nextOpenDay = 'Saturday'; nextOpenTime = '9:00 am'; }
-        else {
-          nd = 1; nextOpenDay = 'Monday'; nextOpenTime = '9:00 am';
+    function nextOpen(fromDay, openMin) {
+      var labels = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      for (var i = 1; i <= 7; i++) {
+        var nd = (fromDay + i) % 7;
+        if (nd >= 1 && nd <= 6) {
+          return 'Opens ' + (i === 1 ? 'tomorrow' : labels[nd]) + ' at ' + fmt(openMin);
         }
-        if (nd === (day + 1) % 7) nextOpenDay = 'tomorrow';
       }
-      openPill.className = 'hours__pill hours__pill--closed';
-      openPill.textContent = 'Closed · Opens ' + (nextOpenDay === 'today' ? 'today' : nextOpenDay) + ' at ' + nextOpenTime;
-    } else if (closingSoon) {
-      var minsLeft = close - mins;
-      openPill.className = 'hours__pill hours__pill--soon';
-      openPill.textContent = 'Closing in ' + minsLeft + ' min';
-    } else {
-      var closeHr = Math.floor(close/60), closeMn = close%60;
-      var closeStr = (closeHr > 12 ? closeHr-12 : closeHr) + (closeMn ? ':'+String(closeMn).padStart(2,'0') : '') + (closeHr >= 12 ? ' pm' : ' am');
-      openPill.className = 'hours__pill hours__pill--open';
-      openPill.textContent = 'Open Now · Closes at ' + closeStr;
+      return 'Opens Monday at ' + fmt(openMin);
     }
 
-    // Orders pill
-    if (mins >= ordersOpen && mins < ordersClose && day >= 1 && day <= 6) {
-      ordersPill.style.display = '';
+    function render(dotId, valId, openMin, closeMin, verb) {
+      var dot = document.getElementById(dotId);
+      var val = document.getElementById(valId);
+      if (!dot || !val) return;
+      var isOpen = openMin >= 0 && mins >= openMin && mins < closeMin;
+      var left = isOpen ? closeMin - mins : 0;
+
+      if (openMin < 0 || !isOpen) {
+        dot.className = 'status-dot status-dot--closed';
+        val.className = 'status-row__val status-row__val--closed';
+        if (openMin >= 0 && mins < openMin) {
+          val.textContent = 'Closed · Opens today at ' + fmt(openMin);
+        } else {
+          val.textContent = 'Closed · ' + nextOpen(day, openMin >= 0 ? openMin : 8*60+30);
+        }
+      } else if (left <= 30) {
+        dot.className = 'status-dot status-dot--soon';
+        val.className = 'status-row__val status-row__val--soon';
+        val.textContent = verb + ' · Closing in ' + left + ' min';
+      } else if (left <= 120) {
+        dot.className = 'status-dot status-dot--open';
+        val.className = 'status-row__val status-row__val--open';
+        var hrs = Math.floor(left/60), mn2 = left%60;
+        val.textContent = verb + ' · Closing in ' + hrs + 'h' + (mn2 ? ' ' + mn2 + 'm' : '') + ' (at ' + fmt(closeMin) + ')';
+      } else {
+        dot.className = 'status-dot status-dot--open';
+        val.className = 'status-row__val status-row__val--open';
+        val.textContent = verb + ' · Closes at ' + fmt(closeMin);
+      }
     }
+
+    // Store: Mon-Fri 9:00–18:00, Sat 9:00–14:00, Sun closed
+    var stO = -1, stC = -1;
+    if (day >= 1 && day <= 5) { stO = 9*60; stC = 18*60; }
+    else if (day === 6) { stO = 9*60; stC = 14*60; }
+
+    // Appointments/Walk-ins & Uber: Mon-Fri 8:30–18:30, Sat 8:30–15:00, Sun closed
+    var apO = -1, apC = -1;
+    if (day >= 1 && day <= 5) { apO = 8*60+30; apC = 18*60+30; }
+    else if (day === 6) { apO = 8*60+30; apC = 15*60; }
+
+    render('sb-store-dot', 'sb-store-val', stO, stC, 'Open Now');
+    render('sb-appt-dot',  'sb-appt-val',  apO, apC, 'Accepting');
+    render('sb-uber-dot',  'sb-uber-val',  apO, apC, 'Accepting Orders');
   })();
 
   // ── Service Tabs ──────────────────────────────────────────
