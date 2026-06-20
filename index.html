@@ -1356,8 +1356,7 @@
   var now = new Date();
   var launch = new Date('2026-07-01');
   if (now < launch) {
-    var days = Math.ceil((launch - now) / 86400000);
-    el.innerHTML = '🎉 <strong>Starting July 1st (' + days + ' days away):</strong> Our pharmacists can prescribe for <strong>28 common conditions</strong> — no referral needed! &nbsp;<a href="#booking">See all conditions →</a>';
+    el.innerHTML = '🎉 <strong>Starting July 1st:</strong> Our pharmacists can prescribe for <strong>28 common conditions</strong> — no referral needed! &nbsp;<a href="#booking">See all conditions →</a>';
   } else {
     el.innerHTML = '✅ Our pharmacists can prescribe for <strong>28 common conditions</strong> — no doctor\'s referral needed. &nbsp;<a href="#booking">See all conditions →</a>';
   }
