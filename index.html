@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
-  <title>St. Clair Drug Mart Pharmacy | Toronto Walk-In Pharmacy</title>
-  <meta name="description" content="Independent Toronto pharmacy on St. Clair West — walk-ins welcome, online appointments, vaccines, free prescription delivery & pharmacist care for 28 common conditions. Call (416) 654-8181." />
-  <meta name="keywords" content="pharmacy Toronto, St. Clair West pharmacy, walk-in pharmacy Toronto, pharmacy near me, minor ailments pharmacy, prescription refill Toronto, flu shot Toronto, vaccines pharmacy, medication review, blister packs, UTI treatment pharmacist, independent pharmacy Toronto, pharmacy 1203 St Clair Ave W" />
+  <title>St. Clair Drug Mart | Clinical Pharmacy &amp; Walk-In Pharmacy Toronto</title>
+  <meta name="description" content="Clinical pharmacy on St. Clair West, Toronto — walk-ins welcome, no appointment needed. Vaccines, prescriptions, minor ailments, medication reviews &amp; free delivery. Skip the walk-in clinic — call (416) 654-8181." />
+  <meta name="keywords" content="clinical pharmacy Toronto, walk-in clinic pharmacy Toronto, pharmacy clinic Toronto, St. Clair West pharmacy, walk-in pharmacy Toronto, pharmacy near me, minor ailments pharmacy, prescription refill Toronto, flu shot Toronto, vaccines pharmacy, medication review, blister packs, UTI treatment pharmacist, independent pharmacy Toronto, pharmacy 1203 St Clair Ave W" />
   <meta name="author" content="St. Clair Drug Mart Pharmacy" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="theme-color" content="#00737c" />
@@ -25,7 +25,7 @@
   <meta property="og:site_name"   content="St. Clair Drug Mart Pharmacy" />
   <meta property="og:locale"      content="en_CA" />
   <meta property="og:url"         content="https://www.stclairdrugmart.ca/" />
-  <meta property="og:title"       content="St. Clair Drug Mart Pharmacy | Toronto Walk-In Pharmacy" />
+  <meta property="og:title"       content="St. Clair Drug Mart | Clinical Pharmacy &amp; Walk-In Toronto" />
   <meta property="og:description" content="Your neighbourhood pharmacy on St. Clair West — walk-ins welcome, online appointments, vaccines, free Rx delivery & pharmacist care for 28 common conditions." />
   <meta property="og:image"       content="https://www.stclairdrugmart.ca/storefront_new_1.webp" />
   <meta property="og:image:alt"   content="St. Clair Drug Mart Pharmacy storefront at 1203 St. Clair Ave W, Toronto" />
@@ -37,7 +37,7 @@
   <meta property="business:contact_data:phone_number" content="+1-416-654-8181" />
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:site"        content="@stclairdrugmart" />
-  <meta name="twitter:title"       content="St. Clair Drug Mart Pharmacy | Toronto Walk-In Pharmacy" />
+  <meta name="twitter:title"       content="St. Clair Drug Mart | Clinical Pharmacy &amp; Walk-In Toronto" />
   <meta name="twitter:description" content="Your neighbourhood pharmacy on St. Clair West — walk-ins welcome, online appointments, vaccines, free Rx delivery & pharmacist care for 28 common conditions." />
   <meta name="twitter:image"       content="https://www.stclairdrugmart.ca/storefront_new_1.webp" />
   <script type="application/ld+json">
@@ -51,7 +51,7 @@
     "url": "https://www.stclairdrugmart.ca/",
     "logo": "https://www.stclairdrugmart.ca/logo.png",
     "image": "https://www.stclairdrugmart.ca/storefront_new_1.webp",
-    "description": "Independent full-service community pharmacy at 1203 St. Clair Avenue West, Toronto, ON. Walk-ins welcome. Prescriptions, free delivery, vaccines, blister packs, medication reviews, and pharmacist assessment and prescribing for 28 common minor ailments.",
+    "description": "Clinical pharmacy and walk-in pharmacy at 1203 St. Clair Avenue West, Toronto, ON. Walk-ins welcome — no appointment needed. Prescriptions, free delivery, vaccines, blister packs, medication reviews, and clinical pharmacist assessment and prescribing for 28 minor ailments.",
     "telephone": "+14166548181",
     "email": "stclairdrugmart@gmail.com",
     "address": {
@@ -355,19 +355,6 @@
     .hero__status .status-row__val--open  { color: #166534; font-weight: 600; }
     .hero__status .status-row__val--soon  { color: #92400e; font-weight: 600; }
     .hero__status .status-row__val--closed { color: #991b1b; font-weight: 400; }
-    @media (max-width: 420px) {
-      .hero__status .status-row {
-        border-radius: 10px;
-        flex-wrap: wrap;
-        padding: .55rem .85rem;
-        row-gap: .2rem;
-      }
-      .hero__status .status-row__val {
-        flex-basis: 100%;
-        padding-left: 22px;
-      }
-      .hero__status .status-row__val::before { display: none; }
-    }
     /* ── Hours status pills (contact section) — same pill style as hero ── */
     .hours__status { margin-top: .85rem; gap: .5rem; }
     .hours__status .status-row {
@@ -387,20 +374,6 @@
     .hours__status .status-row__val--open  { color: #166534; font-weight: 600; }
     .hours__status .status-row__val--soon  { color: #92400e; font-weight: 600; }
     .hours__status .status-row__val--closed { color: #991b1b; font-weight: 400; }
-    @media (max-width: 560px) {
-      .hours__status .status-row {
-        border-radius: 10px;
-        flex-wrap: wrap;
-        padding: .55rem .85rem;
-        row-gap: .2rem;
-      }
-      .hours__status .status-row__val {
-        flex-basis: 100%;
-        padding-left: 22px;
-        font-size: .78rem;
-      }
-      .hours__status .status-row__val::before { display: none; }
-    }
 
     /* ── Sections shared ──────────────────────────────── */
     section { padding: 5rem 1.5rem; }
@@ -1680,12 +1653,13 @@
   <!-- Live status board -->
   <div class="hero__status">
     <div class="status-board">
-      <div class="status-row">
+      <a class="status-row" href="tel:+14166548181" style="text-decoration:none;">
         <span class="status-dot" data-sb-dot="store"></span>
         <span class="status-row__label">Pharmacy</span>
         <span class="status-row__val" data-sb-val="store">Loading…</span>
-      </div>
-      <a class="status-row" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" style="text-decoration:none;cursor:pointer;">
+        <span style="font-size:.65rem;opacity:.4;flex-shrink:0;">📞</span>
+      </a>
+      <a class="status-row" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" style="text-decoration:none;">
         <span class="status-dot" data-sb-dot="uber"></span>
         <span class="status-row__label">Uber Orders</span>
         <span class="status-row__val" data-sb-val="uber">Loading…</span>
@@ -1708,8 +1682,8 @@
         </p>
         <p>
           From prescription dispensing and blister packaging to travel vaccines, medication reviews,
-          and assessments and prescribing for many common conditions, our licensed pharmacists are
-          here to make sure you get the right care without the wait.
+          and assessments and prescribing for many common conditions, our clinical pharmacists are
+          here to make sure you get the right care without the wait — no walk-in clinic required.
         </p>
         <p>
           Walk in, call us at <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">(416) 654-8181</a>,
@@ -1949,7 +1923,7 @@
 
       <!-- TAB: Minor Ailments -->
       <div class="svc-tab__panel" data-panel="ailments">
-        <p class="section__lead" style="margin-bottom:1.5rem;">Our pharmacist can assess your condition and prescribe treatment on the spot — no doctor's appointment, no referral, no waiting. Walk in or start your online assessment.</p>
+        <p class="section__lead" style="margin-bottom:1.5rem;">Our clinical pharmacists can assess your condition and prescribe treatment on the spot — no doctor's appointment, no walk-in clinic, no referral, no waiting. Walk in or start your online assessment.</p>
         <div class="ailments-grid">
           <div class="ailment-card">
             <div class="ailment-card__icon">💊</div>
@@ -2430,12 +2404,13 @@ window.FAQS = [
               <tr id="hours-row-0"><td>Sunday</td><td>Closed</td></tr>
             </table>
             <div class="status-board hours__status">
-              <div class="status-row">
+              <a class="status-row" href="tel:+14166548181" style="text-decoration:none;">
                 <span class="status-dot" data-sb-dot="store"></span>
                 <span class="status-row__label">Pharmacy</span>
                 <span class="status-row__val" data-sb-val="store">Loading…</span>
-              </div>
-              <a class="status-row" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" style="text-decoration:none;cursor:pointer;">
+                <span style="font-size:.65rem;opacity:.4;flex-shrink:0;">📞</span>
+              </a>
+              <a class="status-row" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" style="text-decoration:none;">
                 <span class="status-dot" data-sb-dot="uber"></span>
                 <span class="status-row__label">Uber Orders</span>
                 <span class="status-row__val" data-sb-val="uber">Loading…</span>
@@ -3334,7 +3309,7 @@ window.FAQS = [
         dotClass = 'status-dot status-dot--open';
         valClass = 'status-row__val status-row__val--open';
         var hrs = Math.floor(left/60), mn2 = left%60;
-        text = verb + ' · Closing in ' + hrs + 'h' + (mn2 ? ' ' + mn2 + 'm' : '') + ' (at ' + fmt(closeMin) + ')';
+        text = verb + ' · Closes at ' + fmt(closeMin);
       } else {
         dotClass = 'status-dot status-dot--open';
         valClass = 'status-row__val status-row__val--open';
