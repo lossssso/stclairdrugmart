@@ -693,7 +693,10 @@
     @media (max-width: 680px) { .shop__cards { grid-template-columns: 1fr; } }
 
     /* ── Contact ──────────────────────────────────────── */
-    #contact { background: var(--teal-ice); }
+    #contact { background: var(--teal-deeper); }
+    #contact .section__title { color: #fff; }
+    #contact .section__title::after { background: var(--teal-bright); }
+    #contact .section__lead { color: rgba(255,255,255,.75); }
     .contact__grid {
       display: grid;
       grid-template-columns: 1fr 1.1fr;
@@ -773,8 +776,8 @@
     /* Map */
     .contact__map {
       border-radius: 16px; overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0,60,66,.14);
-      border: 1.5px solid #d8eef0;
+      box-shadow: 0 8px 32px rgba(0,0,0,.25);
+      border: 1.5px solid rgba(255,255,255,.15);
       min-height: 420px; height: 100%;
     }
     .contact__map iframe { width: 100%; height: 100%; min-height: 420px; border: none; }
@@ -785,16 +788,20 @@
       gap: 1rem;
     }
     .info-strip__card--wide { grid-column: 1 / -1; }
-    .transit__body {
-      display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: flex-start;
-    }
-    .transit__routes { flex: 1; min-width: 240px; }
-    .transit__cta    { flex: 1; min-width: 260px; display: flex; flex-direction: column; gap: .5rem; }
+    .transit-address { display:flex; align-items:flex-start; gap:.6rem; font-size:.875rem; color:var(--text); margin-bottom:1rem; }
+    .transit-address__pin { font-size:1rem; flex-shrink:0; }
+    .transit-routes { display:flex; flex-direction:column; gap:.75rem; }
+    .transit-route { display:flex; align-items:flex-start; gap:.85rem; }
+    .transit-route__dot { width:13px; height:13px; border-radius:50%; flex-shrink:0; margin-top:.28rem; }
+    .transit-route__line { font-size:.85rem; font-weight:700; color:var(--text); }
+    .transit-route__step { font-size:.78rem; color:var(--text-muted); margin-top:.18rem; line-height:1.4; }
+    .transit-btn { display:block; width:100%; text-align:center; margin-top:1.4rem; padding:.8rem 1.25rem; font-size:.9rem; border-radius:100px; background:var(--teal-dark); color:#fff; font-weight:700; text-decoration:none; transition:background .15s, transform .15s; }
+    .transit-btn:hover { background:var(--teal-deeper); transform:translateY(-1px); }
     .info-strip__card {
       background: #fff; border-radius: 14px; padding: 1.25rem 1.2rem 1.1rem;
-      border: 1.5px solid #d8eef0;
+      border: 1.5px solid rgba(255,255,255,.12);
       border-left: 3.5px solid var(--teal-bright);
-      box-shadow: 0 2px 12px rgba(0,80,90,.04);
+      box-shadow: 0 4px 20px rgba(0,0,0,.18);
     }
     .info-strip__title {
       font-size: .68rem; font-weight: 800; text-transform: uppercase;
@@ -918,6 +925,8 @@
       .welcome__grid,
       .contact__grid,
       .blog-grid { grid-template-columns: 1fr; }
+      .contact__map { min-height: 240px; height: 240px; }
+      .contact__map iframe { min-height: 240px; height: 240px; }
       .services__grid { grid-template-columns: 1fr 1fr; }
       .services__grid .service-card:last-child { grid-column: unset; max-width: unset; margin: 0; }
       .welcome__photo { order: -1; }
@@ -925,8 +934,6 @@
       /* reduced section padding on mobile */
       section { padding: 2.75rem 1rem; }
       .hero { padding: 2.75rem 1rem 3rem; }
-      /* prevent transit flex items from overflowing viewport */
-      .transit__cta, .transit__routes { min-width: 0; width: 100%; }
       /* collapse steps to single column */
       .steps { grid-template-columns: 1fr; }
       /* shrink staff to 3 columns */
@@ -998,8 +1005,12 @@
       margin-bottom: 1rem;
     }
     .step h3 { font-size: 1rem; font-weight: 700; color: var(--teal-deeper); margin-bottom: .5rem; }
-    .step p  { font-size: .875rem; color: var(--text-muted); line-height: 1.65; }
-    .steps__cta { text-align: center; margin-top: 2rem; }
+    .step p  { font-size: .875rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 0; }
+    .step--clickable { transition: box-shadow .15s, transform .15s; display:flex; flex-direction:column; }
+    .step--clickable:hover { box-shadow: 0 6px 24px rgba(30,107,99,.18); transform: translateY(-2px); }
+    .step__btn { display:inline-block; margin-top:1.1rem; font-size:.8rem; font-weight:700; color:var(--teal-dark); letter-spacing:.02em; }
+    .step--clickable:hover .step__btn { color: var(--teal-bright); }
+    .steps__cta { text-align: center; margin-top: 2rem; display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap; }
 
     /* ── Medication Reviews ───────────────────────── */
     #medication-reviews { background: var(--teal-ice); }
@@ -1141,62 +1152,14 @@
       gap: 1.5rem;
       margin-top: 2rem;
     }
-    .review-card {
-      background: var(--teal-ice);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      border: 1.5px solid var(--border);
-      display: flex; flex-direction: column; gap: .75rem;
-    }
-    .review-card__stars { color: #F59E0B; font-size: 1.1rem; letter-spacing: .08em; }
-    .review-card__text { font-size: .9rem; color: var(--text); line-height: 1.65; font-style: italic; flex: 1; }
-    .review-card__author { font-size: .8rem; color: var(--text-muted); font-weight: 600; }
     .reviews__cta { text-align: center; margin-top: 2rem; }
-
-    /* ── Reviews carousel ─────────────────────────── */
     .reviews-rating {
       display: flex; align-items: center; justify-content: center; gap: .5rem;
       margin-top: 1.5rem; font-size: .9rem; color: var(--text-muted);
     }
     .reviews-rating strong { color: var(--teal-deeper); font-size: 1.05rem; }
     .reviews-rating .stars { color: #F59E0B; font-size: 1.1rem; letter-spacing: .06em; }
-    .reviews-carousel { position: relative; max-width: 720px; margin: 1.5rem auto 0; }
-    .rc-viewport { position: relative; min-height: 230px; }
-    .rc-slide {
-      position: absolute; inset: 0; opacity: 0; visibility: hidden;
-      transition: opacity .5s ease;
-      background: var(--teal-ice); border: 1.5px solid var(--border);
-      border-radius: var(--radius); padding: 2.25rem 2.5rem;
-      display: flex; flex-direction: column; justify-content: center; gap: 1rem;
-      text-align: center;
-    }
-    .rc-slide.active { opacity: 1; visibility: visible; }
-    .rc-stars { color: #F59E0B; font-size: 1.2rem; letter-spacing: .1em; }
-    .rc-text { font-size: 1.08rem; font-style: italic; line-height: 1.7; color: var(--text); }
-    .rc-author { font-size: .85rem; font-weight: 700; color: var(--teal-deeper); }
-    .rc-arrow {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      background: var(--white); border: 1.5px solid var(--border);
-      width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
-      font-size: 1.4rem; line-height: 1; color: var(--teal-dark); z-index: 2;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: var(--shadow); transition: background .15s, border-color .15s;
-    }
-    .rc-arrow:hover { background: var(--teal-ice); border-color: var(--teal-bright); }
-    .rc-arrow--prev { left: -20px; }
-    .rc-arrow--next { right: -20px; }
-    .rc-dots { display: flex; justify-content: center; gap: .5rem; margin-top: 1.25rem; }
-    .rc-dot {
-      width: 9px; height: 9px; border-radius: 50%; border: none; cursor: pointer;
-      background: var(--border); transition: background .2s, transform .2s; padding: 0;
-    }
-    .rc-dot.active { background: var(--teal-bright); transform: scale(1.3); }
-    @media (max-width: 600px) {
-      .rc-arrow--prev { left: -6px; } .rc-arrow--next { right: -6px; }
-      .rc-slide { padding: 1.75rem 1.4rem; }
-      .rc-viewport { min-height: 300px; }
-      .rc-text { font-size: 1rem; }
-    }
+    .reviews-google-link { display: flex; align-items: center; justify-content: center; gap: .75rem; margin-top: 1.25rem; flex-wrap: wrap; }
 
     /* ── Flags carousel ────────────────────────────── */
     #flags { background: var(--white); padding: 2.5rem 1.5rem; }
@@ -1436,6 +1399,7 @@
     .dc-external-link a { color: var(--teal-dark); font-weight: 600; }
     .dc-summary__status--contra   { background: rgba(254,226,226,.3); border-left: 3px solid #EF4444; }
     .dc-summary__status--moderate { background: rgba(255,237,213,.3); border-left: 3px solid #F97316; }
+    .dc-emergency-alert { background: rgba(254,226,226,.25); border: 1.5px solid #EF4444; border-radius: 8px; padding: .9rem 1rem; margin-bottom: .9rem; font-size: .83rem; line-height: 1.55; }
 
     /* ── Extra responsive ─────────────────────────── */
     @media (max-width: 900px) {
@@ -1751,24 +1715,28 @@
     <h2 class="section__title">New to Our Pharmacy?</h2>
     <p class="section__lead">Switching from another pharmacy or chain is easier than you think — we handle everything.</p>
     <div class="steps">
-      <div class="step">
+      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Start prescription transfer">
         <div class="step__num">1</div>
         <h3>Transfer Your Prescription</h3>
-        <p>Use our online transfer form below, call us at <a href="tel:+14166548181" style="color:var(--teal-dark);">(416) 654-8181</a>, or just bring your medication bottle in. We contact your current pharmacy — you don't have to do a thing.</p>
+        <p>We contact your current pharmacy for you — you don't have to do a thing. Call us, bring your bottle in, or use the online form.</p>
+        <span class="step__btn">Start Transfer →</span>
       </div>
-      <div class="step">
+      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Start prescription transfer">
         <div class="step__num">2</div>
         <h3>We Set Up Your File</h3>
-        <p>Our pharmacist reviews your full medication list, checks for interactions, and sets up your profile. Most transfers are ready the same day, with no gap in your medications.</p>
+        <p>Our pharmacist reviews your full medication list, checks for interactions, and sets up your profile. Most transfers are ready the same day.</p>
+        <span class="step__btn">Get Started →</span>
       </div>
-      <div class="step">
+      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Start prescription transfer">
         <div class="step__num">3</div>
         <h3>Pick Up &amp; Meet Us</h3>
-        <p>Come in and meet your pharmacist in person, or choose free GTA-wide delivery. No paperwork, no extra cost — just better, more personal care from your new neighbourhood pharmacy.</p>
+        <p>Come in and meet your pharmacist in person, or choose free GTA-wide delivery. No paperwork, no extra cost.</p>
+        <span class="step__btn">Transfer Now →</span>
       </div>
     </div>
     <div class="steps__cta">
       <a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667">Transfer My Prescription →</a>
+      <a href="tel:+14166548181" class="btn btn--outline">Call (416) 654-8181</a>
     </div>
   </div>
 </section>
@@ -1781,12 +1749,12 @@
 
     <!-- Row 1: primary booking actions -->
     <div class="pa-cards pa-cards--primary">
-      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1100" data-label="Book an Appointment">
+      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="2000" data-label="Book an Appointment">
         <div class="pa-card__icon">📅</div>
         <span class="pa-card__label">Book Appointment</span>
         <span class="pa-card__desc">Schedule a vaccine, consultation, or check-up</span>
       </button>
-      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1100" data-label="Minor Ailment Assessment">
+      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1600" data-label="Minor Ailment Assessment">
         <div class="pa-card__icon">🩺</div>
         <span class="pa-card__label">Common Conditions &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Pharmacist prescribing for 28 minor ailments — no referral needed</span>
@@ -1831,12 +1799,12 @@
 
     <!-- Row 2: patient account actions -->
     <div class="pa-cards pa-cards--secondary">
-      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1400" data-label="Medication Review">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="2800" data-label="Medication Review">
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review</span>
         <span class="pa-card__desc">One-on-one review of all your medications</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="1600" data-label="Medication Refill Request">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="2200" data-label="Medication Refill Request">
         <div class="pa-card__icon">🔁</div>
         <span class="pa-card__label">Refill Request</span>
         <span class="pa-card__desc">Request a prescription refill online</span>
@@ -1846,7 +1814,7 @@
         <span class="pa-card__label">Transfer Your Rx</span>
         <span class="pa-card__desc">Move your prescription to St. Clair Drug Mart</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="820" data-label="Patient Login — PharmAssess Portal">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="1000" data-label="Patient Login — PharmAssess Portal">
         <div class="pa-card__icon">🔑</div>
         <span class="pa-card__label">Patient Login</span>
         <span class="pa-card__desc">Sign in to your PharmAssess patient portal</span>
@@ -1856,7 +1824,10 @@
     <div class="pa-iframe-wrap">
       <div class="pa-iframe-label">
         <span id="pa-iframe-label-text">📅 Book an Appointment</span>
-        <button class="pa-iframe-label__close" id="pa-iframe-close" aria-label="Collapse" title="Collapse">✕</button>
+        <div style="display:flex;gap:.6rem;align-items:center;">
+          <button class="pa-iframe-label__close" id="pa-iframe-fit" aria-label="Reset height" title="Fit to content">↕</button>
+          <button class="pa-iframe-label__close" id="pa-iframe-close" aria-label="Collapse" title="Collapse">✕</button>
+        </div>
       </div>
       <iframe
         id="pa-iframe"
@@ -1928,19 +1899,19 @@
           <div class="ailment-card">
             <div class="ailment-card__icon">💊</div>
             <h3 class="ailment-card__name">Acne</h3>
-            <p class="ailment-card__desc">Topical retinoids (adapalene, tretinoin, tazarotene), topical antibiotics (clindamycin, erythromycin), benzoyl peroxide, azelaic acid — tailored to your skin type and severity.</p>
+            <p class="ailment-card__desc">Topical retinoids and topical antibiotics, benzoyl peroxide, and azelaic acid — our pharmacist tailors the right combination to your skin type and severity.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=13">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">🤧</div>
             <h3 class="ailment-card__name">Allergic Rhinitis</h3>
-            <p class="ailment-card__desc">Antihistamines (cetirizine, loratadine, fexofenadine) and/or prescription intranasal corticosteroids (fluticasone, mometasone) for hay fever and year-round nasal allergies.</p>
+            <p class="ailment-card__desc">Antihistamines and/or intranasal corticosteroid sprays for hay fever and year-round nasal allergies — pharmacist finds the right treatment for you.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=25">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">🦶</div>
             <h3 class="ailment-card__name">Athlete's Foot</h3>
-            <p class="ailment-card__desc">Topical antifungals including terbinafine 1% (most effective), clotrimazole, or miconazole — pharmacist confirms the right product, strength, and duration of treatment.</p>
+            <p class="ailment-card__desc">Topical antifungal treatment — pharmacist confirms the right product, strength, and duration.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=10">Start Assessment →</a>
           </div>
           <div class="ailment-card">
@@ -1952,139 +1923,139 @@
           <div class="ailment-card">
             <div class="ailment-card__icon">🫦</div>
             <h3 class="ailment-card__name">Canker Sores</h3>
-            <p class="ailment-card__desc">Triamcinolone acetonide paste (Orabase), benzydamine mouth rinse, chlorhexidine antiseptic rinse, or topical lidocaine to reduce pain and speed healing.</p>
+            <p class="ailment-card__desc">Topical corticosteroid paste, antiseptic mouth rinse, or numbing gel — pharmacist selects the right treatment to reduce pain and speed healing.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=6">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">💋</div>
             <h3 class="ailment-card__name">Cold Sores</h3>
-            <p class="ailment-card__desc">Oral antivirals (valacyclovir, famciclovir, acyclovir) shorten outbreaks significantly — start at the first tingle. Topical acyclovir cream or docosanol for milder cases.</p>
+            <p class="ailment-card__desc">Oral antivirals shorten outbreaks significantly — start at the first tingle for best results. Topical antiviral cream available for milder cases.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=3">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">❄️</div>
             <h3 class="ailment-card__name">Dandruff</h3>
-            <p class="ailment-card__desc">Prescription-strength ketoconazole 2% shampoo or selenium sulfide 2.5% for stubborn seborrheic dermatitis; zinc pyrithione or coal tar shampoos for milder flaking.</p>
+            <p class="ailment-card__desc">Stronger antifungal shampoo for stubborn seborrheic dermatitis; medicated shampoos for milder flaking — pharmacist recommends the right product.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=44">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">👁️</div>
             <h3 class="ailment-card__name">Dry Eye</h3>
-            <p class="ailment-card__desc">Assessment and recommendation of the right lubricating drops — carboxymethylcellulose, sodium hyaluronate, hypromellose, or carbomer gel matched to your symptoms and severity.</p>
+            <p class="ailment-card__desc">Assessment and recommendation of the right lubricating eye drops — matched to your symptoms and severity by our pharmacist.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=41">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">🖐️</div>
             <h3 class="ailment-card__name">Eczema / Dermatitis</h3>
-            <p class="ailment-card__desc">Low-to-mid potency topical corticosteroids (hydrocortisone 0.5–2.5%, clobetasone butyrate) for flare-ups, plus emollients and oral antihistamines to relieve itch.</p>
+            <p class="ailment-card__desc">Low-to-mid potency topical corticosteroids for flare-ups, plus emollients and antihistamines to relieve itch — pharmacist prescribes the right strength.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=26">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">🔥</div>
             <h3 class="ailment-card__name">Heartburn / GERD</h3>
-            <p class="ailment-card__desc">Proton pump inhibitors (omeprazole, pantoprazole, esomeprazole), H2-blockers (famotidine), or antacids — matched to your frequency and severity of symptoms.</p>
+            <p class="ailment-card__desc">Proton pump inhibitors, H2-blockers, or antacids — matched to your frequency and severity of symptoms by our pharmacist.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=24">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">🩹</div>
             <h3 class="ailment-card__name">Hemorrhoids</h3>
-            <p class="ailment-card__desc">Topical creams or suppositories combining local anesthetics (pramoxine, dibucaine), low-potency hydrocortisone, phenylephrine, and zinc sulfate for pain, itching, and swelling.</p>
+            <p class="ailment-card__desc">Topical creams or suppositories combining local anesthetics, mild corticosteroids, and decongestants for pain, itching, and swelling.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=4">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">🦠</div>
             <h3 class="ailment-card__name">Impetigo</h3>
-            <p class="ailment-card__desc">Prescription topical antibiotics — fusidic acid or mupirocin — applied directly to infected skin sores. Widespread cases are referred for physician care.</p>
+            <p class="ailment-card__desc">Topical antibiotics applied directly to infected skin sores. Widespread cases are referred for physician care.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=2">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">🐝</div>
             <h3 class="ailment-card__name">Insect Bites &amp; Stings</h3>
-            <p class="ailment-card__desc">Oral antihistamines (cetirizine, diphenhydramine, loratadine, hydroxyzine) for allergic reactions and itching; topical hydrocortisone 1% cream for localized swelling and redness.</p>
+            <p class="ailment-card__desc">Oral antihistamines for allergic reactions and itching; topical mild corticosteroid cream for localized swelling and redness.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=19">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">🏃</div>
             <h3 class="ailment-card__name">Jock Itch</h3>
-            <p class="ailment-card__desc">Topical antifungals: terbinafine 1% cream (most effective, shortest course), clotrimazole 1%, or miconazole 2% — pharmacist confirms the right choice and rules out other causes.</p>
+            <p class="ailment-card__desc">Topical antifungal cream — pharmacist confirms the right choice and rules out other causes.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=8">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">🤕</div>
             <h3 class="ailment-card__name">Mild Headache</h3>
-            <p class="ailment-card__desc">Pharmacist assesses your headache and recommends the right analgesic — acetaminophen, ibuprofen, naproxen sodium, or ASA — and screens for when a doctor is needed.</p>
+            <p class="ailment-card__desc">Pharmacist assesses your headache and recommends the right pain reliever — and screens for when a doctor is needed.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=12">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">😤</div>
             <h3 class="ailment-card__name">Nasal Congestion</h3>
-            <p class="ailment-card__desc">Decongestants (pseudoephedrine, oxymetazoline nasal spray for up to 3 days, xylometazoline), saline rinses, and intranasal steroids when allergies are contributing.</p>
+            <p class="ailment-card__desc">Decongestants, saline rinses, and intranasal steroids when allergies are contributing — pharmacist selects the right approach.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=38">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">🤢</div>
             <h3 class="ailment-card__name">Nausea in Pregnancy</h3>
-            <p class="ailment-card__desc">Doxylamine + pyridoxine (Diclectin/Bonjesta, first-line), dimenhydrinate (Gravol), promethazine, or pyridoxine (vitamin B6) alone for mild morning sickness.</p>
+            <p class="ailment-card__desc">First-line antihistamine and vitamin B6 combination for morning sickness; vitamin B6 alone for mild cases — pharmacist assesses and prescribes the right option.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=30">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">👄</div>
             <h3 class="ailment-card__name">Oral Thrush</h3>
-            <p class="ailment-card__desc">Nystatin oral suspension or lozenges (first-line) for white patches and mouth soreness; oral fluconazole for cases that don't respond to nystatin.</p>
+            <p class="ailment-card__desc">Antifungal oral suspension or lozenges for white patches and mouth soreness; stronger antifungal tablets for resistant cases.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=18">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">🩸</div>
             <h3 class="ailment-card__name">Period Pain</h3>
-            <p class="ailment-card__desc">NSAIDs (ibuprofen, naproxen, mefenamic acid, diclofenac, celecoxib) or acetaminophen — pharmacist can prescribe stronger doses or different NSAIDs when standard OTC options aren't enough.</p>
+            <p class="ailment-card__desc">NSAIDs or acetaminophen for period pain — pharmacist can prescribe stronger options when standard choices aren't enough.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=20">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">👁️</div>
             <h3 class="ailment-card__name">Pink Eye</h3>
-            <p class="ailment-card__desc">Antibiotic eye drops (tobramycin, erythromycin, fusidic acid) for bacterial pink eye; antihistamine drops (ketotifen, olopatadine) for allergic conjunctivitis. Viral cases get supportive care.</p>
+            <p class="ailment-card__desc">Antibiotic eye drops for bacterial pink eye; antihistamine drops for allergic conjunctivitis. Viral cases get supportive care.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=22">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">🪱</div>
             <h3 class="ailment-card__name">Pinworms</h3>
-            <p class="ailment-card__desc">Mebendazole (100 mg) or pyrantel pamoate — single dose, repeated in 2 weeks. Whole household treatment recommended to prevent reinfection.</p>
+            <p class="ailment-card__desc">Single-dose antiparasitic tablet, repeated in 2 weeks. Whole household treatment recommended to prevent reinfection.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=43">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">⭕</div>
             <h3 class="ailment-card__name">Ringworm</h3>
-            <p class="ailment-card__desc">Topical antifungals (terbinafine 1%, clotrimazole, miconazole) for ringworm on the skin (tinea corporis). Scalp or nail involvement requires physician referral for oral treatment.</p>
+            <p class="ailment-card__desc">Topical antifungal treatment for ringworm on the skin. Scalp or nail involvement requires physician referral for oral treatment.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=9">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">🪮</div>
             <h3 class="ailment-card__name">Head Lice</h3>
-            <p class="ailment-card__desc">Permethrin 1% (Nix, OTC first-line), malathion 0.5% lotion, or spinosad — pharmacist confirms the right treatment and how to prevent reinfection in the household. Call to ask.</p>
+            <p class="ailment-card__desc">Topical antiparasitic treatment — pharmacist confirms the right product and how to prevent reinfection in the household. Call to ask.</p>
             <a class="ailment-card__link" href="tel:+14166548181">Call Us →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">🦴</div>
             <h3 class="ailment-card__name">Sprains &amp; Strains</h3>
-            <p class="ailment-card__desc">Oral or topical NSAIDs (ibuprofen, naproxen, diclofenac gel, ketoprofen) plus acetaminophen for soft tissue pain and inflammation — pharmacist selects the right combination for you.</p>
+            <p class="ailment-card__desc">Oral or topical NSAIDs plus acetaminophen for soft tissue pain and inflammation — pharmacist selects the right combination for you.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=21">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">🕷️</div>
             <h3 class="ailment-card__name">Tick Bites</h3>
-            <p class="ailment-card__desc">Single 200 mg dose of doxycycline within 72 hours of a qualifying tick bite to prevent Lyme disease — pharmacist confirms eligibility using Ontario public health criteria.</p>
+            <p class="ailment-card__desc">Single-dose antibiotic within 72 hours of a qualifying tick bite for post-exposure prophylaxis — pharmacist confirms eligibility using Ontario public health criteria.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=49">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">💧</div>
             <h3 class="ailment-card__name">Urinary Tract Infection</h3>
-            <p class="ailment-card__desc">Antibiotics (nitrofurantoin, trimethoprim, fosfomycin, TMP-SMX) for uncomplicated UTIs in women — fast relief without needing a doctor's appointment.</p>
+            <p class="ailment-card__desc">Appropriate antibiotic treatment for eligible patients with uncomplicated UTI symptoms — fast relief without needing a doctor's appointment.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=23">Start Assessment →</a>
           </div>
           <div class="ailment-card">
             <div class="ailment-card__icon">🌸</div>
             <h3 class="ailment-card__name">Vaginal Yeast Infection</h3>
-            <p class="ailment-card__desc">Oral fluconazole (single 150 mg dose) or vaginal antifungals (clotrimazole, miconazole, terconazole cream or suppositories) — pharmacist confirms diagnosis and selects the right option.</p>
+            <p class="ailment-card__desc">Oral or topical vaginal antifungal treatment — pharmacist confirms diagnosis and selects the right option.</p>
             <a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=42">Start Assessment →</a>
           </div>
           <div class="ailment-card">
@@ -2115,7 +2086,7 @@
           <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Hepatitis A &amp; B (Twinrix)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Travellers · At-risk individuals</div><p class="vaccine-card__desc">Recommended for travel to Asia, Africa, Latin America, and the Middle East. Many benefit plans cover travel vaccines.</p></div>
           <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Typhoid</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Travellers to endemic regions</div><p class="vaccine-card__desc">Recommended for South Asia, sub-Saharan Africa, and Latin America travel. ~2–3 years of protection.</p></div>
           <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Meningococcal (ACYW)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Travellers · Students</div><p class="vaccine-card__desc">Recommended for sub-Saharan Africa travel, Hajj, and adult catch-up.</p></div>
-          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">HPV (Gardasil 9)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Adult catch-up · Up to age 45</div><p class="vaccine-card__desc">Protects against 9 HPV strains linked to cancers and genital warts. Many extended health plans cover this series.</p></div>
+          <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">HPV (Gardasil 9)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Adult catch-up · Up to age 45</div><p class="vaccine-card__desc">Authorized by Health Canada for protection against 9 HPV strains associated with certain cancers and genital warts. Many extended health plans cover this series.</p></div>
         </div>
         <p style="text-align:center;margin-bottom:.75rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667">Book a Vaccine Appointment</a></p>
         <p style="font-size:.74rem;color:var(--text-muted);text-align:center;">Publicly funded vaccines require a valid Ontario health card. Eligibility criteria apply. Call (416) 654-8181 for current stock.</p>
@@ -2148,7 +2119,7 @@
             <p class="dc-summary__hint">Add your medications on the left, then click <strong>Check Interactions</strong> to see a summary here.</p>
             <div id="dc-summary-body" class="dc-summary__body"></div>
             <div class="dc-summary__cta" id="dc-summary-cta" style="display:none">
-              <p>We recommend booking a <strong>Medication Review</strong> with our pharmacists — it's free and covered by OHIP.</p>
+              <p>We recommend booking a <strong>Medication Review</strong> with our pharmacists — it's covered for eligible Ontario residents through the provincial drug benefit program.</p>
               <a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/patient/meds/306667">Book a Medication Review →</a>
               <div class="dc-pharmacist" style="margin-top:.85rem;">Or call us: <a href="tel:+14166548181">(416) 654-8181</a></div>
             </div>
@@ -2184,17 +2155,9 @@
       <span><strong>4.9</strong> out of 5 on Google</span>
     </div>
 
-    <div class="reviews-carousel">
-      <button class="rc-arrow rc-arrow--prev" aria-label="Previous review">‹</button>
-      <div class="rc-viewport">
-        <div class="rc-track" id="rc-track"><!-- slides injected by JS --></div>
-      </div>
-      <button class="rc-arrow rc-arrow--next" aria-label="Next review">›</button>
-    </div>
-    <div class="rc-dots" id="rc-dots"></div>
-
-    <div class="reviews__cta">
-      <a href="https://www.google.com/search?q=St+Clair+Drug+Mart+Pharmacy+Toronto+reviews" target="_blank" rel="noopener" class="btn btn--outline">⭐ Leave Us a Google Review</a>
+    <div class="reviews-google-link">
+      <a href="https://www.google.com/search?q=St+Clair+Drug+Mart+Pharmacy+Toronto+reviews" target="_blank" rel="noopener" class="btn btn--outline">Read Our Google Reviews →</a>
+      <a href="https://www.google.com/search?q=St+Clair+Drug+Mart+Pharmacy+Toronto+reviews" target="_blank" rel="noopener" class="btn">Leave Us a Review ⭐</a>
     </div>
   </div>
 </section>
@@ -2461,32 +2424,34 @@ window.FAQS = [
       <!-- Transit — full width -->
       <div class="info-strip__card info-strip__card--wide">
         <div class="info-strip__title">🚇 Getting Here by Transit</div>
-        <p style="font-size:.8rem;color:var(--text-muted);margin:.1rem 0 .9rem;"><strong>TTC</strong> (Toronto Transit Commission) is Toronto's public transit network — subways, streetcars, and buses. The map below shows where we are relative to the lines.</p>
-        <div class="transit__body">
-          <div class="transit__routes info-strip__chips">
-            <div class="info-chip"><span class="info-chip__icon">🟡</span><span>Take <strong>Line 1 (Yellow)</strong> to <strong>St. Clair West Station</strong>, then board the <strong>512 St. Clair streetcar</strong> westbound — exit at Dufferin &amp; St. Clair</span></div>
-            <div class="info-chip"><span class="info-chip__icon">🟢</span><span>Take <strong>Line 2 (Green)</strong> to <strong>Dufferin Station</strong>, then board the <strong>29 / 929 Dufferin bus</strong> northbound — exit at St. Clair &amp; Dufferin</span></div>
-            <div class="info-chip"><span class="info-chip__icon">🟠</span><span>Take <strong>Line 5 Eglinton Crosstown</strong> to <strong>Dufferin Station</strong> (Eglinton &amp; Dufferin), then board the <strong>29 / 929 Dufferin bus</strong> southbound to St. Clair &amp; Dufferin</span></div>
-            <div class="info-chip"><span class="info-chip__icon">📍</span><span>We're at <strong>1203 St. Clair Ave W</strong> — corner of St. Clair &amp; Dufferin</span></div>
-            <div style="margin-top:.5rem;display:flex;gap:.6rem;flex-wrap:wrap;">
-              <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=transit" target="_blank" rel="noopener" style="font-size:.8rem;padding:.5rem .9rem;">🗺️ Plan My Route →</a>
-              <a class="btn btn--outline" href="https://www.ttc.ca/routes-and-schedules/maps" target="_blank" rel="noopener" style="font-size:.8rem;padding:.5rem .9rem;">TTC System Map →</a>
+        <div class="transit-address">
+          <span class="transit-address__pin">📍</span>
+          <span><strong>1203 St. Clair Ave W</strong> — corner of St. Clair &amp; Dufferin, Toronto</span>
+        </div>
+        <div class="transit-routes">
+          <div class="transit-route">
+            <div class="transit-route__dot" style="background:#F5A623;"></div>
+            <div>
+              <div class="transit-route__line">Line 1 (Yellow) → St. Clair West Station</div>
+              <div class="transit-route__step">Board the <strong>512 St. Clair</strong> streetcar westbound — exit at Dufferin</div>
             </div>
           </div>
-          <div class="transit__cta">
-            <a href="https://www.ttc.ca/routes-and-schedules/maps" target="_blank" rel="noopener" title="View full TTC System Map">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/TTC_subway_system_map.svg/1200px-TTC_subway_system_map.svg.png"
-                alt="TTC Subway System Map — Toronto Transit Commission"
-                style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);display:block;"
-                loading="lazy"
-                decoding="async"
-                onerror="this.closest('.transit__cta').innerHTML='<a class=\'btn\' href=\'https://www.ttc.ca/routes-and-schedules/maps\' target=\'_blank\' rel=\'noopener\'>View TTC System Map on ttc.ca →</a>'"
-              />
-            </a>
-            <p style="font-size:.72rem;color:var(--text-muted);margin:.4rem 0 0;text-align:center;">Source: TTC / Wikimedia Commons · <a href="https://www.ttc.ca/routes-and-schedules/maps" target="_blank" rel="noopener" style="color:var(--teal-dark);">ttc.ca</a></p>
+          <div class="transit-route">
+            <div class="transit-route__dot" style="background:#008C4A;"></div>
+            <div>
+              <div class="transit-route__line">Line 2 (Green) → Dufferin Station</div>
+              <div class="transit-route__step">Board the <strong>29 / 929 Dufferin</strong> bus northbound — exit at St. Clair</div>
+            </div>
+          </div>
+          <div class="transit-route">
+            <div class="transit-route__dot" style="background:#F5821F;"></div>
+            <div>
+              <div class="transit-route__line">Line 5 Eglinton → Dufferin Station</div>
+              <div class="transit-route__step">Board the <strong>29 / 929 Dufferin</strong> bus northbound — exit at St. Clair</div>
+            </div>
           </div>
         </div>
+        <a class="transit-btn" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=transit" target="_blank" rel="noopener">🗺️ Get Transit Directions on Google Maps →</a>
       </div>
     </div>
 
@@ -2676,18 +2641,16 @@ window.FAQS = [
     }
   })();
 
-  // Auto-resize from PharmAssess postMessage events
-  window.addEventListener('message', function(e) {
-    if (!e.origin.includes('pharmassess.ca')) return;
-    var d = e.data;
-    var h = (d && (d.height || d.iframeHeight || d.frameHeight));
-    if (h && +h > 200) paIframe.style.height = (+h + 40) + 'px';
-  });
-
   // Close/collapse button
   document.getElementById('pa-iframe-close').addEventListener('click', function() {
     paWrap.style.display = paWrap.style.display === 'none' ? '' : 'none';
     this.textContent = paWrap.style.display === 'none' ? '▼' : '✕';
+  });
+
+  // Fit/reset button — snaps iframe back to the active card's fallback height
+  document.getElementById('pa-iframe-fit').addEventListener('click', function() {
+    var active = document.querySelector('.pa-card.active');
+    if (active) paIframe.style.height = (active.dataset.iframeheight || '1600') + 'px';
   });
 
   function switchPaTab(card) {
@@ -2742,14 +2705,25 @@ window.FAQS = [
     });
   });
 
-  // Auto-resize iframe if PharmAssess emits a postMessage with the page height
+  // Auto-resize iframe from PharmAssess postMessage — catches expand AND collapse
   window.addEventListener('message', function(e) {
-    if (!e.origin.includes('pharmassess.ca')) return;
-    var d = e.data;
-    var h = (typeof d === 'object' && d !== null)
-      ? (d.height || d.frameHeight || d.iframeHeight || null)
-      : (typeof d === 'number' ? d : null);
-    if (h && h > 100) paIframe.style.height = h + 'px';
+    try {
+      if (!String(e.origin).includes('pharmassess')) return;
+      var d = e.data, h = null;
+      if (typeof d === 'number') {
+        h = d;
+      } else if (typeof d === 'string') {
+        var n = parseFloat(d);
+        if (!isNaN(n) && n > 0) h = n;
+      } else if (d && typeof d === 'object') {
+        h = d.height || d.iframeHeight || d.frameHeight ||
+            d.scrollHeight || d.contentHeight || d.documentHeight ||
+            d.bodyHeight || d.value ||
+            (d.data && d.data.height) ||
+            (d.size && typeof d.size === 'number' ? d.size : null) || null;
+      }
+      if (h && +h > 50) paIframe.style.height = Math.round(+h) + 'px';
+    } catch (_) {}
   });
 
   // Buttons elsewhere that jump to booking and pre-select a service tab
@@ -2761,64 +2735,6 @@ window.FAQS = [
     });
   });
 
-  // ── Patient reviews carousel ──
-  // To update: replace the text/author below with your exact Google reviews.
-  (function () {
-    const track = document.getElementById('rc-track');
-    if (!track) return;
-    const reviews = [
-      { stars: 5, text: "Exceptional service and fairer prices than big chain pharmacies. Elizabeth and her staff are knowledgeable and the absolute sweetest. They always make sure to go above and beyond serving patients.", author: "— Allana, Google review" },
-      { stars: 5, text: "Elizabeth truly cares about people and that's what makes this pharmacy so special! She goes above and beyond to help. She is what I look for in a pharmacist — someone I feel comfortable to speak with, who is knowledgeable, and actually cares!", author: "— Raechel L., Google review" },
-      { stars: 5, text: "The nicest staff and best service in the city. I have other pharmacies closer to me but I go out of my way to use this one.", author: "— Patrick C., Google review" },
-      { stars: 5, text: "Very clean, organized and the pharmacist is so caring and personal. She knows you when you walk in the door. We are seniors and feel so well taken care of.", author: "— Anna L., Google review" },
-      { stars: 5, text: "If you are looking for high quality care and advice from your pharmacist, then this is your place. Elizabeth is one of the best health care professionals I've ever met.", author: "— Greg M., Google review" },
-      { stars: 5, text: "This is the best pharmacy I've ever been to. All the staff are kind and friendly. Elizabeth is so sweet and helpful, and she speaks a couple different languages which is very helpful too.", author: "— Tammy K., Google review" },
-      { stars: 5, text: "You can go to any pharmacy and they will give you your meds, but they will not care about you the way this pharmacy does. The staff always go above and beyond, putting the customer's needs first. Highly recommended to anyone in the area!", author: "— KT, Google review" },
-      { stars: 5, text: "Awesome staff! The pharmacist is very helpful, friendly, knowledgeable and caring — even right at closing time. Had a great talk there too. Very nice service and you'll feel right at home!", author: "— Ben T., Google review" },
-      { stars: 5, text: "The pharmacist was an angel. She waited 15–20 minutes after closing so I could pick up an eye prescription I needed urgently — something no other pharmacist would do.", author: "— Matthew G., Google review" },
-      { stars: 5, text: "Changing to this pharmacy was the best decision I ever made! Everyone here is extremely friendly and helpful, and the pharmacy itself is clean and fully stocked.", author: "— ty, Google review" },
-      { stars: 5, text: "Elizabeth is the sweetest, nicest and most helpful pharmacist I've ever met! Highly recommend — you won't need any other pharmacy.", author: "— Reza N., Google review" }
-    ];
-    const dotsWrap = document.getElementById('rc-dots');
-    let idx = 0, timer;
-
-    reviews.forEach((r, i) => {
-      const slide = document.createElement('div');
-      slide.className = 'rc-slide' + (i === 0 ? ' active' : '');
-      const stars = document.createElement('div');
-      stars.className = 'rc-stars';
-      stars.textContent = '★'.repeat(r.stars);
-      const text = document.createElement('p');
-      text.className = 'rc-text';
-      text.textContent = '“' + r.text + '”';
-      const author = document.createElement('p');
-      author.className = 'rc-author';
-      author.textContent = r.author;
-      slide.appendChild(stars); slide.appendChild(text); slide.appendChild(author);
-      track.appendChild(slide);
-
-      const dot = document.createElement('button');
-      dot.className = 'rc-dot' + (i === 0 ? ' active' : '');
-      dot.setAttribute('aria-label', 'Show review ' + (i + 1));
-      dot.addEventListener('click', () => go(i));
-      dotsWrap.appendChild(dot);
-    });
-
-    const slides = track.querySelectorAll('.rc-slide');
-    const dots = dotsWrap.querySelectorAll('.rc-dot');
-
-    function go(n) {
-      slides[idx].classList.remove('active'); dots[idx].classList.remove('active');
-      idx = (n + slides.length) % slides.length;
-      slides[idx].classList.add('active'); dots[idx].classList.add('active');
-      restart();
-    }
-    function restart() { clearInterval(timer); timer = setInterval(() => go(idx + 1), 5500); }
-
-    document.querySelector('.rc-arrow--prev').addEventListener('click', () => go(idx - 1));
-    document.querySelector('.rc-arrow--next').addEventListener('click', () => go(idx + 1));
-    restart();
-  })();
 
   // ── Drug Interaction Checker ──
   (function () {
@@ -3181,6 +3097,15 @@ window.FAQS = [
         if (major)  html += `<strong>${major} major</strong> interaction${major>1?'s':''} detected. `;
         if (mod)    html += `<strong>${mod} moderate</strong> interaction${mod>1?'s':''} detected. `;
         html += `<br><br>A Medication Review with our pharmacist is strongly recommended.</div>`;
+        if (contra > 0) {
+          sc.innerHTML = `<div class="dc-emergency-alert"><strong>⚠️ If you are currently taking both of these medications, contact your pharmacist or physician immediately.</strong> If you are experiencing symptoms, call 911 or go to the nearest emergency department.</div>
+            <a href="tel:+14166548181" class="btn" style="width:100%;text-align:center;margin-top:.75rem;">Call Our Pharmacist: (416) 654-8181</a>
+            <div class="dc-pharmacist" style="margin-top:.85rem;">Or <a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/patient/meds/306667">book an urgent medication review</a></div>`;
+        } else {
+          sc.innerHTML = `<p>We recommend booking a <strong>Medication Review</strong> with our pharmacists — it's covered for eligible Ontario residents through the provincial drug benefit program.</p>
+            <a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/patient/meds/306667">Book a Medication Review →</a>
+            <div class="dc-pharmacist" style="margin-top:.85rem;">Or call us: <a href="tel:+14166548181">(416) 654-8181</a></div>`;
+        }
         showCta = true;
       }
       sb.innerHTML = html;
@@ -3222,7 +3147,7 @@ window.FAQS = [
     <p>Collection, use, and disclosure of PHI is governed by PHIPA (Ontario) and, where applicable, the <em>Personal Information Protection and Electronic Documents Act</em> (PIPEDA). We comply with Ontario College of Pharmacists standards for patient record retention and confidentiality.</p>
 
     <h3>6. Third-Party Platforms</h3>
-    <p><strong>PharmAssess:</strong> Online booking, refill requests, prescription transfers, and minor ailment assessments are processed through PharmAssess (Kroll Computer Systems Inc.), a secure pharmacy software platform. Information you submit through the PharmAssess portal is subject to their privacy policy. St. Clair Drug Mart Pharmacy is not responsible for the privacy practices of PharmAssess.</p>
+    <p><strong>PharmAssess:</strong> Online booking, refill requests, prescription transfers, and minor ailment assessments are processed through PharmAssess (Kroll Computer Systems Inc.), a secure pharmacy software platform. PharmAssess acts as a service provider to our pharmacy. As your health information custodian under PHIPA, St. Clair Drug Mart Pharmacy remains accountable for the protection of your personal health information. Contact us at (416) 654-8181 or <a href="mailto:stclairdrugmart@gmail.com">stclairdrugmart@gmail.com</a> with any privacy questions or concerns.</p>
     <p><strong>NLM RxNav:</strong> The Drug Interaction Checker sends anonymous drug names only to the U.S. National Library of Medicine public API. No identifying information is transmitted.</p>
 
     <h3>7. Disclosure</h3>
