@@ -693,7 +693,10 @@
     @media (max-width: 680px) { .shop__cards { grid-template-columns: 1fr; } }
 
     /* ── Contact ──────────────────────────────────────── */
-    #contact { background: var(--teal-ice); }
+    #contact { background: var(--teal-deeper); }
+    #contact .section__title { color: #fff; }
+    #contact .section__title::after { background: var(--teal-bright); }
+    #contact .section__lead { color: rgba(255,255,255,.75); }
     .contact__grid {
       display: grid;
       grid-template-columns: 1fr 1.1fr;
@@ -773,8 +776,8 @@
     /* Map */
     .contact__map {
       border-radius: 16px; overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0,60,66,.14);
-      border: 1.5px solid #d8eef0;
+      box-shadow: 0 8px 32px rgba(0,0,0,.25);
+      border: 1.5px solid rgba(255,255,255,.15);
       min-height: 420px; height: 100%;
     }
     .contact__map iframe { width: 100%; height: 100%; min-height: 420px; border: none; }
@@ -785,16 +788,15 @@
       gap: 1rem;
     }
     .info-strip__card--wide { grid-column: 1 / -1; }
-    .transit__body {
-      display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: flex-start;
-    }
-    .transit__routes { flex: 1; min-width: 240px; }
-    .transit__cta    { flex: 1; min-width: 260px; display: flex; flex-direction: column; gap: .5rem; }
+    .transit__map-wrap { border-radius: 10px; overflow: hidden; border: 1.5px solid var(--border); margin-top: .5rem; }
+    .transit__map-wrap iframe { display: block; width: 100%; height: 260px; border: none; }
+    .transit__map-credit { font-size: .7rem; color: var(--text-muted); padding: .3rem .6rem; }
+    .transit__map-credit a { color: var(--teal-dark); }
     .info-strip__card {
       background: #fff; border-radius: 14px; padding: 1.25rem 1.2rem 1.1rem;
-      border: 1.5px solid #d8eef0;
+      border: 1.5px solid rgba(255,255,255,.12);
       border-left: 3.5px solid var(--teal-bright);
-      box-shadow: 0 2px 12px rgba(0,80,90,.04);
+      box-shadow: 0 4px 20px rgba(0,0,0,.18);
     }
     .info-strip__title {
       font-size: .68rem; font-weight: 800; text-transform: uppercase;
@@ -918,6 +920,8 @@
       .welcome__grid,
       .contact__grid,
       .blog-grid { grid-template-columns: 1fr; }
+      .contact__map { min-height: 240px; height: 240px; }
+      .contact__map iframe { min-height: 240px; height: 240px; }
       .services__grid { grid-template-columns: 1fr 1fr; }
       .services__grid .service-card:last-child { grid-column: unset; max-width: unset; margin: 0; }
       .welcome__photo { order: -1; }
@@ -925,8 +929,8 @@
       /* reduced section padding on mobile */
       section { padding: 2.75rem 1rem; }
       .hero { padding: 2.75rem 1rem 3rem; }
-      /* prevent transit flex items from overflowing viewport */
-      .transit__cta, .transit__routes { min-width: 0; width: 100%; }
+      /* transit map: slightly shorter on mobile */
+      .transit__map-wrap iframe { height: 200px; }
       /* collapse steps to single column */
       .steps { grid-template-columns: 1fr; }
       /* shrink staff to 3 columns */
@@ -2406,32 +2410,22 @@ window.FAQS = [
       <!-- Transit — full width -->
       <div class="info-strip__card info-strip__card--wide">
         <div class="info-strip__title">🚇 Getting Here by Transit</div>
-        <p style="font-size:.8rem;color:var(--text-muted);margin:.1rem 0 .9rem;"><strong>TTC</strong> (Toronto Transit Commission) is Toronto's public transit network — subways, streetcars, and buses. The map below shows where we are relative to the lines.</p>
-        <div class="transit__body">
-          <div class="transit__routes info-strip__chips">
-            <div class="info-chip"><span class="info-chip__icon">🟡</span><span>Take <strong>Line 1 (Yellow)</strong> to <strong>St. Clair West Station</strong>, then board the <strong>512 St. Clair streetcar</strong> westbound — exit at Dufferin &amp; St. Clair</span></div>
-            <div class="info-chip"><span class="info-chip__icon">🟢</span><span>Take <strong>Line 2 (Green)</strong> to <strong>Dufferin Station</strong>, then board the <strong>29 / 929 Dufferin bus</strong> northbound — exit at St. Clair &amp; Dufferin</span></div>
-            <div class="info-chip"><span class="info-chip__icon">🟠</span><span>Take <strong>Line 5 Eglinton Crosstown</strong> to <strong>Dufferin Station</strong> (Eglinton &amp; Dufferin), then board the <strong>29 / 929 Dufferin bus</strong> southbound to St. Clair &amp; Dufferin</span></div>
-            <div class="info-chip"><span class="info-chip__icon">📍</span><span>We're at <strong>1203 St. Clair Ave W</strong> — corner of St. Clair &amp; Dufferin</span></div>
-            <div style="margin-top:.5rem;display:flex;gap:.6rem;flex-wrap:wrap;">
-              <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=transit" target="_blank" rel="noopener" style="font-size:.8rem;padding:.5rem .9rem;">🗺️ Plan My Route →</a>
-              <a class="btn btn--outline" href="https://www.ttc.ca/routes-and-schedules/maps" target="_blank" rel="noopener" style="font-size:.8rem;padding:.5rem .9rem;">TTC System Map →</a>
-            </div>
-          </div>
-          <div class="transit__cta">
-            <a href="https://www.ttc.ca/routes-and-schedules/maps" target="_blank" rel="noopener" title="View full TTC System Map">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/TTC_subway_system_map.svg/1200px-TTC_subway_system_map.svg.png"
-                alt="TTC Subway System Map — Toronto Transit Commission"
-                style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);display:block;"
-                loading="lazy"
-                decoding="async"
-                onerror="this.closest('.transit__cta').innerHTML='<a class=\'btn\' href=\'https://www.ttc.ca/routes-and-schedules/maps\' target=\'_blank\' rel=\'noopener\'>View TTC System Map on ttc.ca →</a>'"
-              />
-            </a>
-            <p style="font-size:.72rem;color:var(--text-muted);margin:.4rem 0 0;text-align:center;">Source: TTC / Wikimedia Commons · <a href="https://www.ttc.ca/routes-and-schedules/maps" target="_blank" rel="noopener" style="color:var(--teal-dark);">ttc.ca</a></p>
-          </div>
+        <div class="transit__map-wrap">
+          <iframe
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-79.4650%2C43.6650%2C-79.4280%2C43.6950&layer=transportmap&marker=43.6774%2C-79.4469"
+            title="TTC transit map — St. Clair Ave W &amp; Dufferin, Toronto"
+            loading="lazy"
+            allowfullscreen
+          ></iframe>
+          <p class="transit__map-credit">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors · Transit data from TTC</p>
         </div>
+        <div class="info-strip__chips" style="margin-top:.85rem;">
+          <div class="info-chip"><span class="info-chip__icon">🟡</span><span>Take <strong>Line 1 (Yellow)</strong> to <strong>St. Clair West Station</strong>, board the <strong>512 St. Clair streetcar</strong> westbound to Dufferin</span></div>
+          <div class="info-chip"><span class="info-chip__icon">🟢</span><span>Take <strong>Line 2 (Green)</strong> to <strong>Dufferin Station</strong>, board the <strong>29 / 929 Dufferin bus</strong> northbound to St. Clair</span></div>
+          <div class="info-chip"><span class="info-chip__icon">🟠</span><span>Take <strong>Line 5 Eglinton Crosstown</strong> to <strong>Dufferin Station</strong>, board the <strong>29 / 929 Dufferin bus</strong> northbound to St. Clair</span></div>
+          <div class="info-chip"><span class="info-chip__icon">📍</span><span>We're at <strong>1203 St. Clair Ave W</strong> — corner of St. Clair &amp; Dufferin</span></div>
+        </div>
+        <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=transit" target="_blank" rel="noopener" style="display:inline-block;margin-top:.9rem;font-size:.85rem;">🗺️ Get Transit Directions on Google Maps →</a>
       </div>
     </div>
 
