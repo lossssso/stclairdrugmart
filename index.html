@@ -1311,6 +1311,28 @@
     }
     .reviews-read-btn:hover { background: var(--border); box-shadow: 0 4px 14px rgba(0,80,90,.1); transform: translateY(-2px); }
 
+    /* Uber Eats reviews strip */
+    .reviews-uber { margin-top: 2.5rem; padding-top: 2rem; border-top: 1.5px solid var(--border); }
+    .reviews-uber__hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; flex-wrap: wrap; gap: .75rem; }
+    .reviews-uber__badge { display: flex; align-items: center; gap: .85rem; }
+    .reviews-uber__logo { height: 34px; width: auto; }
+    .reviews-uber__badge-text { display: flex; flex-direction: column; gap: .08rem; }
+    .reviews-uber__badge-name { font-size: .7rem; font-weight: 700; color: var(--text-muted); letter-spacing: .07em; text-transform: uppercase; }
+    .reviews-uber__badge-rating { font-size: .92rem; color: var(--text); font-weight: 600; }
+    .reviews-uber__badge-rating strong { color: var(--teal-deeper); }
+    .reviews-uber__badge-rating .uber-stars { color: #ffbe00; }
+    .reviews-uber__link { font-size: .85rem; font-weight: 700; color: var(--teal-bright); text-decoration: none; border-bottom: 2px solid var(--teal-mid); padding-bottom: 1px; transition: color .2s, border-color .2s; }
+    .reviews-uber__link:hover { color: var(--teal-deeper); border-color: var(--teal-deeper); }
+    .reviews-uber__scroll { overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; padding-bottom: .5rem; }
+    .reviews-uber__scroll::-webkit-scrollbar { height: 5px; }
+    .reviews-uber__scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+    .reviews-uber__track { display: flex; gap: .85rem; width: max-content; padding: .2rem .1rem .5rem; }
+    .reviews-uber__card { background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 14px; padding: 1.1rem 1.25rem; width: 210px; flex-shrink: 0; transition: box-shadow .22s, transform .2s; }
+    .reviews-uber__card:hover { box-shadow: 0 6px 22px rgba(0,80,90,.13); transform: translateY(-3px); }
+    .reviews-uber__card-stars { color: #ffbe00; font-size: .88rem; margin-bottom: .4rem; letter-spacing: .05em; }
+    .reviews-uber__card-text { font-size: .82rem; color: var(--text); line-height: 1.58; margin-bottom: .6rem; font-style: italic; }
+    .reviews-uber__card-author { font-size: .74rem; font-weight: 700; color: var(--text-muted); }
+
     @media (max-width: 680px) {
       .reviews-metrics { grid-template-columns: 1fr 1fr; }
       .reviews-score { font-size: 4.5rem; }
@@ -2617,6 +2639,74 @@
       <a href="https://www.google.com/maps/place/St.+Clair+Drug+Mart+Pharmacy/@43.6773961,-79.4468996,17z" target="_blank" rel="noopener" class="reviews-read-btn">
         Read All 59 Reviews →
       </a>
+    </div>
+
+    <!-- Uber Eats Reviews -->
+    <div class="reviews-uber">
+      <div class="reviews-uber__hd">
+        <div class="reviews-uber__badge">
+          <img src="logos/uber.png" alt="Uber Eats" class="reviews-uber__logo">
+          <div class="reviews-uber__badge-text">
+            <span class="reviews-uber__badge-name">Uber Eats</span>
+            <span class="reviews-uber__badge-rating"><span class="uber-stars">★★★★★</span> <strong>4.9</strong> &nbsp;·&nbsp; 600+ ratings</span>
+          </div>
+        </div>
+        <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ?diningMode=DELIVERY&mod=storeReviews&modctx=%257B%2522storeUuid%2522%253A%252251074e24-e3f2-53b4-a23d-93521a291b85%2522%257D" target="_blank" rel="noopener" class="reviews-uber__link">View all 24 reviews on Uber Eats →</a>
+      </div>
+      <div class="reviews-uber__scroll">
+        <div class="reviews-uber__track">
+          <div class="reviews-uber__card">
+            <div class="reviews-uber__card-stars">★★★★★</div>
+            <p class="reviews-uber__card-text">"My respect and appreciation for all employees working on Holidays."</p>
+            <div class="reviews-uber__card-author">Cintia B.</div>
+          </div>
+          <div class="reviews-uber__card">
+            <div class="reviews-uber__card-stars">★★★★★</div>
+            <p class="reviews-uber__card-text">"Very friendly, helped me pick out some cold medication. Thank you for the calendar!"</p>
+            <div class="reviews-uber__card-author">Leo D.</div>
+          </div>
+          <div class="reviews-uber__card">
+            <div class="reviews-uber__card-stars">★★★★★</div>
+            <p class="reviews-uber__card-text">"First time ordering, the experience was great!"</p>
+            <div class="reviews-uber__card-author">Leslie T.</div>
+          </div>
+          <div class="reviews-uber__card">
+            <div class="reviews-uber__card-stars">★★★★★</div>
+            <p class="reviews-uber__card-text">"Quick delivery, availability of what I needed."</p>
+            <div class="reviews-uber__card-author">Luisa G.</div>
+          </div>
+          <div class="reviews-uber__card">
+            <div class="reviews-uber__card-stars">★★★★★</div>
+            <p class="reviews-uber__card-text">"Always quick with my order."</p>
+            <div class="reviews-uber__card-author">bliss K.</div>
+          </div>
+          <div class="reviews-uber__card">
+            <div class="reviews-uber__card-stars">★★★★★</div>
+            <p class="reviews-uber__card-text">"Thank you!! You made my day!!!"</p>
+            <div class="reviews-uber__card-author">Christian D.</div>
+          </div>
+          <div class="reviews-uber__card">
+            <div class="reviews-uber__card-stars">★★★★★</div>
+            <p class="reviews-uber__card-text">"Quick service."</p>
+            <div class="reviews-uber__card-author">Cindi M.</div>
+          </div>
+          <div class="reviews-uber__card">
+            <div class="reviews-uber__card-stars">★★★★★</div>
+            <p class="reviews-uber__card-text">"Great service."</p>
+            <div class="reviews-uber__card-author">Maria P.</div>
+          </div>
+          <div class="reviews-uber__card">
+            <div class="reviews-uber__card-stars">★★★★★</div>
+            <p class="reviews-uber__card-text">"Fast."</p>
+            <div class="reviews-uber__card-author">Ellie M.</div>
+          </div>
+          <div class="reviews-uber__card">
+            <div class="reviews-uber__card-stars">★★★★★</div>
+            <p class="reviews-uber__card-text">"Thank you."</p>
+            <div class="reviews-uber__card-author">Jose A.</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
