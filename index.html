@@ -2016,7 +2016,7 @@
 
     <!-- Row 1: primary booking actions -->
     <div class="pa-cards pa-cards--primary">
-      <button class="pa-card active" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Book an Appointment">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Book an Appointment">
         <div class="pa-card__icon">📅</div>
         <span class="pa-card__label">Book Appointment</span>
         <span class="pa-card__desc">Schedule a vaccine (immunization), consultation, or check-up</span>
@@ -2233,7 +2233,7 @@
       </button>
     </div>
 
-    <div class="pa-iframe-wrap">
+    <div class="pa-iframe-wrap" style="display:none">
       <div class="pa-iframe-label">
         <span id="pa-iframe-label-text">📅 Book an Appointment</span>
         <button class="pa-iframe-label__close" id="pa-iframe-close" aria-label="Collapse" title="Collapse">✕</button>
@@ -3331,6 +3331,7 @@ window.FAQS = [
   // Collapse/expand the iframe panel
   var paCloseBtn = document.getElementById('pa-iframe-close');
   function paOpen() {
+    paWrap.style.display = '';
     paWrap.classList.remove('collapsed');
     paCloseBtn.textContent = '✕';
   }
