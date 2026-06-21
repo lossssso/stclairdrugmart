@@ -1867,6 +1867,70 @@
       .trust-badge { min-width: 44%; padding: .7rem .6rem; }
       .trust-badge:not(:first-child)::before { display: none; }
     }
+    /* ── Site-wide search overlay ────────────────── */
+    .nav__search-btn { background:none; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; transition:background .15s; flex-shrink:0; }
+    .nav__search-btn:hover { background:rgba(255,255,255,.15); }
+    .nav__search-btn svg { width:18px; height:18px; stroke:#fff; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .site-search-overlay {
+      display:none; position:fixed; inset:0; z-index:9999;
+      background:rgba(0,20,22,.62); align-items:flex-start; justify-content:center;
+      padding:max(4rem,10vh) 1rem 1rem; backdrop-filter:blur(5px);
+    }
+    .site-search-overlay.open { display:flex; }
+    .site-search__box {
+      background:#fff; border-radius:var(--radius); width:100%; max-width:640px;
+      box-shadow:0 24px 64px rgba(0,0,0,.35); overflow:hidden;
+    }
+    .site-search__bar { display:flex; align-items:center; padding:.9rem 1.1rem; gap:.75rem; border-bottom:1.5px solid var(--border); }
+    .site-search__bar svg { width:20px; height:20px; stroke:var(--teal-bright); fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; }
+    .site-search__input { flex:1; border:none; outline:none; font-size:1.05rem; font-family:inherit; color:var(--text); background:none; }
+    .site-search__input::placeholder { color:var(--text-muted); }
+    .site-search__close { background:none; border:none; cursor:pointer; font-size:1.3rem; color:var(--text-muted); padding:.2rem .4rem; border-radius:6px; transition:background .15s; }
+    .site-search__close:hover { background:var(--teal-ice); }
+    .site-search__results { max-height:min(480px,60vh); overflow-y:auto; padding:.5rem 0; }
+    .site-search__tip { padding:1.1rem 1.25rem; font-size:.82rem; color:var(--text-muted); text-align:center; }
+    .site-search__category { font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--text-muted); padding:.5rem 1.25rem .25rem; }
+    .site-search__result {
+      display:flex; align-items:center; gap:.75rem; padding:.6rem 1.25rem;
+      cursor:pointer; transition:background .12s; border:none; background:none; width:100%; text-align:left;
+    }
+    .site-search__result:hover { background:var(--teal-ice); }
+    .site-search__result-icon { font-size:1.25rem; flex-shrink:0; width:1.75rem; text-align:center; }
+    .site-search__result-body { flex:1; min-width:0; }
+    .site-search__result-title { font-size:.9rem; font-weight:600; color:var(--teal-deeper); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .site-search__result-title mark { background:none; color:var(--teal-bright); font-weight:700; }
+    .site-search__result-desc { font-size:.76rem; color:var(--text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .site-search__result-tag { font-size:.7rem; font-weight:700; background:var(--teal-ice); color:var(--teal-dark); border:1px solid var(--border); border-radius:20px; padding:.1rem .55rem; flex-shrink:0; }
+    .site-search__empty { padding:1.5rem 1.25rem; text-align:center; color:var(--text-muted); font-size:.88rem; }
+
+    /* ── Symptom smart search ─────────────────────── */
+    .ailments-smartsearch { margin-bottom:1rem; }
+    .ailments-smartsearch__wrap {
+      display:flex; align-items:center; gap:.55rem; background:#fff;
+      border:2px solid var(--teal-bright); border-radius:100px; padding:.45rem .6rem .45rem 1rem;
+      box-shadow:0 2px 12px rgba(33,161,168,.12); transition:box-shadow .15s;
+    }
+    .ailments-smartsearch__wrap:focus-within { box-shadow:0 2px 22px rgba(33,161,168,.25); }
+    .ailments-smartsearch__wrap svg { width:16px; height:16px; stroke:var(--teal-bright); fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; }
+    .ailments-smartsearch__input { flex:1; border:none; outline:none; font-size:.9rem; font-family:inherit; color:var(--text); background:none; min-width:0; }
+    .ailments-smartsearch__input::placeholder { color:var(--text-muted); font-size:.85rem; }
+    .ailments-smartsearch__clear { background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:.95rem; line-height:1; padding:.2rem; display:none; }
+    .ailments-smartsearch__results {
+      display:none; background:#fff; border:1.5px solid var(--border); border-radius:var(--radius);
+      padding:.5rem 0; margin-top:.5rem; box-shadow:var(--shadow);
+    }
+    .ailments-smartsearch__results.has-results { display:block; }
+    .ailments-smartsearch__hit {
+      display:flex; align-items:center; gap:.7rem; padding:.52rem 1rem; cursor:pointer;
+      border:none; background:none; width:100%; text-align:left; transition:background .12s;
+    }
+    .ailments-smartsearch__hit:hover { background:var(--teal-ice); }
+    .ailments-smartsearch__hit-icon { font-size:1.25rem; width:1.5rem; text-align:center; flex-shrink:0; }
+    .ailments-smartsearch__hit-body { flex:1; }
+    .ailments-smartsearch__hit-name { font-size:.88rem; font-weight:700; color:var(--teal-deeper); }
+    .ailments-smartsearch__hit-kw { font-size:.74rem; color:var(--text-muted); }
+    .ailments-smartsearch__none { padding:.8rem 1rem; font-size:.82rem; color:var(--text-muted); text-align:center; }
+    .ailments-smartsearch__divider { font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--text-muted); padding:.5rem 1rem .15rem; }
     /* ── Privacy Policy modal ─────────────────────── */
     .pp-overlay {
       display: none; position: fixed; inset: 0; z-index: 9999;
@@ -1918,6 +1982,9 @@
       <img src="logo.png" alt="" class="nav__brand__logo" />
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
+    <button class="nav__search-btn" id="navSearchBtn" aria-label="Search site">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+    </button>
     <button class="nav__toggle" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
@@ -1943,6 +2010,20 @@
     </ul>
   </div>
 </nav>
+
+<!-- ── Site Search Overlay ──────────────────────────────── -->
+<div class="site-search-overlay" id="siteSearch" role="dialog" aria-modal="true" aria-label="Search">
+  <div class="site-search__box">
+    <div class="site-search__bar">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      <input class="site-search__input" id="siteSearchInput" type="text" placeholder="Search conditions, services, FAQ…" autocomplete="off" spellcheck="false"/>
+      <button class="site-search__close" id="siteSearchClose" aria-label="Close search">&times;</button>
+    </div>
+    <div class="site-search__results" id="siteSearchResults">
+      <div class="site-search__tip">Type to search conditions, services, vaccines, FAQ and more.</div>
+    </div>
+  </div>
+</div>
 
 <!-- ── Hero ─────────────────────────────────────────────── -->
 <header class="hero" id="home">
@@ -2149,6 +2230,14 @@
     <!-- Conditions panel — sits right below Common Conditions button -->
     <div class="conditions-panel" id="conditions-panel">
       <div class="conditions-panel__hd">Which condition are you dealing with?</div>
+      <div class="ailments-smartsearch" id="smartsearch-portal">
+        <div class="ailments-smartsearch__wrap">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+          <input class="ailments-smartsearch__input" data-scope="portal" type="text" placeholder="Tell us how you feel… e.g. 'itchy rash', 'burning when I pee', 'eye discharge'" autocomplete="off" spellcheck="false"/>
+          <button class="ailments-smartsearch__clear" aria-label="Clear search">✕</button>
+        </div>
+        <div class="ailments-smartsearch__results" id="smartsearch-results-portal"></div>
+      </div>
       <div class="ailments-triage" id="ailments-triage-portal">
         <button class="ailments-triage__btn ailments-triage__btn--all active" data-triage="portal" data-cat="all">All Conditions</button>
         <div class="ailments-triage__group">
@@ -2335,6 +2424,14 @@
         </button>
         <div class="svc-acc__body svc-acc__body--wide">
 <p class="section__lead" style="margin-bottom:1.5rem;">Our clinical pharmacists can assess your condition and prescribe treatment on the spot — no doctor's appointment, no walk-in clinic, no referral, no waiting. Walk in or start your online assessment.</p>
+        <div class="ailments-smartsearch" id="smartsearch-main">
+          <div class="ailments-smartsearch__wrap">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+            <input class="ailments-smartsearch__input" data-scope="main" type="text" placeholder="Tell us how you feel… e.g. 'itchy rash', 'burning when I pee', 'eye discharge'" autocomplete="off" spellcheck="false"/>
+            <button class="ailments-smartsearch__clear" aria-label="Clear search">✕</button>
+          </div>
+          <div class="ailments-smartsearch__results" id="smartsearch-results-main"></div>
+        </div>
         <div class="ailments-triage" id="ailments-triage-main">
           <button class="ailments-triage__btn ailments-triage__btn--all active" data-triage="main" data-cat="all">All 28 Conditions</button>
           <div class="ailments-triage__group">
@@ -4212,6 +4309,302 @@ window.FAQS = [
       run();
     }
   })();
+
+  // ── Smart Symptom Search ──────────────────────────────────
+  var AILMENT_DB = [
+    { name:'Pink Eye', icon:'👁️', id:22, call:false,
+      kw:['eye','red eye','pink eye','discharge','crusty','sticky','goopy','conjunctivitis','itchy eye','watery eye','swollen eye','eye infection'] },
+    { name:'Dry Eye', icon:'💧', id:41, call:false,
+      kw:['dry eye','gritty','scratchy eye','tired eyes','screen','burning eye','blurry','contact lens'] },
+    { name:'Allergic Rhinitis', icon:'🤧', id:25, call:false,
+      kw:['sneezing','runny nose','itchy nose','watery eyes','hay fever','pollen','allergy','seasonal','pet allergy','dust','nasal drip','sniffles'] },
+    { name:'Nasal Congestion', icon:'😤', id:38, call:false,
+      kw:['stuffy nose','blocked nose','congestion','can\'t breathe','sinus','stuffed up','nasal pressure','hard to breathe','blocked'] },
+    { name:'Oral Thrush', icon:'👄', id:18, call:false,
+      kw:['white patches mouth','tongue','thrush','mouth','bad taste','coating','oral','sore throat mouth','white tongue'] },
+    { name:'Cold Sores', icon:'💋', id:3, call:false,
+      kw:['lip blister','tingling lips','cold sore','fever blister','mouth blister','herpes','tingling','sore lip','blistering','lip sore'] },
+    { name:'Canker Sores', icon:'🫦', id:6, call:false,
+      kw:['canker','mouth sore','painful mouth','gum sore','ulcer','inside mouth','tongue sore','cheek sore','eating hurts','mouth ulcer'] },
+    { name:'Mild Headache', icon:'🤕', id:12, call:false,
+      kw:['headache','head pain','pressure head','forehead','temples','throbbing','sore head','behind eyes','skull','pain in head'] },
+    { name:'Acne', icon:'💊', id:13, call:false,
+      kw:['pimples','blackheads','acne','breakout','face','back','chest','spots','zits','blemish','clogged pores','oily skin'] },
+    { name:'Eczema / Dermatitis', icon:'🖐️', id:26, call:false,
+      kw:['eczema','itchy skin','dry skin','rash','red patches','dermatitis','flare','inflamed skin','scaly skin','cracked skin','weeping skin'] },
+    { name:'Dandruff', icon:'❄️', id:44, call:false,
+      kw:['dandruff','flaky scalp','flakes','scalp','white flakes','itchy scalp','seborrheic','oily scalp','hair flakes'] },
+    { name:'Impetigo', icon:'🦠', id:2, call:false,
+      kw:['impetigo','crusty sore','honey crust','bacterial skin','contagious','around nose','around mouth','children rash','blistering sore','school sore'] },
+    { name:'Ringworm', icon:'⭕', id:9, call:false,
+      kw:['ringworm','circular rash','round rash','fungal','ring shaped','tinea','spreading rash','circular','ring','scaly ring'] },
+    { name:'Warts', icon:'🌱', id:46, call:false,
+      kw:['wart','bumps','rough skin','skin growth','plantar wart','hand wart','foot wart','spreading bump','hard bump','HPV skin'] },
+    { name:'Head Lice', icon:'🪮', id:null, call:true,
+      kw:['lice','nits','head lice','itchy head','scalp itch','eggs in hair','louse','school lice','kids lice','infestation'] },
+    { name:'Athlete\'s Foot', icon:'🦶', id:10, call:false,
+      kw:['athlete foot','foot fungus','itchy toes','cracked foot','peeling foot','between toes','burning feet','foot itch','toe fungus','tinea pedis'] },
+    { name:'Calluses & Corns', icon:'👣', id:45, call:false,
+      kw:['callus','corn','hard skin','foot pain','thick skin','walking pain','sole','toe bump','rough toe','hard toe'] },
+    { name:'Jock Itch', icon:'🏃', id:8, call:false,
+      kw:['jock itch','groin rash','groin itch','inner thigh','itchy groin','thigh rash','sweating rash','tinea cruris','groin fungal'] },
+    { name:'Heartburn / GERD', icon:'🔥', id:24, call:false,
+      kw:['heartburn','acid reflux','burning chest','gerd','indigestion','after eating','chest burn','stomach acid','lying down','acid taste','reflux'] },
+    { name:'Hemorrhoids', icon:'🩹', id:4, call:false,
+      kw:['hemorrhoids','piles','rectum','anal itch','rectal pain','blood stool','bleeding toilet','bowel pain','anal swelling','sitting pain'] },
+    { name:'Pinworms', icon:'🪱', id:43, call:false,
+      kw:['pinworms','worms','anal itch at night','nighttime itch','bottom itch','rectal itch','children worms','intestinal worm','threadworm'] },
+    { name:'Sprains & Strains', icon:'🦴', id:21, call:false,
+      kw:['sprain','strain','twisted ankle','muscle pain','swollen joint','injury','bruise','pulled muscle','knee','ankle','wrist','rolled ankle','hurt muscle'] },
+    { name:'Period Pain', icon:'🩸', id:20, call:false,
+      kw:['period pain','cramps','menstrual','menstruation','lower abdomen','period','monthly pain','PMS','dysmenorrhea','uterus cramping'] },
+    { name:'Vaginal Yeast Infection', icon:'🌸', id:42, call:false,
+      kw:['yeast infection','vaginal itch','vaginal discharge','burning vagina','vaginal irritation','candida','thrush','white discharge','cottage cheese discharge'] },
+    { name:'Nausea in Pregnancy', icon:'🤢', id:30, call:false,
+      kw:['morning sickness','pregnancy nausea','vomiting pregnant','nausea pregnant','first trimester','sick pregnant','queasy pregnant','nausea baby'] },
+    { name:'UTI', icon:'💧', id:23, call:false,
+      kw:['uti','urinary tract infection','burning pee','painful urination','frequent urination','cloudy urine','bladder infection','need to pee','urgency','blood in urine','burning urination'] },
+    { name:'Insect Bites & Stings', icon:'🐝', id:19, call:false,
+      kw:['insect bite','mosquito','bee sting','wasp sting','bite','sting','swelling bite','red bump','itchy bite','bug bite','fly bite','hornet'] },
+    { name:'Tick Bites', icon:'🕷️', id:49, call:false,
+      kw:['tick','tick bite','lyme','woods','outdoors','attached tick','removed tick','bullseye rash','deer tick','forest tick'] },
+  ];
+  var PHARMA_BASE = 'https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=';
+
+  function scoreAilment(ailment, query) {
+    var words = query.toLowerCase().split(/\s+/).filter(Boolean);
+    if (!words.length) return 0;
+    var score = 0;
+    var kws = ailment.kw.join(' ');
+    var nameLower = ailment.name.toLowerCase();
+    words.forEach(function(w) {
+      if (nameLower.indexOf(w) !== -1) score += 3;
+      ailment.kw.forEach(function(k) { if (k.indexOf(w) !== -1 || w.indexOf(k) !== -1) score += 2; });
+      if (kws.indexOf(w) !== -1) score += 1;
+    });
+    return score;
+  }
+
+  function renderSmartResults(scope, query) {
+    var resultsEl = document.getElementById('smartsearch-results-' + scope);
+    var triageEl = document.getElementById('ailments-triage-' + scope);
+    var sectionsEls = document.querySelectorAll('.ailments-cat-section[data-triage-scope="' + scope + '"]');
+    var clearBtn = document.querySelector('#smartsearch-' + scope + ' .ailments-smartsearch__clear');
+    if (!query || query.length < 2) {
+      resultsEl.classList.remove('has-results');
+      resultsEl.innerHTML = '';
+      triageEl.style.display = '';
+      sectionsEls.forEach(function(s) { s.style.display = s.classList.contains('ailments-cat--topic-only') ? 'none' : ''; });
+      if (clearBtn) clearBtn.style.display = 'none';
+      return;
+    }
+    if (clearBtn) clearBtn.style.display = '';
+    var scored = AILMENT_DB.map(function(a) { return { a:a, score:scoreAilment(a, query) }; })
+      .filter(function(x) { return x.score > 0; })
+      .sort(function(a,b) { return b.score - a.score; })
+      .slice(0, 8);
+    triageEl.style.display = 'none';
+    sectionsEls.forEach(function(s) { s.style.display = 'none'; });
+    if (!scored.length) {
+      resultsEl.innerHTML = '<div class="ailments-smartsearch__none">No conditions matched "<strong>' + query + '</strong>".<br>Try broader terms or browse by category below.</div>';
+      resultsEl.classList.add('has-results');
+      triageEl.style.display = '';
+      sectionsEls.forEach(function(s) { s.style.display = s.classList.contains('ailments-cat--topic-only') ? 'none' : ''; });
+      return;
+    }
+    var html = '<div class="ailments-smartsearch__divider">Best matches for "' + query + '"</div>';
+    scored.forEach(function(x) {
+      var a = x.a;
+      var href = a.call ? 'tel:+14166548181' : '#booking';
+      var dataUrl = a.call ? '' : ' data-url="' + PHARMA_BASE + a.id + '"';
+      html += '<button class="ailments-smartsearch__hit js-smart-hit" data-href="' + href + '"' + dataUrl + ' data-call="' + (a.call?'1':'') + '">'
+        + '<span class="ailments-smartsearch__hit-icon">' + a.icon + '</span>'
+        + '<span class="ailments-smartsearch__hit-body">'
+        + '<span class="ailments-smartsearch__hit-name">' + a.name + '</span>'
+        + '<span class="ailments-smartsearch__hit-kw">' + (a.call ? 'Call us for treatment options' : 'Tap to start your pharmacist assessment') + '</span>'
+        + '</span>'
+        + '<span class="site-search__result-tag">Assess →</span>'
+        + '</button>';
+    });
+    resultsEl.innerHTML = html;
+    resultsEl.classList.add('has-results');
+    // Wire up hit buttons
+    resultsEl.querySelectorAll('.js-smart-hit').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var call = this.dataset.call === '1';
+        var url = this.dataset.url;
+        if (call) { window.location.href = 'tel:+14166548181'; return; }
+        // Open assessment in pa-iframe
+        var paWrap = document.getElementById('pa-wrap');
+        var paIframe = document.getElementById('pa-iframe');
+        var paLabel = document.getElementById('pa-label');
+        if (paWrap && paIframe && url) {
+          paIframe.src = url;
+          paIframe.style.height = '900px';
+          if (paLabel) paLabel.textContent = 'Minor Ailment Assessment';
+          if (paWrap) { paWrap.style.display = ''; paWrap.classList.remove('collapsed'); }
+          document.querySelectorAll('.pa-card').forEach(function(c) { c.classList.remove('active'); });
+        }
+        var bookingEl = document.getElementById('booking');
+        if (bookingEl) bookingEl.scrollIntoView({ behavior:'smooth', block:'start' });
+      });
+    });
+  }
+
+  document.querySelectorAll('.ailments-smartsearch__input').forEach(function(inp) {
+    var debounce;
+    inp.addEventListener('input', function() {
+      clearTimeout(debounce);
+      var scope = this.dataset.scope;
+      var val = this.value.trim();
+      debounce = setTimeout(function() { renderSmartResults(scope, val); }, 180);
+    });
+  });
+  document.querySelectorAll('.ailments-smartsearch__clear').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var wrap = this.closest('.ailments-smartsearch');
+      var inp = wrap.querySelector('.ailments-smartsearch__input');
+      inp.value = '';
+      inp.dispatchEvent(new Event('input'));
+      inp.focus();
+    });
+  });
+
+  // ── Site-Wide Search ──────────────────────────────────────
+  var SITE_INDEX = [
+    { icon:'🩺', title:'Minor Ailments — 28 Conditions', desc:'No doctor needed — pharmacist can assess and prescribe', tag:'Service', anchor:'#services', open:'acc-ailments' },
+    { icon:'🏥', title:'Patient Portal & Online Booking', desc:'Book appointments, self-assessment, refill requests', tag:'Service', anchor:'#booking' },
+    { icon:'💉', title:'Vaccines & Travel Health', desc:'Flu, COVID, shingles, Tdap, RSV, travel vaccines', tag:'Service', anchor:'#services', open:'acc-vaccines' },
+    { icon:'📋', title:'Medication Reviews (MedsCheck)', desc:'One-on-one review of all your medications — OHIP covered', tag:'Service', anchor:'#services', open:'acc-med-reviews' },
+    { icon:'🚭', title:'Smoking Cessation', desc:'Champix, nicotine patches, personalized quit plan', tag:'Service', anchor:'#services', open:'acc-cessation' },
+    { icon:'🩹', title:'Free Naloxone Kits', desc:'Free naloxone kits and training — no prescription needed', tag:'Service', anchor:'#services', open:'acc-naloxone' },
+    { icon:'💊', title:'Drug Interaction Checker', desc:'Check if your medications interact safely', tag:'Tool', anchor:'#drug-checker' },
+    { icon:'📦', title:'Order on Uber Eats', desc:'Pharmacy items delivered to your door', tag:'Shop', anchor:'#shop' },
+    { icon:'👩‍⚕️', title:'Meet Our Team', desc:'Elizabeth Da Silva BScPharm and our pharmacy staff', tag:'About', anchor:'#team' },
+    { icon:'📍', title:'Find Us & Hours', desc:'1203 St. Clair Ave W — Mon–Fri 9am–6pm, Sat 9am–2pm', tag:'Contact', anchor:'#contact' },
+    { icon:'🏪', title:'About St. Clair Drug Mart', desc:'Your neighbourhood pharmacy since 1960', tag:'About', anchor:'#about' },
+    { icon:'❓', title:'FAQ', desc:'Frequently asked questions about our services', tag:'Help', anchor:'#faq' },
+    { icon:'📝', title:'Health & Wellness Blog', desc:'Pharmacy tips, health news, and wellness guides', tag:'Blog', url:'blog/index.html' },
+    { icon:'🔄', title:'Prescription Transfers', desc:'Transfer your prescription to us — we call the other pharmacy', tag:'Service', anchor:'#services' },
+    { icon:'📸', title:'New Prescription — Send a Photo', desc:'Send a photo of your new prescription online', tag:'Service', anchor:'#booking' },
+  ].concat(AILMENT_DB.map(function(a) {
+    return { icon:a.icon, title:a.name, desc: a.call ? 'Minor ailment — call us for treatment options' : 'Minor ailment — pharmacist can prescribe', tag:'Condition', anchor:'#booking', ailmentUrl: a.call ? null : (PHARMA_BASE + a.id) };
+  }));
+
+  var siteOverlay = document.getElementById('siteSearch');
+  var siteInput = document.getElementById('siteSearchInput');
+  var siteResults = document.getElementById('siteSearchResults');
+  var siteDebounce;
+
+  function openSiteSearch() {
+    siteOverlay.classList.add('open');
+    siteInput.value = '';
+    siteResults.innerHTML = '<div class="site-search__tip">Type to search conditions, services, vaccines, FAQ and more.</div>';
+    setTimeout(function() { siteInput.focus(); }, 60);
+    document.body.style.overflow = 'hidden';
+  }
+  function closeSiteSearch() {
+    siteOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function highlightMatch(text, query) {
+    if (!query) return text;
+    var escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return text.replace(new RegExp('(' + escaped + ')', 'gi'), '<mark>$1</mark>');
+  }
+
+  function scoreSiteItem(item, query) {
+    var q = query.toLowerCase();
+    var score = 0;
+    var t = item.title.toLowerCase();
+    var d = item.desc.toLowerCase();
+    if (t === q) score += 10;
+    else if (t.startsWith(q)) score += 7;
+    else if (t.indexOf(q) !== -1) score += 5;
+    if (d.indexOf(q) !== -1) score += 2;
+    // word-level
+    q.split(/\s+/).forEach(function(w) {
+      if (!w) return;
+      if (t.indexOf(w) !== -1) score += 3;
+      if (d.indexOf(w) !== -1) score += 1;
+    });
+    return score;
+  }
+
+  function renderSiteSearch(query) {
+    if (!query || query.length < 2) {
+      siteResults.innerHTML = '<div class="site-search__tip">Type to search conditions, services, vaccines, FAQ and more.</div>';
+      return;
+    }
+    var scored = SITE_INDEX.map(function(item) { return { item:item, score:scoreSiteItem(item, query) }; })
+      .filter(function(x) { return x.score > 0; })
+      .sort(function(a,b) { return b.score - a.score; })
+      .slice(0, 12);
+    if (!scored.length) {
+      siteResults.innerHTML = '<div class="site-search__empty">No results for "<strong>' + query + '</strong>". Try different keywords.</div>';
+      return;
+    }
+    // Group by tag
+    var byTag = {};
+    scored.forEach(function(x) {
+      var tag = x.item.tag;
+      if (!byTag[tag]) byTag[tag] = [];
+      byTag[tag].push(x.item);
+    });
+    var html = '';
+    Object.keys(byTag).forEach(function(tag) {
+      html += '<div class="site-search__category">' + tag + '</div>';
+      byTag[tag].forEach(function(item) {
+        html += '<button class="site-search__result js-site-result" data-anchor="' + (item.anchor||'') + '" data-url="' + (item.url||'') + '" data-open="' + (item.open||'') + '" data-ailment-url="' + (item.ailmentUrl||'') + '">'
+          + '<span class="site-search__result-icon">' + item.icon + '</span>'
+          + '<span class="site-search__result-body">'
+          + '<span class="site-search__result-title">' + highlightMatch(item.title, query) + '</span>'
+          + '<span class="site-search__result-desc">' + item.desc + '</span>'
+          + '</span>'
+          + '<span class="site-search__result-tag">' + tag + '</span>'
+          + '</button>';
+      });
+    });
+    siteResults.innerHTML = html;
+    siteResults.querySelectorAll('.js-site-result').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var anchor = this.dataset.anchor;
+        var url = this.dataset.url;
+        var openAcc = this.dataset.open;
+        var ailmentUrl = this.dataset.ailmentUrl;
+        closeSiteSearch();
+        if (url) { window.location.href = url; return; }
+        if (ailmentUrl) {
+          var paWrap = document.getElementById('pa-wrap');
+          var paIframe = document.getElementById('pa-iframe');
+          var paLabel = document.getElementById('pa-label');
+          if (paWrap && paIframe) {
+            paIframe.src = ailmentUrl;
+            paIframe.style.height = '900px';
+            if (paLabel) paLabel.textContent = 'Minor Ailment Assessment';
+            if (paWrap) { paWrap.style.display = ''; paWrap.classList.remove('collapsed'); }
+            document.querySelectorAll('.pa-card').forEach(function(c) { c.classList.remove('active'); });
+          }
+        }
+        if (openAcc && window.openAcc) { setTimeout(function() { openAcc(openAcc); }, 300); }
+        if (anchor) { var el = document.querySelector(anchor); if (el) setTimeout(function() { el.scrollIntoView({ behavior:'smooth', block:'start' }); }, openAcc ? 400 : 100); }
+      });
+    });
+  }
+
+  document.getElementById('navSearchBtn').addEventListener('click', openSiteSearch);
+  document.getElementById('siteSearchClose').addEventListener('click', closeSiteSearch);
+  siteOverlay.addEventListener('click', function(e) { if (e.target === siteOverlay) closeSiteSearch(); });
+  siteInput.addEventListener('input', function() {
+    clearTimeout(siteDebounce);
+    var q = this.value.trim();
+    siteDebounce = setTimeout(function() { renderSiteSearch(q); }, 180);
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && siteOverlay.classList.contains('open')) closeSiteSearch();
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSiteSearch(); }
+  });
 
   // ── Ailment Triage Filter ─────────────────────────────────
   document.querySelectorAll('.ailments-triage__btn').forEach(function(btn) {
