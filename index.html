@@ -876,7 +876,12 @@
     @media (max-width: 600px) { .find-us__main { grid-template-columns: 1fr; } .contact__info-strip { grid-template-columns: 1fr; } }
 
     /* ── About + Gallery ──────────────────────────────── */
-    #about { background: var(--teal-ice) url('cloud.png') no-repeat center bottom / contain; }
+    #about {
+      background:
+        url('cloud.png') no-repeat center top / contain,
+        url('cloud.png') no-repeat center bottom / contain,
+        var(--teal-ice);
+    }
     .about__text { max-width: 760px; }
     .about__text p { color: var(--text-muted); margin-top: 1rem; }
     .gallery {
