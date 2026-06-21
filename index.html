@@ -79,7 +79,7 @@
       { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "18:00" },
       { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "14:00" }
     ],
-    "availableLanguage": ["English","Spanish","Portuguese","Italian","Turkish","Tagalog","Polish"],
+    "availableLanguage": ["English","Spanish","Portuguese","Italian","Turkish","Polish"],
     "medicalSpecialty": "Pharmacy",
     "knowsAbout": ["Prescription dispensing","Minor ailments prescribing","Vaccinations","Medication reviews","Blister packaging","Travel health","Smoking cessation"],
     "aggregateRating": {
@@ -1150,7 +1150,8 @@
       display: flex; flex-direction: column; gap: .4rem;
       transition: box-shadow .15s, transform .15s;
     }
-    .vaccine-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+    .vaccine-card { cursor: pointer; }
+    .vaccine-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); border-color: var(--teal-bright); }
     .vaccine-card__header { display: flex; align-items: flex-start; justify-content: space-between; gap: .5rem; }
     .vaccine-card__name {
       font-family: var(--font-display);
@@ -1694,7 +1695,7 @@
       padding: 0 1.2rem; color: var(--text-muted); line-height: 1.72; font-size: .875rem;
     }
     .faq-item.open .faq-item__a { max-height: 500px; padding: 0 1.2rem 1.15rem; }
-    .faq-item__a a { color: var(--teal-bright); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--teal-mid); }
+    .faq-item__a a { color: var(--teal-bright); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--teal-mid); white-space: nowrap; }
     .faq-item__a a:hover { color: var(--teal-deeper); border-color: var(--teal-deeper); }
 
     /* ── Footer trust badges ──────────────────────── */
@@ -2467,24 +2468,28 @@
             <div class="medscheck-card__title">Annual Medication Review</div>
             <p class="medscheck-card__desc">A face-to-face or phone consultation covering all your prescriptions, over-the-counter medications, vitamins, and supplements. We identify interactions, duplications, and medications that may no longer be appropriate for you.</p>
             <span class="medscheck-card__tag">Eligible if taking 3 or more chronic medications</span>
+            <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" style="margin-top:.75rem;display:inline-block;">Book a Review →</a>
           </div>
           <div class="medscheck-card">
             <div class="medscheck-card__icon">🩺</div>
             <div class="medscheck-card__title">Diabetes Medication Review</div>
             <p class="medscheck-card__desc">A specialized review for patients living with Type 2 diabetes. We assess your diabetes medications, discuss blood sugar targets, and help coordinate care with your healthcare team.</p>
             <span class="medscheck-card__tag">For patients with Type 2 diabetes on any medication</span>
+            <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" style="margin-top:.75rem;display:inline-block;">Book a Review →</a>
           </div>
           <div class="medscheck-card">
             <div class="medscheck-card__icon">🏥</div>
             <div class="medscheck-card__title">Post-Hospital Reconciliation</div>
             <p class="medscheck-card__desc">Coming home from the hospital? We'll compare your discharge medications with your existing prescriptions to prevent dangerous errors, duplications, or gaps in your care during this critical transition.</p>
             <span class="medscheck-card__tag">Following hospital discharge or a care transition</span>
+            <a class="svc-acc__link" href="#booking" style="margin-top:.75rem;display:inline-block;">Book a Review →</a>
           </div>
           <div class="medscheck-card">
             <div class="medscheck-card__icon">🔄</div>
             <div class="medscheck-card__title">Follow-Up Review</div>
             <p class="medscheck-card__desc">When your medications change significantly — a new diagnosis, a new prescription, or a concern about side effects — we schedule a focused follow-up to make sure your therapy stays on track.</p>
             <span class="medscheck-card__tag">After a significant medication change or concern</span>
+            <a class="svc-acc__link" href="#booking" style="margin-top:.75rem;display:inline-block;">Book a Review →</a>
           </div>
         </div>
         <p class="insurance__note" style="margin-top:1.75rem;">Medication reviews are <strong>covered at no cost</strong> for eligible Ontario residents. <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us</a> to book — walk-ins welcome.</p>
@@ -3045,7 +3050,7 @@ window.FAQS = [
   {
     icon: "🌐",
     q: "Do you serve patients in languages other than English?",
-    a: "Absolutely. Our team speaks English, Spanish, Portuguese, Italian, Turkish, Tagalog, Polish, and more — reflecting the rich diversity of Corso Italia and St. Clair West. We want every patient to feel understood and comfortable. If you're not sure whether we speak your language, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> or <a href=\"#team\">meet our team →</a>"
+    a: "Absolutely. Our team speaks English, Spanish, Portuguese, Italian, Turkish, Polish, and more — reflecting the rich diversity of Corso Italia and St. Clair West. We want every patient to feel understood and comfortable. If you're not sure whether we speak your language, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> or <a href=\"#team\">meet our team →</a>"
   },
   {
     icon: "💊",
@@ -3954,6 +3959,15 @@ window.FAQS = [
       if (btn) btn.setAttribute('aria-expanded', 'true');
     };
   })();
+
+  // Make vaccine cards clickable — scroll to booking
+  document.querySelectorAll('.vaccine-card').forEach(function(card) {
+    card.addEventListener('click', function(e) {
+      if (e.target.closest('a,button')) return;
+      var booking = document.getElementById('booking');
+      if (booking) booking.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
 
 
 
