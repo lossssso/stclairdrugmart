@@ -65,4 +65,9 @@ footer a:hover { color:#fff; }
 @media (max-width:640px){
   .post { padding:0 1rem; }
   .nav__inner { padding:0 max(1rem,env(safe-area-inset-right)) 0 max(1rem,env(safe-area-inset-left)); }
+  .post h1 { font-size:clamp(1.45rem,5.5vw,2rem); }
+  .post__lead { font-size:1rem; padding:.85rem 1rem; }
+  .post h2 { font-size:1.15rem; }
+  .post__cta { padding:1.25rem 1rem; }
+  .btn { padding:.65rem 1rem; font-size:.85rem; }
 }

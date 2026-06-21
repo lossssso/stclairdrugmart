@@ -130,8 +130,8 @@
     @media (max-width:720px) {
       .post-featured { grid-template-columns:1fr; }
       .post-featured__img { min-height:140px; font-size:3rem; }
-      .post-featured__body { padding:1.5rem; }
-      .post-featured__title { font-size:1.2rem; }
+      .post-featured__body { padding:1.25rem 1rem; }
+      .post-featured__title { font-size:1.15rem; }
     }
 
     /* ── Posts section heading ────────────────────── */
@@ -162,6 +162,19 @@
 
     @media (max-width:900px) { .posts-grid { grid-template-columns:repeat(2,1fr); } }
     @media (max-width:580px) { .posts-grid { grid-template-columns:1fr; } }
+    @media (max-width:640px) {
+      .blog-hero { padding: 2.5rem 1rem 2.25rem; }
+      .blog-hero h1 { font-size: clamp(1.6rem,6vw,2.4rem); }
+      .blog-hero__sub { font-size: .92rem; margin-bottom: 1.5rem; }
+      .blog-hero__search { max-width: 100%; }
+      .blog-filters { padding: 1.25rem 1rem 0; gap: .4rem; }
+      .blog-main { padding: 1.25rem 1rem 3rem; }
+      .post-featured__body { padding: 1.25rem 1rem; }
+      .blog-topics { padding: 0 1rem; }
+      .blog-cta { padding: 2.5rem 1rem; }
+      .blog-cta__btns { flex-direction: column; align-items: center; }
+      .blog-cta__btn { width: 100%; max-width: 320px; justify-content: center; }
+    }
 
     /* ── Newsletter / CTA band ────────────────────── */
     .blog-cta {
