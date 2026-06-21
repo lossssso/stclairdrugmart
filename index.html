@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
   <title>St. Clair Drug Mart | Clinical Pharmacy Toronto</title>
   <meta name="description" content="Clinical pharmacy on St. Clair West in Corso Italia, Toronto — walk-ins welcome, no appointment needed. Serving Via Italia, Davenport, Dufferin, Wychwood &amp; surrounding neighbourhoods. Vaccines, prescriptions, minor ailments, medication reviews &amp; free GTA delivery. Call (416) 654-8181." />
-  <meta name="keywords" content="clinical pharmacy Toronto, pharmacy Corso Italia, pharmacy Via Italia, pharmacy St. Clair West, pharmacy Davenport Toronto, pharmacy Dufferin St Clair, pharmacy Wychwood Toronto, pharmacy Earlscourt Toronto, walk-in pharmacy Toronto, walk-in clinic pharmacy Toronto, St. Clair West pharmacy, independent pharmacy Toronto, minor ailments pharmacy, prescription refill Toronto, flu shot Toronto, vaccines pharmacy, medication review, blister packs, UTI treatment pharmacist, pharmacy near me, pharmacy 1203 St Clair Ave W, farmacia Corso Italia, farmacia Toronto, naloxone Toronto, free naloxone kit Toronto, narcan Toronto, free narcan kit, naloxone near me, naloxone pharmacy Toronto, Ontario Naloxone Program pharmacy, opioid overdose prevention Toronto, free naloxone St Clair West, harm reduction pharmacy Toronto, where to get naloxone Ontario" />
+  <meta name="keywords" content="clinical pharmacy Toronto, pharmacy Corso Italia, pharmacy Via Italia, pharmacy St. Clair West, pharmacy Davenport Toronto, pharmacy Dufferin St Clair, pharmacy Wychwood Toronto, pharmacy Earlscourt Toronto, walk-in pharmacy Toronto, walk-in clinic pharmacy Toronto, St. Clair West pharmacy, independent pharmacy Toronto, minor ailments pharmacy, prescription refill Toronto, flu shot Toronto, vaccines pharmacy, medication review, blister packs, UTI treatment pharmacist, pharmacy near me, pharmacy 1203 St Clair Ave W, farmacia Corso Italia, farmacia Toronto, naloxone Toronto, free naloxone kit Toronto, narcan Toronto, free narcan kit, naloxone near me, naloxone pharmacy Toronto, Ontario Naloxone Program pharmacy, opioid overdose prevention Toronto, free naloxone St Clair West, harm reduction pharmacy Toronto, where to get naloxone Ontario, smoking cessation Toronto, quit smoking pharmacy Toronto, Champix prescription Toronto, varenicline pharmacist Ontario, Zyban pharmacist Toronto, stop smoking help Toronto, nicotine replacement therapy Toronto, quit smoking support pharmacy" />
   <meta name="author" content="St. Clair Drug Mart Pharmacy" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="theme-color" content="#00737c" />
@@ -1091,6 +1091,69 @@
       color: var(--teal-deeper); text-transform: uppercase; letter-spacing: .04em;
     }
     .naloxone-card__desc { font-size: .81rem; color: var(--text-muted); line-height: 1.6; margin: 0; }
+
+    /* ── Smoking Cessation ─────────────────────────────── */
+    .cessation-timeline-label {
+      font-size: .8rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--teal-dark); margin-bottom: .9rem;
+    }
+    .cessation-timeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: .75rem;
+    }
+    .cessation-milestone {
+      background: var(--teal-ice); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: .85rem .9rem;
+      display: flex; flex-direction: column; gap: .4rem;
+    }
+    .cessation-milestone__time {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--teal-bright); color: #fff;
+      font-size: .72rem; font-weight: 800; letter-spacing: .04em;
+      border-radius: 100px; padding: .18rem .65rem; align-self: flex-start;
+    }
+    .cessation-milestone__text { font-size: .78rem; color: var(--text); line-height: 1.45; }
+
+    .cessation-section-hd {
+      font-family: var(--font-display); font-size: 1rem; font-weight: 900;
+      color: var(--teal-deeper); text-transform: uppercase; letter-spacing: .05em;
+    }
+    .cessation-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+    }
+    .cessation-option {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem 1.1rem;
+      display: flex; flex-direction: column; gap: .4rem;
+    }
+    .cessation-option__icon { font-size: 1.4rem; }
+    .cessation-option__name {
+      font-family: var(--font-display); font-size: .88rem; font-weight: 900;
+      color: var(--teal-deeper); text-transform: uppercase; letter-spacing: .04em; line-height: 1.25;
+    }
+    .cessation-option__desc { font-size: .79rem; color: var(--text-muted); line-height: 1.6; flex: 1; margin: 0; }
+    .cessation-option__tag {
+      display: inline-block; font-size: .7rem; font-weight: 700;
+      background: rgba(33,161,168,.1); color: var(--teal-dark);
+      border-radius: 20px; padding: .18rem .6rem; margin-top: .2rem; align-self: flex-start;
+    }
+    .cessation-consult-steps { display: flex; flex-direction: column; gap: .85rem; }
+    .cessation-consult-step {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.1rem;
+    }
+    .cessation-consult-step__num {
+      flex-shrink: 0; width: 2rem; height: 2rem; border-radius: 50%;
+      background: var(--teal-bright); color: #fff;
+      font-weight: 800; font-size: .88rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cessation-consult-step__title { font-weight: 700; font-size: .88rem; color: var(--teal-deeper); margin-bottom: .2rem; }
+    .cessation-consult-step__desc { font-size: .79rem; color: var(--text-muted); line-height: 1.55; margin: 0; }
     .medscheck-card {
       background: var(--white); border-radius: var(--radius);
       border: 1.5px solid var(--border);
@@ -1815,6 +1878,7 @@
           <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},200)">Minor Ailments</a></li>
           <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},200)">Medication Reviews</a></li>
           <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},200)">Vaccinations</a></li>
+          <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},200)">Smoking Cessation</a></li>
           <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},200)">Free Naloxone Kits</a></li>
           <li><a href="#drug-checker">Drug Checker</a></li>
           <li><a href="#services">Insurance</a></li>
@@ -2521,6 +2585,80 @@
         </div>
       </div>
 
+      <div class="svc-acc-item" id="acc-cessation">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🚭</span>
+          <span class="svc-acc__title">Smoking Cessation — Quit with Expert Support</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body svc-acc__body--wide">
+          <p class="section__lead" style="margin-bottom:1.5rem;">Ready to quit? Our pharmacist can assess your situation, prescribe all first-line cessation therapies, and support you through the full journey — no doctor's referral, no wait list, no judgment.</p>
+
+          <div class="cessation-timeline-label">⏱️ What happens to your body when you quit</div>
+          <div class="cessation-timeline">
+            <div class="cessation-milestone"><div class="cessation-milestone__time">20 min</div><p class="cessation-milestone__text">Heart rate and blood pressure drop back to normal levels</p></div>
+            <div class="cessation-milestone"><div class="cessation-milestone__time">12 hrs</div><p class="cessation-milestone__text">Carbon monoxide in your blood returns to normal — more oxygen reaches your organs</p></div>
+            <div class="cessation-milestone"><div class="cessation-milestone__time">2 weeks</div><p class="cessation-milestone__text">Circulation improves and lung function increases by up to 30%</p></div>
+            <div class="cessation-milestone"><div class="cessation-milestone__time">1 month</div><p class="cessation-milestone__text">Coughing and shortness of breath decrease — your cilia start clearing the lungs</p></div>
+            <div class="cessation-milestone"><div class="cessation-milestone__time">1 year</div><p class="cessation-milestone__text">Risk of heart attack drops to half that of a smoker</p></div>
+            <div class="cessation-milestone"><div class="cessation-milestone__time">5 years</div><p class="cessation-milestone__text">Stroke risk falls to the same level as someone who has never smoked</p></div>
+            <div class="cessation-milestone"><div class="cessation-milestone__time">10 years</div><p class="cessation-milestone__text">Lung cancer risk is now half that of someone still smoking</p></div>
+            <div class="cessation-milestone"><div class="cessation-milestone__time">15 years</div><p class="cessation-milestone__text">Heart disease risk is the same as a lifetime non-smoker</p></div>
+          </div>
+
+          <div class="cessation-section-hd" style="margin-top:2rem;margin-bottom:.85rem;">💊 Treatment Options We Can Prescribe</div>
+          <div class="cessation-options">
+            <div class="cessation-option">
+              <div class="cessation-option__icon">🩹</div>
+              <div class="cessation-option__name">Nicotine Replacement Therapy (NRT)</div>
+              <p class="cessation-option__desc">Patches, gum, lozenges, oral inhaler, and mouth spray — available without a prescription and covered by most insurance plans. The patch delivers a steady nicotine background; faster-acting forms (gum, lozenge) handle sudden cravings.</p>
+              <span class="cessation-option__tag">First-line · No Rx needed · ODB covered</span>
+            </div>
+            <div class="cessation-option">
+              <div class="cessation-option__icon">💊</div>
+              <div class="cessation-option__name">Varenicline (Champix)</div>
+              <p class="cessation-option__desc">The most effective single prescription therapy for quitting. Varenicline reduces the satisfaction from smoking while easing withdrawal — so cigarettes simply become less rewarding. Our pharmacist can prescribe this directly, without a doctor's visit.</p>
+              <span class="cessation-option__tag">Most effective · Rx required · Pharmacist can prescribe</span>
+            </div>
+            <div class="cessation-option">
+              <div class="cessation-option__icon">🔵</div>
+              <div class="cessation-option__name">Bupropion (Zyban)</div>
+              <p class="cessation-option__desc">An antidepressant that also significantly reduces nicotine cravings and withdrawal. A strong option if you have a history of depression or anxiety alongside your smoking, or if varenicline isn't right for you. Our pharmacist can prescribe this too.</p>
+              <span class="cessation-option__tag">Rx required · Also supports mood · Pharmacist can prescribe</span>
+            </div>
+            <div class="cessation-option">
+              <div class="cessation-option__icon">🔗</div>
+              <div class="cessation-option__name">Combination Therapy</div>
+              <p class="cessation-option__desc">Pairing a long-acting nicotine patch with a faster-acting form (gum or lozenge) — or combining NRT with a prescription medication — is significantly more effective than any single approach alone. Your pharmacist will recommend what combination makes sense for you.</p>
+              <span class="cessation-option__tag">Highest success rates · Tailored to you</span>
+            </div>
+          </div>
+
+          <div class="cessation-section-hd" style="margin-top:2rem;margin-bottom:.85rem;">📋 What Happens at Your Consultation</div>
+          <div class="cessation-consult-steps">
+            <div class="cessation-consult-step">
+              <div class="cessation-consult-step__num">1</div>
+              <div><div class="cessation-consult-step__title">Smoking history &amp; triggers</div><p class="cessation-consult-step__desc">We review how long you've smoked, how much, what situations or emotions trigger the urge — and whether you've tried to quit before. No judgment — this just helps us tailor a plan that actually fits your life.</p></div>
+            </div>
+            <div class="cessation-consult-step">
+              <div class="cessation-consult-step__num">2</div>
+              <div><div class="cessation-consult-step__title">Set a quit date together</div><p class="cessation-consult-step__desc">Research consistently shows that committing to a specific quit date — within 2 weeks — significantly improves success. We help you pick one and start medication before that day so it's working by the time you stop.</p></div>
+            </div>
+            <div class="cessation-consult-step">
+              <div class="cessation-consult-step__num">3</div>
+              <div><div class="cessation-consult-step__title">Personalized treatment plan</div><p class="cessation-consult-step__desc">Based on your history, other medications, and preferences, we prescribe or recommend the right combination of NRT and/or prescription therapy. We also walk through how to handle cravings and what to expect in the first week.</p></div>
+            </div>
+            <div class="cessation-consult-step">
+              <div class="cessation-consult-step__num">4</div>
+              <div><div class="cessation-consult-step__title">Follow-up &amp; ongoing support</div><p class="cessation-consult-step__desc">We check in at 1 week, 1 month, and 3 months. If cravings are difficult, side effects arise, or you need to adjust your plan, we're here. Relapse is common — it's part of the process, not a failure.</p></div>
+            </div>
+          </div>
+
+          <p style="text-align:center;margin-top:2rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667">Book a Free Smoking Cessation Consultation →</a></p>
+          <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">No referral needed · Most treatments covered by insurance &amp; ODB · Walk-ins welcome</p>
+        </div>
+      </div>
+
       <div class="svc-acc__group-hd">💊 Pharmacy Services</div>
 
       <div class="svc-acc-item">
@@ -3124,6 +3262,11 @@ window.FAQS = [
     icon: "📦",
     q: "Do you offer blister packs for complex medication schedules?",
     a: "Yes. We prepare weekly blister (bubble) packs that organize your medications by day and time — ideal for patients managing multiple prescriptions, or families supporting a loved one. Blister packs reduce missed doses and medication errors. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> or <a href=\"#booking\">book a setup appointment</a> — it usually takes just one short visit."
+  },
+  {
+    icon: "🚭",
+    q: "Can a pharmacist help me quit smoking in Ontario?",
+    a: "Yes — Ontario pharmacists can independently assess you and prescribe all first-line smoking cessation treatments, including <strong>varenicline (Champix)</strong> and <strong>bupropion (Zyban)</strong>, without a doctor's referral. We also carry the full range of nicotine replacement therapies (patches, gum, lozenges, inhaler). Our pharmacist will work with you on a personalized quit plan and follow-up support. Many treatments are covered by ODB and private insurance. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},200)\">Learn about our smoking cessation program →</a>"
   },
   {
     icon: "🆘",
