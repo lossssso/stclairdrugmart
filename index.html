@@ -1004,6 +1004,7 @@
       .find-us__info-card { padding: 1.1rem; }
       .find-us__actions { gap: .5rem; }
       .find-us__actions .btn { flex: 1; text-align: center; justify-content: center; }
+      .faq-list { grid-template-columns: 1fr; }
     }
 
     /* ── Alert banner ─────────────────────────────── */
@@ -1610,23 +1611,38 @@
     .svc-tab__panel.active { display: block; }
 
     /* ── FAQ ────────────────────────────────────────── */
-    .faq { background: #f5fafa; }
-    .faq-list { margin-top: 1.75rem; border-top: 1px solid var(--border); }
-    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq { background: linear-gradient(140deg, var(--teal-deeper) 0%, #003a40 100%); position: relative; overflow: hidden; }
+    .faq::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(33,161,168,.18) 0%, transparent 70%); pointer-events:none; }
+    .faq .section__title { color: #fff; }
+    .faq .section__title::after { background: var(--teal-bright); }
+    .faq .section__lead { color: rgba(255,255,255,.65); }
+    .faq-list { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; margin-top: 2rem; border: none; }
+    .faq-item {
+      background: #fff; border-radius: 14px; overflow: hidden;
+      box-shadow: 0 2px 18px rgba(0,0,0,.13);
+      border-left: 4px solid var(--teal-mid);
+      transition: box-shadow .25s, transform .25s, border-color .2s;
+    }
+    .faq-item:hover { box-shadow: 0 6px 28px rgba(0,0,0,.22); transform: translateY(-2px); }
+    .faq-item.open { border-left-color: var(--teal-bright); }
     .faq-item__q {
       width: 100%; text-align: left; background: none; border: none;
-      cursor: pointer; padding: 1.1rem 0;
-      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-      font-family: var(--font-display); font-weight: 600; font-size: .95rem;
-      color: var(--teal-deeper); letter-spacing: .01em;
+      cursor: pointer; padding: 1.1rem 1.2rem;
+      display: flex; align-items: center; gap: .75rem;
+      font-family: var(--font-display); font-weight: 700; font-size: .93rem;
+      color: var(--teal-deeper); transition: color .2s;
     }
-    .faq-item__q svg { width: 18px; height: 18px; flex-shrink: 0; transition: transform .2s; stroke: var(--teal-bright); }
+    .faq-item.open .faq-item__q { color: var(--teal-bright); }
+    .faq-item__q-icon { font-size: 1.35rem; flex-shrink: 0; line-height: 1; }
+    .faq-item__q-text { flex: 1; line-height: 1.35; }
+    .faq-item__q svg { width: 18px; height: 18px; flex-shrink: 0; transition: transform .25s; stroke: var(--teal-bright); }
     .faq-item.open .faq-item__q svg { transform: rotate(45deg); }
     .faq-item__a {
-      display: none; padding: 0 2rem 1.1rem 0;
-      color: var(--text-muted); line-height: 1.72; font-size: .9rem;
+      max-height: 0; overflow: hidden;
+      transition: max-height .38s ease, padding .3s;
+      padding: 0 1.2rem; color: var(--text-muted); line-height: 1.72; font-size: .875rem;
     }
-    .faq-item.open .faq-item__a { display: block; }
+    .faq-item.open .faq-item__a { max-height: 500px; padding: 0 1.2rem 1.15rem; }
 
     /* ── Footer trust badges ──────────────────────── */
     .footer__trust { margin-top: 1.75rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
@@ -2660,52 +2676,60 @@
 <script>
 window.FAQS = [
   {
+    icon: "🩺",
     q: "Do I need a doctor's referral to get a prescription?",
     a: "Not for minor ailments. Under Ontario's Minor Ailments Program, our pharmacist can assess and prescribe for 28 common conditions — no doctor's appointment, no referral needed. For other prescriptions, you'll still need a prescription from a physician or nurse practitioner, which you can bring to us to fill."
   },
   {
+    icon: "🚶",
     q: "Do you accept walk-ins?",
     a: "Yes! Walk-ins are always welcome for prescription drop-offs, vaccine appointments, and minor ailment assessments. For busier periods or medication reviews, we recommend calling ahead or booking online through PharmAssess so we can give you our full attention."
   },
   {
+    icon: "🗺️",
     q: "Can you fill prescriptions from doctors outside Ontario?",
     a: "We can fill prescriptions written by Canadian physicians licensed in any province. Prescriptions from outside Canada cannot be filled directly, but our pharmacist can often help you find an interim solution while you establish care with an Ontario provider. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to discuss your situation."
   },
   {
+    icon: "🔄",
     q: "How do I transfer my prescriptions to your pharmacy?",
     a: "Transferring is easy. You can request a transfer online using the \"Transfer Your Rx\" button in the Services section above, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a>, or simply come in. We'll contact your current pharmacy on your behalf — there's nothing more you need to do. Most transfers take about 15 minutes."
   },
   {
+    icon: "🚚",
     q: "Do you offer delivery?",
     a: "Yes — we deliver prescriptions and health products free anywhere in the GTA. We're also available on Uber Eats for on-demand delivery of over-the-counter products. Call <a href=\"tel:+14166548181\">(416) 654-8181</a> to arrange delivery."
   },
   {
+    icon: "💊",
     q: "Is a medication review free?",
     a: "Yes — medication reviews are covered at no cost for eligible Ontario residents through the provincial drug benefit program. You're typically eligible if you're taking 3 or more chronic medications, or following a hospital discharge. Book online or call us to confirm your eligibility."
   },
   {
+    icon: "📦",
     q: "Do you do blister packs?",
     a: "Yes. We prepare weekly blister (bubble) packs to organize complex medication schedules — ideal for patients taking multiple medications or caring for a family member who needs help staying on track. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to get started; setup is straightforward and usually takes one visit."
   },
   {
+    icon: "🌐",
     q: "What languages do you serve patients in?",
     a: "Our team serves patients in English, Spanish, Portuguese, Italian, Turkish, Tagalog, Polish, and more. The St. Clair West community is wonderfully diverse — we're proud to offer care in the languages our patients are most comfortable with. See the language flags on our homepage or call to check availability."
   }
-  /* ── add new FAQs here, following the same { q: "…", a: "…" } format ── */
+  /* ── add new FAQs here, following the same { q: "…", a: "…", icon: "…" } format ── */
 ];
 </script>
 
 <section id="faq" class="faq">
   <div class="section__inner">
-    <h2 class="section__title">Frequently Asked Questions</h2>
-    <p class="section__lead">Quick answers to common questions about our pharmacy.</p>
+    <h2 class="section__title">Got Questions?</h2>
+    <p class="section__lead">Everything you need to know — straight from your pharmacist.</p>
     <div class="faq-list" id="faq-list"><!-- populated by script below --></div>
   </div>
 </section>
 
 <script>
 (function(){
-  var svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+  var svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
   var list = document.getElementById('faq-list');
   if (!list || !window.FAQS) return;
   window.FAQS.forEach(function(faq){
@@ -2714,7 +2738,7 @@ window.FAQS = [
     var btn = document.createElement('button');
     btn.className = 'faq-item__q';
     btn.setAttribute('aria-expanded', 'false');
-    btn.innerHTML = faq.q + ' ' + svg;
+    btn.innerHTML = '<span class="faq-item__q-icon">' + (faq.icon || '💬') + '</span><span class="faq-item__q-text">' + faq.q + '</span>' + svg;
     var ans = document.createElement('div');
     ans.className = 'faq-item__a';
     ans.innerHTML = faq.a;
