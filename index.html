@@ -1270,6 +1270,9 @@
     }
     .reviews-uber-badge img { height: 22px; width: auto; }
     .reviews-uber-badge__text { font-size: .83rem; font-weight: 700; color: #000; }
+    .reviews-uber-top-badge { display: inline-flex; align-items: center; gap: .55rem; margin-top: 1rem; background: #f0faf0; border: 1.5px solid #c0e0c0; border-radius: 100px; padding: .35rem .9rem .35rem .55rem; }
+    .reviews-uber-top-badge img { height: 32px; width: 32px; object-fit: contain; }
+    .reviews-uber-top-badge span { font-size: .78rem; font-weight: 700; color: #1a5c1a; }
 
     /* Stars */
     .reviews-stars-wrap {
@@ -2685,6 +2688,10 @@
           </div>
           <div class="reviews-score"><span class="js-countup" data-target="4.9" data-decimals="1">4.9</span></div>
           <div class="reviews-score-sub">out of 5 &nbsp;·&nbsp; 600+ ratings</div>
+          <div class="reviews-uber-top-badge">
+            <img src="logos/uber_top_store.png" alt="Top Uber Store badge">
+            <span>Top Store in Toronto</span>
+          </div>
         </div>
       </div>
     </div>
@@ -2698,7 +2705,7 @@
       </div>
       <div class="reviews-metric">
         <div class="reviews-metric__icon">🚴</div>
-        <div class="reviews-metric__num"><span class="js-countup" data-target="10" data-suffix="K+">10K+</span></div>
+        <div class="reviews-metric__num"><span class="js-countup" data-target="15000" data-suffix="+">15000+</span></div>
         <div class="reviews-metric__label">Delivery Orders<br>Completed</div>
       </div>
       <div class="reviews-metric">
@@ -3958,15 +3965,20 @@ window.FAQS = [
 
     function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
+    function fmtNum(n, decimals) {
+      if (decimals) return n.toFixed(decimals);
+      return Math.floor(n).toLocaleString('en-CA');
+    }
+
     function countUp(el, target, decimals, suffix, duration) {
       var start = null;
       function step(ts) {
         if (!start) start = ts;
         var p = Math.min((ts - start) / duration, 1);
         var val = target * easeOut(p);
-        el.textContent = (decimals ? val.toFixed(decimals) : Math.floor(val)) + suffix;
+        el.textContent = fmtNum(val, decimals) + suffix;
         if (p < 1) requestAnimationFrame(step);
-        else el.textContent = (decimals ? target.toFixed(decimals) : target) + suffix;
+        else el.textContent = fmtNum(target, decimals) + suffix;
       }
       requestAnimationFrame(step);
     }
