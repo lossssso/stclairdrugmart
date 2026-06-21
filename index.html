@@ -1356,7 +1356,7 @@
     @media (max-width: 700px)  { .ailments-grid { grid-template-columns: repeat(2, 1fr); } }
 
     /* ── Drug Interaction Checker ─────────────────── */
-    #drug-checker { background: var(--white); }
+    #drug-checker { background: var(--teal-ice); }
     .dc-layout {
       display: grid;
       grid-template-columns: 1fr 340px;
@@ -1686,7 +1686,7 @@
           <li><a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">Medication Reviews</a></li>
           <li><a href="#services">What We Offer</a></li>
           <li><a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)">Vaccinations</a></li>
-          <li><a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=drug-check]').click()},80)">Drug Checker</a></li>
+          <li><a href="#drug-checker">Drug Checker</a></li>
           <li><a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=insurance]').click()},80)">Insurance</a></li>
         </ul>
       </li>
@@ -2441,47 +2441,6 @@
 
       <div class="svc-acc-item">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🔎</span>
-          <span class="svc-acc__title">Free Drug Interaction Checker</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body svc-acc__body--wide">
-<p class="section__lead" style="margin-bottom:1.5rem;">Add two or more medications to check for possible interactions — right here, no sign-up needed.</p>
-        <div class="dc-layout">
-          <div class="dc-card">
-            <div class="dc-input-row">
-              <div class="dc-autocomplete">
-                <input type="text" id="dc-input" class="dc-input" placeholder="Type a medication name…" autocomplete="off" aria-label="Medication name" />
-                <ul id="dc-suggestions" class="dc-suggestions" role="listbox"></ul>
-              </div>
-              <button type="button" id="dc-add" class="btn">Add</button>
-            </div>
-            <div id="dc-chips" class="dc-chips" aria-live="polite"></div>
-            <div class="dc-actions">
-              <button type="button" id="dc-check" class="btn" disabled>Check Interactions →</button>
-              <button type="button" id="dc-clear" class="btn btn--outline">Clear</button>
-            </div>
-            <div id="dc-results" class="dc-results"></div>
-            <p class="dc-disclaimer">⚠️ This tool is for general information only and may not capture every interaction. Always confirm with our pharmacists before starting, stopping, or combining medications. Medication names are sent anonymously to the U.S. National Library of Medicine (NLM RxNav API) — no personal health information is collected or stored by this website.</p>
-            <div class="dc-credit"><span>For a complete report, visit</span><a href="https://www.drugs.com/drug_interactions.html" target="_blank" rel="noopener" class="dc-credit__logo">Drugs<span>.com</span></a><span class="dc-credit__data">· Data: NLM RxNav · DrugBank · Health Canada</span></div>
-          </div>
-          <div class="dc-summary" id="dc-summary">
-            <div class="dc-summary__icon">💊</div>
-            <h3 class="dc-summary__title">Your Summary</h3>
-            <p class="dc-summary__hint">Add your medications on the left, then click <strong>Check Interactions</strong> to see a summary here.</p>
-            <div id="dc-summary-body" class="dc-summary__body"></div>
-            <div class="dc-summary__cta" id="dc-summary-cta" style="display:none">
-              <p>We recommend booking a <strong>Medication Review</strong> with our pharmacists — it's covered for eligible Ontario residents through the provincial drug benefit program.</p>
-              <a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/patient/meds/306667">Book a Medication Review →</a>
-              <div class="dc-pharmacist" style="margin-top:.85rem;">Or call us: <a href="tel:+14166548181">(416) 654-8181</a></div>
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
           <span class="svc-acc__icon">🛡️</span>
           <span class="svc-acc__title">Insurance Direct-Billing</span>
           <span class="svc-acc__chev">+</span>
@@ -2504,7 +2463,44 @@
   </div>
 </section>
 
-<!-- ── Medication Reviews ─────────────────────────────────── -->
+<!-- ── Drug Interaction Checker ───────────────────────────── -->
+<section id="drug-checker">
+  <div class="section__inner">
+    <h2 class="section__title">Free Drug Interaction Checker</h2>
+    <p class="section__lead">Add two or more medications to check for possible interactions — right here, no sign-up needed. No account required.</p>
+    <div class="dc-layout">
+      <div class="dc-card">
+        <div class="dc-input-row">
+          <div class="dc-autocomplete">
+            <input type="text" id="dc-input" class="dc-input" placeholder="Type a medication name…" autocomplete="off" aria-label="Medication name" />
+            <ul id="dc-suggestions" class="dc-suggestions" role="listbox"></ul>
+          </div>
+          <button type="button" id="dc-add" class="btn">Add</button>
+        </div>
+        <div id="dc-chips" class="dc-chips" aria-live="polite"></div>
+        <div class="dc-actions">
+          <button type="button" id="dc-check" class="btn" disabled>Check Interactions →</button>
+          <button type="button" id="dc-clear" class="btn btn--outline">Clear</button>
+        </div>
+        <div id="dc-results" class="dc-results"></div>
+        <p class="dc-disclaimer">⚠️ This tool is for general information only and may not capture every interaction. Always confirm with our pharmacists before starting, stopping, or combining medications. Medication names are sent anonymously to the U.S. National Library of Medicine (NLM RxNav API) — no personal health information is collected or stored by this website.</p>
+        <div class="dc-credit"><span>For a complete report, visit</span><a href="https://www.drugs.com/drug_interactions.html" target="_blank" rel="noopener" class="dc-credit__logo">Drugs<span>.com</span></a><span class="dc-credit__data">· Data: NLM RxNav · DrugBank · Health Canada</span></div>
+      </div>
+      <div class="dc-summary" id="dc-summary">
+        <div class="dc-summary__icon">💊</div>
+        <h3 class="dc-summary__title">Your Summary</h3>
+        <p class="dc-summary__hint">Add your medications on the left, then click <strong>Check Interactions</strong> to see a summary here.</p>
+        <div id="dc-summary-body" class="dc-summary__body"></div>
+        <div class="dc-summary__cta" id="dc-summary-cta" style="display:none">
+          <p>We recommend booking a <strong>Medication Review</strong> with our pharmacists — it's covered for eligible Ontario residents through the provincial drug benefit program.</p>
+          <a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/patient/meds/306667">Book a Medication Review →</a>
+          <div class="dc-pharmacist" style="margin-top:.85rem;">Or call us: <a href="tel:+14166548181">(416) 654-8181</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── Reviews ────────────────────────────────────────────── -->
 <section id="reviews">
   <div class="section__inner">
@@ -2997,8 +2993,8 @@ window.FAQS = [
     <a href="#booking">Patient Portal</a>
     <a href="#team">Our Team</a>
     <a href="#faq">FAQ</a>
-    <a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=drug-check]').click()},80)">Drug Checker</a>
-    <a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=insurance]').click()},80)">Insurance</a>
+    <a href="#drug-checker">Drug Checker</a>
+    <a href="#services">Insurance</a>
     <a href="#shop">Shop</a>
     <a href="#contact">Contact</a>
     <a href="#about">About</a>
