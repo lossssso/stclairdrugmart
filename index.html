@@ -1576,12 +1576,6 @@
     @media (max-width: 600px) {
       .ailments-triage__btns { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; }
     }
-    .ailments-triage__toggle { width: 100%; background: none; border: none; border-bottom: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: space-between; font-weight: 700; color: var(--teal-deeper); font-size: .88rem; padding: .48rem 0; text-align: left; gap: .5rem; }
-    .ailments-triage__toggle:hover { color: var(--teal-bright); }
-    .ailments-triage__chev { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; transition: transform .2s; }
-    .ailments-triage__toggle[aria-expanded="false"] .ailments-triage__chev { transform: rotate(-90deg); }
-    .ailments-triage__panel { max-height: 400px; overflow: hidden; transition: max-height .25s ease, padding-top .25s ease; padding-top: .55rem; }
-    .ailments-triage__panel.collapsed { max-height: 0 !important; padding-top: 0; }
     .ailments-cat-section { margin-bottom: 1.5rem; }
     .ailments-cat__hd { font-size: .78rem; font-weight: 900; color: var(--teal-deeper); text-transform: uppercase; letter-spacing: .06em; padding: .35rem .65rem; background: var(--teal-ice); border-radius: 6px; display: inline-block; margin-bottom: .75rem; }
     .ailment-card { cursor: pointer; }
@@ -2247,38 +2241,32 @@
       <div class="ailments-triage" id="ailments-triage-portal">
         <button class="ailments-triage__btn ailments-triage__btn--all active" data-triage="portal" data-cat="all">All Conditions</button>
         <div class="ailments-triage__group">
-          <button class="ailments-triage__toggle" aria-expanded="true"><span>🔍 Where is your main symptom?</span><svg class="ailments-triage__chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-          <div class="ailments-triage__panel">
-            <div class="ailments-triage__btns">
-              <button class="ailments-triage__btn" data-triage="portal" data-cat="eent">🧠 Head: Eyes, Nose &amp; Mouth</button>
-              <button class="ailments-triage__btn" data-triage="portal" data-cat="skin">🧴 Skin &amp; Hair</button>
-              <button class="ailments-triage__btn" data-triage="portal" data-cat="feet">🦶 Feet</button>
-              <button class="ailments-triage__btn" data-triage="portal" data-cat="groin">🏃 Groin &amp; Pelvic</button>
-              <button class="ailments-triage__btn" data-triage="portal" data-cat="gut">🔥 Stomach &amp; Bowel</button>
-            </div>
+          <div class="ailments-triage__q">🔍 Where is your main symptom?</div>
+          <div class="ailments-triage__btns">
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="eent">🧠 Head: Eyes, Nose &amp; Mouth</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="skin">🧴 Skin &amp; Hair</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="feet">🦶 Feet</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="groin">🏃 Groin &amp; Pelvic</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="gut">🔥 Stomach &amp; Bowel</button>
           </div>
         </div>
         <div class="ailments-triage__group">
-          <button class="ailments-triage__toggle" aria-expanded="true"><span>🗂️ Browse by topic</span><svg class="ailments-triage__chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-          <div class="ailments-triage__panel">
-            <div class="ailments-triage__btns">
-              <button class="ailments-triage__btn" data-triage="portal" data-cat="pain">🦴 Pain &amp; Injury</button>
-              <button class="ailments-triage__btn" data-triage="portal" data-cat="womens">🌸 Women's Health</button>
-              <button class="ailments-triage__btn" data-triage="portal" data-cat="bites">🐝 Bites &amp; Stings</button>
-              <button class="ailments-triage__btn" data-triage="portal" data-cat="children">🧒 Children's Health</button>
-              <button class="ailments-triage__btn" data-triage="portal" data-cat="contagious">🦠 Contagious / Infections</button>
-            </div>
+          <div class="ailments-triage__q">🗂️ What does it relate to?</div>
+          <div class="ailments-triage__btns">
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="pain">🦴 Pain &amp; Injury</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="womens">🌸 Women's Health</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="bites">🐝 Bites &amp; Stings</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="children">🧒 Children's Health</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="contagious">🦠 Contagious / Infections</button>
           </div>
         </div>
         <div class="ailments-triage__group">
-          <button class="ailments-triage__toggle" aria-expanded="true"><span>🩺 What does it look or feel like?</span><svg class="ailments-triage__chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-          <div class="ailments-triage__panel">
-            <div class="ailments-triage__btns">
-              <button class="ailments-triage__btn" data-triage="portal" data-cat="s-rash">🔴 Rash, redness or itching</button>
-              <button class="ailments-triage__btn" data-triage="portal" data-cat="s-pain">🤕 Pain, aching or swelling</button>
-              <button class="ailments-triage__btn" data-triage="portal" data-cat="s-sore">🫧 Sore, blister or growth</button>
-              <button class="ailments-triage__btn" data-triage="portal" data-cat="s-discharge">💧 Discharge or unusual fluid</button>
-            </div>
+          <div class="ailments-triage__q">🩺 What does it look or feel like?</div>
+          <div class="ailments-triage__btns">
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="s-rash">🔴 Rash, redness or itching</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="s-pain">🤕 Pain, aching or swelling</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="s-sore">🫧 Sore, blister or growth</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="s-discharge">💧 Discharge or unusual fluid</button>
           </div>
         </div>
       </div>
@@ -2502,38 +2490,32 @@
         <div class="ailments-triage" id="ailments-triage-main">
           <button class="ailments-triage__btn ailments-triage__btn--all active" data-triage="main" data-cat="all">All 28 Conditions</button>
           <div class="ailments-triage__group">
-            <button class="ailments-triage__toggle" aria-expanded="true"><span>🔍 Where is your main symptom?</span><svg class="ailments-triage__chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-            <div class="ailments-triage__panel">
-              <div class="ailments-triage__btns">
-                <button class="ailments-triage__btn" data-triage="main" data-cat="eent">🧠 Head: Eyes, Nose &amp; Mouth</button>
-                <button class="ailments-triage__btn" data-triage="main" data-cat="skin">🧴 Skin &amp; Hair</button>
-                <button class="ailments-triage__btn" data-triage="main" data-cat="feet">🦶 Feet</button>
-                <button class="ailments-triage__btn" data-triage="main" data-cat="groin">🏃 Groin &amp; Pelvic</button>
-                <button class="ailments-triage__btn" data-triage="main" data-cat="gut">🔥 Stomach &amp; Bowel</button>
-              </div>
+            <div class="ailments-triage__q">🔍 Where is your main symptom?</div>
+            <div class="ailments-triage__btns">
+              <button class="ailments-triage__btn" data-triage="main" data-cat="eent">🧠 Head: Eyes, Nose &amp; Mouth</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="skin">🧴 Skin &amp; Hair</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="feet">🦶 Feet</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="groin">🏃 Groin &amp; Pelvic</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="gut">🔥 Stomach &amp; Bowel</button>
             </div>
           </div>
           <div class="ailments-triage__group">
-            <button class="ailments-triage__toggle" aria-expanded="true"><span>🗂️ Browse by topic</span><svg class="ailments-triage__chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-            <div class="ailments-triage__panel">
-              <div class="ailments-triage__btns">
-                <button class="ailments-triage__btn" data-triage="main" data-cat="pain">🦴 Pain &amp; Injury</button>
-                <button class="ailments-triage__btn" data-triage="main" data-cat="womens">🌸 Women's Health</button>
-                <button class="ailments-triage__btn" data-triage="main" data-cat="bites">🐝 Bites &amp; Stings</button>
-                <button class="ailments-triage__btn" data-triage="main" data-cat="children">🧒 Children's Health</button>
-                <button class="ailments-triage__btn" data-triage="main" data-cat="contagious">🦠 Contagious / Infections</button>
-              </div>
+            <div class="ailments-triage__q">🗂️ What does it relate to?</div>
+            <div class="ailments-triage__btns">
+              <button class="ailments-triage__btn" data-triage="main" data-cat="pain">🦴 Pain &amp; Injury</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="womens">🌸 Women's Health</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="bites">🐝 Bites &amp; Stings</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="children">🧒 Children's Health</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="contagious">🦠 Contagious / Infections</button>
             </div>
           </div>
           <div class="ailments-triage__group">
-            <button class="ailments-triage__toggle" aria-expanded="true"><span>🩺 What does it look or feel like?</span><svg class="ailments-triage__chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-            <div class="ailments-triage__panel">
-              <div class="ailments-triage__btns">
-                <button class="ailments-triage__btn" data-triage="main" data-cat="s-rash">🔴 Rash, redness or itching</button>
-                <button class="ailments-triage__btn" data-triage="main" data-cat="s-pain">🤕 Pain, aching or swelling</button>
-                <button class="ailments-triage__btn" data-triage="main" data-cat="s-sore">🫧 Sore, blister or growth</button>
-                <button class="ailments-triage__btn" data-triage="main" data-cat="s-discharge">💧 Discharge or unusual fluid</button>
-              </div>
+            <div class="ailments-triage__q">🩺 What does it look or feel like?</div>
+            <div class="ailments-triage__btns">
+              <button class="ailments-triage__btn" data-triage="main" data-cat="s-rash">🔴 Rash, redness or itching</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="s-pain">🤕 Pain, aching or swelling</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="s-sore">🫧 Sore, blister or growth</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="s-discharge">💧 Discharge or unusual fluid</button>
             </div>
           </div>
         </div>
@@ -4732,16 +4714,6 @@ window.FAQS = [
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && siteOverlay.classList.contains('open')) closeSiteSearch();
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSiteSearch(); }
-  });
-
-  // ── Triage question dropdown toggles ─────────────────────
-  document.querySelectorAll('.ailments-triage__toggle').forEach(function(toggle) {
-    toggle.addEventListener('click', function() {
-      var expanded = this.getAttribute('aria-expanded') === 'true';
-      this.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-      var panel = this.nextElementSibling;
-      if (panel) panel.classList.toggle('collapsed', expanded);
-    });
   });
 
   // ── Ailment Triage Filter ─────────────────────────────────
