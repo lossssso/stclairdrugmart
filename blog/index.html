@@ -3,99 +3,482 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,viewport-fit=cover"/>
-  <title>Health &amp; Pharmacy Blog | St. Clair Drug Mart Pharmacy, Toronto</title>
-  <meta name="description" content="Health tips, pharmacy news, and wellness advice from St. Clair Drug Mart Pharmacy in Toronto — minor ailments, vaccines, prescriptions, and more."/>
-  <link rel="canonical" href="https://www.stclairdrugmart.ca/blog/index.html"/>
+  <title>Health &amp; Wellness Hub | St. Clair Drug Mart Pharmacy, Toronto</title>
+  <meta name="description" content="Health tips, pharmacy news, and wellness advice from your neighbourhood pharmacists at St. Clair Drug Mart — minor ailments, vaccines, medication guides, and more."/>
+  <link rel="canonical" href="https://www.stclairdrugmart.ca/blog/"/>
   <meta name="robots" content="index, follow, max-image-preview:large"/>
   <meta property="og:type" content="website"/>
-  <meta property="og:title" content="Health &amp; Pharmacy Blog | St. Clair Drug Mart Pharmacy"/>
+  <meta property="og:title" content="Health &amp; Wellness Hub | St. Clair Drug Mart Pharmacy"/>
   <meta property="og:description" content="Health tips, pharmacy news, and wellness advice from your neighbourhood pharmacists in Toronto."/>
-  <meta property="og:url" content="https://www.stclairdrugmart.ca/blog/index.html"/>
-  <meta property="og:image" content="https://www.stclairdrugmart.ca/storefront_new_1.webp"/>
-  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
-  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
+  <meta property="og:url" content="https://www.stclairdrugmart.ca/blog/"/>
+  <meta property="og:image" content="https://www.stclairdrugmart.ca/storefront_exterior.webp"/>
+  <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="post.css"/>
   <style>
-    .blog-hero { background:linear-gradient(150deg,var(--teal-deeper) 0%,var(--teal-dark) 55%,var(--teal-bright) 100%); padding:3rem 1.5rem 2.5rem; color:#fff; text-align:center; }
-    .blog-hero h1 { font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; margin-bottom:.5rem; }
-    .blog-hero p { opacity:.85; font-size:.98rem; max-width:560px; margin:0 auto; }
-    .blog-main { max-width:1100px; margin:3rem auto; padding:0 1.5rem 4rem; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --teal-bright:#21a1a8; --teal-mid:#5cb9bc; --teal-dark:#00737c; --teal-deeper:#00737c;
+      --teal-ice:#d7fbfc; --white:#fff; --text:#0d2d2e; --text-muted:#3a6062;
+      --border:#b8e8ea; --radius:12px; --shadow:0 2px 14px rgba(0,115,124,.10);
+    }
+    html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; overflow-x:hidden; }
+    body { font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif; background:#f4fbfc; color:var(--text); line-height:1.7; overflow-x:hidden; }
+    a { color:var(--teal-dark); text-decoration:none; }
+    img { display:block; max-width:100%; }
+
+    /* ── Nav ───────────────────────────────────────── */
+    .nav { position:sticky; top:0; z-index:200; background:var(--teal-deeper); box-shadow:0 2px 10px rgba(0,0,0,.22); }
+    .nav__inner { max-width:1140px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:0 1.5rem; height:58px; }
+    .nav__brand { display:flex; align-items:center; gap:.6rem; font-weight:800; font-size:.97rem; color:#fff; letter-spacing:.015em; text-decoration:none; }
+    .nav__brand__logo { width:32px; height:32px; border-radius:6px; object-fit:contain; }
+    .nav__links { display:flex; list-style:none; gap:.15rem; }
+    .nav__links a { color:rgba(255,255,255,.85); font-size:.875rem; font-weight:500; padding:.45rem .78rem; border-radius:7px; transition:background .15s; text-decoration:none; display:block; }
+    .nav__links a:hover { background:rgba(255,255,255,.13); color:#fff; }
+    .nav__cta a { background:var(--teal-bright) !important; color:#fff !important; }
+    .nav__cta a:hover { background:var(--teal-mid) !important; }
+    .nav__toggle { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:.35rem; }
+    .nav__toggle span { display:block; width:22px; height:2px; background:#fff; border-radius:2px; transition:all .2s; }
+    .nav__toggle.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+    .nav__toggle.open span:nth-child(2) { opacity:0; }
+    .nav__toggle.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+    @media (max-width:700px) {
+      .nav__toggle { display:flex; }
+      .nav__links { display:none; position:absolute; top:58px; left:0; right:0; background:var(--teal-deeper); flex-direction:column; padding:.75rem 1rem 1rem; gap:0; }
+      .nav__links.open { display:flex; }
+      .nav__links li { width:100%; }
+      .nav__links a { padding:.65rem 1rem; }
+    }
+
+    /* ── Hero ─────────────────────────────────────── */
+    .blog-hero {
+      background: linear-gradient(140deg, #004f56 0%, var(--teal-dark) 45%, var(--teal-bright) 100%);
+      padding: 4rem 1.5rem 3.5rem;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .blog-hero::before {
+      content:'';
+      position:absolute; inset:0;
+      background: radial-gradient(ellipse 70% 60% at 80% 30%, rgba(255,255,255,.07), transparent);
+      pointer-events:none;
+    }
+    .blog-hero__eyebrow { font-size:.78rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; opacity:.7; margin-bottom:.6rem; }
+    .blog-hero h1 { font-size:clamp(2rem,5vw,3.2rem); font-weight:800; line-height:1.15; margin-bottom:.75rem; }
+    .blog-hero__sub { font-size:1.05rem; opacity:.82; max-width:560px; margin:0 auto 2rem; line-height:1.65; }
+    .blog-hero__search {
+      display:flex; align-items:center; max-width:460px; margin:0 auto;
+      background:rgba(255,255,255,.15); border:1.5px solid rgba(255,255,255,.3);
+      border-radius:100px; overflow:hidden; backdrop-filter:blur(8px);
+    }
+    .blog-hero__search input {
+      flex:1; background:none; border:none; outline:none; padding:.7rem 1.2rem;
+      color:#fff; font-size:.9rem; font-family:inherit;
+    }
+    .blog-hero__search input::placeholder { color:rgba(255,255,255,.6); }
+    .blog-hero__search button {
+      background:var(--teal-bright); border:none; cursor:pointer; padding:.7rem 1.2rem;
+      color:#fff; font-size:.9rem; font-weight:600; font-family:inherit; transition:background .15s;
+    }
+    .blog-hero__search button:hover { background:var(--teal-mid); }
+
+    /* ── Category filters ─────────────────────────── */
+    .blog-filters {
+      max-width:1140px; margin:0 auto; padding:2rem 1.5rem 0;
+      display:flex; align-items:center; gap:.5rem; flex-wrap:wrap;
+    }
+    .blog-filters__label { font-size:.78rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.1em; margin-right:.25rem; }
+    .filter-btn {
+      background:var(--white); border:1.5px solid var(--border); border-radius:100px;
+      padding:.38rem .9rem; font-size:.8rem; font-weight:600; cursor:pointer;
+      color:var(--text-muted); transition:all .15s; font-family:inherit;
+    }
+    .filter-btn:hover, .filter-btn.active { background:var(--teal-bright); color:#fff; border-color:var(--teal-bright); }
+
+    /* ── Posts grid container ─────────────────────── */
+    .blog-main { max-width:1140px; margin:0 auto; padding:1.75rem 1.5rem 4rem; }
+
+    /* ── Featured post ────────────────────────────── */
+    .featured-wrap { margin-bottom:2rem; }
+    .featured-label { font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--teal-dark); margin-bottom:.65rem; }
+    .post-featured {
+      background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow);
+      display:grid; grid-template-columns:1fr 1.6fr; overflow:hidden;
+      border-top:4px solid var(--teal-bright); transition:box-shadow .2s;
+    }
+    .post-featured:hover { box-shadow:0 6px 28px rgba(0,115,124,.18); }
+    .post-featured__img {
+      background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal-bright) 100%);
+      display:flex; align-items:center; justify-content:center;
+      min-height:220px; font-size:4rem; color:rgba(255,255,255,.25);
+    }
+    .post-featured__body { padding:2rem 2rem 1.75rem; display:flex; flex-direction:column; gap:.6rem; }
+    .post-featured__tags { display:flex; gap:.4rem; flex-wrap:wrap; }
+    .post-featured__title { font-size:1.45rem; font-weight:800; color:var(--teal-deeper); line-height:1.25; }
+    .post-featured__title a { color:inherit; text-decoration:none; transition:color .15s; }
+    .post-featured__title a:hover { color:var(--teal-bright); }
+    .post-featured__meta { font-size:.8rem; color:var(--text-muted); display:flex; gap:.85rem; }
+    .post-featured__excerpt { font-size:.93rem; color:var(--text-muted); flex:1; line-height:1.65; }
+    .post-featured__cta { display:inline-flex; align-items:center; gap:.4rem; font-size:.85rem; font-weight:700; color:var(--teal-dark); text-decoration:none; transition:color .15s; }
+    .post-featured__cta:hover { color:var(--teal-bright); }
+    @media (max-width:720px) {
+      .post-featured { grid-template-columns:1fr; }
+      .post-featured__img { min-height:140px; font-size:3rem; }
+      .post-featured__body { padding:1.5rem; }
+      .post-featured__title { font-size:1.2rem; }
+    }
+
+    /* ── Posts section heading ────────────────────── */
+    .posts-section__hd { display:flex; align-items:center; justify-content:space-between; margin:2.25rem 0 1.1rem; }
+    .posts-section__title { font-size:1.1rem; font-weight:800; color:var(--teal-deeper); }
+    .posts-section__count { font-size:.8rem; color:var(--text-muted); }
+
+    /* ── Posts grid ───────────────────────────────── */
     .posts-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
-    .post-card { background:var(--white); border-radius:var(--radius); padding:1.5rem; box-shadow:var(--shadow); border-top:3px solid var(--teal-bright); display:flex; flex-direction:column; gap:.6rem; }
-    .post-card__meta { display:flex; gap:1rem; font-size:.78rem; color:var(--text-muted); }
-    .post-card__title { font-size:1.05rem; font-weight:700; line-height:1.3; }
-    .post-card__title a { color:var(--teal-deeper); text-decoration:none; transition:color .15s; }
+    .post-card {
+      background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow);
+      border-top:3px solid var(--teal-bright); display:flex; flex-direction:column;
+      gap:.5rem; padding:1.5rem; transition:box-shadow .2s, transform .2s;
+    }
+    .post-card:hover { box-shadow:0 6px 28px rgba(0,115,124,.16); transform:translateY(-2px); }
+    .post-card__icon { font-size:2rem; margin-bottom:.2rem; }
+    .post-card__meta { display:flex; gap:.75rem; font-size:.75rem; color:var(--text-muted); }
+    .post-card__title { font-size:1rem; font-weight:700; line-height:1.35; color:var(--teal-deeper); }
+    .post-card__title a { color:inherit; text-decoration:none; transition:color .15s; }
     .post-card__title a:hover { color:var(--teal-bright); }
-    .post-card__excerpt { font-size:.875rem; color:var(--text-muted); flex:1; line-height:1.55; }
-    .post-card__footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.5rem; }
-    .post-card__tags { display:flex; gap:.35rem; flex-wrap:wrap; }
-    .ptag { background:var(--teal-ice); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem; font-size:.72rem; color:var(--teal-dark); }
-    .read-more { font-size:.82rem; font-weight:600; color:var(--teal-dark); text-decoration:none; transition:color .15s; }
+    .post-card__excerpt { font-size:.85rem; color:var(--text-muted); flex:1; line-height:1.6; }
+    .post-card__footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.4rem; margin-top:.3rem; }
+    .post-card__tags { display:flex; gap:.3rem; flex-wrap:wrap; }
+    .ptag { background:var(--teal-ice); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem; font-size:.7rem; color:var(--teal-dark); font-weight:600; }
+    .read-more { font-size:.8rem; font-weight:700; color:var(--teal-dark); text-decoration:none; transition:color .15s; white-space:nowrap; }
     .read-more:hover { color:var(--teal-bright); }
     .blog-empty { color:var(--text-muted); grid-column:1/-1; text-align:center; padding:3rem 0; }
-    @media (max-width:900px){ .posts-grid { grid-template-columns:repeat(2,1fr); } }
-    @media (max-width:600px){ .posts-grid { grid-template-columns:1fr; } }
+
+    @media (max-width:900px) { .posts-grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:580px) { .posts-grid { grid-template-columns:1fr; } }
+
+    /* ── Newsletter / CTA band ────────────────────── */
+    .blog-cta {
+      background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal-bright) 100%);
+      padding:3.5rem 1.5rem; text-align:center; color:#fff; margin:3rem 0 0;
+    }
+    .blog-cta h2 { font-size:clamp(1.5rem,3.5vw,2.1rem); font-weight:800; margin-bottom:.6rem; }
+    .blog-cta p { opacity:.85; max-width:480px; margin:0 auto 1.75rem; font-size:.97rem; }
+    .blog-cta__btns { display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap; }
+    .blog-cta__btn {
+      display:inline-flex; align-items:center; gap:.4rem; font-size:.9rem; font-weight:700;
+      padding:.7rem 1.4rem; border-radius:100px; text-decoration:none; transition:all .18s; cursor:pointer;
+      border:2px solid #fff; font-family:inherit;
+    }
+    .blog-cta__btn--primary { background:#fff; color:var(--teal-dark); }
+    .blog-cta__btn--primary:hover { background:var(--teal-ice); }
+    .blog-cta__btn--outline { background:transparent; color:#fff; }
+    .blog-cta__btn--outline:hover { background:rgba(255,255,255,.15); }
+
+    /* ── Topics sidebar strip ─────────────────────── */
+    .blog-topics { max-width:1140px; margin:2.5rem auto 0; padding:0 1.5rem; }
+    .blog-topics__grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+    .topic-card {
+      background:var(--white); border-radius:var(--radius); padding:1.25rem 1rem; text-align:center;
+      box-shadow:var(--shadow); cursor:pointer; transition:all .18s; border:1.5px solid var(--border);
+      text-decoration:none; color:var(--text);
+    }
+    .topic-card:hover { background:var(--teal-ice); border-color:var(--teal-bright); transform:translateY(-2px); }
+    .topic-card__icon { font-size:1.8rem; margin-bottom:.5rem; }
+    .topic-card__name { font-size:.82rem; font-weight:700; color:var(--teal-deeper); line-height:1.25; }
+    .topic-card__count { font-size:.72rem; color:var(--text-muted); margin-top:.2rem; }
+    @media (max-width:720px) { .blog-topics__grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:400px) { .blog-topics__grid { grid-template-columns:1fr 1fr; } }
+
+    /* ── Section divider heading ──────────────────── */
+    .section-hd {
+      display:flex; align-items:center; gap:.75rem; margin:2.5rem 0 1.25rem;
+      font-size:1.1rem; font-weight:800; color:var(--teal-deeper);
+    }
+    .section-hd::after { content:''; flex:1; height:1px; background:var(--border); }
+
+    /* ── Footer ───────────────────────────────────── */
+    footer { background:var(--teal-deeper); color:rgba(255,255,255,.8); text-align:center; padding:2.25rem 1.5rem 2.5rem; font-size:.85rem; }
+    .footer__links { display:flex; flex-wrap:wrap; gap:.35rem .75rem; justify-content:center; margin-bottom:1rem; }
+    .footer__links a { color:rgba(255,255,255,.7); text-decoration:none; font-size:.82rem; transition:color .15s; }
+    .footer__links a:hover { color:#fff; }
+    footer p { margin-bottom:.35rem; }
+    footer a { color:rgba(255,255,255,.7); }
+    footer a:hover { color:#fff; }
+    .footer__socials { display:flex; gap:.75rem; justify-content:center; margin:1.1rem 0; }
+    .footer__socials a { width:36px; height:36px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.1); border-radius:50%; transition:background .15s; }
+    .footer__socials a:hover { background:rgba(255,255,255,.22); }
+    .footer__socials svg { width:16px; height:16px; fill:none; stroke:rgba(255,255,255,.8); stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+    .footer__reg { font-size:.72rem; opacity:.5; max-width:640px; margin:.75rem auto 0; line-height:1.5; }
+    .footer__copy { font-size:.72rem; opacity:.45; margin-top:.5rem; }
   </style>
 </head>
 <body>
+
+<!-- ── Navigation ──────────────────────────────────────────── -->
 <nav class="nav">
   <div class="nav__inner">
-    <a href="../index.html" class="nav__brand">St. Clair Drug Mart</a>
-    <ul class="nav__links">
+    <a href="../index.html" class="nav__brand">
+      <img src="../logo.png" alt="" class="nav__brand__logo"/>
+      <span>St. Clair Drug Mart</span>
+    </a>
+    <button class="nav__toggle" aria-label="Toggle menu" id="navToggle">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav__links" id="navLinks">
       <li><a href="../index.html">Home</a></li>
       <li><a href="../index.html#booking">Services</a></li>
-      <li><a href="index.html">Blog</a></li>
+      <li><a href="../index.html#services">Minor Ailments</a></li>
+      <li><a href="index.html" style="color:#fff;font-weight:700;">Blog</a></li>
       <li><a href="../index.html#contact">Contact</a></li>
-      <li class="nav__cta"><a href="https://app.pharmassess.ca/appointment/306667" target="_blank" rel="noopener">Book Appointment</a></li>
+      <li class="nav__cta"><a href="https://app.pharmassess.ca/appointment/306667" target="_blank" rel="noopener">Book Now</a></li>
     </ul>
   </div>
 </nav>
 
+<!-- ── Hero ────────────────────────────────────────────────── -->
 <div class="blog-hero">
-  <h1>Health &amp; Pharmacy Blog</h1>
-  <p>Tips, news, and wellness advice from your neighbourhood pharmacists at St. Clair Drug Mart.</p>
+  <div class="blog-hero__eyebrow">St. Clair Drug Mart Pharmacy · Toronto</div>
+  <h1>Health &amp; Wellness Hub</h1>
+  <p class="blog-hero__sub">Straight-talk health tips, pharmacy news, and wellness guides from your neighbourhood pharmacists on St. Clair West.</p>
+  <div class="blog-hero__search">
+    <input type="text" id="searchInput" placeholder="Search articles…" autocomplete="off"/>
+    <button type="button" id="searchBtn">Search</button>
+  </div>
 </div>
 
-<main class="blog-main">
-  <div class="posts-grid" id="posts-grid">
-    <p class="blog-empty">Loading posts…</p>
+<!-- ── Topic Cards ──────────────────────────────────────────── -->
+<div class="blog-topics">
+  <div class="blog-topics__grid">
+    <a class="topic-card filter-topic" data-tag="Minor Ailments" href="#">
+      <div class="topic-card__icon">💊</div>
+      <div class="topic-card__name">Minor Ailments</div>
+      <div class="topic-card__count">Pharmacist-prescribed conditions</div>
+    </a>
+    <a class="topic-card filter-topic" data-tag="Vaccines" href="#">
+      <div class="topic-card__icon">💉</div>
+      <div class="topic-card__name">Vaccines</div>
+      <div class="topic-card__count">What's new for 2026</div>
+    </a>
+    <a class="topic-card filter-topic" data-tag="Getting Started" href="#">
+      <div class="topic-card__icon">🏥</div>
+      <div class="topic-card__name">Getting Started</div>
+      <div class="topic-card__count">New patient guides</div>
+    </a>
+    <a class="topic-card filter-topic" data-tag="Medication" href="#">
+      <div class="topic-card__icon">📋</div>
+      <div class="topic-card__name">Medication Tips</div>
+      <div class="topic-card__count">Interactions &amp; safety</div>
+    </a>
   </div>
+</div>
+
+<!-- ── Category Filters ─────────────────────────────────────── -->
+<div class="blog-filters">
+  <span class="blog-filters__label">Filter:</span>
+  <button class="filter-btn active" data-filter="all">All Articles</button>
+  <button class="filter-btn" data-filter="Minor Ailments">Minor Ailments</button>
+  <button class="filter-btn" data-filter="Vaccines">Vaccines</button>
+  <button class="filter-btn" data-filter="Getting Started">Getting Started</button>
+  <button class="filter-btn" data-filter="Medication">Medication</button>
+</div>
+
+<!-- ── Main Content ─────────────────────────────────────────── -->
+<main class="blog-main">
+
+  <!-- Featured post slot -->
+  <div class="featured-wrap" id="featuredWrap">
+    <div class="featured-label">✦ Latest Article</div>
+    <div id="featuredPost"></div>
+  </div>
+
+  <!-- All posts -->
+  <div class="section-hd">All Articles</div>
+  <div class="posts-grid" id="postsGrid">
+    <p class="blog-empty">Loading articles…</p>
+  </div>
+
 </main>
 
+<!-- ── CTA Band ─────────────────────────────────────────────── -->
+<div class="blog-cta">
+  <h2>Skip the waiting room</h2>
+  <p>For 28 common conditions, your pharmacist can assess and prescribe — walk in or start online in minutes.</p>
+  <div class="blog-cta__btns">
+    <a class="blog-cta__btn blog-cta__btn--primary" href="https://app.pharmassess.ca/self-assessment/306667" target="_blank" rel="noopener">Start Online Assessment →</a>
+    <a class="blog-cta__btn blog-cta__btn--outline" href="../index.html#booking">Patient Portal</a>
+  </div>
+</div>
+
+<!-- ── Footer ───────────────────────────────────────────────── -->
 <footer>
+  <div class="footer__links">
+    <a href="../index.html">Home</a>
+    <a href="../index.html#booking">Patient Portal</a>
+    <a href="../index.html#services">Minor Ailments</a>
+    <a href="../index.html#services">Vaccines</a>
+    <a href="index.html">Blog</a>
+    <a href="../index.html#team">Our Team</a>
+    <a href="../index.html#faq">FAQ</a>
+    <a href="../index.html#contact">Contact</a>
+  </div>
   <p>1203 St. Clair Avenue West, Toronto, ON &nbsp;·&nbsp; <a href="tel:+14166548181">(416) 654-8181</a> &nbsp;·&nbsp; <a href="mailto:stclairdrugmart@gmail.com">stclairdrugmart@gmail.com</a></p>
-  <p style="margin-top:.5rem;opacity:.45;">&copy; 2026 St. Clair Drug Mart Pharmacy. All rights reserved.</p>
+  <div class="footer__socials">
+    <a href="https://www.facebook.com/p/St-Clair-Drug-Mart-Pharmacy-100089068174445/" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+    </a>
+    <a href="https://www.instagram.com/stclairdrugmart/" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="1.8"/><circle cx="12" cy="12" r="4.4" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.3" fill="rgba(255,255,255,.75)" stroke="none"/></svg>
+    </a>
+    <a href="https://ca.linkedin.com/company/stclairdrugmart" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    </a>
+  </div>
+  <p class="footer__reg">Regulated by the Ontario College of Pharmacists · Designated Manager: Elizabeth Da Silva, BScPharm, RPh · OCP Accreditation No. 306667</p>
+  <p class="footer__copy">&copy; 2026 St. Clair Drug Mart Pharmacy. All rights reserved.</p>
 </footer>
 
 <script>
 (function(){
-  var grid = document.getElementById('posts-grid');
+  var TAG_ICONS = {
+    'Minor Ailments':'💊','Vaccines':'💉','Getting Started':'🏥','Medication':'📋','Wellness':'🌿'
+  };
+
+  var allPosts = [];
+  var activeFilter = 'all';
+  var searchQuery = '';
+
+  function icon(tags){
+    for (var i=0;i<tags.length;i++){ if(TAG_ICONS[tags[i]]) return TAG_ICONS[tags[i]]; }
+    return '📝';
+  }
+
+  function renderFeatured(post){
+    var url = 'posts/' + post.slug + '.html';
+    var tags = (post.tags||[]).map(function(t){ return '<span class="ptag">'+t+'</span>'; }).join('');
+    document.getElementById('featuredPost').innerHTML =
+      '<a class="post-featured" href="'+url+'">'
+      +'<div class="post-featured__img">'+icon(post.tags||[])+'</div>'
+      +'<div class="post-featured__body">'
+      +'<div class="post-featured__tags">'+tags+'</div>'
+      +'<h2 class="post-featured__title"><a href="'+url+'">'+post.title+'</a></h2>'
+      +'<div class="post-featured__meta"><span>'+(post.dateLabel||post.date)+'</span><span>'+(post.readTime||'')+'</span></div>'
+      +'<p class="post-featured__excerpt">'+post.excerpt+'</p>'
+      +'<span class="post-featured__cta">Read full article →</span>'
+      +'</div></a>';
+  }
+
+  function renderGrid(posts){
+    var grid = document.getElementById('postsGrid');
+    if (!posts.length){
+      grid.innerHTML = '<p class="blog-empty">No articles match your search. <a href="#" onclick="resetFilters();return false;">Clear filters</a></p>';
+      return;
+    }
+    grid.innerHTML = posts.map(function(p){
+      var url = 'posts/' + p.slug + '.html';
+      var tags = (p.tags||[]).map(function(t){ return '<span class="ptag">'+t+'</span>'; }).join('');
+      return '<article class="post-card">'
+        +'<div class="post-card__icon">'+icon(p.tags||[])+'</div>'
+        +'<div class="post-card__meta"><span>'+(p.dateLabel||p.date)+'</span><span>'+(p.readTime||'')+'</span></div>'
+        +'<h2 class="post-card__title"><a href="'+url+'">'+p.title+'</a></h2>'
+        +'<p class="post-card__excerpt">'+p.excerpt+'</p>'
+        +'<div class="post-card__footer"><div class="post-card__tags">'+tags+'</div>'
+        +'<a class="read-more" href="'+url+'">Read more →</a></div>'
+        +'</article>';
+    }).join('');
+  }
+
+  function applyFilters(){
+    var filtered = allPosts.filter(function(p){
+      var matchTag = activeFilter === 'all' || (p.tags && p.tags.indexOf(activeFilter) !== -1);
+      var matchSearch = !searchQuery || p.title.toLowerCase().indexOf(searchQuery) !== -1 || p.excerpt.toLowerCase().indexOf(searchQuery) !== -1;
+      return matchTag && matchSearch;
+    });
+    // Don't show featured post in grid
+    var gridPosts = (activeFilter === 'all' && !searchQuery && allPosts.length > 0)
+      ? filtered.filter(function(p){ return p.slug !== allPosts[0].slug; })
+      : filtered;
+    renderGrid(gridPosts);
+    document.getElementById('featuredWrap').style.display = (activeFilter === 'all' && !searchQuery) ? '' : 'none';
+  }
+
+  function resetFilters(){
+    activeFilter = 'all';
+    searchQuery = '';
+    document.getElementById('searchInput').value = '';
+    document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.filter === 'all'); });
+    applyFilters();
+  }
+
+  // Filter buttons
+  document.querySelectorAll('.filter-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      activeFilter = this.dataset.filter;
+      document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+      this.classList.add('active');
+      applyFilters();
+    });
+  });
+
+  // Topic cards act as filters
+  document.querySelectorAll('.filter-topic').forEach(function(card){
+    card.addEventListener('click', function(e){
+      e.preventDefault();
+      activeFilter = this.dataset.tag;
+      document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.filter === activeFilter); });
+      document.querySelector('.blog-main').scrollIntoView({behavior:'smooth', block:'start'});
+      applyFilters();
+    });
+  });
+
+  // Search
+  document.getElementById('searchBtn').addEventListener('click', function(){
+    searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
+    activeFilter = 'all';
+    document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.filter === 'all'); });
+    applyFilters();
+  });
+  document.getElementById('searchInput').addEventListener('keydown', function(e){
+    if (e.key === 'Enter') document.getElementById('searchBtn').click();
+  });
+
+  // Nav toggle
+  document.getElementById('navToggle').addEventListener('click', function(){
+    this.classList.toggle('open');
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  // Load posts
   fetch('posts.json', { cache: 'no-cache' })
     .then(function(r){ return r.json(); })
     .then(function(posts){
-      if (!posts || !posts.length) {
-        grid.innerHTML = '<p class="blog-empty">Our first posts are coming soon — check back next week!</p>';
+      if (!posts || !posts.length){
+        document.getElementById('postsGrid').innerHTML = '<p class="blog-empty">Our first posts are coming soon — check back next week!</p>';
+        document.getElementById('featuredWrap').style.display = 'none';
         return;
       }
       posts.sort(function(a,b){ return new Date(b.date) - new Date(a.date); });
-      grid.innerHTML = posts.map(function(p){
-        var tags = (p.tags||[]).map(function(t){ return '<span class="ptag">'+t+'</span>'; }).join('');
-        var url = 'posts/' + p.slug + '.html';
-        return '<article class="post-card">'
-          + '<div class="post-card__meta"><span>'+(p.dateLabel||p.date)+'</span><span>'+(p.readTime||'')+'</span></div>'
-          + '<h2 class="post-card__title"><a href="'+url+'">'+p.title+'</a></h2>'
-          + '<p class="post-card__excerpt">'+p.excerpt+'</p>'
-          + '<div class="post-card__footer"><div class="post-card__tags">'+tags+'</div>'
-          + '<a class="read-more" href="'+url+'">Read more →</a></div>'
-          + '</article>';
-      }).join('');
+      allPosts = posts;
+      renderFeatured(posts[0]);
+      renderGrid(posts.slice(1));
     })
     .catch(function(){
-      grid.innerHTML = '<p class="blog-empty">Posts are temporarily unavailable. Please try again soon.</p>';
+      // Fallback: render known posts statically
+      var fallback = [
+        {slug:'pharmacist-prescribe-uti-ontario',title:'Can a Pharmacist Prescribe Antibiotics for a UTI in Ontario?',date:'2026-06-15',dateLabel:'June 15, 2026',excerpt:'Yes — Ontario pharmacists can assess and prescribe antibiotics for an uncomplicated UTI, no doctor\'s appointment needed.',tags:['Minor Ailments'],readTime:'5 min read'},
+        {slug:'pharmacy-vaccines-toronto-2026',title:'What Vaccines Can You Get at a Toronto Pharmacy in 2026?',date:'2026-06-10',dateLabel:'June 10, 2026',excerpt:'Flu, COVID-19, shingles, pneumococcal, RSV, Tdap and travel vaccines — the full 2026 list, who\'s eligible, and which are free with your health card.',tags:['Vaccines'],readTime:'6 min read'},
+        {slug:'transfer-prescription-toronto',title:'How to Transfer Your Prescription to a New Pharmacy in Toronto',date:'2026-06-05',dateLabel:'June 5, 2026',excerpt:'Switching pharmacies is easier than you think. We contact your old pharmacy for you — most transfers take about 15 minutes.',tags:['Getting Started'],readTime:'4 min read'}
+      ];
+      fallback.sort(function(a,b){ return new Date(b.date) - new Date(a.date); });
+      allPosts = fallback;
+      renderFeatured(fallback[0]);
+      renderGrid(fallback.slice(1));
     });
 })();
 </script>
