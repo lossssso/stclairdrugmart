@@ -3276,7 +3276,7 @@ window.FAQS = [
   {
     icon: "🚭",
     q: "Can a pharmacist help me quit smoking in Ontario?",
-    a: "Yes — Ontario pharmacists can independently assess you and prescribe all first-line smoking cessation treatments, including <strong>varenicline (Champix)</strong> and <strong>bupropion (Zyban)</strong>, without a doctor's referral. We also carry the full range of nicotine replacement therapies (patches, gum, lozenges, inhaler). Our pharmacist will work with you on a personalized quit plan and follow-up support. Many treatments are covered by ODB and private insurance. <a href=\"#booking\" onclick=\"setTimeout(function(){document.querySelector('[data-url*=diagnosisId=16]').click()},200)\">Start your quit assessment online →</a>"
+    a: "Yes — Ontario pharmacists can independently assess you and prescribe all first-line smoking cessation treatments, including <strong>varenicline (Champix)</strong> and <strong>bupropion (Zyban)</strong>, without a doctor's referral. We also carry the full range of nicotine replacement therapies (patches, gum, lozenges, inhaler). Our pharmacist will work with you on a personalized quit plan and follow-up support. Many treatments are covered by ODB and private insurance. <a href=\"#booking\" class=\"js-pa-select\" data-url=\"https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=16\">Start your quit assessment online →</a>"
   },
   {
     icon: "🆘",
@@ -3618,8 +3618,19 @@ window.FAQS = [
   document.querySelectorAll('.js-pa-select').forEach(el => {
     el.addEventListener('click', function(e) {
       e.preventDefault();
-      var target = document.querySelector('.pa-card[data-url="' + this.dataset.url + '"]');
-      if (target) switchPaTab(target);
+      var url = this.dataset.url;
+      var target = document.querySelector('.pa-card[data-url="' + url + '"]');
+      if (target) {
+        switchPaTab(target);
+      } else {
+        // No matching pa-card — load URL directly into the iframe
+        document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
+        paIframe.src = url;
+        paIframe.style.height = '1500px';
+        paExpanded = false;
+        paOpen();
+        setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+      }
     });
   });
 
