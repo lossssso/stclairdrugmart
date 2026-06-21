@@ -424,6 +424,20 @@
       box-shadow: 0 4px 24px rgba(30,107,99,.18);
     }
     .welcome__photo img { width: 100%; height: auto; display: block; }
+    .welcome__question { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--teal-bright); margin: 1.6rem 0 .7rem; }
+    .welcome__pills { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .welcome__pill { display: inline-flex; align-items: center; gap: .4rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 100px; padding: .52rem 1.05rem; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; transition: background .15s, color .15s, transform .12s, box-shadow .15s; }
+    .welcome__pill:hover { background: var(--teal-bright); color: #fff; border-color: var(--teal-bright); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(33,161,168,.25); }
+    .welcome__boxes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.25rem; }
+    .welcome-box { background: #fff; border: 1.5px solid var(--border); border-top: 3.5px solid var(--teal-bright); border-radius: 14px; padding: 1.4rem 1.25rem 1.3rem; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: .35rem; transition: box-shadow .2s, transform .15s, border-color .15s; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+    .welcome-box:hover { box-shadow: 0 8px 28px rgba(0,115,124,.14); transform: translateY(-3px); border-color: var(--teal-bright); }
+    .welcome-box__icon { font-size: 1.9rem; margin-bottom: .3rem; }
+    .welcome-box__title { font-size: 1rem; font-weight: 800; color: var(--text); }
+    .welcome-box__desc { font-size: .82rem; color: var(--text-muted); line-height: 1.5; flex: 1; margin-top: .1rem; }
+    .welcome-box__cta { font-size: .82rem; font-weight: 700; color: var(--teal-dark); margin-top: .5rem; }
+    @media (max-width: 768px) {
+      .welcome__boxes { grid-template-columns: 1fr; }
+    }
 
     /* ── Services ─────────────────────────────────────── */
     #services { background: var(--white); }
@@ -1806,14 +1820,37 @@
           Walk in, call us at <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">(416) 654-8181</a>,
           or book online — we're always happy to help.
         </p>
-        <div style="margin-top:1.5rem; display:flex; gap:.75rem; flex-wrap:wrap;">
-          <a href="#booking" class="btn">Book an Appointment</a>
-          <a href="#services" class="btn btn--outline">Our Services</a>
+        <p class="welcome__question">What brings you in today?</p>
+        <div class="welcome__pills">
+          <a href="#booking" class="welcome__pill" onclick="setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)">🤒 Feeling ill?</a>
+          <a href="#booking" class="welcome__pill" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">💊 Worried about med side effects?</a>
+          <a href="#booking" class="welcome__pill" onclick="setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)">✈️ Travelling or need a shot?</a>
         </div>
       </div>
       <div class="welcome__photo">
         <img src="storefront_new_2.webp" alt="St. Clair Drug Mart storefront at 1203 St. Clair Ave W, Toronto" width="1227" height="1281" loading="lazy" decoding="async" />
       </div>
+    </div>
+
+    <div class="welcome__boxes">
+      <a href="#booking" class="welcome-box" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">
+        <div class="welcome-box__icon">📋</div>
+        <div class="welcome-box__title">Medication Reviews</div>
+        <div class="welcome-box__desc">Free for eligible Ontario residents — our pharmacist reviews all your medications, catches interactions, and optimizes your therapy.</div>
+        <span class="welcome-box__cta">Book a review →</span>
+      </a>
+      <a href="#booking" class="welcome-box" onclick="setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)">
+        <div class="welcome-box__icon">🩺</div>
+        <div class="welcome-box__title">Common Conditions</div>
+        <div class="welcome-box__desc">Pharmacists can assess and prescribe for 28 conditions — UTIs, skin infections, allergies, heartburn, cold sores, and more. No doctor needed.</div>
+        <span class="welcome-box__cta">See conditions →</span>
+      </a>
+      <a href="#booking" class="welcome-box" onclick="setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)">
+        <div class="welcome-box__icon">💉</div>
+        <div class="welcome-box__title">Vaccinations</div>
+        <div class="welcome-box__desc">Flu, COVID-19, shingles, travel vaccines, and more — administered right in the pharmacy. Walk-ins welcome, appointments recommended.</div>
+        <span class="welcome-box__cta">View vaccines →</span>
+      </a>
     </div>
   </div>
 </section>
