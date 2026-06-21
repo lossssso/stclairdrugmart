@@ -4621,9 +4621,13 @@ window.FAQS = [
     if (!a) return;
     var hash = a.getAttribute('href');
     if (!hash || hash === '#') return;
+    e.preventDefault();
+    if (hash === '#home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     var target = document.getElementById(hash.slice(1));
     if (!target) return;
-    e.preventDefault();
     if (!a.hasAttribute('onclick')) {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
