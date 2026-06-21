@@ -906,7 +906,7 @@
     .gallery__item:nth-child(5),
     .gallery__item:nth-child(6) {
       grid-column: span 4;
-      aspect-ratio: 3/2;
+      aspect-ratio: 3/4;
     }
     .gallery__item {
       border-radius: var(--radius);
@@ -980,7 +980,7 @@
       .pa-cards--secondary { grid-template-columns: repeat(3, 1fr); }
       .gallery  { grid-template-columns: repeat(3, 1fr); }
       .gallery__item:nth-child(1), .gallery__item:nth-child(2), .gallery__item:nth-child(3) { grid-column: span 1; }
-      .gallery__item:nth-child(4), .gallery__item:nth-child(5), .gallery__item:nth-child(6) { grid-column: span 1; aspect-ratio: 3/2; }
+      .gallery__item:nth-child(4), .gallery__item:nth-child(5), .gallery__item:nth-child(6) { grid-column: span 1; aspect-ratio: 3/4; }
     }
     @media (max-width: 768px) {
       .nav__links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e9f4f5; box-shadow: 0 8px 20px rgba(0,60,66,.08); flex-direction: column; align-items: stretch; padding: .5rem 1rem 1rem; gap: .1rem; }
@@ -3585,9 +3585,11 @@ window.FAQS = [
   document.querySelectorAll('.pa-card').forEach(card => {
     card.addEventListener('click', function() {
       if (this === conditionsCard) {
+        // Close any open iframe panel before toggling the conditions list
+        paWrap.style.display = 'none';
+        document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
         const isOpen = conditionsPanel.classList.toggle('open');
         this.classList.toggle('conditions-open', isOpen);
-        document.querySelectorAll('.pa-card').forEach(c => { if (c !== conditionsCard) c.classList.remove('active'); });
         if (isOpen) {
           this.classList.add('active');
         } else {
