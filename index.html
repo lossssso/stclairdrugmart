@@ -1828,9 +1828,9 @@
         </p>
         <p class="welcome__question">What brings you in today?</p>
         <div class="welcome__pills">
-          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)">🤒 Feeling ill?</a>
-          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">💊 Worried about med side effects?</a>
-          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)">✈️ Travelling or need a shot?</a>
+          <a href="#acc-ailments" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-ailments')},120)">🤒 Feeling ill?</a>
+          <a href="#acc-med-reviews" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-med-reviews')},120)">💊 Worried about med side effects?</a>
+          <a href="#acc-vaccines" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-vaccines')},120)">✈️ Travelling or need a shot?</a>
         </div>
       </div>
       <div class="welcome__photo">
@@ -1839,19 +1839,19 @@
     </div>
 
     <div class="welcome__boxes">
-      <a href="#services" class="welcome-box" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">
+      <a href="#acc-med-reviews" class="welcome-box" onclick="setTimeout(function(){openAcc('acc-med-reviews')},120)">
         <div class="welcome-box__icon">📋</div>
         <div class="welcome-box__title">Medication Reviews</div>
         <div class="welcome-box__desc">Free for eligible Ontario residents — our pharmacist reviews all your medications, catches interactions, and optimizes your therapy.</div>
         <span class="welcome-box__cta">Book a review →</span>
       </a>
-      <a href="#services" class="welcome-box" onclick="setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)">
+      <a href="#acc-ailments" class="welcome-box" onclick="setTimeout(function(){openAcc('acc-ailments')},120)">
         <div class="welcome-box__icon">🩺</div>
         <div class="welcome-box__title">Common Conditions</div>
         <div class="welcome-box__desc">Pharmacists can assess and prescribe for 28 conditions — UTIs, skin infections, allergies, heartburn, cold sores, and more. No doctor needed.</div>
         <span class="welcome-box__cta">See conditions →</span>
       </a>
-      <a href="#services" class="welcome-box" onclick="setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)">
+      <a href="#acc-vaccines" class="welcome-box" onclick="setTimeout(function(){openAcc('acc-vaccines')},120)">
         <div class="welcome-box__icon">💉</div>
         <div class="welcome-box__title">Vaccinations</div>
         <div class="welcome-box__desc">Flu, COVID-19, shingles, travel vaccines, and more — administered right in the pharmacy. Walk-ins welcome, appointments recommended.</div>
@@ -2046,7 +2046,7 @@
 
       <div class="svc-acc__group-hd">🏥 Clinical Services</div>
 
-      <div class="svc-acc-item">
+      <div class="svc-acc-item" id="acc-ailments">
         <button class="svc-acc__head" aria-expanded="false">
           <span class="svc-acc__icon">🩺</span>
           <span class="svc-acc__title">Minor Ailments — 28 Conditions</span>
@@ -2228,7 +2228,7 @@
         </div>
       </div>
 
-      <div class="svc-acc-item">
+      <div class="svc-acc-item" id="acc-vaccines">
         <button class="svc-acc__head" aria-expanded="false">
           <span class="svc-acc__icon">💉</span>
           <span class="svc-acc__title">Vaccines &amp; Immunizations</span>
@@ -2271,7 +2271,7 @@
         </div>
       </div>
 
-      <div class="svc-acc-item">
+      <div class="svc-acc-item" id="acc-med-reviews">
         <button class="svc-acc__head" aria-expanded="false">
           <span class="svc-acc__icon">📋</span>
           <span class="svc-acc__title">Medication Reviews</span>
@@ -3687,6 +3687,13 @@ window.FAQS = [
         head.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       });
     });
+    window.openAcc = function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('open');
+      var btn = el.querySelector('.svc-acc__head');
+      if (btn) btn.setAttribute('aria-expanded', 'true');
+    };
   })();
 
   // ── FAQ Accordion ─────────────────────────────────────────
