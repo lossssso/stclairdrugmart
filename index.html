@@ -1691,6 +1691,8 @@
       padding: 0 1.2rem; color: var(--text-muted); line-height: 1.72; font-size: .875rem;
     }
     .faq-item.open .faq-item__a { max-height: 500px; padding: 0 1.2rem 1.15rem; }
+    .faq-item__a a { color: var(--teal-bright); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--teal-mid); }
+    .faq-item__a a:hover { color: var(--teal-deeper); border-color: var(--teal-deeper); }
 
     /* ── Footer trust badges ──────────────────────── */
     .footer__trust { margin-top: 1.75rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
@@ -3006,52 +3008,52 @@ window.FAQS = [
   {
     icon: "🩺",
     q: "Can a pharmacist prescribe medication in Ontario?",
-    a: "Yes — in Ontario, pharmacists are authorized to prescribe for 28 minor ailments under the Minor Ailments Program (MAP). You can walk in with no doctor's appointment and no referral. Conditions include UTIs, skin infections, acid reflux, pink eye, cold sores, athlete's foot, oral thrush, and more. Our pharmacist assesses you on-site and can prescribe or recommend treatment right away."
+    a: "Yes — in Ontario, pharmacists are authorized to prescribe for 28 minor ailments under the Minor Ailments Program (MAP). You can walk in with no doctor's appointment and no referral. Conditions include UTIs, skin infections, acid reflux, pink eye, cold sores, athlete's foot, oral thrush, and more. Our pharmacist assesses you on-site and can prescribe or recommend treatment right away. <a href=\"#services\" onclick=\"setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)\">See all 28 conditions →</a>"
   },
   {
     icon: "🦠",
     q: "Can I get a UTI prescription without seeing a doctor?",
-    a: "Yes. Urinary tract infections (UTIs) are one of the 28 conditions Ontario pharmacists can now independently assess and prescribe for. No doctor visit required. Walk in or book online — our pharmacist will review your symptoms and, if appropriate, prescribe an antibiotic the same day. This service is covered by OHIP for eligible patients."
+    a: "Yes. Urinary tract infections (UTIs) are one of the 28 conditions Ontario pharmacists can now independently assess and prescribe for. No doctor visit required. Walk in or <a href=\"#booking\">book online</a> — our pharmacist will review your symptoms and, if appropriate, prescribe an antibiotic the same day. This service is covered by OHIP for eligible patients. <a href=\"#services\" onclick=\"setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)\">View all minor ailments →</a>"
   },
   {
     icon: "💉",
     q: "What vaccines do you offer?",
-    a: "We offer a wide range of vaccinations including flu (influenza), COVID-19, shingles (Shingrix), pneumonia, travel vaccines (Hepatitis A &amp; B, typhoid), Tdap (tetanus, diphtheria, pertussis), and HPV. No doctor's referral is needed. Book online or walk in — appointments are usually available same-day or next-day."
+    a: "We offer a wide range of vaccinations including flu (influenza), COVID-19, shingles (Shingrix), pneumonia, travel vaccines (Hepatitis A &amp; B, typhoid), Tdap (tetanus, diphtheria, pertussis), and HPV. No doctor's referral is needed. <a href=\"#services\" onclick=\"setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)\">View all vaccines &amp; book an appointment →</a>"
   },
   {
     icon: "🏥",
     q: "Do you accept ODB, OHIP+, and private insurance?",
-    a: "Yes — we accept the Ontario Drug Benefit (ODB) program, OHIP+ for patients under 25, Trillium Drug Program, and virtually all major private insurance plans including Sunlife, Manulife, Great-West Life, Blue Cross, and more. We process claims directly so you only pay any outstanding balance. Bring your insurance card and we'll handle the rest."
+    a: "Yes — we accept the Ontario Drug Benefit (ODB) program, OHIP+ for patients under 25, Trillium Drug Program, and virtually all major private insurance plans including Sunlife, Manulife, Great-West Life, Blue Cross, and more. We process claims directly so you only pay any outstanding balance. Bring your insurance card and we'll handle the rest. <a href=\"#services\" onclick=\"setTimeout(function(){document.querySelector('[data-tab=insurance]').click()},80)\">See insurance &amp; coverage details →</a>"
   },
   {
     icon: "🔄",
     q: "How do I transfer my prescriptions to your pharmacy?",
-    a: "Transferring is simple. Use the <strong>Transfer Your Rx</strong> button in the Services section, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a>, or just walk in. We contact your previous pharmacy on your behalf — you don't need to do anything else. Most transfers are processed within 15–30 minutes, and we'll text or call you when it's ready."
+    a: "Transferring is simple. Use the <strong>Transfer Your Rx</strong> button in our <a href=\"#booking\">Patient Portal</a>, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a>, or just walk in. We contact your previous pharmacy on your behalf — you don't need to do anything else. Most transfers are processed within 15–30 minutes, and we'll text or call you when it's ready."
   },
   {
     icon: "🚚",
     q: "Do you deliver prescriptions in Toronto?",
-    a: "Yes — free prescription and health product delivery anywhere in the GTA, with no minimum order and no delivery fee. Just call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to arrange it. We're also on <strong>Uber Eats</strong> for fast on-demand delivery of OTC products, vitamins, and essentials — often under 30 minutes."
+    a: "Yes — free prescription and health product delivery anywhere in the GTA, with no minimum order and no delivery fee. Just call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to arrange it. We're also on <strong>Uber Eats</strong> for fast on-demand delivery of OTC products, vitamins, and essentials — often under 30 minutes. <a href=\"#shop\">Order online →</a>"
   },
   {
     icon: "🌐",
     q: "Do you serve patients in languages other than English?",
-    a: "Absolutely. Our team speaks English, Spanish, Portuguese, Italian, Turkish, Tagalog, Polish, and more — reflecting the rich diversity of Corso Italia and St. Clair West. We want every patient to feel understood and comfortable. If you're not sure whether we speak your language, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> and we'll do our best to help."
+    a: "Absolutely. Our team speaks English, Spanish, Portuguese, Italian, Turkish, Tagalog, Polish, and more — reflecting the rich diversity of Corso Italia and St. Clair West. We want every patient to feel understood and comfortable. If you're not sure whether we speak your language, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> or <a href=\"#team\">meet our team →</a>"
   },
   {
     icon: "💊",
     q: "Is a MedsCheck medication review really free?",
-    a: "Yes, completely free for eligible Ontario residents. You qualify if you take 3 or more chronic medications, were recently discharged from hospital, or have a complex medication regimen. Our pharmacist reviews all your medications for interactions, duplications, and side effects, and puts together a personalized medication plan. Book online or call us — most reviews take 30–45 minutes."
+    a: "Yes, completely free for eligible Ontario residents. You qualify if you take 3 or more chronic medications, were recently discharged from hospital, or have a complex medication regimen. Our pharmacist reviews all your medications for interactions, duplications, and side effects, and puts together a personalized medication plan. Most reviews take 30–45 minutes. <a href=\"#services\" onclick=\"setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)\">Book a Medication Review →</a>"
   },
   {
     icon: "💸",
     q: "Can I save money by switching to generic medications?",
-    a: "In most cases, yes. Generic medications contain the same active ingredient, dose, and strength as brand-name drugs — they're just manufactured by a different company after the patent expires. In Ontario, pharmacists can often substitute a generic automatically. Ask us at the counter or during your next prescription pickup — savings can be significant, especially for long-term medications."
+    a: "In most cases, yes. Generic medications contain the same active ingredient, dose, and strength as brand-name drugs — they're just manufactured by a different company after the patent expires. In Ontario, pharmacists can often substitute a generic automatically. Ask us at the counter or <a href=\"#booking\">book a quick consultation</a> — savings can be significant, especially for long-term medications."
   },
   {
     icon: "📦",
     q: "Do you offer blister packs for complex medication schedules?",
-    a: "Yes. We prepare weekly blister (bubble) packs that organize your medications by day and time — ideal for patients managing multiple prescriptions, or families supporting a loved one. Blister packs reduce missed doses and medication errors. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to get set up — it usually takes just one short visit."
+    a: "Yes. We prepare weekly blister (bubble) packs that organize your medications by day and time — ideal for patients managing multiple prescriptions, or families supporting a loved one. Blister packs reduce missed doses and medication errors. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> or <a href=\"#booking\">book a setup appointment</a> — it usually takes just one short visit."
   }
   /* ── add new FAQs here, following the same { q: "…", a: "…", icon: "…" } format ── */
 ];
