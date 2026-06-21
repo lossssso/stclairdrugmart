@@ -563,7 +563,7 @@
       margin-bottom: 0;
     }
     .pa-cards--secondary {
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       margin-top: .75rem;
       margin-bottom: 2rem;
     }
@@ -2152,9 +2152,9 @@
       </a>
       <a href="#booking" class="welcome-box" onclick="setTimeout(function(){document.getElementById('pa-new-rx').click()},150)">
         <div class="welcome-box__icon">📝</div>
-        <div class="welcome-box__title">New Prescription</div>
-        <div class="welcome-box__desc">Have a new prescription? Send us a photo to get it ready in advance — just bring the original when you pick up.</div>
-        <span class="welcome-box__cta">Submit new Rx →</span>
+        <div class="welcome-box__title">New Prescription &amp; Refill Requests</div>
+        <div class="welcome-box__desc">Submit a photo of your new Rx or request a refill from your profile and we will get it ready.</div>
+        <span class="welcome-box__cta">Submit new Rx or refill →</span>
       </a>
     </div>
   </div>
@@ -2398,20 +2398,15 @@
 
     <!-- Row 2: patient account actions -->
     <div class="pa-cards pa-cards--secondary">
-      <button class="pa-card" id="pa-new-rx" data-url="https://app.pharmassess.ca/new-rx/306667" data-iframeheight="1400" data-label="Send New Prescription">
+      <button class="pa-card" id="pa-new-rx" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="1400" data-label="New Prescription &amp; Refill Requests">
         <div class="pa-card__icon">📝</div>
-        <span class="pa-card__label">New Prescription</span>
-        <span class="pa-card__desc">Send a photo — bring the original on pickup</span>
+        <span class="pa-card__label">New Prescription &amp; Refill Requests</span>
+        <span class="pa-card__desc">Submit a photo of your new Rx or request a refill from your profile and we will get it ready</span>
       </button>
       <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1600" data-label="Medication Review">
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review</span>
         <span class="pa-card__desc">One-on-one review of all your medications</span>
-      </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="1400" data-label="Medication Refill Request">
-        <div class="pa-card__icon">🔁</div>
-        <span class="pa-card__label">Refill Request</span>
-        <span class="pa-card__desc">Request a prescription refill online</span>
       </button>
       <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="1800" data-label="Transfer Your Prescription">
         <div class="pa-card__icon">🔀</div>
