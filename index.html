@@ -1655,7 +1655,7 @@
     .faq .section__title { color: #fff; }
     .faq .section__title::after { background: var(--teal-bright); }
     .faq .section__lead { color: rgba(255,255,255,.65); }
-    .faq-list { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; margin-top: 2rem; border: none; }
+    .faq-list { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; margin-top: 2rem; border: none; align-items: start; }
     .faq-item {
       background: #fff; border-radius: 14px; overflow: hidden;
       box-shadow: 0 2px 18px rgba(0,0,0,.13);
@@ -2996,43 +2996,53 @@
 window.FAQS = [
   {
     icon: "🩺",
-    q: "Do I need a doctor's referral to get a prescription?",
-    a: "Not for minor ailments. Under Ontario's Minor Ailments Program, our pharmacist can assess and prescribe for 28 common conditions — no doctor's appointment, no referral needed. For other prescriptions, you'll still need a prescription from a physician or nurse practitioner, which you can bring to us to fill."
+    q: "Can a pharmacist prescribe medication in Ontario?",
+    a: "Yes — in Ontario, pharmacists are authorized to prescribe for 28 minor ailments under the Minor Ailments Program (MAP). You can walk in with no doctor's appointment and no referral. Conditions include UTIs, skin infections, acid reflux, pink eye, cold sores, athlete's foot, oral thrush, and more. Our pharmacist assesses you on-site and can prescribe or recommend treatment right away."
   },
   {
-    icon: "🚶",
-    q: "Do you accept walk-ins?",
-    a: "Yes! Walk-ins are always welcome for prescription drop-offs, vaccine appointments, and minor ailment assessments. For busier periods or medication reviews, we recommend calling ahead or booking online through PharmAssess so we can give you our full attention."
+    icon: "🦠",
+    q: "Can I get a UTI prescription without seeing a doctor?",
+    a: "Yes. Urinary tract infections (UTIs) are one of the 28 conditions Ontario pharmacists can now independently assess and prescribe for. No doctor visit required. Walk in or book online — our pharmacist will review your symptoms and, if appropriate, prescribe an antibiotic the same day. This service is covered by OHIP for eligible patients."
   },
   {
-    icon: "🗺️",
-    q: "Can you fill prescriptions from doctors outside Ontario?",
-    a: "We can fill prescriptions written by Canadian physicians licensed in any province. Prescriptions from outside Canada cannot be filled directly, but our pharmacist can often help you find an interim solution while you establish care with an Ontario provider. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to discuss your situation."
+    icon: "💉",
+    q: "What vaccines do you offer?",
+    a: "We offer a wide range of vaccinations including flu (influenza), COVID-19, shingles (Shingrix), pneumonia, travel vaccines (Hepatitis A &amp; B, typhoid), Tdap (tetanus, diphtheria, pertussis), and HPV. No doctor's referral is needed. Book online or walk in — appointments are usually available same-day or next-day."
+  },
+  {
+    icon: "🏥",
+    q: "Do you accept ODB, OHIP+, and private insurance?",
+    a: "Yes — we accept the Ontario Drug Benefit (ODB) program, OHIP+ for patients under 25, Trillium Drug Program, and virtually all major private insurance plans including Sunlife, Manulife, Great-West Life, Blue Cross, and more. We process claims directly so you only pay any outstanding balance. Bring your insurance card and we'll handle the rest."
   },
   {
     icon: "🔄",
     q: "How do I transfer my prescriptions to your pharmacy?",
-    a: "Transferring is easy. You can request a transfer online using the \"Transfer Your Rx\" button in the Services section above, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a>, or simply come in. We'll contact your current pharmacy on your behalf — there's nothing more you need to do. Most transfers take about 15 minutes."
+    a: "Transferring is simple. Use the <strong>Transfer Your Rx</strong> button in the Services section, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a>, or just walk in. We contact your previous pharmacy on your behalf — you don't need to do anything else. Most transfers are processed within 15–30 minutes, and we'll text or call you when it's ready."
   },
   {
     icon: "🚚",
-    q: "Do you offer delivery?",
-    a: "Yes — we deliver prescriptions and health products free anywhere in the GTA. We're also available on Uber Eats for on-demand delivery of over-the-counter products. Call <a href=\"tel:+14166548181\">(416) 654-8181</a> to arrange delivery."
-  },
-  {
-    icon: "💊",
-    q: "Is a medication review free?",
-    a: "Yes — medication reviews are covered at no cost for eligible Ontario residents through the provincial drug benefit program. You're typically eligible if you're taking 3 or more chronic medications, or following a hospital discharge. Book online or call us to confirm your eligibility."
+    q: "Do you deliver prescriptions in Toronto?",
+    a: "Yes — free prescription and health product delivery anywhere in the GTA, with no minimum order and no delivery fee. Just call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to arrange it. We're also on <strong>Uber Eats</strong> for fast on-demand delivery of OTC products, vitamins, and essentials — often under 30 minutes."
   },
   {
     icon: "📦",
-    q: "Do you do blister packs?",
-    a: "Yes. We prepare weekly blister (bubble) packs to organize complex medication schedules — ideal for patients taking multiple medications or caring for a family member who needs help staying on track. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to get started; setup is straightforward and usually takes one visit."
+    q: "Do you offer blister packs for complex medication schedules?",
+    a: "Yes. We prepare weekly blister (bubble) packs that organize your medications by day and time — ideal for patients managing multiple prescriptions, or families supporting a loved one. Blister packs reduce missed doses and medication errors. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to get set up — it usually takes just one short visit."
+  },
+  {
+    icon: "💊",
+    q: "Is a MedsCheck medication review really free?",
+    a: "Yes, completely free for eligible Ontario residents. You qualify if you take 3 or more chronic medications, were recently discharged from hospital, or have a complex medication regimen. Our pharmacist reviews all your medications for interactions, duplications, and side effects, and puts together a personalized medication plan. Book online or call us — most reviews take 30–45 minutes."
+  },
+  {
+    icon: "💸",
+    q: "Can I save money by switching to generic medications?",
+    a: "In most cases, yes. Generic medications contain the same active ingredient, dose, and strength as brand-name drugs — they're just manufactured by a different company after the patent expires. In Ontario, pharmacists can often substitute a generic automatically. Ask us at the counter or during your next prescription pickup — savings can be significant, especially for long-term medications."
   },
   {
     icon: "🌐",
-    q: "What languages do you serve patients in?",
-    a: "Our team serves patients in English, Spanish, Portuguese, Italian, Turkish, Tagalog, Polish, and more. The St. Clair West community is wonderfully diverse — we're proud to offer care in the languages our patients are most comfortable with. See the language flags on our homepage or call to check availability."
+    q: "Do you serve patients in languages other than English?",
+    a: "Absolutely. Our team speaks English, Spanish, Portuguese, Italian, Turkish, Tagalog, Polish, and more — reflecting the rich diversity of Corso Italia and St. Clair West. We want every patient to feel understood and comfortable. If you're not sure whether we speak your language, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> and we'll do our best to help."
   }
   /* ── add new FAQs here, following the same { q: "…", a: "…", icon: "…" } format ── */
 ];
