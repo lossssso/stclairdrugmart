@@ -1568,12 +1568,13 @@
     .ailment-card__link:hover { color: var(--teal-deeper); }
     .ailments-triage { background: var(--teal-ice); border-radius: var(--radius); padding: 1.1rem 1.25rem; margin-bottom: 1.5rem; border: 1.5px solid var(--border); }
     .ailments-triage__q { font-weight: 700; color: var(--teal-deeper); font-size: .88rem; margin-bottom: .65rem; }
+    .ailments-triage__btn--all { width: 100%; text-align: center; margin-bottom: .6rem; }
+    .ailments-triage__group { margin-top: .7rem; }
     .ailments-triage__btns { display: flex; flex-wrap: wrap; gap: .45rem; }
     .ailments-triage__btn { background: var(--white); border: 1.5px solid var(--border); border-radius: 999px; padding: .42rem .95rem; font-size: .8rem; font-weight: 600; cursor: pointer; transition: all .15s; color: var(--text-dark); }
     .ailments-triage__btn:hover, .ailments-triage__btn.active { background: var(--teal-bright); color: #fff; border-color: var(--teal-bright); }
     @media (max-width: 600px) {
       .ailments-triage__btns { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; }
-      .ailments-triage__btn[data-cat="all"] { grid-column: 1 / -1; }
     }
     .ailments-cat-section { margin-bottom: 1.5rem; }
     .ailments-cat__hd { font-size: .78rem; font-weight: 900; color: var(--teal-deeper); text-transform: uppercase; letter-spacing: .06em; padding: .35rem .65rem; background: var(--teal-ice); border-radius: 6px; display: inline-block; margin-bottom: .75rem; }
@@ -2149,17 +2150,24 @@
     <div class="conditions-panel" id="conditions-panel">
       <div class="conditions-panel__hd">Which condition are you dealing with?</div>
       <div class="ailments-triage" id="ailments-triage-portal">
-        <div class="ailments-triage__q">Filter by area or concern:</div>
-        <div class="ailments-triage__btns">
-          <button class="ailments-triage__btn active" data-triage="portal" data-cat="all">All Conditions</button>
-          <button class="ailments-triage__btn" data-triage="portal" data-cat="eent">👁️ Eyes, Nose &amp; Throat</button>
-          <button class="ailments-triage__btn" data-triage="portal" data-cat="skin">🧴 Skin &amp; Hair</button>
-          <button class="ailments-triage__btn" data-triage="portal" data-cat="feet">🦶 Feet</button>
-          <button class="ailments-triage__btn" data-triage="portal" data-cat="groin">🏃 Groin</button>
-          <button class="ailments-triage__btn" data-triage="portal" data-cat="gut">🔥 Stomach &amp; Bowel</button>
-          <button class="ailments-triage__btn" data-triage="portal" data-cat="pain">🦴 Pain &amp; Injury</button>
-          <button class="ailments-triage__btn" data-triage="portal" data-cat="womens">🌸 Women's &amp; Urinary</button>
-          <button class="ailments-triage__btn" data-triage="portal" data-cat="bites">🕷️ Tick Bites</button>
+        <button class="ailments-triage__btn ailments-triage__btn--all active" data-triage="portal" data-cat="all">All Conditions</button>
+        <div class="ailments-triage__group">
+          <div class="ailments-triage__q">🔍 Where is your main symptom?</div>
+          <div class="ailments-triage__btns">
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="eent">👁️ Eyes, Nose &amp; Throat</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="skin">🧴 Skin &amp; Hair</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="feet">🦶 Feet</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="groin">🏃 Groin</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="gut">🔥 Stomach &amp; Bowel</button>
+          </div>
+        </div>
+        <div class="ailments-triage__group">
+          <div class="ailments-triage__q">What topic are you looking for?</div>
+          <div class="ailments-triage__btns">
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="pain">🦴 Pain &amp; Injury</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="womens">🌸 Women's Health</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="bites">🕷️ Tick Bites</button>
+          </div>
         </div>
       </div>
       <div class="ailments-cat-section portal-cat" data-triage-scope="portal" data-cat="eent">
@@ -2216,7 +2224,7 @@
         </div>
       </div>
       <div class="ailments-cat-section portal-cat" data-triage-scope="portal" data-cat="womens">
-        <div class="ailments-cat__hd">🌸 Women's &amp; Urinary Health</div>
+        <div class="ailments-cat__hd">🌸 Women's Health</div>
         <div class="ailments-grid">
           <div class="ailment-card"><div class="ailment-card__icon">🩸</div><h3 class="ailment-card__name">Period Pain</h3><p class="ailment-card__desc">Cramping or throbbing pain in the lower abdomen during your period.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=20">Start Assessment →</a></div>
           <div class="ailment-card"><div class="ailment-card__icon">🌸</div><h3 class="ailment-card__name">Vaginal Yeast Infection</h3><p class="ailment-card__desc">Itching, burning, or irritation around the vagina — not sexually transmitted.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=42">Start Assessment →</a></div>
@@ -2300,17 +2308,24 @@
         <div class="svc-acc__body svc-acc__body--wide">
 <p class="section__lead" style="margin-bottom:1.5rem;">Our clinical pharmacists can assess your condition and prescribe treatment on the spot — no doctor's appointment, no walk-in clinic, no referral, no waiting. Walk in or start your online assessment.</p>
         <div class="ailments-triage" id="ailments-triage-main">
-          <div class="ailments-triage__q">Filter by area or concern:</div>
-          <div class="ailments-triage__btns">
-            <button class="ailments-triage__btn active" data-triage="main" data-cat="all">All 28 Conditions</button>
-            <button class="ailments-triage__btn" data-triage="main" data-cat="eent">👁️ Eyes, Nose &amp; Throat</button>
-            <button class="ailments-triage__btn" data-triage="main" data-cat="skin">🧴 Skin &amp; Hair</button>
-            <button class="ailments-triage__btn" data-triage="main" data-cat="feet">🦶 Feet</button>
-            <button class="ailments-triage__btn" data-triage="main" data-cat="groin">🏃 Groin</button>
-            <button class="ailments-triage__btn" data-triage="main" data-cat="gut">🔥 Stomach &amp; Bowel</button>
-            <button class="ailments-triage__btn" data-triage="main" data-cat="pain">🦴 Pain &amp; Injury</button>
-            <button class="ailments-triage__btn" data-triage="main" data-cat="womens">🌸 Women's &amp; Urinary</button>
-            <button class="ailments-triage__btn" data-triage="main" data-cat="bites">🕷️ Tick Bites</button>
+          <button class="ailments-triage__btn ailments-triage__btn--all active" data-triage="main" data-cat="all">All 28 Conditions</button>
+          <div class="ailments-triage__group">
+            <div class="ailments-triage__q">🔍 Where is your main symptom?</div>
+            <div class="ailments-triage__btns">
+              <button class="ailments-triage__btn" data-triage="main" data-cat="eent">👁️ Eyes, Nose &amp; Throat</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="skin">🧴 Skin &amp; Hair</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="feet">🦶 Feet</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="groin">🏃 Groin</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="gut">🔥 Stomach &amp; Bowel</button>
+            </div>
+          </div>
+          <div class="ailments-triage__group">
+            <div class="ailments-triage__q">What topic are you looking for?</div>
+            <div class="ailments-triage__btns">
+              <button class="ailments-triage__btn" data-triage="main" data-cat="pain">🦴 Pain &amp; Injury</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="womens">🌸 Women's Health</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="bites">🕷️ Tick Bites</button>
+            </div>
           </div>
         </div>
         <div class="ailments-cat-section main-cat" data-triage-scope="main" data-cat="eent">
@@ -2367,7 +2382,7 @@
           </div>
         </div>
         <div class="ailments-cat-section main-cat" data-triage-scope="main" data-cat="womens">
-          <div class="ailments-cat__hd">🌸 Women's &amp; Urinary Health</div>
+          <div class="ailments-cat__hd">🌸 Women's Health</div>
           <div class="ailments-grid">
             <div class="ailment-card"><div class="ailment-card__icon">🩸</div><h3 class="ailment-card__name">Period Pain</h3><p class="ailment-card__desc">Cramping or throbbing pain in your lower abdomen during your period, sometimes with back pain or nausea.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=20">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">🌸</div><h3 class="ailment-card__name">Vaginal Yeast Infection</h3><p class="ailment-card__desc">Itching, burning, or irritation around the vagina, with or without thick white discharge — not sexually transmitted.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=42">Start Assessment →</a></div>
