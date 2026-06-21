@@ -1072,6 +1072,24 @@
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1.25rem; margin-top: 2rem;
     }
+    .naloxone-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.1rem;
+    }
+    .naloxone-card {
+      background: var(--white); border-radius: var(--radius);
+      border: 1.5px solid var(--border);
+      padding: 1.25rem 1.1rem;
+      display: flex; flex-direction: column; gap: .4rem;
+    }
+    .naloxone-card__icon { font-size: 1.45rem; line-height: 1; }
+    .naloxone-card__title {
+      font-family: var(--font-display);
+      font-size: .9rem; font-weight: 900;
+      color: var(--teal-deeper); text-transform: uppercase; letter-spacing: .04em;
+    }
+    .naloxone-card__desc { font-size: .81rem; color: var(--text-muted); line-height: 1.6; margin: 0; }
     .medscheck-card {
       background: var(--white); border-radius: var(--radius);
       border: 1.5px solid var(--border);
@@ -1793,6 +1811,7 @@
           <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},200)">Minor Ailments</a></li>
           <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},200)">Medication Reviews</a></li>
           <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},200)">Vaccinations</a></li>
+          <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},200)">Free Naloxone Kits</a></li>
           <li><a href="#drug-checker">Drug Checker</a></li>
           <li><a href="#services">Insurance</a></li>
         </ul>
@@ -2509,6 +2528,35 @@
         <div class="svc-acc__body">
           <p>Fast, accurate dispensing with one-on-one counselling from your pharmacist. New here? Bring your prescription in, or we'll transfer it from your old pharmacy for you.</p>
           <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/transfer-rx/306667">Transfer or refill your prescription →</a>
+        </div>
+      </div>
+
+      <div class="svc-acc-item" id="acc-naloxone">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🆘</span>
+          <span class="svc-acc__title">Free Naloxone Kits — Opioid Overdose Prevention</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body svc-acc__body--wide">
+          <p class="section__lead" style="margin-bottom:1.25rem;">Naloxone (Narcan®) is a safe, fast-acting medication that reverses an opioid overdose and can save a life. We provide kits <strong>free of charge</strong> — no prescription required, no judgment, no questions asked.</p>
+          <div class="naloxone-grid">
+            <div class="naloxone-card">
+              <div class="naloxone-card__icon">👥</div>
+              <div class="naloxone-card__title">Who it's for</div>
+              <p class="naloxone-card__desc">Anyone who uses opioids — whether prescribed (oxycodone, hydromorphone, codeine, fentanyl) or obtained outside a prescription — is encouraged to have a kit. Family members, caregivers, and anyone who cares about someone who uses opioids are equally welcome to pick one up.</p>
+            </div>
+            <div class="naloxone-card">
+              <div class="naloxone-card__icon">🧰</div>
+              <div class="naloxone-card__title">What's in the kit</div>
+              <p class="naloxone-card__desc">Each kit contains naloxone nasal spray (or injectable solution), gloves, step-by-step rescue instructions, and a short in-person training with our pharmacist so you feel prepared and confident if you ever need it.</p>
+            </div>
+            <div class="naloxone-card">
+              <div class="naloxone-card__icon">💚</div>
+              <div class="naloxone-card__title">Completely free &amp; confidential</div>
+              <p class="naloxone-card__desc">Provided at no cost through the <strong>Ontario Naloxone Program</strong>. Just walk in and ask our pharmacist, or call <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">(416) 654-8181</a>. No appointment, no paperwork, no insurance needed.</p>
+            </div>
+          </div>
+          <p style="font-size:.78rem;color:var(--text-muted);text-align:center;margin-top:1.75rem;">Funded by the Ontario Ministry of Health · Available to all Ontarians · Walk-ins always welcome</p>
         </div>
       </div>
 
