@@ -1241,9 +1241,9 @@
       display: flex; align-items: stretch; justify-content: center; flex-wrap: wrap;
     }
     .reviews-platform {
-      flex: 1; min-width: 220px; max-width: 340px;
+      flex: 1; min-width: 240px; max-width: 380px;
       display: flex; flex-direction: column; align-items: center;
-      text-align: center; padding: 1.5rem 2rem 2rem;
+      text-align: center; padding: 1.5rem 2.5rem 2rem;
     }
     .reviews-platform-divider {
       width: 1.5px; background: var(--border); align-self: center; height: 160px; flex-shrink: 0;
@@ -1270,16 +1270,16 @@
       margin-bottom: 1.5rem;
     }
     .reviews-uber-badge img { height: 22px; width: auto; }
+    .reviews-uber-badge__icon { filter: brightness(0); }
     .reviews-uber-badge__text { font-size: .83rem; font-weight: 700; color: #000; }
-    .reviews-uber-stars-row { display: flex; align-items: center; justify-content: center; gap: .75rem; }
-    .reviews-uber-top-badge-img { height: 64px; width: 64px; object-fit: contain; flex-shrink: 0; }
-    .reviews-uber-top-badge { display: inline-flex; align-items: center; gap: .55rem; margin-top: 1rem; background: #f0faf0; border: 1.5px solid #c0e0c0; border-radius: 100px; padding: .35rem 1rem; }
+    .reviews-uber-top-badge-img { height: 80px; width: 80px; object-fit: contain; margin-top: 1.1rem; }
+    .reviews-uber-top-badge { display: inline-flex; align-items: center; gap: .55rem; margin-top: .6rem; background: #f0faf0; border: 1.5px solid #c0e0c0; border-radius: 100px; padding: .35rem 1rem; }
     .reviews-uber-top-badge span { font-size: .78rem; font-weight: 700; color: #1a5c1a; }
 
     /* Stars */
     .reviews-stars-wrap {
       position: relative; display: inline-block;
-      font-size: 4.2rem; letter-spacing: .06em; line-height: 1;
+      font-size: 3.4rem; letter-spacing: .06em; line-height: 1;
       margin-bottom: .45rem;
     }
     .reviews-stars-bg { color: #e5e7eb; user-select: none; }
@@ -2682,21 +2682,19 @@
 
         <div class="reviews-platform-divider" aria-hidden="true"></div>
 
-        <!-- Uber Eats -->
+        <!-- Uber Orders -->
         <div class="reviews-platform">
           <div class="reviews-uber-badge">
-            <img src="logos/uber.png" alt="Uber Eats">
-            <span class="reviews-uber-badge__text">Uber Eats</span>
+            <img src="logos/uber.png" alt="Uber" class="reviews-uber-badge__icon">
+            <span class="reviews-uber-badge__text">Uber Orders</span>
           </div>
-          <div class="reviews-uber-stars-row">
-            <div class="reviews-stars-wrap" aria-label="4.9 out of 5 stars">
-              <span class="reviews-stars-bg" aria-hidden="true">★★★★★</span>
-              <span class="reviews-stars-fill" aria-hidden="true">★★★★★</span>
-            </div>
-            <img src="logos/uber_top_store_v2.png" alt="Top Store in Toronto badge" class="reviews-uber-top-badge-img">
+          <div class="reviews-stars-wrap" aria-label="4.9 out of 5 stars">
+            <span class="reviews-stars-bg" aria-hidden="true">★★★★★</span>
+            <span class="reviews-stars-fill" aria-hidden="true">★★★★★</span>
           </div>
           <div class="reviews-score"><span class="js-countup" data-target="4.9" data-decimals="1">4.9</span></div>
           <div class="reviews-score-sub">out of 5 &nbsp;·&nbsp; 600+ ratings</div>
+          <img src="logos/uber_top_store_v2.png" alt="Top Store in Toronto badge" class="reviews-uber-top-badge-img">
           <div class="reviews-uber-top-badge">
             <span>Top Store in Toronto</span>
           </div>
