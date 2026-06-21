@@ -797,6 +797,13 @@
     .status-row__val--closed { color: #991b1b; }
 
     .find-us__actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: auto; }
+    .find-us__rating { display: flex; flex-direction: column; gap: .15rem; margin-top: .85rem; padding: .7rem .9rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 10px; text-decoration: none; transition: box-shadow .2s; }
+    .find-us__rating:hover { box-shadow: 0 2px 10px rgba(0,0,0,.1); }
+    .find-us__rating-stars { color: #f5a623; font-size: 1.1rem; letter-spacing: .05em; line-height: 1; }
+    .find-us__rating-meta { display: flex; align-items: baseline; gap: .35rem; }
+    .find-us__rating-score { font-size: 1.15rem; font-weight: 800; color: var(--text); }
+    .find-us__rating-count { font-size: .78rem; color: var(--text-muted); }
+    .find-us__rating-cta { font-size: .73rem; font-weight: 600; color: var(--teal-dark); }
 
     /* 3-column info strip */
     .contact__info-strip {
@@ -2841,6 +2848,16 @@ window.FAQS = [
           <a href="tel:+14166548181" class="btn">📞 Call Us</a>
           <a href="mailto:stclairdrugmart@gmail.com" class="btn btn--outline">✉️ Email</a>
         </div>
+
+        <!-- Reviews -->
+        <a class="find-us__rating" href="https://www.google.com/maps/place/St.+Clair+Drug+Mart+Pharmacy/@43.6773961,-79.4468996,17z/data=!4m8!3m7!1s0x882b35d5e572114b:0x899add08acb1e556!8m2!3d43.6773961!4d-79.4468996!9m1!1b1" target="_blank" rel="noopener">
+          <div class="find-us__rating-stars">★★★★★</div>
+          <div class="find-us__rating-meta">
+            <span class="find-us__rating-score">4.9</span>
+            <span class="find-us__rating-count">· 55 Google reviews</span>
+          </div>
+          <span class="find-us__rating-cta">Read reviews →</span>
+        </a>
 
       </div>
     </div>
