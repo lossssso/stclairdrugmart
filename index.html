@@ -695,6 +695,10 @@
     #contact .section__title::after { background: var(--teal-bright); }
     #contact .section__lead { color: rgba(255,255,255,.75); }
     /* ── Find Us section ───────────────────────────────── */
+    .find-us__section-hd { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.1rem; }
+    .find-us__top-right { display: flex; flex-direction: column; align-items: flex-end; gap: .55rem; }
+    .find-us__partner-logos { display: flex; align-items: center; gap: .55rem; }
+    .find-us__partner-logos img { height: 42px; width: 42px; object-fit: contain; border-radius: 50%; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,.12); }
     .find-us__addr-bar {
       display: flex; justify-content: space-between; align-items: center;
       background: var(--white); border-radius: 14px; padding: .9rem 1.4rem;
@@ -2756,9 +2760,23 @@ window.FAQS = [
 <!-- ── Contact ────────────────────────────────────────────── -->
 <section id="contact">
   <div class="section__inner">
-    <h2 class="section__title">Find Us</h2>
+    <!-- Section header row: title left, logos + contact right -->
+    <div class="find-us__section-hd">
+      <h2 class="section__title" style="margin-bottom:0;">Find Us</h2>
+      <div class="find-us__top-right">
+        <div class="find-us__partner-logos">
+          <img src="logos/ttc.webp" alt="TTC — Toronto Transit Commission">
+          <img src="logos/greenp.png" alt="Green P Municipal Parking">
+          <img src="logos/bikeshare.png" alt="Bike Share Toronto">
+        </div>
+        <div class="find-us__contact-pills">
+          <a href="tel:+14166548181" class="find-us__cpill find-us__cpill--call">📞 (416) 654-8181</a>
+          <a href="mailto:stclairdrugmart@gmail.com" class="find-us__cpill find-us__cpill--email">✉️ Email Us</a>
+        </div>
+      </div>
+    </div>
 
-    <!-- Address + inline contact pills -->
+    <!-- Address bar -->
     <div class="find-us__addr-bar">
       <div class="find-us__addr-left">
         <span class="find-us__addr-icon">📍</span>
@@ -2766,10 +2784,6 @@ window.FAQS = [
           <p class="find-us__addr-text">1203 St. Clair Avenue West, Toronto, ON</p>
           <a href="https://www.google.com/maps/dir/?api=1&destination=St.+Clair+Drug+Mart+Pharmacy+1203+St+Clair+Ave+W+Toronto+ON" target="_blank" rel="noopener" class="find-us__dir-link">Get Directions on Google Maps →</a>
         </div>
-      </div>
-      <div class="find-us__contact-pills">
-        <a href="tel:+14166548181" class="find-us__cpill find-us__cpill--call">📞 (416) 654-8181</a>
-        <a href="mailto:stclairdrugmart@gmail.com" class="find-us__cpill find-us__cpill--email">✉️ Email Us</a>
       </div>
     </div>
 
@@ -2839,7 +2853,7 @@ window.FAQS = [
 
       <!-- Transit -->
       <div class="info-strip__card">
-        <div class="info-strip__title"><img class="brand-badge" src="logos/ttc.webp" alt="TTC" height="28" style="height:28px;width:auto;"> Getting Here by TTC</div>
+        <div class="info-strip__title">🚇 Getting Here by TTC</div>
         <div class="info-strip__body">
           <div class="transit-address">
             <span class="transit-address__pin">📍</span>
@@ -2879,9 +2893,9 @@ window.FAQS = [
           <div class="info-strip__chips">
             <div class="info-strip__sub-label">Car Parking</div>
             <div class="info-chip"><span class="info-chip__icon">🚗</span><span><strong>Street parking</strong> directly in front on St. Clair Ave W — free on evenings &amp; weekends</span></div>
-            <a class="info-chip" href="https://www.google.com/maps/search/?api=1&query=Green+P+Parking+St+Clair+Ave+W+Via+Italia+Toronto" target="_blank" rel="noopener"><span class="info-chip__icon" style="width:auto;"><img src="logos/greenp.png" alt="Green P Municipal Parking" style="height:22px;width:22px;object-fit:contain;border-radius:50%;display:block;"></span><span><strong>Green P — Via Italia Lot</strong> (St. Clair Ave W &amp; Via Italia, near Dufferin) <span class="info-chip__map">· Map →</span></span></a>
+            <a class="info-chip" href="https://www.google.com/maps/search/?api=1&query=Green+P+Parking+St+Clair+Ave+W+Via+Italia+Toronto" target="_blank" rel="noopener"><span class="info-chip__icon">🅿️</span><span><strong>Green P — Via Italia Lot</strong> (St. Clair Ave W &amp; Via Italia, near Dufferin) <span class="info-chip__map">· Map →</span></span></a>
             <div class="info-chip"><span class="info-chip__icon">♿</span><span>Accessible entrance &amp; designated parking spaces available</span></div>
-            <div class="info-strip__sub-label" style="margin-top:.55rem;"><img class="sub-logo" src="logos/bikeshare.png" alt="Bike Share Toronto" style="height:22px;width:22px;object-fit:contain;border-radius:50%;display:block;"> Bike Share Toronto</div>
+            <div class="info-strip__sub-label" style="margin-top:.55rem;">🚲 Bike Share Toronto</div>
             <a class="info-chip" href="https://bikesharetoronto.com/system-map/" target="_blank" rel="noopener"><span class="info-chip__icon">🚲</span><span><strong>91 Via Italia station</strong> — just around the corner from the pharmacy <span class="info-chip__map">· Live map →</span></span></a>
           </div>
         </div>
