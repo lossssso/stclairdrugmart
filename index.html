@@ -678,6 +678,9 @@
     .shop__card__icon-wrap span { font-size: 1.6rem; line-height: 1; }
     .shop__card__title { font-size: 1rem; font-weight: 700; color: var(--teal-deeper); }
     .shop__card__desc { font-size: .875rem; color: var(--text-muted); line-height: 1.6; }
+    .shop__card__photo { width: 100%; aspect-ratio: 4/3; border-radius: 10px; overflow: hidden; margin-bottom: .25rem; }
+    .shop__card__photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s; }
+    .shop__card:hover .shop__card__photo img { transform: scale(1.04); }
     .btn--uber {
       display: inline-flex; align-items: center; gap: .6rem;
       background: #000; color: #fff; border-radius: 8px;
@@ -867,21 +870,17 @@
       gap: 1.1rem;
       margin-top: 2.5rem;
     }
-    /* Top row: 2 big storefront photos — show full image, no crop */
+    /* Top row: 3 photos equally spaced */
     .gallery__item:nth-child(1),
-    .gallery__item:nth-child(2) {
-      grid-column: span 3;
-      aspect-ratio: 1/1;
-      background: var(--teal-ice);
-    }
-    .gallery__item:nth-child(1) img,
-    .gallery__item:nth-child(2) img {
-      object-fit: contain;
+    .gallery__item:nth-child(2),
+    .gallery__item:nth-child(3) {
+      grid-column: span 2;
+      aspect-ratio: 3/4;
     }
     /* Bottom row: 3 interior photos */
-    .gallery__item:nth-child(3),
     .gallery__item:nth-child(4),
-    .gallery__item:nth-child(5) {
+    .gallery__item:nth-child(5),
+    .gallery__item:nth-child(6) {
       grid-column: span 2;
       aspect-ratio: 4/3;
     }
@@ -951,9 +950,9 @@
     /* ── Responsive ───────────────────────────────────── */
     @media (max-width: 900px) {
       .pa-cards--secondary { grid-template-columns: repeat(3, 1fr); }
-      .gallery  { grid-template-columns: repeat(2, 1fr); }
-      .gallery__item:nth-child(1), .gallery__item:nth-child(2) { grid-column: span 1; aspect-ratio: 4/3; }
-      .gallery__item:nth-child(3), .gallery__item:nth-child(4), .gallery__item:nth-child(5) { grid-column: span 1; aspect-ratio: 4/3; }
+      .gallery  { grid-template-columns: repeat(3, 1fr); }
+      .gallery__item:nth-child(1), .gallery__item:nth-child(2), .gallery__item:nth-child(3) { grid-column: span 1; aspect-ratio: 3/4; }
+      .gallery__item:nth-child(4), .gallery__item:nth-child(5), .gallery__item:nth-child(6) { grid-column: span 1; aspect-ratio: 4/3; }
     }
     @media (max-width: 768px) {
       .nav__links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e9f4f5; box-shadow: 0 8px 20px rgba(0,60,66,.08); flex-direction: column; align-items: stretch; padding: .5rem 1rem 1rem; gap: .1rem; }
@@ -2756,6 +2755,9 @@ window.FAQS = [
     <p class="section__lead">Get your prescriptions and health essentials delivered right to your door.</p>
     <div class="shop__cards">
       <div class="shop__card">
+        <div class="shop__card__photo">
+          <img src="delivery_uber.jpeg" alt="St. Clair Drug Mart Uber Eats order ready for delivery" loading="lazy" decoding="async">
+        </div>
         <div class="shop__card__head">
           <div class="shop__card__icon-wrap shop__card__icon-wrap--uber">
             <img src="logos/uber.png" alt="Uber Eats">
@@ -2772,6 +2774,9 @@ window.FAQS = [
         </a>
       </div>
       <div class="shop__card">
+        <div class="shop__card__photo">
+          <img src="delivery_bag.jpeg" alt="St. Clair Drug Mart branded delivery bag ready for a patient" loading="lazy" decoding="async">
+        </div>
         <div class="shop__card__head">
           <div class="shop__card__icon-wrap shop__card__icon-wrap--delivery">
             <span>🚴</span>
@@ -2984,6 +2989,9 @@ window.FAQS = [
     <div class="gallery">
       <div class="gallery__item">
         <img src="storefront_studio.jpeg" alt="St. Clair Drug Mart Pharmacy exterior — 1203 St. Clair Ave W, Toronto" loading="lazy" decoding="async" />
+      </div>
+      <div class="gallery__item">
+        <img src="neighbourhood.jpeg" alt="Corso Italia street on St. Clair Ave W with TTC streetcar and flower baskets" loading="lazy" decoding="async" />
       </div>
       <div class="gallery__item">
         <img src="storefront_angle.jpeg" alt="St. Clair Drug Mart Pharmacy storefront on St. Clair Ave W, Toronto" loading="lazy" decoding="async" />
