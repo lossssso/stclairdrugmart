@@ -2788,7 +2788,7 @@
           <div class="find-us__rating-stars">★★★★★</div>
           <div class="find-us__rating-meta">
             <span class="find-us__rating-score">4.9</span>
-            <span class="find-us__rating-count">· 55 Google reviews</span>
+            <span class="find-us__rating-count">· 59 Google reviews</span>
           </div>
           <span class="find-us__rating-cta">Read reviews →</span>
         </a>
@@ -3809,14 +3809,19 @@ window.FAQS = [
     if (day >= 1 && day <= 5) { stO = 9*60; stC = 18*60; }
     else if (day === 6) { stO = 9*60; stC = 14*60; }
 
-    // Appointments/Walk-ins & Uber: Mon-Fri 8:30–18:30, Sat 8:30–15:00, Sun closed
+    // Appointments/Walk-ins: Mon-Fri 8:30–18:30, Sat 8:30–15:00, Sun closed
     var apO = -1, apC = -1;
     if (day >= 1 && day <= 5) { apO = 8*60+30; apC = 18*60+30; }
     else if (day === 6) { apO = 8*60+30; apC = 15*60; }
 
+    // Uber Orders: Mon-Fri 8:45–18:30, Sat 8:45–15:00, Sun closed
+    var ubO = -1, ubC = -1;
+    if (day >= 1 && day <= 5) { ubO = 8*60+45; ubC = 18*60+30; }
+    else if (day === 6) { ubO = 8*60+45; ubC = 15*60; }
+
     render('store', stO, stC, 'Open Now');
     render('appt',  apO, apC, 'Accepting');
-    render('uber',  apO, apC, 'Accepting Orders');
+    render('uber',  ubO, ubC, 'Accepting Orders');
   })();
 
   // ── Service Tabs ──────────────────────────────────────────
