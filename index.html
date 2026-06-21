@@ -4615,6 +4615,20 @@ window.FAQS = [
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSiteSearch(); }
   });
 
+  // ── Keep URL hash-free so browser scroll restoration works on refresh ──
+  document.addEventListener('click', function(e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var hash = a.getAttribute('href');
+    if (!hash || hash === '#') return;
+    var target = document.getElementById(hash.slice(1));
+    if (!target) return;
+    e.preventDefault();
+    if (!a.hasAttribute('onclick')) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
   // ── Transit/Parking logo scroll + highlight ───────────────
   function goToCard(id) {
     var el = document.getElementById(id);
