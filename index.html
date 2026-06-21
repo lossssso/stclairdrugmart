@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
   <title>St. Clair Drug Mart | Clinical Pharmacy Toronto</title>
   <meta name="description" content="Clinical pharmacy on St. Clair West in Corso Italia, Toronto — walk-ins welcome, no appointment needed. Serving Via Italia, Davenport, Dufferin, Wychwood &amp; surrounding neighbourhoods. Vaccines, prescriptions, minor ailments, medication reviews &amp; free GTA delivery. Call (416) 654-8181." />
-  <meta name="keywords" content="clinical pharmacy Toronto, pharmacy Corso Italia, pharmacy Via Italia, pharmacy St. Clair West, pharmacy Davenport Toronto, pharmacy Dufferin St Clair, pharmacy Wychwood Toronto, pharmacy Earlscourt Toronto, walk-in pharmacy Toronto, walk-in clinic pharmacy Toronto, St. Clair West pharmacy, independent pharmacy Toronto, minor ailments pharmacy, prescription refill Toronto, flu shot Toronto, vaccines pharmacy, medication review, blister packs, UTI treatment pharmacist, pharmacy near me, pharmacy 1203 St Clair Ave W, farmacia Corso Italia, farmacia Toronto" />
+  <meta name="keywords" content="clinical pharmacy Toronto, pharmacy Corso Italia, pharmacy Via Italia, pharmacy St. Clair West, pharmacy Davenport Toronto, pharmacy Dufferin St Clair, pharmacy Wychwood Toronto, pharmacy Earlscourt Toronto, walk-in pharmacy Toronto, walk-in clinic pharmacy Toronto, St. Clair West pharmacy, independent pharmacy Toronto, minor ailments pharmacy, prescription refill Toronto, flu shot Toronto, vaccines pharmacy, medication review, blister packs, UTI treatment pharmacist, pharmacy near me, pharmacy 1203 St Clair Ave W, farmacia Corso Italia, farmacia Toronto, naloxone Toronto, free naloxone kit Toronto, narcan Toronto, free narcan kit, naloxone near me, naloxone pharmacy Toronto, Ontario Naloxone Program pharmacy, opioid overdose prevention Toronto, free naloxone St Clair West, harm reduction pharmacy Toronto, where to get naloxone Ontario" />
   <meta name="author" content="St. Clair Drug Mart Pharmacy" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="theme-color" content="#00737c" />
@@ -51,7 +51,7 @@
     "url": "https://www.stclairdrugmart.ca/",
     "logo": "https://www.stclairdrugmart.ca/logo.png",
     "image": "https://www.stclairdrugmart.ca/storefront_studio.jpeg",
-    "description": "Clinical pharmacy and walk-in pharmacy at 1203 St. Clair Avenue West, Toronto, ON. Walk-ins welcome — no appointment needed. Prescriptions, free delivery, vaccines, blister packs, medication reviews, and clinical pharmacist assessment and prescribing for 28 minor ailments.",
+    "description": "Clinical pharmacy and walk-in pharmacy at 1203 St. Clair Avenue West, Toronto, ON. Walk-ins welcome — no appointment needed. Prescriptions, free delivery, vaccines, blister packs, medication reviews, pharmacist prescribing for 28 minor ailments, and free naloxone kits through the Ontario Naloxone Program.",
     "telephone": "+14166548181",
     "email": "stclairdrugmart@gmail.com",
     "address": {
@@ -81,7 +81,7 @@
     ],
     "availableLanguage": ["English","Spanish","Portuguese","Italian","Turkish","Polish"],
     "medicalSpecialty": "Pharmacy",
-    "knowsAbout": ["Prescription dispensing","Minor ailments prescribing","Vaccinations","Medication reviews","Blister packaging","Travel health","Smoking cessation"],
+    "knowsAbout": ["Prescription dispensing","Minor ailments prescribing","Vaccinations","Medication reviews","Blister packaging","Travel health","Smoking cessation","Naloxone dispensing","Harm reduction","Opioid overdose prevention"],
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
@@ -98,7 +98,8 @@
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Minor Ailments Assessment & Prescribing" } },
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Medication Reviews (MedsCheck)" } },
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Blister / Compliance Packaging" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Prescription Transfers" } }
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Prescription Transfers" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Free Naloxone Kits — Ontario Naloxone Program" } }
       ]
     },
     "sameAs": [
@@ -1291,7 +1292,10 @@
     .reviews-uber-badge img { height: 22px; width: auto; }
     .reviews-uber-badge__icon { filter: brightness(0); }
     .reviews-uber-badge__text { font-size: .83rem; font-weight: 700; color: #000; }
-    .reviews-uber-top-badge-img { height: 80px; width: 80px; object-fit: contain; margin-top: 1.1rem; }
+    .reviews-platform--uber { flex-direction: row; justify-content: center; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .reviews-uber-rating { display: flex; flex-direction: column; align-items: center; }
+    .reviews-uber-award { display: flex; flex-direction: column; align-items: center; }
+    .reviews-uber-top-badge-img { height: 80px; width: 80px; object-fit: contain; }
     .reviews-uber-top-badge { display: inline-flex; align-items: center; gap: .55rem; margin-top: .6rem; background: #f0faf0; border: 1.5px solid #c0e0c0; border-radius: 100px; padding: .35rem 1rem; }
     .reviews-uber-top-badge span { font-size: .78rem; font-weight: 700; color: #1a5c1a; }
 
@@ -2732,20 +2736,24 @@
         <div class="reviews-platform-divider" aria-hidden="true"></div>
 
         <!-- Uber Orders -->
-        <div class="reviews-platform">
-          <div class="reviews-uber-badge">
-            <img src="logos/uber.png" alt="Uber" class="reviews-uber-badge__icon">
-            <span class="reviews-uber-badge__text">Uber Orders</span>
+        <div class="reviews-platform reviews-platform--uber">
+          <div class="reviews-uber-rating">
+            <div class="reviews-uber-badge">
+              <img src="logos/uber.png" alt="Uber" class="reviews-uber-badge__icon">
+              <span class="reviews-uber-badge__text">Uber Orders</span>
+            </div>
+            <div class="reviews-stars-wrap" aria-label="4.9 out of 5 stars">
+              <span class="reviews-stars-bg" aria-hidden="true">★★★★★</span>
+              <span class="reviews-stars-fill" aria-hidden="true">★★★★★</span>
+            </div>
+            <div class="reviews-score"><span class="js-countup" data-target="4.9" data-decimals="1">4.9</span></div>
+            <div class="reviews-score-sub">out of 5 &nbsp;·&nbsp; 600+ ratings</div>
           </div>
-          <div class="reviews-stars-wrap" aria-label="4.9 out of 5 stars">
-            <span class="reviews-stars-bg" aria-hidden="true">★★★★★</span>
-            <span class="reviews-stars-fill" aria-hidden="true">★★★★★</span>
-          </div>
-          <div class="reviews-score"><span class="js-countup" data-target="4.9" data-decimals="1">4.9</span></div>
-          <div class="reviews-score-sub">out of 5 &nbsp;·&nbsp; 600+ ratings</div>
-          <img src="logos/uber_top_store_v2.png" alt="Top Store in Toronto badge" class="reviews-uber-top-badge-img">
-          <div class="reviews-uber-top-badge">
-            <span>Top Store in Toronto</span>
+          <div class="reviews-uber-award">
+            <img src="logos/uber_top_store_v2.png" alt="Top Store in Toronto badge" class="reviews-uber-top-badge-img">
+            <div class="reviews-uber-top-badge">
+              <span>Top Store in Toronto</span>
+            </div>
           </div>
         </div>
       </div>
@@ -3116,6 +3124,21 @@ window.FAQS = [
     icon: "📦",
     q: "Do you offer blister packs for complex medication schedules?",
     a: "Yes. We prepare weekly blister (bubble) packs that organize your medications by day and time — ideal for patients managing multiple prescriptions, or families supporting a loved one. Blister packs reduce missed doses and medication errors. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> or <a href=\"#booking\">book a setup appointment</a> — it usually takes just one short visit."
+  },
+  {
+    icon: "🆘",
+    q: "Where can I get a free naloxone kit in Toronto?",
+    a: "You can pick up a <strong>free naloxone (Narcan®) kit</strong> right here at St. Clair Drug Mart — 1203 St. Clair Ave W, Toronto. We provide kits through the <strong>Ontario Naloxone Program</strong> at no cost, with no prescription needed and no appointment required. Our pharmacist will give you a quick, confidential training so you feel prepared. Just walk in or call <a href=\"tel:+14166548181\">(416) 654-8181</a>. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},200)\">Learn more about our naloxone program →</a>"
+  },
+  {
+    icon: "💊",
+    q: "Do I need a prescription for naloxone (Narcan) in Ontario?",
+    a: "No — naloxone nasal spray (Narcan®) is available <strong>without a prescription</strong> in Ontario. Through the Ontario Naloxone Program, we provide free kits to anyone who uses opioids (whether prescribed or otherwise), as well as family members, caregivers, and anyone who wants to be prepared to help. No judgment, no paperwork. Walk in or call <a href=\"tel:+14166548181\">(416) 654-8181</a>."
+  },
+  {
+    icon: "❤️",
+    q: "What is naloxone and how does it work?",
+    a: "Naloxone (Narcan®) is a fast-acting medication that reverses an opioid overdose by blocking opioids in the brain — restoring normal breathing within 2–5 minutes. It works against oxycodone, fentanyl, hydromorphone, codeine, heroin, and other opioids. It is completely safe: if opioids aren't present, it has no effect. We provide kits <strong>free of charge</strong> with a short training session so you know exactly what to do. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},200)\">Get your free kit →</a>"
   }
   /* ── add new FAQs here, following the same { q: "…", a: "…", icon: "…" } format ── */
 ];
