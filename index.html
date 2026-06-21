@@ -678,7 +678,12 @@
     .shop__card__icon-wrap img { width: 28px; height: 28px; object-fit: contain; }
     .shop__card__icon-wrap span { font-size: 1.6rem; line-height: 1; }
     .shop__card__title { font-size: 1rem; font-weight: 700; color: var(--teal-deeper); }
-    .shop__card__desc { font-size: .875rem; color: var(--text-muted); line-height: 1.6; }
+    .shop__card__desc { font-size: .875rem; color: var(--text-muted); line-height: 1.6; flex: 1; }
+    .shop__card .btn--uber,
+    .shop__card .btn--outline {
+      width: 100%; justify-content: center; text-align: center;
+      padding: .72rem 1.2rem; font-size: .875rem; font-weight: 600; box-sizing: border-box;
+    }
     .shop__card__photo { width: 100%; aspect-ratio: 4/3; border-radius: 10px; overflow: hidden; margin-bottom: .25rem; }
     .shop__card__photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s; }
     .shop__card:hover .shop__card__photo img { transform: scale(1.04); }
@@ -2885,7 +2890,7 @@
           <div class="reviews-uber-rating">
             <div class="reviews-uber-badge">
               <img src="logos/uber.png" alt="Uber" class="reviews-uber-badge__icon">
-              <span class="reviews-uber-badge__text">Order with Uber Eats</span>
+              <span class="reviews-uber-badge__text">Uber Orders</span>
             </div>
             <div class="reviews-stars-wrap" aria-label="4.9 out of 5 stars">
               <span class="reviews-stars-bg" aria-hidden="true">★★★★★</span>
@@ -2946,7 +2951,7 @@
       </a>
       <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" class="reviews-uber-btn">
         <img src="logos/uber-white.png" alt="">
-        Order on Uber Eats
+        Order on Uber
       </a>
       <a href="https://www.google.com/search?q=St.+Clair+Drug+Mart+Pharmacy+Reviews" target="_blank" rel="noopener" class="reviews-read-btn">
         Read All 59 Reviews →
@@ -2966,7 +2971,7 @@
           <div class="shop__card__icon-wrap shop__card__icon-wrap--uber">
             <img src="logos/uber.png" alt="Uber Eats">
           </div>
-          <div class="shop__card__title">Uber Eats Delivery</div>
+          <div class="shop__card__title">Uber Orders</div>
         </div>
         <p class="shop__card__desc">
           Order OTC medications, vitamins, personal care products, and health essentials directly through Uber Eats — delivered to your door in minutes.
