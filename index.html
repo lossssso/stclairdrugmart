@@ -1074,7 +1074,7 @@
     }
     .medscheck-card {
       background: var(--white); border-radius: var(--radius);
-      border: 1.5px solid var(--border); border-left: 4px solid var(--teal-bright);
+      border: 1.5px solid var(--border);
       padding: 1.4rem 1.2rem;
       display: flex; flex-direction: column; gap: .45rem;
       transition: box-shadow .15s;
@@ -1175,6 +1175,7 @@
     .vaccines__new-note strong { color: var(--teal-deeper); }
     .vaccine-card__who { font-size: .81rem; color: var(--text); font-weight: 600; line-height: 1.4; }
     .vaccine-card__desc { font-size: .79rem; color: var(--text-muted); line-height: 1.55; }
+    .vaccine-card__rx { font-size: .72rem; color: #16a34a; font-weight: 600; margin-top: .5rem; margin-bottom: 0; }
     .vaccines__cta-block {
       margin-top: 2.5rem; text-align: center;
       background: var(--teal-ice); border: 1.5px solid var(--border);
@@ -2439,7 +2440,7 @@
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Pneumococcal</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--new">NEW JUL 1</span><span class="vaccine-card__badge badge--funded">FREE</span></span></div><div class="vaccine-card__who">Adults 65+ · Younger adults at high risk</div><p class="vaccine-card__desc">Protects against pneumococcal pneumonia. Recommended for those with heart disease, diabetes, lung or kidney disease.</p></div>
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">RSV</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--new">NEW JUL 1</span><span class="vaccine-card__badge badge--funded">FREE</span></span></div><div class="vaccine-card__who">Adults 75+ · Adults 60+ at high risk · Long-term care residents</div><p class="vaccine-card__desc">Single dose protecting against RSV-related lower respiratory illness. Publicly funded for older adults at highest risk; available privately for others 60+.</p></div>
           </div>
-          <p style="text-align:center;margin-bottom:.75rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667">Book a Vaccine Appointment</a></p>
+          <p style="text-align:center;margin-bottom:.75rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667">Book a Vaccine (Immunization) Appointment</a></p>
           <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-bottom:2rem;">Publicly funded vaccines require a valid Ontario health card. Eligibility criteria apply. Call (416) 654-8181 for current stock.</p>
 
           <div class="vaccines__sub-heading" style="margin-bottom:.75rem;">✈️ Travel &amp; Private Vaccines</div>
@@ -2450,7 +2451,7 @@
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Meningococcal (ACYW)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Travellers · Students</div><p class="vaccine-card__desc">Recommended for sub-Saharan Africa travel, Hajj, and adult catch-up.</p></div>
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">HPV (Gardasil 9)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Adult catch-up · Up to age 45</div><p class="vaccine-card__desc">Authorized by Health Canada for protection against 9 HPV strains associated with certain cancers and genital warts. Many extended health plans cover this series.</p></div>
           </div>
-          <p style="text-align:center;margin-top:1.25rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667">Book a Travel Consultation →</a></p>
+          <p style="text-align:center;margin-top:1.25rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667">Book a Travel Vaccine (Immunization) Appointment →</a></p>
           <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">Many travel vaccines are covered by extended health benefits — ask our team to check your plan.</p>
         </div>
       </div>
@@ -3968,6 +3969,10 @@ window.FAQS = [
       var booking = document.getElementById('booking');
       if (booking) booking.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
+    var rx = document.createElement('p');
+    rx.className = 'vaccine-card__rx';
+    rx.textContent = '✓ No prescription required';
+    card.appendChild(rx);
   });
 
 
