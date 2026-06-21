@@ -347,7 +347,7 @@
     .hero__status .status-dot { width: 10px; height: 10px; }
     .hero__status .status-row__label {
       font-size: .78rem; font-weight: 700; color: var(--teal-deeper);
-      flex: 0 0 auto; white-space: nowrap; min-width: 5em; letter-spacing: .02em;
+      flex: 0 0 6.5em; white-space: nowrap; letter-spacing: .02em;
     }
     .hero__status .status-row__val {
       font-size: .75rem; color: var(--text-muted);
@@ -3980,7 +3980,7 @@ window.FAQS = [
         if (openMin >= 0 && mins < openMin) {
           text = 'Closed · Opens today at ' + fmt(openMin);
         } else {
-          text = 'Closed · ' + nextOpen(day, openMin >= 0 ? openMin : 8*60+30);
+          text = 'Closed · ' + nextOpen(day, openMin >= 0 ? openMin : 9*60);
         }
       } else if (left <= 30) {
         dotClass = 'status-dot status-dot--soon';
@@ -4006,18 +4006,12 @@ window.FAQS = [
     if (day >= 1 && day <= 5) { stO = 9*60; stC = 18*60; }
     else if (day === 6) { stO = 9*60; stC = 14*60; }
 
-    // Appointments/Walk-ins: Mon-Fri 8:30–18:30, Sat 8:30–15:00, Sun closed
-    var apO = -1, apC = -1;
-    if (day >= 1 && day <= 5) { apO = 8*60+30; apC = 18*60+30; }
-    else if (day === 6) { apO = 8*60+30; apC = 15*60; }
-
-    // Order with Uber Eats: Mon-Fri 8:45–18:30, Sat 8:45–15:00, Sun closed
+    // Order with Uber Eats: same hours as store
     var ubO = -1, ubC = -1;
-    if (day >= 1 && day <= 5) { ubO = 8*60+45; ubC = 18*60+30; }
-    else if (day === 6) { ubO = 8*60+45; ubC = 15*60; }
+    if (day >= 1 && day <= 5) { ubO = 9*60; ubC = 18*60; }
+    else if (day === 6) { ubO = 9*60; ubC = 14*60; }
 
     render('store', stO, stC, 'Open Now');
-    render('appt',  apO, apC, 'Accepting');
     render('uber',  ubO, ubC, 'Accepting Orders');
 
     // Highlight today's hours row — colour based on whether store is open right now
