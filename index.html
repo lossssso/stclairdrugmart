@@ -695,10 +695,9 @@
     #contact .section__title::after { background: var(--teal-bright); }
     #contact .section__lead { color: rgba(255,255,255,.75); }
     /* ── Find Us section ───────────────────────────────── */
-    .find-us__section-hd { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.1rem; }
-    .find-us__top-right { display: flex; flex-direction: column; align-items: flex-end; gap: .55rem; }
-    .find-us__partner-logos { display: flex; align-items: center; gap: .55rem; }
-    .find-us__partner-logos img { height: 42px; width: 42px; object-fit: contain; border-radius: 50%; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,.12); }
+    .find-us__section-hd { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.1rem; }
+    .find-us__partner-logos { display: flex; align-items: center; gap: .75rem; }
+    .find-us__partner-logos img { height: 64px; width: 64px; object-fit: contain; border-radius: 50%; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.18); }
     .find-us__addr-bar {
       display: flex; justify-content: space-between; align-items: center;
       background: var(--white); border-radius: 14px; padding: .9rem 1.4rem;
@@ -2760,19 +2759,13 @@ window.FAQS = [
 <!-- ── Contact ────────────────────────────────────────────── -->
 <section id="contact">
   <div class="section__inner">
-    <!-- Section header row: title left, logos + contact right -->
+    <!-- Section header row: title left, logos right -->
     <div class="find-us__section-hd">
       <h2 class="section__title" style="margin-bottom:0;">Find Us</h2>
-      <div class="find-us__top-right">
-        <div class="find-us__partner-logos">
-          <img src="logos/ttc.webp" alt="TTC — Toronto Transit Commission">
-          <img src="logos/greenp.png" alt="Green P Municipal Parking">
-          <img src="logos/bikeshare.png" alt="Bike Share Toronto">
-        </div>
-        <div class="find-us__contact-pills">
-          <a href="tel:+14166548181" class="find-us__cpill find-us__cpill--call">📞 (416) 654-8181</a>
-          <a href="mailto:stclairdrugmart@gmail.com" class="find-us__cpill find-us__cpill--email">✉️ Email Us</a>
-        </div>
+      <div class="find-us__partner-logos">
+        <img src="logos/ttc.webp" alt="TTC — Toronto Transit Commission">
+        <img src="logos/greenp.png" alt="Green P Municipal Parking">
+        <img src="logos/bikeshare.png" alt="Bike Share Toronto">
       </div>
     </div>
 
