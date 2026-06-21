@@ -347,7 +347,7 @@
     .hero__status .status-dot { width: 10px; height: 10px; }
     .hero__status .status-row__label {
       font-size: .78rem; font-weight: 700; color: var(--teal-deeper);
-      flex: 0 0 6.5em; letter-spacing: .02em;
+      flex: 0 0 auto; white-space: nowrap; min-width: 5em; letter-spacing: .02em;
     }
     .hero__status .status-row__val {
       font-size: .75rem; color: var(--text-muted);
@@ -1003,10 +1003,17 @@
       .insurance-grid { grid-template-columns: 1fr 1fr; }
       .reviews-grid { grid-template-columns: 1fr; }
       .contact__info-strip { grid-template-columns: 1fr; }
+      /* Welcome pills — full width on mobile */
+      .welcome__pill { width: 100%; box-sizing: border-box; justify-content: center; text-align: center; }
+      /* Accordion headers — larger touch targets */
+      .svc-acc__head { min-height: 52px; }
+      /* Shop cards — single column */
+      .shop__grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
       .pa-cards--primary   { grid-template-columns: 1fr; }
-      .pa-cards--secondary { grid-template-columns: 1fr 1fr; }
+      /* Secondary portal cards — single column on small phones */
+      .pa-cards--secondary { grid-template-columns: 1fr; }
       .staff-grid { grid-template-columns: 1fr 1fr; }
       .insurance-grid { grid-template-columns: 1fr; }
       .hero__logo { width: 130px; height: 130px; }
@@ -1016,6 +1023,17 @@
       .find-us__actions { gap: .5rem; }
       .find-us__actions .btn { flex: 1; text-align: center; justify-content: center; }
       .faq-list { grid-template-columns: 1fr; }
+      /* Reviews metrics — 3-col at small screens avoids lone orphan */
+      .reviews-metrics { grid-template-columns: repeat(3, 1fr); }
+      /* Reviews actions — stack buttons */
+      .reviews-actions { flex-direction: column; align-items: center; }
+      .reviews-actions .reviews-google-btn,
+      .reviews-actions .reviews-uber-btn,
+      .reviews-actions .reviews-read-btn { width: 100%; max-width: 320px; justify-content: center; box-sizing: border-box; }
+      /* Welcome boxes — 1 col */
+      .welcome__boxes { grid-template-columns: 1fr; }
+      /* Accordion title overflow */
+      .svc-acc__title { font-size: .92rem; }
     }
 
     /* ── Alert banner ─────────────────────────────── */
@@ -1463,8 +1481,11 @@
       .reviews-metrics { grid-template-columns: 1fr 1fr; }
       .reviews-score { font-size: 3.8rem; }
       .reviews-stars-wrap { font-size: 3rem; }
-      .reviews-platform-divider { display: none; }
-      .reviews-platform { padding: 1rem .75rem; min-width: 170px; }
+      /* Stack review platforms vertically */
+      .reviews-platforms { flex-direction: column; align-items: center; gap: 0; }
+      .reviews-platform { width: 100%; max-width: 440px; min-width: 0; padding: 1.25rem 1rem; }
+      .reviews-platform--uber { flex-direction: column; gap: 1rem; padding: 1.25rem 1rem; }
+      .reviews-platform-divider { width: 60%; height: 1.5px; align-self: center; }
     }
 
     /* ── Flags carousel ────────────────────────────── */
@@ -1543,6 +1564,10 @@
     .ailments-triage__btns { display: flex; flex-wrap: wrap; gap: .45rem; }
     .ailments-triage__btn { background: var(--white); border: 1.5px solid var(--border); border-radius: 999px; padding: .42rem .95rem; font-size: .8rem; font-weight: 600; cursor: pointer; transition: all .15s; color: var(--text-dark); }
     .ailments-triage__btn:hover, .ailments-triage__btn.active { background: var(--teal-bright); color: #fff; border-color: var(--teal-bright); }
+    @media (max-width: 600px) {
+      .ailments-triage__btns { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; }
+      .ailments-triage__btn[data-cat="all"] { grid-column: 1 / -1; }
+    }
     .ailments-cat-section { margin-bottom: 1.5rem; }
     .ailments-cat__hd { font-size: .78rem; font-weight: 900; color: var(--teal-deeper); text-transform: uppercase; letter-spacing: .06em; padding: .35rem .65rem; background: var(--teal-ice); border-radius: 6px; display: inline-block; margin-bottom: .75rem; }
     .ailment-card { cursor: pointer; }
@@ -2136,7 +2161,6 @@
           <div class="ailment-card"><div class="ailment-card__icon">💧</div><h3 class="ailment-card__name">Dry Eye</h3><p class="ailment-card__desc">Eyes that feel gritty, scratchy, or tired — especially after screen time or in air conditioning.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=41">Start Assessment →</a></div>
           <div class="ailment-card"><div class="ailment-card__icon">🤧</div><h3 class="ailment-card__name">Allergic Rhinitis</h3><p class="ailment-card__desc">Sneezing, runny nose, itchy or watery eyes — around pollen, pets, or dust.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=25">Start Assessment →</a></div>
           <div class="ailment-card"><div class="ailment-card__icon">😤</div><h3 class="ailment-card__name">Nasal Congestion</h3><p class="ailment-card__desc">A blocked, stuffy nose that makes it hard to breathe or sleep.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=38">Start Assessment →</a></div>
-          <div class="ailment-card"><div class="ailment-card__icon">🤒</div><h3 class="ailment-card__name">Sore Throat</h3><p class="ailment-card__desc">Pain or scratchiness in your throat that worsens when swallowing — with or without fever.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667">Start Assessment →</a></div>
           <div class="ailment-card"><div class="ailment-card__icon">👄</div><h3 class="ailment-card__name">Oral Thrush</h3><p class="ailment-card__desc">White patches inside your mouth, on your tongue, or throat.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=18">Start Assessment →</a></div>
           <div class="ailment-card"><div class="ailment-card__icon">💋</div><h3 class="ailment-card__name">Cold Sores</h3><p class="ailment-card__desc">Tingling or blistering around the lips — often triggered by stress or sun.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=3">Start Assessment →</a></div>
           <div class="ailment-card"><div class="ailment-card__icon">🫦</div><h3 class="ailment-card__name">Canker Sores</h3><p class="ailment-card__desc">Painful sores inside your mouth or on your gums that make eating uncomfortable.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=6">Start Assessment →</a></div>
@@ -2265,7 +2289,7 @@
         <div class="ailments-triage" id="ailments-triage-main">
           <div class="ailments-triage__q">🔍 Where is your main symptom? We'll narrow the list.</div>
           <div class="ailments-triage__btns">
-            <button class="ailments-triage__btn active" data-triage="main" data-cat="all">All 29 Conditions</button>
+            <button class="ailments-triage__btn active" data-triage="main" data-cat="all">All 28 Conditions</button>
             <button class="ailments-triage__btn" data-triage="main" data-cat="eent">👁️ Eyes, Nose &amp; Throat</button>
             <button class="ailments-triage__btn" data-triage="main" data-cat="skin">🧴 Skin &amp; Hair</button>
             <button class="ailments-triage__btn" data-triage="main" data-cat="feet">🦶 Feet &amp; Groin</button>
@@ -2282,7 +2306,6 @@
             <div class="ailment-card"><div class="ailment-card__icon">💧</div><h3 class="ailment-card__name">Dry Eye</h3><p class="ailment-card__desc">Eyes that feel gritty, scratchy, or tired — especially after screen time, in air conditioning, or in windy conditions.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=41">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">🤧</div><h3 class="ailment-card__name">Allergic Rhinitis</h3><p class="ailment-card__desc">Sneezing, runny nose, itchy or watery eyes, and nasal congestion — especially around pollen, pets, or dust.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=25">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">😤</div><h3 class="ailment-card__name">Nasal Congestion</h3><p class="ailment-card__desc">A blocked, stuffy nose that makes it hard to breathe, sleep, or taste — with or without a runny nose.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=38">Start Assessment →</a></div>
-            <div class="ailment-card"><div class="ailment-card__icon">🤒</div><h3 class="ailment-card__name">Sore Throat</h3><p class="ailment-card__desc">Pain or scratchiness in your throat, worse when swallowing — with or without fever or swollen glands.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">👄</div><h3 class="ailment-card__name">Oral Thrush</h3><p class="ailment-card__desc">White patches or a coating inside your mouth, on your tongue, or throat that may be sore or cause a bad taste.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=18">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">💋</div><h3 class="ailment-card__name">Cold Sores</h3><p class="ailment-card__desc">A tingling, burning, or itching feeling around your lips followed by a blister — often triggered by stress or sun.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=3">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">🫦</div><h3 class="ailment-card__name">Canker Sores</h3><p class="ailment-card__desc">Painful white or yellow sores inside your mouth, on your gums, or tongue that make eating and talking uncomfortable.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=6">Start Assessment →</a></div>
