@@ -1027,7 +1027,7 @@
     .alert-banner__close:hover { background: rgba(255,255,255,.15); color: var(--white); }
 
     /* ── New patients / Steps ─────────────────────── */
-    #new-patients { background: var(--teal-ice); }
+    #new-patients { background: linear-gradient(140deg, #edfefe 0%, #b8e8ea 100%); }
     .steps {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1205,7 +1205,7 @@
     .insurance__note { margin-top: 1.5rem; font-size: .9rem; color: var(--text-muted); text-align: center; }
 
     /* ── Meet the Team ────────────────────────────── */
-    #team { background: var(--teal-ice); }
+    #team { background: linear-gradient(140deg, #edfefe 0%, #b8e8ea 100%); }
     /* ── Team grid ── */
     .staff-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin: 2rem 0 1.5rem; max-width: 100%; }
     #team .section__inner { max-width: 1400px; }
@@ -1225,7 +1225,19 @@
     #reviews .section__title::after { background: var(--teal-bright); }
     #reviews .section__lead { color: var(--text-muted); }
 
-    .reviews-hero { text-align: center; margin: 2.25rem 0 0; }
+    /* Reviews hero — two platforms side by side */
+    .reviews-hero { margin: 2rem 0 0; }
+    .reviews-platforms {
+      display: flex; align-items: stretch; justify-content: center; flex-wrap: wrap;
+    }
+    .reviews-platform {
+      flex: 1; min-width: 220px; max-width: 340px;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding: 1.5rem 2rem 2rem;
+    }
+    .reviews-platform-divider {
+      width: 1.5px; background: var(--border); align-self: center; height: 160px; flex-shrink: 0;
+    }
 
     /* Google badge pill */
     .reviews-google-badge {
@@ -1234,9 +1246,21 @@
       padding: .55rem 1.15rem .55rem .85rem;
       border: 1.5px solid #dadce0;
       box-shadow: 0 2px 10px rgba(0,0,0,.09);
-      margin-bottom: 1.75rem; cursor: default;
+      margin-bottom: 1.5rem;
     }
     .reviews-google-badge__text { font-size: .83rem; font-weight: 700; color: #3c4043; }
+
+    /* Uber badge pill */
+    .reviews-uber-badge {
+      display: inline-flex; align-items: center; gap: .65rem;
+      background: #fff; border-radius: 100px;
+      padding: .48rem 1.1rem .48rem .8rem;
+      border: 1.5px solid #e0e0e0;
+      box-shadow: 0 2px 10px rgba(0,0,0,.09);
+      margin-bottom: 1.5rem;
+    }
+    .reviews-uber-badge img { height: 22px; width: auto; }
+    .reviews-uber-badge__text { font-size: .83rem; font-weight: 700; color: #000; }
 
     /* Stars */
     .reviews-stars-wrap {
@@ -1256,22 +1280,22 @@
 
     /* Score */
     .reviews-score {
-      font-size: 6rem; font-weight: 900; line-height: 1;
+      font-size: 5rem; font-weight: 900; line-height: 1;
       letter-spacing: -.03em; margin-bottom: .2rem;
       background: linear-gradient(135deg, var(--teal-deeper) 0%, var(--teal-bright) 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    .reviews-score-sub { font-size: .88rem; color: var(--text-muted); margin-bottom: 2.5rem; }
+    .reviews-score-sub { font-size: .85rem; color: var(--text-muted); margin-bottom: 0; }
 
     /* Metrics */
     .reviews-metrics {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1rem; margin-bottom: 2.5rem;
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 1rem; margin-top: 2.5rem; margin-bottom: 2.5rem;
     }
     .reviews-metric {
       background: var(--teal-ice); border: 1.5px solid var(--border);
-      border-radius: 16px; padding: 1.5rem 1rem 1.3rem; text-align: center;
+      border-radius: 16px; padding: 1.4rem .85rem 1.2rem; text-align: center;
       transition: box-shadow .22s, transform .22s;
       opacity: 0; transform: translateY(22px);
     }
@@ -1283,11 +1307,11 @@
     }
     .reviews-metric:hover { box-shadow: 0 8px 28px rgba(0,80,90,.13); transform: translateY(-4px); }
     .reviews-metric__num {
-      font-size: 2.6rem; font-weight: 900; color: var(--teal-deeper);
+      font-size: 2.2rem; font-weight: 900; color: var(--teal-deeper);
       line-height: 1; margin-bottom: .35rem; letter-spacing: -.02em;
     }
-    .reviews-metric__label { font-size: .76rem; color: var(--text-muted); line-height: 1.5; }
-    .reviews-metric__icon { font-size: 1.4rem; margin-bottom: .5rem; }
+    .reviews-metric__label { font-size: .72rem; color: var(--text-muted); line-height: 1.5; }
+    .reviews-metric__icon { font-size: 1.35rem; margin-bottom: .45rem; }
 
     /* CTA buttons */
     .reviews-actions { display: flex; justify-content: center; gap: .75rem; flex-wrap: wrap; }
@@ -1301,6 +1325,17 @@
       transition: box-shadow .2s, transform .15s, background .15s;
     }
     .reviews-google-btn:hover { box-shadow: 0 5px 18px rgba(0,0,0,.16); transform: translateY(-2px); background: #f8f9fa; }
+    .reviews-uber-btn {
+      display: inline-flex; align-items: center; gap: .65rem;
+      background: #000; color: #fff;
+      border: 1.5px solid #000; border-radius: 100px;
+      padding: .75rem 1.6rem; font-weight: 700; font-size: .9rem;
+      font-family: var(--font-body); text-decoration: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,.2);
+      transition: box-shadow .2s, transform .15s, background .15s;
+    }
+    .reviews-uber-btn img { height: 18px; width: auto; }
+    .reviews-uber-btn:hover { box-shadow: 0 5px 18px rgba(0,0,0,.35); transform: translateY(-2px); background: #222; border-color: #222; }
     .reviews-read-btn {
       display: inline-flex; align-items: center; gap: .5rem;
       background: var(--teal-ice); color: var(--teal-deeper);
@@ -1311,32 +1346,15 @@
     }
     .reviews-read-btn:hover { background: var(--border); box-shadow: 0 4px 14px rgba(0,80,90,.1); transform: translateY(-2px); }
 
-    /* Uber Eats reviews strip */
-    .reviews-uber { margin-top: 2.5rem; padding-top: 2rem; border-top: 1.5px solid var(--border); }
-    .reviews-uber__hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; flex-wrap: wrap; gap: .75rem; }
-    .reviews-uber__badge { display: flex; align-items: center; gap: .85rem; }
-    .reviews-uber__logo { height: 34px; width: auto; }
-    .reviews-uber__badge-text { display: flex; flex-direction: column; gap: .08rem; }
-    .reviews-uber__badge-name { font-size: .7rem; font-weight: 700; color: var(--text-muted); letter-spacing: .07em; text-transform: uppercase; }
-    .reviews-uber__badge-rating { font-size: .92rem; color: var(--text); font-weight: 600; }
-    .reviews-uber__badge-rating strong { color: var(--teal-deeper); }
-    .reviews-uber__badge-rating .uber-stars { color: #ffbe00; }
-    .reviews-uber__link { font-size: .85rem; font-weight: 700; color: var(--teal-bright); text-decoration: none; border-bottom: 2px solid var(--teal-mid); padding-bottom: 1px; transition: color .2s, border-color .2s; }
-    .reviews-uber__link:hover { color: var(--teal-deeper); border-color: var(--teal-deeper); }
-    .reviews-uber__scroll { overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; padding-bottom: .5rem; }
-    .reviews-uber__scroll::-webkit-scrollbar { height: 5px; }
-    .reviews-uber__scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-    .reviews-uber__track { display: flex; gap: .85rem; width: max-content; padding: .2rem .1rem .5rem; }
-    .reviews-uber__card { background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 14px; padding: 1.1rem 1.25rem; width: 210px; flex-shrink: 0; transition: box-shadow .22s, transform .2s; }
-    .reviews-uber__card:hover { box-shadow: 0 6px 22px rgba(0,80,90,.13); transform: translateY(-3px); }
-    .reviews-uber__card-stars { color: #ffbe00; font-size: .88rem; margin-bottom: .4rem; letter-spacing: .05em; }
-    .reviews-uber__card-text { font-size: .82rem; color: var(--text); line-height: 1.58; margin-bottom: .6rem; font-style: italic; }
-    .reviews-uber__card-author { font-size: .74rem; font-weight: 700; color: var(--text-muted); }
-
+    @media (max-width: 900px) {
+      .reviews-metrics { grid-template-columns: repeat(3, 1fr); }
+    }
     @media (max-width: 680px) {
       .reviews-metrics { grid-template-columns: 1fr 1fr; }
-      .reviews-score { font-size: 4.5rem; }
+      .reviews-score { font-size: 3.8rem; }
       .reviews-stars-wrap { font-size: 3rem; }
+      .reviews-platform-divider { display: none; }
+      .reviews-platform { padding: 1rem .75rem; min-width: 170px; }
     }
 
     /* ── Flags carousel ────────────────────────────── */
@@ -1385,7 +1403,7 @@
       letter-spacing: .03em; text-transform: uppercase;
     }
     /* ── Minor Ailments Section ───────────────────── */
-    #conditions { background: var(--teal-ice); }
+    #conditions { background: linear-gradient(140deg, #edfefe 0%, #b8e8ea 100%); }
     .ailments__intro { max-width: 720px; margin: 0 auto 2.5rem; text-align: center; }
     .ailments__intro p { color: var(--text-muted); font-size: .95rem; line-height: 1.75; }
     .ailments-grid {
@@ -1414,7 +1432,7 @@
     @media (max-width: 700px)  { .ailments-grid { grid-template-columns: repeat(2, 1fr); } }
 
     /* ── Drug Interaction Checker ─────────────────── */
-    #drug-checker { background: var(--teal-ice); }
+    #drug-checker { background: linear-gradient(140deg, #edfefe 0%, #b8e8ea 100%); }
     .dc-layout {
       display: grid;
       grid-template-columns: 1fr 340px;
@@ -2622,25 +2640,42 @@
     <p class="section__lead">Real reviews from real neighbours in St. Clair West.</p>
 
     <div class="reviews-hero">
-      <!-- Google badge -->
-      <div class="reviews-google-badge">
-        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-        </svg>
-        <span class="reviews-google-badge__text">Google Reviews</span>
-      </div>
+      <div class="reviews-platforms">
+        <!-- Google -->
+        <div class="reviews-platform">
+          <div class="reviews-google-badge">
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            <span class="reviews-google-badge__text">Google Reviews</span>
+          </div>
+          <div class="reviews-stars-wrap" aria-label="4.9 out of 5 stars">
+            <span class="reviews-stars-bg" aria-hidden="true">★★★★★</span>
+            <span class="reviews-stars-fill" aria-hidden="true">★★★★★</span>
+          </div>
+          <div class="reviews-score"><span class="js-countup" data-target="4.9" data-decimals="1">4.9</span></div>
+          <div class="reviews-score-sub">out of 5 &nbsp;·&nbsp; 59 verified reviews</div>
+        </div>
 
-      <!-- Stars — animate to 4.9/5 on scroll -->
-      <div class="reviews-stars-wrap" aria-label="4.9 out of 5 stars">
-        <span class="reviews-stars-bg" aria-hidden="true">★★★★★</span>
-        <span class="reviews-stars-fill" aria-hidden="true">★★★★★</span>
-      </div>
+        <div class="reviews-platform-divider" aria-hidden="true"></div>
 
-      <div class="reviews-score"><span class="js-countup" data-target="4.9" data-decimals="1">4.9</span></div>
-      <div class="reviews-score-sub">out of 5 &nbsp;·&nbsp; 59 verified Google reviews</div>
+        <!-- Uber Eats -->
+        <div class="reviews-platform">
+          <div class="reviews-uber-badge">
+            <img src="logos/uber.png" alt="Uber Eats">
+            <span class="reviews-uber-badge__text">Uber Eats</span>
+          </div>
+          <div class="reviews-stars-wrap" aria-label="4.9 out of 5 stars">
+            <span class="reviews-stars-bg" aria-hidden="true">★★★★★</span>
+            <span class="reviews-stars-fill" aria-hidden="true">★★★★★</span>
+          </div>
+          <div class="reviews-score"><span class="js-countup" data-target="4.9" data-decimals="1">4.9</span></div>
+          <div class="reviews-score-sub">out of 5 &nbsp;·&nbsp; 600+ ratings</div>
+        </div>
+      </div>
     </div>
 
     <!-- Metrics -->
@@ -2649,6 +2684,11 @@
         <div class="reviews-metric__icon">⭐</div>
         <div class="reviews-metric__num"><span class="js-countup" data-target="59">59</span></div>
         <div class="reviews-metric__label">Google Reviews<br>from Real Patients</div>
+      </div>
+      <div class="reviews-metric">
+        <div class="reviews-metric__icon">🚴</div>
+        <div class="reviews-metric__num"><span class="js-countup" data-target="10" data-suffix="K+">10K+</span></div>
+        <div class="reviews-metric__label">Delivery Orders<br>Completed</div>
       </div>
       <div class="reviews-metric">
         <div class="reviews-metric__icon">🏘️</div>
@@ -2678,77 +2718,13 @@
         </svg>
         Write a Review on Google
       </a>
+      <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" class="reviews-uber-btn">
+        <img src="logos/uber-white.png" alt="">
+        Order on Uber Eats
+      </a>
       <a href="https://www.google.com/search?q=St.+Clair+Drug+Mart+Pharmacy+Reviews" target="_blank" rel="noopener" class="reviews-read-btn">
         Read All 59 Reviews →
       </a>
-    </div>
-
-    <!-- Uber Eats Reviews -->
-    <div class="reviews-uber">
-      <div class="reviews-uber__hd">
-        <div class="reviews-uber__badge">
-          <img src="logos/uber.png" alt="Uber Eats" class="reviews-uber__logo">
-          <div class="reviews-uber__badge-text">
-            <span class="reviews-uber__badge-name">Uber Eats</span>
-            <span class="reviews-uber__badge-rating"><span class="uber-stars">★★★★★</span> <strong>4.9</strong> &nbsp;·&nbsp; 600+ ratings</span>
-          </div>
-        </div>
-        <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ?diningMode=DELIVERY&mod=storeReviews&modctx=%257B%2522storeUuid%2522%253A%252251074e24-e3f2-53b4-a23d-93521a291b85%2522%257D" target="_blank" rel="noopener" class="reviews-uber__link">View all 24 reviews on Uber Eats →</a>
-      </div>
-      <div class="reviews-uber__scroll">
-        <div class="reviews-uber__track">
-          <div class="reviews-uber__card">
-            <div class="reviews-uber__card-stars">★★★★★</div>
-            <p class="reviews-uber__card-text">"My respect and appreciation for all employees working on Holidays."</p>
-            <div class="reviews-uber__card-author">Cintia B.</div>
-          </div>
-          <div class="reviews-uber__card">
-            <div class="reviews-uber__card-stars">★★★★★</div>
-            <p class="reviews-uber__card-text">"Very friendly, helped me pick out some cold medication. Thank you for the calendar!"</p>
-            <div class="reviews-uber__card-author">Leo D.</div>
-          </div>
-          <div class="reviews-uber__card">
-            <div class="reviews-uber__card-stars">★★★★★</div>
-            <p class="reviews-uber__card-text">"First time ordering, the experience was great!"</p>
-            <div class="reviews-uber__card-author">Leslie T.</div>
-          </div>
-          <div class="reviews-uber__card">
-            <div class="reviews-uber__card-stars">★★★★★</div>
-            <p class="reviews-uber__card-text">"Quick delivery, availability of what I needed."</p>
-            <div class="reviews-uber__card-author">Luisa G.</div>
-          </div>
-          <div class="reviews-uber__card">
-            <div class="reviews-uber__card-stars">★★★★★</div>
-            <p class="reviews-uber__card-text">"Always quick with my order."</p>
-            <div class="reviews-uber__card-author">bliss K.</div>
-          </div>
-          <div class="reviews-uber__card">
-            <div class="reviews-uber__card-stars">★★★★★</div>
-            <p class="reviews-uber__card-text">"Thank you!! You made my day!!!"</p>
-            <div class="reviews-uber__card-author">Christian D.</div>
-          </div>
-          <div class="reviews-uber__card">
-            <div class="reviews-uber__card-stars">★★★★★</div>
-            <p class="reviews-uber__card-text">"Quick service."</p>
-            <div class="reviews-uber__card-author">Cindi M.</div>
-          </div>
-          <div class="reviews-uber__card">
-            <div class="reviews-uber__card-stars">★★★★★</div>
-            <p class="reviews-uber__card-text">"Great service."</p>
-            <div class="reviews-uber__card-author">Maria P.</div>
-          </div>
-          <div class="reviews-uber__card">
-            <div class="reviews-uber__card-stars">★★★★★</div>
-            <p class="reviews-uber__card-text">"Fast."</p>
-            <div class="reviews-uber__card-author">Ellie M.</div>
-          </div>
-          <div class="reviews-uber__card">
-            <div class="reviews-uber__card-stars">★★★★★</div>
-            <p class="reviews-uber__card-text">"Thank you."</p>
-            <div class="reviews-uber__card-author">Jose A.</div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -3973,9 +3949,10 @@ window.FAQS = [
     function run() {
       if (done) return;
       done = true;
-      // Stars fill
-      var fill = section.querySelector('.reviews-stars-fill');
-      if (fill) fill.classList.add('anim');
+      // Stars fill — animate all (Google + Uber)
+      section.querySelectorAll('.reviews-stars-fill').forEach(function(fill) {
+        fill.classList.add('anim');
+      });
       // Count-up numbers
       section.querySelectorAll('.js-countup').forEach(function(el) {
         var target   = parseFloat(el.dataset.target);
