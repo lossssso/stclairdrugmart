@@ -1947,7 +1947,7 @@
 <header class="hero" id="home">
   <img src="logo.png" alt="St. Clair Drug Mart Pharmacy logo" class="hero__logo" width="940" height="922" fetchpriority="high" />
   <h1 class="hero__name">St. Clair Drug Mart Pharmacy</h1>
-  <p class="hero__sub">1203 St. Clair Ave W, Toronto &nbsp;·&nbsp; (416) 654-8181</p>
+  <p class="hero__sub"><a href="https://www.google.com/maps/dir/?api=1&destination=St.+Clair+Drug+Mart+Pharmacy+1203+St+Clair+Ave+W+Toronto+ON" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">1203 St. Clair Ave W, Toronto</a> &nbsp;·&nbsp; <a href="tel:+14166548181" style="color:inherit;text-decoration:none;">(416) 654-8181</a></p>
 
   <div class="hero__socials">
     <a href="https://www.facebook.com/p/St-Clair-Drug-Mart-Pharmacy-100089068174445/" target="_blank" rel="noopener" aria-label="Facebook">
@@ -3403,11 +3403,22 @@ window.FAQS = [
         const isOpen = conditionsPanel.classList.toggle('open');
         this.classList.toggle('conditions-open', isOpen);
         document.querySelectorAll('.pa-card').forEach(c => { if (c !== conditionsCard) c.classList.remove('active'); });
-        this.classList.add('active');
+        if (isOpen) {
+          this.classList.add('active');
+        } else {
+          this.classList.remove('active');
+        }
       } else {
-        conditionsPanel.classList.remove('open');
-        conditionsCard.classList.remove('conditions-open');
-        switchPaTab(this);
+        const alreadyActive = this.classList.contains('active');
+        const panelVisible = paWrap.style.display !== 'none' && !paWrap.classList.contains('collapsed');
+        if (alreadyActive && panelVisible) {
+          document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
+          paClose();
+        } else {
+          conditionsPanel.classList.remove('open');
+          conditionsCard.classList.remove('conditions-open');
+          switchPaTab(this);
+        }
       }
     });
   });
