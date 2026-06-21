@@ -1137,6 +1137,9 @@
     .svc-acc__body p { font-size: .9rem; color: var(--text-muted); line-height: 1.7; margin: 0 0 .85rem; }
     .svc-acc__link { display: inline-block; font-size: .82rem; font-weight: 700; color: var(--teal-dark); letter-spacing: .02em; text-decoration: none; }
     .svc-acc__link:hover { color: var(--teal-bright); }
+    .svc-tabs__section-hd { display: flex; align-items: center; gap: 1rem; margin: 2.5rem 0 1.5rem; }
+    .svc-tabs__section-hd::before, .svc-tabs__section-hd::after { content: ''; flex: 1; height: 1.5px; background: var(--border); }
+    .svc-tabs__section-hd span { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--teal-bright); white-space: nowrap; }
     @media (max-width: 600px) {
       .svc-acc__body { padding-left: 1.25rem; }
       .svc-acc__title { font-size: .95rem; }
@@ -1741,12 +1744,12 @@
         <a href="#booking">Services</a>
         <ul class="nav__dropdown">
           <li><a href="#booking">Book Appointment</a></li>
-          <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)">Minor Ailments</a></li>
-          <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">Medication Reviews</a></li>
+          <li><a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)">Minor Ailments</a></li>
+          <li><a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">Medication Reviews</a></li>
           <li><a href="#services">What We Offer</a></li>
-          <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)">Vaccinations</a></li>
-          <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=drug-check]').click()},80)">Drug Checker</a></li>
-          <li><a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=insurance]').click()},80)">Insurance</a></li>
+          <li><a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)">Vaccinations</a></li>
+          <li><a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=drug-check]').click()},80)">Drug Checker</a></li>
+          <li><a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=insurance]').click()},80)">Insurance</a></li>
         </ul>
       </li>
       <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a></li>
@@ -1822,9 +1825,9 @@
         </p>
         <p class="welcome__question">What brings you in today?</p>
         <div class="welcome__pills">
-          <a href="#booking" class="welcome__pill" onclick="setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)">🤒 Feeling ill?</a>
-          <a href="#booking" class="welcome__pill" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">💊 Worried about med side effects?</a>
-          <a href="#booking" class="welcome__pill" onclick="setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)">✈️ Travelling or need a shot?</a>
+          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)">🤒 Feeling ill?</a>
+          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">💊 Worried about med side effects?</a>
+          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)">✈️ Travelling or need a shot?</a>
         </div>
       </div>
       <div class="welcome__photo">
@@ -1833,19 +1836,19 @@
     </div>
 
     <div class="welcome__boxes">
-      <a href="#booking" class="welcome-box" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">
+      <a href="#services" class="welcome-box" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">
         <div class="welcome-box__icon">📋</div>
         <div class="welcome-box__title">Medication Reviews</div>
         <div class="welcome-box__desc">Free for eligible Ontario residents — our pharmacist reviews all your medications, catches interactions, and optimizes your therapy.</div>
         <span class="welcome-box__cta">Book a review →</span>
       </a>
-      <a href="#booking" class="welcome-box" onclick="setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)">
+      <a href="#services" class="welcome-box" onclick="setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)">
         <div class="welcome-box__icon">🩺</div>
         <div class="welcome-box__title">Common Conditions</div>
         <div class="welcome-box__desc">Pharmacists can assess and prescribe for 28 conditions — UTIs, skin infections, allergies, heartburn, cold sores, and more. No doctor needed.</div>
         <span class="welcome-box__cta">See conditions →</span>
       </a>
-      <a href="#booking" class="welcome-box" onclick="setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)">
+      <a href="#services" class="welcome-box" onclick="setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)">
         <div class="welcome-box__icon">💉</div>
         <div class="welcome-box__title">Vaccinations</div>
         <div class="welcome-box__desc">Flu, COVID-19, shingles, travel vaccines, and more — administered right in the pharmacy. Walk-ins welcome, appointments recommended.</div>
@@ -1934,8 +1937,8 @@
 <!-- ── Services & Booking (merged) ───────────────────────── -->
 <section id="booking">
   <div class="section__inner">
-    <h2 class="section__title">Clinical Service Appointments</h2>
-    <p class="section__lead">Select a service below — everything loads right here, no new tab needed.</p>
+    <h2 class="section__title">Book Online</h2>
+    <p class="section__lead">Select a service — everything loads right here, no new tab needed.</p>
 
     <!-- Row 1: primary booking actions -->
     <div class="pa-cards pa-cards--primary">
@@ -2028,6 +2031,106 @@
     <p class="booking__note">
       Having trouble? Call us at <a href="tel:+14166548181" style="color:var(--teal-dark);">(416) 654-8181</a> and we'll book you in directly.
     </p>
+  </div>
+</section>
+
+<!-- ── Our Services (accordion) ───────────────────────────── -->
+<section id="services">
+  <div class="section__inner">
+    <h2 class="section__title">What We Offer</h2>
+    <p class="section__lead">Everything under one roof — tap any service to learn more.</p>
+    <div class="svc-acc">
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">💊</span>
+          <span class="svc-acc__title">Prescription Dispensing &amp; Refills</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Fast, accurate dispensing with one-on-one counselling from your pharmacist. New here? Bring your prescription in, or we'll transfer it from your old pharmacy for you.</p>
+          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/transfer-rx/306667">Transfer or refill your prescription →</a>
+        </div>
+      </div>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">📦</span>
+          <span class="svc-acc__title">Blister Packs (Compliance Packaging)</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>We sort your medications into easy-to-follow weekly packs organized by day and time — so you never miss a dose or lose track of a complicated schedule. A great help for caregivers, too.</p>
+          <a class="svc-acc__link" href="tel:+14166548181">Call us to set it up — (416) 654-8181 →</a>
+        </div>
+      </div>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">💉</span>
+          <span class="svc-acc__title">Vaccines &amp; Immunizations</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Flu, COVID-19, shingles, pneumococcal, RSV, and travel vaccines — given right here, no doctor's visit needed. Walk in or book ahead during busy periods.</p>
+          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">Book a vaccine appointment →</a>
+        </div>
+      </div>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">📋</span>
+          <span class="svc-acc__title">Medication Reviews</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>A relaxed sit-down with your pharmacist to go over everything you take — catching interactions, simplifying your routine, and answering your questions. Covered at no cost for eligible Ontario residents.</p>
+          <a class="svc-acc__link" href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">See the types of reviews we offer →</a>
+        </div>
+      </div>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">✈️</span>
+          <span class="svc-acc__title">Travel Health</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Heading abroad? We'll review your destinations, recommend the right vaccines and medications, and get you travel-ready — all in one visit.</p>
+          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">Book a travel consultation →</a>
+        </div>
+      </div>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🔀</span>
+          <span class="svc-acc__title">Prescription Transfers</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Switching from another pharmacy is simple — just tell us where your prescriptions are now and we'll handle the rest. Most transfers are ready in about 15 minutes.</p>
+          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/transfer-rx/306667">Start your transfer online →</a>
+        </div>
+      </div>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🚚</span>
+          <span class="svc-acc__title">Free Local Delivery</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>We deliver prescriptions and health essentials free anywhere in the GTA — or order over-the-counter items and personal care products through Uber Eats.</p>
+          <a class="svc-acc__link" href="#shop">See delivery &amp; shop options →</a>
+        </div>
+      </div>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🔎</span>
+          <span class="svc-acc__title">Free Drug Interaction Checker</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Check your own medications for possible interactions in seconds — no sign-up, no personal information needed. Always confirm with our pharmacist before making any changes.</p>
+          <a class="svc-acc__link" href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=drug-check]').click()},80)">Open the interaction checker →</a>
+        </div>
+      </div>
+
+
+    <div class="svc-tabs__section-hd"><span>Explore by Service</span></div>
 
     <!-- ── Service Tabs ─────────────────────────────── -->
     <div class="svc-tabs" id="svc-tabs">
@@ -2320,103 +2423,6 @@
         <p class="insurance__note" style="margin-top:1.25rem;">Not sure if your plan is covered? <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us</a> — we'll check on the spot.</p>
       </div>
     </div><!-- /svc-tabs -->
-  </div>
-</section>
-
-<!-- ── Our Services (accordion) ───────────────────────────── -->
-<section id="services">
-  <div class="section__inner">
-    <h2 class="section__title">What We Offer</h2>
-    <p class="section__lead">Everything under one roof — tap any service to learn more.</p>
-    <div class="svc-acc">
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">💊</span>
-          <span class="svc-acc__title">Prescription Dispensing &amp; Refills</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body">
-          <p>Fast, accurate dispensing with one-on-one counselling from your pharmacist. New here? Bring your prescription in, or we'll transfer it from your old pharmacy for you.</p>
-          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/transfer-rx/306667">Transfer or refill your prescription →</a>
-        </div>
-      </div>
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">📦</span>
-          <span class="svc-acc__title">Blister Packs (Compliance Packaging)</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body">
-          <p>We sort your medications into easy-to-follow weekly packs organized by day and time — so you never miss a dose or lose track of a complicated schedule. A great help for caregivers, too.</p>
-          <a class="svc-acc__link" href="tel:+14166548181">Call us to set it up — (416) 654-8181 →</a>
-        </div>
-      </div>
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">💉</span>
-          <span class="svc-acc__title">Vaccines &amp; Immunizations</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body">
-          <p>Flu, COVID-19, shingles, pneumococcal, RSV, and travel vaccines — given right here, no doctor's visit needed. Walk in or book ahead during busy periods.</p>
-          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">Book a vaccine appointment →</a>
-        </div>
-      </div>
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">📋</span>
-          <span class="svc-acc__title">Medication Reviews</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body">
-          <p>A relaxed sit-down with your pharmacist to go over everything you take — catching interactions, simplifying your routine, and answering your questions. Covered at no cost for eligible Ontario residents.</p>
-          <a class="svc-acc__link" href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">See the types of reviews we offer →</a>
-        </div>
-      </div>
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">✈️</span>
-          <span class="svc-acc__title">Travel Health</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body">
-          <p>Heading abroad? We'll review your destinations, recommend the right vaccines and medications, and get you travel-ready — all in one visit.</p>
-          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">Book a travel consultation →</a>
-        </div>
-      </div>
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🔀</span>
-          <span class="svc-acc__title">Prescription Transfers</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body">
-          <p>Switching from another pharmacy is simple — just tell us where your prescriptions are now and we'll handle the rest. Most transfers are ready in about 15 minutes.</p>
-          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/transfer-rx/306667">Start your transfer online →</a>
-        </div>
-      </div>
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🚚</span>
-          <span class="svc-acc__title">Free Local Delivery</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body">
-          <p>We deliver prescriptions and health essentials free anywhere in the GTA — or order over-the-counter items and personal care products through Uber Eats.</p>
-          <a class="svc-acc__link" href="#shop">See delivery &amp; shop options →</a>
-        </div>
-      </div>
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🔎</span>
-          <span class="svc-acc__title">Free Drug Interaction Checker</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body">
-          <p>Check your own medications for possible interactions in seconds — no sign-up, no personal information needed. Always confirm with our pharmacist before making any changes.</p>
-          <a class="svc-acc__link" href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=drug-check]').click()},80)">Open the interaction checker →</a>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -2896,8 +2902,8 @@ window.FAQS = [
     <a href="#booking">Book Appointment</a>
     <a href="#team">Our Team</a>
     <a href="#faq">FAQ</a>
-    <a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=drug-check]').click()},80)">Drug Checker</a>
-    <a href="#booking" onclick="setTimeout(function(){document.querySelector('[data-tab=insurance]').click()},80)">Insurance</a>
+    <a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=drug-check]').click()},80)">Drug Checker</a>
+    <a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=insurance]').click()},80)">Insurance</a>
     <a href="#shop">Shop</a>
     <a href="#contact">Contact</a>
     <a href="#about">About</a>
