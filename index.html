@@ -1962,9 +1962,11 @@
         </p>
         <p class="welcome__question">What brings you in today?</p>
         <div class="welcome__pills">
-          <a href="#acc-ailments" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-ailments')},120)">🤒 Feeling ill?</a>
-          <a href="#acc-med-reviews" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-med-reviews')},120)">💊 Worried about med side effects?</a>
-          <a href="#acc-vaccines" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-vaccines')},120)">✈️ Travelling or need a shot?</a>
+          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},120)">🤒 I'm feeling ill</a>
+          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)">💊 I'm worried about my medication side effects</a>
+          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)">✈️ I'm travelling and need to be prepared and healthy!</a>
+          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)">🚭 I want to successfully quit smoking!</a>
+          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)">🆘 I need a free naloxone kit</a>
         </div>
       </div>
       <div class="welcome__photo">
