@@ -1787,11 +1787,11 @@
         <a href="#services">Services</a>
         <ul class="nav__dropdown">
           <li><a href="#booking">Patient Portal</a></li>
-          <li><a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)">Minor Ailments</a></li>
-          <li><a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">Medication Reviews</a></li>
-          <li><a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)">Vaccinations</a></li>
+          <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},200)">Minor Ailments</a></li>
+          <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},200)">Medication Reviews</a></li>
+          <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},200)">Vaccinations</a></li>
           <li><a href="#drug-checker">Drug Checker</a></li>
-          <li><a href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=insurance]').click()},80)">Insurance</a></li>
+          <li><a href="#services">Insurance</a></li>
         </ul>
       </li>
       <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a></li>
@@ -3015,22 +3015,22 @@ window.FAQS = [
   {
     icon: "🩺",
     q: "Can a pharmacist prescribe medication in Ontario?",
-    a: "Yes — in Ontario, pharmacists are authorized to prescribe for 28 minor ailments under the Minor Ailments Program (MAP). You can walk in with no doctor's appointment and no referral. Conditions include UTIs, skin infections, acid reflux, pink eye, cold sores, athlete's foot, oral thrush, and more. Our pharmacist assesses you on-site and can prescribe or recommend treatment right away. <a href=\"#services\" onclick=\"setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)\">See all 28 conditions →</a>"
+    a: "Yes — in Ontario, pharmacists are authorized to prescribe for 28 minor ailments under the Minor Ailments Program (MAP). You can walk in with no doctor's appointment and no referral. Conditions include UTIs, skin infections, acid reflux, pink eye, cold sores, athlete's foot, oral thrush, and more. Our pharmacist assesses you on-site and can prescribe or recommend treatment right away. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},200)\">See all 28 conditions →</a>"
   },
   {
     icon: "🦠",
     q: "Can I get a UTI prescription without seeing a doctor?",
-    a: "Yes. Urinary tract infections (UTIs) are one of the 28 conditions Ontario pharmacists can now independently assess and prescribe for. No doctor visit required. Walk in or <a href=\"#booking\">book online</a> — our pharmacist will review your symptoms and, if appropriate, prescribe an antibiotic the same day. This service is covered by OHIP for eligible patients. <a href=\"#services\" onclick=\"setTimeout(function(){document.querySelector('[data-tab=ailments]').click()},80)\">View all minor ailments →</a>"
+    a: "Yes. Urinary tract infections (UTIs) are one of the 28 conditions Ontario pharmacists can now independently assess and prescribe for. No doctor visit required. Walk in or <a href=\"#booking\">book online</a> — our pharmacist will review your symptoms and, if appropriate, prescribe an antibiotic the same day. This service is covered by OHIP for eligible patients. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},200)\">View all minor ailments →</a>"
   },
   {
     icon: "💉",
     q: "What vaccines do you offer?",
-    a: "We offer a wide range of vaccinations including flu (influenza), COVID-19, shingles (Shingrix), pneumonia, travel vaccines (Hepatitis A &amp; B, typhoid), Tdap (tetanus, diphtheria, pertussis), and HPV. No doctor's referral is needed. <a href=\"#services\" onclick=\"setTimeout(function(){document.querySelector('[data-tab=vaccines]').click()},80)\">View all vaccines &amp; book an appointment →</a>"
+    a: "We offer a wide range of vaccinations including flu (influenza), COVID-19, shingles (Shingrix), pneumonia, travel vaccines (Hepatitis A &amp; B, typhoid), Tdap (tetanus, diphtheria, pertussis), and HPV. No doctor's referral is needed. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},200)\">View all vaccines &amp; book an appointment →</a>"
   },
   {
     icon: "🏥",
     q: "Do you accept ODB, OHIP+, and private insurance?",
-    a: "Yes — we accept the Ontario Drug Benefit (ODB) program, OHIP+ for patients under 25, Trillium Drug Program, and virtually all major private insurance plans including Sunlife, Manulife, Great-West Life, Blue Cross, and more. We process claims directly so you only pay any outstanding balance. Bring your insurance card and we'll handle the rest. <a href=\"#services\" onclick=\"setTimeout(function(){document.querySelector('[data-tab=insurance]').click()},80)\">See insurance &amp; coverage details →</a>"
+    a: "Yes — we accept the Ontario Drug Benefit (ODB) program, OHIP+ for patients under 25, Trillium Drug Program, and virtually all major private insurance plans including Sunlife, Manulife, Great-West Life, Blue Cross, and more. We process claims directly so you only pay any outstanding balance. Bring your insurance card and we'll handle the rest. <a href=\"#services\">See insurance &amp; coverage details →</a>"
   },
   {
     icon: "🔄",
@@ -3050,7 +3050,7 @@ window.FAQS = [
   {
     icon: "💊",
     q: "Is a MedsCheck medication review really free?",
-    a: "Yes, completely free for eligible Ontario residents. You qualify if you take 3 or more chronic medications, were recently discharged from hospital, or have a complex medication regimen. Our pharmacist reviews all your medications for interactions, duplications, and side effects, and puts together a personalized medication plan. Most reviews take 30–45 minutes. <a href=\"#services\" onclick=\"setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)\">Book a Medication Review →</a>"
+    a: "Yes, completely free for eligible Ontario residents. You qualify if you take 3 or more chronic medications, were recently discharged from hospital, or have a complex medication regimen. Our pharmacist reviews all your medications for interactions, duplications, and side effects, and puts together a personalized medication plan. Most reviews take 30–45 minutes. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},200)\">Book a Medication Review →</a>"
   },
   {
     icon: "💸",
