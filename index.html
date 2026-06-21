@@ -846,14 +846,26 @@
     .about__text p { color: var(--text-muted); margin-top: 1rem; }
     .gallery {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       gap: 1.1rem;
       margin-top: 2.5rem;
+    }
+    /* Top row: 2 big storefront photos */
+    .gallery__item:nth-child(1),
+    .gallery__item:nth-child(2) {
+      grid-column: span 3;
+      aspect-ratio: 5/4;
+    }
+    /* Bottom row: 3 interior photos */
+    .gallery__item:nth-child(3),
+    .gallery__item:nth-child(4),
+    .gallery__item:nth-child(5) {
+      grid-column: span 2;
+      aspect-ratio: 4/3;
     }
     .gallery__item {
       border-radius: var(--radius);
       overflow: hidden;
-      aspect-ratio: 3/4;
       box-shadow: var(--shadow);
     }
     .gallery__item img {
@@ -918,6 +930,8 @@
     @media (max-width: 900px) {
       .pa-cards--secondary { grid-template-columns: repeat(3, 1fr); }
       .gallery  { grid-template-columns: repeat(2, 1fr); }
+      .gallery__item:nth-child(1), .gallery__item:nth-child(2) { grid-column: span 1; aspect-ratio: 4/3; }
+      .gallery__item:nth-child(3), .gallery__item:nth-child(4), .gallery__item:nth-child(5) { grid-column: span 1; aspect-ratio: 4/3; }
     }
     @media (max-width: 768px) {
       .nav__links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e9f4f5; box-shadow: 0 8px 20px rgba(0,60,66,.08); flex-direction: column; align-items: stretch; padding: .5rem 1rem 1rem; gap: .1rem; }
