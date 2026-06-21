@@ -1115,7 +1115,7 @@
 
     /* ── Our Services accordion ───────────────────── */
     #services { background: var(--white); }
-    .svc-acc { max-width: 780px; margin: 2rem auto 0; display: flex; flex-direction: column; gap: .7rem; }
+    .svc-acc { margin: 2rem auto 0; display: flex; flex-direction: column; gap: .7rem; }
     .svc-acc-item {
       background: var(--white); border: 1.5px solid var(--border);
       border-radius: var(--radius); overflow: hidden;
@@ -1137,6 +1137,9 @@
     .svc-acc__body p { font-size: .9rem; color: var(--text-muted); line-height: 1.7; margin: 0 0 .85rem; }
     .svc-acc__link { display: inline-block; font-size: .82rem; font-weight: 700; color: var(--teal-dark); letter-spacing: .02em; text-decoration: none; }
     .svc-acc__link:hover { color: var(--teal-bright); }
+    .svc-acc__body--wide { padding-left: 1.25rem; }
+    .svc-acc__group-hd { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--teal-bright); padding: 1.1rem 0 .3rem; margin-top: .4rem; border-top: 2px solid var(--border); }
+    .svc-acc__group-hd:first-child { border-top: none; padding-top: 0; margin-top: 0; }
     .svc-tabs__section-hd { display: flex; align-items: center; gap: 1rem; margin: 2.5rem 0 1.5rem; }
     .svc-tabs__section-hd::before, .svc-tabs__section-hd::after { content: ''; flex: 1; height: 1.5px; background: var(--border); }
     .svc-tabs__section-hd span { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--teal-bright); white-space: nowrap; }
@@ -2038,113 +2041,19 @@
 <section id="services">
   <div class="section__inner">
     <h2 class="section__title">What We Offer</h2>
-    <p class="section__lead">Everything under one roof — tap any service to learn more.</p>
+    <p class="section__lead">Everything under one roof — tap any service to see the full details.</p>
     <div class="svc-acc">
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">💊</span>
-          <span class="svc-acc__title">Prescription Dispensing &amp; Refills</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body">
-          <p>Fast, accurate dispensing with one-on-one counselling from your pharmacist. New here? Bring your prescription in, or we'll transfer it from your old pharmacy for you.</p>
-          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/transfer-rx/306667">Transfer or refill your prescription →</a>
-        </div>
-      </div>
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">📦</span>
-          <span class="svc-acc__title">Blister Packs (Compliance Packaging)</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body">
-          <p>We sort your medications into easy-to-follow weekly packs organized by day and time — so you never miss a dose or lose track of a complicated schedule. A great help for caregivers, too.</p>
-          <a class="svc-acc__link" href="tel:+14166548181">Call us to set it up — (416) 654-8181 →</a>
-        </div>
-      </div>
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">💉</span>
-          <span class="svc-acc__title">Vaccines &amp; Immunizations</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body">
-          <p>Flu, COVID-19, shingles, pneumococcal, RSV, and travel vaccines — given right here, no doctor's visit needed. Walk in or book ahead during busy periods.</p>
-          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">Book a vaccine appointment →</a>
-        </div>
-      </div>
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">📋</span>
-          <span class="svc-acc__title">Medication Reviews</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body">
-          <p>A relaxed sit-down with your pharmacist to go over everything you take — catching interactions, simplifying your routine, and answering your questions. Covered at no cost for eligible Ontario residents.</p>
-          <a class="svc-acc__link" href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=med-reviews]').click()},80)">See the types of reviews we offer →</a>
-        </div>
-      </div>
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">✈️</span>
-          <span class="svc-acc__title">Travel Health</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body">
-          <p>Heading abroad? We'll review your destinations, recommend the right vaccines and medications, and get you travel-ready — all in one visit.</p>
-          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667">Book a travel consultation →</a>
-        </div>
-      </div>
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🔀</span>
-          <span class="svc-acc__title">Prescription Transfers</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body">
-          <p>Switching from another pharmacy is simple — just tell us where your prescriptions are now and we'll handle the rest. Most transfers are ready in about 15 minutes.</p>
-          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/transfer-rx/306667">Start your transfer online →</a>
-        </div>
-      </div>
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🚚</span>
-          <span class="svc-acc__title">Free Local Delivery</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body">
-          <p>We deliver prescriptions and health essentials free anywhere in the GTA — or order over-the-counter items and personal care products through Uber Eats.</p>
-          <a class="svc-acc__link" href="#shop">See delivery &amp; shop options →</a>
-        </div>
-      </div>
-      <div class="svc-acc-item">
-        <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🔎</span>
-          <span class="svc-acc__title">Free Drug Interaction Checker</span>
-          <span class="svc-acc__chev">+</span>
-        </button>
-        <div class="svc-acc__body">
-          <p>Check your own medications for possible interactions in seconds — no sign-up, no personal information needed. Always confirm with our pharmacist before making any changes.</p>
-          <a class="svc-acc__link" href="#services" onclick="setTimeout(function(){document.querySelector('[data-tab=drug-check]').click()},80)">Open the interaction checker →</a>
-        </div>
-      </div>
 
+      <div class="svc-acc__group-hd">🏥 Clinical Services</div>
 
-    <div class="svc-tabs__section-hd"><span>Explore by Service</span></div>
-
-    <!-- ── Service Tabs ─────────────────────────────── -->
-    <div class="svc-tabs" id="svc-tabs">
-      <nav class="svc-tabs__nav" role="tablist" aria-label="Services">
-        <button class="svc-tab__btn active" data-tab="ailments" role="tab" aria-selected="true">Minor Ailments (28)</button>
-        <button class="svc-tab__btn" data-tab="vaccines" role="tab" aria-selected="false">Vaccines</button>
-        <button class="svc-tab__btn" data-tab="med-reviews" role="tab" aria-selected="false">Medication Reviews</button>
-        <button class="svc-tab__btn" data-tab="drug-check" role="tab" aria-selected="false">Drug Checker</button>
-        <button class="svc-tab__btn" data-tab="insurance" role="tab" aria-selected="false">Insurance</button>
-      </nav>
-
-      <!-- TAB: Minor Ailments -->
-      <div class="svc-tab__panel active" data-panel="ailments">
-        <p class="section__lead" style="margin-bottom:1.5rem;">Our clinical pharmacists can assess your condition and prescribe treatment on the spot — no doctor's appointment, no walk-in clinic, no referral, no waiting. Walk in or start your online assessment.</p>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🩺</span>
+          <span class="svc-acc__title">Minor Ailments — 28 Conditions</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body svc-acc__body--wide">
+<p class="section__lead" style="margin-bottom:1.5rem;">Our clinical pharmacists can assess your condition and prescribe treatment on the spot — no doctor's appointment, no walk-in clinic, no referral, no waiting. Walk in or start your online assessment.</p>
         <div class="ailments-grid">
           <div class="ailment-card">
             <div class="ailment-card__icon">💊</div>
@@ -2316,11 +2225,17 @@
           </div>
         </div>
         <p style="font-size:.8rem;color:var(--text-muted);text-align:center;">All 28 conditions available as of July 1, 2026 &nbsp;·&nbsp; Walk in or click any condition to start your online assessment &nbsp;·&nbsp; <strong>No doctor's referral needed</strong></p>
+        </div>
       </div>
 
-      <!-- TAB: Vaccines -->
-      <div class="svc-tab__panel" data-panel="vaccines">
-        <p class="section__lead" style="margin-bottom:1.5rem;">Our pharmacist administers vaccines right in the pharmacy — no doctor's visit required. Walk-ins welcome; appointments recommended for busy periods.</p>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">💉</span>
+          <span class="svc-acc__title">Vaccines &amp; Immunizations</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body svc-acc__body--wide">
+<p class="section__lead" style="margin-bottom:1.5rem;">Our pharmacist administers vaccines right in the pharmacy — no doctor's visit required. Walk-ins welcome; appointments recommended for busy periods.</p>
         <div class="vaccines__sub-heading" style="margin-bottom:.75rem;">Publicly Funded — Free with a Valid Ontario Health Card</div>
         <p class="vaccines__new-note">🆕 <strong>New as of July 1, 2026:</strong> Ontario pharmacists can now administer the publicly funded <strong>Tdap, shingles, pneumococcal &amp; RSV</strong> vaccines — get them right here at the pharmacy, no doctor's visit needed.</p>
         <div class="vaccine-grid" style="margin-bottom:1.75rem;">
@@ -2331,20 +2246,39 @@
           <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Pneumococcal</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--new">NEW JUL 1</span><span class="vaccine-card__badge badge--funded">FREE</span></span></div><div class="vaccine-card__who">Adults 65+ · Younger adults at high risk</div><p class="vaccine-card__desc">Protects against pneumococcal pneumonia. Recommended for those with heart disease, diabetes, lung or kidney disease.</p></div>
           <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">RSV</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--new">NEW JUL 1</span><span class="vaccine-card__badge badge--funded">FREE</span></span></div><div class="vaccine-card__who">Adults 75+ · Adults 60+ at high risk · Long-term care residents</div><p class="vaccine-card__desc">Single dose protecting against RSV-related lower respiratory illness. Publicly funded for older adults at highest risk; available privately for others 60+.</p></div>
         </div>
-        <div class="vaccines__sub-heading" style="margin-bottom:.75rem;">Travel &amp; Private Vaccines</div>
+<p style="text-align:center;margin-bottom:.75rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667">Book a Vaccine Appointment</a></p>
+        <p style="font-size:.74rem;color:var(--text-muted);text-align:center;">Publicly funded vaccines require a valid Ontario health card. Eligibility criteria apply. Call (416) 654-8181 for current stock.</p>
+        </div>
+      </div>
+
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">✈️</span>
+          <span class="svc-acc__title">Travel Health</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body svc-acc__body--wide">
+          <p>Heading abroad? We'll review your destinations, recommend the right vaccines and medications, and get you travel-ready — all in one visit.</p>
+<div class="vaccines__sub-heading" style="margin-bottom:.75rem;">Travel &amp; Private Vaccines</div>
         <div class="vaccine-grid" style="margin-bottom:1.5rem;">
           <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Hepatitis A &amp; B (Twinrix)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Travellers · At-risk individuals</div><p class="vaccine-card__desc">Recommended for travel to Asia, Africa, Latin America, and the Middle East. Many benefit plans cover travel vaccines.</p></div>
           <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Typhoid</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Travellers to endemic regions</div><p class="vaccine-card__desc">Recommended for South Asia, sub-Saharan Africa, and Latin America travel. ~2–3 years of protection.</p></div>
           <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Meningococcal (ACYW)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Travellers · Students</div><p class="vaccine-card__desc">Recommended for sub-Saharan Africa travel, Hajj, and adult catch-up.</p></div>
           <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">HPV (Gardasil 9)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Adult catch-up · Up to age 45</div><p class="vaccine-card__desc">Authorized by Health Canada for protection against 9 HPV strains associated with certain cancers and genital warts. Many extended health plans cover this series.</p></div>
         </div>
-        <p style="text-align:center;margin-bottom:.75rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667">Book a Vaccine Appointment</a></p>
-        <p style="font-size:.74rem;color:var(--text-muted);text-align:center;">Publicly funded vaccines require a valid Ontario health card. Eligibility criteria apply. Call (416) 654-8181 for current stock.</p>
+          <p style="text-align:center;margin-top:1.25rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667">Book a Travel Consultation →</a></p>
+          <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">Many travel vaccines are covered by extended health benefits — ask our team to check your plan.</p>
+        </div>
       </div>
 
-      <!-- TAB: Medication Reviews -->
-      <div class="svc-tab__panel" data-panel="med-reviews">
-        <p class="section__lead" style="margin-bottom:1.5rem;">Our pharmacist takes the time to review all your medications — catching interactions, simplifying regimens, and making sure every medication you take is working for you.</p>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">📋</span>
+          <span class="svc-acc__title">Medication Reviews</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body svc-acc__body--wide">
+<p class="section__lead" style="margin-bottom:1.5rem;">Our pharmacist takes the time to review all your medications — catching interactions, simplifying regimens, and making sure every medication you take is working for you.</p>
         <div class="medscheck-grid">
           <div class="medscheck-card">
             <div class="medscheck-card__icon">📋</div>
@@ -2372,11 +2306,69 @@
           </div>
         </div>
         <p class="insurance__note" style="margin-top:1.75rem;">Medication reviews are <strong>covered at no cost</strong> for eligible Ontario residents. <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us</a> to book — walk-ins welcome.</p>
+        </div>
       </div>
 
-      <!-- TAB: Drug Checker -->
-      <div class="svc-tab__panel" data-panel="drug-check">
-        <p class="section__lead" style="margin-bottom:1.5rem;">Add two or more medications to check for possible interactions — right here, no sign-up needed.</p>
+      <div class="svc-acc__group-hd">💊 Pharmacy Services</div>
+
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">💊</span>
+          <span class="svc-acc__title">Prescription Dispensing &amp; Refills</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Fast, accurate dispensing with one-on-one counselling from your pharmacist. New here? Bring your prescription in, or we'll transfer it from your old pharmacy for you.</p>
+          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/transfer-rx/306667">Transfer or refill your prescription →</a>
+        </div>
+      </div>
+
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">📦</span>
+          <span class="svc-acc__title">Blister Packs (Compliance Packaging)</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>We sort your medications into easy-to-follow weekly packs organized by day and time — so you never miss a dose or lose track of a complicated schedule. A great help for caregivers, too.</p>
+          <a class="svc-acc__link" href="tel:+14166548181">Call us to set it up — (416) 654-8181 →</a>
+        </div>
+      </div>
+
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🔀</span>
+          <span class="svc-acc__title">Prescription Transfers</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Switching from another pharmacy is simple — just tell us where your prescriptions are now and we'll handle the rest. Most transfers are ready in about 15 minutes.</p>
+          <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/transfer-rx/306667">Start your transfer online →</a>
+        </div>
+      </div>
+
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🚚</span>
+          <span class="svc-acc__title">Free Local Delivery</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>We deliver prescriptions and health essentials free anywhere in the GTA — or order over-the-counter items and personal care products through Uber Eats.</p>
+          <a class="svc-acc__link" href="#shop">See delivery &amp; shop options →</a>
+        </div>
+      </div>
+
+      <div class="svc-acc__group-hd">🛠️ Tools &amp; Support</div>
+
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🔎</span>
+          <span class="svc-acc__title">Free Drug Interaction Checker</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body svc-acc__body--wide">
+<p class="section__lead" style="margin-bottom:1.5rem;">Add two or more medications to check for possible interactions — right here, no sign-up needed.</p>
         <div class="dc-layout">
           <div class="dc-card">
             <div class="dc-input-row">
@@ -2407,11 +2399,17 @@
             </div>
           </div>
         </div>
+        </div>
       </div>
 
-      <!-- TAB: Insurance -->
-      <div class="svc-tab__panel" data-panel="insurance">
-        <p class="section__lead" style="margin-bottom:1.5rem;">We direct-bill most major insurance plans — no paperwork, no upfront payment in most cases.</p>
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🛡️</span>
+          <span class="svc-acc__title">Insurance Direct-Billing</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body svc-acc__body--wide">
+<p class="section__lead" style="margin-bottom:1.5rem;">We direct-bill most major insurance plans — no paperwork, no upfront payment in most cases.</p>
         <div class="insurance-grid">
           <div class="insurance-card"><div class="insurance-card__abbr">ODB</div><div class="insurance-card__name">Ontario Drug Benefit</div><div class="insurance-card__desc">Seniors, social assistance, Trillium Drug Program</div></div>
           <div class="insurance-card"><div class="insurance-card__abbr">GSC</div><div class="insurance-card__name">Green Shield Canada</div><div class="insurance-card__desc">Employer group and individual plans</div></div>
@@ -2421,8 +2419,9 @@
           <div class="insurance-card"><div class="insurance-card__abbr">IAF</div><div class="insurance-card__name">Industrial Alliance</div><div class="insurance-card__desc">Group and individual health benefits</div></div>
         </div>
         <p class="insurance__note" style="margin-top:1.25rem;">Not sure if your plan is covered? <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us</a> — we'll check on the spot.</p>
+        </div>
       </div>
-    </div><!-- /svc-tabs -->
+
     </div>
   </div>
 </section>
