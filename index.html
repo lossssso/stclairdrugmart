@@ -623,6 +623,7 @@
       margin-bottom: .25rem;
     }
     .pa-card__desc { font-size: .78rem; color: var(--text-muted); line-height: 1.4; }
+    .pa-cards .pa-iframe-wrap { grid-column: 1 / -1; margin-top: .25rem; }
     .pa-iframe-wrap {
       border-radius: var(--radius);
       overflow: hidden;
@@ -2266,6 +2267,20 @@
         <span class="pa-card__label">Common Conditions &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Pharmacist prescribing for 28 minor ailments — no referral needed</span>
       </button>
+      <div class="pa-iframe-wrap" id="pa-wrap" style="display:none">
+        <div class="pa-iframe-label">
+          <span id="pa-iframe-label-text">📅 Book an Appointment</span>
+          <button class="pa-iframe-label__close" id="pa-iframe-close" aria-label="Collapse" title="Collapse">✕</button>
+        </div>
+        <iframe
+          id="pa-iframe"
+          src="about:blank"
+          title="PharmAssess Online Booking"
+          allow="payment"
+          scrolling="no"
+        ></iframe>
+        <button class="pa-iframe-expand" id="pa-iframe-expand">Need more room? Expand ↓</button>
+      </div>
     </div>
 
     <!-- Conditions panel — sits right below Common Conditions button -->
@@ -2423,20 +2438,6 @@
       </button>
     </div>
 
-    <div class="pa-iframe-wrap" style="display:none">
-      <div class="pa-iframe-label">
-        <span id="pa-iframe-label-text">📅 Book an Appointment</span>
-        <button class="pa-iframe-label__close" id="pa-iframe-close" aria-label="Collapse" title="Collapse">✕</button>
-      </div>
-      <iframe
-        id="pa-iframe"
-        src="https://app.pharmassess.ca/appointment/306667"
-        title="PharmAssess Online Booking"
-        allow="payment"
-        scrolling="no"
-      ></iframe>
-      <button class="pa-iframe-expand" id="pa-iframe-expand">Need more room? Expand ↓</button>
-    </div>
     <p class="booking__note">
       Having trouble? Call us at <a href="tel:+14166548181" style="color:var(--teal-dark);">(416) 654-8181</a> and we'll book you in directly.
     </p>
@@ -3588,9 +3589,14 @@ window.FAQS = [
     var expandBtn = document.getElementById('pa-iframe-expand');
     if (expandBtn) expandBtn.textContent = 'Need more room? Expand ↓';
     if (card.dataset.label) paLabelText.textContent = card.dataset.label;
+    // Move the panel into the same grid as the clicked card so it drops down under it
+    var parentGrid = card.closest('.pa-cards');
+    if (parentGrid && paWrap.parentElement !== parentGrid) {
+      parentGrid.appendChild(paWrap);
+    }
     paOpen(); // always ensure the panel is visible
     setTimeout(function() {
-      paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      paWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 80);
   }
 
@@ -3634,8 +3640,13 @@ window.FAQS = [
       conditionsCard.classList.add('active');
       paIframe.style.height = (conditionsCard.dataset.iframeheight || '1200') + 'px';
       paIframe.src = url;
+      // Move panel into primary grid (where the conditions card lives)
+      var primaryGrid = conditionsCard.closest('.pa-cards');
+      if (primaryGrid && paWrap.parentElement !== primaryGrid) {
+        primaryGrid.appendChild(paWrap);
+      }
       paOpen(); // always show the panel, even if previously closed
-      setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+      setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 80);
     });
   });
 
@@ -4468,7 +4479,7 @@ window.FAQS = [
         // Open assessment in pa-iframe
         var paWrap = document.getElementById('pa-wrap');
         var paIframe = document.getElementById('pa-iframe');
-        var paLabel = document.getElementById('pa-label');
+        var paLabel = document.getElementById('pa-iframe-label-text');
         if (paWrap && paIframe && url) {
           paIframe.src = url;
           paIframe.style.height = '900px';
@@ -4609,7 +4620,7 @@ window.FAQS = [
         if (ailmentUrl) {
           var paWrap = document.getElementById('pa-wrap');
           var paIframe = document.getElementById('pa-iframe');
-          var paLabel = document.getElementById('pa-label');
+          var paLabel = document.getElementById('pa-iframe-label-text');
           if (paWrap && paIframe) {
             paIframe.src = ailmentUrl;
             paIframe.style.height = '900px';
