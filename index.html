@@ -694,71 +694,58 @@
     #contact .section__title { color: #fff; }
     #contact .section__title::after { background: var(--teal-bright); }
     #contact .section__lead { color: rgba(255,255,255,.75); }
-    .contact__grid {
-      display: grid;
-      grid-template-columns: 1fr 1.1fr;
-      gap: 2.5rem;
-      margin-top: 2.25rem;
-      align-items: start;
+    /* ── Find Us section ───────────────────────────────── */
+    .find-us__addr-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--white); border-radius: 14px; padding: .9rem 1.4rem;
+      border: 1.5px solid var(--border); margin-top: 1.75rem;
+      gap: 1rem; flex-wrap: wrap;
+      box-shadow: 0 2px 12px rgba(0,0,0,.05);
     }
-    .contact__info {
-      display: flex; flex-direction: column; gap: 0;
-      background: var(--white); border-radius: 16px;
-      padding: 1.75rem;
-      border: 1.5px solid #d8eef0;
-      box-shadow: 0 4px 20px rgba(0,80,90,.05);
+    .find-us__addr-left { display: flex; align-items: center; gap: .75rem; }
+    .find-us__addr-icon { font-size: 1.15rem; }
+    .find-us__addr-text { font-size: .95rem; font-weight: 700; color: var(--text); margin: 0 0 .18rem; }
+    .find-us__dir-link { font-size: .8rem; color: var(--teal-dark); font-weight: 600; text-decoration: none; }
+    .find-us__dir-link:hover { color: var(--teal-deeper); }
+    .find-us__contact-pills { display: flex; gap: .55rem; flex-wrap: wrap; }
+    .find-us__cpill {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .5rem 1.1rem; border-radius: 100px;
+      font-size: .84rem; font-weight: 700; text-decoration: none;
+      transition: background .15s, transform .1s;
     }
-    .contact__row {
-      display: flex; align-items: flex-start; gap: .8rem;
-      padding: 1rem 0; border-bottom: 1px solid #eef7f8;
-    }
-    .contact__row:first-child { padding-top: 0; }
-    .contact__row--split {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: .5rem; padding: 1rem 0; border-bottom: 1px solid #eef7f8;
-    }
-    .contact__row__split-item { display: flex; align-items: flex-start; gap: .6rem; }
-    .contact__row__icon {
-      width: 32px; height: 32px; border-radius: 9px;
-      background: var(--teal-ice); display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; font-size: .85rem;
-    }
-    .contact__row__body h4 { font-size: .67rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--teal-bright); margin-bottom: .18rem; }
-    .contact__row__body p, .contact__row__body a {
-      font-size: .86rem; color: var(--text-muted); margin: 0; display: block; line-height: 1.5;
-    }
-    .contact__row__body a:hover { color: var(--teal-dark); }
-    .contact__row__split-item .contact__row__body a { font-size: .82rem; overflow-wrap: break-word; }
+    .find-us__cpill--call { background: var(--teal-dark); color: #fff; }
+    .find-us__cpill--call:hover { background: var(--teal-deeper); transform: translateY(-1px); }
+    .find-us__cpill--email { background: var(--teal-ice); color: var(--teal-dark); border: 1.5px solid var(--border); }
+    .find-us__cpill--email:hover { background: var(--border); }
 
-    /* Contact info card — restructured */
-    .contact__addr-hd {
-      display: flex; align-items: center; gap: .85rem;
-      padding-bottom: 1rem; margin-bottom: .1rem;
-      border-bottom: 1.5px solid #eef7f8;
+    .find-us__main {
+      display: grid; grid-template-columns: 1.15fr 1fr;
+      gap: 1rem; margin-top: 1rem; align-items: stretch;
     }
-    .contact__addr-text {
-      font-size: .97rem; font-weight: 700; color: var(--text);
-      margin: 0 0 .25rem; line-height: 1.35;
+    .find-us__map-card {
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 6px 28px rgba(0,0,0,.12);
+      border: 1.5px solid var(--border); min-height: 380px;
     }
-    .contact__dir-link {
-      font-size: .82rem; color: var(--teal-dark); font-weight: 600; text-decoration: none;
-    }
-    .contact__dir-link:hover { color: var(--teal-deeper); }
+    .find-us__map-card iframe { width: 100%; height: 100%; min-height: 380px; border: none; display: block; }
 
-    .contact__body-split {
-      display: grid; grid-template-columns: 1.15fr 1fr; gap: 1.5rem;
-      padding: 1rem 0 1.1rem; border-bottom: 1.5px solid #eef7f8;
+    .find-us__info-card {
+      background: var(--white); border-radius: 16px; padding: 1.35rem 1.3rem;
+      border: 1.5px solid var(--border);
+      box-shadow: 0 2px 12px rgba(0,0,0,.05);
+      display: flex; flex-direction: column; gap: 1rem;
     }
-    .contact__col-head {
-      font-size: .67rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: .1em; color: var(--teal-bright); margin-bottom: .7rem;
+    .find-us__card-title {
+      font-size: .63rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--teal-bright); margin-bottom: .55rem;
     }
 
-    /* Clean hours rows */
-    .hours__list { display: flex; flex-direction: column; gap: .3rem; }
+    /* Hours */
+    .hours__list { display: flex; flex-direction: column; gap: .35rem; }
     .hours__row {
       display: flex; justify-content: space-between; align-items: center;
-      padding: .4rem .7rem; border-radius: 8px;
+      padding: .45rem .75rem; border-radius: 8px;
       background: #f4fbfb; font-size: .83rem;
     }
     .hours__day { font-weight: 600; color: var(--text); display: flex; align-items: center; }
@@ -771,29 +758,28 @@
       border-radius: 50%; background: #16a34a; margin-right: .45rem; flex-shrink: 0;
     }
 
-    /* Contact reach column */
-    .contact__reach-col { display: flex; flex-direction: column; gap: .9rem; }
-    .contact__reach-item { display: flex; align-items: flex-start; gap: .65rem; }
-    .contact__reach-label {
-      font-size: .62rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: .1em; color: var(--teal-bright); margin: 0 0 .12rem;
+    /* Contact reach items */
+    .find-us__reach { display: flex; flex-direction: column; gap: .65rem; }
+    .find-us__reach-item { display: flex; align-items: center; gap: .65rem; }
+    .find-us__reach-icon {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: var(--teal-ice); display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: .82rem;
     }
-    .contact__reach-item a {
-      font-size: .86rem; color: var(--text-muted); text-decoration: none; display: block;
-    }
-    .contact__reach-item a:hover { color: var(--teal-dark); }
+    .find-us__reach-label { font-size: .6rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--teal-bright); margin: 0 0 .1rem; }
+    .find-us__reach-item a { font-size: .84rem; color: var(--text-muted); text-decoration: none; display: block; }
+    .find-us__reach-item a:hover { color: var(--teal-dark); }
 
-    /* Live status board */
+    /* Live status */
+    .find-us__status { display: flex; flex-direction: column; gap: .35rem; }
     .status-board { margin-top: 1rem; display: flex; flex-direction: column; gap: .4rem; }
     .status-row {
       display: flex; align-items: center; gap: .6rem;
-      padding: .5rem .7rem;
-      background: #fff; border-radius: 8px;
-      border: 1.5px solid #e5f4f5;
+      padding: .45rem .7rem;
+      background: #f4fbfb; border-radius: 8px;
+      border: 1.5px solid #e0f2f3;
     }
-    .status-dot {
-      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
     .status-dot--open { background: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.18); animation: sb-pulse 2s ease-in-out infinite; }
     .status-dot--soon { background: #d97706; box-shadow: 0 0 0 3px rgba(217,119,6,.18); }
     .status-dot--closed { background: #dc2626; }
@@ -801,49 +787,24 @@
       0%, 100% { box-shadow: 0 0 0 3px rgba(22,163,74,.18); }
       50% { box-shadow: 0 0 0 5px rgba(22,163,74,.06); }
     }
-    .status-row__label {
-      font-size: .73rem; font-weight: 700; color: var(--text);
-      min-width: 140px; flex-shrink: 0; letter-spacing: .01em;
-    }
-    .status-row__val { font-size: .73rem; color: var(--text-muted); }
+    .status-row__label { font-size: .72rem; font-weight: 700; color: var(--text); flex: 1; letter-spacing: .01em; }
+    .status-row__val { font-size: .72rem; color: var(--text-muted); }
     .status-row__val--open { color: #166534; font-weight: 600; }
     .status-row__val--soon { color: #92400e; font-weight: 600; }
     .status-row__val--closed { color: #991b1b; }
 
-    /* Map */
-    .contact__map {
-      border-radius: 16px; overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0,0,0,.25);
-      border: 1.5px solid rgba(255,255,255,.15);
-      min-height: 420px; height: 100%;
-    }
-    .contact__map iframe { width: 100%; height: 100%; min-height: 420px; border: none; }
+    .find-us__actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: auto; }
 
-    /* Parking + Transit + Languages info strip */
+    /* 3-column info strip */
     .contact__info-strip {
-      margin-top: 1.5rem; display: grid; grid-template-columns: 1fr 1fr;
-      gap: 1rem; align-items: start;
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem; margin-top: 1rem; align-items: start;
     }
-    .info-strip__card--full { grid-column: 1 / -1; }
-    .lang-flags { display: flex; flex-wrap: wrap; gap: .5rem .85rem; }
-    .lang-flag-item { display: flex; align-items: center; gap: .4rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 100px; padding: .38rem .9rem; }
-    .lang-flag { font-size: 1.1rem; line-height: 1; }
-    .lang-name { font-size: .84rem; font-weight: 700; color: var(--text); }
-    .lang-access-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .9rem; padding-top: .85rem; border-top: 1.5px solid #eef7f8; }
-    .transit-address { display:flex; align-items:flex-start; gap:.6rem; font-size:.875rem; color:var(--text); margin-bottom:1rem; }
-    .transit-address__pin { font-size:1rem; flex-shrink:0; }
-    .transit-routes { display:flex; flex-direction:column; gap:.75rem; }
-    .transit-route { display:flex; align-items:flex-start; gap:.85rem; }
-    .transit-route__dot { width:13px; height:13px; border-radius:50%; flex-shrink:0; margin-top:.28rem; }
-    .transit-route__line { font-size:.85rem; font-weight:700; color:var(--text); }
-    .transit-route__step { font-size:.78rem; color:var(--text-muted); margin-top:.18rem; line-height:1.4; }
-    .transit-btn { display:block; width:100%; text-align:center; margin-top:1.4rem; padding:.8rem 1.25rem; font-size:.9rem; border-radius:100px; background:var(--teal-dark); color:#fff; font-weight:700; text-decoration:none; transition:background .15s, transform .15s; }
-    .transit-btn:hover { background:var(--teal-deeper); transform:translateY(-1px); }
     .info-strip__card {
       background: #fff; border-radius: 14px; padding: 1.25rem 1.2rem 1.1rem;
-      border: 1.5px solid rgba(255,255,255,.12);
-      border-left: 3.5px solid var(--teal-bright);
-      box-shadow: 0 4px 20px rgba(0,0,0,.18);
+      border: 1.5px solid var(--border);
+      border-top: 3.5px solid var(--teal-bright);
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
     }
     .info-strip__title {
       font-size: .68rem; font-weight: 800; text-transform: uppercase;
@@ -852,7 +813,7 @@
     .info-strip__chips { display: flex; flex-direction: column; gap: .5rem; }
     .info-chip {
       display: flex; align-items: flex-start; gap: .55rem;
-      font-size: .81rem; color: var(--text-muted); line-height: 1.45;
+      font-size: .8rem; color: var(--text-muted); line-height: 1.45;
     }
     .info-chip__icon { font-size: .9rem; flex-shrink: 0; width: 18px; text-align: center; margin-top: .05rem; }
     .info-chip strong { color: var(--text); font-weight: 600; }
@@ -861,16 +822,23 @@
     a.info-chip:hover { color: var(--teal-dark); }
     a.info-chip:hover strong { color: var(--teal-dark); }
     .info-chip__map { color: var(--teal-dark); font-weight: 700; white-space: nowrap; }
-    .info-strip__sub-label { font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--teal-bright); margin-bottom: .25rem; }
-    @media (max-width: 768px) {
-      .contact__info-strip { grid-template-columns: 1fr; }
-      .info-strip__card--full { grid-column: 1; }
-    }
-
-    .contact__actions { display: flex; gap: .75rem; flex-wrap: wrap; padding-top: 1.1rem; }
-    .contact__status-inline { display: flex; flex-direction: column; gap: .35rem; padding: .85rem 0 .25rem; border-top: 1.5px solid #eef7f8; }
-    .contact__status-inline .status-row { background: #f4fbfb; border-color: #e0f2f3; }
-    .contact__status-inline .status-row__label { min-width: 0; font-size: .72rem; }
+    .info-strip__sub-label { font-size: .65rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--teal-bright); margin-bottom: .25rem; }
+    .transit-address { display:flex; align-items:flex-start; gap:.6rem; font-size:.85rem; color:var(--text); margin-bottom:.85rem; }
+    .transit-address__pin { font-size:1rem; flex-shrink:0; }
+    .transit-routes { display:flex; flex-direction:column; gap:.65rem; }
+    .transit-route { display:flex; align-items:flex-start; gap:.85rem; }
+    .transit-route__dot { width:12px; height:12px; border-radius:50%; flex-shrink:0; margin-top:.3rem; }
+    .transit-route__line { font-size:.82rem; font-weight:700; color:var(--text); }
+    .transit-route__step { font-size:.76rem; color:var(--text-muted); margin-top:.15rem; line-height:1.4; }
+    .transit-btn { display:block; width:100%; text-align:center; margin-top:1.25rem; padding:.72rem 1.1rem; font-size:.83rem; border-radius:100px; background:var(--teal-dark); color:#fff; font-weight:700; text-decoration:none; transition:background .15s, transform .15s; }
+    .transit-btn:hover { background:var(--teal-deeper); transform:translateY(-1px); }
+    .lang-flags { display: flex; flex-wrap: wrap; gap: .4rem .65rem; }
+    .lang-flag-item { display: flex; align-items: center; gap: .38rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 100px; padding: .3rem .75rem; }
+    .lang-flag { font-size: 1rem; line-height: 1; }
+    .lang-name { font-size: .78rem; font-weight: 700; color: var(--text); }
+    .lang-access-chips { display: flex; flex-direction: column; gap: .4rem; margin-top: .75rem; padding-top: .7rem; border-top: 1.5px solid #eef7f8; }
+    @media (max-width: 900px) { .contact__info-strip { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .find-us__main { grid-template-columns: 1fr; } .contact__info-strip { grid-template-columns: 1fr; } }
 
     /* ── About + Gallery ──────────────────────────────── */
     #about { background: var(--white); }
@@ -973,45 +941,33 @@
       .nav__toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
       .nav__toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
       .welcome__grid,
-      .contact__grid,
       .blog-grid { grid-template-columns: 1fr; }
-      .contact__map { min-height: 240px; height: 240px; }
-      .contact__map iframe { min-height: 240px; height: 240px; }
+      .find-us__main { grid-template-columns: 1fr; }
+      .find-us__map-card { min-height: 260px; }
+      .find-us__map-card iframe { min-height: 260px; }
       .services__grid { grid-template-columns: 1fr 1fr; }
       .services__grid .service-card:last-child { grid-column: unset; max-width: unset; margin: 0; }
       .welcome__photo { order: -1; }
       .gallery  { grid-template-columns: 1fr 1fr; }
-      /* reduced section padding on mobile */
       section { padding: 2.75rem 1rem; }
       .hero { padding: 2.75rem 1rem 3rem; }
-      /* collapse steps to single column */
       .steps { grid-template-columns: 1fr; }
-      /* shrink staff to 3 columns */
       .staff-grid { grid-template-columns: repeat(3, 1fr); }
-      /* shrink insurance to 2 columns */
       .insurance-grid { grid-template-columns: 1fr 1fr; }
-      /* reviews to single column */
       .reviews-grid { grid-template-columns: 1fr; }
-      /* contact body split stacks on mobile */
-      .contact__body-split { grid-template-columns: 1fr; gap: .75rem; }
+      .contact__info-strip { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
       .pa-cards--primary   { grid-template-columns: 1fr; }
       .pa-cards--secondary { grid-template-columns: 1fr 1fr; }
-      /* staff to 2 columns on very small screens */
       .staff-grid { grid-template-columns: 1fr 1fr; }
-      /* insurance to 1 column on very small screens */
       .insurance-grid { grid-template-columns: 1fr; }
-      /* hero logo slightly smaller */
       .hero__logo { width: 130px; height: 130px; }
-      /* tighten section padding further */
       section { padding: 2rem .875rem; }
       .hero { padding: 2rem .875rem 2.5rem; }
-      /* contact info card: less padding so status rows have more room */
-      .contact__info { padding: 1.1rem; }
-      /* call us / email buttons fill the row */
-      .contact__actions { gap: .5rem; }
-      .contact__actions .btn { flex: 1; text-align: center; justify-content: center; }
+      .find-us__info-card { padding: 1.1rem; }
+      .find-us__actions { gap: .5rem; }
+      .find-us__actions .btn { flex: 1; text-align: center; justify-content: center; }
     }
 
     /* ── Alert banner ─────────────────────────────── */
@@ -2780,62 +2736,78 @@ window.FAQS = [
   <div class="section__inner">
     <h2 class="section__title">Find Us</h2>
 
-    <div class="contact__grid">
-      <!-- Left: info -->
-      <div class="contact__info">
-
-        <!-- Address header -->
-        <div class="contact__addr-hd">
-          <div class="contact__row__icon">📍</div>
-          <div>
-            <p class="contact__addr-text">1203 St. Clair Avenue West, Toronto, ON</p>
-            <a href="https://www.google.com/maps/dir/?api=1&destination=St.+Clair+Drug+Mart+Pharmacy+1203+St+Clair+Ave+W+Toronto+ON" target="_blank" rel="noopener" class="contact__dir-link">Get Directions on Google Maps →</a>
-          </div>
+    <!-- Address + inline contact pills -->
+    <div class="find-us__addr-bar">
+      <div class="find-us__addr-left">
+        <span class="find-us__addr-icon">📍</span>
+        <div>
+          <p class="find-us__addr-text">1203 St. Clair Avenue West, Toronto, ON</p>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=St.+Clair+Drug+Mart+Pharmacy+1203+St+Clair+Ave+W+Toronto+ON" target="_blank" rel="noopener" class="find-us__dir-link">Get Directions on Google Maps →</a>
         </div>
+      </div>
+      <div class="find-us__contact-pills">
+        <a href="tel:+14166548181" class="find-us__cpill find-us__cpill--call">📞 (416) 654-8181</a>
+        <a href="mailto:stclairdrugmart@gmail.com" class="find-us__cpill find-us__cpill--email">✉️ Email Us</a>
+      </div>
+    </div>
 
-        <!-- Hours + Contact split -->
-        <div class="contact__body-split">
-          <!-- Hours -->
-          <div>
-            <h4 class="contact__col-head">Hours</h4>
-            <div class="hours__list">
-              <div class="hours__row" id="hours-row-1">
-                <span class="hours__day">Mon – Fri</span>
-                <span class="hours__time">9:00 am – 6:00 pm</span>
-              </div>
-              <div class="hours__row" id="hours-row-6">
-                <span class="hours__day">Saturday</span>
-                <span class="hours__time">9:00 am – 2:00 pm</span>
-              </div>
-              <div class="hours__row" id="hours-row-0">
-                <span class="hours__day">Sunday</span>
-                <span class="hours__time">Closed</span>
-              </div>
-            </div>
-          </div>
+    <!-- Map (left) + Hours/Contact/Status (right) -->
+    <div class="find-us__main">
+      <!-- Map -->
+      <div class="find-us__map-card">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.234!2d-79.4468996!3d43.6773961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b35d5e572114b%3A0x899add08acb1e556!2sSt.+Clair+Drug+Mart+Pharmacy!5e0!3m2!1sen!2sca!4v1700000000000"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="St. Clair Drug Mart map"
+        ></iframe>
+      </div>
 
-          <!-- Contact -->
-          <div class="contact__reach-col">
-            <h4 class="contact__col-head">Contact</h4>
-            <div class="contact__reach-item">
-              <div class="contact__row__icon">📞</div>
-              <div>
-                <p class="contact__reach-label">Phone</p>
-                <a href="tel:+14166548181">(416) 654-8181</a>
-              </div>
+      <!-- Hours + Contact + Live Status -->
+      <div class="find-us__info-card">
+
+        <!-- Hours -->
+        <div>
+          <div class="find-us__card-title">Hours</div>
+          <div class="hours__list">
+            <div class="hours__row" id="hours-row-1">
+              <span class="hours__day">Mon – Fri</span>
+              <span class="hours__time">9:00 am – 6:00 pm</span>
             </div>
-            <div class="contact__reach-item">
-              <div class="contact__row__icon">✉️</div>
-              <div>
-                <p class="contact__reach-label">Email</p>
-                <a href="mailto:stclairdrugmart@gmail.com">stclairdrugmart@<wbr>gmail.com</a>
-              </div>
+            <div class="hours__row" id="hours-row-6">
+              <span class="hours__day">Saturday</span>
+              <span class="hours__time">9:00 am – 2:00 pm</span>
+            </div>
+            <div class="hours__row" id="hours-row-0">
+              <span class="hours__day">Sunday</span>
+              <span class="hours__time">Closed</span>
             </div>
           </div>
         </div>
 
-        <!-- Live status rows — inside the card -->
-        <div class="contact__status-inline">
+        <!-- Contact -->
+        <div class="find-us__reach">
+          <div class="find-us__card-title">Contact</div>
+          <div class="find-us__reach-item">
+            <div class="find-us__reach-icon">📞</div>
+            <div>
+              <p class="find-us__reach-label">Phone</p>
+              <a href="tel:+14166548181">(416) 654-8181</a>
+            </div>
+          </div>
+          <div class="find-us__reach-item">
+            <div class="find-us__reach-icon">✉️</div>
+            <div>
+              <p class="find-us__reach-label">Email</p>
+              <a href="mailto:stclairdrugmart@gmail.com">stclairdrugmart@gmail.com</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live status -->
+        <div class="find-us__status">
+          <div class="find-us__card-title">Live Status</div>
           <a class="status-row" href="tel:+14166548181" style="text-decoration:none;">
             <span class="status-dot" data-sb-dot="store"></span>
             <span class="status-row__label">Pharmacy</span>
@@ -2850,29 +2822,21 @@ window.FAQS = [
           </a>
         </div>
 
-        <div class="contact__actions">
+        <!-- Action buttons -->
+        <div class="find-us__actions">
           <a href="tel:+14166548181" class="btn">📞 Call Us</a>
           <a href="mailto:stclairdrugmart@gmail.com" class="btn btn--outline">✉️ Email</a>
         </div>
-      </div>
 
-      <!-- Right: map -->
-      <div class="contact__map">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.234!2d-79.4468996!3d43.6773961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b35d5e572114b%3A0x899add08acb1e556!2sSt.+Clair+Drug+Mart+Pharmacy!5e0!3m2!1sen!2sca!4v1700000000000"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          title="St. Clair Drug Mart map"
-        ></iframe>
       </div>
     </div>
 
-    <!-- Info strip: Transit · Parking · Languages (3 equal columns) -->
+    <!-- 3-column info strip: Transit | Parking & Cycling | Languages -->
     <div class="contact__info-strip">
+
       <!-- Transit -->
       <div class="info-strip__card">
-        <div class="info-strip__title">🚇 Getting Here by Transit (TTC)</div>
+        <div class="info-strip__title">🚇 Getting Here by TTC</div>
         <div class="transit-address">
           <span class="transit-address__pin">📍</span>
           <span><strong>1203 St. Clair Ave W</strong> — corner of St. Clair &amp; Dufferin</span>
@@ -2902,24 +2866,26 @@ window.FAQS = [
         </div>
         <a class="transit-btn" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=transit" target="_blank" rel="noopener">🗺️ Transit Directions →</a>
       </div>
+
       <!-- Parking & Cycling -->
       <div class="info-strip__card">
         <div class="info-strip__title">🅿️ Parking &amp; 🚲 Cycling</div>
         <div class="info-strip__chips">
           <div class="info-strip__sub-label">Car Parking</div>
           <div class="info-chip"><span class="info-chip__icon">🚗</span><span><strong>Street parking</strong> directly in front on St. Clair Ave W — free on evenings &amp; weekends</span></div>
-          <a class="info-chip" href="https://www.google.com/maps/search/?api=1&query=Green+P+Parking+St+Clair+Ave+W+Via+Italia+Toronto" target="_blank" rel="noopener"><span class="info-chip__icon">🏢</span><span><strong>Green P — Via Italia Lot</strong> (St. Clair Ave W &amp; Via Italia, near Dufferin) — paid public lot <span class="info-chip__map">· Map →</span></span></a>
+          <a class="info-chip" href="https://www.google.com/maps/search/?api=1&query=Green+P+Parking+St+Clair+Ave+W+Via+Italia+Toronto" target="_blank" rel="noopener"><span class="info-chip__icon">🏢</span><span><strong>Green P — Via Italia Lot</strong> (St. Clair Ave W &amp; Via Italia, near Dufferin) <span class="info-chip__map">· Map →</span></span></a>
           <div class="info-chip"><span class="info-chip__icon">♿</span><span>Accessible entrance &amp; designated parking spaces available</span></div>
-          <div class="info-strip__sub-label" style="margin-top:.6rem;">Bike Share Toronto</div>
-          <a class="info-chip" href="https://members.bikesharetoronto.com/station/7358" target="_blank" rel="noopener"><span class="info-chip__icon">🚲</span><span><strong>Station 7358 — MacKay Ave</strong> (1 block behind the pharmacy, off St. Clair W) <span class="info-chip__map">· View station →</span></span></a>
+          <div class="info-strip__sub-label" style="margin-top:.55rem;">Bike Share Toronto</div>
+          <a class="info-chip" href="https://members.bikesharetoronto.com/station/7358" target="_blank" rel="noopener"><span class="info-chip__icon">🚲</span><span><strong>Station 7358 — MacKay Ave</strong> (1 block behind the pharmacy) <span class="info-chip__map">· View station →</span></span></a>
         </div>
-        <div style="display:flex;gap:.6rem;margin-top:1.1rem;flex-wrap:wrap;">
-          <a class="transit-btn" style="flex:1;min-width:140px;margin-top:0;" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=driving" target="_blank" rel="noopener">🗺️ Driving Directions →</a>
-          <a class="transit-btn" style="flex:1;min-width:140px;margin-top:0;background:var(--teal-mid);" href="https://www.google.com/maps/dir/?api=1&destination=MacKay+Ave+%26+St+Clair+Ave+W,+Toronto,+ON&travelmode=bicycling" target="_blank" rel="noopener">🚲 Cycling Directions →</a>
+        <div style="display:flex;gap:.55rem;margin-top:1.1rem;flex-wrap:wrap;">
+          <a class="transit-btn" style="flex:1;min-width:120px;margin-top:0;" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=driving" target="_blank" rel="noopener">🗺️ Driving →</a>
+          <a class="transit-btn" style="flex:1;min-width:120px;margin-top:0;background:var(--teal-mid);" href="https://www.google.com/maps/dir/?api=1&destination=MacKay+Ave+%26+St+Clair+Ave+W,+Toronto,+ON&travelmode=bicycling" target="_blank" rel="noopener">🚲 Cycling →</a>
         </div>
       </div>
+
       <!-- Languages & Accessibility -->
-      <div class="info-strip__card info-strip__card--full">
+      <div class="info-strip__card">
         <div class="info-strip__title">🌐 Languages &amp; Accessibility</div>
         <div class="lang-flags">
           <div class="lang-flag-item"><span class="lang-flag">🇨🇦</span><span class="lang-name">English</span></div>
@@ -2928,14 +2894,15 @@ window.FAQS = [
           <div class="lang-flag-item"><span class="lang-flag">🇵🇹</span><span class="lang-name">Portuguese</span></div>
           <div class="lang-flag-item"><span class="lang-flag">🇹🇷</span><span class="lang-name">Turkish</span></div>
           <div class="lang-flag-item"><span class="lang-flag">🇵🇱</span><span class="lang-name">Polish</span></div>
-          <div class="lang-flag-item"><span class="lang-flag">🌍</span><span class="lang-name">&amp; more — ask our staff</span></div>
+          <div class="lang-flag-item"><span class="lang-flag">🌍</span><span class="lang-name">&amp; more</span></div>
         </div>
         <div class="lang-access-chips">
-          <div class="info-chip"><span class="info-chip__icon">🩺</span><span><strong>Specialized diabetes consultations</strong> — medication reviews &amp; management support</span></div>
-          <div class="info-chip"><span class="info-chip__icon">♿</span><span>Fully accessible entrance &amp; parking spaces available</span></div>
+          <div class="info-chip"><span class="info-chip__icon">🩺</span><span><strong>Diabetes consultations</strong> — medication reviews &amp; management support</span></div>
+          <div class="info-chip"><span class="info-chip__icon">♿</span><span>Fully accessible entrance &amp; parking available</span></div>
           <div class="info-chip"><span class="info-chip__icon">🏳️‍🌈</span><span>LGBTQ+ friendly &amp; welcoming space</span></div>
         </div>
       </div>
+
     </div>
 
   </div>
