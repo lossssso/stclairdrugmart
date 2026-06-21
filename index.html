@@ -1355,10 +1355,15 @@
     .reviews-uber-badge img { height: 22px; width: auto; }
     .reviews-uber-badge__icon { filter: brightness(0); }
     .reviews-uber-badge__text { font-size: .83rem; font-weight: 700; color: #000; }
-    .reviews-platform--uber { flex-direction: row; justify-content: center; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
-    .reviews-uber-rating { display: flex; flex-direction: column; align-items: center; }
-    .reviews-uber-award { display: flex; flex-direction: column; align-items: center; }
-    .reviews-uber-top-badge-img { height: 80px; width: 80px; object-fit: contain; }
+    .reviews-platform--uber {
+      flex-direction: row; justify-content: center; align-items: center;
+      gap: 1.5rem; flex-wrap: wrap;
+      max-width: 580px; padding: 1.5rem 1.75rem 2rem;
+    }
+    .reviews-uber-rating { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .reviews-uber-rating .reviews-stars-wrap { font-size: 2.6rem; }
+    .reviews-uber-award { display: flex; flex-direction: column; align-items: center; text-align: center; flex-shrink: 0; }
+    .reviews-uber-top-badge-img { height: 90px; width: 90px; object-fit: contain; }
     .reviews-uber-top-badge { display: inline-flex; align-items: center; gap: .55rem; margin-top: .6rem; background: #f0faf0; border: 1.5px solid #c0e0c0; border-radius: 100px; padding: .35rem 1rem; }
     .reviews-uber-top-badge span { font-size: .78rem; font-weight: 700; color: #1a5c1a; }
 
@@ -3259,11 +3264,6 @@ window.FAQS = [
     a: "In most cases, yes. Generic medications contain the same active ingredient, dose, and strength as brand-name drugs — they're just manufactured by a different company after the patent expires. In Ontario, pharmacists can often substitute a generic automatically. Ask us at the counter or <a href=\"#booking\">book a quick consultation</a> — savings can be significant, especially for long-term medications."
   },
   {
-    icon: "📦",
-    q: "Do you offer blister packs for complex medication schedules?",
-    a: "Yes. We prepare weekly blister (bubble) packs that organize your medications by day and time — ideal for patients managing multiple prescriptions, or families supporting a loved one. Blister packs reduce missed doses and medication errors. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> or <a href=\"#booking\">book a setup appointment</a> — it usually takes just one short visit."
-  },
-  {
     icon: "🚭",
     q: "Can a pharmacist help me quit smoking in Ontario?",
     a: "Yes — Ontario pharmacists can independently assess you and prescribe all first-line smoking cessation treatments, including <strong>varenicline (Champix)</strong> and <strong>bupropion (Zyban)</strong>, without a doctor's referral. We also carry the full range of nicotine replacement therapies (patches, gum, lozenges, inhaler). Our pharmacist will work with you on a personalized quit plan and follow-up support. Many treatments are covered by ODB and private insurance. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},200)\">Learn about our smoking cessation program →</a>"
@@ -3282,6 +3282,11 @@ window.FAQS = [
     icon: "❤️",
     q: "What is naloxone and how does it work?",
     a: "Naloxone (Narcan®) is a fast-acting medication that reverses an opioid overdose by blocking opioids in the brain — restoring normal breathing within 2–5 minutes. It works against oxycodone, fentanyl, hydromorphone, codeine, heroin, and other opioids. It is completely safe: if opioids aren't present, it has no effect. We provide kits <strong>free of charge</strong> with a short training session so you know exactly what to do. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},200)\">Get your free kit →</a>"
+  },
+  {
+    icon: "📦",
+    q: "Do you offer blister packs for complex medication schedules?",
+    a: "Yes. We prepare weekly blister (bubble) packs that organize your medications by day and time — ideal for patients managing multiple prescriptions, or families supporting a loved one. Blister packs reduce missed doses and medication errors. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> or <a href=\"#booking\">book a setup appointment</a> — it usually takes just one short visit."
   }
   /* ── add new FAQs here, following the same { q: "…", a: "…", icon: "…" } format ── */
 ];
