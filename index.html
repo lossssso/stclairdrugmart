@@ -861,6 +861,7 @@
     a.info-chip:hover { color: var(--teal-dark); }
     a.info-chip:hover strong { color: var(--teal-dark); }
     .info-chip__map { color: var(--teal-dark); font-weight: 700; white-space: nowrap; }
+    .info-strip__sub-label { font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--teal-bright); margin-bottom: .25rem; }
     @media (max-width: 768px) {
       .contact__info-strip { grid-template-columns: 1fr; }
       .info-strip__card--full { grid-column: 1; }
@@ -2901,16 +2902,21 @@ window.FAQS = [
         </div>
         <a class="transit-btn" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=transit" target="_blank" rel="noopener">🗺️ Transit Directions →</a>
       </div>
-      <!-- Parking -->
+      <!-- Parking & Cycling -->
       <div class="info-strip__card">
-        <div class="info-strip__title">🅿️ Parking</div>
+        <div class="info-strip__title">🅿️ Parking &amp; 🚲 Cycling</div>
         <div class="info-strip__chips">
+          <div class="info-strip__sub-label">Car Parking</div>
           <div class="info-chip"><span class="info-chip__icon">🚗</span><span><strong>Street parking</strong> directly in front on St. Clair Ave W — free on evenings &amp; weekends</span></div>
-          <a class="info-chip" href="https://www.google.com/maps/search/?api=1&query=Green+P+Parking+St+Clair+Ave+W+Via+Italia+Toronto" target="_blank" rel="noopener"><span class="info-chip__icon">🏢</span><span><strong>Green P Lot</strong> — St. Clair Ave W &amp; Via Italia (near Dufferin), paid public parking <span class="info-chip__map">· View on Maps →</span></span></a>
-          <div class="info-chip"><span class="info-chip__icon">♿</span><span>Accessible entrance &amp; parking spaces available</span></div>
-          <a class="info-chip" href="https://members.bikesharetoronto.com/station/7358" target="_blank" rel="noopener"><span class="info-chip__icon">🚲</span><span><strong>Bike Share Toronto</strong> — station on MacKay Ave (behind the pharmacy) <span class="info-chip__map">· View station →</span></span></a>
+          <a class="info-chip" href="https://www.google.com/maps/search/?api=1&query=Green+P+Parking+St+Clair+Ave+W+Via+Italia+Toronto" target="_blank" rel="noopener"><span class="info-chip__icon">🏢</span><span><strong>Green P — Via Italia Lot</strong> (St. Clair Ave W &amp; Via Italia, near Dufferin) — paid public lot <span class="info-chip__map">· Map →</span></span></a>
+          <div class="info-chip"><span class="info-chip__icon">♿</span><span>Accessible entrance &amp; designated parking spaces available</span></div>
+          <div class="info-strip__sub-label" style="margin-top:.6rem;">Bike Share Toronto</div>
+          <a class="info-chip" href="https://members.bikesharetoronto.com/station/7358" target="_blank" rel="noopener"><span class="info-chip__icon">🚲</span><span><strong>Station 7358 — MacKay Ave</strong> (1 block behind the pharmacy, off St. Clair W) <span class="info-chip__map">· View station →</span></span></a>
         </div>
-        <a class="transit-btn" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=driving" target="_blank" rel="noopener" style="margin-top:1.1rem;">🗺️ Driving Directions →</a>
+        <div style="display:flex;gap:.6rem;margin-top:1.1rem;flex-wrap:wrap;">
+          <a class="transit-btn" style="flex:1;min-width:140px;margin-top:0;" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=driving" target="_blank" rel="noopener">🗺️ Driving Directions →</a>
+          <a class="transit-btn" style="flex:1;min-width:140px;margin-top:0;background:var(--teal-mid);" href="https://www.google.com/maps/dir/?api=1&destination=MacKay+Ave+%26+St+Clair+Ave+W,+Toronto,+ON&travelmode=bicycling" target="_blank" rel="noopener">🚲 Cycling Directions →</a>
+        </div>
       </div>
       <!-- Languages & Accessibility -->
       <div class="info-strip__card info-strip__card--full">
