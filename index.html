@@ -760,8 +760,17 @@
     .hours__row.today .hours__day,
     .hours__row.today .hours__time { color: var(--teal-deeper); font-weight: 700; }
     .hours__row.today .hours__day::before {
-      content: ''; display: inline-block; width: 6px; height: 6px;
-      border-radius: 50%; background: #16a34a; margin-right: .45rem; flex-shrink: 0;
+      content: ''; display: inline-block; width: 7px; height: 7px;
+      border-radius: 50%; margin-right: .45rem; flex-shrink: 0;
+      background: #dc2626;
+    }
+    .hours__row.today.open-today .hours__day::before {
+      background: #16a34a;
+      animation: hours-pulse 2s ease-in-out infinite;
+    }
+    @keyframes hours-pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(22,163,74,.5); }
+      50% { opacity: .6; box-shadow: 0 0 0 4px rgba(22,163,74,0); }
     }
 
     /* Contact reach items */
@@ -3821,11 +3830,6 @@ window.FAQS = [
     var day = d.getDay(); // 0=Sun, 1-5=Mon-Fri, 6=Sat
     var mins = d.getHours() * 60 + d.getMinutes();
 
-    // Highlight today's row
-    var rowId = (day >= 1 && day <= 5) ? 'hours-row-1' : (day === 6 ? 'hours-row-6' : 'hours-row-0');
-    var todayRow = document.getElementById(rowId);
-    if (todayRow) todayRow.classList.add('today');
-
     function fmt(m) {
       var h = Math.floor(m / 60), mn = m % 60, ap = h >= 12 ? 'pm' : 'am';
       if (h > 12) h -= 12; if (h === 0) h = 12;
@@ -3896,6 +3900,15 @@ window.FAQS = [
     render('store', stO, stC, 'Open Now');
     render('appt',  apO, apC, 'Accepting');
     render('uber',  ubO, ubC, 'Accepting Orders');
+
+    // Highlight today's hours row — colour based on whether store is open right now
+    var rowId = (day >= 1 && day <= 5) ? 'hours-row-1' : (day === 6 ? 'hours-row-6' : 'hours-row-0');
+    var todayRow = document.getElementById(rowId);
+    if (todayRow) {
+      todayRow.classList.add('today');
+      var storeOpenNow = stO >= 0 && mins >= stO && mins < stC;
+      todayRow.classList.add(storeOpenNow ? 'open-today' : 'closed-today');
+    }
   })();
 
   // ── Service Tabs ──────────────────────────────────────────
