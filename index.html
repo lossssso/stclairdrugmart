@@ -274,20 +274,21 @@
     /* ── Animated drifting clouds ────────────────────── */
     .hero__clouds { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
     .hero__cloud  { position: absolute; left: 0; animation: cloud-drift linear infinite; will-change: transform; display: block; }
-    /* cloud2.png is a photo with white bg — multiply blends it into the sky */
-    .hero__cloud--real { mix-blend-mode: multiply; }
     .hero__cloud--flip { animation-name: cloud-drift-r; }
-    @keyframes cloud-drift   { from { transform: translateX(-55vw);           } to { transform: translateX(120vw);           } }
-    @keyframes cloud-drift-r { from { transform: translateX(-55vw) scaleX(-1);} to { transform: translateX(120vw) scaleX(-1);} }
-    .hero__cloud:nth-child(1) { width:560px; top: 3%; animation-duration: 90s; animation-delay: -12s; opacity:.82; }
-    .hero__cloud:nth-child(2) { width:320px; top:22%; animation-duration: 68s; animation-delay: -35s; opacity:.65; }
-    .hero__cloud:nth-child(3) { width:480px; top: 8%; animation-duration:112s; animation-delay: -60s; opacity:.70; }
-    .hero__cloud:nth-child(4) { width:260px; top: 0%; animation-duration: 58s; animation-delay: -20s; opacity:.55; }
-    .hero__cloud:nth-child(5) { width:640px; top:16%; animation-duration: 95s; animation-delay: -45s; opacity:.75; }
-    .hero__cloud:nth-child(6) { width:380px; top:36%; animation-duration: 72s; animation-delay:  -8s; opacity:.60; }
-    .hero__cloud:nth-child(7) { width:520px; top:28%; animation-duration: 85s; animation-delay: -75s; opacity:.65; }
-    .hero__cloud:nth-child(8) { width:300px; top:52%; animation-duration: 62s; animation-delay: -55s; opacity:.45; }
-    .hero__cloud:nth-child(9) { width:440px; top:44%; animation-duration:100s; animation-delay: -90s; opacity:.55; }
+    @keyframes cloud-drift   { from { transform: translateX(-60vw);           } to { transform: translateX(120vw);           } }
+    @keyframes cloud-drift-r { from { transform: translateX(-60vw) scaleX(-1);} to { transform: translateX(120vw) scaleX(-1);} }
+    .hero__cloud:nth-child(1)  { width:800px; top: 0%; animation-duration:105s; animation-delay: -15s; opacity:.92; }
+    .hero__cloud:nth-child(2)  { width:550px; top: 9%; animation-duration: 72s; animation-delay: -42s; opacity:.88; }
+    .hero__cloud:nth-child(3)  { width:700px; top:17%; animation-duration: 90s; animation-delay: -68s; opacity:.90; }
+    .hero__cloud:nth-child(4)  { width:460px; top: 5%; animation-duration: 65s; animation-delay: -28s; opacity:.85; }
+    .hero__cloud:nth-child(5)  { width:900px; top:26%; animation-duration:120s; animation-delay: -85s; opacity:.88; }
+    .hero__cloud:nth-child(6)  { width:500px; top:35%; animation-duration: 78s; animation-delay:  -8s; opacity:.85; }
+    .hero__cloud:nth-child(7)  { width:750px; top:44%; animation-duration: 98s; animation-delay: -52s; opacity:.82; }
+    .hero__cloud:nth-child(8)  { width:420px; top:53%; animation-duration: 68s; animation-delay: -36s; opacity:.80; }
+    .hero__cloud:nth-child(9)  { width:820px; top:62%; animation-duration:110s; animation-delay: -92s; opacity:.78; }
+    .hero__cloud:nth-child(10) { width:580px; top:70%; animation-duration: 82s; animation-delay: -20s; opacity:.75; }
+    .hero__cloud:nth-child(11) { width:680px; top:76%; animation-duration: 95s; animation-delay: -72s; opacity:.72; }
+    .hero__cloud:nth-child(12) { width:500px; top:82%; animation-duration: 75s; animation-delay: -50s; opacity:.68; }
     @media (prefers-reduced-motion: reduce) { .hero__cloud { animation: none; } }
     .hero__logo {
       width: 170px; height: 170px;
@@ -2053,15 +2054,18 @@
 <!-- ── Hero ─────────────────────────────────────────────── -->
 <header class="hero" id="home">
   <div class="hero__clouds" aria-hidden="true">
-    <img src="cloud2.png" class="hero__cloud hero__cloud--real" alt="">
+    <img src="cloud2.png" class="hero__cloud" alt="">
     <img src="cloud.png"  class="hero__cloud hero__cloud--flip" alt="">
-    <img src="cloud2.png" class="hero__cloud hero__cloud--real hero__cloud--flip" alt="">
+    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" alt="">
     <img src="cloud.png"  class="hero__cloud" alt="">
-    <img src="cloud2.png" class="hero__cloud hero__cloud--real" alt="">
+    <img src="cloud2.png" class="hero__cloud" alt="">
     <img src="cloud.png"  class="hero__cloud hero__cloud--flip" alt="">
-    <img src="cloud2.png" class="hero__cloud hero__cloud--real hero__cloud--flip" alt="">
+    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" alt="">
     <img src="cloud.png"  class="hero__cloud" alt="">
-    <img src="cloud2.png" class="hero__cloud hero__cloud--real hero__cloud--flip" alt="">
+    <img src="cloud2.png" class="hero__cloud" alt="">
+    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" alt="">
+    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" alt="">
+    <img src="cloud.png"  class="hero__cloud" alt="">
   </div>
   <img src="logo.png" alt="St. Clair Drug Mart Pharmacy logo" class="hero__logo" width="940" height="922" fetchpriority="high" />
   <h1 class="hero__name">St. Clair Drug Mart Pharmacy</h1>
