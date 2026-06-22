@@ -948,10 +948,13 @@
       object-fit: cover;
       transition: transform .35s;
     }
-    /* Top row: show full image at natural height, no cropping */
+    /* All images: no cropping, show full image */
     .gallery__item:nth-child(1) img,
     .gallery__item:nth-child(2) img,
     .gallery__item:nth-child(3) img { height: auto; object-fit: contain; }
+    .gallery__item:nth-child(4) img,
+    .gallery__item:nth-child(5) img,
+    .gallery__item:nth-child(6) img { object-fit: contain; background: #eef9f9; }
     .gallery__item:hover img { transform: scale(1.05); }
 
     /* ── Footer ───────────────────────────────────────── */
