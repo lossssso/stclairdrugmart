@@ -921,40 +921,29 @@
     }
     .about__text { max-width: 760px; }
     .about__text p { color: var(--text-muted); margin-top: 1rem; }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 1.1rem;
-      margin-top: 2.5rem;
-    }
-    /* Top row: full width — 4 cols each */
-    .gallery__item:nth-child(1) { grid-column: 1 / span 4; }
-    .gallery__item:nth-child(2) { grid-column: 5 / span 4; }
-    .gallery__item:nth-child(3) { grid-column: 9 / span 4; }
-    /* Bottom row: full-width pyramid base — 4 cols each */
-    .gallery__item:nth-child(4),
-    .gallery__item:nth-child(5),
-    .gallery__item:nth-child(6) {
-      grid-column: span 4;
-      aspect-ratio: 3/4;
+    .gallery { display: flex; flex-direction: column; gap: 1.1rem; margin-top: 2.5rem; }
+    /* Top row: sticks out past the section edges — pyramid wide at top */
+    .gallery__row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.1rem; }
+    .gallery__row--top {
+      margin-left: clamp(-4rem, -6vw, -1.5rem);
+      margin-right: clamp(-4rem, -6vw, -1.5rem);
     }
     .gallery__item {
       border-radius: var(--radius);
       overflow: hidden;
       box-shadow: var(--shadow);
     }
+    /* All images: full width, natural landscape ratio, no cropping, no fill */
     .gallery__item img {
-      width: 100%; height: 100%;
-      object-fit: cover;
+      width: 100%; height: auto; display: block;
+      object-fit: contain;
       transition: transform .35s;
     }
-    /* All images: no cropping, show full image */
-    .gallery__item:nth-child(1) img,
-    .gallery__item:nth-child(2) img,
-    .gallery__item:nth-child(3) img { height: auto; object-fit: contain; }
-    .gallery__item:nth-child(4) img,
-    .gallery__item:nth-child(5) img,
-    .gallery__item:nth-child(6) img { object-fit: contain; background: #eef9f9; }
+    /* Bottom row: portrait interior shots — show at natural ratio */
+    .gallery__row--bottom .gallery__item img {
+      object-fit: cover; height: 100%;
+    }
+    .gallery__row--bottom .gallery__item { aspect-ratio: 4/3; }
     .gallery__item:hover img { transform: scale(1.05); }
 
     /* ── Footer ───────────────────────────────────────── */
@@ -1011,9 +1000,7 @@
     /* ── Responsive ───────────────────────────────────── */
     @media (max-width: 900px) {
       .pa-cards--secondary { grid-template-columns: repeat(3, 1fr); }
-      .gallery  { grid-template-columns: repeat(3, 1fr); }
-      .gallery__item:nth-child(1), .gallery__item:nth-child(2), .gallery__item:nth-child(3) { grid-column: span 1; }
-      .gallery__item:nth-child(4), .gallery__item:nth-child(5), .gallery__item:nth-child(6) { grid-column: span 1; aspect-ratio: 3/4; }
+      .gallery__row--top { margin-left: 0; margin-right: 0; }
     }
     @media (max-width: 768px) {
       .nav__links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e9f4f5; box-shadow: 0 8px 20px rgba(0,60,66,.08); flex-direction: column; align-items: stretch; padding: .5rem 1rem 1rem; gap: .1rem; }
@@ -1044,7 +1031,7 @@
       .services__grid { grid-template-columns: 1fr 1fr; }
       .services__grid .service-card:last-child { grid-column: unset; max-width: unset; margin: 0; }
       .welcome__photo { order: -1; }
-      .gallery  { grid-template-columns: 1fr 1fr; }
+      .gallery__row { grid-template-columns: 1fr 1fr; }
       section { padding: 2.75rem 1rem; }
       .hero { padding: 2.75rem 1rem 3rem; }
       .steps { grid-template-columns: 1fr; }
@@ -2878,6 +2865,26 @@
         </div>
       </div>
 
+      <div class="svc-acc-item" id="acc-referrals">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🔗</span>
+          <span class="svc-acc__title">Specialist Referrals</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Not sure where to go next? We can point you toward trusted healthcare providers in the St. Clair West neighbourhood. Just ask at the counter or call us — we're happy to help you find the right specialist.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.7rem;margin:.9rem 0;">
+            <div class="info-chip"><span class="info-chip__icon">👁️</span><span><strong>Optometrists</strong> — eye exams &amp; vision care</span></div>
+            <div class="info-chip"><span class="info-chip__icon">🦴</span><span><strong>Physiotherapy</strong> — rehab &amp; injury recovery</span></div>
+            <div class="info-chip"><span class="info-chip__icon">🧠</span><span><strong>Mental health</strong> — counsellors &amp; psychologists</span></div>
+            <div class="info-chip"><span class="info-chip__icon">🫀</span><span><strong>Cardiologists &amp; internists</strong></span></div>
+            <div class="info-chip"><span class="info-chip__icon">🦷</span><span><strong>Dentists</strong> — clinics accepting new patients</span></div>
+            <div class="info-chip"><span class="info-chip__icon">🤝</span><span><strong>Social work &amp; community support</strong></span></div>
+          </div>
+          <p style="font-size:.82rem;color:var(--text-muted);margin-top:.6rem;"><a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us at (416) 654-8181</a> or ask at the counter — we'll match you with the right provider.</p>
+        </div>
+      </div>
+
       <div class="svc-acc__group-hd">🛠️ Tools &amp; Support</div>
 
       <div class="svc-acc-item">
@@ -3295,19 +3302,7 @@
             <div class="info-chip"><span class="info-chip__icon">♿</span><span>Fully accessible entrance &amp; parking available</span></div>
             <div class="info-chip"><span class="info-chip__icon">🏳️‍🌈</span><span>LGBTQ+ friendly &amp; welcoming space</span></div>
           </div>
-          <div style="margin-top:1.1rem;">
-            <div style="font-weight:700;color:var(--teal-deeper);font-size:.88rem;margin-bottom:.6rem;letter-spacing:.02em;">🔗 Specialist Referrals</div>
-            <p style="font-size:.85rem;color:var(--text-muted);margin:0 0 .75rem;">We can connect you with trusted healthcare providers in the neighbourhood. Ask your pharmacist and we'll point you in the right direction.</p>
-            <div class="lang-access-chips">
-              <div class="info-chip"><span class="info-chip__icon">👁️</span><span><strong>Optometrists</strong> — eye exams &amp; vision care referrals nearby</span></div>
-              <div class="info-chip"><span class="info-chip__icon">🦴</span><span><strong>Physiotherapy</strong> — rehab &amp; injury recovery specialists in the area</span></div>
-              <div class="info-chip"><span class="info-chip__icon">🧠</span><span><strong>Mental health</strong> — counsellors, psychologists &amp; social workers</span></div>
-              <div class="info-chip"><span class="info-chip__icon">🫀</span><span><strong>Cardiologists &amp; internists</strong> — specialist cardiology &amp; internal medicine</span></div>
-              <div class="info-chip"><span class="info-chip__icon">🦷</span><span><strong>Dentists</strong> — local dental clinics accepting new patients</span></div>
-              <div class="info-chip"><span class="info-chip__icon">🤝</span><span><strong>Social work &amp; community support</strong> — housing, income, &amp; caregiver resources</span></div>
-            </div>
-            <p style="font-size:.78rem;color:var(--text-muted);margin:.65rem 0 0;"><a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us at (416) 654-8181</a> or ask at the counter — we're happy to recommend a provider that fits your needs.</p>
-          </div>
+          <div class="info-chip" style="margin-top:.9rem;"><span class="info-chip__icon">🔗</span><span><strong>Specialist Referrals</strong> — we can connect you with optometrists, physio, mental health, and more. <a href="#services" style="color:var(--teal-dark);font-weight:600;">See our referral services →</a></span></div>
         </div>
       </div>
 
@@ -3334,23 +3329,27 @@
     </div>
 
     <div class="gallery">
-      <div class="gallery__item">
-        <img src="storefront_studio.jpeg" alt="St. Clair Drug Mart Pharmacy exterior — 1203 St. Clair Ave W, Toronto" loading="lazy" decoding="async" />
+      <div class="gallery__row gallery__row--top">
+        <div class="gallery__item">
+          <img src="storefront_studio.jpeg" alt="St. Clair Drug Mart Pharmacy exterior — 1203 St. Clair Ave W, Toronto" loading="lazy" decoding="async" />
+        </div>
+        <div class="gallery__item">
+          <img src="neighbourhood.png" alt="Corso Italia street on St. Clair Ave W with TTC streetcar and flower baskets" loading="lazy" decoding="async" />
+        </div>
+        <div class="gallery__item">
+          <img src="storefront_angle.jpeg" alt="St. Clair Drug Mart Pharmacy storefront on St. Clair Ave W, Toronto" loading="lazy" decoding="async" />
+        </div>
       </div>
-      <div class="gallery__item">
-        <img src="neighbourhood.png" alt="Corso Italia street on St. Clair Ave W with TTC streetcar and flower baskets" loading="lazy" decoding="async" />
-      </div>
-      <div class="gallery__item">
-        <img src="storefront_angle.jpeg" alt="St. Clair Drug Mart Pharmacy storefront on St. Clair Ave W, Toronto" loading="lazy" decoding="async" />
-      </div>
-      <div class="gallery__item">
-        <img src="interior_wide.jpg" alt="Inside St. Clair Drug Mart Pharmacy — pharmacy counter and full store" width="945" height="1000" loading="lazy" decoding="async" />
-      </div>
-      <div class="gallery__item">
-        <img src="interior_shelves.png" alt="Over-the-counter and health product shelves at St. Clair Drug Mart Pharmacy" width="945" height="1000" loading="lazy" decoding="async" />
-      </div>
-      <div class="gallery__item">
-        <img src="interior_aisle.jpg" alt="Product aisle and counseling room inside St. Clair Drug Mart Pharmacy" width="929" height="1171" loading="lazy" decoding="async" />
+      <div class="gallery__row gallery__row--bottom">
+        <div class="gallery__item">
+          <img src="interior_wide.jpg" alt="Inside St. Clair Drug Mart Pharmacy — pharmacy counter and full store" loading="lazy" decoding="async" />
+        </div>
+        <div class="gallery__item">
+          <img src="interior_shelves.png" alt="Over-the-counter and health product shelves at St. Clair Drug Mart Pharmacy" loading="lazy" decoding="async" />
+        </div>
+        <div class="gallery__item">
+          <img src="interior_aisle.jpg" alt="Product aisle and counseling room inside St. Clair Drug Mart Pharmacy" loading="lazy" decoding="async" />
+        </div>
       </div>
     </div>
   </div>
