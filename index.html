@@ -180,29 +180,19 @@
       right: 0;
       width: 100%;
       z-index: 100;
-      background: transparent;
-      border-bottom: 1px solid transparent;
+      background: rgba(182,236,239,0);
+      border-bottom: 1px solid rgba(33,161,168,0);
       box-shadow: none;
-      transition: background .35s, box-shadow .35s, border-color .35s;
       overflow: hidden;
     }
-    /* Cloud images live inside the nav and fade in once scrolled */
+    /* Clouds always drift in the nav; JS fades the background in as the hero scrolls away */
     .nav__cloud {
       position: absolute; top: 0; left: 0; z-index: 0;
       animation: cloud-drift linear infinite;
       will-change: transform; pointer-events: none;
-      max-width: none; opacity: 0;
-      transition: opacity .8s;
+      max-width: none; opacity: 0.28;
     }
     .nav__cloud--flip { animation-name: cloud-drift-r; }
-    .nav.scrolled .nav__cloud { opacity: .38; }
-    .nav.scrolled {
-      background: rgba(182,236,239,.85);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(33,161,168,.22);
-      box-shadow: 0 1px 14px rgba(0,80,90,.06);
-    }
     .nav__inner {
       max-width: 1100px;
       margin: 0 auto;
@@ -1114,6 +1104,12 @@
       .ailments-triage__q { font-size: .83rem; }
       /* addr-bar pills wrap nicely */
       .find-us__addr-left { flex: 1 1 100%; }
+      /* hero pharmacy label — reduce massive letter-spacing on tablets */
+      .hero__pharmacy-label { letter-spacing: .14em; }
+      /* welcome boxes — 3-col on tablet avoids lone orphan with 5 items */
+      .welcome__boxes { grid-template-columns: repeat(3, 1fr); }
+      /* pa-card description — slightly smaller on mobile */
+      .pa-card__desc { font-size: .75rem; }
     }
     @media (max-width: 480px) {
       .find-us__partner-logos img { height: 46px; width: 46px; }
@@ -1134,7 +1130,6 @@
       .find-us__info-card { padding: 1.1rem; }
       .find-us__actions { gap: .5rem; }
       .find-us__actions .btn { flex: 1; text-align: center; justify-content: center; }
-      .faq-list { grid-template-columns: 1fr; }
       /* Reviews metrics — 3-col at small screens avoids lone orphan */
       .reviews-metrics { grid-template-columns: repeat(3, 1fr); }
       /* Reviews actions — stack buttons */
@@ -1155,6 +1150,16 @@
       /* Status boards — fill width on phones */
       .hero__status { max-width: 100%; }
       .contact__status-board { max-width: 100%; }
+      /* hero pharmacy label — tight letter-spacing on small phones */
+      .hero__pharmacy-label { letter-spacing: .07em; font-size: .85rem; }
+      /* WhatsApp button — respect iOS home indicator safe area */
+      .wa-float { bottom: max(1.25rem, env(safe-area-inset-bottom)); right: max(1.25rem, env(safe-area-inset-right)); }
+      /* section tabs — allow scroll on very small screens */
+      .svc-tabs__nav { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; padding-bottom: 2px; }
+      /* Blog cards — slightly tighter padding */
+      .blog-card { padding: 1.15rem; }
+      /* pa-card icon — shrink on tiny screens */
+      .pa-card__icon { font-size: 1.4rem; }
     }
 
     /* ── Alert banner ─────────────────────────────── */
@@ -1922,7 +1927,7 @@
     .faq .section__title { color: #fff; }
     .faq .section__title::after { background: var(--teal-bright); }
     .faq .section__lead { color: rgba(255,255,255,.65); }
-    .faq-list { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; margin-top: 2rem; border: none; align-items: start; }
+    .faq-list { display: grid; grid-template-columns: 1fr; gap: .85rem; margin-top: 2rem; border: none; align-items: start; }
     .faq-item {
       background: #fff; border-radius: 14px; overflow: hidden;
       box-shadow: 0 2px 18px rgba(0,0,0,.13);
@@ -5084,15 +5089,27 @@ window.FAQS = [
     }
   });
 
-  // ── Transparent nav: becomes solid only after hero leaves viewport ──
+  // ── Nav: clouds always drift; background fades in progressively as hero scrolls away,
+  //    then stays as frosted glass (semi-transparent + blur) throughout the whole site ──
   (function() {
     var nav = document.getElementById('nav');
     var hero = document.getElementById('home');
-    if (!hero) { nav.classList.add('scrolled'); return; }
-    var obs = new IntersectionObserver(function(entries) {
-      nav.classList.toggle('scrolled', !entries[0].isIntersecting);
-    }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
-    obs.observe(hero);
+    function updateNav() {
+      var scrollY = window.scrollY || window.pageYOffset;
+      var heroH = hero ? hero.offsetHeight : 0;
+      // a goes 0→1 between 8% and 58% of hero height; clamp to 1 after hero is gone
+      var a = heroH < 1 ? 1 : Math.max(0, Math.min(1, (scrollY - heroH * 0.08) / (heroH * 0.5)));
+      // Frosted glass: 0.68 alpha so content is slightly visible underneath
+      nav.style.background = 'rgba(182,236,239,' + (0.68 * a).toFixed(3) + ')';
+      var blur = a > 0.01 ? 'blur(' + (14 * a).toFixed(1) + 'px)' : '';
+      nav.style.backdropFilter = blur;
+      nav.style.webkitBackdropFilter = blur;
+      nav.style.borderBottomColor = 'rgba(33,161,168,' + (0.22 * a).toFixed(3) + ')';
+      nav.style.boxShadow = a > 0.05 ? '0 1px 14px rgba(0,80,90,' + (0.06 * a).toFixed(3) + ')' : 'none';
+    }
+    window.addEventListener('scroll', updateNav, { passive: true });
+    window.addEventListener('resize', updateNav, { passive: true });
+    updateNav();
   })();
 
   // ── Transit/Parking logo scroll + highlight ───────────────
