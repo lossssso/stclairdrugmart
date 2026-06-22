@@ -202,13 +202,14 @@
       mask-image: linear-gradient(to bottom, transparent 0%, transparent 8%, black 65%);
       -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 8%, black 65%);
     }
-    .nav__cloud  { position: absolute; left: 0; animation: cloud-drift linear infinite; will-change: transform; max-width: none; display: block; }
+    .nav__cloud  { position: absolute; left: 0; animation: cloud-drift linear infinite; will-change: transform; max-width: none; display: block; filter: drop-shadow(0 1px 3px rgba(0,60,65,.18)); }
     .nav__cloud--flip { animation-name: cloud-drift-r; }
-    .nav__cloud:nth-child(1) { width: 950px; height: 235px; top: -80px; animation-duration:110s; animation-delay: -18s; opacity: .72; }
-    .nav__cloud:nth-child(2) { width: 750px; height: 185px; top: -55px; animation-duration: 86s; animation-delay: -50s; opacity: .65; }
-    .nav__cloud:nth-child(3) { width: 880px; height: 218px; top: -70px; animation-duration:102s; animation-delay: -78s; opacity: .68; }
-    .nav__cloud:nth-child(4) { width: 680px; height: 168px; top: -40px; animation-duration: 78s; animation-delay: -32s; opacity: .60; }
-    @media (max-width: 768px) { .nav__cloud:nth-child(n+3) { display: none; } }
+    .nav__cloud:nth-child(1) { width: 950px; height: 235px; top: -80px; animation-duration:110s; animation-delay: -18s; opacity: .85; }
+    .nav__cloud:nth-child(2) { width: 750px; height: 185px; top: -55px; animation-duration: 86s; animation-delay: -50s; opacity: .78; }
+    .nav__cloud:nth-child(3) { width: 880px; height: 218px; top: -70px; animation-duration:102s; animation-delay: -78s; opacity: .82; }
+    .nav__cloud:nth-child(4) { width: 680px; height: 168px; top: -40px; animation-duration: 78s; animation-delay: -32s; opacity: .76; }
+    .nav__cloud:nth-child(5) { width: 820px; height: 203px; top: -62px; animation-duration: 94s; animation-delay: -64s; opacity: .80; }
+    @media (max-width: 768px) { .nav__cloud:nth-child(n+4) { display: none; } }
     .nav__inner {
       max-width: 1100px;
       margin: 0 auto;
@@ -2174,6 +2175,7 @@
     <img src="cloud.png"  class="nav__cloud nav__cloud--flip" style="transform:translateX(44.7vw) scaleX(-1)" alt="">
     <img src="cloud2.png" class="nav__cloud nav__cloud--flip" style="transform:translateX(77.6vw) scaleX(-1)" alt="">
     <img src="cloud.png"  class="nav__cloud" style="transform:translateX(13.8vw)" alt="">
+    <img src="cloud.png"  class="nav__cloud nav__cloud--flip" style="transform:translateX(-8vw) scaleX(-1)" alt="">
   </div>
   <div class="nav__inner">
     <a href="#home" class="nav__brand">
