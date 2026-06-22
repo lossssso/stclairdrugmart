@@ -1788,6 +1788,9 @@
     .dc-result__pair   { font-size: .88rem; font-weight: 700; color: var(--teal-deeper); }
     .dc-result__desc   { font-size: .84rem; color: var(--text); line-height: 1.6; }
     .dc-result__src    { font-size: .73rem; color: var(--text-muted); margin-top: .35rem; }
+    .dc-result__cta    { margin-top: .6rem; padding-top: .55rem; border-top: 1px solid var(--border); }
+    .dc-result__medscheck-link { font-size: .78rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; }
+    .dc-result__medscheck-link:hover { color: var(--teal-bright); text-decoration: underline; }
     .dc-external-link  { margin-top: .75rem; font-size: .82rem; }
     .dc-external-link a { color: var(--teal-dark); font-weight: 600; }
     .dc-summary__status--contra   { background: rgba(254,226,226,.3); border-left: 3px solid #EF4444; }
@@ -4015,6 +4018,43 @@ window.FAQS = [
       {a:'diphenhydramine',b:'diazepam',sev:'moderate',desc:'Additive CNS depression with benzodiazepines. Increased sedation and impairment.',src:'Clinical Pharmacology'},
     ];
 
+    // Drug class map — for duplicate-class detection
+    const DRUG_CLASSES = {
+      'NSAID':           ['ibuprofen','naproxen','diclofenac','celecoxib','indomethacin','ketorolac','meloxicam','piroxicam','aspirin'],
+      'SSRI':            ['fluoxetine','sertraline','paroxetine','citalopram','escitalopram','fluvoxamine'],
+      'SNRI':            ['venlafaxine','duloxetine','desvenlafaxine','levomilnacipran'],
+      'TCA':             ['amitriptyline','nortriptyline','clomipramine','imipramine','doxepin','desipramine'],
+      'Statin':          ['atorvastatin','rosuvastatin','simvastatin','pravastatin','lovastatin','fluvastatin','pitavastatin'],
+      'Beta-blocker':    ['metoprolol','atenolol','bisoprolol','carvedilol','propranolol','labetalol','nadolol','sotalol'],
+      'ACE inhibitor':   ['lisinopril','enalapril','ramipril','perindopril','quinapril','captopril','fosinopril','trandolapril'],
+      'ARB':             ['losartan','valsartan','irbesartan','candesartan','telmisartan','olmesartan'],
+      'Benzodiazepine':  ['lorazepam','alprazolam','diazepam','clonazepam','temazepam','oxazepam','triazolam','midazolam'],
+      'Opioid':          ['oxycodone','hydrocodone','morphine','codeine','tramadol','fentanyl','hydromorphone','buprenorphine','methadone','tapentadol'],
+      'PPI':             ['omeprazole','esomeprazole','pantoprazole','lansoprazole','rabeprazole'],
+      'Anticoagulant':   ['warfarin','rivaroxaban','apixaban','dabigatran','edoxaban'],
+      'Antiplatelet':    ['aspirin','clopidogrel','ticagrelor','prasugrel'],
+      'Corticosteroid':  ['prednisone','prednisolone','dexamethasone','hydrocortisone','methylprednisolone','budesonide'],
+      'Antipsychotic':   ['quetiapine','olanzapine','risperidone','haloperidol','aripiprazole','clozapine','ziprasidone'],
+    };
+
+    const CLASS_WARN = {
+      'NSAID':          { sev:'major',    desc:'Both medications belong to the NSAID (non-steroidal anti-inflammatory) drug class. Combining two NSAIDs significantly increases the risk of gastrointestinal ulcers, GI bleeding, and kidney damage without providing greater pain relief. This combination is not recommended — a Medication Review can identify safer alternatives.' },
+      'SSRI':           { sev:'major',    desc:'Both medications are SSRI antidepressants. Combining two SSRIs increases the risk of serotonin syndrome (agitation, tremor, rapid heart rate, high body temperature) and serotonin-related side effects. This combination requires specialist justification — a Medication Review is strongly recommended.' },
+      'SNRI':           { sev:'major',    desc:'Both medications are SNRI antidepressants. Duplicate SNRI therapy raises the risk of serotonin syndrome and cardiovascular side effects and is rarely clinically appropriate. A Medication Review is strongly recommended.' },
+      'TCA':            { sev:'major',    desc:'Both medications are tricyclic antidepressants (TCAs). Combining two TCAs significantly increases the risk of cardiac arrhythmia, anticholinergic toxicity, and CNS depression. This combination requires urgent review by a prescriber.' },
+      'Statin':         { sev:'moderate', desc:'Both medications are statins. Combining two statins is uncommon and may increase the risk of myopathy (muscle pain and weakness). A pharmacist can review whether both are clinically necessary.' },
+      'Beta-blocker':   { sev:'major',    desc:'Both medications are beta-blockers. Combining two beta-blockers can cause excessive bradycardia (slow heart rate), hypotension, and heart block. This combination is rarely appropriate without specialist oversight.' },
+      'ACE inhibitor':  { sev:'major',    desc:'Both medications are ACE inhibitors. Combining two drugs from the same class offers no added benefit and substantially increases the risk of hypotension, hyperkalemia, and kidney impairment.' },
+      'ARB':            { sev:'major',    desc:'Both medications are ARBs (angiotensin receptor blockers). Duplicate ARB therapy provides no benefit and increases the risk of hypotension, hyperkalemia, and acute kidney injury.' },
+      'Benzodiazepine': { sev:'major',    desc:'Both medications are benzodiazepines. Combining two benzodiazepines significantly increases the risk of severe CNS and respiratory depression, dangerous sedation, falls, and overdose — especially in older adults.' },
+      'Opioid':         { sev:'major',    desc:'Both medications are opioids. Combining opioids greatly increases the risk of respiratory depression, sedation, and potentially fatal overdose. This combination should only be used under close specialist supervision.' },
+      'PPI':            { sev:'moderate', desc:'Both medications are proton pump inhibitors (PPIs). Taking two PPIs simultaneously offers no additional benefit and increases unnecessary side-effect exposure. A pharmacist can confirm which one is appropriate.' },
+      'Anticoagulant':  { sev:'major',    desc:'Both medications are anticoagulants. Combining anticoagulants dramatically increases the risk of serious or life-threatening bleeding. This combination requires urgent specialist review and monitoring.' },
+      'Antiplatelet':   { sev:'major',    desc:'Both medications are antiplatelets. Dual antiplatelet therapy markedly increases bleeding risk. While sometimes clinically intentional (e.g., post-stent), it should be confirmed as appropriate by your prescriber.' },
+      'Corticosteroid': { sev:'moderate', desc:'Both medications are corticosteroids (steroids). Combining systemic corticosteroids increases cumulative steroid exposure and associated risks including adrenal suppression, immunosuppression, and metabolic effects.' },
+      'Antipsychotic':  { sev:'major',    desc:'Both medications are antipsychotics. Combining antipsychotics increases the risk of QTc prolongation (potentially fatal arrhythmia), metabolic syndrome, and CNS adverse effects. This combination requires specialist justification.' },
+    };
+
     const SEV_ORDER = { contraindicated:0, major:1, moderate:2, minor:3 };
     const SEV_LABEL = {
       contraindicated: { label:'⛔ Contraindicated', cls:'sev-contra',  result:'dc-result--contra' },
@@ -4131,8 +4171,11 @@ window.FAQS = [
       // 3. Local DB check
       const localPairs = runLocalCheck();
 
-      // 4. Merge and deduplicate
-      const all = mergePairs(rxPairs, localPairs);
+      // 4. Drug class duplicate check
+      const classPairs = runClassCheck();
+
+      // 5. Merge and deduplicate
+      const all = mergePairs(rxPairs, [...localPairs, ...classPairs]);
 
       // 5. Render
       renderResults(all);
@@ -4180,6 +4223,48 @@ window.FAQS = [
       return out;
     }
 
+    function runClassCheck() {
+      const out = [];
+      // Build reverse map: generic name -> set of classes
+      const classOf = {};
+      for (const [cls, members] of Object.entries(DRUG_CLASSES)) {
+        members.forEach(m => { if (!classOf[m]) classOf[m]=[]; classOf[m].push(cls); });
+      }
+      for (let i=0; i<meds.length; i++) {
+        for (let j=i+1; j<meds.length; j++) {
+          const a=norm(meds[i].name), b=norm(meds[j].name);
+          const ca=classOf[a]||[], cb=classOf[b]||[];
+          // Same-class duplicates
+          ca.forEach(cls => {
+            if (!cb.includes(cls)) return;
+            const info=CLASS_WARN[cls]; if (!info) return;
+            const names=[cap(meds[i].name), cap(meds[j].name)];
+            out.push({ key:'cls:'+cls+':'+names.map(n=>n.toLowerCase()).sort().join('+'),
+              names, sev:info.sev, desc:info.desc, src:'Duplicate Drug Class ('+cls+')', isDupClass:true, className:cls });
+          });
+          // ACE inhibitor + ARB (dual RAAS blockade)
+          if ((ca.includes('ACE inhibitor')&&cb.includes('ARB'))||(ca.includes('ARB')&&cb.includes('ACE inhibitor'))) {
+            const names=[cap(meds[i].name), cap(meds[j].name)];
+            out.push({ key:'raas:'+names.map(n=>n.toLowerCase()).sort().join('+'),
+              names, sev:'major', desc:'Combining an ACE inhibitor with an ARB (dual RAAS blockade) is not recommended. This combination significantly increases the risk of hypotension, hyperkalemia, and acute kidney injury without meaningful additional cardiovascular benefit. Major clinical guidelines advise against this combination.', src:'Clinical Pharmacology' });
+          }
+          // SSRI + SNRI or SSRI + TCA or SNRI + TCA (serotonergic cross-class)
+          const seroClasses = ['SSRI','SNRI','TCA'];
+          const aInSero = seroClasses.filter(c=>ca.includes(c)), bInSero = seroClasses.filter(c=>cb.includes(c));
+          if (aInSero.length && bInSero.length && aInSero[0]!==bInSero[0]) {
+            const names=[cap(meds[i].name), cap(meds[j].name)];
+            const key='sero:'+names.map(n=>n.toLowerCase()).sort().join('+');
+            if (!out.some(x=>x.key===key)) {
+              out.push({ key, names, sev:'major',
+                desc:'These medications come from different serotonergic antidepressant classes ('+aInSero[0]+' and '+bInSero[0]+'). Combining them significantly increases the risk of serotonin syndrome — a potentially life-threatening condition causing agitation, muscle rigidity, fever, and cardiac instability. This combination requires careful specialist review.',
+                src:'Serotonergic Drug Interaction' });
+            }
+          }
+        }
+      }
+      return out;
+    }
+
     function fuzzy(drug, pattern) {
       if (drug===pattern) return true;
       if (drug.length>3 && pattern.length>3 && (drug.includes(pattern)||pattern.includes(drug))) return true;
@@ -4210,6 +4295,10 @@ window.FAQS = [
       } else {
         pairs.forEach(p => {
           const s = SEV_LABEL[p.sev] || { label:p.sev, cls:'sev-minor', result:'' };
+          const showCta = p.sev==='contraindicated'||p.sev==='major'||p.sev==='moderate';
+          const ctaHtml = showCta
+            ? `<div class="dc-result__cta"><a href="#booking" class="dc-result__medscheck-link js-pa-select" data-url="https://app.pharmassess.ca/patient/meds/306667">📋 Book a Medication Review →</a></div>`
+            : '';
           html += `<div class="dc-result dc-result--ix ${s.result}">
             <div class="dc-result__header">
               <span class="dc-sev-badge ${s.cls}">${s.label}</span>
@@ -4217,12 +4306,22 @@ window.FAQS = [
             </div>
             <div class="dc-result__desc">${esc(p.desc)}</div>
             <div class="dc-result__src">Source: ${esc(p.src)}</div>
+            ${ctaHtml}
           </div>`;
         });
       }
 
       html += `<div class="dc-external-link">For a full report, check <a href="${dcUrl}" target="_blank" rel="noopener">Drugs.com Interaction Checker →</a></div>`;
       results.innerHTML = html;
+      // Wire per-card medication review links
+      results.querySelectorAll('.dc-result__medscheck-link.js-pa-select').forEach(el => {
+        el.addEventListener('click', function(e) {
+          e.preventDefault();
+          const t=document.querySelector('.pa-card[data-url="'+this.dataset.url+'"]');
+          if(t){ t.click(); document.getElementById('siteSearch')&&document.getElementById('siteSearch').classList.remove('open'); }
+          else { document.getElementById('booking')&&document.getElementById('booking').scrollIntoView({behavior:'smooth'}); }
+        });
+      });
       renderSummary(pairs, drugs);
     }
 
