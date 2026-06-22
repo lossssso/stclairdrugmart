@@ -277,18 +277,18 @@
     .hero__cloud--flip { animation-name: cloud-drift-r; }
     @keyframes cloud-drift   { from { transform: translateX(-60vw);           } to { transform: translateX(120vw);           } }
     @keyframes cloud-drift-r { from { transform: translateX(-60vw) scaleX(-1);} to { transform: translateX(120vw) scaleX(-1);} }
-    .hero__cloud:nth-child(1)  { width:800px; height:380px; top: 0%; animation-duration:105s; animation-delay: -15s; opacity:1; }
-    .hero__cloud:nth-child(2)  { width:550px; top: 9%; animation-duration: 72s; animation-delay: -42s; opacity:.88; }
-    .hero__cloud:nth-child(3)  { width:700px; height:320px; top:17%; animation-duration: 90s; animation-delay: -68s; opacity:.98; }
-    .hero__cloud:nth-child(4)  { width:460px; top: 5%; animation-duration: 65s; animation-delay: -28s; opacity:.85; }
-    .hero__cloud:nth-child(5)  { width:900px; height:440px; top:26%; animation-duration:120s; animation-delay: -85s; opacity:.97; }
-    .hero__cloud:nth-child(6)  { width:500px; top:35%; animation-duration: 78s; animation-delay:  -8s; opacity:.85; }
-    .hero__cloud:nth-child(7)  { width:750px; height:360px; top:44%; animation-duration: 98s; animation-delay: -52s; opacity:.95; }
-    .hero__cloud:nth-child(8)  { width:420px; top:53%; animation-duration: 68s; animation-delay: -36s; opacity:.80; }
-    .hero__cloud:nth-child(9)  { width:820px; height:400px; top:62%; animation-duration:110s; animation-delay: -92s; opacity:.93; }
-    .hero__cloud:nth-child(10) { width:580px; top:70%; animation-duration: 82s; animation-delay: -20s; opacity:.75; }
-    .hero__cloud:nth-child(11) { width:680px; height:340px; top:76%; animation-duration: 95s; animation-delay: -72s; opacity:.90; }
-    .hero__cloud:nth-child(12) { width:500px; top:82%; animation-duration: 75s; animation-delay: -50s; opacity:.68; }
+    .hero__cloud:nth-child(1)  { width:1200px; height:580px; top: 0%; animation-duration:145s; animation-delay: -20s;  opacity:1;   }
+    .hero__cloud:nth-child(2)  { width: 850px; height:220px; top: 8%; animation-duration:118s; animation-delay: -55s;  opacity:.90; }
+    .hero__cloud:nth-child(3)  { width:1100px; height:520px; top:18%; animation-duration:160s; animation-delay: -80s;  opacity:.98; }
+    .hero__cloud:nth-child(4)  { width: 780px; height:200px; top: 4%; animation-duration:105s; animation-delay: -35s;  opacity:.86; }
+    .hero__cloud:nth-child(5)  { width:1350px; height:640px; top:28%; animation-duration:175s; animation-delay:-110s;  opacity:.97; }
+    .hero__cloud:nth-child(6)  { width: 900px; height:230px; top:38%; animation-duration:122s; animation-delay: -12s;  opacity:.85; }
+    .hero__cloud:nth-child(7)  { width:1150px; height:560px; top:46%; animation-duration:155s; animation-delay: -65s;  opacity:.95; }
+    .hero__cloud:nth-child(8)  { width: 820px; height:210px; top:55%; animation-duration:112s; animation-delay: -48s;  opacity:.82; }
+    .hero__cloud:nth-child(9)  { width:1250px; height:600px; top:63%; animation-duration:168s; animation-delay:-120s;  opacity:.93; }
+    .hero__cloud:nth-child(10) { width: 870px; height:225px; top:72%; animation-duration:130s; animation-delay: -28s;  opacity:.78; }
+    .hero__cloud:nth-child(11) { width:1050px; height:500px; top:78%; animation-duration:150s; animation-delay: -90s;  opacity:.90; }
+    .hero__cloud:nth-child(12) { width: 800px; height:205px; top:84%; animation-duration:108s; animation-delay: -70s;  opacity:.72; }
     @media (prefers-reduced-motion: reduce) { .hero__cloud { animation: none; } }
     .hero__logo {
       width: 170px; height: 170px;
@@ -616,6 +616,7 @@
     }
     .pa-card__desc { font-size: .78rem; color: var(--text-muted); line-height: 1.4; }
     .pa-cards .pa-iframe-wrap { grid-column: 1 / -1; margin-top: .25rem; }
+    @keyframes paDropDown { from { opacity:0; transform:translateY(-14px); } to { opacity:1; transform:translateY(0); } }
     .pa-iframe-wrap {
       border-radius: var(--radius);
       overflow: hidden;
@@ -624,6 +625,7 @@
       margin-top: 1rem;
       transition: opacity .2s;
     }
+    .pa-iframe-wrap.dropping { animation: paDropDown .35s ease; }
     .pa-iframe-wrap.collapsed iframe,
     .pa-iframe-wrap.collapsed .pa-iframe-expand { display: none; }
     .pa-iframe-wrap.collapsed .pa-iframe-label__close { opacity: .7; }
@@ -722,6 +724,13 @@
       100% { box-shadow: 0 0 0 0 rgba(33,161,168,0),    0 2px 12px rgba(0,0,0,.06); }
     }
     .info-strip__card--highlight { animation: card-highlight-pulse 1.5s ease forwards; }
+    @keyframes heading-pop {
+      0%   { color: var(--teal-bright); transform: scale(1);    letter-spacing: .1em; }
+      20%  { color: #f0a030;            transform: scale(1.12); letter-spacing: .22em; }
+      55%  { color: #21a1a8;            transform: scale(1.06); letter-spacing: .15em; }
+      100% { color: var(--teal-bright); transform: scale(1);    letter-spacing: .1em; }
+    }
+    .info-strip__title--highlight { animation: heading-pop 1s ease forwards; display: inline-block; }
     .find-us__addr-bar {
       display: flex; justify-content: space-between; align-items: center;
       background: var(--white); border-radius: 14px; padding: .9rem 1.4rem;
@@ -2882,11 +2891,11 @@
     <div class="staff-grid">
       <div class="staff-card">
         <div class="staff-card__photo">
-          <img src="team/elizabeth.png" alt="Elizabeth Da Silva, Pharmacist and Owner at St. Clair Drug Mart Pharmacy" width="1122" height="1402" loading="lazy" decoding="async" />
+          <img src="team/elizabeth.png" alt="Elizabeth Da Silva, Pharmacist and Designated Manager at St. Clair Drug Mart Pharmacy" width="1122" height="1402" loading="lazy" decoding="async" />
         </div>
         <p class="staff-card__name">Elizabeth Da Silva</p>
         <p class="staff-card__role" style="font-size:.7rem;letter-spacing:.04em;color:var(--teal-dark);margin-bottom:.1rem;">BScPharm, RPh</p>
-        <p class="staff-card__role">Pharmacist · Owner · 35+ yrs experience</p>
+        <p class="staff-card__role">Pharmacist · Designated Manager · 35+ yrs experience</p>
       </div>
       <div class="staff-card">
         <div class="staff-card__photo">
@@ -3547,6 +3556,9 @@ window.FAQS = [
   function paOpen() {
     paWrap.style.display = '';
     paWrap.classList.remove('collapsed');
+    paWrap.classList.remove('dropping');
+    void paWrap.offsetWidth;
+    paWrap.classList.add('dropping');
     paCloseBtn.textContent = '✕';
   }
   function paClose() {
@@ -4670,6 +4682,13 @@ window.FAQS = [
     void el.offsetWidth;
     el.classList.add('info-strip__card--highlight');
     el.addEventListener('animationend', function() { el.classList.remove('info-strip__card--highlight'); }, { once: true });
+    var title = el.querySelector('.info-strip__title');
+    if (title) {
+      title.classList.remove('info-strip__title--highlight');
+      void title.offsetWidth;
+      title.classList.add('info-strip__title--highlight');
+      title.addEventListener('animationend', function() { title.classList.remove('info-strip__title--highlight'); }, { once: true });
+    }
   }
 
   // ── Ailment Triage Filter ─────────────────────────────────
