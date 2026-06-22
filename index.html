@@ -172,7 +172,7 @@
     .sky-bg-cloud:nth-child(7) { width:1100px; height:272px; top:46vh; animation-duration:110s; animation-delay: -72s; opacity:.44; }
     .sky-bg-cloud:nth-child(8) { width: 960px; height:238px; top:60vh; animation-duration: 94s; animation-delay: -95s; opacity:.38; }
     /* White & light sections become slightly translucent so clouds peek through */
-    #welcome, #services, #about, #blog, #drug-checker, #shop, #faq, #insurance, #booking { background: rgba(255,255,255,.84); }
+    #welcome, #services, #about, #blog, #drug-checker, #shop, #insurance, #booking { background: rgba(255,255,255,.84); }
     #welcome  { background: rgba(215,251,252,.84); }
     #booking  { background: rgba(215,251,252,.84); }
     a { color: inherit; text-decoration: none; }
@@ -319,7 +319,11 @@
     @keyframes cloud-drift   { from { transform: translateX(-60vw);           } to { transform: translateX(120vw);           } }
     @keyframes cloud-drift-r { from { transform: translateX(-60vw) scaleX(-1);} to { transform: translateX(120vw) scaleX(-1);} }
     /* ── Hero clouds ─────────────────────────────────── */
-    .hero__clouds { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .hero__clouds {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+      mask-image: linear-gradient(to bottom, transparent 0, transparent 72px, black 120px);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 72px, black 120px);
+    }
     .hero__cloud  { position: absolute; left: 0; animation: cloud-drift linear infinite; will-change: transform; display: block; max-width: none; }
     .hero__cloud--flip { animation-name: cloud-drift-r; }
     .hero__cloud:nth-child(1)  { width:1200px; height:580px; top: 0%; animation-duration:116s; animation-delay: -20s;  opacity:1;   }
@@ -2138,14 +2142,14 @@
 </head>
 <body>
 <div class="sky-bg" aria-hidden="true">
-  <img src="cloud2.png" class="sky-bg-cloud" alt="">
-  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" alt="">
-  <img src="cloud2.png" class="sky-bg-cloud sky-bg-cloud--flip" alt="">
-  <img src="cloud.png"  class="sky-bg-cloud" alt="">
-  <img src="cloud2.png" class="sky-bg-cloud sky-bg-cloud--flip" alt="">
-  <img src="cloud.png"  class="sky-bg-cloud" alt="">
-  <img src="cloud2.png" class="sky-bg-cloud" alt="">
-  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" alt="">
+  <img src="cloud2.png" class="sky-bg-cloud" style="transform:translateX(-25.9vw)" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" style="transform:translateX(45.9vw) scaleX(-1)" alt="">
+  <img src="cloud2.png" class="sky-bg-cloud sky-bg-cloud--flip" style="transform:translateX(65.4vw) scaleX(-1)" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud" style="transform:translateX(-37.5vw)" alt="">
+  <img src="cloud2.png" class="sky-bg-cloud sky-bg-cloud--flip" style="transform:translateX(2.1vw) scaleX(-1)" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud" style="transform:translateX(-34.7vw)" alt="">
+  <img src="cloud2.png" class="sky-bg-cloud" style="transform:translateX(57.8vw)" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" style="transform:translateX(-58.1vw) scaleX(-1)" alt="">
 </div>
 
 <!-- alert banner removed — announcement moved to hero news card -->
@@ -2153,10 +2157,10 @@
 <!-- ── Nav ──────────────────────────────────────────────── -->
 <nav class="nav" id="nav">
   <div class="nav__clouds" aria-hidden="true">
-    <img src="cloud2.png" class="nav__cloud" alt="">
-    <img src="cloud.png"  class="nav__cloud nav__cloud--flip" alt="">
-    <img src="cloud2.png" class="nav__cloud nav__cloud--flip" alt="">
-    <img src="cloud.png"  class="nav__cloud" alt="">
+    <img src="cloud2.png" class="nav__cloud" style="transform:translateX(-30.6vw)" alt="">
+    <img src="cloud.png"  class="nav__cloud nav__cloud--flip" style="transform:translateX(44.7vw) scaleX(-1)" alt="">
+    <img src="cloud2.png" class="nav__cloud nav__cloud--flip" style="transform:translateX(77.6vw) scaleX(-1)" alt="">
+    <img src="cloud.png"  class="nav__cloud" style="transform:translateX(13.8vw)" alt="">
   </div>
   <div class="nav__inner">
     <a href="#home" class="nav__brand">
@@ -2218,18 +2222,18 @@
 <!-- ── Hero ─────────────────────────────────────────────── -->
 <header class="hero" id="home">
   <div class="hero__clouds" aria-hidden="true">
-    <img src="cloud2.png" class="hero__cloud" alt="">
-    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" alt="">
-    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" alt="">
-    <img src="cloud.png"  class="hero__cloud" alt="">
-    <img src="cloud2.png" class="hero__cloud" alt="">
-    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" alt="">
-    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" alt="">
-    <img src="cloud.png"  class="hero__cloud" alt="">
-    <img src="cloud2.png" class="hero__cloud" alt="">
-    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" alt="">
-    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" alt="">
-    <img src="cloud.png"  class="hero__cloud" alt="">
+    <img src="cloud2.png" class="hero__cloud" style="transform:translateX(-29vw)" alt="">
+    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" style="transform:translateX(56.5vw) scaleX(-1)" alt="">
+    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" style="transform:translateX(70.9vw) scaleX(-1)" alt="">
+    <img src="cloud.png"  class="hero__cloud" style="transform:translateX(21.8vw)" alt="">
+    <img src="cloud2.png" class="hero__cloud" style="transform:translateX(90vw)" alt="">
+    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" style="transform:translateX(-35.7vw) scaleX(-1)" alt="">
+    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" style="transform:translateX(43.5vw) scaleX(-1)" alt="">
+    <img src="cloud.png"  class="hero__cloud" style="transform:translateX(46.7vw)" alt="">
+    <img src="cloud2.png" class="hero__cloud" style="transform:translateX(117.1vw)" alt="">
+    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" style="transform:translateX(-1.4vw) scaleX(-1)" alt="">
+    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" style="transform:translateX(98.8vw) scaleX(-1)" alt="">
+    <img src="cloud.png"  class="hero__cloud" style="transform:translateX(99.5vw)" alt="">
   </div>
   <img src="logo.png" alt="St. Clair Drug Mart Pharmacy logo" class="hero__logo" width="940" height="922" fetchpriority="high" />
   <h1 class="hero__name">St. Clair Drug Mart Pharmacy</h1>
