@@ -144,11 +144,30 @@
     }
     body {
       font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: var(--teal-light);
+      background: linear-gradient(180deg, #b6ecef 0%, #cdf5f6 35%, #e4fbfc 100%) fixed;
       color: var(--text);
       line-height: 1.65;
       overflow-x: clip;
     }
+    /* ── Fixed sky background — clouds drift behind all sections ── */
+    .sky-bg {
+      position: fixed; inset: 0; z-index: -1;
+      overflow: hidden; pointer-events: none;
+      background: linear-gradient(180deg, #b6ecef 0%, #cdf5f6 45%, #e4fbfc 100%);
+    }
+    .sky-bg-cloud {
+      position: absolute; left: 0; animation: cloud-drift linear infinite;
+      will-change: transform; display: block; pointer-events: none;
+    }
+    .sky-bg-cloud--flip { animation-name: cloud-drift-r; }
+    .sky-bg-cloud:nth-child(1) { width: 900px; height: 210px; top: 4px;  animation-duration: 130s; animation-delay: -25s; opacity: .68; }
+    .sky-bg-cloud:nth-child(2) { width: 650px; height: 160px; top: 24px; animation-duration:  98s; animation-delay: -60s; opacity: .58; }
+    .sky-bg-cloud:nth-child(3) { width: 780px; height: 185px; top: 10px; animation-duration: 150s; animation-delay: -85s; opacity: .62; }
+    .sky-bg-cloud:nth-child(4) { width: 560px; height: 135px; top: 32px; animation-duration: 112s; animation-delay: -12s; opacity: .52; }
+    /* White & light sections become slightly translucent so clouds peek through */
+    #welcome, #services, #about, #blog, #drug-checker, #shop, #faq, #insurance, #booking { background: rgba(255,255,255,.91); }
+    #welcome  { background: rgba(215,251,252,.91); }
+    #booking  { background: rgba(215,251,252,.91); }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
 
@@ -166,11 +185,11 @@
       transition: background .35s, box-shadow .35s, border-color .35s;
     }
     .nav.scrolled {
-      background: rgba(255,255,255,.94);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid #e9f4f5;
-      box-shadow: 0 1px 14px rgba(0,80,90,.08);
+      background: rgba(182,236,239,.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(33,161,168,.22);
+      box-shadow: 0 1px 14px rgba(0,80,90,.06);
     }
     .nav__inner {
       max-width: 1100px;
@@ -596,18 +615,28 @@
       gap: .75rem;
       margin-top: 2rem;
     }
-    .pa-cards--primary {
-      grid-template-columns: repeat(3, 1fr);
+    .pa-cards--book {
+      grid-template-columns: 1fr;
       margin-bottom: 0;
     }
-    .pa-card__list { margin:.45rem 0 0; padding-left:1rem; font-size:.76rem; color:var(--text-muted); line-height:1.75; text-align:left; }
-    .pa-list-link { cursor:pointer; color:var(--teal-dark); font-weight:700; font-size:.7rem; white-space:nowrap; margin-left:.3rem; }
-    .pa-list-link:hover { color:var(--teal-bright); text-decoration:underline; }
-    .pa-cards--secondary {
+    .pa-cards--mid {
+      grid-template-columns: 1fr 1fr;
+      margin-top: .75rem;
+      margin-bottom: 0;
+    }
+    .pa-cards--util {
       grid-template-columns: repeat(3, 1fr);
       margin-top: .75rem;
       margin-bottom: 2rem;
     }
+    /* Panels and iframe span the full width of their containing grid row */
+    .pa-cards--book > .pa-iframe-wrap,
+    .pa-cards--mid  > .pa-iframe-wrap,
+    .pa-cards--mid  > .conditions-panel,
+    .pa-cards--util > .pa-iframe-wrap { grid-column: 1 / -1; }
+    .pa-card__list { margin:.45rem 0 0; padding-left:1rem; font-size:.76rem; color:var(--text-muted); line-height:1.75; text-align:left; }
+    .pa-list-link { cursor:pointer; color:var(--teal-dark); font-weight:700; font-size:.7rem; white-space:nowrap; margin-left:.3rem; }
+    .pa-list-link:hover { color:var(--teal-bright); text-decoration:underline; }
     .pa-conditions-arrow {
       display: inline-block;
       font-style: normal;
@@ -1020,8 +1049,8 @@
 
     /* ── Responsive ───────────────────────────────────── */
     @media (max-width: 900px) {
-      .pa-cards--primary    { grid-template-columns: 1fr; }
-      .pa-cards--secondary  { grid-template-columns: repeat(3, 1fr); }
+      .pa-cards--mid  { grid-template-columns: 1fr; }
+      .pa-cards--util { grid-template-columns: repeat(3, 1fr); }
       .gallery__row--top { margin-left: 0; margin-right: 0; }
     }
     @media (max-width: 768px) {
@@ -1081,9 +1110,8 @@
       .ailments-triage__btn { min-height: 40px; }
       .conditions-panel { padding: 1.1rem .9rem; }
       .welcome__boxes { grid-template-columns: repeat(2, 1fr); }
-      .pa-cards--primary   { grid-template-columns: 1fr; }
-      /* Secondary portal cards — single column on small phones */
-      .pa-cards--secondary { grid-template-columns: 1fr; }
+      .pa-cards--mid  { grid-template-columns: 1fr; }
+      .pa-cards--util { grid-template-columns: 1fr; }
       .staff-grid { grid-template-columns: 1fr 1fr; }
       .insurance-grid { grid-template-columns: 1fr; }
       .hero__logo { width: 130px; height: 130px; }
@@ -2059,6 +2087,12 @@
   </style>
 </head>
 <body>
+<div class="sky-bg" aria-hidden="true">
+  <img src="cloud2.png" class="sky-bg-cloud" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" alt="">
+  <img src="cloud2.png" class="sky-bg-cloud sky-bg-cloud--flip" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud" alt="">
+</div>
 
 <!-- alert banner removed — announcement moved to hero news card -->
 
@@ -2090,10 +2124,12 @@
       <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a></li>
       <li><a href="#blog">Blog</a></li>
       <li class="nav__has-dropdown">
-        <a href="#about">About</a>
+        <a href="#faq">Got Questions?</a>
         <ul class="nav__dropdown">
           <li><a href="#about">About Us</a></li>
+          <li><a href="#team">Meet the Team</a></li>
           <li><a href="#faq">FAQ</a></li>
+          <li><a href="#reviews">Ratings (4.9 ⭐)</a></li>
           <li><a href="#contact">Find Us</a></li>
         </ul>
       </li>
@@ -2343,8 +2379,8 @@
     <h2 class="section__title">Patient Portal</h2>
     <p class="section__lead">Book appointments, request refills, transfer prescriptions, or sign in — everything loads right here. Need a rapid COVID-19 test, pregnancy test, or blood glucose check? Book Point of Care Testing below.</p>
 
-    <!-- Row 1: primary booking actions -->
-    <div class="pa-cards pa-cards--primary">
+    <!-- Row 1: Book Appointment — full width -->
+    <div class="pa-cards pa-cards--book">
       <button class="pa-card" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Book an Appointment">
         <div class="pa-card__icon">📅</div>
         <span class="pa-card__label">Book Appointment</span>
@@ -2354,16 +2390,6 @@
           <li><strong>🔬 Point of Care Testing</strong> — COVID-19 test, pregnancy test, blood glucose <span class="pa-list-link" onclick="event.stopPropagation();openAcc('acc-poct');setTimeout(function(){document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span></li>
           <li><strong>📋 General consultation</strong> — minor ailments &amp; medication concerns <span class="pa-list-link" onclick="event.stopPropagation();openAcc('acc-ailments');setTimeout(function(){document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},100)">See conditions →</span></li>
         </ul>
-      </button>
-      <button class="pa-card" id="pa-card-medscheck">
-        <div class="pa-card__icon">📋</div>
-        <span class="pa-card__label">Medication Review &nbsp;<span class="pa-conditions-arrow">▼</span></span>
-        <span class="pa-card__desc">Free OHIP-covered review of all your medications — includes optional blood glucose test</span>
-      </button>
-      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1500" data-label="Minor Ailment Assessment">
-        <div class="pa-card__icon">🩺</div>
-        <span class="pa-card__label">Common Conditions &nbsp;<span class="pa-conditions-arrow">▼</span></span>
-        <span class="pa-card__desc">Pharmacist prescribing for 28 minor ailments — no referral needed</span>
       </button>
       <div class="pa-iframe-wrap" id="pa-wrap" style="display:none">
         <div class="pa-iframe-label">
@@ -2381,7 +2407,31 @@
       </div>
     </div>
 
-    <!-- Conditions panel — sits right below Common Conditions button -->
+    <!-- Row 2: Medication Review + Common Conditions (2-col) -->
+    <div class="pa-cards pa-cards--mid">
+      <button class="pa-card" id="pa-card-medscheck">
+        <div class="pa-card__icon">📋</div>
+        <span class="pa-card__label">Medication Review &nbsp;<span class="pa-conditions-arrow">▼</span></span>
+        <span class="pa-card__desc">Free OHIP-covered review of all your medications — includes optional blood glucose test</span>
+      </button>
+      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1500" data-label="Minor Ailment Assessment">
+        <div class="pa-card__icon">🩺</div>
+        <span class="pa-card__label">Common Conditions &nbsp;<span class="pa-conditions-arrow">▼</span></span>
+        <span class="pa-card__desc">Pharmacist prescribing for 28 minor ailments — no referral needed</span>
+      </button>
+
+    <!-- Medication review expand panel (inside mid-row grid, spans full width) -->
+    <div class="conditions-panel" id="medscheck-panel">
+      <div class="conditions-panel__hd">Medication Review (MedsCheck)</div>
+      <p style="font-size:.9rem;margin-bottom:1.1rem;line-height:1.6;">A free, one-on-one consultation with your pharmacist to review all of your prescriptions, over-the-counter medications, vitamins, and supplements. We look for interactions, duplications, and medications that may no longer be appropriate — and an optional blood glucose test is included at no cost.</p>
+      <p style="font-size:.85rem;margin-bottom:1.25rem;color:var(--text-muted);">Eligible if you take <strong>3 or more chronic medications</strong>. Covered by <strong>OHIP</strong> — no cost to you.</p>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;">
+        <a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/patient/meds/306667" style="flex-shrink:0;">📋 Book a Medication Review →</a>
+        <a href="#services" onclick="openAcc('acc-med-reviews');setTimeout(function(){document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},100)" style="font-size:.82rem;color:var(--teal-dark);font-weight:600;text-decoration:none;">Learn more about MedsCheck →</a>
+      </div>
+    </div>
+
+    <!-- Conditions panel (inside mid-row grid, spans full width) -->
     <div class="conditions-panel" id="conditions-panel">
       <div class="conditions-panel__hd">Which condition are you dealing with?</div>
       <div class="ailments-smartsearch" id="smartsearch-portal">
@@ -2506,20 +2556,10 @@
       </div>
       <p class="conditions-panel__note">All 28 conditions available as of July 1, 2026 &nbsp;·&nbsp; No doctor's referral needed &nbsp;·&nbsp; <strong>Walk in or start your online assessment above</strong></p>
     </div>
+    </div><!-- /.pa-cards--mid -->
 
-    <!-- Medication review expand panel -->
-    <div class="conditions-panel" id="medscheck-panel">
-      <div class="conditions-panel__hd">Medication Review (MedsCheck)</div>
-      <p style="font-size:.9rem;margin-bottom:1.1rem;line-height:1.6;">A free, one-on-one consultation with your pharmacist to review all of your prescriptions, over-the-counter medications, vitamins, and supplements. We look for interactions, duplications, and medications that may no longer be appropriate — and an optional blood glucose test is included at no cost.</p>
-      <p style="font-size:.85rem;margin-bottom:1.25rem;color:var(--text-muted);">Eligible if you take <strong>3 or more chronic medications</strong>. Covered by <strong>OHIP</strong> — no cost to you.</p>
-      <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;">
-        <a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/patient/meds/306667" style="flex-shrink:0;">📋 Book a Medication Review →</a>
-        <a href="#services" onclick="openAcc('acc-med-reviews');setTimeout(function(){document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},100)" style="font-size:.82rem;color:var(--teal-dark);font-weight:600;text-decoration:none;">Learn more about MedsCheck →</a>
-      </div>
-    </div>
-
-    <!-- Row 2: patient account actions -->
-    <div class="pa-cards pa-cards--secondary">
+    <!-- Row 3: Rx, Transfer, Login (3-col) -->
+    <div class="pa-cards pa-cards--util">
       <button class="pa-card" id="pa-new-rx" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="800" data-label="New Prescription &amp; Refill Requests">
         <div class="pa-card__icon">📝</div>
         <span class="pa-card__label">New Prescription &amp; Refill Requests</span>
