@@ -81,7 +81,7 @@
     ],
     "availableLanguage": ["English","Spanish","Portuguese","Italian","Turkish"],
     "medicalSpecialty": "Pharmacy",
-    "knowsAbout": ["Prescription dispensing","Minor ailments prescribing","Vaccinations","Medication reviews","Blister packaging","Travel health","Smoking cessation","Naloxone dispensing","Harm reduction","Opioid overdose prevention"],
+    "knowsAbout": ["Prescription dispensing","Minor ailments prescribing","Prescription renewals","Vaccinations","Medication reviews","Blister packaging","Travel health","Smoking cessation","Naloxone dispensing","Harm reduction","Opioid overdose prevention"],
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
@@ -97,6 +97,7 @@
         { "@type": "Offer", "itemOffered": { "@type": "MedicalProcedure", "name": "Vaccinations (Flu, COVID-19, Shingles, Pneumococcal, RSV, Tdap, Travel)" } },
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Minor Ailments Assessment & Prescribing" } },
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Medication Reviews (MedsCheck)" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Prescription Renewals & Refill Extensions" } },
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Blister / Compliance Packaging" } },
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Prescription Transfers" } },
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Free Naloxone Kits — Ontario Naloxone Program" } }
@@ -2861,6 +2862,45 @@
         </div>
       </div>
 
+      <div class="svc-acc-item" id="acc-rx-renewal">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🔁</span>
+          <span class="svc-acc__title">Prescription Renewals — Can't Reach Your Doctor?</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body svc-acc__body--wide">
+<p class="section__lead" style="margin-bottom:1.5rem;">Out of refills and your doctor's office is closed, unreachable, or booking weeks out? Ontario pharmacists can independently renew (extend) a prescription for continuity of care — so you're never left without your medication while you wait for an appointment.</p>
+        <div class="medscheck-grid">
+          <div class="medscheck-card">
+            <div class="medscheck-card__icon">✅</div>
+            <div class="medscheck-card__title">Who Qualifies</div>
+            <p class="medscheck-card__desc">You must already be established on the medication — taking it safely and effectively on an ongoing basis. Renewals are for continuity of an existing, stable therapy, not for starting something new or treating a new condition.</p>
+            <span class="medscheck-card__tag">Stable, ongoing therapy only</span>
+          </div>
+          <div class="medscheck-card">
+            <div class="medscheck-card__icon">🔍</div>
+            <div class="medscheck-card__title">What Our Pharmacist Reviews</div>
+            <p class="medscheck-card__desc">We confirm the medication has been well-tolerated, safe, and effective for you, weigh the risks and benefits of continuing without a new doctor's visit, and make sure a renewal is in your best interest before authorizing it.</p>
+            <span class="medscheck-card__tag">Case-by-case clinical assessment</span>
+          </div>
+          <div class="medscheck-card">
+            <div class="medscheck-card__icon">📦</div>
+            <div class="medscheck-card__title">How Much We Can Renew</div>
+            <p class="medscheck-card__desc">Under Ontario College of Pharmacists rules, we can renew up to the original quantity prescribed (including any authorized refills) or a 12-month supply — whichever is less. Most narcotics and controlled substances are excluded. Your prescriber is always notified afterward.</p>
+            <span class="medscheck-card__tag">Excludes most narcotics &amp; controlled substances</span>
+          </div>
+          <div class="medscheck-card">
+            <div class="medscheck-card__icon">💳</div>
+            <div class="medscheck-card__title">Cost</div>
+            <p class="medscheck-card__desc">Many insurance plans cover this consultation as a pharmacist clinical service — we'll check your coverage first. If you're paying out of pocket, our fee is <strong>$25</strong>, the standard benchmark rate used across Ontario for uninsured prescription-renewal consultations.</p>
+            <span class="medscheck-card__tag">$25 if uninsured · Many plans cover it</span>
+          </div>
+        </div>
+        <p class="insurance__note" style="margin-top:1.75rem;"><strong>Taking multiple medications?</strong> A quick renewal isn't always the safest fix when several prescriptions could interact. <strong>COME IN FOR AN ASSESSMENT</strong> so our pharmacist can review everything together. <a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" style="color:var(--teal-dark);font-weight:600;">Book a Medication Review →</a></p>
+        <p style="text-align:center;margin-top:1.25rem;"><a href="tel:+14166548181" class="btn">Call to Request a Renewal →</a></p>
+        </div>
+      </div>
+
       <div class="svc-acc-item" id="acc-cessation">
         <button class="svc-acc__head" aria-expanded="false">
           <span class="svc-acc__icon">🚭</span>
@@ -3614,6 +3654,11 @@ window.FAQS = [
     icon: "💊",
     q: "Is a MedsCheck medication review really free?",
     a: "Yes, completely free for eligible Ontario residents. You qualify if you take 3 or more chronic medications, were recently discharged from hospital, or have a complex medication regimen. Our pharmacist reviews all your medications for interactions, duplications, and side effects, and puts together a personalized medication plan. Most reviews take 30–45 minutes. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},200)\">Book a Medication Review →</a>"
+  },
+  {
+    icon: "🔁",
+    q: "Can a pharmacist renew my prescription if I can't reach my doctor?",
+    a: "Yes. If you're already stable on a medication and your doctor's office can't be reached, our pharmacist can independently renew your prescription for continuity of care — up to the original amount prescribed or a 12-month supply, whichever is less (most narcotics and controlled substances are excluded). We confirm the therapy has been working safely for you, authorize the renewal, and notify your doctor afterward. Many insurance plans cover this consultation; our fee is $25 if you're paying out of pocket — the standard Ontario benchmark for this service. If you're taking multiple medications, we'll usually recommend coming in for a full <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},200)\">assessment</a> instead so we can review everything together. <a href=\"tel:+14166548181\">Call us</a> to get started."
   },
   {
     icon: "💸",
@@ -4979,6 +5024,7 @@ window.FAQS = [
     { icon:'🏥', title:'Patient Portal & Online Booking', desc:'Book appointments, self-assessment, refill requests', tag:'Service', anchor:'#booking' },
     { icon:'💉', title:'Vaccines & Travel Health', desc:'Flu, COVID, shingles, Tdap, RSV, travel vaccines', tag:'Service', anchor:'#services', open:'acc-vaccines' },
     { icon:'📋', title:'Medication Reviews (MedsCheck)', desc:'One-on-one review of all your medications — OHIP covered', tag:'Service', anchor:'#services', open:'acc-med-reviews' },
+    { icon:'🔁', title:'Prescription Renewals', desc:'Pharmacist can renew your Rx if your doctor cannot be reached', tag:'Service', anchor:'#services', open:'acc-rx-renewal', kw:'refill extension renew expired no refills left ran out doctor unreachable continuity of care' },
     { icon:'🚭', title:'Smoking Cessation', desc:'Champix, nicotine patches, personalized quit plan', tag:'Service', anchor:'#services', open:'acc-cessation' },
     { icon:'🩹', title:'Free Naloxone Kits', desc:'Free naloxone kits and training — no prescription needed', tag:'Service', anchor:'#services', open:'acc-naloxone' },
     { icon:'💊', title:'Drug Interaction Checker', desc:'Check if your medications interact safely', tag:'Tool', anchor:'#drug-checker' },
