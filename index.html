@@ -188,7 +188,6 @@
       background: rgba(182,236,239,0);
       border-bottom: 1px solid rgba(33,161,168,0);
       box-shadow: none;
-      overflow: hidden;
     }
     /* ── Nav clouds — embedded inside nav so they're always visible regardless of section backgrounds ── */
     .nav__clouds { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; opacity: 0; }
@@ -4988,7 +4987,7 @@ window.FAQS = [
     { icon:'🔄', title:'Prescription Transfers', desc:'Transfer your prescription to us — we call the other pharmacy', tag:'Service', anchor:'#services' },
     { icon:'📸', title:'New Prescription — Send a Photo', desc:'Send a photo of your new prescription online', tag:'Service', anchor:'#booking' },
   ].concat(AILMENT_DB.map(function(a) {
-    return { icon:a.icon, title:a.name, desc: a.call ? 'Minor ailment — call us for treatment options' : 'Minor ailment — pharmacist can prescribe', tag:'Condition', anchor:'#booking', ailmentUrl: a.call ? null : (PHARMA_BASE + a.id) };
+    return { icon:a.icon, title:a.name, desc: a.call ? 'Minor ailment — call us for treatment options' : 'Minor ailment — pharmacist can prescribe', tag:'Condition', anchor:'#booking', ailmentUrl: a.call ? null : (PHARMA_BASE + a.id), kw: a.kw.join(' ') };
   }));
 
   var siteOverlay = document.getElementById('siteSearch');
@@ -5019,15 +5018,18 @@ window.FAQS = [
     var score = 0;
     var t = item.title.toLowerCase();
     var d = item.desc.toLowerCase();
+    var k = item.kw ? item.kw.toLowerCase() : '';
     if (t === q) score += 10;
     else if (t.startsWith(q)) score += 7;
     else if (t.indexOf(q) !== -1) score += 5;
     if (d.indexOf(q) !== -1) score += 2;
+    if (k && k.indexOf(q) !== -1) score += 4;
     // word-level
     q.split(/\s+/).forEach(function(w) {
-      if (!w) return;
+      if (!w || w.length < 3) return;
       if (t.indexOf(w) !== -1) score += 3;
       if (d.indexOf(w) !== -1) score += 1;
+      if (k && k.indexOf(w) !== -1) score += 2;
     });
     return score;
   }
