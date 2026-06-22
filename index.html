@@ -154,8 +154,11 @@
 
     /* ── Nav ──────────────────────────────────────────── */
     .nav {
-      position: sticky;
+      position: fixed;
       top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
       z-index: 100;
       background: transparent;
       border-bottom: 1px solid transparent;
@@ -273,7 +276,7 @@
     .hero {
       background:
         linear-gradient(180deg, #b6ecef 0%, #cdf5f6 45%, #e4fbfc 100%);
-      padding: 5rem 1.5rem 5.5rem;
+      padding: calc(5rem + 64px) 1.5rem 5.5rem;
       text-align: center;
       color: var(--teal-deeper);
       position: relative;
@@ -343,6 +346,8 @@
     .hero__socials a:hover { background: rgba(0,115,124,.18); transform: translateY(-2px); }
     .hero__socials svg { width: 20px; height: 20px; fill: var(--teal-deeper); color: var(--teal-deeper); }
     .hero__socials .uber-word { width: 30px; height: auto; object-fit: contain; }
+    .hero__weather { display: inline-flex; align-items: center; gap: .35rem; background: rgba(255,255,255,.35); border: 1.5px solid rgba(0,115,124,.22); border-radius: 999px; padding: .45rem .85rem; font-size: .82rem; font-weight: 600; color: var(--teal-deeper); text-decoration: none; transition: background .2s; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); white-space: nowrap; }
+    .hero__weather:hover { background: rgba(255,255,255,.55); transform: translateY(-2px); }
     .hero__status {
       position: relative; z-index: 1;
       max-width: 400px; margin: 1.85rem auto 0;
@@ -576,7 +581,7 @@
       margin-bottom: 0;
     }
     .pa-cards--secondary {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       margin-top: .75rem;
       margin-bottom: 2rem;
     }
@@ -2104,6 +2109,9 @@
     <a href="https://www.google.com/maps/place/St.+Clair+Drug+Mart+Pharmacy/@43.6773961,-79.4468996,17z/data=!3m1!4b1!4m6!3m5!1s0x882b35d5e572114b:0x899add08acb1e556!8m2!3d43.6773551!4d-79.4443087!16s%2Fg%2F11f716bxm1" target="_blank" rel="noopener" aria-label="Find us on Google Maps">
       <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
     </a>
+    <a id="weather-btn" class="hero__weather" href="https://wttr.in/Toronto" target="_blank" rel="noopener" aria-label="Toronto weather">
+      <span id="weather-icon">🌤️</span><span id="weather-temp">--°C</span>
+    </a>
   </div>
 
   <!-- Live status board -->
@@ -2446,6 +2454,11 @@
         <span class="pa-card__label">Patient Login</span>
         <span class="pa-card__desc">Sign in to your PharmAssess patient portal</span>
       </button>
+      <button class="pa-card" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Point of Care Testing">
+        <div class="pa-card__icon">🔬</div>
+        <span class="pa-card__label">Point of Care Testing</span>
+        <span class="pa-card__desc">Book a COVID-19 test, pregnancy test, or blood glucose check with your pharmacist</span>
+      </button>
     </div>
 
     <p class="booking__note">
@@ -2744,6 +2757,39 @@
 
           <p style="text-align:center;margin-top:2rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=16">Start Your Quit Journey →</a></p>
           <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">No referral needed · Most treatments covered by insurance &amp; ODB · Walk-ins welcome</p>
+        </div>
+      </div>
+
+      <div class="svc-acc-item" id="acc-poct">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🔬</span>
+          <span class="svc-acc__title">Point of Care Testing (POCT)</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Get fast, accurate lab-quality results right at the pharmacy — no appointment needed for most tests. Our pharmacist performs the test and walks you through your results on the spot.</p>
+          <div class="svc-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1rem 0 1.25rem;">
+            <div style="background:#f3fafb;border-radius:var(--radius);padding:1rem 1.1rem;border:1.5px solid var(--border);">
+              <div style="font-size:1.4rem;margin-bottom:.4rem;">🦠</div>
+              <div style="font-weight:700;color:var(--teal-deeper);margin-bottom:.3rem;">COVID-19 Rapid Antigen Test</div>
+              <p style="font-size:.85rem;color:var(--text-muted);margin:0 0 .5rem;">Get your result in 15 minutes. Ideal for travel, events, or peace of mind.</p>
+              <span style="font-size:.78rem;font-weight:700;color:var(--teal-bright);">$30 · Results in 15 min</span>
+            </div>
+            <div style="background:#f3fafb;border-radius:var(--radius);padding:1rem 1.1rem;border:1.5px solid var(--border);">
+              <div style="font-size:1.4rem;margin-bottom:.4rem;">🤰</div>
+              <div style="font-weight:700;color:var(--teal-deeper);margin-bottom:.3rem;">Pregnancy Test</div>
+              <p style="font-size:.85rem;color:var(--text-muted);margin:0 0 .5rem;">Confidential urine pregnancy test with immediate counselling from your pharmacist.</p>
+              <span style="font-size:.78rem;font-weight:700;color:var(--teal-bright);">$25 · Private &amp; confidential</span>
+            </div>
+            <div style="background:#f3fafb;border-radius:var(--radius);padding:1rem 1.1rem;border:1.5px solid var(--border);">
+              <div style="font-size:1.4rem;margin-bottom:.4rem;">🩸</div>
+              <div style="font-weight:700;color:var(--teal-deeper);margin-bottom:.3rem;">Blood Glucose Check</div>
+              <p style="font-size:.85rem;color:var(--text-muted);margin:0 0 .5rem;">Quick fingerstick blood glucose reading — useful for monitoring or screening for diabetes.</p>
+              <span style="font-size:.78rem;font-weight:700;color:var(--teal-bright);">$15 · No fasting required</span>
+            </div>
+          </div>
+          <p style="text-align:center;margin-top:.5rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600">Book a Test →</a></p>
+          <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">Walk-ins welcome · Results reviewed with your pharmacist</p>
         </div>
       </div>
 
@@ -3242,6 +3288,19 @@
             <div class="info-chip"><span class="info-chip__icon">🩺</span><span><strong>Diabetes consultations</strong> — medication reviews &amp; management support</span></div>
             <div class="info-chip"><span class="info-chip__icon">♿</span><span>Fully accessible entrance &amp; parking available</span></div>
             <div class="info-chip"><span class="info-chip__icon">🏳️‍🌈</span><span>LGBTQ+ friendly &amp; welcoming space</span></div>
+          </div>
+          <div style="margin-top:1.1rem;">
+            <div style="font-weight:700;color:var(--teal-deeper);font-size:.88rem;margin-bottom:.6rem;letter-spacing:.02em;">🔗 Specialist Referrals</div>
+            <p style="font-size:.85rem;color:var(--text-muted);margin:0 0 .75rem;">We can connect you with trusted healthcare providers in the neighbourhood. Ask your pharmacist and we'll point you in the right direction.</p>
+            <div class="lang-access-chips">
+              <div class="info-chip"><span class="info-chip__icon">👁️</span><span><strong>Optometrists</strong> — eye exams &amp; vision care referrals nearby</span></div>
+              <div class="info-chip"><span class="info-chip__icon">🦴</span><span><strong>Physiotherapy</strong> — rehab &amp; injury recovery specialists in the area</span></div>
+              <div class="info-chip"><span class="info-chip__icon">🧠</span><span><strong>Mental health</strong> — counsellors, psychologists &amp; social workers</span></div>
+              <div class="info-chip"><span class="info-chip__icon">🫀</span><span><strong>Cardiologists &amp; internists</strong> — specialist cardiology &amp; internal medicine</span></div>
+              <div class="info-chip"><span class="info-chip__icon">🦷</span><span><strong>Dentists</strong> — local dental clinics accepting new patients</span></div>
+              <div class="info-chip"><span class="info-chip__icon">🤝</span><span><strong>Social work &amp; community support</strong> — housing, income, &amp; caregiver resources</span></div>
+            </div>
+            <p style="font-size:.78rem;color:var(--text-muted);margin:.65rem 0 0;"><a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us at (416) 654-8181</a> or ask at the counter — we're happy to recommend a provider that fits your needs.</p>
           </div>
         </div>
       </div>
@@ -4681,14 +4740,15 @@ window.FAQS = [
     }
   });
 
-  // ── Transparent nav: becomes solid on scroll ──────────────
+  // ── Transparent nav: becomes solid only after hero leaves viewport ──
   (function() {
     var nav = document.getElementById('nav');
-    function updateNav() {
-      nav.classList.toggle('scrolled', window.scrollY > 20);
-    }
-    window.addEventListener('scroll', updateNav, { passive: true });
-    updateNav();
+    var hero = document.getElementById('home');
+    if (!hero) { nav.classList.add('scrolled'); return; }
+    var obs = new IntersectionObserver(function(entries) {
+      nav.classList.toggle('scrolled', !entries[0].isIntersecting);
+    }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
+    obs.observe(hero);
   })();
 
   // ── Transit/Parking logo scroll + highlight ───────────────
@@ -4763,6 +4823,33 @@ window.FAQS = [
   s.type = 'application/ld+json';
   s.textContent = JSON.stringify({'@context':'https://schema.org','@type':'FAQPage','mainEntity':entities});
   document.head.appendChild(s);
+})();
+</script>
+
+<script>
+// ── Hero weather widget ───────────────────────────────────
+(function(){
+  var tempEl = document.getElementById('weather-temp');
+  var iconEl = document.getElementById('weather-icon');
+  if (!tempEl) return;
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=43.6532&longitude=-79.3832&current=temperature_2m,weather_code&timezone=America/Toronto')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var temp = Math.round(d.current.temperature_2m);
+      var code = d.current.weather_code;
+      var icon = '🌤️';
+      if (code === 0) icon = '☀️';
+      else if (code <= 2) icon = '⛅';
+      else if (code <= 3) icon = '☁️';
+      else if (code <= 49) icon = '🌫️';
+      else if (code <= 67) icon = '🌧️';
+      else if (code <= 77) icon = '🌨️';
+      else if (code <= 82) icon = '🌦️';
+      else if (code <= 99) icon = '⛈️';
+      tempEl.textContent = temp + '°C';
+      iconEl.textContent = icon;
+    })
+    .catch(function(){});
 })();
 </script>
 </body>
