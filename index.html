@@ -177,7 +177,7 @@
       margin: 0 auto;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
       padding: 0 max(1.5rem, env(safe-area-inset-right)) 0 max(1.5rem, env(safe-area-inset-left));
       height: 64px;
     }
@@ -204,6 +204,7 @@
       align-items: center;
       list-style: none;
       gap: .25rem;
+      margin-left: auto;
     }
     .nav__links > li { display: flex; align-items: center; }
     .nav__links a {
@@ -1022,11 +1023,11 @@
       .gallery__row--top { margin-left: 0; margin-right: 0; }
     }
     @media (max-width: 768px) {
-      .nav__links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e9f4f5; box-shadow: 0 8px 20px rgba(0,60,66,.08); flex-direction: column; align-items: stretch; padding: .5rem 1rem 1rem; gap: .1rem; }
+      .nav__links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e9f4f5; box-shadow: 0 8px 20px rgba(0,60,66,.08); flex-direction: column; align-items: stretch; padding: .5rem 1rem 1rem; gap: .1rem; margin-left: 0; }
       .nav__links.open { display: flex; }
       .nav__links > li { display: block; }
       .nav__links a { display: flex; width: 100%; min-height: 44px; }
-      .nav__toggle { display: block; }
+      .nav__toggle { display: block; margin-left: auto; }
       .nav__has-dropdown::after { display: none; }
       .nav__dropdown { position: static; border: none; box-shadow: none; border-radius: 0; padding: 0; background: #f3fafb; margin: .2rem 0 .2rem .75rem; min-width: 0; }
       .nav__has-dropdown .nav__dropdown,
@@ -1926,9 +1927,9 @@
       .trust-badge:not(:first-child)::before { display: none; }
     }
     /* ── Site-wide search overlay ────────────────── */
-    .nav__search-btn { background:none; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; transition:background .15s; flex-shrink:0; }
-    .nav__search-btn:hover { background:rgba(255,255,255,.15); }
-    .nav__search-btn svg { width:18px; height:18px; stroke:#fff; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .nav__search-btn { background:none; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; transition:background .15s; flex-shrink:0; margin-left:.5rem; }
+    .nav__search-btn:hover { background:rgba(0,80,90,.1); }
+    .nav__search-btn svg { width:18px; height:18px; stroke:var(--teal-deeper); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
     .site-search-overlay {
       display:none; position:fixed; inset:0; z-index:9999;
       background:rgba(0,20,22,.62); align-items:flex-start; justify-content:center;
@@ -2049,9 +2050,6 @@
       <img src="logo.png" alt="" class="nav__brand__logo" />
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
-    <button class="nav__search-btn" id="navSearchBtn" aria-label="Search site">
-      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
-    </button>
     <button class="nav__toggle" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
@@ -2071,10 +2069,20 @@
         </ul>
       </li>
       <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li class="nav__has-dropdown">
+        <a href="#about">About</a>
+        <ul class="nav__dropdown">
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Find Us</a></li>
+        </ul>
+      </li>
       <li class="nav__cta"><a href="#booking">Book Now</a></li>
     </ul>
+    <button class="nav__search-btn" id="navSearchBtn" aria-label="Search site">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+    </button>
   </div>
 </nav>
 
@@ -2189,6 +2197,9 @@
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)">✈️ I'm travelling and need to be prepared and healthy!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)">🚭 I want to successfully quit smoking!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)">🆘 I need a free naloxone kit</a>
+          <a href="#booking" class="welcome__pill" onclick="setTimeout(function(){var c=document.querySelector('[data-label=\'Point of Care Testing\']');if(c)c.click();},200)">🤰 I might be pregnant!</a>
+          <a href="#booking" class="welcome__pill" onclick="setTimeout(function(){var c=document.querySelector('[data-label=\'Point of Care Testing\']');if(c)c.click();},200)">🦠 I need a COVID-19 test and certificate!</a>
+          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)">🩸 I need better blood sugar control</a>
         </div>
       </div>
       <div class="welcome__photo">
@@ -2200,7 +2211,7 @@
       <a href="#acc-med-reviews" class="welcome-box" onclick="setTimeout(function(){openAcc('acc-med-reviews')},120)">
         <div class="welcome-box__icon">📋</div>
         <div class="welcome-box__title">Medication Reviews</div>
-        <div class="welcome-box__desc">Free for eligible Ontario residents — our pharmacist reviews all your medications, catches interactions, and optimizes your therapy.</div>
+        <div class="welcome-box__desc">Free for eligible Ontario residents — includes an optional blood glucose test at no cost. Our pharmacist reviews all your medications and optimizes your therapy.</div>
         <span class="welcome-box__cta">Book a review →</span>
       </a>
       <a href="#acc-ailments" class="welcome-box" onclick="setTimeout(function(){openAcc('acc-ailments')},120)">
@@ -2482,7 +2493,7 @@
       <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="900" data-label="Medication Review">
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review</span>
-        <span class="pa-card__desc">One-on-one review of all your medications</span>
+        <span class="pa-card__desc">One-on-one review of all your medications — includes optional blood glucose test at no cost</span>
       </button>
       <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="900" data-label="Transfer Your Prescription">
         <div class="pa-card__icon">🔀</div>
@@ -2696,15 +2707,15 @@
           <div class="medscheck-card">
             <div class="medscheck-card__icon">📋</div>
             <div class="medscheck-card__title">Annual Medication Review</div>
-            <p class="medscheck-card__desc">A face-to-face or phone consultation covering all your prescriptions, over-the-counter medications, vitamins, and supplements. We identify interactions, duplications, and medications that may no longer be appropriate for you.</p>
-            <span class="medscheck-card__tag">Eligible if taking 3 or more chronic medications</span>
+            <p class="medscheck-card__desc">A face-to-face or phone consultation covering all your prescriptions, over-the-counter medications, vitamins, and supplements. We identify interactions, duplications, and medications that may no longer be appropriate for you. An <strong>optional blood glucose test at no cost</strong> is available during your review.</p>
+            <span class="medscheck-card__tag">Eligible if taking 3 or more chronic medications · Optional blood glucose test included free</span>
             <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" style="margin-top:.75rem;display:inline-block;">Book a Review →</a>
           </div>
           <div class="medscheck-card">
             <div class="medscheck-card__icon">🩺</div>
             <div class="medscheck-card__title">Diabetes Medication Review</div>
-            <p class="medscheck-card__desc">A specialized review for patients living with Type 2 diabetes. We assess your diabetes medications, discuss blood sugar targets, and help coordinate care with your healthcare team.</p>
-            <span class="medscheck-card__tag">For patients with Type 2 diabetes on any medication</span>
+            <p class="medscheck-card__desc">A specialized review for patients living with Type 2 diabetes. We assess your diabetes medications, discuss blood sugar targets, and help coordinate care with your healthcare team. Includes an <strong>optional blood glucose test at no cost</strong> — your pharmacist checks your reading on the spot and reviews what it means for your therapy.</p>
+            <span class="medscheck-card__tag">For patients with Type 2 diabetes · Optional blood glucose test included free</span>
             <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" style="margin-top:.75rem;display:inline-block;">Book a Review →</a>
           </div>
           <div class="medscheck-card">
