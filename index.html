@@ -4034,6 +4034,25 @@ window.FAQS = [
       sandimmune:'cyclosporine',neoral:'cyclosporine',prograf:'tacrolimus',
       'st. john\'s wort':'st. john\'s wort',hypericum:'st. john\'s wort',
       "saint john's wort":'st. john\'s wort',
+      // Antibiotic combinations
+      septra:'trimethoprim-sulfamethoxazole',bactrim:'trimethoprim-sulfamethoxazole',
+      cotrimoxazole:'trimethoprim-sulfamethoxazole','tmp-smx':'trimethoprim-sulfamethoxazole',
+      // Gout
+      colcrys:'colchicine',
+      // OTC cough suppressant (found in Benylin DM, Robitussin DM, Delsym)
+      'robitussin dm':'dextromethorphan','benylin dm':'dextromethorphan',delsym:'dextromethorphan',
+      // Calcium channel blockers
+      isoptin:'verapamil',verelan:'verapamil',
+      // Theophylline
+      'theo-dur':'theophylline',uniphyl:'theophylline',
+      // Immunosuppressants
+      imuran:'azathioprine',azasan:'azathioprine',
+      // Nitrates (additional forms)
+      'isosorbide mononitrate':'isosorbide mononitrate','isosorbide dinitrate':'isosorbide dinitrate',
+      imdur:'isosorbide mononitrate',ismo:'isosorbide mononitrate',
+      isordil:'isosorbide dinitrate',
+      // PDE5 inhibitors
+      viagra:'sildenafil',revatio:'sildenafil',cialis:'tadalafil',levitra:'vardenafil',
     };
 
     // Curated interaction database — fallback + supplement to RxNav
@@ -4108,6 +4127,40 @@ window.FAQS = [
       {a:'sildenafil',b:'nitroglycerin',sev:'contraindicated',desc:'Both lower blood pressure; the combination can cause life-threatening hypotension. Nitrates (nitroglycerin, isosorbide) must not be used within 24–48 h of PDE5 inhibitors.',src:'Clinical Pharmacology'},
       {a:'diphenhydramine',b:'lorazepam',sev:'moderate',desc:'Additive CNS depression: enhanced sedation, cognitive impairment, and respiratory depression risk. Use with caution, especially in elderly patients.',src:'Clinical Pharmacology'},
       {a:'diphenhydramine',b:'diazepam',sev:'moderate',desc:'Additive CNS depression with benzodiazepines. Increased sedation and impairment.',src:'Clinical Pharmacology'},
+      // ── Digoxin: P-glycoprotein inhibitors ───────────────────────────────────
+      {a:'digoxin',b:'verapamil',sev:'major',desc:'Verapamil inhibits P-glycoprotein and reduces renal digoxin clearance, raising digoxin levels by 50–75%. Risk of digoxin toxicity: bradycardia, nausea, visual disturbances, and arrhythmia. Reduce digoxin dose when adding verapamil and monitor drug levels.',src:'Lexicomp'},
+      {a:'digoxin',b:'diltiazem',sev:'moderate',desc:'Diltiazem inhibits P-glycoprotein, raising digoxin plasma levels by 20–30%. Monitor for signs of digoxin toxicity and consider dose adjustment.',src:'Clinical Pharmacology'},
+      {a:'digoxin',b:'clarithromycin',sev:'major',desc:'Clarithromycin inhibits P-glycoprotein-mediated renal tubular secretion of digoxin, substantially increasing digoxin exposure. Risk of digoxin toxicity including bradycardia, nausea, and cardiac arrhythmias — monitor levels.',src:'Lexicomp'},
+      // ── Warfarin: TMP-SMX ────────────────────────────────────────────────────
+      {a:'warfarin',b:'trimethoprim-sulfamethoxazole',sev:'major',desc:'Trimethoprim inhibits CYP2C9 (warfarin\'s primary metabolising enzyme) and also reduces renal warfarin clearance; sulfamethoxazole displaces warfarin from protein binding. INR can double within 3–5 days of starting Septra/Bactrim. Monitor INR closely.',src:'Lexicomp'},
+      // ── Methotrexate: high-risk combinations ─────────────────────────────────
+      {a:'methotrexate',b:'trimethoprim-sulfamethoxazole',sev:'contraindicated',desc:'Both methotrexate and trimethoprim are antifolates. Concurrent use causes severe additive bone marrow suppression — pancytopenia and fatal outcomes have been documented. This combination is contraindicated. Seek urgent prescriber review if currently taking both.',src:'Lexicomp / Health Canada Monograph'},
+      {a:'methotrexate',b:'aspirin',sev:'major',desc:'Aspirin reduces renal methotrexate clearance and displaces it from plasma protein binding, raising free methotrexate levels. Risk of serious toxicity: mucositis, myelosuppression, and nephrotoxicity — particularly at higher methotrexate doses.',src:'Clinical Pharmacology'},
+      // ── Lithium: ACE inhibitors & loop diuretics ─────────────────────────────
+      {a:'lithium',b:'lisinopril',sev:'major',desc:'ACE inhibitors reduce renal sodium excretion, triggering compensatory proximal tubular lithium reabsorption and raising lithium serum levels. Risk of lithium toxicity: tremor, confusion, polyuria, and cardiac arrhythmia. Monitor lithium levels within 1–2 weeks.',src:'Clinical Pharmacology'},
+      {a:'lithium',b:'ramipril',sev:'major',desc:'ACE inhibitors increase lithium levels by reducing sodium excretion and causing compensatory lithium reabsorption. Risk of toxicity. Monitor lithium levels closely after starting or dose-adjusting ramipril.',src:'Clinical Pharmacology'},
+      {a:'lithium',b:'furosemide',sev:'major',desc:'Furosemide causes sodium and volume depletion, triggering compensatory renal lithium reabsorption and elevating lithium levels. Lithium toxicity (tremor, confusion, cardiac effects) can develop quickly. Monitor lithium levels closely.',src:'Clinical Pharmacology'},
+      // ── Clarithromycin + colchicine ───────────────────────────────────────────
+      {a:'clarithromycin',b:'colchicine',sev:'major',desc:'Clarithromycin potently inhibits both P-glycoprotein and CYP3A4, the primary pathways for colchicine elimination. This combination dramatically increases colchicine exposure — multiple fatal cases have been reported even in patients with normal kidney function. A safer antibiotic should be substituted.',src:'Health Canada Drug Safety Advisory / Lexicomp'},
+      // ── Dextromethorphan (OTC cough syrups): serotonin syndrome ──────────────
+      {a:'dextromethorphan',b:'fluoxetine',sev:'major',desc:'Fluoxetine potently inhibits CYP2D6, the primary enzyme metabolising dextromethorphan, causing several-fold increases in DXM exposure and raising serotonin syndrome risk. Dextromethorphan (in Benylin DM, Robitussin DM, and many other OTC cough products) should be avoided while taking fluoxetine.',src:'Clinical Pharmacology'},
+      {a:'dextromethorphan',b:'sertraline',sev:'major',desc:'Sertraline inhibits CYP2D6 and has its own serotonergic activity. Concurrent use with dextromethorphan (an OTC cough suppressant) increases serotonin syndrome risk. Check all OTC cold and cough products for dextromethorphan.',src:'Clinical Pharmacology'},
+      {a:'dextromethorphan',b:'paroxetine',sev:'major',desc:'Paroxetine is the most potent CYP2D6 inhibitor among SSRIs, dramatically raising dextromethorphan plasma levels and serotonin syndrome risk. Avoid dextromethorphan-containing OTC products while taking paroxetine.',src:'Clinical Pharmacology'},
+      {a:'dextromethorphan',b:'phenelzine',sev:'contraindicated',desc:'Dextromethorphan with MAOIs causes life-threatening serotonin syndrome — even a single dose of a DXM-containing cough syrup has precipitated serious reactions. This combination is contraindicated. Check all OTC cough and cold products carefully.',src:'Health Canada Monograph'},
+      {a:'dextromethorphan',b:'tranylcypromine',sev:'contraindicated',desc:'Dextromethorphan with MAOIs causes life-threatening serotonin syndrome. Contraindicated. Avoid all OTC products containing dextromethorphan.',src:'Health Canada Monograph'},
+      // ── Bupropion + tramadol ──────────────────────────────────────────────────
+      {a:'bupropion',b:'tramadol',sev:'major',desc:'Bupropion lowers the seizure threshold and inhibits CYP2D6, increasing tramadol plasma levels. Tramadol also lowers seizure threshold and has serotonergic activity. The combination substantially increases risk of seizures. Seek prescriber review before using both.',src:'Clinical Pharmacology'},
+      // ── Ciprofloxacin + theophylline ──────────────────────────────────────────
+      {a:'ciprofloxacin',b:'theophylline',sev:'major',desc:'Ciprofloxacin strongly inhibits CYP1A2, the primary enzyme metabolising theophylline. Theophylline levels can increase by 50–100%, risking serious toxicity: seizures, cardiac arrhythmias, and severe nausea. Reduce theophylline dose by 30–50% and monitor levels closely when adding ciprofloxacin.',src:'Clinical Pharmacology'},
+      // ── Fluoroquinolone + corticosteroid: tendon rupture ─────────────────────
+      {a:'ciprofloxacin',b:'prednisone',sev:'moderate',desc:'Concurrent use of fluoroquinolone antibiotics and corticosteroids significantly increases the risk of tendon rupture — particularly the Achilles tendon. Risk is highest in patients over 60 or with renal impairment. Report any new tendon pain or swelling immediately.',src:'FDA Drug Safety Communication / ISMP'},
+      // ── Nitrates: extended combinations with PDE5 inhibitors ─────────────────
+      {a:'sildenafil',b:'isosorbide mononitrate',sev:'contraindicated',desc:'PDE5 inhibitors and nitrates both lower blood pressure via the nitric oxide / cGMP pathway. Combining them causes unpredictable, severe, and potentially fatal hypotension. All nitrate forms (nitroglycerin, isosorbide mononitrate, isosorbide dinitrate) are contraindicated with sildenafil.',src:'Clinical Pharmacology / Health Canada Monograph'},
+      {a:'sildenafil',b:'isosorbide dinitrate',sev:'contraindicated',desc:'PDE5 inhibitors are contraindicated with all nitrate forms due to risk of severe hypotension. Includes sublingual, oral, patch, and spray formulations.',src:'Clinical Pharmacology'},
+      {a:'tadalafil',b:'nitroglycerin',sev:'contraindicated',desc:'PDE5 inhibitors and nitrates cause severe, potentially fatal hypotension when combined. Tadalafil\'s longer half-life (17–21 h) means this risk extends well beyond the last dose. No nitrate should be used within 48 hours of tadalafil.',src:'Clinical Pharmacology / Health Canada Monograph'},
+      {a:'tadalafil',b:'isosorbide mononitrate',sev:'contraindicated',desc:'Tadalafil and all nitrates are contraindicated. Tadalafil\'s prolonged half-life means 48 h must elapse after the last dose before any nitrate can be safely administered.',src:'Clinical Pharmacology'},
+      {a:'tadalafil',b:'isosorbide dinitrate',sev:'contraindicated',desc:'Tadalafil and nitrates are contraindicated in all forms. Requires 48 h washout after last tadalafil dose.',src:'Clinical Pharmacology'},
+      {a:'vardenafil',b:'nitroglycerin',sev:'contraindicated',desc:'PDE5 inhibitors combined with any nitrate can cause life-threatening hypotension. Contraindicated.',src:'Clinical Pharmacology'},
     ];
 
     // Drug class map — for duplicate-class detection
@@ -4334,6 +4387,14 @@ window.FAQS = [
             out.push({ key:'cls:'+cls+':'+names.map(n=>n.toLowerCase()).sort().join('+'),
               names, sev:info.sev, desc:info.desc, src:'Duplicate Drug Class ('+cls+')', isDupClass:true, className:cls });
           });
+          // Opioid + Benzodiazepine — FDA Black Box Warning
+          if ((ca.includes('Opioid')&&cb.includes('Benzodiazepine'))||(ca.includes('Benzodiazepine')&&cb.includes('Opioid'))) {
+            const names=[cap(meds[i].name), cap(meds[j].name)];
+            out.push({ key:'opioid-benzo:'+names.map(n=>n.toLowerCase()).sort().join('+'),
+              names, sev:'major',
+              desc:'Concurrent use of opioids and benzodiazepines carries an FDA and Health Canada Black Box Warning for potentially fatal respiratory depression, coma, and death. Both drug classes suppress CNS and respiratory drive — the combination multiplies this risk, particularly at night and in older adults. This combination requires specialist oversight, lowest effective doses, and a Medication Review.',
+              src:'FDA Black Box Warning / Health Canada Drug Safety Communication' });
+          }
           // ACE inhibitor + ARB (dual RAAS blockade)
           if ((ca.includes('ACE inhibitor')&&cb.includes('ARB'))||(ca.includes('ARB')&&cb.includes('ACE inhibitor'))) {
             const names=[cap(meds[i].name), cap(meds[j].name)];
