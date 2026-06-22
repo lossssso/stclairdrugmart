@@ -5115,6 +5115,7 @@ window.FAQS = [
   (function() {
     var nav = document.getElementById('nav');
     var hero = document.getElementById('home');
+    var tcMeta = document.querySelector('meta[name="theme-color"]');
     function updateNav() {
       var scrollY = window.scrollY || window.pageYOffset;
       var heroH = hero ? hero.offsetHeight : 0;
@@ -5127,6 +5128,13 @@ window.FAQS = [
       nav.style.webkitBackdropFilter = blur;
       nav.style.borderBottomColor = 'rgba(33,161,168,' + (0.22 * a).toFixed(3) + ')';
       nav.style.boxShadow = a > 0.05 ? '0 1px 14px rgba(0,80,90,' + (0.06 * a).toFixed(3) + ')' : 'none';
+      // Sync browser chrome (iOS/Android theme-color) to match nav frosting
+      if (tcMeta) {
+        var r = Math.round(235 + (182 - 235) * a);
+        var g = Math.round(251 + (236 - 251) * a);
+        var b = Math.round(252 + (239 - 252) * a);
+        tcMeta.setAttribute('content', 'rgb(' + r + ',' + g + ',' + b + ')');
+      }
     }
     window.addEventListener('scroll', updateNav, { passive: true });
     window.addEventListener('resize', updateNav, { passive: true });
