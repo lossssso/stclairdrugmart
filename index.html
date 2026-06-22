@@ -1972,6 +1972,28 @@
     .ailments-smartsearch__hit-arrow { font-size:1rem; color:var(--teal-bright); flex-shrink:0; font-weight:600; opacity:.7; }
     .ailments-smartsearch__none { padding:.8rem 1rem; font-size:.82rem; color:var(--text-muted); text-align:center; }
     .ailments-smartsearch__divider { font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--text-muted); padding:.5rem 1rem .15rem; }
+    /* ── POCT cards ───────────────────────────────── */
+    .poct-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.1rem; margin:1.25rem 0 1.5rem; }
+    .poct-card {
+      display:flex; flex-direction:column; gap:.45rem;
+      background:var(--white); border:1.5px solid var(--border);
+      border-radius:var(--radius); padding:1.3rem 1.2rem;
+      text-decoration:none; cursor:pointer; position:relative;
+      transition:border-color .15s, box-shadow .15s, transform .15s;
+    }
+    .poct-card:hover { border-color:var(--teal-bright); box-shadow:0 6px 22px rgba(30,107,99,.13); transform:translateY(-2px); }
+    .poct-card--free { background:rgba(33,161,168,.04); border-color:rgba(33,161,168,.35); }
+    .poct-card__icon { font-size:1.75rem; }
+    .poct-card__name { font-family:var(--font-display); font-size:.9rem; font-weight:900; color:var(--teal-deeper); text-transform:uppercase; letter-spacing:.04em; line-height:1.25; margin-top:.1rem; }
+    .poct-card__desc { font-size:.81rem; color:var(--text-muted); line-height:1.65; flex:1; margin:0; }
+    .poct-card__bullets { margin:.4rem 0 0; padding-left:1.1rem; font-size:.78rem; color:var(--text-muted); line-height:1.7; }
+    .poct-card__price { font-size:.82rem; font-weight:700; color:var(--teal-bright); margin-top:.3rem; }
+    .poct-card__tag { font-size:.7rem; font-weight:700; background:rgba(33,161,168,.1); color:var(--teal-dark); border-radius:20px; padding:.13rem .6rem; display:inline-block; }
+    .poct-card__free-badge { font-size:.7rem; font-weight:700; background:var(--teal-bright); color:#fff; border-radius:20px; padding:.13rem .65rem; display:inline-block; }
+    .poct-card__cta { margin-top:.75rem; font-size:.82rem; font-weight:700; color:var(--teal-dark); display:flex; align-items:center; gap:.25rem; border-top:1px solid var(--border); padding-top:.7rem; }
+    .poct-card__cta--alt { font-size:.76rem; color:var(--text-muted); font-weight:500; margin-top:.25rem; }
+    .poct-card__cta--alt a { color:var(--teal-dark); font-weight:600; }
+
     /* ── Privacy Policy modal ─────────────────────── */
     .pp-overlay {
       display: none; position: fixed; inset: 0; z-index: 9999;
@@ -2759,30 +2781,86 @@
           <span class="svc-acc__title">Point of Care Testing (POCT)</span>
           <span class="svc-acc__chev">+</span>
         </button>
-        <div class="svc-acc__body">
-          <p>Get fast, accurate lab-quality results right at the pharmacy — no appointment needed for most tests. Our pharmacist performs the test and walks you through your results on the spot.</p>
-          <div class="svc-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1rem 0 1.25rem;">
-            <div style="background:#f3fafb;border-radius:var(--radius);padding:1rem 1.1rem;border:1.5px solid var(--border);">
-              <div style="font-size:1.4rem;margin-bottom:.4rem;">🦠</div>
-              <div style="font-weight:700;color:var(--teal-deeper);margin-bottom:.3rem;">COVID-19 Rapid Antigen Test</div>
-              <p style="font-size:.85rem;color:var(--text-muted);margin:0 0 .5rem;">Get your result in 15 minutes. Ideal for travel, events, or peace of mind.</p>
-              <span style="font-size:.78rem;font-weight:700;color:var(--teal-bright);">$30 · Results in 15 min</span>
+        <div class="svc-acc__body svc-acc__body--wide">
+          <p class="section__lead" style="margin-bottom:1.5rem;">Lab-quality results right at the pharmacy — no doctor's order, no walk-in clinic wait. Our pharmacist performs the test, explains your result on the spot, and tells you exactly what to do next. Click any test below to book.</p>
+
+          <div class="poct-cards">
+
+            <!-- COVID-19 -->
+            <a class="poct-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="COVID-19 Rapid Antigen Test">
+              <div class="poct-card__icon">🦠</div>
+              <div class="poct-card__name">COVID-19 Rapid Antigen Test</div>
+              <p class="poct-card__desc">A Health Canada–approved lateral flow antigen test performed by your pharmacist. Results in under 15 minutes — no lab requisition or physician order needed.</p>
+              <ul class="poct-card__bullets">
+                <li>Before visiting elderly or immunocompromised family</li>
+                <li>International travel documentation</li>
+                <li>Symptomatic screening at work or school</li>
+                <li>Peace of mind after an exposure</li>
+              </ul>
+              <div class="poct-card__price">$30 · Results in 15 minutes</div>
+              <span class="poct-card__tag">Walk-ins welcome · Results emailed on request</span>
+              <div class="poct-card__cta">Book COVID-19 Test →</div>
+            </a>
+
+            <!-- Pregnancy -->
+            <a class="poct-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Pregnancy Test">
+              <div class="poct-card__icon">🤰</div>
+              <div class="poct-card__name">Pregnancy Test</div>
+              <p class="poct-card__desc">A clinical urine HCG test performed in a private counselling room. More sensitive than over-the-counter home tests — your pharmacist reviews the result with you immediately and can advise on next steps.</p>
+              <ul class="poct-card__bullets">
+                <li>Missed period or early pregnancy symptoms</li>
+                <li>Confirming a home test result</li>
+                <li>Guidance on prenatal vitamins &amp; next steps</li>
+                <li>Fully confidential — no record shared without consent</li>
+              </ul>
+              <div class="poct-card__price">$25 · Private &amp; confidential</div>
+              <span class="poct-card__tag">Private counselling room · No referral needed</span>
+              <div class="poct-card__cta">Book Pregnancy Test →</div>
+            </a>
+
+            <!-- Blood Glucose -->
+            <div class="poct-card poct-card--free">
+              <div class="poct-card__icon">🩸</div>
+              <div class="poct-card__name">Blood Glucose Check</div>
+              <span class="poct-card__free-badge">✓ Free with Medication Review</span>
+              <p class="poct-card__desc" style="margin-top:.3rem;">A quick fingerstick capillary blood glucose reading — results in seconds. Useful for diabetes screening, monitoring your control between doctor visits, or checking if an unexpected reading at home was accurate.</p>
+              <ul class="poct-card__bullets">
+                <li>Random or fasting glucose screening</li>
+                <li>Diabetes management check-in</li>
+                <li>Pre-travel health assessment</li>
+                <li>Monitoring after a medication change</li>
+              </ul>
+              <p class="poct-card__desc" style="margin-top:.5rem;"><strong style="color:var(--teal-deeper);">Included at no extra charge</strong> when you book a MedsCheck (Medication Review) — your pharmacist does the reading as part of your review and discusses what it means for your medications.</p>
+              <div class="poct-card__cta">
+                <a href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},200);return true;" style="color:var(--teal-dark);text-decoration:none;font-weight:700;">Book a Free Medication Review →</a>
+              </div>
+              <div class="poct-card__cta--alt">Standalone glucose check without a review: <a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Blood Glucose Check">Book for $15 →</a></div>
             </div>
-            <div style="background:#f3fafb;border-radius:var(--radius);padding:1rem 1.1rem;border:1.5px solid var(--border);">
-              <div style="font-size:1.4rem;margin-bottom:.4rem;">🤰</div>
-              <div style="font-weight:700;color:var(--teal-deeper);margin-bottom:.3rem;">Pregnancy Test</div>
-              <p style="font-size:.85rem;color:var(--text-muted);margin:0 0 .5rem;">Confidential urine pregnancy test with immediate counselling from your pharmacist.</p>
-              <span style="font-size:.78rem;font-weight:700;color:var(--teal-bright);">$25 · Private &amp; confidential</span>
+
+          </div>
+
+          <div class="cessation-section-hd" style="margin-top:1.75rem;margin-bottom:.85rem;">📋 What Happens at Your Visit</div>
+          <div class="cessation-consult-steps">
+            <div class="cessation-consult-step">
+              <div class="cessation-consult-step__num">1</div>
+              <div><div class="cessation-consult-step__title">Book or walk in</div><p class="cessation-consult-step__desc">Book online through our patient portal or simply walk in — most tests take under 20 minutes total. No doctor's requisition required.</p></div>
             </div>
-            <div style="background:#f3fafb;border-radius:var(--radius);padding:1rem 1.1rem;border:1.5px solid var(--border);">
-              <div style="font-size:1.4rem;margin-bottom:.4rem;">🩸</div>
-              <div style="font-weight:700;color:var(--teal-deeper);margin-bottom:.3rem;">Blood Glucose Check</div>
-              <p style="font-size:.85rem;color:var(--text-muted);margin:0 0 .5rem;">Quick fingerstick blood glucose reading — useful for monitoring or screening for diabetes.</p>
-              <span style="font-size:.78rem;font-weight:700;color:var(--teal-bright);">$15 · No fasting required</span>
+            <div class="cessation-consult-step">
+              <div class="cessation-consult-step__num">2</div>
+              <div><div class="cessation-consult-step__title">Pharmacist performs the test</div><p class="cessation-consult-step__desc">We perform the test in a clean, private area of the pharmacy using certified equipment. You'll receive clear instructions before and during the process.</p></div>
+            </div>
+            <div class="cessation-consult-step">
+              <div class="cessation-consult-step__num">3</div>
+              <div><div class="cessation-consult-step__title">Results explained on the spot</div><p class="cessation-consult-step__desc">Your pharmacist walks you through what your result means — in plain language. No waiting for a callback or online portal.</p></div>
+            </div>
+            <div class="cessation-consult-step">
+              <div class="cessation-consult-step__num">4</div>
+              <div><div class="cessation-consult-step__title">Next steps &amp; follow-up</div><p class="cessation-consult-step__desc">If your result suggests you need additional care, we'll refer you to your physician or the appropriate provider — and help you understand what to ask for.</p></div>
             </div>
           </div>
-          <p style="text-align:center;margin-top:.5rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600">Book a Test →</a></p>
-          <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">Walk-ins welcome · Results reviewed with your pharmacist</p>
+
+          <p style="text-align:center;margin-top:1.75rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600">Book a Test →</a></p>
+          <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">Walk-ins welcome · No doctor's order required · Results reviewed with your pharmacist</p>
         </div>
       </div>
 
