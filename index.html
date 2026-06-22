@@ -1932,6 +1932,11 @@
       background:rgba(0,20,22,.62); align-items:flex-start; justify-content:center;
       padding:max(4rem,10vh) 1rem 1rem; backdrop-filter:blur(5px);
     }
+    @media (max-width:600px) {
+      .site-search-overlay { padding:4.5rem .75rem 1rem; }
+      .site-search__result { padding:.6rem .9rem; gap:.6rem; }
+      .site-search__result-tag { display:none; }
+    }
     .site-search-overlay.open { display:flex; }
     .site-search__box {
       background:#fff; border-radius:var(--radius); width:100%; max-width:640px;
@@ -1947,16 +1952,16 @@
     .site-search__tip { padding:1.1rem 1.25rem; font-size:.82rem; color:var(--text-muted); text-align:center; }
     .site-search__category { font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--text-muted); padding:.5rem 1.25rem .25rem; }
     .site-search__result {
-      display:flex; align-items:center; gap:.75rem; padding:.6rem 1.25rem;
+      display:flex; align-items:center; gap:.75rem; padding:.65rem 1.25rem;
       cursor:pointer; transition:background .12s; border:none; background:none; width:100%; text-align:left;
     }
     .site-search__result:hover { background:var(--teal-ice); }
-    .site-search__result-icon { font-size:1.25rem; flex-shrink:0; width:1.75rem; text-align:center; }
-    .site-search__result-body { flex:1; min-width:0; }
-    .site-search__result-title { font-size:.9rem; font-weight:600; color:var(--teal-deeper); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .site-search__result-icon { font-size:1.2rem; flex-shrink:0; width:1.6rem; text-align:center; line-height:1; }
+    .site-search__result-body { flex:1; min-width:0; display:flex; flex-direction:column; gap:.18rem; }
+    .site-search__result-title { display:block; font-size:.88rem; font-weight:700; color:var(--teal-deeper); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.25; }
     .site-search__result-title mark { background:none; color:var(--teal-bright); font-weight:700; }
-    .site-search__result-desc { font-size:.76rem; color:var(--text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .site-search__result-tag { font-size:.7rem; font-weight:700; background:var(--teal-ice); color:var(--teal-dark); border:1px solid var(--border); border-radius:20px; padding:.1rem .55rem; flex-shrink:0; }
+    .site-search__result-desc { display:block; font-size:.75rem; color:var(--text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.35; }
+    .site-search__result-tag { font-size:.68rem; font-weight:700; background:var(--teal-ice); color:var(--teal-dark); border:1px solid var(--border); border-radius:20px; padding:.18rem .6rem; flex-shrink:0; white-space:nowrap; }
     .site-search__empty { padding:1.5rem 1.25rem; text-align:center; color:var(--text-muted); font-size:.88rem; }
 
     /* ── Symptom smart search ─────────────────────── */
