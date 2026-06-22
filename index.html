@@ -347,7 +347,7 @@
     .hero__socials a:hover { background: rgba(0,115,124,.18); transform: translateY(-2px); }
     .hero__socials svg { width: 20px; height: 20px; fill: var(--teal-deeper); color: var(--teal-deeper); }
     .hero__socials .uber-word { width: 30px; height: auto; object-fit: contain; }
-    .hero__weather { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; width: auto; height: 42px; padding: 0 1rem; border-radius: 42px; background: rgba(0,115,124,.09); border: 1.5px solid rgba(0,115,124,.24); font-size: .82rem; font-weight: 600; color: var(--teal-deeper); text-decoration: none; transition: background .15s, transform .15s; white-space: nowrap; flex-shrink: 0; }
+    .hero__weather { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; width: auto !important; height: 42px; padding: 0 1rem; border-radius: 42px !important; background: rgba(0,115,124,.09); border: 1.5px solid rgba(0,115,124,.24); font-size: .82rem; font-weight: 600; color: var(--teal-deeper); text-decoration: none; transition: background .15s, transform .15s; white-space: nowrap; flex-shrink: 0; }
     .hero__weather:hover { background: rgba(0,115,124,.18); transform: translateY(-2px); }
     #weather-icon { font-size: 1rem; line-height: 1; }
     #weather-temp { font-size: .82rem; font-weight: 700; }
@@ -960,8 +960,9 @@
       object-fit: contain;
       transition: transform .35s;
     }
-    /* Bottom row: portrait interior shots — show at natural ratio */
-    .gallery__row--bottom .gallery__item img { object-fit: contain; height: auto; }
+    /* Bottom row: no overflow clip, no height constraint — show at full natural size */
+    .gallery__row--bottom .gallery__item { overflow: visible; border-radius: 0; box-shadow: none; }
+    .gallery__row--bottom .gallery__item img { object-fit: unset; height: auto; border-radius: var(--radius); box-shadow: var(--shadow); }
     .gallery__item:hover img { transform: scale(1.05); }
 
     /* ── Footer ───────────────────────────────────────── */
@@ -2209,7 +2210,7 @@
         <div class="welcome__pills">
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},120)">🤒 I'm feeling ill</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)">💊 I'm worried about my medication side effects</a>
-          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)">✈️ I'm travelling and need to be prepared and healthy!</a>
+          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)">✈️ I'm travelling and want to stay healthy!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)">🚭 I want to successfully quit smoking!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)">🆘 I need a free naloxone kit</a>
           <a href="#booking" class="welcome__pill" onclick="setTimeout(function(){var c=document.querySelector('[data-label=\'Book an Appointment\']');if(c)c.click();},200)">🤰 I might be pregnant!</a>
