@@ -347,7 +347,7 @@
     .hero__socials a:hover { background: rgba(0,115,124,.18); transform: translateY(-2px); }
     .hero__socials svg { width: 20px; height: 20px; fill: var(--teal-deeper); color: var(--teal-deeper); }
     .hero__socials .uber-word { width: 30px; height: auto; object-fit: contain; }
-    .hero__weather { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; height: 42px; padding: 0 1rem; border-radius: 42px; background: rgba(0,115,124,.09); border: 1.5px solid rgba(0,115,124,.24); font-size: .82rem; font-weight: 600; color: var(--teal-deeper); text-decoration: none; transition: background .15s, transform .15s; white-space: nowrap; flex-shrink: 0; }
+    .hero__weather { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; width: auto; height: 42px; padding: 0 1rem; border-radius: 42px; background: rgba(0,115,124,.09); border: 1.5px solid rgba(0,115,124,.24); font-size: .82rem; font-weight: 600; color: var(--teal-deeper); text-decoration: none; transition: background .15s, transform .15s; white-space: nowrap; flex-shrink: 0; }
     .hero__weather:hover { background: rgba(0,115,124,.18); transform: translateY(-2px); }
     #weather-icon { font-size: 1rem; line-height: 1; }
     #weather-temp { font-size: .82rem; font-weight: 700; }
@@ -597,9 +597,10 @@
       margin-top: 2rem;
     }
     .pa-cards--primary {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       margin-bottom: 0;
     }
+    .pa-card__list { margin:.45rem 0 0; padding-left:1rem; font-size:.76rem; color:var(--text-muted); line-height:1.75; text-align:left; }
     .pa-cards--secondary {
       grid-template-columns: repeat(5, 1fr);
       margin-top: .75rem;
@@ -2199,8 +2200,8 @@
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)">✈️ I'm travelling and need to be prepared and healthy!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)">🚭 I want to successfully quit smoking!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)">🆘 I need a free naloxone kit</a>
-          <a href="#booking" class="welcome__pill" onclick="setTimeout(function(){var c=document.querySelector('[data-label=\'Point of Care Testing\']');if(c)c.click();},200)">🤰 I might be pregnant!</a>
-          <a href="#booking" class="welcome__pill" onclick="setTimeout(function(){var c=document.querySelector('[data-label=\'Point of Care Testing\']');if(c)c.click();},200)">🦠 I need a COVID-19 test and certificate!</a>
+          <a href="#booking" class="welcome__pill" onclick="setTimeout(function(){var c=document.querySelector('[data-label=\'Book an Appointment\']');if(c)c.click();},200)">🤰 I might be pregnant!</a>
+          <a href="#booking" class="welcome__pill" onclick="setTimeout(function(){var c=document.querySelector('[data-label=\'Book an Appointment\']');if(c)c.click();},200)">🦠 I need a COVID-19 test and certificate!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)">🩸 I need better blood sugar control</a>
         </div>
       </div>
@@ -2234,7 +2235,7 @@
         <div class="welcome-box__desc">Submit a photo of your new Rx or request a refill from your profile and we will get it ready.</div>
         <span class="welcome-box__cta">Submit new Rx or refill →</span>
       </a>
-      <a href="#booking" class="welcome-box" onclick="setTimeout(function(){var c=document.querySelector('[data-label=\'Point of Care Testing\']');if(c)c.click();},150)">
+      <a href="#booking" class="welcome-box" onclick="setTimeout(function(){var c=document.querySelector('[data-label=\'Book an Appointment\']');if(c)c.click();},150)">
         <div class="welcome-box__icon">🔬</div>
         <div class="welcome-box__title">Point of Care Testing</div>
         <div class="welcome-box__desc">Rapid COVID-19, pregnancy, and blood glucose tests — performed by your pharmacist, results in minutes.</div>
@@ -2331,12 +2332,12 @@
       <button class="pa-card" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Book an Appointment">
         <div class="pa-card__icon">📅</div>
         <span class="pa-card__label">Book Appointment</span>
-        <span class="pa-card__desc">Schedule a vaccine (immunization), consultation, or check-up</span>
-      </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Point of Care Testing">
-        <div class="pa-card__icon">🔬</div>
-        <span class="pa-card__label">Point of Care Testing</span>
-        <span class="pa-card__desc">Rapid COVID-19 · Pregnancy Test · Blood Glucose Check — results in minutes</span>
+        <span class="pa-card__desc">Consultation with your pharmacist — book for any of the following:</span>
+        <ul class="pa-card__list">
+          <li><strong>💉 Vaccinations</strong> — flu, COVID-19, travel &amp; more</li>
+          <li><strong>🔬 Point of Care Testing</strong> — COVID-19 test, pregnancy test, blood glucose</li>
+          <li><strong>📋 General consultation</strong> — medications, minor ailments, health concerns</li>
+        </ul>
       </button>
       <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1500" data-label="Minor Ailment Assessment">
         <div class="pa-card__icon">🩺</div>
