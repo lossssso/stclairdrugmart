@@ -190,7 +190,15 @@
       box-shadow: none;
       overflow: hidden;
     }
-    /* Nav clouds are the fixed sky-bg layer showing through the frosted glass — no extra elements needed */
+    /* ── Nav clouds — embedded inside nav so they're always visible regardless of section backgrounds ── */
+    .nav__clouds { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; opacity: 0; }
+    .nav__cloud  { position: absolute; left: 0; animation: cloud-drift linear infinite; will-change: transform; max-width: none; display: block; }
+    .nav__cloud--flip { animation-name: cloud-drift-r; }
+    .nav__cloud:nth-child(1) { width: 950px; height: 235px; top: -80px; animation-duration:110s; animation-delay: -18s; opacity: .72; }
+    .nav__cloud:nth-child(2) { width: 750px; height: 185px; top: -55px; animation-duration: 86s; animation-delay: -50s; opacity: .65; }
+    .nav__cloud:nth-child(3) { width: 880px; height: 218px; top: -70px; animation-duration:102s; animation-delay: -78s; opacity: .68; }
+    .nav__cloud:nth-child(4) { width: 680px; height: 168px; top: -40px; animation-duration: 78s; animation-delay: -32s; opacity: .60; }
+    @media (max-width: 768px) { .nav__cloud:nth-child(n+3) { display: none; } }
     .nav__inner {
       max-width: 1100px;
       margin: 0 auto;
@@ -2140,6 +2148,12 @@
 
 <!-- ── Nav ──────────────────────────────────────────────── -->
 <nav class="nav" id="nav">
+  <div class="nav__clouds" aria-hidden="true">
+    <img src="cloud2.png" class="nav__cloud" alt="">
+    <img src="cloud.png"  class="nav__cloud nav__cloud--flip" alt="">
+    <img src="cloud2.png" class="nav__cloud nav__cloud--flip" alt="">
+    <img src="cloud.png"  class="nav__cloud" alt="">
+  </div>
   <div class="nav__inner">
     <a href="#home" class="nav__brand">
       <img src="logo.png" alt="" class="nav__brand__logo" />
@@ -5116,6 +5130,7 @@ window.FAQS = [
     var nav = document.getElementById('nav');
     var hero = document.getElementById('home');
     var tcMeta = document.querySelector('meta[name="theme-color"]');
+    var navClouds = nav.querySelector('.nav__clouds');
     function updateNav() {
       var scrollY = window.scrollY || window.pageYOffset;
       var heroH = hero ? hero.offsetHeight : 0;
@@ -5128,6 +5143,8 @@ window.FAQS = [
       nav.style.webkitBackdropFilter = blur;
       nav.style.borderBottomColor = 'rgba(33,161,168,' + (0.22 * a).toFixed(3) + ')';
       nav.style.boxShadow = a > 0.05 ? '0 1px 14px rgba(0,80,90,' + (0.06 * a).toFixed(3) + ')' : 'none';
+      // Fade nav clouds in with the glass
+      if (navClouds) navClouds.style.opacity = a.toFixed(3);
       // Sync browser chrome (iOS/Android theme-color) to match nav frosting
       if (tcMeta) {
         var r = Math.round(235 + (182 - 235) * a);
