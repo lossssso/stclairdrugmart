@@ -158,6 +158,7 @@
     .sky-bg-cloud {
       position: absolute; left: 0; animation: cloud-drift linear infinite;
       will-change: transform; display: block; pointer-events: none;
+      max-width: none;
     }
     .sky-bg-cloud--flip { animation-name: cloud-drift-r; }
     .sky-bg-cloud:nth-child(1) { width: 900px; height: 210px; top: 4px;  animation-duration: 130s; animation-delay: -25s; opacity: .68; }
@@ -183,7 +184,18 @@
       border-bottom: 1px solid transparent;
       box-shadow: none;
       transition: background .35s, box-shadow .35s, border-color .35s;
+      overflow: hidden;
     }
+    /* Cloud images live inside the nav and fade in once scrolled */
+    .nav__cloud {
+      position: absolute; top: 0; left: 0; z-index: 0;
+      animation: cloud-drift linear infinite;
+      will-change: transform; pointer-events: none;
+      max-width: none; opacity: 0;
+      transition: opacity .8s;
+    }
+    .nav__cloud--flip { animation-name: cloud-drift-r; }
+    .nav.scrolled .nav__cloud { opacity: .38; }
     .nav.scrolled {
       background: rgba(182,236,239,.85);
       backdrop-filter: blur(14px);
@@ -199,6 +211,8 @@
       justify-content: flex-start;
       padding: 0 max(1.5rem, env(safe-area-inset-right)) 0 max(1.5rem, env(safe-area-inset-left));
       height: 64px;
+      position: relative;
+      z-index: 1;
     }
     .nav__brand {
       display: flex;
@@ -1084,7 +1098,7 @@
       .welcome__photo { order: -1; }
       .gallery__row { grid-template-columns: 1fr 1fr; }
       section { padding: 2.75rem 1rem; }
-      .hero { padding: 2.75rem 1rem 3rem; }
+      .hero { padding: calc(2.75rem + 64px) 1rem 3rem; }
       .steps { grid-template-columns: 1fr; }
       .staff-grid { grid-template-columns: repeat(3, 1fr); }
       .insurance-grid { grid-template-columns: 1fr 1fr; }
@@ -1116,7 +1130,7 @@
       .insurance-grid { grid-template-columns: 1fr; }
       .hero__logo { width: 130px; height: 130px; }
       section { padding: 2rem .875rem; }
-      .hero { padding: 2rem .875rem 2.5rem; }
+      .hero { padding: calc(2rem + 64px) .875rem 2.5rem; }
       .find-us__info-card { padding: 1.1rem; }
       .find-us__actions { gap: .5rem; }
       .find-us__actions .btn { flex: 1; text-align: center; justify-content: center; }
@@ -2098,6 +2112,8 @@
 
 <!-- ── Nav ──────────────────────────────────────────────── -->
 <nav class="nav" id="nav">
+  <img src="cloud2.png" class="nav__cloud" alt="" style="height:52px;width:auto;top:6px;animation-duration:95s;animation-delay:-18s;">
+  <img src="cloud.png"  class="nav__cloud nav__cloud--flip" alt="" style="height:40px;width:auto;top:16px;animation-duration:72s;animation-delay:-50s;">
   <div class="nav__inner">
     <a href="#home" class="nav__brand">
       <img src="logo.png" alt="" class="nav__brand__logo" />
@@ -2252,7 +2268,7 @@
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)">✈️ I'm travelling and want to stay healthy!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)">🚭 I want to successfully quit smoking!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)">🆘 I need a free naloxone kit</a>
-          <a href="#booking" class="welcome__pill" onclick="setTimeout(function(){var c=document.querySelector('[data-label=\'Book an Appointment\']');if(c)c.click();},200)">🤰 I might be pregnant!</a>
+          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-poct');document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},200)">🤰 I might be pregnant!</a>
           <a href="#booking" class="welcome__pill" onclick="setTimeout(function(){var c=document.querySelector('[data-label=\'Book an Appointment\']');if(c)c.click();},200)">🦠 I need a COVID-19 test and certificate!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)">🩸 I need better blood sugar control</a>
         </div>
@@ -2263,19 +2279,19 @@
     </div>
 
     <div class="welcome__boxes">
-      <a href="#acc-med-reviews" class="welcome-box" onclick="setTimeout(function(){openAcc('acc-med-reviews')},120)">
+      <a href="#services" class="welcome-box" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},200)">
         <div class="welcome-box__icon">📋</div>
         <div class="welcome-box__title">Medication Reviews</div>
         <div class="welcome-box__desc">Free for eligible Ontario residents — includes an optional blood glucose test at no cost. Our pharmacist reviews all your medications and optimizes your therapy.</div>
         <span class="welcome-box__cta">Book a review →</span>
       </a>
-      <a href="#acc-ailments" class="welcome-box" onclick="setTimeout(function(){openAcc('acc-ailments')},120)">
+      <a href="#services" class="welcome-box" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},200)">
         <div class="welcome-box__icon">🩺</div>
         <div class="welcome-box__title">Common Conditions</div>
         <div class="welcome-box__desc">Pharmacists can assess and prescribe for 28 conditions — UTIs, skin infections, allergies, heartburn, cold sores, and more. No doctor needed.</div>
         <span class="welcome-box__cta">See conditions →</span>
       </a>
-      <a href="#acc-vaccines" class="welcome-box" onclick="setTimeout(function(){openAcc('acc-vaccines')},120)">
+      <a href="#services" class="welcome-box" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},200)">
         <div class="welcome-box__icon">💉</div>
         <div class="welcome-box__title">Vaccinations</div>
         <div class="welcome-box__desc">Flu, COVID-19, shingles, travel vaccines, and more — administered right in the pharmacy. Walk-ins welcome, appointments recommended.</div>
