@@ -398,23 +398,25 @@
     .hero__weather:hover { background: rgba(0,115,124,.18); transform: translateY(-2px); }
     #weather-icon { font-size: 1rem; line-height: 1; }
     #weather-temp { font-size: .82rem; font-weight: 700; }
-    /* ── Hero news card ───────────────────────────── */
-    .hero__news {
-      position: relative; z-index: 1;
-      display: inline-flex; align-items: flex-start; gap: .65rem;
-      background: rgba(255,255,255,.45); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border: 1.5px solid rgba(0,115,124,.28); border-left: 4px solid var(--teal-bright);
-      border-radius: 10px; padding: .7rem 1rem;
-      max-width: 460px; margin: 1.25rem auto 0;
-      text-align: left; text-decoration: none; color: var(--teal-deeper);
-      transition: background .15s, transform .15s;
+    /* ── Welcome modal ────────────────────────────── */
+    .welcome-modal-overlay {
+      display:none; position:fixed; inset:0; z-index:9999;
+      background:rgba(0,20,22,.62); align-items:center; justify-content:center;
+      padding:1rem; backdrop-filter:blur(5px);
     }
-    .hero__news:hover { background: rgba(255,255,255,.62); transform: translateY(-1px); }
-    .hero__news__badge { font-size:.65rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; background:var(--teal-bright); color:#fff; border-radius:4px; padding:.1rem .45rem; flex-shrink:0; margin-top:.15rem; white-space:nowrap; }
-    .hero__news__body { flex:1; }
-    .hero__news__title { font-size:.83rem; font-weight:700; color:var(--teal-deeper); }
-    .hero__news__text { font-size:.76rem; color:var(--text-muted); margin:.15rem 0 0; line-height:1.5; }
-    .hero__news__close { background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:.9rem; line-height:1; padding:.1rem; flex-shrink:0; }
+    .welcome-modal-overlay.open { display:flex; }
+    .welcome-modal {
+      position: relative;
+      background:#fff; border-radius:var(--radius); width:100%; max-width:440px;
+      box-shadow:0 24px 64px rgba(0,0,0,.35); overflow:hidden;
+      padding: 1.75rem 1.75rem 1.5rem; text-align:center;
+    }
+    .welcome-modal__close { position:absolute; top:.6rem; right:.6rem; background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:1.2rem; line-height:1; padding:.4rem; }
+    .welcome-modal__title { font-size:1.15rem; font-weight:800; color:var(--teal-deeper); margin-bottom:.5rem; }
+    .welcome-modal__badge { display:inline-block; font-size:.65rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; background:var(--teal-bright); color:#fff; border-radius:4px; padding:.15rem .5rem; margin-bottom:.65rem; }
+    .welcome-modal__text { font-size:.9rem; color:var(--text-muted); line-height:1.55; margin-bottom:1.1rem; }
+    .welcome-modal__cta { display:inline-block; background:var(--teal-bright); color:#fff; font-weight:700; font-size:.88rem; text-decoration:none; padding:.65rem 1.4rem; border-radius:30px; transition:background .15s, transform .15s; }
+    .welcome-modal__cta:hover { background:var(--teal-dark); transform:translateY(-1px); }
     .hero__status {
       position: relative; z-index: 1;
       max-width: 400px; margin: 1.85rem auto 0;
@@ -1184,8 +1186,8 @@
       .gallery__row { grid-template-columns: 1fr; }
       /* Services cards — single column on phones */
       .services__grid { grid-template-columns: 1fr; }
-      /* Hero news card — fill width on phones (inline-flex doesn't constrain) */
-      .hero__news { display: flex; width: 100%; max-width: 100%; }
+      /* Welcome modal — tighter padding on phones */
+      .welcome-modal { padding: 1.5rem 1.25rem 1.25rem; }
       /* Status boards — fill width on phones */
       .hero__status { max-width: 100%; }
       .contact__status-board { max-width: 100%; }
@@ -2265,16 +2267,6 @@
     </a>
   </div>
 
-  <!-- News card -->
-  <div id="hero-news" class="hero__news" style="display:inline-flex;">
-    <span class="hero__news__badge" id="hero-news-badge">✅ Now Available</span>
-    <div class="hero__news__body">
-      <div class="hero__news__title">Pharmacist Prescribing Expands</div>
-      <div class="hero__news__text">Our pharmacists can now prescribe for <strong>28 common conditions</strong> — no doctor's referral needed. <a href="#booking" style="color:var(--teal-dark);font-weight:600;">See all conditions →</a></div>
-    </div>
-    <button class="hero__news__close" aria-label="Dismiss" onclick="document.getElementById('hero-news').style.display='none'">✕</button>
-  </div>
-
   <!-- Live status board -->
   <div class="hero__status">
     <div class="status-board">
@@ -2293,6 +2285,17 @@
     </div>
   </div>
 </header>
+
+<!-- Welcome / news modal -->
+<div class="welcome-modal-overlay" id="welcomeModal" role="dialog" aria-modal="true" aria-label="Welcome">
+  <div class="welcome-modal">
+    <button class="welcome-modal__close" id="welcomeModalClose" aria-label="Close">&times;</button>
+    <span class="welcome-modal__badge">✅ Now Available</span>
+    <div class="welcome-modal__title">Welcome to St. Clair Drug Mart Pharmacy</div>
+    <div class="welcome-modal__text">Our pharmacists can now prescribe for <strong>28 common conditions</strong> — no doctor's referral needed.</div>
+    <a href="#booking" class="welcome-modal__cta" id="welcomeModalCta">See all conditions →</a>
+  </div>
+</div>
 
 <!-- ── Welcome ───────────────────────────────────────────── -->
 <section id="welcome">
@@ -5154,6 +5157,29 @@ window.FAQS = [
       });
     });
   }
+
+  (function() {
+    var WELCOME_KEY = 'welcomeModalDismissed_v1';
+    var overlay = document.getElementById('welcomeModal');
+    var closeBtn = document.getElementById('welcomeModalClose');
+    var cta = document.getElementById('welcomeModalCta');
+    if (!overlay) return;
+    function closeWelcome() {
+      overlay.classList.remove('open');
+      try { localStorage.setItem(WELCOME_KEY, '1'); } catch (e) {}
+    }
+    var alreadyDismissed = false;
+    try { alreadyDismissed = !!localStorage.getItem(WELCOME_KEY); } catch (e) {}
+    if (!alreadyDismissed) {
+      setTimeout(function() { overlay.classList.add('open'); }, 1200);
+    }
+    closeBtn.addEventListener('click', closeWelcome);
+    cta.addEventListener('click', closeWelcome);
+    overlay.addEventListener('click', function(e) { if (e.target === overlay) closeWelcome(); });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) closeWelcome();
+    });
+  })();
 
   document.getElementById('navSearchBtn').addEventListener('click', openSiteSearch);
   document.getElementById('siteSearchClose').addEventListener('click', closeSiteSearch);
