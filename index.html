@@ -178,6 +178,11 @@
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
 
+    /* Jump-to-section links (nav, footer, FAQ "see more" links) land flush at the
+       top of the viewport — offset by the fixed nav's height so headings aren't
+       hidden underneath it. */
+    section[id] { scroll-margin-top: 80px; }
+
     /* ── Nav ──────────────────────────────────────────── */
     .nav {
       position: fixed;
@@ -1012,7 +1017,7 @@
        always shown (object-fit: contain), never cropped. */
     .gallery__item {
       aspect-ratio: 5 / 7;
-      background: var(--white);
+      background: var(--teal-ice);
       border-radius: var(--radius);
       overflow: hidden;
       box-shadow: var(--shadow);
