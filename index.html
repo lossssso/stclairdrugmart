@@ -346,8 +346,8 @@
     .hero__socials a:hover { background: rgba(0,115,124,.18); transform: translateY(-2px); }
     .hero__socials svg { width: 20px; height: 20px; fill: var(--teal-deeper); color: var(--teal-deeper); }
     .hero__socials .uber-word { width: 30px; height: auto; object-fit: contain; }
-    .hero__weather { display: inline-flex; align-items: center; gap: .35rem; background: rgba(255,255,255,.35); border: 1.5px solid rgba(0,115,124,.22); border-radius: 999px; padding: .45rem .85rem; font-size: .82rem; font-weight: 600; color: var(--teal-deeper); text-decoration: none; transition: background .2s; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); white-space: nowrap; }
-    .hero__weather:hover { background: rgba(255,255,255,.55); transform: translateY(-2px); }
+    .hero__weather { display: inline-flex; align-items: center; justify-content: center; gap: .3rem; width: auto; height: 42px; padding: 0 .85rem; border-radius: 42px; background: rgba(0,115,124,.09); border: 1.5px solid rgba(0,115,124,.24); font-size: .8rem; font-weight: 600; color: var(--teal-deeper); text-decoration: none; transition: background .15s, transform .15s; white-space: nowrap; }
+    .hero__weather:hover { background: rgba(0,115,124,.18); transform: translateY(-2px); }
     .hero__status {
       position: relative; z-index: 1;
       max-width: 400px; margin: 1.85rem auto 0;
@@ -1972,14 +1972,17 @@
     }
     .ailments-smartsearch__results.has-results { display:block; }
     .ailments-smartsearch__hit {
-      display:flex; align-items:center; gap:.7rem; padding:.52rem 1rem; cursor:pointer;
+      display:flex; align-items:center; gap:.75rem; padding:.65rem 1rem; cursor:pointer;
       border:none; background:none; width:100%; text-align:left; transition:background .12s;
+      border-bottom: 1px solid var(--border);
     }
+    .ailments-smartsearch__hit:last-child { border-bottom: none; }
     .ailments-smartsearch__hit:hover { background:var(--teal-ice); }
-    .ailments-smartsearch__hit-icon { font-size:1.25rem; width:1.5rem; text-align:center; flex-shrink:0; }
-    .ailments-smartsearch__hit-body { flex:1; }
-    .ailments-smartsearch__hit-name { font-size:.88rem; font-weight:700; color:var(--teal-deeper); }
-    .ailments-smartsearch__hit-kw { font-size:.74rem; color:var(--text-muted); }
+    .ailments-smartsearch__hit-icon { font-size:1.3rem; width:1.75rem; text-align:center; flex-shrink:0; background:var(--teal-ice); border-radius:50%; padding:.3rem; line-height:1; }
+    .ailments-smartsearch__hit-body { flex:1; min-width:0; display:flex; flex-direction:column; gap:.22rem; }
+    .ailments-smartsearch__hit-name { font-size:.9rem; font-weight:700; color:var(--teal-deeper); line-height:1.2; }
+    .ailments-smartsearch__hit-kw { font-size:.74rem; color:var(--text-muted); line-height:1.3; }
+    .ailments-smartsearch__hit-arrow { font-size:1rem; color:var(--teal-bright); flex-shrink:0; font-weight:600; opacity:.7; }
     .ailments-smartsearch__none { padding:.8rem 1rem; font-size:.82rem; color:var(--text-muted); text-align:center; }
     .ailments-smartsearch__divider { font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--text-muted); padding:.5rem 1rem .15rem; }
     /* ── Privacy Policy modal ─────────────────────── */
@@ -4543,9 +4546,9 @@ window.FAQS = [
         + '<span class="ailments-smartsearch__hit-icon">' + a.icon + '</span>'
         + '<span class="ailments-smartsearch__hit-body">'
         + '<span class="ailments-smartsearch__hit-name">' + a.name + '</span>'
-        + '<span class="ailments-smartsearch__hit-kw">' + (a.call ? 'Call us for treatment options' : 'Tap to start your pharmacist assessment') + '</span>'
+        + '<span class="ailments-smartsearch__hit-kw">' + (a.call ? 'Call us for treatment options' : 'Start pharmacist assessment online') + '</span>'
         + '</span>'
-        + '<span class="site-search__result-tag">Assess →</span>'
+        + '<span class="ailments-smartsearch__hit-arrow">›</span>'
         + '</button>';
     });
     resultsEl.innerHTML = html;
