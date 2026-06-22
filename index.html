@@ -161,10 +161,15 @@
       max-width: none;
     }
     .sky-bg-cloud--flip { animation-name: cloud-drift-r; }
-    .sky-bg-cloud:nth-child(1) { width:1350px; height: 320px; top:  6px; animation-duration: 165s; animation-delay: -25s; opacity: .72; }
-    .sky-bg-cloud:nth-child(2) { width:1050px; height: 260px; top: 28px; animation-duration: 128s; animation-delay: -60s; opacity: .62; }
-    .sky-bg-cloud:nth-child(3) { width:1200px; height: 290px; top: 12px; animation-duration: 148s; animation-delay: -85s; opacity: .66; }
-    .sky-bg-cloud:nth-child(4) { width: 950px; height: 235px; top: 40px; animation-duration: 116s; animation-delay: -12s; opacity: .58; }
+    /* 8 clouds cover the full viewport height — same clouds seen through hero, nav, and all sections */
+    .sky-bg-cloud:nth-child(1) { width:1350px; height:330px; top: 1vh; animation-duration:165s; animation-delay: -25s; opacity:.80; }
+    .sky-bg-cloud:nth-child(2) { width:1050px; height:260px; top: 5vh; animation-duration:128s; animation-delay: -60s; opacity:.70; }
+    .sky-bg-cloud:nth-child(3) { width:1250px; height:305px; top: 2vh; animation-duration:153s; animation-delay: -85s; opacity:.75; }
+    .sky-bg-cloud:nth-child(4) { width: 980px; height:245px; top: 9vh; animation-duration:120s; animation-delay: -12s; opacity:.65; }
+    .sky-bg-cloud:nth-child(5) { width:1200px; height:295px; top:22vh; animation-duration:145s; animation-delay: -40s; opacity:.58; }
+    .sky-bg-cloud:nth-child(6) { width:1300px; height:318px; top:33vh; animation-duration:160s; animation-delay: -18s; opacity:.50; }
+    .sky-bg-cloud:nth-child(7) { width:1100px; height:272px; top:46vh; animation-duration:138s; animation-delay: -72s; opacity:.44; }
+    .sky-bg-cloud:nth-child(8) { width: 960px; height:238px; top:60vh; animation-duration:118s; animation-delay: -95s; opacity:.38; }
     /* White & light sections become slightly translucent so clouds peek through */
     #welcome, #services, #about, #blog, #drug-checker, #shop, #faq, #insurance, #booking { background: rgba(255,255,255,.91); }
     #welcome  { background: rgba(215,251,252,.91); }
@@ -185,14 +190,7 @@
       box-shadow: none;
       overflow: hidden;
     }
-    /* Clouds always drift in the nav; JS fades the background in as the hero scrolls away */
-    .nav__cloud {
-      position: absolute; top: 0; left: 0; z-index: 0;
-      animation: cloud-drift linear infinite;
-      will-change: transform; pointer-events: none;
-      max-width: none; opacity: 0.28;
-    }
-    .nav__cloud--flip { animation-name: cloud-drift-r; }
+    /* Nav clouds are the fixed sky-bg layer showing through the frosted glass — no extra elements needed */
     .nav__inner {
       max-width: 1100px;
       margin: 0 auto;
@@ -298,33 +296,16 @@
 
     /* ── Hero ─────────────────────────────────────────── */
     .hero {
-      background:
-        linear-gradient(180deg, #b6ecef 0%, #cdf5f6 45%, #e4fbfc 100%);
+      background: transparent;
       padding: calc(5rem + 64px) 1.5rem 5.5rem;
       text-align: center;
       color: var(--teal-deeper);
       position: relative;
-      overflow: hidden;
     }
-    /* ── Animated drifting clouds ────────────────────── */
-    .hero__clouds { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-    .hero__cloud  { position: absolute; left: 0; animation: cloud-drift linear infinite; will-change: transform; display: block; }
-    .hero__cloud--flip { animation-name: cloud-drift-r; }
+    /* ── Cloud keyframes — shared by sky-bg layer ────── */
     @keyframes cloud-drift   { from { transform: translateX(-60vw);           } to { transform: translateX(120vw);           } }
     @keyframes cloud-drift-r { from { transform: translateX(-60vw) scaleX(-1);} to { transform: translateX(120vw) scaleX(-1);} }
-    .hero__cloud:nth-child(1)  { width:1200px; height:580px; top: 0%; animation-duration:145s; animation-delay: -20s;  opacity:1;   }
-    .hero__cloud:nth-child(2)  { width: 850px; height:220px; top: 8%; animation-duration:106s; animation-delay: -55s;  opacity:.90; }
-    .hero__cloud:nth-child(3)  { width:1100px; height:520px; top:18%; animation-duration:138s; animation-delay: -80s;  opacity:.98; }
-    .hero__cloud:nth-child(4)  { width: 780px; height:200px; top: 4%; animation-duration: 96s; animation-delay: -35s;  opacity:.86; }
-    .hero__cloud:nth-child(5)  { width:1350px; height:640px; top:28%; animation-duration:165s; animation-delay:-110s;  opacity:.97; }
-    .hero__cloud:nth-child(6)  { width: 900px; height:230px; top:38%; animation-duration:111s; animation-delay: -12s;  opacity:.85; }
-    .hero__cloud:nth-child(7)  { width:1150px; height:560px; top:46%; animation-duration:141s; animation-delay: -65s;  opacity:.95; }
-    .hero__cloud:nth-child(8)  { width: 820px; height:210px; top:55%; animation-duration:101s; animation-delay: -48s;  opacity:.82; }
-    .hero__cloud:nth-child(9)  { width:1250px; height:600px; top:63%; animation-duration:153s; animation-delay:-120s;  opacity:.93; }
-    .hero__cloud:nth-child(10) { width: 870px; height:225px; top:72%; animation-duration:108s; animation-delay: -28s;  opacity:.78; }
-    .hero__cloud:nth-child(11) { width:1050px; height:500px; top:78%; animation-duration:128s; animation-delay: -90s;  opacity:.90; }
-    .hero__cloud:nth-child(12) { width: 800px; height:205px; top:84%; animation-duration: 99s; animation-delay: -70s;  opacity:.72; }
-    @media (prefers-reduced-motion: reduce) { .hero__cloud { animation: none; } }
+    @media (prefers-reduced-motion: reduce) { .sky-bg-cloud { animation: none; } }
     .hero__logo {
       width: 170px; height: 170px;
       object-fit: contain;
@@ -2119,16 +2100,16 @@
   <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" alt="">
   <img src="cloud2.png" class="sky-bg-cloud sky-bg-cloud--flip" alt="">
   <img src="cloud.png"  class="sky-bg-cloud" alt="">
+  <img src="cloud2.png" class="sky-bg-cloud sky-bg-cloud--flip" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud" alt="">
+  <img src="cloud2.png" class="sky-bg-cloud" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" alt="">
 </div>
 
 <!-- alert banner removed — announcement moved to hero news card -->
 
 <!-- ── Nav ──────────────────────────────────────────────── -->
 <nav class="nav" id="nav">
-  <img src="cloud2.png" class="nav__cloud" alt="" style="height:200px;width:auto;top:-80px;animation-duration:145s;animation-delay:-18s;">
-  <img src="cloud.png"  class="nav__cloud nav__cloud--flip" alt="" style="height:160px;width:auto;top:-55px;animation-duration:111s;animation-delay:-50s;">
-  <img src="cloud2.png" class="nav__cloud nav__cloud--flip" alt="" style="height:180px;width:auto;top:-70px;animation-duration:128s;animation-delay:-35s;">
-  <img src="cloud.png"  class="nav__cloud" alt="" style="height:140px;width:auto;top:-48px;animation-duration: 99s;animation-delay:-75s;">
   <div class="nav__inner">
     <a href="#home" class="nav__brand">
       <img src="logo.png" alt="" class="nav__brand__logo" />
@@ -2188,20 +2169,6 @@
 
 <!-- ── Hero ─────────────────────────────────────────────── -->
 <header class="hero" id="home">
-  <div class="hero__clouds" aria-hidden="true">
-    <img src="cloud2.png" class="hero__cloud" alt="">
-    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" alt="">
-    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" alt="">
-    <img src="cloud.png"  class="hero__cloud" alt="">
-    <img src="cloud2.png" class="hero__cloud" alt="">
-    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" alt="">
-    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" alt="">
-    <img src="cloud.png"  class="hero__cloud" alt="">
-    <img src="cloud2.png" class="hero__cloud" alt="">
-    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" alt="">
-    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" alt="">
-    <img src="cloud.png"  class="hero__cloud" alt="">
-  </div>
   <img src="logo.png" alt="St. Clair Drug Mart Pharmacy logo" class="hero__logo" width="940" height="922" fetchpriority="high" />
   <h1 class="hero__name">St. Clair Drug Mart Pharmacy</h1>
   <p class="hero__sub"><a href="https://www.google.com/maps/dir/?api=1&destination=St.+Clair+Drug+Mart+Pharmacy+1203+St+Clair+Ave+W+Toronto+ON" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">1203 St. Clair Ave W, Toronto</a> &nbsp;·&nbsp; <a href="tel:+14166548181" style="color:inherit;text-decoration:none;">(416) 654-8181</a></p>
