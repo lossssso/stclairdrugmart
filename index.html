@@ -413,17 +413,26 @@
       position: relative;
       background:#fff; border-radius:var(--radius); width:100%; max-width:440px;
       box-shadow:0 24px 64px rgba(0,0,0,.35); overflow:hidden;
-      padding: 1.75rem 1.75rem 1.5rem; text-align:center;
+      text-align:center;
       transform: scale(.94) translateY(10px);
       transition: transform .6s cubic-bezier(.2,.9,.3,1.2);
     }
     .welcome-modal-overlay.open .welcome-modal { transform: scale(1) translateY(0); }
-    .welcome-modal__close { position:absolute; top:.6rem; right:.6rem; background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:1.2rem; line-height:1; padding:.4rem; }
+    .welcome-modal__close { position:absolute; top:.6rem; right:.6rem; background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:1.2rem; line-height:1; padding:.4rem; z-index:2; }
+    .welcome-modal__top { background: linear-gradient(135deg, var(--teal-ice), #fff); padding: 1.6rem 1.75rem 1rem; }
+    .welcome-modal__icon { width:56px; height:56px; border-radius:50%; background:#fff; border:1.5px solid var(--border); box-shadow:0 6px 16px rgba(0,90,95,.12); display:flex; align-items:center; justify-content:center; margin:0 auto .75rem; overflow:hidden; }
+    .welcome-modal__icon img { width:38px; height:auto; display:block; }
     .welcome-modal__title { font-size:1.15rem; font-weight:800; color:var(--teal-deeper); margin-bottom:.5rem; }
     .welcome-modal__badge { display:inline-block; font-size:.65rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; background:var(--teal-bright); color:#fff; border-radius:4px; padding:.15rem .5rem; margin-bottom:.65rem; }
-    .welcome-modal__text { font-size:.9rem; color:var(--text-muted); line-height:1.55; margin-bottom:1.1rem; }
-    .welcome-modal__cta { display:inline-block; background:var(--teal-bright); color:#fff; font-weight:700; font-size:.88rem; text-decoration:none; padding:.65rem 1.4rem; border-radius:30px; transition:background .15s, transform .15s; }
+    .welcome-modal__text { font-size:.9rem; color:var(--text-muted); line-height:1.55; margin-bottom:0; }
+    .welcome-modal__body { padding: 1.1rem 1.75rem 1.5rem; }
+    .welcome-modal__tags { display:flex; flex-wrap:wrap; justify-content:center; gap:.4rem; margin:.9rem 0 1rem; }
+    .welcome-modal__tags span { font-size:.72rem; font-weight:700; color:var(--teal-dark); background:var(--teal-ice); border:1px solid var(--border); border-radius:100px; padding:.28rem .65rem; }
+    .welcome-modal__rating { font-size:.78rem; font-weight:700; color:var(--text-muted); margin-bottom:1.15rem; }
+    .welcome-modal__cta { display:inline-block; background:var(--teal-bright); color:#fff; font-weight:700; font-size:.88rem; text-decoration:none; padding:.7rem 1.6rem; border-radius:30px; transition:background .15s, transform .15s; box-shadow:0 8px 20px rgba(33,161,168,.3); }
     .welcome-modal__cta:hover { background:var(--teal-dark); transform:translateY(-1px); }
+    .welcome-modal__later { display:block; margin:.75rem auto 0; background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:.78rem; font-weight:600; text-decoration:underline; padding:.3rem; }
+    .welcome-modal__later:hover { color:var(--teal-dark); }
     .hero__status {
       position: relative; z-index: 1;
       max-width: 400px; margin: 1.85rem auto 0;
@@ -1194,7 +1203,8 @@
       /* Services cards — single column on phones */
       .services__grid { grid-template-columns: 1fr; }
       /* Welcome modal — tighter padding on phones */
-      .welcome-modal { padding: 1.5rem 1.25rem 1.25rem; }
+      .welcome-modal__top { padding: 1.35rem 1.25rem .85rem; }
+      .welcome-modal__body { padding: 1rem 1.25rem 1.25rem; }
       /* Status boards — fill width on phones */
       .hero__status { max-width: 100%; }
       .contact__status-board { max-width: 100%; }
@@ -2298,10 +2308,18 @@
 <div class="welcome-modal-overlay" id="welcomeModal" role="dialog" aria-modal="true" aria-label="Welcome">
   <div class="welcome-modal">
     <button class="welcome-modal__close" id="welcomeModalClose" aria-label="Close">&times;</button>
-    <span class="welcome-modal__badge">✅ Now Available</span>
-    <div class="welcome-modal__title">Welcome to St. Clair Drug Mart Pharmacy</div>
-    <div class="welcome-modal__text">Our pharmacists can now prescribe for <strong>28 common conditions</strong> — no doctor's referral needed.</div>
-    <a href="#services" class="welcome-modal__cta" id="welcomeModalCta">See all conditions →</a>
+    <div class="welcome-modal__top">
+      <div class="welcome-modal__icon"><img src="logo.png" alt="" /></div>
+      <span class="welcome-modal__badge">✅ Now Available</span>
+      <div class="welcome-modal__title">Welcome to St. Clair Drug Mart Pharmacy</div>
+      <div class="welcome-modal__text">Feeling under the weather? Our pharmacists can now assess &amp; prescribe for <strong>28 common conditions</strong> — no doctor's referral needed.</div>
+    </div>
+    <div class="welcome-modal__body">
+      <div class="welcome-modal__tags"><span>UTIs</span><span>Pink eye</span><span>Cold sores</span><span>Allergies</span><span>+24 more</span></div>
+      <div class="welcome-modal__rating">⭐ 4.9/5 from 59 Google reviews</div>
+      <a href="#services" class="welcome-modal__cta" id="welcomeModalCta">See conditions →</a>
+      <button class="welcome-modal__later" id="welcomeModalLater" type="button">Maybe later</button>
+    </div>
   </div>
 </div>
 
@@ -5172,21 +5190,24 @@ window.FAQS = [
   }
 
   (function() {
-    var WELCOME_KEY = 'welcomeModalDismissed_v1';
+    var WELCOME_KEY = 'welcomeModalDismissedUntil_v2';
+    var SNOOZE_MS = 3 * 24 * 60 * 60 * 1000; // re-show after 3 days
     var overlay = document.getElementById('welcomeModal');
     var closeBtn = document.getElementById('welcomeModalClose');
+    var laterBtn = document.getElementById('welcomeModalLater');
     var cta = document.getElementById('welcomeModalCta');
     if (!overlay) return;
     function closeWelcome() {
       overlay.classList.remove('open');
-      try { localStorage.setItem(WELCOME_KEY, '1'); } catch (e) {}
+      try { localStorage.setItem(WELCOME_KEY, String(Date.now() + SNOOZE_MS)); } catch (e) {}
     }
-    var alreadyDismissed = false;
-    try { alreadyDismissed = !!localStorage.getItem(WELCOME_KEY); } catch (e) {}
-    if (!alreadyDismissed) {
-      setTimeout(function() { overlay.classList.add('open'); }, 1200);
+    var snoozedUntil = 0;
+    try { snoozedUntil = parseInt(localStorage.getItem(WELCOME_KEY), 10) || 0; } catch (e) {}
+    if (Date.now() > snoozedUntil) {
+      setTimeout(function() { overlay.classList.add('open'); }, 1400);
     }
     closeBtn.addEventListener('click', closeWelcome);
+    if (laterBtn) laterBtn.addEventListener('click', closeWelcome);
     cta.addEventListener('click', function() {
       closeWelcome();
       setTimeout(function() {
