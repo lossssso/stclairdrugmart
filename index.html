@@ -1100,6 +1100,15 @@
       .welcome__boxes { grid-template-columns: 1fr; }
       /* Accordion title overflow */
       .svc-acc__title { font-size: .92rem; }
+      /* Gallery — single column on phones */
+      .gallery__row { grid-template-columns: 1fr; }
+      /* Services cards — single column on phones */
+      .services__grid { grid-template-columns: 1fr; }
+      /* Hero news card — fill width on phones (inline-flex doesn't constrain) */
+      .hero__news { display: flex; width: 100%; max-width: 100%; }
+      /* Status boards — fill width on phones */
+      .hero__status { max-width: 100%; }
+      .contact__status-board { max-width: 100%; }
     }
 
     /* ── Alert banner ─────────────────────────────── */
@@ -2149,7 +2158,7 @@
 
   <!-- News card -->
   <div id="hero-news" class="hero__news" style="display:inline-flex;">
-    <span class="hero__news__badge" id="hero-news-badge">🎉 Coming July 1</span>
+    <span class="hero__news__badge" id="hero-news-badge">✅ Now Available</span>
     <div class="hero__news__body">
       <div class="hero__news__title">Pharmacist Prescribing Expands</div>
       <div class="hero__news__text">Our pharmacists can now prescribe for <strong>28 common conditions</strong> — no doctor's referral needed. <a href="#booking" style="color:var(--teal-dark);font-weight:600;">See all conditions →</a></div>
