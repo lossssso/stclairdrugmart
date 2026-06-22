@@ -188,7 +188,6 @@
       background: rgba(182,236,239,0);
       border-bottom: 1px solid rgba(33,161,168,0);
       box-shadow: none;
-      overflow: hidden;
     }
     /* ── Nav clouds — embedded inside nav so they're always visible regardless of section backgrounds ── */
     .nav__clouds { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; opacity: 0; }
@@ -4988,7 +4987,7 @@ window.FAQS = [
     { icon:'🔄', title:'Prescription Transfers', desc:'Transfer your prescription to us — we call the other pharmacy', tag:'Service', anchor:'#services' },
     { icon:'📸', title:'New Prescription — Send a Photo', desc:'Send a photo of your new prescription online', tag:'Service', anchor:'#booking' },
   ].concat(AILMENT_DB.map(function(a) {
-    return { icon:a.icon, title:a.name, desc: a.call ? 'Minor ailment — call us for treatment options' : 'Minor ailment — pharmacist can prescribe', tag:'Condition', anchor:'#booking', ailmentUrl: a.call ? null : (PHARMA_BASE + a.id) };
+    return { icon:a.icon, title:a.name, desc: a.call ? 'Minor ailment — call us for treatment options' : 'Minor ailment — pharmacist can prescribe', tag:'Condition', anchor:'#booking', ailmentUrl: a.call ? null : (PHARMA_BASE + a.id), kw:a.kw };
   }));
 
   var siteOverlay = document.getElementById('siteSearch');
@@ -5029,6 +5028,14 @@ window.FAQS = [
       if (t.indexOf(w) !== -1) score += 3;
       if (d.indexOf(w) !== -1) score += 1;
     });
+    // symptom/synonym keywords (e.g. "itch" should surface jock itch, athlete's foot,
+    // eczema, dandruff, hemorrhoids, pinworms, etc. — not just items with "itch" in the title)
+    if (item.kw && item.kw.length) {
+      q.split(/\s+/).forEach(function(w) {
+        if (!w) return;
+        item.kw.forEach(function(k) { if (k.indexOf(w) !== -1 || w.indexOf(k) !== -1) score += 2; });
+      });
+    }
     return score;
   }
 
@@ -5108,6 +5115,7 @@ window.FAQS = [
 
   // ── Keep URL hash-free so browser scroll restoration works on refresh ──
   document.addEventListener('click', function(e) {
+    if (e.defaultPrevented) return; // e.g. mobile nav dropdown toggles already handled their own click
     var a = e.target.closest('a[href^="#"]');
     if (!a) return;
     var hash = a.getAttribute('href');
