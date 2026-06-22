@@ -190,7 +190,11 @@
       box-shadow: none;
     }
     /* ── Nav clouds — embedded inside nav so they're always visible regardless of section backgrounds ── */
-    .nav__clouds { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; opacity: 0; }
+    .nav__clouds {
+      position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; opacity: 0;
+      mask-image: linear-gradient(to bottom, transparent 0%, transparent 65%, black 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 65%, black 100%);
+    }
     .nav__cloud  { position: absolute; left: 0; animation: cloud-drift linear infinite; will-change: transform; max-width: none; display: block; }
     .nav__cloud--flip { animation-name: cloud-drift-r; }
     .nav__cloud:nth-child(1) { width: 950px; height: 235px; top: -80px; animation-duration:110s; animation-delay: -18s; opacity: .72; }
@@ -5138,8 +5142,8 @@ window.FAQS = [
       var heroH = hero ? hero.offsetHeight : 0;
       // a goes 0→1 as user scrolls; complete before hero logo reaches the nav (~20% of hero height)
       var a = heroH < 1 ? 1 : Math.max(0, Math.min(1, scrollY / (heroH * 0.20)));
-      // Frosted glass: 0.72 alpha so content is faintly visible underneath
-      nav.style.background = 'rgba(182,236,239,' + (0.72 * a).toFixed(3) + ')';
+      // Fades to fully opaque so it matches the browser chrome colour exactly, no seam
+      nav.style.background = 'rgba(182,236,239,' + a.toFixed(3) + ')';
       var blur = a > 0.01 ? 'blur(' + (14 * a).toFixed(1) + 'px)' : '';
       nav.style.backdropFilter = blur;
       nav.style.webkitBackdropFilter = blur;
