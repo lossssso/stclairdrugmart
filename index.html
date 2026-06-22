@@ -79,7 +79,7 @@
       { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "18:00" },
       { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "14:00" }
     ],
-    "availableLanguage": ["English","Spanish","Portuguese","Italian","Turkish","Polish"],
+    "availableLanguage": ["English","Spanish","Portuguese","Italian","Turkish"],
     "medicalSpecialty": "Pharmacy",
     "knowsAbout": ["Prescription dispensing","Minor ailments prescribing","Vaccinations","Medication reviews","Blister packaging","Travel health","Smoking cessation","Naloxone dispensing","Harm reduction","Opioid overdose prevention"],
     "aggregateRating": {
@@ -960,10 +960,7 @@
       transition: transform .35s;
     }
     /* Bottom row: portrait interior shots — show at natural ratio */
-    .gallery__row--bottom .gallery__item img {
-      object-fit: cover; height: 100%;
-    }
-    .gallery__row--bottom .gallery__item { aspect-ratio: 4/3; }
+    .gallery__row--bottom .gallery__item img { object-fit: contain; height: auto; }
     .gallery__item:hover img { transform: scale(1.05); }
 
     /* ── Footer ───────────────────────────────────────── */
@@ -2246,7 +2243,7 @@
 <section id="flags">
   <div class="flags-section">
     <div class="flags-section__tagline">Celebrating Our Multicultural Community</div>
-    <p class="flags-section__sub">Our pharmacists and staff serve patients in English, Spanish, Italian, Portuguese, Turkish, Polish, and more — because everyone deserves care in their language.</p>
+    <p class="flags-section__sub">Our pharmacists and staff serve patients in English, Spanish, Italian, Portuguese, Turkish, and more — because everyone deserves care in their language.</p>
     <div class="flags-viewport">
       <div class="flags-track">
         <!-- set 1 -->
@@ -2856,6 +2853,26 @@
         </div>
       </div>
 
+      <div class="svc-acc-item" id="acc-referrals">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🔗</span>
+          <span class="svc-acc__title">Specialist Referrals</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Not sure where to go next? We can point you toward trusted healthcare providers in the St. Clair West neighbourhood. Just ask at the counter or call us — we're happy to help you find the right specialist.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.7rem;margin:.9rem 0;">
+            <div class="info-chip"><span class="info-chip__icon">👁️</span><span><strong>Optometrists</strong> — eye exams &amp; vision care</span></div>
+            <div class="info-chip"><span class="info-chip__icon">🦴</span><span><strong>Physiotherapy</strong> — rehab &amp; injury recovery</span></div>
+            <div class="info-chip"><span class="info-chip__icon">🧠</span><span><strong>Mental health</strong> — counsellors &amp; psychologists</span></div>
+            <div class="info-chip"><span class="info-chip__icon">🫀</span><span><strong>Cardiologists &amp; internists</strong></span></div>
+            <div class="info-chip"><span class="info-chip__icon">🦷</span><span><strong>Dentists</strong> — clinics accepting new patients</span></div>
+            <div class="info-chip"><span class="info-chip__icon">🤝</span><span><strong>Social work &amp; community support</strong></span></div>
+          </div>
+          <p style="font-size:.82rem;color:var(--text-muted);margin-top:.6rem;"><a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us at (416) 654-8181</a> or ask at the counter — we'll match you with the right provider.</p>
+        </div>
+      </div>
+
       <div class="svc-acc__group-hd">💊 Pharmacy Services</div>
 
       <div class="svc-acc-item">
@@ -2937,23 +2954,15 @@
 
       <div class="svc-acc__group-hd">🛠️ Tools &amp; Support</div>
 
-      <div class="svc-acc-item" id="acc-referrals">
+      <div class="svc-acc-item">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🔗</span>
-          <span class="svc-acc__title">Specialist Referrals</span>
+          <span class="svc-acc__icon">💊</span>
+          <span class="svc-acc__title">Drug Interaction Checker</span>
           <span class="svc-acc__chev">+</span>
         </button>
         <div class="svc-acc__body">
-          <p>Not sure where to go next? We can point you toward trusted healthcare providers in the St. Clair West neighbourhood. Just ask at the counter or call us — we're happy to help you find the right specialist.</p>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.7rem;margin:.9rem 0;">
-            <div class="info-chip"><span class="info-chip__icon">👁️</span><span><strong>Optometrists</strong> — eye exams &amp; vision care</span></div>
-            <div class="info-chip"><span class="info-chip__icon">🦴</span><span><strong>Physiotherapy</strong> — rehab &amp; injury recovery</span></div>
-            <div class="info-chip"><span class="info-chip__icon">🧠</span><span><strong>Mental health</strong> — counsellors &amp; psychologists</span></div>
-            <div class="info-chip"><span class="info-chip__icon">🫀</span><span><strong>Cardiologists &amp; internists</strong></span></div>
-            <div class="info-chip"><span class="info-chip__icon">🦷</span><span><strong>Dentists</strong> — clinics accepting new patients</span></div>
-            <div class="info-chip"><span class="info-chip__icon">🤝</span><span><strong>Social work &amp; community support</strong></span></div>
-          </div>
-          <p style="font-size:.82rem;color:var(--text-muted);margin-top:.6rem;"><a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us at (416) 654-8181</a> or ask at the counter — we'll match you with the right provider.</p>
+          <p>Check for interactions between two or more medications — free, no sign-up needed. Enter your medications and our tool will flag any known interactions and their severity.</p>
+          <a class="svc-acc__link" href="#drug-checker">Open Drug Interaction Checker →</a>
         </div>
       </div>
 
@@ -3364,7 +3373,6 @@
             <div class="lang-flag-item"><span class="lang-flag">🇮🇹</span><span class="lang-name">Italian</span></div>
             <div class="lang-flag-item"><span class="lang-flag">🇵🇹</span><span class="lang-name">Portuguese</span></div>
             <div class="lang-flag-item"><span class="lang-flag">🇹🇷</span><span class="lang-name">Turkish</span></div>
-            <div class="lang-flag-item"><span class="lang-flag">🇵🇱</span><span class="lang-name">Polish</span></div>
             <div class="lang-flag-item"><span class="lang-flag">🌍</span><span class="lang-name">&amp; more</span></div>
           </div>
           <div class="lang-access-chips">
