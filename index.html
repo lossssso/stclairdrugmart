@@ -597,12 +597,14 @@
       margin-top: 2rem;
     }
     .pa-cards--primary {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       margin-bottom: 0;
     }
     .pa-card__list { margin:.45rem 0 0; padding-left:1rem; font-size:.76rem; color:var(--text-muted); line-height:1.75; text-align:left; }
+    .pa-list-link { cursor:pointer; color:var(--teal-dark); font-weight:700; font-size:.7rem; white-space:nowrap; margin-left:.3rem; }
+    .pa-list-link:hover { color:var(--teal-bright); text-decoration:underline; }
     .pa-cards--secondary {
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       margin-top: .75rem;
       margin-bottom: 2rem;
     }
@@ -1018,7 +1020,8 @@
 
     /* ── Responsive ───────────────────────────────────── */
     @media (max-width: 900px) {
-      .pa-cards--secondary { grid-template-columns: repeat(3, 1fr); }
+      .pa-cards--primary    { grid-template-columns: 1fr; }
+      .pa-cards--secondary  { grid-template-columns: repeat(3, 1fr); }
       .gallery__row--top { margin-left: 0; margin-right: 0; }
     }
     @media (max-width: 768px) {
@@ -2347,10 +2350,15 @@
         <span class="pa-card__label">Book Appointment</span>
         <span class="pa-card__desc">Consultation with your pharmacist — book for any of the following:</span>
         <ul class="pa-card__list">
-          <li><strong>💉 Vaccinations</strong> — flu, COVID-19, travel &amp; more</li>
-          <li><strong>🔬 Point of Care Testing</strong> — COVID-19 test, pregnancy test, blood glucose</li>
-          <li><strong>📋 General consultation</strong> — medications, minor ailments, health concerns</li>
+          <li><strong>💉 Vaccinations</strong> — flu, COVID-19, travel &amp; more <span class="pa-list-link" onclick="event.stopPropagation();openAcc('acc-vaccines');setTimeout(function(){document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span></li>
+          <li><strong>🔬 Point of Care Testing</strong> — COVID-19 test, pregnancy test, blood glucose <span class="pa-list-link" onclick="event.stopPropagation();openAcc('acc-poct');setTimeout(function(){document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span></li>
+          <li><strong>📋 General consultation</strong> — minor ailments &amp; medication concerns <span class="pa-list-link" onclick="event.stopPropagation();openAcc('acc-ailments');setTimeout(function(){document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},100)">See conditions →</span></li>
         </ul>
+      </button>
+      <button class="pa-card" id="pa-card-medscheck">
+        <div class="pa-card__icon">📋</div>
+        <span class="pa-card__label">Medication Review &nbsp;<span class="pa-conditions-arrow">▼</span></span>
+        <span class="pa-card__desc">Free OHIP-covered review of all your medications — includes optional blood glucose test</span>
       </button>
       <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1500" data-label="Minor Ailment Assessment">
         <div class="pa-card__icon">🩺</div>
@@ -2499,17 +2507,23 @@
       <p class="conditions-panel__note">All 28 conditions available as of July 1, 2026 &nbsp;·&nbsp; No doctor's referral needed &nbsp;·&nbsp; <strong>Walk in or start your online assessment above</strong></p>
     </div>
 
+    <!-- Medication review expand panel -->
+    <div class="conditions-panel" id="medscheck-panel">
+      <div class="conditions-panel__hd">Medication Review (MedsCheck)</div>
+      <p style="font-size:.9rem;margin-bottom:1.1rem;line-height:1.6;">A free, one-on-one consultation with your pharmacist to review all of your prescriptions, over-the-counter medications, vitamins, and supplements. We look for interactions, duplications, and medications that may no longer be appropriate — and an optional blood glucose test is included at no cost.</p>
+      <p style="font-size:.85rem;margin-bottom:1.25rem;color:var(--text-muted);">Eligible if you take <strong>3 or more chronic medications</strong>. Covered by <strong>OHIP</strong> — no cost to you.</p>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;">
+        <a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/patient/meds/306667" style="flex-shrink:0;">📋 Book a Medication Review →</a>
+        <a href="#services" onclick="openAcc('acc-med-reviews');setTimeout(function(){document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},100)" style="font-size:.82rem;color:var(--teal-dark);font-weight:600;text-decoration:none;">Learn more about MedsCheck →</a>
+      </div>
+    </div>
+
     <!-- Row 2: patient account actions -->
     <div class="pa-cards pa-cards--secondary">
       <button class="pa-card" id="pa-new-rx" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="800" data-label="New Prescription &amp; Refill Requests">
         <div class="pa-card__icon">📝</div>
         <span class="pa-card__label">New Prescription &amp; Refill Requests</span>
         <span class="pa-card__desc">Submit a photo of your new Rx or request a refill from your profile and we will get it ready</span>
-      </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="900" data-label="Medication Review">
-        <div class="pa-card__icon">📋</div>
-        <span class="pa-card__label">Medication Review</span>
-        <span class="pa-card__desc">One-on-one review of all your medications — includes optional blood glucose test at no cost</span>
       </button>
       <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="900" data-label="Transfer Your Prescription">
         <div class="pa-card__icon">🔀</div>
@@ -3776,32 +3790,44 @@ window.FAQS = [
     }, 80);
   }
 
-  const conditionsCard = document.getElementById('pa-card-conditions');
+  const conditionsCard  = document.getElementById('pa-card-conditions');
   const conditionsPanel = document.getElementById('conditions-panel');
+  const medscheckCard   = document.getElementById('pa-card-medscheck');
+  const medscheckPanel  = document.getElementById('medscheck-panel');
+
+  function closeAllPanels() {
+    paWrap.style.display = 'none';
+    paWrap.classList.remove('collapsed');
+    conditionsPanel.classList.remove('open');
+    medscheckPanel.classList.remove('open');
+    document.querySelectorAll('.pa-card').forEach(c => { c.classList.remove('active'); c.classList.remove('conditions-open'); });
+  }
 
   document.querySelectorAll('.pa-card').forEach(card => {
     card.addEventListener('click', function() {
       if (this === conditionsCard) {
-        // Close any open iframe panel before toggling the conditions list
-        paWrap.style.display = 'none';
-        document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
-        const isOpen = conditionsPanel.classList.toggle('open');
-        this.classList.toggle('conditions-open', isOpen);
-        if (isOpen) {
-          this.classList.add('active');
-        } else {
-          this.classList.remove('active');
+        const wasOpen = conditionsPanel.classList.contains('open');
+        closeAllPanels();
+        if (!wasOpen) {
+          conditionsPanel.classList.add('open');
+          this.classList.add('active', 'conditions-open');
+          setTimeout(function() { conditionsPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 80);
+        }
+      } else if (this === medscheckCard) {
+        const wasOpen = medscheckPanel.classList.contains('open');
+        closeAllPanels();
+        if (!wasOpen) {
+          medscheckPanel.classList.add('open');
+          this.classList.add('active', 'conditions-open');
+          setTimeout(function() { medscheckPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 80);
         }
       } else {
         const alreadyActive = this.classList.contains('active');
         const panelVisible = paWrap.style.display !== 'none';
         if (alreadyActive && panelVisible) {
-          document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
-          paWrap.style.display = 'none';
-          paWrap.classList.remove('collapsed');
+          closeAllPanels();
         } else {
-          conditionsPanel.classList.remove('open');
-          conditionsCard.classList.remove('conditions-open');
+          closeAllPanels();
           switchPaTab(this);
         }
       }
