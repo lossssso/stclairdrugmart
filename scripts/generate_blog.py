@@ -307,7 +307,23 @@ def footer_html() -> str:
     year = datetime.date.today().year
     return f"""<footer>
   <p>1203 St. Clair Avenue West, Toronto, ON &nbsp;·&nbsp; <a href="{PHARMACY['tel']}">{PHARMACY['phone']}</a> &nbsp;·&nbsp; <a href="mailto:{PHARMACY['email']}">{PHARMACY['email']}</a></p>
-  <p style="margin-top:.5rem;opacity:.45;">&copy; {year} St. Clair Drug Mart Pharmacy. All rights reserved.</p>
+  <div class="footer__trust">
+    <div class="footer__badges">
+      <div class="trust-badge">
+        <div class="trust-badge__disc"><img src="../../logos/ocp.png" alt="Ontario College of Pharmacists" class="trust-badge__logo"></div>
+        <span class="trust-badge__caption">OCP Accreditation<br>No. 306667</span>
+      </div>
+      <div class="trust-badge">
+        <div class="trust-badge__disc"><img src="../../logos/pharmassess.png" alt="PharmAssess — Online Pharmacy Booking" class="trust-badge__logo"></div>
+        <span class="trust-badge__caption">PharmAssess<br>Online Booking</span>
+      </div>
+      <div class="trust-badge trust-badge--wordmark">
+        <div class="trust-badge__disc"><img src="../../logos/medsask.png" alt="MedSask — Your Medication Information Service" class="trust-badge__logo"></div>
+        <span class="trust-badge__caption">Medication<br>Information Partner</span>
+      </div>
+    </div>
+  </div>
+  <p style="margin-top:.75rem;opacity:.45;">&copy; {year} St. Clair Drug Mart Pharmacy. All rights reserved.</p>
 </footer>"""
 
 
