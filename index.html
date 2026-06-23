@@ -3853,6 +3853,7 @@ window.FAQS = [
         <button type="button" id="faqSearchClear" class="faq-search__clear" aria-label="Clear search" hidden>&times;</button>
       </div>
       <div class="faq-search__status" id="faqSearchStatus" aria-live="polite"></div>
+      <div class="ailments-smartsearch__results" id="faqServiceResults"></div>
       <div class="ailments-smartsearch__results" id="faqConditionResults"></div>
     </div>
     <div class="faq-list" id="faq-list"><!-- populated by script below --></div>
@@ -3897,6 +3898,7 @@ window.FAQS = [
   var status = document.getElementById('faqSearchStatus');
   var list = document.getElementById('faq-list');
   var condBox = document.getElementById('faqConditionResults');
+  var serviceBox = document.getElementById('faqServiceResults');
   if (!input || !list || !window.FAQS) return;
 
   var UMBRELLA_Q = 'Can a pharmacist prescribe medication in Ontario?';
@@ -3966,6 +3968,60 @@ window.FAQS = [
     });
   }
 
+  // Score a service/vaccine/consult item from the shared SITE_INDEX so queries
+  // like "flu shot", "quit smoking", "travel vaccine", "renew my prescription"
+  // surface the relevant service — not just FAQ text matches.
+  function scoreService(item, query){
+    var q = query.toLowerCase();
+    var t = item.title.toLowerCase();
+    var d = (item.desc || '').toLowerCase();
+    var k = item.kw ? item.kw.toLowerCase() : '';
+    var s = 0;
+    if (t.indexOf(q) !== -1) s += 5;
+    if (d.indexOf(q) !== -1) s += 2;
+    if (k && k.indexOf(q) !== -1) s += 4;
+    q.split(/\s+/).forEach(function(w){
+      if (!w || w.length < 3) return;
+      if (t.indexOf(w) !== -1) s += 3;
+      if (d.indexOf(w) !== -1) s += 1;
+      if (k && k.indexOf(w) !== -1) s += 2;
+    });
+    return s;
+  }
+
+  function renderServices(matches, query){
+    if (!serviceBox) return;
+    if (!matches.length) { serviceBox.classList.remove('has-results'); serviceBox.innerHTML = ''; return; }
+    var html = '<div class="ailments-smartsearch__divider">Services &amp; vaccines matching "' + query + '"</div>';
+    matches.forEach(function(x){
+      var it = x.it;
+      html += '<button class="ailments-smartsearch__hit js-faq-svc-hit" data-anchor="' + (it.anchor || '') + '" data-open="' + (it.open || '') + '" data-url="' + (it.url || '') + '">'
+        + '<span class="ailments-smartsearch__hit-icon">' + it.icon + '</span>'
+        + '<span class="ailments-smartsearch__hit-body">'
+        + '<span class="ailments-smartsearch__hit-name">' + it.title + '</span>'
+        + '<span class="ailments-smartsearch__hit-kw">' + it.desc + '</span>'
+        + '</span>'
+        + '<span class="ailments-smartsearch__hit-arrow">›</span>'
+        + '</button>';
+    });
+    serviceBox.innerHTML = html;
+    serviceBox.classList.add('has-results');
+    serviceBox.querySelectorAll('.js-faq-svc-hit').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var anchor = this.dataset.anchor;
+        var openId = this.dataset.open;
+        var url = this.dataset.url;
+        if (url) { window.location.href = url; return; }
+        if (openId && window.openAcc) {
+          window.openAcc(openId);
+          setTimeout(function(){ var el = document.getElementById(openId); if (el) el.scrollIntoView({ behavior:'smooth', block:'start' }); }, 120);
+        } else if (anchor) {
+          var el = document.querySelector(anchor); if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+        }
+      });
+    });
+  }
+
   function escapeRx(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
   function highlight(text, terms){
     var out = text;
@@ -3998,6 +4054,7 @@ window.FAQS = [
     });
     if (emptyBox) { emptyBox.remove(); emptyBox = null; }
     renderConditions([], '');
+    renderServices([], '');
     status.innerHTML = '';
     clearBtn.hidden = true;
   }
@@ -4024,6 +4081,16 @@ window.FAQS = [
       .slice(0, 5);
     renderConditions(condMatches, query);
 
+    // Services, vaccines & consults from the shared SITE_INDEX (clinical items
+    // only — Services & Tools, not About/Contact/Blog noise).
+    var siteIdx = window.SITE_INDEX || [];
+    var svcMatches = siteIdx.filter(function(it){ return it.tag === 'Service' || it.tag === 'Tool'; })
+      .map(function(it){ return { it: it, s: scoreService(it, query) }; })
+      .filter(function(x){ return x.s > 0; })
+      .sort(function(a,b){ return b.s - a.s; })
+      .slice(0, 4);
+    renderServices(svcMatches, query);
+
     var scored = idx.map(function(entry){ return { entry: entry, s: score(entry, query) }; });
     if (condMatches.length) {
       // Whenever a symptom matches a minor ailment, also surface the general
@@ -4041,17 +4108,25 @@ window.FAQS = [
         entry.item.classList.remove('faq-best-match');
         entry.item.querySelector('.faq-item__q-text').innerHTML = entry.q;
       });
-      if (condMatches.length) {
-        status.innerHTML = '<strong>' + condMatches.length + '</strong> condition' + (condMatches.length === 1 ? '' : 's') + ' matched “' + query + '” above — no FAQ matched directly, but here are some popular questions too:';
+      var foundElsewhere = condMatches.length + svcMatches.length;
+      if (foundElsewhere) {
+        var bits = [];
+        if (svcMatches.length) bits.push('<strong>' + svcMatches.length + '</strong> service' + (svcMatches.length === 1 ? '' : 's'));
+        if (condMatches.length) bits.push('<strong>' + condMatches.length + '</strong> condition' + (condMatches.length === 1 ? '' : 's'));
+        status.innerHTML = bits.join(' and ') + ' matched “' + query + '” above — no FAQ matched directly, but here are some popular questions too:';
       } else {
         status.innerHTML = 'No exact match for “<strong>' + query + '</strong>” — here are some popular questions, or ask us directly:';
       }
       var topThree = idx.slice(0, 3);
       topThree.forEach(function(entry){ entry.item.classList.remove('faq-hidden'); list.appendChild(entry.item); });
-      emptyBox = document.createElement('div');
-      emptyBox.className = 'faq-empty';
-      emptyBox.innerHTML = '<p>Couldn\'t find that in our FAQ. Call or message us and a pharmacist will answer directly.</p><a href="tel:+14166548181" class="btn">Call (416) 654-8181 →</a>';
-      list.appendChild(emptyBox);
+      // Only push the "can't answer → call us" card when we found nothing at all
+      // (no FAQ, no condition, no service) — that's the assistant's fallback.
+      if (!foundElsewhere) {
+        emptyBox = document.createElement('div');
+        emptyBox.className = 'faq-empty';
+        emptyBox.innerHTML = '<p>Couldn\'t find that, and our FAQ didn\'t cover it. Call or message us and a pharmacist will answer directly.</p><a href="tel:+14166548181" class="btn">Call (416) 654-8181 →</a>';
+        list.appendChild(emptyBox);
+      }
       return;
     }
 
