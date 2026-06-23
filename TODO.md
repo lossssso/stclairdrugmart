@@ -1,0 +1,107 @@
+# St. Clair Drug Mart — To-Do
+
+## Prescription Extensions & Adaptations — custom intake form (deferred)
+
+The "Out of refills? Can't reach your doctor?" callout (Welcome section, anchor
+`#rx-extensions`) and the **Prescription Extensions & Adaptations** item under
+**Book an Appointment** (Patient Portal) are now live, but currently point at the
+general Book-an-Appointment / phone-call flow.
+
+Still to build:
+
+- A dedicated questionnaire / **custom appointment form in PharmAssess** for
+  patients requesting a prescription extension or adaptation.
+- Capture what the pharmacy needs when the patient is **not already on file**,
+  e.g.:
+  - Bring in / upload your most recent prescription (Rx label or bottle).
+  - Proof of the original prescription / current therapy where we don't have it
+    on record.
+  - Finalize the exact list of required documentation together (pending the OCP
+    regulatory review — see note below).
+- Once the custom form exists, repoint the callout CTA and the portal list item
+  from the general appointment URL to the new extension/adaptation form URL.
+
+### Open regulatory question (to confirm before finalizing copy)
+Confirm the OCP rules on renewing/extending and adapting prescriptions for
+someone who is **not** an existing patient of the pharmacy — specifically
+whether it can be done over the phone, and what proof of prior/chronic use is
+required. The welcome callout copy currently hedges ("may be able to… in many
+cases…") so it can be tightened once the rules are confirmed.
+
+## COVID-19 test certificate (to set up / confirm)
+
+The site already surfaces a "I need a COVID-19 test and certificate!" pill and
+Point-of-Care Testing under Book an Appointment. To-do:
+
+- Decide which test we offer for travel certificates: rapid antigen vs.
+  point-of-care molecular/PCR (e.g., ID NOW). Travel/airlines usually require a
+  **molecular/PCR** negative-result certificate, not antigen — confirm what the
+  destinations our patients ask about will accept.
+- Build the actual **certificate document** (negative-result letter with
+  patient name/DOB, test type, sample date/time, result, pharmacist signature &
+  pharmacy/OCP accreditation details) and a delivery method (printed + secure
+  emailed PDF).
+- Confirm staffing requirement: lab-based test ordering/specimen collection
+  requires a **Part A pharmacist**; point-of-care testing can be done in
+  pharmacy. Confirm our pharmacist designation and procurement of test kits.
+- Note (research): Ontario pharmacists **can** test asymptomatic patients for
+  travel and issue a negative-result clearance certificate — so this is offerable
+  once the test type, kit supply, and certificate template are finalized.
+
+## From the overnight site audit (June 23, 2026) — action items left for you
+
+These need your hands (account access, a business decision, or an in-store
+process) and can't be done from the code. Pulled from the audit's prioritized
+next-actions list.
+
+### Needs you in an account / dashboard
+- **GitHub → Settings → Secrets → confirm `ANTHROPIC_API_KEY` is set.** The
+  weekly blog bot (`.github/workflows/blog.yml`, Mondays 9 AM ET) needs this
+  secret to generate posts. If it's missing, Mondays silently produce nothing
+  (likely how the earlier desynced/phantom posts crept in). *(This is the "go
+  into secrets" item.)*
+- **Upload blog hero images.** Posts currently have no hero image (cards show a
+  teal placeholder). Either upload a relevant photo per post or have the
+  workflow attach/generate one — lifts click-through on the blog and on social
+  shares. *(This is the "upload the thing for the blog" item.)*
+- **Confirm the privacy policy names PharmAssess** (and any analytics) as a
+  third-party processor, and that a data-sharing/vendor agreement is in place —
+  PHIPA expects disclosed processors. Booking/patient data flows through
+  `app.pharmassess.ca`.
+
+### Marketing / front-of-store (owner + staff)
+- **Launch a Google review drive** — a QR counter card linking straight to your
+  Google review page; ask every satisfied patient at pickup; aim for 2–3 new
+  reviews/week. Highest-ROI growth lever; you already have the 4.9★.
+- **Respond to every Google review within 48 h** (even the 5★ ones) — it's a
+  ranking and trust signal. (An AI draft-reply assistant can make this seconds.)
+- **Complete the Google Business Profile** — every field, ≥20 photos (the
+  optimized ones are ready), and post weekly (blog posts can feed this).
+- **Keep "4.9 ★ / 59 reviews" accurate.** It's hardcoded ~18 places; if the real
+  Google figure changes, the site is technically inaccurate advertising (OCP).
+  Update it manually (or we make it pull live).
+- **Verify hardcoded hours/holidays** are current (Closed Sunday, Sat 9–2, etc.).
+
+### Professionalism / compliance polish (small)
+- Consider naming the **Designated Manager** in the footer. (OCP accreditation
+  No. 306667 is already shown in the footer trust badge.)
+- Do a pass on "free / no cost" wording (50+ uses) so each is clearly tied to
+  eligibility (valid OHIP card / criteria), never a blanket "free."
+
+### Site/dev follow-ups (I can do these — just say when)
+- Add a **site chatbot** (wrap the existing FAQ + smart search) and a mobile
+  **Book/Refill bubble or bottom bar** for one-tap conversion.
+- Extend the Monday blog bot to also draft a **GBP post, IG/FB caption, and
+  email** from the same article (one generation, four placements).
+- Optionally upgrade the blog bot model and add seasonal topic weighting.
+- Bump small inline **touch targets to ≥24 px** (footer phone/email, inline CTAs).
+- Optimize remaining storefront JPEGs to WebP (~150 K each). Low priority.
+
+### Already done this session (for reference)
+- ✅ Deleted ~6 MB of unused images (`delivery_uber.jpeg`, `delivery_bag.jpeg`,
+  `interior_counter.png`, `interior_entrance.webp`).
+- ✅ Cloud animation now JS-driven (fixes "clouds not moving" in Comet/Chrome);
+  nav clouds slowed.
+- ✅ FAQ smart-search now surfaces conditions/minor-ailment assessments.
+- ✅ Bike Share section: second nearby station added; parking vs. bike-share now
+  highlight independently from the Find-Us logos.

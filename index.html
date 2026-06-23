@@ -204,11 +204,11 @@
     }
     .nav__cloud  { position: absolute; left: 0; animation: cloud-drift linear infinite; will-change: transform; max-width: none; display: block; filter: drop-shadow(0 1px 3px rgba(0,60,65,.18)); }
     .nav__cloud--flip { animation-name: cloud-drift-r; }
-    .nav__cloud:nth-child(1) { width: 950px; height: 235px; top: -100px; animation-duration:110s; animation-delay: -18s; opacity: .85; }
-    .nav__cloud:nth-child(2) { width: 750px; height: 185px; top: -46px; animation-duration: 86s; animation-delay: -50s; opacity: .78; }
-    .nav__cloud:nth-child(3) { width: 880px; height: 218px; top: -88px; animation-duration:102s; animation-delay: -78s; opacity: .82; }
-    .nav__cloud:nth-child(4) { width: 680px; height: 168px; top: -36px; animation-duration: 78s; animation-delay: -32s; opacity: .76; }
-    .nav__cloud:nth-child(5) { width: 820px; height: 203px; top: -57px; animation-duration: 94s; animation-delay: -64s; opacity: .80; }
+    .nav__cloud:nth-child(1) { width: 950px; height: 235px; top: -100px; animation-duration:175s; animation-delay: -29s; opacity: .85; }
+    .nav__cloud:nth-child(2) { width: 750px; height: 185px; top: -46px; animation-duration:140s; animation-delay: -81s; opacity: .78; }
+    .nav__cloud:nth-child(3) { width: 880px; height: 218px; top: -88px; animation-duration:165s; animation-delay:-126s; opacity: .82; }
+    .nav__cloud:nth-child(4) { width: 680px; height: 168px; top: -36px; animation-duration:125s; animation-delay: -51s; opacity: .76; }
+    .nav__cloud:nth-child(5) { width: 820px; height: 203px; top: -57px; animation-duration:150s; animation-delay:-102s; opacity: .80; }
     @media (max-width: 768px) { .nav__cloud:nth-child(n+4) { display: none; } }
     .nav__inner {
       max-width: 1100px;
@@ -543,6 +543,33 @@
     @media (max-width: 768px) {
       .welcome__boxes { grid-template-columns: repeat(2, 1fr); }
     }
+    /* ── Rx Extensions & Adaptations callout ──────────── */
+    .rx-ext { margin-top: 2.25rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+      background: linear-gradient(135deg, var(--teal-ice), #fff);
+      border: 1.5px solid var(--border); border-left: 5px solid var(--teal-bright);
+      border-radius: 16px; padding: 1.5rem 1.75rem; box-shadow: 0 4px 18px rgba(0,80,90,.07); }
+    .rx-ext__icon { font-size: 2.6rem; line-height: 1; flex-shrink: 0; }
+    .rx-ext__body { flex: 1 1 320px; }
+    .rx-ext__title { font-size: 1.15rem; font-weight: 800; color: var(--teal-deeper); margin-bottom: .35rem; }
+    .rx-ext__text { font-size: .9rem; color: var(--text-muted); line-height: 1.55; margin: 0; }
+    .rx-ext__actions { display: flex; flex-direction: column; gap: .55rem; flex-shrink: 0; }
+    .rx-ext__btn { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; white-space: nowrap;
+      background: var(--teal-bright); color: #fff; font-weight: 700; font-size: .86rem; text-decoration: none;
+      padding: .65rem 1.3rem; border-radius: 30px; transition: background .15s, transform .15s;
+      box-shadow: 0 6px 16px rgba(33,161,168,.25); border: none; cursor: pointer; }
+    .rx-ext__btn:hover { background: var(--teal-dark); transform: translateY(-1px); }
+    .rx-ext__btn--ghost { background: #fff; color: var(--teal-dark); border: 1.5px solid var(--border); box-shadow: none; }
+    .rx-ext__btn--ghost:hover { background: var(--teal-ice); color: var(--teal-deeper); transform: translateY(-1px); }
+    .rx-ext--flash { animation: rx-ext-flash 1.6s ease; }
+    @keyframes rx-ext-flash {
+      0%   { box-shadow: 0 0 0 0 rgba(33,161,168,0); }
+      20%  { box-shadow: 0 0 0 5px rgba(33,161,168,.28); }
+      100% { box-shadow: 0 4px 18px rgba(0,80,90,.07); }
+    }
+    @media (max-width: 560px) {
+      .rx-ext__actions { width: 100%; }
+      .rx-ext__btn { width: 100%; }
+    }
 
     /* ── Services ─────────────────────────────────────── */
     #services { background: var(--white); }
@@ -839,6 +866,13 @@
       100% { box-shadow: 0 0 0 0 rgba(33,161,168,0),    0 2px 12px rgba(0,0,0,.06); }
     }
     .info-strip__card--highlight { animation: card-highlight-pulse 1.5s ease forwards; }
+    .info-strip__subgroup { border-radius: 12px; transition: background .2s; }
+    .info-strip__subgroup--highlight { animation: subgroup-highlight-pulse 1.6s ease forwards; }
+    @keyframes subgroup-highlight-pulse {
+      0%   { background: rgba(33,161,168,.16); box-shadow: 0 0 0 0 rgba(33,161,168,.45); }
+      35%  { background: rgba(33,161,168,.12); box-shadow: 0 0 0 6px rgba(33,161,168,.15); }
+      100% { background: rgba(33,161,168,0);   box-shadow: 0 0 0 0 rgba(33,161,168,0); }
+    }
     @keyframes heading-pop {
       0%   { color: var(--teal-bright); transform: scale(1);    letter-spacing: .1em; }
       20%  { color: #f0a030;            transform: scale(1.12); letter-spacing: .22em; }
@@ -2202,14 +2236,14 @@
 </head>
 <body>
 <div class="sky-bg" aria-hidden="true">
-  <img src="cloud2.png" class="sky-bg-cloud" style="transform:translateX(-25.9vw)" alt="">
-  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" style="transform:translateX(45.9vw) scaleX(-1)" alt="">
-  <img src="cloud2.png" class="sky-bg-cloud sky-bg-cloud--flip" style="transform:translateX(65.4vw) scaleX(-1)" alt="">
-  <img src="cloud.png"  class="sky-bg-cloud" style="transform:translateX(-37.5vw)" alt="">
-  <img src="cloud2.png" class="sky-bg-cloud sky-bg-cloud--flip" style="transform:translateX(2.1vw) scaleX(-1)" alt="">
-  <img src="cloud.png"  class="sky-bg-cloud" style="transform:translateX(-34.7vw)" alt="">
-  <img src="cloud2.png" class="sky-bg-cloud" style="transform:translateX(57.8vw)" alt="">
-  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" style="transform:translateX(-58.1vw) scaleX(-1)" alt="">
+  <img src="cloud2.png" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="102" data-delay="-60" style="transform:translateX(45.9vw) scaleX(-1)" alt="">
+  <img src="cloud2.png" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="122" data-delay="-85" style="transform:translateX(65.4vw) scaleX(-1)" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud" data-dur="96" data-delay="-12" style="transform:translateX(-37.5vw)" alt="">
+  <img src="cloud2.png" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="116" data-delay="-40" style="transform:translateX(2.1vw) scaleX(-1)" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud" data-dur="128" data-delay="-18" style="transform:translateX(-34.7vw)" alt="">
+  <img src="cloud2.png" class="sky-bg-cloud" data-dur="110" data-delay="-72" style="transform:translateX(57.8vw)" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="94" data-delay="-95" style="transform:translateX(-58.1vw) scaleX(-1)" alt="">
 </div>
 
 <!-- alert banner removed — announcement moved to hero news card -->
@@ -2217,11 +2251,11 @@
 <!-- ── Nav ──────────────────────────────────────────────── -->
 <nav class="nav" id="nav">
   <div class="nav__clouds" aria-hidden="true">
-    <img src="cloud2.png" class="nav__cloud" style="transform:translateX(-30.6vw)" alt="">
-    <img src="cloud.png"  class="nav__cloud nav__cloud--flip" style="transform:translateX(44.7vw) scaleX(-1)" alt="">
-    <img src="cloud2.png" class="nav__cloud nav__cloud--flip" style="transform:translateX(77.6vw) scaleX(-1)" alt="">
-    <img src="cloud.png"  class="nav__cloud" style="transform:translateX(13.8vw)" alt="">
-    <img src="cloud.png"  class="nav__cloud nav__cloud--flip" style="transform:translateX(-8vw) scaleX(-1)" alt="">
+    <img src="cloud2.png" class="nav__cloud" data-dur="175" data-delay="-29" style="transform:translateX(-30.6vw)" alt="">
+    <img src="cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="140" data-delay="-81" style="transform:translateX(44.7vw) scaleX(-1)" alt="">
+    <img src="cloud2.png" class="nav__cloud nav__cloud--flip" data-dur="165" data-delay="-126" style="transform:translateX(77.6vw) scaleX(-1)" alt="">
+    <img src="cloud.png"  class="nav__cloud" data-dur="125" data-delay="-51" style="transform:translateX(13.8vw)" alt="">
+    <img src="cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="150" data-delay="-102" style="transform:translateX(-8vw) scaleX(-1)" alt="">
   </div>
   <div class="nav__inner">
     <a href="#home" class="nav__brand">
@@ -2283,18 +2317,18 @@
 <!-- ── Hero ─────────────────────────────────────────────── -->
 <header class="hero" id="home">
   <div class="hero__clouds" aria-hidden="true">
-    <img src="cloud2.png" class="hero__cloud" style="transform:translateX(-29vw)" alt="">
-    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" style="transform:translateX(56.5vw) scaleX(-1)" alt="">
-    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" style="transform:translateX(70.9vw) scaleX(-1)" alt="">
-    <img src="cloud.png"  class="hero__cloud" style="transform:translateX(21.8vw)" alt="">
-    <img src="cloud2.png" class="hero__cloud" style="transform:translateX(90vw)" alt="">
-    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" style="transform:translateX(-35.7vw) scaleX(-1)" alt="">
-    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" style="transform:translateX(43.5vw) scaleX(-1)" alt="">
-    <img src="cloud.png"  class="hero__cloud" style="transform:translateX(46.7vw)" alt="">
-    <img src="cloud2.png" class="hero__cloud" style="transform:translateX(117.1vw)" alt="">
-    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" style="transform:translateX(-1.4vw) scaleX(-1)" alt="">
-    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" style="transform:translateX(98.8vw) scaleX(-1)" alt="">
-    <img src="cloud.png"  class="hero__cloud" style="transform:translateX(99.5vw)" alt="">
+    <img src="cloud2.png" class="hero__cloud" data-dur="116" data-delay="-20" style="transform:translateX(-29vw)" alt="">
+    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" data-dur="85" data-delay="-55" style="transform:translateX(56.5vw) scaleX(-1)" alt="">
+    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" data-dur="110" data-delay="-80" style="transform:translateX(70.9vw) scaleX(-1)" alt="">
+    <img src="cloud.png"  class="hero__cloud" data-dur="77" data-delay="-35" style="transform:translateX(21.8vw)" alt="">
+    <img src="cloud2.png" class="hero__cloud" data-dur="132" data-delay="-110" style="transform:translateX(90vw)" alt="">
+    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" data-dur="89" data-delay="-12" style="transform:translateX(-35.7vw) scaleX(-1)" alt="">
+    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" data-dur="113" data-delay="-65" style="transform:translateX(43.5vw) scaleX(-1)" alt="">
+    <img src="cloud.png"  class="hero__cloud" data-dur="81" data-delay="-48" style="transform:translateX(46.7vw)" alt="">
+    <img src="cloud2.png" class="hero__cloud" data-dur="122" data-delay="-120" style="transform:translateX(117.1vw)" alt="">
+    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" data-dur="86" data-delay="-28" style="transform:translateX(-1.4vw) scaleX(-1)" alt="">
+    <img src="cloud2.png" class="hero__cloud hero__cloud--flip" data-dur="102" data-delay="-90" style="transform:translateX(98.8vw) scaleX(-1)" alt="">
+    <img src="cloud.png"  class="hero__cloud" data-dur="79" data-delay="-70" style="transform:translateX(99.5vw)" alt="">
   </div>
   <img src="logo.png" alt="St. Clair Drug Mart Pharmacy logo" class="hero__logo" width="940" height="922" fetchpriority="high" />
   <h1 class="hero__name">St. Clair Drug Mart Pharmacy</h1>
@@ -2383,6 +2417,7 @@
         <div class="welcome__pills">
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},120)">🤒 I'm feeling ill</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)">💊 I'm worried about my medication side effects</a>
+          <a href="#rx-extensions" class="welcome__pill" onclick="setTimeout(function(){var el=document.getElementById('rx-extensions');el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.remove('rx-ext--flash');void el.offsetWidth;el.classList.add('rx-ext--flash');},60)">🩹 Can't reach my doctor and I'm running out of medication!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)">✈️ I'm travelling and want to stay healthy!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)">🚭 I want to successfully quit smoking!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)">🆘 I need a free naloxone kit</a>
@@ -2427,6 +2462,19 @@
         <div class="welcome-box__desc">Rapid COVID-19, pregnancy, and blood glucose tests — performed by your pharmacist, results in minutes.</div>
         <span class="welcome-box__cta">Book a test →</span>
       </a>
+    </div>
+
+    <!-- Rx Extensions & Adaptations callout -->
+    <div class="rx-ext" id="rx-extensions">
+      <div class="rx-ext__icon">💊</div>
+      <div class="rx-ext__body">
+        <div class="rx-ext__title">Out of refills? Can't reach your doctor?</div>
+        <p class="rx-ext__text">If you've run out of medication and can't get in to see your prescriber, our pharmacists may be able to <strong>extend, renew, or adapt your prescription</strong> so you don't go without. Already a patient with us? In many cases we can help over the phone. New to us? Bring in or upload your most recent prescription (a label, bottle, or other proof of your current therapy) so we can confirm what you've been taking.</p>
+      </div>
+      <div class="rx-ext__actions">
+        <a class="rx-ext__btn" href="#booking" onclick="setTimeout(function(){var c=document.querySelector('[data-label=\'Book an Appointment\']');if(c)c.click();},150)">📅 Request an Extension / Adaptation</a>
+        <a class="rx-ext__btn rx-ext__btn--ghost" href="tel:+14166548181">📞 Call (416) 654-8181</a>
+      </div>
     </div>
   </div>
 </section>
@@ -2523,6 +2571,7 @@
           <li><strong>💉 Vaccinations</strong> — flu, COVID-19, travel &amp; more <span class="pa-list-link" onclick="event.stopPropagation();openAcc('acc-vaccines');setTimeout(function(){document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span></li>
           <li><strong>🔬 Point of Care Testing</strong> — COVID-19 test, pregnancy test, blood glucose <span class="pa-list-link" onclick="event.stopPropagation();openAcc('acc-poct');setTimeout(function(){document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span></li>
           <li><strong>📋 General consultation</strong> — minor ailments &amp; medication concerns <span class="pa-list-link" onclick="event.stopPropagation();openAcc('acc-ailments');setTimeout(function(){document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},100)">See conditions →</span></li>
+          <li><strong>💊 Prescription Extensions &amp; Adaptations</strong> — out of refills or can't reach your doctor? <span class="pa-list-link" onclick="event.stopPropagation();document.getElementById('rx-extensions').scrollIntoView({behavior:'smooth',block:'center'})">Learn more →</span></li>
         </ul>
       </button>
       <div class="pa-iframe-wrap" id="pa-wrap" style="display:none">
@@ -3467,8 +3516,8 @@
       <h2 class="section__title" style="margin-bottom:0;">Find Us</h2>
       <div class="find-us__partner-logos">
         <button class="find-us__logo-btn" onclick="goToCard('transit-card')" aria-label="View TTC transit directions"><img src="logos/ttc.webp" alt="TTC — Toronto Transit Commission"></button>
-        <button class="find-us__logo-btn" onclick="goToCard('parking-card')" aria-label="View parking info"><img src="logos/greenp.png" alt="Green P Municipal Parking"></button>
-        <button class="find-us__logo-btn" onclick="goToCard('parking-card')" aria-label="View Bike Share info"><img src="logos/bikeshare.png" alt="Bike Share Toronto"></button>
+        <button class="find-us__logo-btn" onclick="goToCard('parking-card', 'parking-car-group')" aria-label="View parking info"><img src="logos/greenp.png" alt="Green P Municipal Parking"></button>
+        <button class="find-us__logo-btn" onclick="goToCard('parking-card', 'parking-bike-group')" aria-label="View Bike Share info"><img src="logos/bikeshare.png" alt="Bike Share Toronto"></button>
       </div>
     </div>
 
@@ -3595,12 +3644,17 @@
         <div class="info-strip__title">🅿️ Parking &amp; 🚲 Cycling</div>
         <div class="info-strip__body">
           <div class="info-strip__chips">
-            <div class="info-strip__sub-label">Car Parking</div>
-            <div class="info-chip"><span class="info-chip__icon">🚗</span><span><strong>Street parking</strong> directly in front on St. Clair Ave W — free on evenings &amp; weekends</span></div>
-            <a class="info-chip" href="https://www.google.com/maps/search/?api=1&query=Green+P+Parking+St+Clair+Ave+W+Via+Italia+Toronto" target="_blank" rel="noopener"><span class="info-chip__icon">🅿️</span><span><strong>Green P — Via Italia Lot</strong> (St. Clair Ave W &amp; Via Italia, near Dufferin) <span class="info-chip__map">· Map →</span></span></a>
-            <div class="info-chip"><span class="info-chip__icon">♿</span><span>Accessible entrance &amp; designated parking spaces available</span></div>
-            <div class="info-strip__sub-label" style="margin-top:.55rem;">🚲 Bike Share Toronto</div>
-            <a class="info-chip" href="https://bikesharetoronto.com/system-map/" target="_blank" rel="noopener"><span class="info-chip__icon">🚲</span><span><strong>91 Via Italia station</strong> — just around the corner from the pharmacy <span class="info-chip__map">· Live map →</span></span></a>
+            <div class="info-strip__subgroup" id="parking-car-group">
+              <div class="info-strip__sub-label">Car Parking</div>
+              <div class="info-chip"><span class="info-chip__icon">🚗</span><span><strong>Street parking</strong> directly in front on St. Clair Ave W — free on evenings &amp; weekends</span></div>
+              <a class="info-chip" href="https://www.google.com/maps/search/?api=1&query=Green+P+Parking+St+Clair+Ave+W+Via+Italia+Toronto" target="_blank" rel="noopener"><span class="info-chip__icon">🅿️</span><span><strong>Green P — Via Italia Lot</strong> (St. Clair Ave W &amp; Via Italia, near Dufferin) <span class="info-chip__map">· Map →</span></span></a>
+              <div class="info-chip"><span class="info-chip__icon">♿</span><span>Accessible entrance &amp; designated parking spaces available</span></div>
+            </div>
+            <div class="info-strip__subgroup" id="parking-bike-group">
+              <div class="info-strip__sub-label" style="margin-top:.55rem;">🚲 Bike Share Toronto</div>
+              <a class="info-chip" href="https://bikesharetoronto.com/system-map/" target="_blank" rel="noopener"><span class="info-chip__icon">🚲</span><span><strong>91 Via Italia station</strong> — just around the corner from the pharmacy <span class="info-chip__map">· Live map →</span></span></a>
+              <a class="info-chip" href="https://bikesharetoronto.com/system-map/" target="_blank" rel="noopener"><span class="info-chip__icon">🚲</span><span><strong>7 Norton Ave station</strong> — another nearby option <span class="info-chip__map">· Live map →</span></span></a>
+            </div>
           </div>
         </div>
         <div class="info-strip__btn-row">
@@ -3790,6 +3844,7 @@ window.FAQS = [
         <button type="button" id="faqSearchClear" class="faq-search__clear" aria-label="Clear search" hidden>&times;</button>
       </div>
       <div class="faq-search__status" id="faqSearchStatus" aria-live="polite"></div>
+      <div class="ailments-smartsearch__results" id="faqConditionResults"></div>
     </div>
     <div class="faq-list" id="faq-list"><!-- populated by script below --></div>
   </div>
@@ -3832,8 +3887,10 @@ window.FAQS = [
   var clearBtn = document.getElementById('faqSearchClear');
   var status = document.getElementById('faqSearchStatus');
   var list = document.getElementById('faq-list');
+  var condBox = document.getElementById('faqConditionResults');
   if (!input || !list || !window.FAQS) return;
 
+  var UMBRELLA_Q = 'Can a pharmacist prescribe medication in Ontario?';
   var items = Array.prototype.slice.call(list.querySelectorAll('.faq-item'));
   var plain = document.createElement('div');
   var idx = items.map(function(item, i){
@@ -3843,6 +3900,62 @@ window.FAQS = [
   });
   var emptyBox = null;
   var debounce;
+
+  function scoreCondition(a, query){
+    var words = query.toLowerCase().split(/\s+/).filter(Boolean);
+    if (!words.length) return 0;
+    var s = 0;
+    var kws = a.kw.join(' ');
+    var nameLower = a.name.toLowerCase();
+    words.forEach(function(w){
+      if (w.length < 3) return;
+      if (nameLower.indexOf(w) !== -1) s += 3;
+      a.kw.forEach(function(k){ if (k.indexOf(w) !== -1 || w.indexOf(k) !== -1) s += 2; });
+      if (kws.indexOf(w) !== -1) s += 1;
+    });
+    return s;
+  }
+
+  function renderConditions(matches, query){
+    if (!condBox) return;
+    if (!matches.length) { condBox.classList.remove('has-results'); condBox.innerHTML = ''; return; }
+    var html = '<div class="ailments-smartsearch__divider">Conditions matching "' + query + '"</div>';
+    matches.forEach(function(x){
+      var a = x.a;
+      var href = a.call ? 'tel:+14166548181' : '#booking';
+      var dataUrl = (!a.call && window.PHARMA_BASE) ? ' data-url="' + window.PHARMA_BASE + a.id + '"' : '';
+      html += '<button class="ailments-smartsearch__hit js-faq-cond-hit" data-href="' + href + '"' + dataUrl + ' data-call="' + (a.call?'1':'') + '">'
+        + '<span class="ailments-smartsearch__hit-icon">' + a.icon + '</span>'
+        + '<span class="ailments-smartsearch__hit-body">'
+        + '<span class="ailments-smartsearch__hit-name">' + a.name + '</span>'
+        + '<span class="ailments-smartsearch__hit-kw">' + (a.call ? 'Call us for treatment options' : 'Start pharmacist assessment online') + '</span>'
+        + '</span>'
+        + '<span class="ailments-smartsearch__hit-arrow">›</span>'
+        + '</button>';
+    });
+    condBox.innerHTML = html;
+    condBox.classList.add('has-results');
+    condBox.querySelectorAll('.js-faq-cond-hit').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var call = this.dataset.call === '1';
+        var url = this.dataset.url;
+        if (call) { window.location.href = 'tel:+14166548181'; return; }
+        var paWrap = document.getElementById('pa-wrap');
+        var paIframe = document.getElementById('pa-iframe');
+        var paLabel = document.getElementById('pa-iframe-label-text');
+        if (paWrap && paIframe && url) {
+          paIframe.src = url;
+          paIframe.style.height = '900px';
+          if (paLabel) paLabel.textContent = 'Minor Ailment Assessment';
+          paWrap.style.display = '';
+          paWrap.classList.remove('collapsed');
+          document.querySelectorAll('.pa-card').forEach(function(c){ c.classList.remove('active'); });
+        }
+        var bookingEl = document.getElementById('booking');
+        if (bookingEl) bookingEl.scrollIntoView({ behavior:'smooth', block:'start' });
+      });
+    });
+  }
 
   function escapeRx(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
   function highlight(text, terms){
@@ -3875,6 +3988,7 @@ window.FAQS = [
       entry.item.querySelector('.faq-item__q-text').innerHTML = entry.q;
     });
     if (emptyBox) { emptyBox.remove(); emptyBox = null; }
+    renderConditions([], '');
     status.innerHTML = '';
     clearBtn.hidden = true;
   }
@@ -3890,7 +4004,25 @@ window.FAQS = [
     if (!query) { resetView(); return; }
 
     var terms = query.toLowerCase().split(/\s+/).filter(function(w){ return w.length >= 3; });
+
+    // Minor-ailment conditions matching the query (from the same AILMENT_DB the
+    // ailment assessment search uses), so symptom-style queries like "rash"
+    // surface relevant conditions, not just FAQ text matches.
+    var ailmentDb = window.AILMENT_DB || [];
+    var condMatches = ailmentDb.map(function(a){ return { a:a, s: scoreCondition(a, query) }; })
+      .filter(function(x){ return x.s > 0; })
+      .sort(function(a,b){ return b.s - a.s; })
+      .slice(0, 5);
+    renderConditions(condMatches, query);
+
     var scored = idx.map(function(entry){ return { entry: entry, s: score(entry, query) }; });
+    if (condMatches.length) {
+      // Whenever a symptom matches a minor ailment, also surface the general
+      // "pharmacist can prescribe" / assessment FAQ alongside it.
+      scored.forEach(function(x){
+        if (x.entry.q === UMBRELLA_Q) x.s = Math.max(x.s, 7);
+      });
+    }
     var matches = scored.filter(function(x){ return x.s > 0; }).sort(function(a,b){ return b.s - a.s; });
 
     if (!matches.length) {
@@ -3900,7 +4032,11 @@ window.FAQS = [
         entry.item.classList.remove('faq-best-match');
         entry.item.querySelector('.faq-item__q-text').innerHTML = entry.q;
       });
-      status.innerHTML = 'No exact match for “<strong>' + query + '</strong>” — here are some popular questions, or ask us directly:';
+      if (condMatches.length) {
+        status.innerHTML = '<strong>' + condMatches.length + '</strong> condition' + (condMatches.length === 1 ? '' : 's') + ' matched “' + query + '” above — no FAQ matched directly, but here are some popular questions too:';
+      } else {
+        status.innerHTML = 'No exact match for “<strong>' + query + '</strong>” — here are some popular questions, or ask us directly:';
+      }
       var topThree = idx.slice(0, 3);
       topThree.forEach(function(entry){ entry.item.classList.remove('faq-hidden'); list.appendChild(entry.item); });
       emptyBox = document.createElement('div');
@@ -5418,6 +5554,33 @@ window.FAQS = [
     }
   });
 
+  // ── Cloud drift, driven by JS (not CSS @keyframes) so it can't be silently
+  //    disabled by a browser's animation engine, reduced-motion override, or
+  //    power-saving mode — these clouds are purely decorative (aria-hidden).
+  (function() {
+    var els = document.querySelectorAll('.nav__cloud, .hero__cloud, .sky-bg-cloud');
+    var items = [];
+    els.forEach(function(el) {
+      var dur = parseFloat(el.dataset.dur);
+      var delay = parseFloat(el.dataset.delay) || 0;
+      if (!dur) return;
+      el.style.animation = 'none';
+      items.push({ el: el, dur: dur, delay: delay, flip: el.className.indexOf('--flip') !== -1 });
+    });
+    if (!items.length) return;
+    function tick(now) {
+      var t = now / 1000;
+      for (var i = 0; i < items.length; i++) {
+        var it = items[i];
+        var prog = (((t - it.delay) % it.dur) + it.dur) % it.dur / it.dur;
+        var vw = -60 + prog * 180;
+        it.el.style.transform = 'translateX(' + vw.toFixed(2) + 'vw)' + (it.flip ? ' scaleX(-1)' : '');
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+
   // ── Nav: clouds always drift; background fades in progressively as hero scrolls away,
   //    then stays as frosted glass (semi-transparent + blur) throughout the whole site ──
   (function() {
@@ -5453,10 +5616,11 @@ window.FAQS = [
   })();
 
   // ── Transit/Parking logo scroll + highlight ───────────────
-  function goToCard(id) {
+  function goToCard(id, subId) {
     var el = document.getElementById(id);
     if (!el) return;
-    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    var target = (subId && document.getElementById(subId)) || el;
+    target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     el.classList.remove('info-strip__card--highlight');
     void el.offsetWidth;
     el.classList.add('info-strip__card--highlight');
@@ -5467,6 +5631,15 @@ window.FAQS = [
       void title.offsetWidth;
       title.classList.add('info-strip__title--highlight');
       title.addEventListener('animationend', function() { title.classList.remove('info-strip__title--highlight'); }, { once: true });
+    }
+    if (subId) {
+      var sub = document.getElementById(subId);
+      if (sub) {
+        sub.classList.remove('info-strip__subgroup--highlight');
+        void sub.offsetWidth;
+        sub.classList.add('info-strip__subgroup--highlight');
+        sub.addEventListener('animationend', function() { sub.classList.remove('info-strip__subgroup--highlight'); }, { once: true });
+      }
     }
   }
 
