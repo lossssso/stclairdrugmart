@@ -28,6 +28,22 @@ whether it can be done over the phone, and what proof of prior/chronic use is
 required. The welcome callout copy currently hedges ("may be able to… in many
 cases…") so it can be tightened once the rules are confirmed.
 
+**Documentation requirement, and the "photo of a bottle from another pharmacy"
+case:** OCP's published guidance requires the pharmacist to have **"reference
+to, or a copy of, the original prescription"** before renewing — that's the bar,
+not optional. A clear photo of a labeled pill bottle/package from another
+pharmacy (showing drug, strength, prescriber, and the original pharmacy) is, in
+common practice, generally treated as that "reference" — but OCP's published
+materials don't explicitly bless photos as a standalone source, and OCP's
+prescription-transfer/due-diligence guidance expects the pharmacist to verify
+authenticity, which in practice can mean **calling the original pharmacy or
+prescriber to confirm details**, especially for a new patient or a controlled
+substance. The site copy now reflects this ("a clear photo... is usually
+enough to get started — we may call your previous pharmacy to confirm").
+**Before this becomes official store policy, confirm directly with OCP (or your
+own pharmacist judgment/SOPs) whether a photo alone is ever sufficient without
+a verification call, and document that policy for staff.**
+
 ## COVID-19 test certificate (to set up / confirm)
 
 The site already surfaces a "I need a COVID-19 test and certificate!" pill and
