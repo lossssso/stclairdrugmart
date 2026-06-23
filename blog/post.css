@@ -66,8 +66,8 @@ footer a:hover { color:#fff; }
 .footer__trust { margin-top:1.5rem; display:flex; flex-direction:column; align-items:center; gap:1.1rem; }
 .footer__badges { display:flex; align-items:flex-start; justify-content:center; gap:1.75rem; flex-wrap:wrap; }
 .trust-badge { display:flex; flex-direction:column; align-items:center; gap:.6rem; position:relative; }
-.trust-badge__disc { width:88px; height:88px; border-radius:50%; background:rgba(255,255,255,.82); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); border:1.5px solid rgba(255,255,255,.55); box-shadow:0 8px 22px rgba(0,30,33,.28), inset 0 1px 1px rgba(255,255,255,.7); display:flex; align-items:center; justify-content:center; transition:transform .18s ease, box-shadow .18s ease; }
-.trust-badge:hover .trust-badge__disc { transform:translateY(-3px); box-shadow:0 13px 28px rgba(0,30,33,.34), inset 0 1px 1px rgba(255,255,255,.7); }
+.trust-badge__disc { width:84px; height:84px; border-radius:50%; background:rgba(255,255,255,.60); -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px); border:1.5px solid rgba(255,255,255,.35); display:flex; align-items:center; justify-content:center; transition:background .15s, transform .15s; }
+.trust-badge:hover .trust-badge__disc { background:rgba(255,255,255,.70); transform:translateY(-2px); }
 .trust-badge__logo { width:auto; height:auto; max-width:60px; max-height:50px; object-fit:contain; display:block; }
 .trust-badge--wordmark .trust-badge__logo { max-width:66px; max-height:54px; }
 .trust-badge__caption { font-size:.64rem; color:rgba(255,255,255,.72); font-weight:600; text-align:center; line-height:1.35; letter-spacing:.02em; }
