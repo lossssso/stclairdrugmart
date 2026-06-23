@@ -2025,6 +2025,29 @@
     .faq-item__a a { color: var(--teal-bright); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--teal-mid); white-space: nowrap; }
     .faq-item__a a:hover { color: var(--teal-deeper); border-color: var(--teal-deeper); }
 
+    /* ── FAQ smart search ─────────────────────────── */
+    .faq-search { margin: 1.75rem 0 1rem; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .faq-search__bar {
+      display: flex; align-items: center; gap: .65rem;
+      background: #fff; border-radius: 100px; padding: .8rem 1.1rem;
+      box-shadow: 0 8px 26px rgba(0,0,0,.22);
+      border: 1.5px solid transparent;
+      transition: box-shadow .2s, border-color .2s;
+    }
+    .faq-search__bar:focus-within { border-color: var(--teal-bright); box-shadow: 0 8px 26px rgba(0,0,0,.22), 0 0 0 3px rgba(33,161,168,.25); }
+    .faq-search__bar svg { width: 19px; height: 19px; stroke: var(--teal-bright); flex-shrink: 0; }
+    .faq-search__input { flex: 1; border: none; outline: none; font-size: .92rem; font-family: inherit; color: var(--text); background: none; min-width: 0; }
+    .faq-search__input::placeholder { color: var(--text-muted); }
+    .faq-search__clear { background: var(--teal-ice); border: none; cursor: pointer; color: var(--teal-dark); font-size: 1rem; line-height: 1; width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; }
+    .faq-search__status { text-align: center; font-size: .8rem; color: rgba(255,255,255,.7); margin-top: .65rem; min-height: 1.2em; }
+    .faq-search__status strong { color: #fff; }
+    .faq-item__q-text mark, .faq-item__a mark { background: rgba(33,161,168,.22); color: var(--teal-deeper); border-radius: 3px; padding: 0 .1em; }
+    .faq-item.faq-hidden { display: none; }
+    .faq-item.faq-best-match { border-left-color: var(--teal-bright); }
+    .faq-empty { background: rgba(255,255,255,.92); border-radius: 14px; padding: 1.4rem 1.3rem; text-align: center; }
+    .faq-empty p { color: var(--text-muted); font-size: .88rem; margin: 0 0 .85rem; line-height: 1.55; }
+    .faq-empty a.btn { display: inline-block; }
+
     /* ── Footer trust badges ──────────────────────── */
     .footer__trust { margin-top: 1.75rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
     .footer__badges {
@@ -2939,8 +2962,8 @@
           <div class="medscheck-card">
             <div class="medscheck-card__icon">💳</div>
             <div class="medscheck-card__title">Cost</div>
-            <p class="medscheck-card__desc">Many insurance plans cover this consultation as a pharmacist clinical service — we'll check your coverage first. If you're paying out of pocket, our fee is <strong>$15</strong> for the assessment and renewal — disclosed and confirmed with you before we charge anything.</p>
-            <span class="medscheck-card__tag">$15 if uninsured · Many plans cover it</span>
+            <p class="medscheck-card__desc">This isn't an OHIP-covered service, so there's a fee — <strong>$15</strong> for the assessment and renewal, confirmed with you before we charge anything. Many extended health / drug benefit plans will reimburse it as a pharmacist clinical service; we'll give you a receipt to submit to your provider.</p>
+            <span class="medscheck-card__tag">$15 fee · Many plans reimburse with a receipt</span>
           </div>
         </div>
         <p class="insurance__note" style="margin-top:1.75rem;">Call us or come in — for most patients a quick phone conversation is enough, but our pharmacist may ask you to come in if an in-person check is needed for your safety.</p>
@@ -3706,7 +3729,7 @@ window.FAQS = [
   {
     icon: "🔁",
     q: "Can a pharmacist renew my prescription if I can't reach my doctor?",
-    a: "Yes. If you're already stable on a medication and your doctor's office can't be reached, our pharmacist can independently renew your prescription for continuity of care — up to the original amount prescribed or a 12-month supply, whichever is less (most narcotics and controlled substances are excluded). We confirm the therapy has been working safely for you, authorize the renewal, and notify your doctor afterward — often over the phone, though our pharmacist may ask you to come in if an in-person check is needed. Many insurance plans cover this consultation; our fee is $15 if you're paying out of pocket. If you're taking multiple medications, your renewal may be covered with a <strong>Medication Review</strong> instead — at no cost — confirming it's safe to keep taking everything together. <a href=\"tel:+14166548181\">Call us</a> or come in to get started."
+    a: "Yes. If you're already stable on a medication and your doctor's office can't be reached, our pharmacist can independently renew your prescription for continuity of care — up to the original amount prescribed or a 12-month supply, whichever is less (most narcotics and controlled substances are excluded). We confirm the therapy has been working safely for you, authorize the renewal, and notify your doctor afterward — often over the phone, though our pharmacist may ask you to come in if an in-person check is needed. This isn't covered by OHIP, but many extended health or drug benefit plans will reimburse the fee if you submit a receipt — just ask and we'll give you one. Either way, our fee is $15. If you're taking multiple medications, your renewal may be covered with a <strong>Medication Review</strong> instead — at no cost — confirming it's safe to keep taking everything together. <a href=\"tel:+14166548181\">Call us</a> or come in to get started."
   },
   {
     icon: "💸",
@@ -3746,7 +3769,7 @@ window.FAQS = [
   {
     icon: "🔄",
     q: "Can a pharmacist extend or adapt my prescription?",
-    a: "Yes. Ontario pharmacists can <strong>extend</strong> (renew) an existing prescription so you don't run out while waiting to reach your doctor, and can also <strong>adapt</strong> a prescription — adjusting the dose, dosage form (e.g. tablet to liquid), or regimen to better suit you — without contacting your doctor first. Both are only for medications you're already stable and established on; we always notify your prescriber afterward. Extensions are capped at the original quantity prescribed or a 12-month supply, whichever is less, and most narcotics and controlled substances are excluded. Many insurance plans cover the consultation; our fee is $15 if you're paying out of pocket. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},200)\">See how prescription renewals &amp; adaptations work →</a>"
+    a: "Yes. Ontario pharmacists can <strong>extend</strong> (renew) an existing prescription so you don't run out while waiting to reach your doctor, and can also <strong>adapt</strong> a prescription — adjusting the dose, dosage form (e.g. tablet to liquid), or regimen to better suit you — without contacting your doctor first. Both are only for medications you're already stable and established on; we always notify your prescriber afterward. Extensions are capped at the original quantity prescribed or a 12-month supply, whichever is less, and most narcotics and controlled substances are excluded. This isn't covered by OHIP, but many extended health or drug benefit plans will reimburse the fee with a receipt, which we're happy to provide. Either way, our fee is $15. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},200)\">See how prescription renewals &amp; adaptations work →</a>"
   }
   /* ── add new FAQs here, following the same { q: "…", a: "…", icon: "…" } format ── */
 ];
@@ -3756,6 +3779,14 @@ window.FAQS = [
   <div class="section__inner">
     <h2 class="section__title">Got Questions? <span style="font-size:.7em;opacity:.6;">(FAQ)</span></h2>
     <p class="section__lead">Everything you need to know — straight from your pharmacist.</p>
+    <div class="faq-search">
+      <div class="faq-search__bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="faqSearchInput" class="faq-search__input" placeholder="Ask a question — e.g. “can I get a flu shot?”" autocomplete="off" spellcheck="false" />
+        <button type="button" id="faqSearchClear" class="faq-search__clear" aria-label="Clear search" hidden>&times;</button>
+      </div>
+      <div class="faq-search__status" id="faqSearchStatus" aria-live="polite"></div>
+    </div>
     <div class="faq-list" id="faq-list"><!-- populated by script below --></div>
   </div>
 </section>
@@ -3765,9 +3796,10 @@ window.FAQS = [
   var svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
   var list = document.getElementById('faq-list');
   if (!list || !window.FAQS) return;
-  window.FAQS.forEach(function(faq){
+  window.FAQS.forEach(function(faq, idx){
     var item = document.createElement('div');
     item.className = 'faq-item';
+    item.dataset.idx = idx;
     var btn = document.createElement('button');
     btn.className = 'faq-item__q';
     btn.setAttribute('aria-expanded', 'false');
@@ -3786,6 +3818,121 @@ window.FAQS = [
     item.appendChild(btn);
     item.appendChild(ans);
     list.appendChild(item);
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var input = document.getElementById('faqSearchInput');
+  var clearBtn = document.getElementById('faqSearchClear');
+  var status = document.getElementById('faqSearchStatus');
+  var list = document.getElementById('faq-list');
+  if (!input || !list || !window.FAQS) return;
+
+  var items = Array.prototype.slice.call(list.querySelectorAll('.faq-item'));
+  var plain = document.createElement('div');
+  var idx = items.map(function(item, i){
+    var faq = window.FAQS[i];
+    plain.innerHTML = faq.a;
+    return { item: item, q: faq.q, body: plain.textContent.trim() };
+  });
+  var emptyBox = null;
+  var debounce;
+
+  function escapeRx(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  function highlight(text, terms){
+    var out = text;
+    terms.forEach(function(t){
+      if (!t) return;
+      out = out.replace(new RegExp('(' + escapeRx(t) + ')', 'gi'), '<mark>$1</mark>');
+    });
+    return out;
+  }
+  function score(entry, query){
+    var q = query.toLowerCase();
+    var t = entry.q.toLowerCase();
+    var b = entry.body.toLowerCase();
+    var s = 0;
+    if (t === q) s += 12;
+    else if (t.indexOf(q) !== -1) s += 6;
+    if (b.indexOf(q) !== -1) s += 3;
+    q.split(/\s+/).forEach(function(w){
+      if (!w || w.length < 3) return;
+      var wb = new RegExp('\\b' + escapeRx(w));
+      if (wb.test(t)) s += 3;
+      if (wb.test(b)) s += 1;
+    });
+    return s;
+  }
+  function resetView(){
+    idx.forEach(function(entry){
+      entry.item.classList.remove('faq-hidden', 'faq-best-match');
+      entry.item.querySelector('.faq-item__q-text').innerHTML = entry.q;
+    });
+    if (emptyBox) { emptyBox.remove(); emptyBox = null; }
+    status.innerHTML = '';
+    clearBtn.hidden = true;
+  }
+  function closeAll(){
+    items.forEach(function(item){
+      item.classList.remove('open');
+      item.querySelector('.faq-item__q').setAttribute('aria-expanded', 'false');
+    });
+  }
+  function runSearch(query){
+    clearBtn.hidden = !query;
+    if (emptyBox) { emptyBox.remove(); emptyBox = null; }
+    if (!query) { resetView(); return; }
+
+    var terms = query.toLowerCase().split(/\s+/).filter(function(w){ return w.length >= 3; });
+    var scored = idx.map(function(entry){ return { entry: entry, s: score(entry, query) }; });
+    var matches = scored.filter(function(x){ return x.s > 0; }).sort(function(a,b){ return b.s - a.s; });
+
+    if (!matches.length) {
+      closeAll();
+      idx.forEach(function(entry){
+        entry.item.classList.add('faq-hidden');
+        entry.item.classList.remove('faq-best-match');
+        entry.item.querySelector('.faq-item__q-text').innerHTML = entry.q;
+      });
+      status.innerHTML = 'No exact match for “<strong>' + query + '</strong>” — here are some popular questions, or ask us directly:';
+      var topThree = idx.slice(0, 3);
+      topThree.forEach(function(entry){ entry.item.classList.remove('faq-hidden'); list.appendChild(entry.item); });
+      emptyBox = document.createElement('div');
+      emptyBox.className = 'faq-empty';
+      emptyBox.innerHTML = '<p>Couldn\'t find that in our FAQ. Call or message us and a pharmacist will answer directly.</p><a href="tel:+14166548181" class="btn">Call (416) 654-8181 →</a>';
+      list.appendChild(emptyBox);
+      return;
+    }
+
+    closeAll();
+    var matchedIds = {};
+    matches.forEach(function(x, i){
+      matchedIds[x.entry.item.dataset.idx] = true;
+      x.entry.item.classList.remove('faq-hidden');
+      x.entry.item.classList.toggle('faq-best-match', i === 0);
+      x.entry.item.querySelector('.faq-item__q-text').innerHTML = highlight(x.entry.q, terms.length ? terms : [query]);
+      list.appendChild(x.entry.item);
+    });
+    idx.forEach(function(entry){
+      if (!matchedIds[entry.item.dataset.idx]) entry.item.classList.add('faq-hidden');
+    });
+    var top = matches[0].entry.item;
+    top.classList.add('open');
+    top.querySelector('.faq-item__q').setAttribute('aria-expanded', 'true');
+    status.innerHTML = '<strong>' + matches.length + '</strong> matching question' + (matches.length === 1 ? '' : 's') + ' for “' + query + '” — best match opened below.';
+  }
+
+  input.addEventListener('input', function(){
+    clearTimeout(debounce);
+    var q = this.value.trim();
+    debounce = setTimeout(function(){ runSearch(q); }, 200);
+  });
+  clearBtn.addEventListener('click', function(){
+    input.value = '';
+    input.focus();
+    resetView();
   });
 })();
 </script>
