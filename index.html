@@ -686,6 +686,12 @@
 
     /* ── Booking / PharmAssess ────────────────────────── */
     #booking { background: var(--teal-light); }
+    #booking .section__inner { position: relative; }
+    .booking__logo {
+      position: absolute; top: 0; right: 0;
+      height: clamp(90px, 11vw, 160px); width: auto;
+    }
+    @media (max-width: 860px) { .booking__logo { display: none; } }
     .pa-cards {
       display: grid;
       gap: .75rem;
@@ -2593,6 +2599,7 @@
 <!-- ── Services & Booking (merged) ───────────────────────── -->
 <section id="booking">
   <div class="section__inner">
+    <img src="logo.png" alt="St. Clair Drug Mart Pharmacy" class="booking__logo" loading="lazy" decoding="async" />
     <h2 class="section__title">Patient Portal</h2>
     <p class="section__lead">Book appointments, request refills, transfer prescriptions, or sign in — everything loads right here. Need a rapid COVID-19 test, pregnancy test, or blood glucose check? Book Point of Care Testing below.</p>
 
