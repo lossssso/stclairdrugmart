@@ -1026,17 +1026,14 @@
     }
     .about__text { max-width: 760px; }
     .about__text p { color: var(--text-muted); margin-top: 1rem; }
-    .gallery { display: flex; flex-direction: column; gap: 1.1rem; margin-top: 2.5rem; }
-    /* Top row: sticks out past the section edges — pyramid wide at top */
-    .gallery__row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.1rem; }
-    .gallery__row--top {
+    .gallery {
+      display: flex; flex-direction: column; gap: 1.1rem; margin-top: 2.5rem;
+      /* full-bleed: both rows span the same width so their columns line up */
       margin-left: clamp(-4rem, -6vw, -1.5rem);
       margin-right: clamp(-4rem, -6vw, -1.5rem);
     }
-    /* Every photo card shares the same box so both rows line up; photo
-       fills the box edge-to-edge (object-fit: cover), no letterbox bars. */
+    .gallery__row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.1rem; }
     .gallery__item {
-      aspect-ratio: 5 / 7;
       background: var(--teal-ice);
       border-radius: var(--radius);
       overflow: hidden;
@@ -1048,6 +1045,13 @@
       transition: transform .35s;
     }
     .gallery__item:hover img { transform: scale(1.05); }
+    /* Top row: tall portrait storefront / neighbourhood photos */
+    .gallery__row--top .gallery__item { aspect-ratio: 5 / 7; }
+    /* Bottom row: wide interior photos shown in full — the box matches the
+       photos' native 945:1000 ratio, so object-fit:cover shows the whole
+       image with no cropping and no letterbox bars. They line up column-
+       for-column directly under the three portrait photos above. */
+    .gallery__row--bottom .gallery__item { aspect-ratio: 945 / 1000; }
 
     /* ── Footer ───────────────────────────────────────── */
     footer {
@@ -1114,7 +1118,7 @@
     @media (max-width: 900px) {
       .pa-cards--mid  { grid-template-columns: 1fr; }
       .pa-cards--util { grid-template-columns: repeat(3, 1fr); }
-      .gallery__row--top { margin-left: 0; margin-right: 0; }
+      .gallery { margin-left: 0; margin-right: 0; }
     }
     @media (max-width: 768px) {
       .nav__links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e9f4f5; box-shadow: 0 8px 20px rgba(0,60,66,.08); flex-direction: column; align-items: stretch; padding: .5rem 1rem 1rem; gap: .1rem; margin-left: 0; }
