@@ -101,7 +101,8 @@
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Prescription Renewals & Refill Extensions" } },
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Blister / Compliance Packaging" } },
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Prescription Transfers" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Free Naloxone Kits — Ontario Naloxone Program" } }
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Free Naloxone Kits — Ontario Naloxone Program" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Braces, Supports & Compression Stockings (Champion, OTC Professional, Truform)" } }
       ]
     },
     "sameAs": [
@@ -828,7 +829,7 @@
     /* ── Shop / Order Online ──────────────────────────── */
     #shop { background: var(--white); }
     /* ── Shop / Uber Eats ────────────────────────────── */
-    .shop__cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
+    .shop__cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
     .shop__card {
       display: flex; flex-direction: column; gap: 1rem;
       background: #fff; border-radius: 14px; padding: 1.75rem 1.5rem;
@@ -843,7 +844,8 @@
       display: flex; align-items: center; justify-content: center;
     }
     .shop__card__icon-wrap--uber { background: #06C167; }
-    .shop__card__icon-wrap--delivery { background: var(--teal-ice); border: 1.5px solid var(--border); }
+    .shop__card__icon-wrap--delivery,
+    .shop__card__icon-wrap--braces { background: var(--teal-ice); border: 1.5px solid var(--border); }
     .shop__card__icon-wrap img { width: 28px; height: 28px; object-fit: contain; }
     .shop__card__icon-wrap span { font-size: 1.6rem; line-height: 1; }
     .shop__card__title { font-size: 1rem; font-weight: 700; color: var(--teal-deeper); }
@@ -865,6 +867,7 @@
     }
     .btn--uber:hover { background: #05a857; }
     .btn--uber img { width: 22px; height: 22px; object-fit: contain; }
+    @media (max-width: 900px) { .shop__cards { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 680px) { .shop__cards { grid-template-columns: 1fr; } }
 
     /* ── Contact ──────────────────────────────────────── */
@@ -2304,6 +2307,7 @@
           <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},200)">Free Naloxone Kits</a></li>
           <li><a href="#drug-checker">Drug Checker</a></li>
           <li><a href="#services">Insurance</a></li>
+          <li><a href="braces-supports.html">Braces &amp; Supports</a></li>
         </ul>
       </li>
       <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a></li>
@@ -3279,6 +3283,18 @@
         </div>
       </div>
 
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🦵</span>
+          <span class="svc-acc__title">Braces, Supports &amp; Compression Stockings</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>We carry Champion, OTC Professional and Truform back &amp; lumbar supports, knee braces, wrist/elbow splints, ankle supports, abdominal binders, and medical compression stockings &amp; socks — in-store now.</p>
+          <a class="svc-acc__link" href="braces-supports.html">Browse braces &amp; supports →</a>
+        </div>
+      </div>
+
       <div class="svc-acc__group-hd">🛠️ Tools &amp; Support</div>
 
       <div class="svc-acc-item">
@@ -3716,6 +3732,18 @@
           We deliver prescriptions and health essentials free anywhere in the GTA. No minimums, no fees — just give us a call.
         </p>
         <a href="tel:+14166548181" class="btn btn--outline">📞 Call to Arrange Delivery</a>
+      </div>
+      <div class="shop__card">
+        <div class="shop__card__head">
+          <div class="shop__card__icon-wrap shop__card__icon-wrap--braces">
+            <span>🦵</span>
+          </div>
+          <div class="shop__card__title">Braces &amp; Supports</div>
+        </div>
+        <p class="shop__card__desc">
+          Champion, OTC Professional &amp; Truform back, knee, wrist, ankle and abdominal supports plus medical compression stockings — in stock now.
+        </p>
+        <a href="braces-supports.html" class="btn btn--outline">🩹 Shop Braces &amp; Supports</a>
       </div>
     </div>
   </div>
@@ -4285,6 +4313,7 @@ window.FAQS = [
     <a href="#drug-checker">Drug Checker</a>
     <a href="#services">Insurance</a>
     <a href="#shop">Shop</a>
+    <a href="braces-supports.html">Braces &amp; Supports</a>
     <a href="#contact">Contact</a>
     <a href="#about">About</a>
   </div>
@@ -5530,6 +5559,7 @@ window.FAQS = [
     { icon:'📝', title:'Health & Wellness Blog', desc:'Pharmacy tips, health news, and wellness guides', tag:'Blog', url:'blog/index.html' },
     { icon:'🔄', title:'Prescription Transfers', desc:'Transfer your prescription to us — we call the other pharmacy', tag:'Service', anchor:'#services', kw:'switch pharmacy move prescription shoppers drug mart rexall walmart costco loblaws' },
     { icon:'📸', title:'New Prescription — Send a Photo', desc:'Send a photo of your new prescription online', tag:'Service', anchor:'#booking', kw:'send photo new prescription upload e-prescription fax doctor sent it electronically' },
+    { icon:'🦵', title:'Braces, Supports & Compression Stockings', desc:'Champion, OTC Professional & Truform — in-store now', tag:'Shop', url:'braces-supports.html', kw:'back brace lumbar support knee brace sleeve wrist brace splint elbow strap ankle support abdominal binder compression socks stockings orthopedic champion otc professional truform medical device' },
   ].concat(AILMENT_DB.map(function(a) {
     return { icon:a.icon, title:a.name, desc: a.call ? 'Minor ailment — call us for treatment options' : 'Minor ailment — pharmacist can prescribe', tag:'Condition', anchor:'#booking', ailmentUrl: a.call ? null : (PHARMA_BASE + a.id), kw: a.kw.join(' ') };
   }));
