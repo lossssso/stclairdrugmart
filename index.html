@@ -709,16 +709,34 @@
     .pa-cards--mid  > .pa-iframe-wrap,
     .pa-cards--mid  > .conditions-panel,
     .pa-cards--util > .pa-iframe-wrap { grid-column: 1 / -1; }
-    .pa-card__list { margin:.45rem 0 0; padding-left:1rem; font-size:.76rem; color:var(--text-muted); line-height:1.75; text-align:left; }
-    .pa-list-link { cursor:pointer; color:var(--teal-dark); font-weight:700; font-size:.7rem; white-space:nowrap; margin-left:.3rem; }
-    .pa-list-link:hover { color:var(--teal-bright); text-decoration:underline; }
+    .pa-card__chips {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: .5rem;
+      margin-top: .75rem;
+      text-align: left;
+    }
+    .pa-chip {
+      display: flex; align-items: flex-start; gap: .5rem;
+      background: rgba(255,255,255,.55);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: .5rem .6rem;
+      cursor: pointer;
+      transition: background .15s, border-color .15s, transform .15s;
+    }
+    .pa-chip:hover { background: var(--white); border-color: var(--teal-bright); transform: translateY(-1px); }
+    .pa-chip__icon { font-size: 1.05rem; line-height: 1; flex-shrink: 0; }
+    .pa-chip__text { display: flex; flex-direction: column; gap: .1rem; min-width: 0; }
+    .pa-chip__text strong { font-size: .76rem; color: var(--text); line-height: 1.25; }
+    .pa-chip__text small { font-size: .68rem; color: var(--text-muted); line-height: 1.3; }
     .pa-conditions-arrow {
       display: inline-block;
       font-style: normal;
       transition: transform .2s;
       font-size: .85em;
     }
-    .pa-card.conditions-open .pa-conditions-arrow { transform: rotate(180deg); }
+    .pa-card.active .pa-conditions-arrow { transform: rotate(180deg); }
     .services-within__title {
       font-family: var(--font-display);
       font-size: 1.3rem; font-weight: 900;
@@ -2573,14 +2591,30 @@
     <div class="pa-cards pa-cards--book">
       <button class="pa-card" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Book an Appointment">
         <div class="pa-card__icon">📅</div>
-        <span class="pa-card__label">Book or Call Your Pharmacist</span>
+        <span class="pa-card__label">Book a Call or Appointment with Your Pharmacist</span>
         <span class="pa-card__desc">In person or over the phone when appropriate — many assessments, like UTIs and other minor ailments, don't need a visit. For:</span>
-        <ul class="pa-card__list">
-          <li><strong>💉 Vaccinations</strong> — flu, COVID-19, travel &amp; more <span class="pa-list-link" onclick="event.stopPropagation();openAcc('acc-vaccines');setTimeout(function(){document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span></li>
-          <li><strong>🔬 Point of Care Testing</strong> — COVID-19 test, pregnancy test, blood glucose <span class="pa-list-link" onclick="event.stopPropagation();openAcc('acc-poct');setTimeout(function(){document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span></li>
-          <li><strong>📋 General Consultation</strong> — <strong>Common Conditions</strong> &amp; <strong>Medication Reviews</strong> <span class="pa-list-link" onclick="event.stopPropagation();openAcc('acc-ailments');setTimeout(function(){document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},100)">See conditions →</span> <span class="pa-list-link" onclick="event.stopPropagation();openAcc('acc-med-reviews');setTimeout(function(){document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},100)">Med reviews →</span></li>
-          <li><strong>💊 Prescription Extensions &amp; Adaptations</strong> — out of refills or can't reach your doctor? <span class="pa-list-link" onclick="event.stopPropagation();document.getElementById('rx-extensions').scrollIntoView({behavior:'smooth',block:'center'})">Learn more →</span></li>
-        </ul>
+        <div class="pa-card__chips">
+          <div class="pa-chip" onclick="event.stopPropagation();openAcc('acc-vaccines');setTimeout(function(){document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},100)">
+            <span class="pa-chip__icon">💉</span>
+            <span class="pa-chip__text"><strong>Vaccinations</strong><small>Flu, COVID-19, travel &amp; more</small></span>
+          </div>
+          <div class="pa-chip" onclick="event.stopPropagation();openAcc('acc-poct');setTimeout(function(){document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},100)">
+            <span class="pa-chip__icon">🔬</span>
+            <span class="pa-chip__text"><strong>Point of Care Testing</strong><small>COVID-19, pregnancy, blood glucose</small></span>
+          </div>
+          <div class="pa-chip" onclick="event.stopPropagation();openAcc('acc-ailments');setTimeout(function(){document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},100)">
+            <span class="pa-chip__icon">🩺</span>
+            <span class="pa-chip__text"><strong>Common Conditions</strong><small>28 minor ailments, no referral</small></span>
+          </div>
+          <div class="pa-chip" onclick="event.stopPropagation();openAcc('acc-med-reviews');setTimeout(function(){document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},100)">
+            <span class="pa-chip__icon">📋</span>
+            <span class="pa-chip__text"><strong>Medication Reviews</strong><small>Free OHIP-covered MedsCheck</small></span>
+          </div>
+          <div class="pa-chip" onclick="event.stopPropagation();document.getElementById('rx-extensions').scrollIntoView({behavior:'smooth',block:'center'})">
+            <span class="pa-chip__icon">💊</span>
+            <span class="pa-chip__text"><strong>Rx Extensions &amp; Adaptations</strong><small>Out of refills or can't reach your doctor?</small></span>
+          </div>
+        </div>
       </button>
       <div class="pa-iframe-wrap" id="pa-wrap" style="display:none">
         <div class="pa-iframe-label">
@@ -2600,27 +2634,16 @@
 
     <!-- Row 2: Medication Review + Common Conditions (2-col) -->
     <div class="pa-cards pa-cards--mid">
-      <button class="pa-card" id="pa-card-medscheck">
+      <button class="pa-card" id="pa-card-medscheck" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1300" data-label="Medication Review (MedsCheck)">
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review &nbsp;<span class="pa-conditions-arrow">▼</span></span>
-        <span class="pa-card__desc">Free OHIP-covered review of all your medications — includes optional blood glucose test</span>
+        <span class="pa-card__desc">Free OHIP-covered review if you take 3+ medications — includes optional blood glucose test</span>
       </button>
       <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1500" data-label="Minor Ailment Assessment">
         <div class="pa-card__icon">🩺</div>
         <span class="pa-card__label">Common Conditions &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Pharmacist prescribing for 28 minor ailments — no referral needed, in person or by phone when appropriate</span>
       </button>
-
-    <!-- Medication review expand panel (inside mid-row grid, spans full width) -->
-    <div class="conditions-panel" id="medscheck-panel">
-      <div class="conditions-panel__hd">Medication Review (MedsCheck)</div>
-      <p style="font-size:.9rem;margin-bottom:1.1rem;line-height:1.6;">A free, one-on-one consultation with your pharmacist to review all of your prescriptions, over-the-counter medications, vitamins, and supplements. We look for interactions, duplications, and medications that may no longer be appropriate — and an optional blood glucose test is included at no cost.</p>
-      <p style="font-size:.85rem;margin-bottom:1.25rem;color:var(--text-muted);">Eligible if you take <strong>3 or more chronic medications</strong>. Covered by <strong>OHIP</strong> — no cost to you.</p>
-      <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;">
-        <a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/patient/meds/306667" style="flex-shrink:0;">📋 Book a Medication Review →</a>
-        <a href="#services" onclick="openAcc('acc-med-reviews');setTimeout(function(){document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},100)" style="font-size:.82rem;color:var(--teal-dark);font-weight:600;text-decoration:none;">Learn more about MedsCheck →</a>
-      </div>
-    </div>
 
     <!-- Conditions panel (inside mid-row grid, spans full width) -->
     <div class="conditions-panel" id="conditions-panel">
@@ -2753,17 +2776,17 @@
     <div class="pa-cards pa-cards--util">
       <button class="pa-card" id="pa-new-rx" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="800" data-label="New Prescription &amp; Refill Requests">
         <div class="pa-card__icon">📝</div>
-        <span class="pa-card__label">New Prescription &amp; Refill Requests</span>
+        <span class="pa-card__label">New Prescription &amp; Refill Requests &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Submit a photo of your new Rx or request a refill from your profile and we will get it ready</span>
       </button>
       <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="900" data-label="Transfer Your Prescription">
         <div class="pa-card__icon">🔀</div>
-        <span class="pa-card__label">Transfer Your Rx</span>
+        <span class="pa-card__label">Transfer Your Rx &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Move your prescription to St. Clair Drug Mart</span>
       </button>
       <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="760" data-label="Patient Login — PharmAssess Portal">
         <div class="pa-card__icon">🔑</div>
-        <span class="pa-card__label">Patient Login</span>
+        <span class="pa-card__label">Patient Login &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Sign in to your PharmAssess patient portal</span>
       </button>
     </div>
@@ -4406,6 +4429,9 @@ window.FAQS = [
     if (parentGrid && paWrap.parentElement !== parentGrid) {
       parentGrid.appendChild(paWrap);
     }
+    // Medication Review sits in a 2-col row — keep the form scoped to its own column
+    // instead of spanning under Common Conditions too.
+    paWrap.style.gridColumn = (card === medscheckCard) ? '1' : '';
     paOpen(); // always ensure the panel is visible
     setTimeout(function() {
       paWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -4415,14 +4441,12 @@ window.FAQS = [
   const conditionsCard  = document.getElementById('pa-card-conditions');
   const conditionsPanel = document.getElementById('conditions-panel');
   const medscheckCard   = document.getElementById('pa-card-medscheck');
-  const medscheckPanel  = document.getElementById('medscheck-panel');
 
   function closeAllPanels() {
     paWrap.style.display = 'none';
     paWrap.classList.remove('collapsed');
     conditionsPanel.classList.remove('open');
-    medscheckPanel.classList.remove('open');
-    document.querySelectorAll('.pa-card').forEach(c => { c.classList.remove('active'); c.classList.remove('conditions-open'); });
+    document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
   }
 
   document.querySelectorAll('.pa-card').forEach(card => {
@@ -4432,16 +4456,8 @@ window.FAQS = [
         closeAllPanels();
         if (!wasOpen) {
           conditionsPanel.classList.add('open');
-          this.classList.add('active', 'conditions-open');
+          this.classList.add('active');
           setTimeout(function() { conditionsPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 80);
-        }
-      } else if (this === medscheckCard) {
-        const wasOpen = medscheckPanel.classList.contains('open');
-        closeAllPanels();
-        if (!wasOpen) {
-          medscheckPanel.classList.add('open');
-          this.classList.add('active', 'conditions-open');
-          setTimeout(function() { medscheckPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 80);
         }
       } else {
         const alreadyActive = this.classList.contains('active');
@@ -4462,7 +4478,6 @@ window.FAQS = [
       e.preventDefault();
       const url = this.dataset.url;
       conditionsPanel.classList.remove('open');
-      conditionsCard.classList.remove('conditions-open');
       document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
       conditionsCard.classList.add('active');
       paIframe.style.height = (conditionsCard.dataset.iframeheight || '1200') + 'px';
@@ -4472,6 +4487,7 @@ window.FAQS = [
       if (primaryGrid && paWrap.parentElement !== primaryGrid) {
         primaryGrid.appendChild(paWrap);
       }
+      paWrap.style.gridColumn = '';
       paOpen(); // always show the panel, even if previously closed
       setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 80);
     });
