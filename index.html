@@ -687,11 +687,22 @@
     /* ── Booking / PharmAssess ────────────────────────── */
     #booking { background: var(--teal-light); }
     #booking .section__inner { position: relative; }
+    .booking__logo-cloud {
+      position: absolute; top: -14px; right: -28px;
+      width: clamp(180px, 22vw, 340px); height: auto;
+      z-index: 1; pointer-events: none;
+      animation: booking-cloud-float 9s ease-in-out infinite;
+    }
+    @keyframes booking-cloud-float {
+      0%, 100% { transform: translate(0, 0); }
+      50%      { transform: translate(-2%, -6%); }
+    }
+    @media (prefers-reduced-motion: reduce) { .booking__logo-cloud { animation: none; } }
     .booking__logo {
-      position: absolute; top: 0; right: 0;
+      position: absolute; top: 0; right: 0; z-index: 2;
       height: clamp(90px, 11vw, 160px); width: auto;
     }
-    @media (max-width: 860px) { .booking__logo { display: none; } }
+    @media (max-width: 860px) { .booking__logo, .booking__logo-cloud { display: none; } }
     .pa-cards {
       display: grid;
       gap: .75rem;
@@ -2599,6 +2610,7 @@
 <!-- ── Services & Booking (merged) ───────────────────────── -->
 <section id="booking">
   <div class="section__inner">
+    <img src="cloud.png" alt="" aria-hidden="true" class="booking__logo-cloud" loading="lazy" decoding="async" />
     <img src="logo.png" alt="St. Clair Drug Mart Pharmacy" class="booking__logo" loading="lazy" decoding="async" />
     <h2 class="section__title">Patient Portal</h2>
     <p class="section__lead">Book appointments, request refills, transfer prescriptions, or sign in — everything loads right here. Need a rapid COVID-19 test, pregnancy test, or blood glucose check? Book Point of Care Testing below.</p>
