@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,viewport-fit=cover"/>
-  <title>Health &amp; Wellness Hub | St. Clair Drug Mart Pharmacy, Toronto, Ontario</title>
+  <title>Health &amp; Wellness Hub | St. Clair Drug Mart Clinical Pharmacy, Toronto</title>
   <meta name="description" content="Health tips, pharmacy news, and wellness advice from the team at St. Clair Drug Mart — a top-rated clinical pharmacy in Toronto, Ontario built around patient-centred care. Minor ailments, vaccines, medication guides, and more."/>
   <meta name="keywords" content="pharmacy blog Toronto, pharmacy health tips Ontario, best pharmacy Toronto, top rated pharmacy Ontario, minor ailments Ontario, vaccines Toronto, medication guides, St. Clair Drug Mart blog"/>
   <meta name="author" content="St. Clair Drug Mart Pharmacy"/>
@@ -15,12 +15,12 @@
   <meta property="og:type" content="website"/>
   <meta property="og:locale" content="en_CA"/>
   <meta property="og:site_name" content="St. Clair Drug Mart Pharmacy"/>
-  <meta property="og:title" content="Health &amp; Wellness Hub | St. Clair Drug Mart Pharmacy"/>
+  <meta property="og:title" content="Health &amp; Wellness Hub | St. Clair Drug Mart Clinical Pharmacy"/>
   <meta property="og:description" content="Health tips, pharmacy news, and wellness advice from a top-rated clinical pharmacy in Toronto, Ontario."/>
   <meta property="og:url" content="https://www.stclairdrugmart.ca/blog/"/>
   <meta property="og:image" content="https://www.stclairdrugmart.ca/storefront_exterior.webp"/>
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Health &amp; Wellness Hub | St. Clair Drug Mart Pharmacy"/>
+  <meta name="twitter:title" content="Health &amp; Wellness Hub | St. Clair Drug Mart Clinical Pharmacy"/>
   <meta name="twitter:description" content="Health tips, pharmacy news, and wellness advice from a top-rated clinical pharmacy in Toronto, Ontario."/>
   <meta name="twitter:image" content="https://www.stclairdrugmart.ca/storefront_exterior.webp"/>
   <script type="application/ld+json">
@@ -743,7 +743,7 @@
   });
   if (!items.length) return;
   var minInterval = 1000 / 30;
-  var lastFrame = 0, lastDelta = 0, slowStreak = 0, powerSaveOn = false;
+  var lastFrame = 0, lastDelta = 0, slowStreak = 0, powerSaveOn = false, origin = null;
   function enterPowerSave() {
     if (powerSaveOn) return;
     powerSaveOn = true;
@@ -751,6 +751,7 @@
     items.forEach(function(it, i) { if (i % 2 === 1) it.el.style.display = 'none'; });
   }
   function tick(now) {
+    if (origin === null) origin = now;
     if (now - lastFrame < minInterval) { requestAnimationFrame(tick); return; }
     if (lastDelta) {
       var gap = now - lastDelta;
@@ -759,7 +760,7 @@
     }
     lastDelta = now;
     lastFrame = now;
-    var t = now / 1000;
+    var t = (now - origin) / 1000;
     for (var i = 0; i < items.length; i++) {
       var it = items[i];
       if (powerSaveOn && it.el.style.display === 'none') continue;

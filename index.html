@@ -558,7 +558,7 @@
     @media (max-width: 768px) {
       .welcome__boxes { grid-template-columns: repeat(2, 1fr); }
     }
-    /* ── Rx Extensions & Adaptations callout ──────────── */
+    /* ── Med Extensions & Adaptations callout ──────────── */
     .rx-ext { margin-top: 2.25rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
       background: linear-gradient(135deg, var(--teal-ice), #fff);
       border: 1.5px solid var(--border); border-left: 5px solid var(--teal-bright);
@@ -2572,7 +2572,7 @@
       </a>
     </div>
 
-    <!-- Rx Extensions & Adaptations callout -->
+    <!-- Med Extensions & Adaptations callout -->
     <div class="rx-ext" id="rx-extensions">
       <div class="rx-ext__icon">💊</div>
       <div class="rx-ext__body">
@@ -2691,7 +2691,7 @@
           <div class="pa-chip">
             <span class="pa-chip__icon">🔬</span>
             <span class="pa-chip__text">
-              <strong>Point of Care Testing</strong><small>Rapid COVID-19, strep &amp; pregnancy tests, plus blood glucose checks</small>
+              <strong>Point of Care Testing</strong><small>Rapid COVID-19 &amp; pregnancy tests, plus blood glucose checks</small>
               <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-poct');setTimeout(function(){document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
             </span>
           </div>
@@ -2712,7 +2712,7 @@
           <div class="pa-chip">
             <span class="pa-chip__icon">💊</span>
             <span class="pa-chip__text">
-              <strong>Extension Requests</strong><small>Prescription renewals &amp; dosage adaptations when your doctor's unreachable</small>
+              <strong>Med Extensions &amp; Adaptations</strong><small>Prescription renewals &amp; dosage adaptations when your doctor's unreachable</small>
               <span class="pa-chip__learn" onclick="event.stopPropagation();document.getElementById('rx-extensions').scrollIntoView({behavior:'smooth',block:'center'})">Learn more →</span>
             </span>
           </div>
@@ -3121,7 +3121,7 @@
       <div class="svc-acc-item" id="acc-rx-renewal">
         <button class="svc-acc__head" aria-expanded="false">
           <span class="svc-acc__icon">🔁</span>
-          <span class="svc-acc__title">Prescription Renewals — Can't Reach Your Doctor?</span>
+          <span class="svc-acc__title">Med Extensions &amp; Adaptations</span>
           <span class="svc-acc__chev">+</span>
         </button>
         <div class="svc-acc__body svc-acc__body--wide">
@@ -4556,18 +4556,15 @@ window.FAQS = [
     if (parentGrid && paWrap.parentElement !== parentGrid) {
       parentGrid.appendChild(paWrap);
     }
-    // Medication Review sits in a 2-col row — keep the form scoped to its own column
-    // instead of spanning under Common Conditions too.
-    paWrap.style.gridColumn = (card === medscheckCard) ? '1' : '';
+    paWrap.style.gridColumn = '';
     paOpen(); // always ensure the panel is visible
     setTimeout(function() {
-      paWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 80);
   }
 
   const conditionsCard  = document.getElementById('pa-card-conditions');
   const conditionsPanel = document.getElementById('conditions-panel');
-  const medscheckCard   = document.getElementById('pa-card-medscheck');
 
   function closeAllPanels() {
     paWrap.style.display = 'none';
@@ -4584,7 +4581,7 @@ window.FAQS = [
         if (!wasOpen) {
           conditionsPanel.classList.add('open');
           this.classList.add('active');
-          setTimeout(function() { conditionsPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 80);
+          setTimeout(function() { conditionsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
         }
       } else {
         const alreadyActive = this.classList.contains('active');
@@ -4628,7 +4625,7 @@ window.FAQS = [
       }
       paWrap.style.gridColumn = '';
       paOpen(); // always show the panel, even if previously closed
-      setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 80);
+      setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
     });
   });
 
@@ -5657,7 +5654,7 @@ window.FAQS = [
     { icon:'🏥', title:'Patient Portal & Online Booking', desc:'Book appointments, self-assessment, refill requests', tag:'Service', anchor:'#booking', kw:'book appointment online refill request self assessment schedule visit' },
     { icon:'💉', title:'Vaccines & Travel Health', desc:'Flu, COVID, shingles, Tdap, RSV, travel vaccines', tag:'Service', anchor:'#services', open:'acc-vaccines', kw:'flu shot influenza covid booster shingles shingrix pneumonia pneumococcal travel vaccine yellow fever typhoid hepatitis a b tdap tetanus diphtheria hpv rsv immunization' },
     { icon:'📋', title:'Medication Reviews (MedsCheck)', desc:'One-on-one review of all your medications — OHIP covered', tag:'Service', anchor:'#services', open:'acc-med-reviews', kw:'polypharmacy multiple medications too many pills side effects senior medication list review medscheck safe together' },
-    { icon:'🔁', title:'Prescription Renewals', desc:'Pharmacist can renew your Rx if your doctor cannot be reached', tag:'Service', anchor:'#services', open:'acc-rx-renewal', kw:'refill extension renew expired no refills left ran out doctor unreachable continuity of care' },
+    { icon:'🔁', title:'Med Extensions & Adaptations', desc:'Pharmacist can renew your Rx if your doctor cannot be reached', tag:'Service', anchor:'#services', open:'acc-rx-renewal', kw:'refill extension renew expired no refills left ran out doctor unreachable continuity of care' },
     { icon:'🚭', title:'Smoking Cessation', desc:'Champix, nicotine patches, personalized quit plan', tag:'Service', anchor:'#services', open:'acc-cessation', kw:'champix chantix varenicline zyban bupropion nicotine patch gum lozenge inhaler quit smoking vape vaping' },
     { icon:'🩹', title:'Free Naloxone Kits', desc:'Free naloxone kits and training — no prescription needed', tag:'Service', anchor:'#services', open:'acc-naloxone', kw:'narcan opioid overdose fentanyl heroin oxycodone hydromorphone codeine reversal' },
     { icon:'💊', title:'Drug Interaction Checker', desc:'Check if your medications interact safely', tag:'Tool', anchor:'#drug-checker', kw:'tylenol advil ibuprofen acetaminophen aspirin warfarin blood thinner antibiotic statin lipitor metformin ozempic wegovy eliquis xarelto ssri interaction safe together check medications' },
@@ -5865,7 +5862,7 @@ window.FAQS = [
     });
     if (!items.length) return;
     var minInterval = 1000 / 30;
-    var lastFrame = 0, lastDelta = 0, slowStreak = 0, powerSaveOn = false;
+    var lastFrame = 0, lastDelta = 0, slowStreak = 0, powerSaveOn = false, origin = null;
     function enterPowerSave() {
       if (powerSaveOn) return;
       powerSaveOn = true;
@@ -5873,6 +5870,7 @@ window.FAQS = [
       items.forEach(function(it, i) { if (i % 2 === 1) it.el.style.display = 'none'; });
     }
     function tick(now) {
+      if (origin === null) origin = now;
       if (now - lastFrame < minInterval) { requestAnimationFrame(tick); return; }
       if (lastDelta) {
         var gap = now - lastDelta;
@@ -5881,7 +5879,7 @@ window.FAQS = [
       }
       lastDelta = now;
       lastFrame = now;
-      var t = now / 1000;
+      var t = (now - origin) / 1000;
       for (var i = 0; i < items.length; i++) {
         var it = items[i];
         if (powerSaveOn && it.el.style.display === 'none') continue;

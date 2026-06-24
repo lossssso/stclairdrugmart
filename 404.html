@@ -304,7 +304,7 @@
     });
     if (!items.length) return;
     var minInterval = 1000 / 30;
-    var lastFrame = 0, lastDelta = 0, slowStreak = 0, powerSaveOn = false;
+    var lastFrame = 0, lastDelta = 0, slowStreak = 0, powerSaveOn = false, origin = null;
     function enterPowerSave() {
       if (powerSaveOn) return;
       powerSaveOn = true;
@@ -312,6 +312,7 @@
       items.forEach(function(it, i) { if (i % 2 === 1) it.el.style.display = 'none'; });
     }
     function tick(now) {
+      if (origin === null) origin = now;
       if (now - lastFrame < minInterval) { requestAnimationFrame(tick); return; }
       if (lastDelta) {
         var gap = now - lastDelta;
@@ -320,7 +321,7 @@
       }
       lastDelta = now;
       lastFrame = now;
-      var t = now / 1000;
+      var t = (now - origin) / 1000;
       for (var i = 0; i < items.length; i++) {
         var it = items[i];
         if (powerSaveOn && it.el.style.display === 'none') continue;
