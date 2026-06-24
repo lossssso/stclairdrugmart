@@ -47,8 +47,9 @@
     ]
   }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
+    /* ── Reset & base (matches index.html) ───────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --teal-ice:    #d7fbfc;
@@ -60,37 +61,123 @@
       --text:        #0d2d2e;
       --text-muted:  #3a6062;
       --border:      #b8e8ea;
-      --radius:      12px;
-      --shadow:      0 2px 14px rgba(0,115,124,.10);
+      --radius:      10px;
+      --shadow:      0 2px 12px rgba(0,115,124,.10);
+      --font-display: 'Helvetica Neue', Helvetica, 'Arial', 'Inter', sans-serif;
     }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: var(--teal-ice);
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(180deg, #b6ecef 0%, #cdf5f6 35%, #e4fbfc 100%) fixed;
       color: var(--text);
       line-height: 1.65;
+      overflow-x: hidden;
       display: flex; flex-direction: column; min-height: 100vh;
     }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
 
-    /* ── Nav (shared pattern) ──────────────────────────── */
-    .nav { position: sticky; top: 0; z-index: 100; background: var(--teal-deeper); box-shadow: 0 2px 8px rgba(0,0,0,.20); }
-    .nav__inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; height: 56px; }
-    .nav__brand { display: flex; align-items: center; gap: .55rem; font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; font-weight: 400; color: var(--white); letter-spacing: .06em; white-space: nowrap; text-decoration: none; }
+    /* ── Fixed sky background — same drifting clouds as the main site ── */
+    .sky-bg {
+      position: fixed; inset: 0; z-index: -1;
+      overflow: hidden; pointer-events: none;
+      background: linear-gradient(180deg, #b6ecef 0%, #cdf5f6 45%, #e4fbfc 100%);
+    }
+    .sky-bg-cloud {
+      position: absolute; left: 0; animation: cloud-drift linear infinite;
+      will-change: transform; display: block; pointer-events: none;
+      max-width: none;
+    }
+    .sky-bg-cloud--flip { animation-name: cloud-drift-r; }
+    .sky-bg-cloud:nth-child(1) { width:1350px; height:330px; top: 1vh; animation-duration:132s; animation-delay: -25s; opacity:.80; }
+    .sky-bg-cloud:nth-child(2) { width:1050px; height:260px; top: 5vh; animation-duration:102s; animation-delay: -60s; opacity:.70; }
+    .sky-bg-cloud:nth-child(3) { width:1250px; height:305px; top: 2vh; animation-duration:122s; animation-delay: -85s; opacity:.75; }
+    .sky-bg-cloud:nth-child(4) { width: 980px; height:245px; top: 9vh; animation-duration: 96s; animation-delay: -12s; opacity:.65; }
+    .sky-bg-cloud:nth-child(5) { width:1200px; height:295px; top:22vh; animation-duration:116s; animation-delay: -40s; opacity:.58; }
+    .sky-bg-cloud:nth-child(6) { width:1300px; height:318px; top:33vh; animation-duration:128s; animation-delay: -18s; opacity:.50; }
+    .sky-bg-cloud:nth-child(7) { width:1100px; height:272px; top:46vh; animation-duration:110s; animation-delay: -72s; opacity:.44; }
+    .sky-bg-cloud:nth-child(8) { width: 960px; height:238px; top:60vh; animation-duration: 94s; animation-delay: -95s; opacity:.38; }
+    @keyframes cloud-drift   { from { transform: translateX(-60vw);           } to { transform: translateX(120vw);           } }
+    @keyframes cloud-drift-r { from { transform: translateX(-60vw) scaleX(-1);} to { transform: translateX(120vw) scaleX(-1);} }
+
+    /* ── Nav (identical structure/engine to index.html) ──── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 100;
+      background: rgba(182,236,239,.97);
+      border-bottom: 1px solid rgba(33,161,168,.22);
+      box-shadow: 0 1px 14px rgba(0,80,90,.06);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    }
+    .nav__clouds {
+      position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; opacity: 1;
+      mask-image: linear-gradient(to bottom, transparent 0%, transparent 8%, black 65%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 8%, black 65%);
+    }
+    .nav__cloud  { position: absolute; left: 0; animation: cloud-drift linear infinite; will-change: transform; max-width: none; display: block; filter: drop-shadow(0 1px 3px rgba(0,60,65,.18)); }
+    .nav__cloud--flip { animation-name: cloud-drift-r; }
+    .nav__cloud:nth-child(1) { width: 950px; height: 235px; top: -100px; animation-duration:175s; animation-delay: -29s; opacity: .85; }
+    .nav__cloud:nth-child(2) { width: 750px; height: 185px; top: -46px; animation-duration:140s; animation-delay: -81s; opacity: .78; }
+    .nav__cloud:nth-child(3) { width: 880px; height: 218px; top: -88px; animation-duration:165s; animation-delay:-126s; opacity: .82; }
+    .nav__cloud:nth-child(4) { width: 680px; height: 168px; top: -36px; animation-duration:125s; animation-delay: -51s; opacity: .76; }
+    .nav__cloud:nth-child(5) { width: 820px; height: 203px; top: -57px; animation-duration:150s; animation-delay:-102s; opacity: .80; }
+    .nav__cloud:nth-child(6) { width: 900px; height: 223px; top: -70px; animation-duration:130s; animation-delay: 0s; opacity: .80; }
+    @media (max-width: 768px) { .nav__cloud:nth-child(4), .nav__cloud:nth-child(5) { display: none; } }
+    .nav__inner {
+      max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: flex-start;
+      padding: 0 max(1.5rem, env(safe-area-inset-right)) 0 max(1.5rem, env(safe-area-inset-left));
+      height: 64px; position: relative; z-index: 1;
+    }
+    .nav__brand {
+      display: flex; align-items: center; gap: .6rem;
+      font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
+      color: var(--teal-deeper); letter-spacing: .02em; text-transform: uppercase;
+      white-space: nowrap; text-decoration: none;
+    }
     .nav__brand__logo { height: 34px; width: auto; display: block; }
-    .nav__links { display: flex; list-style: none; gap: .25rem; }
-    .nav__links a { color: rgba(255,255,255,.85); font-size: .875rem; font-weight: 500; padding: .45rem .75rem; border-radius: 6px; transition: background .15s, color .15s; }
-    .nav__links a:hover { background: rgba(255,255,255,.12); color: var(--white); }
-    .nav__links a.active { background: rgba(255,255,255,.18); color: var(--white); }
-    .nav__links .nav__cta a { background: var(--teal-bright); color: var(--white); }
-    .nav__links .nav__cta a:hover { background: var(--teal-mid); }
-    .nav__toggle { display: none; background: none; border: none; cursor: pointer; padding: .4rem; }
-    .nav__toggle span { display: block; width: 22px; height: 2px; background: var(--white); margin: 4px 0; border-radius: 2px; }
+    .nav__links { display: flex; align-items: center; list-style: none; gap: .25rem; margin-left: auto; }
+    .nav__links > li { display: flex; align-items: center; }
+    .nav__links a {
+      display: inline-flex; align-items: center; color: #2c5457;
+      font-size: .875rem; font-weight: 500; line-height: 1;
+      padding: .5rem .8rem; border-radius: 7px;
+      transition: background .15s, color .15s;
+    }
+    .nav__links a:hover { background: #eef9fa; color: var(--teal-deeper); }
+    .nav__links a.active { background: #eef9fa; color: var(--teal-deeper); font-weight: 700; }
+    .nav__links .nav__cta a { background: var(--teal-bright); color: var(--white); font-weight: 600; box-shadow: 0 3px 10px rgba(33,161,168,.25); }
+    .nav__links .nav__cta a:hover { background: var(--teal-dark); color: var(--white); }
+    .nav__toggle { display: none; background: none; border: none; cursor: pointer; padding: .4rem; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+    .nav__toggle span { display: block; width: 22px; height: 2px; background: var(--teal-deeper); margin: 4px 0; border-radius: 2px; transition: transform .2s, opacity .2s; }
+    .nav__has-dropdown { position: relative; }
+    .nav__has-dropdown > a { gap: .3rem; }
+    .nav__has-dropdown > a::after { content: '▾'; font-size: .65rem; opacity: .65; transition: transform .2s; line-height: 1; }
+    .nav__has-dropdown:hover > a::after { transform: rotate(180deg); }
+    .nav__has-dropdown::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 10px; }
+    .nav__dropdown {
+      display: none; position: absolute; top: calc(100% + 9px); left: 0;
+      background: #fff; border: 1px solid #e9f4f5; border-radius: 10px;
+      box-shadow: 0 12px 32px rgba(0,60,66,.12); padding: .4rem; min-width: 210px;
+      z-index: 200; list-style: none; margin: 0;
+    }
+    .nav__dropdown li { list-style: none; }
+    .nav__has-dropdown:hover .nav__dropdown,
+    .nav__has-dropdown.open .nav__dropdown { display: block; }
+    .nav__dropdown a { display: block; padding: .55rem .85rem; font-size: .85rem; font-weight: 500; color: #2c5457; border-radius: 7px; white-space: nowrap; }
+    .nav__dropdown a:hover { background: #eef9fa; color: var(--teal-deeper); }
+    .nav__dropdown a.active { background: #eef9fa; color: var(--teal-deeper); font-weight: 700; }
 
     /* ── Page header ──────────────────────────────────── */
-    .page-header { background: var(--teal-deeper); color: var(--white); padding: 2.25rem 1.5rem 1.85rem; text-align: center; }
-    .page-header h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.8rem, 4vw, 2.7rem); letter-spacing: .05em; margin-bottom: .5rem; }
+    .page-header {
+      background: linear-gradient(140deg, var(--teal-deeper) 0%, #003a40 100%);
+      color: var(--white);
+      padding: calc(2.25rem + 64px) 1.5rem 1.85rem;
+      text-align: center;
+    }
+    .page-header h1 {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: clamp(1.7rem, 4vw, 2.5rem); letter-spacing: .02em;
+      text-transform: uppercase; margin-bottom: .6rem;
+    }
     .page-header p { font-size: .92rem; opacity: .85; max-width: 620px; margin: 0 auto; }
 
     /* ── Page body ─────────────────────────────────────── */
@@ -100,7 +187,7 @@
 
     .brace-cat { margin-bottom: 2.25rem; }
     .brace-cat__hd { display: flex; align-items: baseline; gap: .6rem; margin-bottom: .9rem; }
-    .brace-cat__hd h2 { font-size: 1.1rem; font-weight: 800; color: var(--teal-deeper); letter-spacing: .01em; }
+    .brace-cat__hd h2 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; text-transform: uppercase; letter-spacing: .015em; color: var(--teal-deeper); }
     .brace-cat__hd .brace-cat__brands { font-size: .72rem; color: var(--text-muted); font-weight: 600; }
 
     .brace-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
@@ -131,46 +218,193 @@
     .btn--outline { background: transparent; color: var(--teal-dark); border: 1.5px solid var(--teal-dark); }
     .btn--outline:hover { background: var(--teal-ice); }
 
-    @media (max-width: 640px) {
+    /* ── Footer (matches index.html) ─────────────────────── */
+    footer {
+      background: linear-gradient(140deg, var(--teal-deeper) 0%, #003a40 100%);
+      color: rgba(255,255,255,.8);
+      text-align: center;
+      padding: 2rem max(1.5rem, env(safe-area-inset-right)) max(2rem, env(safe-area-inset-bottom)) max(1.5rem, env(safe-area-inset-left));
+      font-size: .85rem;
+    }
+    footer a { color: rgba(255,255,255,.65); }
+    footer a:hover { color: var(--white); }
+    .footer__links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: .75rem; flex-wrap: wrap; }
+    .footer__links a { font-size: .82rem; }
+    .footer__socials { display: flex; justify-content: center; gap: .75rem; margin-top: 1rem; }
+    .footer__socials a {
+      display: flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.20);
+      transition: background .15s;
+    }
+    .footer__socials a:hover { background: rgba(255,255,255,.22); }
+    .footer__socials svg { width: 16px; height: 16px; fill: rgba(255,255,255,.75); }
+    .footer__socials .uber-word--footer { width: 23px; height: auto; object-fit: contain; opacity: .8; }
+
+    /* ── Footer trust badges (frosted-glass circles) ──────── */
+    .footer__trust { margin-top: 1.75rem; display: flex; flex-direction: column; align-items: center; gap: 1.1rem; }
+    .footer__badges { display: flex; align-items: flex-start; justify-content: center; gap: 1.75rem; flex-wrap: wrap; background: none; box-shadow: none; padding: 0; }
+    .trust-badge { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: .6rem; padding: 0; min-width: 0; position: relative; }
+    .trust-badge__disc {
+      width: 84px; height: 84px; border-radius: 50%;
+      background: rgba(255,255,255,.60);
+      -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+      border: 1.5px solid rgba(255,255,255,.35);
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s, transform .15s;
+    }
+    .trust-badge:hover .trust-badge__disc { background: rgba(255,255,255,.70); transform: translateY(-2px); }
+    .trust-badge__logo { width: auto; height: auto; max-width: 60px; max-height: 50px; object-fit: contain; display: block; }
+    .trust-badge--wordmark .trust-badge__logo { max-width: 66px; max-height: 54px; }
+    .trust-badge__caption { font-size: .64rem; color: rgba(255,255,255,.72); font-weight: 600; text-align: center; line-height: 1.35; letter-spacing: .02em; }
+    .footer__reg { font-size: .68rem; color: rgba(255,255,255,.5); text-align: center; max-width: 600px; line-height: 1.6; }
+    @media (max-width: 560px) {
+      .footer__badges { gap: 1.1rem; }
+      .trust-badge__disc { width: 76px; height: 76px; }
+      .trust-badge__logo { max-width: 52px; max-height: 44px; }
+      .trust-badge--wordmark .trust-badge__logo { max-width: 58px; max-height: 48px; }
+    }
+
+    /* ── WhatsApp floating button ──────────────────────── */
+    .wa-float {
+      position: fixed; bottom: 1.75rem; right: 1.75rem; z-index: 8999;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: #25D366;
+      box-shadow: 0 4px 18px rgba(37,211,102,.45);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 24px rgba(37,211,102,.6); }
+    .wa-float svg { width: 32px; height: 32px; fill: #fff; }
+    .wa-float__tip {
+      position: absolute; right: 68px; white-space: nowrap;
+      background: #1a1a1a; color: #fff;
+      font-size: .78rem; font-family: 'Inter', sans-serif;
+      padding: .35rem .75rem; border-radius: 6px;
+      opacity: 0; pointer-events: none;
+      transition: opacity .18s;
+    }
+    .wa-float__tip::after {
+      content: ''; position: absolute; left: 100%; top: 50%;
+      transform: translateY(-50%);
+      border: 6px solid transparent; border-left-color: #1a1a1a;
+    }
+    .wa-float:hover .wa-float__tip { opacity: 1; }
+    @media (max-width: 480px) { .wa-float { bottom: max(1.25rem, env(safe-area-inset-bottom)); right: max(1.25rem, env(safe-area-inset-right)); } }
+
+    /* ── Privacy Policy modal ─────────────────────────── */
+    .pp-overlay {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,.55); align-items: center; justify-content: center;
+    }
+    .pp-overlay.open { display: flex; }
+    .pp-modal {
+      background: #fff; border-radius: 12px; max-width: 680px; width: 92%;
+      max-height: 88vh; overflow-y: auto; padding: 2rem 2rem 1.5rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,.35); position: relative;
+    }
+    .pp-modal h2 { font-size: 1.35rem; color: var(--teal-deeper); margin-bottom: 1rem; }
+    .pp-modal h3 { font-size: 1rem; color: var(--teal-dark); margin: 1.25rem 0 .4rem; }
+    .pp-modal p, .pp-modal li { font-size: .88rem; color: #374151; line-height: 1.7; margin-bottom: .5rem; }
+    .pp-modal ul { padding-left: 1.25rem; margin-bottom: .5rem; }
+    .pp-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #6B7280; line-height: 1; }
+    .pp-close:hover { color: #111; }
+    .pp-link { color: rgba(255,255,255,.55); font-size: .7rem; text-decoration: underline; cursor: pointer; background: none; border: none; }
+
+    /* ── Responsive (matches index.html breakpoints) ────── */
+    @media (max-width: 1000px) and (min-width: 769px) {
+      .nav__links a { font-size: .8rem; padding: .35rem .55rem; }
+      .nav__links { gap: 0; }
+    }
+    @media (max-width: 860px) and (min-width: 769px) {
+      .nav__brand span { display: none; }
+    }
+    @media (max-width: 768px) {
+      .nav__links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e9f4f5; box-shadow: 0 8px 20px rgba(0,60,66,.08); flex-direction: column; align-items: stretch; padding: .5rem 1rem 1rem; gap: .1rem; margin-left: 0; }
+      .nav__links.open { display: flex; }
+      .nav__links > li { display: block; }
+      .nav__links a { display: flex; width: 100%; min-height: 44px; }
+      .nav__toggle { display: block; margin-left: auto; }
+      .nav__has-dropdown::after { display: none; }
+      .nav__dropdown { position: static; border: none; box-shadow: none; border-radius: 0; padding: 0; background: #f3fafb; margin: .2rem 0 .2rem .75rem; min-width: 0; }
+      .nav__has-dropdown .nav__dropdown,
+      .nav__has-dropdown:hover .nav__dropdown { display: none; }
+      .nav__has-dropdown.open .nav__dropdown { display: block; }
+      .nav__has-dropdown > a::after { margin-left: auto; }
+      .nav__has-dropdown:hover > a::after { transform: none; }
+      .nav__has-dropdown.open > a::after { transform: rotate(180deg); }
+      .nav__brand span { font-size: .8rem; letter-spacing: .01em; }
+      .nav__toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+      .nav__toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+      .nav__toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+      .page-header { padding: calc(1.75rem + 64px) 1rem 2rem; }
       .brace-grid { grid-template-columns: 1fr; }
       .brace-cat__hd { flex-direction: column; align-items: flex-start; gap: .15rem; }
     }
-
-    /* ── Footer ────────────────────────────────────────── */
-    footer { background: var(--teal-deeper); color: rgba(255,255,255,.8); text-align: center; padding: 2rem 1.5rem; font-size: .85rem; }
-    footer a { color: rgba(255,255,255,.75); }
-    footer a:hover { color: var(--white); }
-    .footer__links { display: flex; justify-content: center; gap: 1.25rem; margin-bottom: .75rem; flex-wrap: wrap; }
-    .footer__links a { font-size: .82rem; }
-
-    @media (max-width: 700px) {
-      .nav__toggle { display: flex; flex-direction: column; }
-      .nav__links { display: none; position: absolute; top: 56px; left: 0; right: 0; background: var(--teal-deeper); flex-direction: column; padding: .5rem 1rem 1rem; gap: .1rem; }
-      .nav__links.open { display: flex; }
-    }
+    @media (max-width: 420px) { .nav__brand span { display: none; } }
   </style>
 </head>
 <body>
 
-<nav class="nav">
+<div class="sky-bg" aria-hidden="true">
+  <img src="cloud2.png" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="102" data-delay="-60" style="transform:translateX(45.9vw) scaleX(-1)" alt="">
+  <img src="cloud2.png" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="122" data-delay="-85" style="transform:translateX(65.4vw) scaleX(-1)" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud" data-dur="96" data-delay="-12" style="transform:translateX(-37.5vw)" alt="">
+  <img src="cloud2.png" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="116" data-delay="-40" style="transform:translateX(2.1vw) scaleX(-1)" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud" data-dur="128" data-delay="-18" style="transform:translateX(-34.7vw)" alt="">
+  <img src="cloud2.png" class="sky-bg-cloud" data-dur="110" data-delay="-72" style="transform:translateX(57.8vw)" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="94" data-delay="-95" style="transform:translateX(-58.1vw) scaleX(-1)" alt="">
+</div>
+
+<!-- ── Nav ──────────────────────────────────────────────── -->
+<nav class="nav" id="nav">
+  <div class="nav__clouds" aria-hidden="true">
+    <img src="cloud2.png" class="nav__cloud" data-dur="175" data-delay="-29" style="transform:translateX(-30.6vw)" alt="">
+    <img src="cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="140" data-delay="-81" style="transform:translateX(44.7vw) scaleX(-1)" alt="">
+    <img src="cloud2.png" class="nav__cloud nav__cloud--flip" data-dur="165" data-delay="-126" style="transform:translateX(77.6vw) scaleX(-1)" alt="">
+    <img src="cloud.png"  class="nav__cloud" data-dur="125" data-delay="-51" style="transform:translateX(13.8vw)" alt="">
+    <img src="cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="150" data-delay="-102" style="transform:translateX(-8vw) scaleX(-1)" alt="">
+    <img src="cloud2.png" class="nav__cloud" data-dur="130" data-delay="0" style="transform:translateX(-60vw)" alt="">
+  </div>
   <div class="nav__inner">
-    <a href="index.html" class="nav__brand">
+    <a href="index.html#welcome" class="nav__brand">
       <img src="logo.png" alt="" class="nav__brand__logo" />
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
-    <button class="nav__toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
+    <button class="nav__toggle" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
-    <ul class="nav__links">
+    <ul class="nav__links" id="navLinks">
       <li><a href="index.html#welcome">Home</a></li>
-      <li><a href="index.html#services">Services</a></li>
+      <li class="nav__has-dropdown">
+        <a href="index.html#services">Services</a>
+        <ul class="nav__dropdown">
+          <li><a href="index.html#booking">Patient Portal</a></li>
+          <li><a href="index.html#services">Ailment Assessment</a></li>
+          <li><a href="index.html#services">Medication Reviews</a></li>
+          <li><a href="index.html#services">Vaccinations</a></li>
+          <li><a href="index.html#services">Smoking Cessation</a></li>
+          <li><a href="index.html#services">Free Naloxone Kits</a></li>
+          <li><a href="index.html#drug-checker">Drug Checker</a></li>
+          <li><a href="index.html#services">Insurance</a></li>
+          <li><a href="braces-supports.html" class="active" aria-current="page">Braces &amp; Supports</a></li>
+        </ul>
+      </li>
       <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a></li>
-      <li><a href="braces-supports.html" class="active">Braces &amp; Supports</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
       <li><a href="blog/index.html">Blog</a></li>
-      <li><a href="index.html#about">About</a></li>
-      <li><a href="portal.html">Patient Portal</a></li>
-      <li class="nav__cta"><a href="index.html#booking">Book Appointment</a></li>
+      <li class="nav__has-dropdown">
+        <a href="index.html#faq">Got Questions?</a>
+        <ul class="nav__dropdown">
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#team">Meet the Team</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+          <li><a href="index.html#reviews">Ratings (4.9 ⭐)</a></li>
+          <li><a href="index.html#contact">Find Us</a></li>
+        </ul>
+      </li>
+      <li class="nav__cta"><a href="index.html#booking">Book Now</a></li>
     </ul>
   </div>
 </nav>
@@ -327,24 +561,181 @@
   </div>
 </div>
 
+<!-- ── Footer ─────────────────────────────────────────────── -->
 <footer>
   <div class="footer__links">
     <a href="index.html#welcome">Home</a>
     <a href="index.html#services">Services</a>
+    <a href="index.html#booking">Patient Portal</a>
+    <a href="index.html#team">Our Team</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="index.html#drug-checker">Drug Checker</a>
+    <a href="index.html#services">Insurance</a>
     <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
+    <a href="braces-supports.html" class="active" aria-current="page">Braces &amp; Supports</a>
     <a href="index.html#contact">Contact</a>
     <a href="index.html#about">About</a>
-    <a href="blog/index.html">Blog</a>
   </div>
   <p>1203 St. Clair Avenue West, Toronto, ON &nbsp;·&nbsp; <a href="tel:+14166548181">(416) 654-8181</a> &nbsp;·&nbsp; <a href="mailto:stclairdrugmart@gmail.com">stclairdrugmart@gmail.com</a></p>
+
+  <div class="footer__socials">
+    <a href="https://www.facebook.com/p/St-Clair-Drug-Mart-Pharmacy-100089068174445/" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+    </a>
+    <a href="https://www.instagram.com/stclairdrugmart/" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="1.8"/><circle cx="12" cy="12" r="4.4" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.3" fill="rgba(255,255,255,.75)" stroke="none"/></svg>
+    </a>
+    <a href="https://ca.linkedin.com/company/stclairdrugmart" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    </a>
+    <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" aria-label="Uber">
+      <img src="logos/uber-white.png" alt="Uber" class="uber-word uber-word--footer">
+    </a>
+  </div>
+
+  <div class="footer__trust">
+    <div class="footer__badges">
+      <div class="trust-badge">
+        <div class="trust-badge__disc"><img src="logos/ocp.png" alt="Ontario College of Pharmacists" class="trust-badge__logo"></div>
+        <span class="trust-badge__caption">OCP Accreditation<br>No. 306667</span>
+      </div>
+      <div class="trust-badge">
+        <div class="trust-badge__disc"><img src="logos/pharmassess.png" alt="PharmAssess — Online Pharmacy Booking" class="trust-badge__logo"></div>
+        <span class="trust-badge__caption">PharmAssess<br>Online Booking</span>
+      </div>
+      <div class="trust-badge trust-badge--wordmark">
+        <div class="trust-badge__disc"><img src="logos/medsask.png" alt="MedSask — Your Medication Information Service" class="trust-badge__logo"></div>
+        <span class="trust-badge__caption">Medication<br>Information Partner</span>
+      </div>
+    </div>
+    <p class="footer__reg">Regulated by the Ontario College of Pharmacists &nbsp;·&nbsp; Designated Manager: Elizabeth Da Silva, BScPharm, RPh &nbsp;·&nbsp; Pharmacist on duty during all operating hours</p>
+    <button class="pp-link" onclick="document.getElementById('pp-overlay').classList.add('open')">Privacy Policy</button>
+  </div>
+
   <p style="margin-top:.75rem;opacity:.45;">&copy; 2026 St. Clair Drug Mart Pharmacy. All rights reserved.</p>
 </footer>
 
+<!-- ── WhatsApp floating button ──────────────────────────── -->
+<a class="wa-float"
+   href="https://wa.me/14166548181?text=Hi%20St.%20Clair%20Drug%20Mart!%20I%20have%20a%20question%20about%20"
+   target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
+  <span class="wa-float__tip">Chat on WhatsApp</span>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- ── Privacy Policy modal ──────────────────────────────── -->
+<div class="pp-overlay" id="pp-overlay" role="dialog" aria-modal="true" aria-labelledby="pp-title">
+  <div class="pp-modal">
+    <button class="pp-close" onclick="document.getElementById('pp-overlay').classList.remove('open')" aria-label="Close">&times;</button>
+    <h2 id="pp-title">Privacy Policy</h2>
+    <p><strong>Effective Date:</strong> July 1, 2026 &nbsp;·&nbsp; <strong>Last Updated:</strong> June 2026</p>
+
+    <h3>1. About Us</h3>
+    <p>St. Clair Drug Mart Pharmacy (&#8220;the Pharmacy&#8221;) is located at 1203 St. Clair Avenue West, Toronto, ON M6E 1B6. We are a <strong>health information custodian</strong> as defined under the <em>Personal Health Information Protection Act, 2004</em> (PHIPA). Our Designated Manager and Privacy Officer is Elizabeth Da Silva, BScPharm, RPh. Contact: <a href="mailto:stclairdrugmart@gmail.com">stclairdrugmart@gmail.com</a> &nbsp;·&nbsp; (416) 654-8181.</p>
+
+    <h3>2. What This Policy Covers</h3>
+    <p>This policy applies to personal health information (PHI) and other personal information we collect through this website and in the course of providing pharmacy services. It does not govern information collected directly by third-party platforms (see Section 6).</p>
+
+    <h3>3. Information We Collect</h3>
+    <ul>
+      <li><strong>Pharmacy services:</strong> Name, date of birth, health card number, medication history, prescriptions, and other PHI necessary to dispense medications and provide clinical services.</li>
+      <li><strong>Drug Interaction Checker:</strong> Medication names you enter are sent anonymously to the U.S. National Library of Medicine (NLM RxNav API). No name, health card, or identifying information is sent. This website does not store any information you enter in the checker.</li>
+      <li><strong>Contact &amp; inquiries:</strong> Name, email, and phone number when you contact us voluntarily.</li>
+      <li><strong>Website usage:</strong> This website does not use tracking cookies, analytics cookies, or advertising cookies. No personal data is collected through cookies.</li>
+    </ul>
+
+    <h3>4. Purposes of Collection</h3>
+    <p>We collect PHI only for the purposes of providing healthcare — dispensing prescriptions, clinical assessments, medication reviews, and pharmacist consultations — or as required by law. We do not sell, rent, or trade your personal information.</p>
+
+    <h3>5. Legal Authority</h3>
+    <p>Collection, use, and disclosure of PHI is governed by PHIPA (Ontario) and, where applicable, the <em>Personal Information Protection and Electronic Documents Act</em> (PIPEDA). We comply with Ontario College of Pharmacists standards for patient record retention and confidentiality.</p>
+
+    <h3>6. Third-Party Platforms</h3>
+    <p><strong>PharmAssess:</strong> Online booking, refill requests, prescription transfers, and minor ailment assessments are processed through PharmAssess (Kroll Computer Systems Inc.), a secure pharmacy software platform. PharmAssess acts as a service provider to our pharmacy. As your health information custodian under PHIPA, St. Clair Drug Mart Pharmacy remains accountable for the protection of your personal health information. Contact us at (416) 654-8181 or <a href="mailto:stclairdrugmart@gmail.com">stclairdrugmart@gmail.com</a> with any privacy questions or concerns.</p>
+    <p><strong>NLM RxNav:</strong> The Drug Interaction Checker sends anonymous drug names only to the U.S. National Library of Medicine public API. No identifying information is transmitted.</p>
+
+    <h3>7. Disclosure</h3>
+    <p>We may disclose PHI without your consent only as permitted or required by PHIPA — for example, to another health information custodian involved in your circle of care, or as required by law. We will not disclose PHI to third parties for marketing purposes.</p>
+
+    <h3>8. Security</h3>
+    <p>We implement physical, administrative, and technical safeguards appropriate to the sensitivity of the information, including secure storage of patient records and restricted access by pharmacy staff.</p>
+
+    <h3>9. Your Rights</h3>
+    <ul>
+      <li>Request access to your PHI held by the Pharmacy.</li>
+      <li>Request correction of inaccurate PHI.</li>
+      <li>Withdraw consent where consent is the legal basis for collection or use.</li>
+      <li>File a complaint with the <a href="https://www.ipc.on.ca" target="_blank" rel="noopener">Information and Privacy Commissioner of Ontario</a>.</li>
+    </ul>
+
+    <h3>10. Contact Our Privacy Officer</h3>
+    <p>For privacy questions, requests, or complaints, contact our Privacy Officer:<br>
+    <strong>Elizabeth Da Silva, BScPharm, RPh</strong><br>
+    1203 St. Clair Avenue West, Toronto, ON M6E 1B6<br>
+    <a href="tel:+14166548181">(416) 654-8181</a> &nbsp;·&nbsp; <a href="mailto:stclairdrugmart@gmail.com">stclairdrugmart@gmail.com</a></p>
+
+    <h3>11. Changes to This Policy</h3>
+    <p>We may update this policy from time to time. The effective date at the top of this page reflects the most recent version.</p>
+  </div>
+</div>
+
 <script>
-  document.querySelectorAll('.nav__links a').forEach(function(link) {
-    link.addEventListener('click', function() {
-      document.querySelector('.nav__links').classList.remove('open');
+  // ── Cloud drift, driven by JS (same engine as index.html) ──
+  (function() {
+    var els = document.querySelectorAll('.nav__cloud, .sky-bg-cloud');
+    var items = [];
+    els.forEach(function(el) {
+      var dur = parseFloat(el.dataset.dur);
+      var delay = parseFloat(el.dataset.delay) || 0;
+      if (!dur) return;
+      el.style.animation = 'none';
+      items.push({ el: el, dur: dur, delay: delay, flip: el.className.indexOf('--flip') !== -1 });
     });
+    if (!items.length) return;
+    function tick(now) {
+      var t = now / 1000;
+      for (var i = 0; i < items.length; i++) {
+        var it = items[i];
+        var prog = (((t - it.delay) % it.dur) + it.dur) % it.dur / it.dur;
+        var vw = -60 + prog * 180;
+        it.el.style.transform = 'translateX(' + vw.toFixed(2) + 'vw)' + (it.flip ? ' scaleX(-1)' : '');
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+
+  // ── Mobile nav: dropdown toggle + close on link click / outside tap ──
+  document.querySelectorAll('.nav__links a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      var parent = link.closest('.nav__has-dropdown');
+      if (parent && link === parent.querySelector(':scope > a') && window.innerWidth <= 768) {
+        e.preventDefault();
+        parent.classList.toggle('open');
+        return;
+      }
+      document.querySelector('.nav__links').classList.remove('open');
+      document.querySelector('.nav__toggle').classList.remove('open');
+      document.querySelectorAll('.nav__has-dropdown').forEach(function(d) { d.classList.remove('open'); });
+    });
+  });
+  document.addEventListener('click', function(e) {
+    var nav = document.querySelector('nav');
+    if (!nav.contains(e.target)) {
+      document.querySelector('.nav__links').classList.remove('open');
+      document.querySelector('.nav__toggle').classList.remove('open');
+      document.querySelectorAll('.nav__has-dropdown').forEach(function(d) { d.classList.remove('open'); });
+    }
+  });
+
+  // ── Privacy Policy modal: close on outside click / Escape ──
+  document.getElementById('pp-overlay').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') document.getElementById('pp-overlay').classList.remove('open');
   });
 </script>
 </body>
