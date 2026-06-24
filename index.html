@@ -157,6 +157,9 @@
       position: fixed; inset: 0; z-index: -1;
       overflow: hidden; pointer-events: none;
       background: linear-gradient(180deg, #b6ecef 0%, #cdf5f6 45%, #e4fbfc 100%);
+      /* Clouds ease in gently on load instead of popping in. The body paints the
+         same gradient, so the layer fades over an identical sky — no flash/seam. */
+      animation: cloud-layer-in 3s ease both;
     }
     .sky-bg-cloud {
       position: absolute; left: 0; animation: cloud-drift linear infinite;
@@ -327,11 +330,14 @@
     /* ── Cloud keyframes ─────────────────────────────── */
     @keyframes cloud-drift   { from { transform: translateX(-60vw);           } to { transform: translateX(120vw);           } }
     @keyframes cloud-drift-r { from { transform: translateX(-60vw) scaleX(-1);} to { transform: translateX(120vw) scaleX(-1);} }
+    /* One-time gentle fade so cloud layers ease in on load rather than popping */
+    @keyframes cloud-layer-in { from { opacity: 0; } to { opacity: 1; } }
     /* ── Hero clouds ─────────────────────────────────── */
     .hero__clouds {
       position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
       mask-image: linear-gradient(to bottom, transparent 0, transparent 72px, black 120px);
       -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 72px, black 120px);
+      animation: cloud-layer-in 3s ease both;
     }
     .hero__cloud  { position: absolute; left: 0; animation: cloud-drift linear infinite; will-change: transform; display: block; max-width: none; }
     .hero__cloud--flip { animation-name: cloud-drift-r; }
@@ -347,7 +353,7 @@
     .hero__cloud:nth-child(10) { width: 870px; height:225px; top:72%; animation-duration: 86s; animation-delay: -28s;  opacity:.78; }
     .hero__cloud:nth-child(11) { width:1050px; height:500px; top:78%; animation-duration:102s; animation-delay: -90s;  opacity:.90; }
     .hero__cloud:nth-child(12) { width: 800px; height:205px; top:84%; animation-duration: 79s; animation-delay: -70s;  opacity:.72; }
-    @media (prefers-reduced-motion: reduce) { .hero__cloud, .sky-bg-cloud { animation: none; } }
+    @media (prefers-reduced-motion: reduce) { .hero__cloud, .sky-bg-cloud { animation: none; } .sky-bg, .hero__clouds { animation: none; opacity: 1; } }
     /* On mobile: fewer clouds for performance */
     @media (max-width: 768px) {
       .hero__cloud:nth-child(n+7) { display: none; }
@@ -2362,9 +2368,9 @@
         </ul>
       </li>
       <li class="nav__has-dropdown">
-        <a href="#shop">Shop</a>
+        <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
         <ul class="nav__dropdown">
-          <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Order on Uber Eats</a></li>
+          <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Order on Uber</a></li>
           <li><a href="braces-supports.html">Braces &amp; Supports</a></li>
         </ul>
       </li>
@@ -3795,7 +3801,7 @@
         <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ"
            target="_blank" rel="noopener" class="btn--uber">
           <img src="logos/uber.png" alt="">
-          Order on Uber Eats
+          Order on Uber
         </a>
       </div>
       <div class="shop__card">

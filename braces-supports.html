@@ -82,6 +82,9 @@
       position: fixed; inset: 0; z-index: -1;
       overflow: hidden; pointer-events: none;
       background: linear-gradient(180deg, #b6ecef 0%, #cdf5f6 45%, #e4fbfc 100%);
+      /* Clouds ease in gently on load instead of popping in (body paints the same
+         gradient, so the fade happens over an identical sky — no flash/seam). */
+      animation: cloud-layer-in 3s ease both;
     }
     .sky-bg-cloud {
       position: absolute; left: 0; animation: cloud-drift linear infinite;
@@ -99,6 +102,8 @@
     .sky-bg-cloud:nth-child(8) { width: 960px; height:238px; top:60vh; animation-duration: 94s; animation-delay: -95s; opacity:.38; }
     @keyframes cloud-drift   { from { transform: translateX(-60vw);           } to { transform: translateX(120vw);           } }
     @keyframes cloud-drift-r { from { transform: translateX(-60vw) scaleX(-1);} to { transform: translateX(120vw) scaleX(-1);} }
+    @keyframes cloud-layer-in { from { opacity: 0; } to { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .sky-bg-cloud { animation: none; } .sky-bg { animation: none; opacity: 1; } }
 
     /* ── Nav (identical structure/engine to index.html) ──── */
     .nav {
@@ -392,9 +397,9 @@
         </ul>
       </li>
       <li class="nav__has-dropdown">
-        <a href="index.html#shop">Shop</a>
+        <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
         <ul class="nav__dropdown">
-          <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Order on Uber Eats</a></li>
+          <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Order on Uber</a></li>
           <li><a href="braces-supports.html" class="active" aria-current="page">Braces &amp; Supports</a></li>
         </ul>
       </li>
