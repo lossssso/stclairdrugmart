@@ -554,6 +554,8 @@
     .rx-ext__body { flex: 1 1 320px; }
     .rx-ext__title { font-size: 1.15rem; font-weight: 800; color: var(--teal-deeper); margin-bottom: .35rem; }
     .rx-ext__text { font-size: .9rem; color: var(--text-muted); line-height: 1.55; margin: 0; }
+    .rx-ext__learn { display: inline-block; font-size: .85rem; font-weight: 700; color: var(--teal-dark); margin-top: .5rem; cursor: pointer; width: fit-content; }
+    .rx-ext__learn:hover { text-decoration: underline; }
     .rx-ext__actions { display: flex; flex-direction: column; gap: .55rem; flex-shrink: 0; }
     .rx-ext__btn { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; white-space: nowrap;
       background: var(--teal-bright); color: #fff; font-weight: 700; font-size: .86rem; text-decoration: none;
@@ -2525,7 +2527,7 @@
       </a>
       <a href="#services" class="welcome-box" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},200)">
         <div class="welcome-box__icon">🩺</div>
-        <div class="welcome-box__title">Common Conditions</div>
+        <div class="welcome-box__title">Minor Ailments</div>
         <div class="welcome-box__desc">Pharmacists can assess and prescribe for 28 conditions — UTIs, skin infections, allergies, heartburn, cold sores, and more. No doctor needed.</div>
         <span class="welcome-box__cta">See conditions →</span>
       </a>
@@ -2555,6 +2557,7 @@
       <div class="rx-ext__body">
         <div class="rx-ext__title">Out of refills? Can't reach your doctor?</div>
         <p class="rx-ext__text">Run out before you can reach your prescriber? Our pharmacists can <strong>extend, renew, or adapt your prescription</strong> so you don't go without. We just need a copy of — or reference to — your original Rx: if you're our patient it's likely on file; if not, <strong>bring in your vial or send a clear photo of the label</strong>. Whether we can renew, and whether it's done by phone, is always <strong>up to the pharmacist's discretion</strong>.</p>
+        <span class="rx-ext__learn" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},120)">Learn more →</span>
       </div>
       <div class="rx-ext__actions">
         <a class="rx-ext__btn" href="#booking" onclick="setTimeout(function(){var c=document.querySelector('[data-label=\'Book an Appointment\']');if(c)c.click();},150)">📅 Request an Extension / Adaptation</a>
@@ -2654,7 +2657,7 @@
     <div class="pa-cards pa-cards--book">
       <button class="pa-card" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Book an Appointment">
         <div class="pa-card__icon">📅</div>
-        <span class="pa-card__label">Book a Call or Appointment with Your Pharmacist</span>
+        <span class="pa-card__label">Book a Call or Appointment with Your Pharmacist &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">In person or over the phone when appropriate — many assessments, like UTIs and other minor ailments, don't need a visit. For:</span>
         <div class="pa-card__chips">
           <div class="pa-chip">
@@ -2674,7 +2677,7 @@
           <div class="pa-chip">
             <span class="pa-chip__icon">🩺</span>
             <span class="pa-chip__text">
-              <strong>Common Conditions</strong><small>Pharmacist assessment for 28+ minor ailments — no doctor referral needed</small>
+              <strong>Minor Ailments</strong><small>Pharmacist assessment for 28+ conditions — no doctor referral needed</small>
               <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-ailments');setTimeout(function(){document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
             </span>
           </div>
@@ -2719,8 +2722,8 @@
       </button>
       <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1500" data-label="Minor Ailment Assessment">
         <div class="pa-card__icon">🩺</div>
-        <span class="pa-card__label">Common Conditions &nbsp;<span class="pa-conditions-arrow">▼</span></span>
-        <span class="pa-card__desc">Pharmacist prescribing for 28 minor ailments — no referral needed, in person or by phone when appropriate</span>
+        <span class="pa-card__label">Minor Ailments &nbsp;<span class="pa-conditions-arrow">▼</span></span>
+        <span class="pa-card__desc">Pharmacist prescribing for 28 conditions — no referral needed, in person or by phone when appropriate</span>
       </button>
 
     <!-- Conditions panel (inside mid-row grid, spans full width) -->
