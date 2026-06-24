@@ -171,19 +171,31 @@
     .nav__dropdown a:hover { background: #eef9fa; color: var(--teal-deeper); }
     .nav__dropdown a.active { background: #eef9fa; color: var(--teal-deeper); font-weight: 700; }
 
-    /* ── Page header ──────────────────────────────────── */
-    .page-header {
-      background: linear-gradient(140deg, var(--teal-deeper) 0%, #003a40 100%);
-      color: var(--white);
-      padding: calc(2.25rem + 64px) 1.5rem 1.85rem;
-      text-align: center;
+    /* ── Page header — frosted glass card floating on the sky ─────── */
+    .page-header { background: transparent; color: var(--text); padding: calc(2.5rem + 64px) 1.5rem 1rem; }
+    .page-header__card {
+      max-width: 1060px; margin: 0 auto;
+      background: rgba(255,255,255,.66);
+      -webkit-backdrop-filter: blur(10px) saturate(1.1); backdrop-filter: blur(10px) saturate(1.1);
+      border: 1px solid rgba(255,255,255,.75); border-radius: 20px;
+      padding: 1.9rem 2rem; box-shadow: 0 12px 40px rgba(0,80,90,.15);
+    }
+    .page-header__crumbs { font-size: .78rem; color: var(--text-muted); margin-bottom: .9rem; }
+    .page-header__crumbs a { color: var(--teal-dark); text-decoration: none; }
+    .page-header__crumbs a:hover { text-decoration: underline; }
+    .page-header__eyebrow {
+      display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--teal-dark); background: var(--teal-ice);
+      border: 1px solid var(--border); padding: .3rem .8rem; border-radius: 100px; margin-bottom: .9rem;
     }
     .page-header h1 {
       font-family: var(--font-display); font-weight: 700;
-      font-size: clamp(1.7rem, 4vw, 2.5rem); letter-spacing: .02em;
-      text-transform: uppercase; margin-bottom: .6rem;
+      font-size: clamp(1.8rem, 4.2vw, 2.7rem); letter-spacing: .02em;
+      text-transform: uppercase; color: var(--teal-deeper); line-height: 1.1; margin-bottom: .6rem;
     }
-    .page-header p { font-size: .92rem; opacity: .85; max-width: 620px; margin: 0 auto; }
+    .page-header p { font-size: .94rem; color: var(--text-muted); max-width: 680px; margin: 0 0 1.15rem; line-height: 1.6; }
+    .page-header__chips { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .page-header__chip { font-size: .78rem; font-weight: 600; color: var(--teal-dark); background: #fff; border: 1px solid var(--border); border-radius: 100px; padding: .35rem .85rem; }
 
     /* ── Page body ─────────────────────────────────────── */
     .page-wrap { max-width: 1060px; margin: 0 auto; padding: 2.25rem 1.5rem 1rem; flex: 1; width: 100%; }
@@ -343,7 +355,8 @@
       .nav__toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
       .nav__toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
       .nav__toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-      .page-header { padding: calc(1.75rem + 64px) 1rem 2rem; }
+      .page-header { padding: calc(1.75rem + 64px) 1rem .5rem; }
+      .page-header__card { padding: 1.4rem 1.25rem; border-radius: 16px; }
       .brace-grid { grid-template-columns: 1fr; }
       .brace-cat__hd { flex-direction: column; align-items: flex-start; gap: .15rem; }
     }
@@ -419,10 +432,19 @@
   </div>
 </nav>
 
-<div class="page-header">
-  <h1>Braces, Supports &amp; Compression</h1>
-  <p>Back &amp; lumbar supports, knee braces, wrist &amp; elbow supports, ankle supports, abdominal binders, and medical compression stockings — all available in-store, no appointment needed.</p>
-</div>
+<header class="page-header">
+  <div class="page-header__card">
+    <nav class="page-header__crumbs" aria-label="Breadcrumb"><a href="index.html#welcome">Home</a> › <span>Braces &amp; Supports</span></nav>
+    <span class="page-header__eyebrow">🛍️ In-Store Products</span>
+    <h1>Braces, Supports &amp; Compression</h1>
+    <p>Back &amp; lumbar supports, knee braces, wrist &amp; elbow supports, ankle supports, abdominal binders, and medical compression stockings — all available in-store, no appointment needed.</p>
+    <div class="page-header__chips">
+      <span class="page-header__chip">✓ No appointment</span>
+      <span class="page-header__chip">✓ Expert fitting help</span>
+      <span class="page-header__chip">✓ Walk in anytime</span>
+    </div>
+  </div>
+</header>
 
 <div class="page-wrap">
   <div class="page-note">

@@ -186,19 +186,34 @@
     .hero__cloud:nth-child(11) { width:1050px; height:500px; top:78%; animation-duration:102s; animation-delay: -90s;  opacity:.90; }
     .hero__cloud:nth-child(12) { width: 800px; height:205px; top:84%; animation-duration: 79s; animation-delay: -70s;  opacity:.72; }
     @media (max-width:768px) { .hero__cloud:nth-child(n+7) { display:none; } }
-    /* ── "News wire" masthead branding ── */
-    .blog-hero__eyebrow { position:relative; z-index:1; font-size:.78rem; font-weight:700; letter-spacing:.25em; text-transform:uppercase; color:var(--teal-dark); opacity:.75; margin-bottom:.55rem; }
-    .blog-hero h1 {
-      position:relative; z-index:1;
-      font-family:'Georgia','Times New Roman',serif;
-      font-size:clamp(2.2rem,5.6vw,3.7rem); font-weight:700; letter-spacing:.01em;
-      line-height:1.1; margin-bottom:.65rem;
+    /* ── "News desk" masthead — frosted glass card on the sky ── */
+    .blog-hero__inner {
+      position:relative; z-index:1; max-width:680px; margin:0 auto;
+      background:rgba(255,255,255,.62);
+      -webkit-backdrop-filter:blur(11px) saturate(1.1); backdrop-filter:blur(11px) saturate(1.1);
+      border:1px solid rgba(255,255,255,.75); border-radius:22px;
+      padding:2.25rem 2rem 2rem; text-align:center;
+      box-shadow:0 14px 44px rgba(0,80,90,.17);
     }
-    .blog-hero__rule { position:relative; z-index:1; width:64px; height:3px; background:var(--teal-bright); margin:0 auto 1.1rem; border-radius:2px; }
-    .blog-hero__sub { position:relative; z-index:1; font-size:1.02rem; color:rgba(0,63,68,.72); max-width:560px; margin:0 auto 2rem; line-height:1.65; }
+    .blog-hero__badge {
+      display:inline-flex; align-items:center; gap:.5rem;
+      font-size:.72rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase;
+      color:var(--teal-dark); background:rgba(255,255,255,.72); border:1px solid var(--border);
+      padding:.35rem .85rem; border-radius:100px; margin-bottom:1.1rem;
+    }
+    .blog-hero__live { width:8px; height:8px; border-radius:50%; background:#e5484d; animation:wire-pulse 2s infinite; }
+    @keyframes wire-pulse { 0%{box-shadow:0 0 0 0 rgba(229,72,77,.55);} 70%{box-shadow:0 0 0 7px rgba(229,72,77,0);} 100%{box-shadow:0 0 0 0 rgba(229,72,77,0);} }
+    .blog-hero h1 {
+      font-family:'Georgia','Times New Roman',serif;
+      font-size:clamp(2.2rem,5.8vw,3.8rem); font-weight:700; letter-spacing:.01em;
+      line-height:1.05; color:var(--teal-deeper); margin-bottom:.6rem;
+    }
+    .blog-hero__sub { font-size:1.02rem; color:rgba(0,63,68,.78); max-width:520px; margin:0 auto 1.6rem; line-height:1.6; }
+    .blog-hero__stats { display:flex; align-items:center; justify-content:center; gap:.7rem; flex-wrap:wrap; margin-top:1.5rem; font-size:.8rem; color:var(--text-muted); }
+    .blog-hero__stats strong { color:var(--teal-deeper); font-weight:800; }
+    .blog-hero__stats .dot { width:4px; height:4px; border-radius:50%; background:var(--teal-mid); }
     .blog-hero__search {
-      position:relative; z-index:1;
-      display:flex; align-items:center; max-width:460px; margin:0 auto;
+      display:flex; align-items:center; max-width:440px; margin:0 auto;
       background:var(--white); border:1.5px solid var(--border);
       border-radius:100px; overflow:hidden; box-shadow:var(--shadow);
     }
@@ -457,13 +472,21 @@
     <img src="../cloud2.webp" class="hero__cloud hero__cloud--flip" data-dur="102" data-delay="-90" style="transform:translateX(98.8vw) scaleX(-1)" alt="">
     <img src="../cloud.png"  class="hero__cloud" data-dur="79" data-delay="-70" style="transform:translateX(99.5vw)" alt="">
   </div>
-  <div class="blog-hero__eyebrow">St. Clair Drug Mart Pharmacy presents</div>
-  <h1>The Health Wire</h1>
-  <div class="blog-hero__rule"></div>
-  <p class="blog-hero__sub">Straight-talk health tips, pharmacy news, and wellness guides from your neighbourhood pharmacists on St. Clair West.</p>
-  <div class="blog-hero__search">
-    <input type="text" id="searchInput" placeholder="Search articles…" autocomplete="off"/>
-    <button type="button" id="searchBtn">Search</button>
+  <div class="blog-hero__inner">
+    <div class="blog-hero__badge"><span class="blog-hero__live"></span> St. Clair Drug Mart · Pharmacy News Desk</div>
+    <h1>The Health Wire</h1>
+    <p class="blog-hero__sub">Plain-language health news, pharmacy updates, and wellness guides from your neighbourhood pharmacists on St. Clair West.</p>
+    <div class="blog-hero__search">
+      <input type="text" id="searchInput" placeholder="Search articles…" autocomplete="off"/>
+      <button type="button" id="searchBtn">Search</button>
+    </div>
+    <div class="blog-hero__stats">
+      <span><strong>28</strong> conditions we can prescribe for</span>
+      <span class="dot"></span>
+      <span><strong>New</strong> articles weekly</span>
+      <span class="dot"></span>
+      <span><strong>4.9★</strong> patient rating</span>
+    </div>
   </div>
 </div>
 
