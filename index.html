@@ -631,6 +631,20 @@
     .service-card--toggle .service-card__arrow { opacity: 1; transform: none; font-size: 1.1rem; transition: transform .2s; }
     .service-card--toggle.open .service-card__arrow { transform: rotate(90deg); }
 
+    /* ── Conditions panel ─────────────────────────────── */
+    .conditions-panel {
+      display: none; margin-top: 1.25rem;
+      background: var(--white); border-radius: var(--radius);
+      border: 1.5px solid var(--border); padding: 1.5rem 1.25rem;
+    }
+    .conditions-panel.open { display: block; }
+    .conditions-panel__hd {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--teal-deeper); margin-bottom: 1rem;
+    }
+    .conditions-panel__note { margin-top: 1rem; font-size: .78rem; color: var(--text-muted); text-align: center; }
+
     /* ── Minor Ailment cards (descriptive, SEO-rich) ──── */
     .ailments-grid {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
@@ -753,6 +767,7 @@
     /* Panels and iframe span the full width of their containing grid row */
     .pa-cards--book > .pa-iframe-wrap,
     .pa-cards--mid  > .pa-iframe-wrap,
+    .pa-cards--mid  > .conditions-panel,
     .pa-cards--util > .pa-iframe-wrap { grid-column: 1 / -1; }
     .pa-card__chips {
       display: grid;
@@ -1285,6 +1300,7 @@
       .find-us__cpill { flex: 1; justify-content: center; min-height: 44px; }
       .info-strip__card { padding: 1rem .9rem; }
       .ailments-triage__btn { min-height: 40px; }
+      .conditions-panel { padding: 1.1rem .9rem; }
       .welcome__boxes { grid-template-columns: repeat(2, 1fr); }
       .pa-cards--mid  { grid-template-columns: 1fr; }
       .pa-cards--util { grid-template-columns: 1fr; }
@@ -2725,11 +2741,137 @@
         <span class="pa-card__label">Medication Review &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Free OHIP-covered review if you take 3+ medications — includes optional blood glucose test</span>
       </button>
-      <button class="pa-card" id="pa-card-conditions" data-iframeheight="1500">
+      <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1500" data-label="Minor Ailment Assessment">
         <div class="pa-card__icon">🩺</div>
-        <span class="pa-card__label">Minor Ailments &nbsp;<span class="pa-conditions-arrow" style="transform:rotate(-90deg)">▼</span></span>
-        <span class="pa-card__desc">Pharmacist prescribing for 28 conditions — no referral needed. Tap to browse all 28 &amp; start an assessment</span>
+        <span class="pa-card__label">Minor Ailments &nbsp;<span class="pa-conditions-arrow">▼</span></span>
+        <span class="pa-card__desc">Pharmacist prescribing for 28 conditions — no referral needed, in person or by phone when appropriate</span>
       </button>
+
+    <!-- Conditions panel (inside mid-row grid, spans full width) -->
+    <div class="conditions-panel" id="conditions-panel">
+      <div class="conditions-panel__hd">Which condition are you dealing with?</div>
+      <div class="ailments-smartsearch" id="smartsearch-portal">
+        <div class="ailments-smartsearch__wrap">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+          <input class="ailments-smartsearch__input" data-scope="portal" type="text" placeholder="Tell us how you feel… e.g. 'itchy rash', 'burning when I pee', 'eye discharge'" autocomplete="off" spellcheck="false"/>
+          <button class="ailments-smartsearch__clear" aria-label="Clear search">✕</button>
+        </div>
+        <div class="ailments-smartsearch__results" id="smartsearch-results-portal"></div>
+      </div>
+      <div class="ailments-triage" id="ailments-triage-portal">
+        <button class="ailments-triage__btn ailments-triage__btn--all active" data-triage="portal" data-cat="all">All Conditions</button>
+        <div class="ailments-triage__group">
+          <div class="ailments-triage__q">Where is your symptom, or what does it relate to?</div>
+          <div class="ailments-triage__btns">
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="eent">🧠 Head: Eyes, Nose &amp; Mouth</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="skin">🧴 Skin &amp; Hair</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="feet">🦶 Feet</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="groin">🏃 Groin &amp; Pelvic</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="gut">🔥 Stomach &amp; Bowel</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="pain">🦴 Pain &amp; Injury</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="womens">🌸 Women's Health</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="bites">🐝 Bites &amp; Stings</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="children">🧒 Children's Health</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="contagious">🦠 Contagious / Infections</button>
+          </div>
+        </div>
+      </div>
+      <div class="ailments-cat-section portal-cat" data-triage-scope="portal" data-cat="eent">
+        <div class="ailments-cat__hd">🧠 Head: Eyes, Ears, Nose &amp; Mouth</div>
+        <div class="ailments-grid">
+          <div class="ailment-card"><div class="ailment-card__icon">🤕</div><h3 class="ailment-card__name">Mild Headache</h3><p class="ailment-card__desc">A dull ache or pressure around the forehead, temples, or back of the neck.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=12">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">👁️</div><h3 class="ailment-card__name">Pink Eye</h3><p class="ailment-card__desc">Red, irritated eyes with discharge — sticky or crusty in the morning.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=22">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">💧</div><h3 class="ailment-card__name">Dry Eye</h3><p class="ailment-card__desc">Eyes that feel gritty, scratchy, or tired — especially after screen time or in air conditioning.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=41">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🤧</div><h3 class="ailment-card__name">Allergic Rhinitis</h3><p class="ailment-card__desc">Sneezing, runny nose, itchy or watery eyes — around pollen, pets, or dust.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=25">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">😤</div><h3 class="ailment-card__name">Nasal Congestion</h3><p class="ailment-card__desc">A blocked, stuffy nose that makes it hard to breathe or sleep.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=38">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">👄</div><h3 class="ailment-card__name">Oral Thrush</h3><p class="ailment-card__desc">White patches inside your mouth, on your tongue, or throat.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=18">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">💋</div><h3 class="ailment-card__name">Cold Sores</h3><p class="ailment-card__desc">Tingling or blistering around the lips — often triggered by stress or sun.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=3">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🫦</div><h3 class="ailment-card__name">Canker Sores</h3><p class="ailment-card__desc">Painful sores inside your mouth or on your gums that make eating uncomfortable.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=6">Start Assessment →</a></div>
+        </div>
+      </div>
+      <div class="ailments-cat-section portal-cat" data-triage-scope="portal" data-cat="skin">
+        <div class="ailments-cat__hd">🧴 Skin &amp; Hair</div>
+        <div class="ailments-grid">
+          <div class="ailment-card"><div class="ailment-card__icon">💊</div><h3 class="ailment-card__name">Acne</h3><p class="ailment-card__desc">Pimples, blackheads, or inflamed red spots on your face, back, or chest.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=13">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🖐️</div><h3 class="ailment-card__name">Eczema / Dermatitis</h3><p class="ailment-card__desc">Patches of itchy, red, dry or inflamed skin that flare up and may crack or weep.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=26">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">❄️</div><h3 class="ailment-card__name">Dandruff</h3><p class="ailment-card__desc">Flaky white or yellowish scales on your scalp and hair, sometimes with itchiness.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=44">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🦠</div><h3 class="ailment-card__name">Impetigo</h3><p class="ailment-card__desc">Red sores that crust over honey-coloured — common in children, around nose and mouth.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=2">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">⭕</div><h3 class="ailment-card__name">Ringworm</h3><p class="ailment-card__desc">A circular, scaly, itchy rash on the skin — a fungal infection, not a worm.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=9">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🌱</div><h3 class="ailment-card__name">Warts</h3><p class="ailment-card__desc">Small, rough, skin-coloured bumps on hands, feet, or body that may spread.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=46">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🔍</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Intense scalp itching — small eggs (nits) attached to hair, common in children.</p><a class="ailment-card__link" href="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
+        </div>
+      </div>
+      <div class="ailments-cat-section portal-cat" data-triage-scope="portal" data-cat="feet">
+        <div class="ailments-cat__hd">🦶 Feet</div>
+        <div class="ailments-grid">
+          <div class="ailment-card"><div class="ailment-card__icon">🦶</div><h3 class="ailment-card__name">Athlete's Foot</h3><p class="ailment-card__desc">Itchy, scaly, or cracked skin between toes or on the soles of your feet.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=10">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">👣</div><h3 class="ailment-card__name">Calluses &amp; Corns</h3><p class="ailment-card__desc">Hard, thickened patches on feet or toes causing discomfort when walking.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=45">Start Assessment →</a></div>
+        </div>
+      </div>
+      <div class="ailments-cat-section portal-cat" data-triage-scope="portal" data-cat="groin">
+        <div class="ailments-cat__hd">🏃 Groin &amp; Pelvic</div>
+        <div class="ailments-grid">
+          <div class="ailment-card"><div class="ailment-card__icon">🏃</div><h3 class="ailment-card__name">Jock Itch</h3><p class="ailment-card__desc">A red, itchy, ring-shaped rash in the groin or inner thighs — worse with sweating.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=8">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🌸</div><h3 class="ailment-card__name">Vaginal Yeast Infection</h3><p class="ailment-card__desc">Itching, burning, or irritation around the vagina — not sexually transmitted.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=42">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">💧</div><h3 class="ailment-card__name">Urinary Tract Infection</h3><p class="ailment-card__desc">Burning when urinating, needing to go frequently, or cloudy urine.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=23">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🩹</div><h3 class="ailment-card__name">Hemorrhoids</h3><p class="ailment-card__desc">Itching, pain, or swelling around your rectum, or blood on toilet paper.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=4">Start Assessment →</a></div>
+        </div>
+      </div>
+      <div class="ailments-cat-section portal-cat" data-triage-scope="portal" data-cat="gut">
+        <div class="ailments-cat__hd">🔥 Stomach &amp; Bowel</div>
+        <div class="ailments-grid">
+          <div class="ailment-card"><div class="ailment-card__icon">🔥</div><h3 class="ailment-card__name">Heartburn / GERD</h3><p class="ailment-card__desc">A burning feeling in your chest or throat after eating, especially when lying down.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=24">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🩹</div><h3 class="ailment-card__name">Hemorrhoids</h3><p class="ailment-card__desc">Itching, pain, or swelling around your rectum, or blood on toilet paper.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=4">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🐛</div><h3 class="ailment-card__name">Pinworms</h3><p class="ailment-card__desc">Intense itching around the anus, especially at night — common in children.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=43">Start Assessment →</a></div>
+        </div>
+      </div>
+      <div class="ailments-cat-section portal-cat" data-triage-scope="portal" data-cat="pain">
+        <div class="ailments-cat__hd">🦴 Pain &amp; Injury</div>
+        <div class="ailments-grid">
+          <div class="ailment-card"><div class="ailment-card__icon">🤕</div><h3 class="ailment-card__name">Mild Headache</h3><p class="ailment-card__desc">A dull ache or pressure around the forehead, temples, or back of the neck.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=12">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🦴</div><h3 class="ailment-card__name">Sprains &amp; Strains</h3><p class="ailment-card__desc">Pain, swelling, or bruising around a joint or muscle after twisting or overstretching.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=21">Start Assessment →</a></div>
+        </div>
+      </div>
+      <div class="ailments-cat-section portal-cat" data-triage-scope="portal" data-cat="womens">
+        <div class="ailments-cat__hd">🌸 Women's Health</div>
+        <div class="ailments-grid">
+          <div class="ailment-card"><div class="ailment-card__icon">🩸</div><h3 class="ailment-card__name">Period Pain</h3><p class="ailment-card__desc">Cramping or throbbing pain in the lower abdomen during your period.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=20">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🌸</div><h3 class="ailment-card__name">Vaginal Yeast Infection</h3><p class="ailment-card__desc">Itching, burning, or irritation around the vagina — not sexually transmitted.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=42">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🤢</div><h3 class="ailment-card__name">Nausea in Pregnancy</h3><p class="ailment-card__desc">Feeling queasy or vomiting during the first trimester — morning sickness.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=30">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">💧</div><h3 class="ailment-card__name">Urinary Tract Infection</h3><p class="ailment-card__desc">Burning when urinating, needing to go frequently, or cloudy urine.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=23">Start Assessment →</a></div>
+        </div>
+      </div>
+      <div class="ailments-cat-section portal-cat" data-triage-scope="portal" data-cat="bites" data-cats="bites skin">
+        <div class="ailments-cat__hd">🐝 Bites &amp; Stings</div>
+        <div class="ailments-grid">
+          <div class="ailment-card"><div class="ailment-card__icon">🐝</div><h3 class="ailment-card__name">Insect Bites &amp; Stings</h3><p class="ailment-card__desc">Redness, swelling, or itching at a bite from a mosquito, bee, or wasp.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=19">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🕷️</div><h3 class="ailment-card__name">Tick Bites</h3><p class="ailment-card__desc">Found a tick attached to your skin after time outdoors in wooded or grassy areas.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=49">Start Assessment →</a></div>
+        </div>
+      </div>
+      <div class="ailments-cat-section portal-cat ailments-cat--topic-only" data-triage-scope="portal" data-cat="children">
+        <div class="ailments-cat__hd">🧒 Children's Health</div>
+        <div class="ailments-grid">
+          <div class="ailment-card"><div class="ailment-card__icon">👁️</div><h3 class="ailment-card__name">Pink Eye</h3><p class="ailment-card__desc">Red, irritated eyes with discharge — sticky or crusty in the morning.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=22">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🦠</div><h3 class="ailment-card__name">Impetigo</h3><p class="ailment-card__desc">Red sores that crust over honey-coloured — common in children, around nose and mouth.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=2">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🐛</div><h3 class="ailment-card__name">Pinworms</h3><p class="ailment-card__desc">Intense itching around the anus at night — most common in children but can affect the whole family.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=43">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🔍</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Intense scalp itching — small eggs (nits) attached to hair, common in children.</p><a class="ailment-card__link" href="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🐝</div><h3 class="ailment-card__name">Insect Bites &amp; Stings</h3><p class="ailment-card__desc">Redness, swelling, or itching at a bite from a mosquito, bee, or wasp.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=19">Start Assessment →</a></div>
+        </div>
+      </div>
+      <div class="ailments-cat-section portal-cat ailments-cat--topic-only" data-triage-scope="portal" data-cat="contagious">
+        <div class="ailments-cat__hd">🦠 Contagious / Infections</div>
+        <div class="ailments-grid">
+          <div class="ailment-card"><div class="ailment-card__icon">👁️</div><h3 class="ailment-card__name">Pink Eye</h3><p class="ailment-card__desc">Red, irritated eyes with discharge — highly contagious, avoid touching eyes.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=22">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🦠</div><h3 class="ailment-card__name">Impetigo</h3><p class="ailment-card__desc">Red sores with honey-coloured crusting — very contagious bacterial skin infection.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=2">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">💋</div><h3 class="ailment-card__name">Cold Sores</h3><p class="ailment-card__desc">Blistering around the lips caused by HSV — contagious through direct contact.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=3">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">⭕</div><h3 class="ailment-card__name">Ringworm</h3><p class="ailment-card__desc">A circular fungal rash that spreads through skin contact, shared items, or animals.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=9">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🔍</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Spread by head-to-head contact — common in schools and daycares.</p><a class="ailment-card__link" href="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🐛</div><h3 class="ailment-card__name">Pinworms</h3><p class="ailment-card__desc">Tiny worms spread by ingesting eggs — from contaminated hands, surfaces, or bedding. Easily passed through households.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=43">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">👄</div><h3 class="ailment-card__name">Oral Thrush</h3><p class="ailment-card__desc">A fungal mouth infection — can pass between infants and nursing mothers.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=18">Start Assessment →</a></div>
+        </div>
+      </div>
+      <p class="conditions-panel__note">All 28 conditions available as of July 1, 2026 &nbsp;·&nbsp; No doctor's referral needed &nbsp;·&nbsp; <strong>Walk in or start your online assessment above</strong></p>
+    </div>
     </div><!-- /.pa-cards--mid -->
 
     <!-- Row 3: Rx, Transfer, Login (3-col) -->
@@ -4423,20 +4565,25 @@ window.FAQS = [
   }
 
   const conditionsCard  = document.getElementById('pa-card-conditions');
+  const conditionsPanel = document.getElementById('conditions-panel');
 
   function closeAllPanels() {
     paWrap.style.display = 'none';
     paWrap.classList.remove('collapsed');
+    conditionsPanel.classList.remove('open');
     document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
   }
 
   document.querySelectorAll('.pa-card').forEach(card => {
     card.addEventListener('click', function() {
       if (this === conditionsCard) {
-        // Minor Ailments has its own full list under Services — jump there
-        // instead of duplicating the 28-condition browser inline here.
-        openAcc('acc-ailments');
-        setTimeout(function() { document.getElementById('acc-ailments').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+        const wasOpen = conditionsPanel.classList.contains('open');
+        closeAllPanels();
+        if (!wasOpen) {
+          conditionsPanel.classList.add('open');
+          this.classList.add('active');
+          setTimeout(function() { conditionsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+        }
       } else {
         const alreadyActive = this.classList.contains('active');
         const panelVisible = paWrap.style.display !== 'none';
@@ -4466,6 +4613,7 @@ window.FAQS = [
     chip.addEventListener('click', function(e) {
       e.preventDefault();
       const url = this.dataset.url;
+      conditionsPanel.classList.remove('open');
       document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
       conditionsCard.classList.add('active');
       paIframe.style.height = (conditionsCard.dataset.iframeheight || '1200') + 'px';
