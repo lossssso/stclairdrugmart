@@ -1873,6 +1873,8 @@
     .ailments-triage__btns { display: flex; flex-wrap: wrap; gap: .45rem; }
     .ailments-triage__btn { background: var(--white); border: 1.5px solid var(--border); border-radius: 999px; padding: .42rem .95rem; font-size: .8rem; font-weight: 600; cursor: pointer; transition: all .15s; color: var(--text-dark); }
     .ailments-triage__btn:hover, .ailments-triage__btn.active { background: var(--teal-bright); color: #fff; border-color: var(--teal-bright); }
+    .ailments-triage__btn--unsure { border-style: dashed; border-color: var(--teal-dark); color: var(--teal-dark); }
+    .ailments-triage__btn--unsure:hover { background: var(--teal-dark); color: #fff; border-color: var(--teal-dark); }
     @media (max-width: 600px) {
       .ailments-triage__btns { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; }
     }
@@ -2773,6 +2775,7 @@
             <button class="ailments-triage__btn" data-triage="portal" data-cat="bites">🐝 Bites &amp; Stings</button>
             <button class="ailments-triage__btn" data-triage="portal" data-cat="children">🧒 Children's Health</button>
             <button class="ailments-triage__btn" data-triage="portal" data-cat="contagious">🦠 Contagious / Infections</button>
+            <button class="ailments-triage__btn ailments-triage__btn--unsure" data-cat="unsure" onclick="event.stopPropagation();var c=document.getElementById('pa-card-book');if(c)c.click();">❓ Not Sure? Book Assessment with Pharmacist</button>
           </div>
         </div>
       </div>
