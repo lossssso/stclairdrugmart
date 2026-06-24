@@ -253,54 +253,148 @@ Return a single JSON object (no markdown fences) with these exact fields:
                 raise RuntimeError(f"Failed after 2 attempts: {exc}") from exc
             print(f"Attempt {attempt + 1} failed ({exc}), retrying…")
 
-# ── Shared CSS & layout fragments ─────────────────────────────
+# ── Shared sky-bg / cloud-nav fragments (same base as the rest of the site) ──
+# `depth` is how many directories below the site root the page lives in:
+#   blog/index.html -> depth 1 ("../" reaches the root)
+#   blog/posts/*.html -> depth 2 ("../../" reaches the root)
 
-SHARED_CSS = """
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --teal-bright: #2EC5BC; --teal-mid: #1AA8A0; --teal-dark: #0D7A72;
-      --teal-deeper: #08524C; --teal-ice: #E8F8F7; --white: #fff;
-      --text: #132624; --text-muted: #426260; --border: #ACD9D8;
-      --radius: 10px; --shadow: 0 2px 12px rgba(13,122,114,.10);
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--teal-ice); color: var(--text); line-height: 1.7; }
-    a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; }
-    .nav { position: sticky; top: 0; z-index: 100; background: var(--teal-deeper); box-shadow: 0 2px 8px rgba(0,0,0,.20); }
-    .nav__inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; height: 56px; }
-    .nav__brand { font-weight: 700; font-size: .95rem; color: #fff; letter-spacing: .02em; }
-    .nav__links { display: flex; list-style: none; gap: .25rem; }
-    .nav__links a { color: rgba(255,255,255,.85); font-size: .875rem; font-weight: 500; padding: .45rem .75rem; border-radius: 6px; transition: background .15s; }
-    .nav__links a:hover { background: rgba(255,255,255,.12); color: #fff; }
-    .nav__links .nav__cta a { background: var(--teal-bright); color: #fff; }
-    .nav__links .nav__cta a:hover { background: var(--teal-mid); }
-    .btn { display: inline-block; background: var(--teal-dark); color: #fff; font-weight: 600; font-size: .9rem; padding: .65rem 1.6rem; border-radius: 8px; transition: background .15s, transform .1s; }
-    .btn:hover { background: var(--teal-deeper); transform: translateY(-1px); }
-    .btn--bright { background: var(--teal-bright); }
-    .btn--bright:hover { background: var(--teal-mid); }
-    .btn--ghost { background: rgba(255,255,255,.15); border: 1.5px solid rgba(255,255,255,.3); }
-    .btn--ghost:hover { background: rgba(255,255,255,.25); }
-    footer { background: var(--teal-deeper); color: rgba(255,255,255,.8); text-align: center; padding: 2rem 1.5rem; font-size: .85rem; }
-    footer a { color: rgba(255,255,255,.65); }
-    footer a:hover { color: #fff; }
-    @media (max-width: 600px) { .nav__links { display: none; } }"""
+def sky_bg_html(depth: int) -> str:
+    p = "../" * depth
+    return f"""<div class="sky-bg" aria-hidden="true">
+  <img src="{p}cloud2.webp" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="">
+  <img src="{p}cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="102" data-delay="-60" style="transform:translateX(45.9vw) scaleX(-1)" alt="">
+  <img src="{p}cloud2.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="122" data-delay="-85" style="transform:translateX(65.4vw) scaleX(-1)" alt="">
+  <img src="{p}cloud.png"  class="sky-bg-cloud" data-dur="96" data-delay="-12" style="transform:translateX(-37.5vw)" alt="">
+  <img src="{p}cloud2.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="116" data-delay="-40" style="transform:translateX(2.1vw) scaleX(-1)" alt="">
+  <img src="{p}cloud.png"  class="sky-bg-cloud" data-dur="128" data-delay="-18" style="transform:translateX(-34.7vw)" alt="">
+  <img src="{p}cloud2.webp" class="sky-bg-cloud" data-dur="110" data-delay="-72" style="transform:translateX(57.8vw)" alt="">
+  <img src="{p}cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="94" data-delay="-95" style="transform:translateX(-58.1vw) scaleX(-1)" alt="">
+</div>"""
 
 
 def nav_html(depth: int = 1) -> str:
-    prefix = "../" * depth
-    return f"""<nav class="nav">
+    p = "../" * depth
+    blog_href = "index.html" if depth == 1 else "../index.html"
+    return f"""<nav class="nav" id="nav">
+  <div class="nav__clouds" aria-hidden="true">
+    <img src="{p}cloud2.webp" class="nav__cloud" data-dur="175" data-delay="-29" style="transform:translateX(-30.6vw)" alt="">
+    <img src="{p}cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="140" data-delay="-81" style="transform:translateX(44.7vw) scaleX(-1)" alt="">
+    <img src="{p}cloud2.webp" class="nav__cloud nav__cloud--flip" data-dur="165" data-delay="-126" style="transform:translateX(77.6vw) scaleX(-1)" alt="">
+    <img src="{p}cloud.png"  class="nav__cloud" data-dur="125" data-delay="-51" style="transform:translateX(13.8vw)" alt="">
+    <img src="{p}cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="150" data-delay="-102" style="transform:translateX(-8vw) scaleX(-1)" alt="">
+    <img src="{p}cloud2.webp" class="nav__cloud" data-dur="130" data-delay="0" style="transform:translateX(-60vw)" alt="">
+  </div>
   <div class="nav__inner">
-    <a href="{prefix}index.html" class="nav__brand">St. Clair Drug Mart</a>
-    <ul class="nav__links">
-      <li><a href="{prefix}index.html">Home</a></li>
-      <li><a href="{prefix}index.html#services">Services</a></li>
-      <li><a href="{prefix}blog/index.html">Blog</a></li>
-      <li><a href="{prefix}index.html#contact">Contact</a></li>
-      <li class="nav__cta"><a href="{PHARMACY['booking']}" target="_blank" rel="noopener">Book Appointment</a></li>
+    <a href="{p}index.html#welcome" class="nav__brand">
+      <img src="{p}logo.png" alt="" class="nav__brand__logo"/>
+      <span>St. Clair Drug Mart Pharmacy</span>
+    </a>
+    <button class="nav__toggle" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav__links" id="navLinks">
+      <li><a href="{p}index.html#welcome">Home</a></li>
+      <li class="nav__has-dropdown">
+        <a href="{p}index.html#services">Services</a>
+        <ul class="nav__dropdown">
+          <li><a href="{p}index.html#booking">Patient Portal</a></li>
+          <li><a href="{p}index.html#services">Ailment Assessment</a></li>
+          <li><a href="{p}index.html#services">Medication Reviews</a></li>
+          <li><a href="{p}index.html#services">Vaccinations</a></li>
+          <li><a href="{p}index.html#services">Smoking Cessation</a></li>
+          <li><a href="{p}index.html#services">Free Naloxone Kits</a></li>
+          <li><a href="{p}index.html#drug-checker">Drug Checker</a></li>
+          <li><a href="{p}index.html#services">Insurance</a></li>
+        </ul>
+      </li>
+      <li class="nav__has-dropdown">
+        <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
+        <ul class="nav__dropdown">
+          <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Order on Uber</a></li>
+          <li><a href="{p}braces-supports.html">Braces &amp; Supports</a></li>
+        </ul>
+      </li>
+      <li><a href="{blog_href}" class="active" aria-current="page">Blog</a></li>
+      <li class="nav__has-dropdown">
+        <a href="{p}index.html#faq">Got Questions?</a>
+        <ul class="nav__dropdown">
+          <li><a href="{p}index.html#about">About Us</a></li>
+          <li><a href="{p}index.html#team">Meet the Team</a></li>
+          <li><a href="{p}index.html#faq">FAQ</a></li>
+          <li><a href="{p}index.html#reviews">Ratings (4.9 ⭐)</a></li>
+          <li><a href="{p}index.html#contact">Find Us</a></li>
+        </ul>
+      </li>
+      <li class="nav__cta"><a href="{PHARMACY['booking']}" target="_blank" rel="noopener">Book Now</a></li>
     </ul>
   </div>
 </nav>"""
+
+
+CLOUD_JS = """<script>
+(function() {
+  var els = document.querySelectorAll('.nav__cloud, .sky-bg-cloud');
+  var items = [];
+  els.forEach(function(el) {
+    var dur = parseFloat(el.dataset.dur);
+    var delay = parseFloat(el.dataset.delay) || 0;
+    if (!dur) return;
+    el.style.animation = 'none';
+    items.push({ el: el, dur: dur, delay: delay, flip: el.className.indexOf('--flip') !== -1 });
+  });
+  if (!items.length) return;
+  var minInterval = 1000 / 30;
+  var lastFrame = 0, lastDelta = 0, slowStreak = 0, powerSaveOn = false;
+  function enterPowerSave() {
+    if (powerSaveOn) return;
+    powerSaveOn = true;
+    minInterval = 1000 / 18;
+    items.forEach(function(it, i) { if (i % 2 === 1) it.el.style.display = 'none'; });
+  }
+  function tick(now) {
+    if (now - lastFrame < minInterval) { requestAnimationFrame(tick); return; }
+    if (lastDelta) {
+      var gap = now - lastDelta;
+      slowStreak = gap > 70 ? slowStreak + 1 : Math.max(0, slowStreak - 1);
+      if (slowStreak > 12) enterPowerSave();
+    }
+    lastDelta = now;
+    lastFrame = now;
+    var t = now / 1000;
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      if (powerSaveOn && it.el.style.display === 'none') continue;
+      var prog = (((t - it.delay) % it.dur) + it.dur) % it.dur / it.dur;
+      var vw = -60 + prog * 180;
+      it.el.style.transform = 'translateX(' + vw.toFixed(2) + 'vw)' + (it.flip ? ' scaleX(-1)' : '');
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+document.querySelectorAll('.nav__links a').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    var parent = link.closest('.nav__has-dropdown');
+    if (parent && link === parent.querySelector(':scope > a') && window.innerWidth <= 768) {
+      e.preventDefault();
+      parent.classList.toggle('open');
+      return;
+    }
+    document.querySelector('.nav__links').classList.remove('open');
+    document.querySelector('.nav__toggle').classList.remove('open');
+    document.querySelectorAll('.nav__has-dropdown').forEach(function(d) { d.classList.remove('open'); });
+  });
+});
+document.addEventListener('click', function(e) {
+  var nav = document.querySelector('nav');
+  if (!nav.contains(e.target)) {
+    document.querySelector('.nav__links').classList.remove('open');
+    document.querySelector('.nav__toggle').classList.remove('open');
+    document.querySelectorAll('.nav__has-dropdown').forEach(function(d) { d.classList.remove('open'); });
+  }
+});
+</script>"""
 
 
 def footer_html() -> str:
@@ -330,8 +424,9 @@ def footer_html() -> str:
 # ── Individual post page ───────────────────────────────────────
 
 def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> str:
-    tags_html = " ".join(f'<span class="ptag">{t}</span>' for t in post.get("tags", []))
     post_url  = f"{SITE_URL}/blog/posts/{slug}"
+    pretty_date = fmt_date(date_str)
+    breadcrumb_label = post.get("tags", [primary_kw])[0] if post.get("tags") else primary_kw
 
     schema = json.dumps({
         "@context": "https://schema.org",
@@ -355,163 +450,69 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
         "keywords": primary_kw,
     }, indent=2)
 
-    return f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{post['title']} | St. Clair Drug Mart Pharmacy Toronto</title>
-  <meta name="description" content="{post['meta_description']}" />
-  <link rel="canonical" href="{post_url}" />
-
-  <!-- Open Graph -->
-  <meta property="og:type"        content="article" />
-  <meta property="og:title"       content="{post['title']}" />
-  <meta property="og:description" content="{post['meta_description']}" />
-  <meta property="og:url"         content="{post_url}" />
-  <meta property="og:site_name"   content="St. Clair Drug Mart Pharmacy" />
-  <meta property="article:published_time" content="{date_str}" />
-
-  <!-- Structured data -->
-  <script type="application/ld+json">
-{schema}
-  </script>
-
-  <style>
-{SHARED_CSS}
-    .post-hero {{ background: linear-gradient(150deg, var(--teal-deeper) 0%, var(--teal-dark) 55%, var(--teal-bright) 100%); padding: 3rem 1.5rem; color: #fff; }}
-    .post-hero__inner {{ max-width: 760px; margin: 0 auto; }}
-    .post-hero__tags {{ margin-bottom: .9rem; display: flex; gap: .4rem; flex-wrap: wrap; }}
-    .ptag {{ display: inline-block; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); border-radius: 20px; padding: .2rem .65rem; font-size: .75rem; font-weight: 500; }}
-    .post-hero__title {{ font-size: clamp(1.75rem, 4vw, 2.6rem); font-weight: 800; line-height: 1.15; margin-bottom: .75rem; }}
-    .post-hero__meta {{ font-size: .82rem; opacity: .75; display: flex; gap: 1.25rem; flex-wrap: wrap; }}
-    .post-body {{ max-width: 760px; margin: 0 auto; padding: 2.5rem 1.5rem; }}
-    .post-body h2 {{ font-size: 1.3rem; font-weight: 700; color: var(--teal-deeper); margin: 2rem 0 .5rem; }}
-    .post-body h3 {{ font-size: 1.05rem; font-weight: 600; color: var(--teal-dark); margin: 1.5rem 0 .4rem; }}
-    .post-body p {{ color: var(--text-muted); margin-bottom: 1rem; }}
-    .post-body ul {{ margin: .25rem 0 1rem 1.5rem; color: var(--text-muted); }}
-    .post-body li {{ margin-bottom: .35rem; }}
-    .post-body strong {{ color: var(--text); font-weight: 600; }}
-    .back-link {{ display: inline-flex; align-items: center; gap: .35rem; color: var(--teal-dark); font-size: .875rem; font-weight: 600; margin-bottom: 1.75rem; transition: color .15s; }}
-    .back-link:hover {{ color: var(--teal-deeper); }}
-    .post-cta {{ background: var(--teal-deeper); color: #fff; border-radius: 12px; padding: 2rem; text-align: center; margin: 2.5rem 0; }}
-    .post-cta h3 {{ font-size: 1.15rem; font-weight: 700; margin-bottom: .45rem; }}
-    .post-cta p {{ opacity: .8; font-size: .875rem; margin-bottom: 1.25rem; }}
-    .cta-btns {{ display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }}
-  </style>
-</head>
-<body>
-{nav_html(depth=2)}
-<div class="post-hero">
-  <div class="post-hero__inner">
-    <div class="post-hero__tags">{tags_html}</div>
-    <h1 class="post-hero__title">{post['title']}</h1>
-    <div class="post-hero__meta">
-      <span>📅 {fmt_date(date_str)}</span>
-      <span>⏱ {post['reading_minutes']} min read</span>
-      <span>✍️ {PHARMACY['short']}, Toronto</span>
-    </div>
-  </div>
-</div>
-<div class="post-body">
-  <a href="../../blog/index.html" class="back-link">← Back to Blog</a>
-  {post['content_html']}
-  <div class="post-cta">
-    <h3>Visit St. Clair Drug Mart Pharmacy in Toronto</h3>
-    <p>1203 St. Clair Ave W, Toronto · Mon–Fri 9 am–6 pm · Sat 9 am–2 pm</p>
-    <div class="cta-btns">
-      <a href="{PHARMACY['tel']}" class="btn btn--bright">📞 {PHARMACY['phone']}</a>
-      <a href="{PHARMACY['booking']}" target="_blank" rel="noopener" class="btn btn--ghost">Book Appointment</a>
-    </div>
-  </div>
-</div>
-{footer_html()}
-</body>
-</html>"""
-
-
-# ── Blog index page ────────────────────────────────────────────
-
-def build_blog_index(posts: list) -> str:
-    ordered = sorted(posts, key=lambda p: p["date"], reverse=True)
-
-    cards = []
-    for p in ordered:
-        tags_html = "".join(f'<span class="ptag">{t}</span>' for t in p.get("tags", []))
-        cards.append(
-            f'    <article class="post-card">\n'
-            f'      <div class="post-card__meta"><span>📅 {fmt_date(p["date"])}</span>'
-            f'<span>⏱ {p.get("reading_minutes", 3)} min read</span></div>\n'
-            f'      <h2 class="post-card__title"><a href="posts/{p["slug"]}">{p["title"]}</a></h2>\n'
-            f'      <p class="post-card__excerpt">{p["excerpt"]}</p>\n'
-            f'      <div class="post-card__footer"><div class="post-card__tags">{tags_html}</div>'
-            f'<a href="posts/{p["slug"]}" class="read-more">Read more →</a></div>\n'
-            f'    </article>'
-        )
-
-    grid = (
-        "\n".join(cards)
-        if cards
-        else '<p style="color:var(--text-muted);grid-column:1/-1;text-align:center;padding:3rem 0">Our first posts are coming soon — check back next week!</p>'
-    )
-
-    schema = json.dumps({
+    breadcrumb_schema = json.dumps({
         "@context": "https://schema.org",
-        "@type": "Blog",
-        "name": "St. Clair Drug Mart Pharmacy Health Blog",
-        "description": "Health tips, pharmacy news, and wellness advice from St. Clair Drug Mart Pharmacy in Toronto.",
-        "url": f"{SITE_URL}/blog/",
-        "publisher": {"@type": "Organization", "name": PHARMACY["name"], "url": SITE_URL},
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{SITE_URL}/"},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": f"{SITE_URL}/blog/index.html"},
+            {"@type": "ListItem", "position": 3, "name": post["title"]},
+        ],
     }, indent=2)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Health &amp; Pharmacy Blog | St. Clair Drug Mart Pharmacy Toronto</title>
-  <meta name="description" content="Health tips, pharmacy advice, and local wellness news from St. Clair Drug Mart Pharmacy at 1203 St. Clair Ave W, Toronto." />
-  <link rel="canonical" href="{SITE_URL}/blog/" />
-  <meta property="og:title"       content="Health &amp; Pharmacy Blog | St. Clair Drug Mart Pharmacy" />
-  <meta property="og:description" content="Health tips and pharmacy advice from your neighbourhood pharmacists in St. Clair West, Toronto." />
-  <meta property="og:url"         content="{SITE_URL}/blog/" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,viewport-fit=cover"/>
+  <title>{post['title']} | St. Clair Drug Mart Pharmacy Toronto</title>
+  <meta name="description" content="{post['meta_description']}"/>
+  <link rel="canonical" href="{post_url}"/>
+  <meta name="robots" content="index, follow, max-image-preview:large"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="{post['title']}"/>
+  <meta property="og:description" content="{post['meta_description']}"/>
+  <meta property="og:url" content="{post_url}"/>
+  <meta property="og:site_name" content="St. Clair Drug Mart Pharmacy"/>
+  <meta property="article:published_time" content="{date_str}"/>
+  <link rel="icon" type="image/x-icon" href="../../favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../post.css"/>
   <script type="application/ld+json">
 {schema}
   </script>
-  <style>
-{SHARED_CSS}
-    .blog-hero {{ background: linear-gradient(150deg, var(--teal-deeper) 0%, var(--teal-dark) 55%, var(--teal-bright) 100%); padding: 3rem 1.5rem 2.5rem; color: #fff; text-align: center; }}
-    .blog-hero h1 {{ font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: .5rem; }}
-    .blog-hero p {{ opacity: .8; font-size: .95rem; }}
-    .blog-main {{ max-width: 1100px; margin: 3rem auto; padding: 0 1.5rem 4rem; }}
-    .posts-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }}
-    .post-card {{ background: var(--white); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border-top: 3px solid var(--teal-bright); display: flex; flex-direction: column; gap: .6rem; }}
-    .post-card__meta {{ display: flex; gap: 1rem; font-size: .78rem; color: var(--text-muted); }}
-    .post-card__title {{ font-size: 1.05rem; font-weight: 700; line-height: 1.3; }}
-    .post-card__title a {{ color: var(--teal-deeper); transition: color .15s; }}
-    .post-card__title a:hover {{ color: var(--teal-bright); }}
-    .post-card__excerpt {{ font-size: .875rem; color: var(--text-muted); flex: 1; line-height: 1.55; }}
-    .post-card__footer {{ display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; }}
-    .post-card__tags {{ display: flex; gap: .35rem; flex-wrap: wrap; }}
-    .ptag {{ background: var(--teal-ice); border: 1px solid var(--border); border-radius: 20px; padding: .15rem .6rem; font-size: .72rem; color: var(--teal-dark); }}
-    .read-more {{ font-size: .82rem; font-weight: 600; color: var(--teal-dark); transition: color .15s; }}
-    .read-more:hover {{ color: var(--teal-bright); }}
-    @media (max-width: 900px) {{ .posts-grid {{ grid-template-columns: repeat(2, 1fr); }} }}
-    @media (max-width: 600px) {{ .posts-grid {{ grid-template-columns: 1fr; }} }}
-  </style>
+  <script type="application/ld+json">
+{breadcrumb_schema}
+  </script>
 </head>
 <body>
-{nav_html(depth=1)}
-<div class="blog-hero">
-  <h1>Health &amp; Pharmacy Blog</h1>
-  <p>Tips, local health news, and pharmacy advice from St. Clair Drug Mart Pharmacy in Toronto's St. Clair West neighbourhood.</p>
-</div>
-<main class="blog-main">
-  <div class="posts-grid">
-{grid}
+{sky_bg_html(depth=2)}
+
+{nav_html(depth=2)}
+
+<article class="post">
+  <p class="post__breadcrumb"><a href="../../index.html">Home</a> › <a href="../index.html">Blog</a> › {breadcrumb_label}</p>
+  <h1>{post['title']}</h1>
+  <p class="post__meta">Updated {pretty_date} · {post['reading_minutes']} min read · {breadcrumb_label}</p>
+
+  {post['content_html']}
+
+  <div class="post__cta">
+    <h3>Have questions about this?</h3>
+    <p>Walk in, or start an online assessment — our pharmacist at {PHARMACY['name']} can help today.</p>
+    <a class="btn" href="{PHARMACY['booking']}" target="_blank" rel="noopener">Book an Appointment →</a>
+    <a class="btn btn--outline" href="{PHARMACY['tel']}">Call {PHARMACY['phone']}</a>
   </div>
-</main>
+
+  <p class="post__disclaimer">This article is general information, not medical advice. Speak with our pharmacist or your doctor about your specific situation.</p>
+</article>
+
 {footer_html()}
+{CLOUD_JS}
 </body>
 </html>"""
 
@@ -615,9 +616,6 @@ def main():
         "topic":           topic_desc,
     })
     save_posts(posts)
-
-    (BLOG_DIR / "index.html").write_text(build_blog_index(posts))
-    print("Regenerated     : blog/index.html")
 
     update_main_site(posts)
     update_sitemap(posts)

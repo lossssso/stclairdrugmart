@@ -32,7 +32,7 @@
     ]
   }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -48,60 +48,119 @@
       --border:      #b8e8ea;
       --radius:      10px;
       --shadow:      0 2px 12px rgba(0,115,124,.10);
+      --font-display: 'Helvetica Neue', Helvetica, 'Arial', 'Inter', sans-serif;
     }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: var(--teal-ice);
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(180deg, #b6ecef 0%, #cdf5f6 35%, #e4fbfc 100%) fixed;
       color: var(--text);
       line-height: 1.65;
+      overflow-x: hidden;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
     a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
 
-    /* ── Nav ─────────────────────────────────────────── */
-    .nav {
-      position: sticky; top: 0; z-index: 100;
-      background: var(--teal-deeper);
-      box-shadow: 0 2px 8px rgba(0,0,0,.20);
+    /* ── Fixed sky background — same drifting clouds as the main site ── */
+    .sky-bg {
+      position: fixed; inset: 0; z-index: -1;
+      overflow: hidden; pointer-events: none;
+      background: linear-gradient(180deg, #b6ecef 0%, #cdf5f6 45%, #e4fbfc 100%);
+      animation: cloud-layer-in 3s ease both;
     }
+    .sky-bg-cloud {
+      position: absolute; left: 0; animation: cloud-drift linear infinite;
+      will-change: transform; display: block; pointer-events: none;
+      max-width: none;
+    }
+    .sky-bg-cloud--flip { animation-name: cloud-drift-r; }
+    .sky-bg-cloud:nth-child(1) { width:1350px; height:330px; top: 1vh; animation-duration:132s; animation-delay: -25s; opacity:.80; }
+    .sky-bg-cloud:nth-child(2) { width:1050px; height:260px; top: 5vh; animation-duration:102s; animation-delay: -60s; opacity:.70; }
+    .sky-bg-cloud:nth-child(3) { width:1250px; height:305px; top: 2vh; animation-duration:122s; animation-delay: -85s; opacity:.75; }
+    .sky-bg-cloud:nth-child(4) { width: 980px; height:245px; top: 9vh; animation-duration: 96s; animation-delay: -12s; opacity:.65; }
+    .sky-bg-cloud:nth-child(5) { width:1200px; height:295px; top:22vh; animation-duration:116s; animation-delay: -40s; opacity:.58; }
+    .sky-bg-cloud:nth-child(6) { width:1300px; height:318px; top:33vh; animation-duration:128s; animation-delay: -18s; opacity:.50; }
+    .sky-bg-cloud:nth-child(7) { width:1100px; height:272px; top:46vh; animation-duration:110s; animation-delay: -72s; opacity:.44; }
+    .sky-bg-cloud:nth-child(8) { width: 960px; height:238px; top:60vh; animation-duration: 94s; animation-delay: -95s; opacity:.38; }
+    @keyframes cloud-drift   { from { transform: translateX(-60vw);           } to { transform: translateX(120vw);           } }
+    @keyframes cloud-drift-r { from { transform: translateX(-60vw) scaleX(-1);} to { transform: translateX(120vw) scaleX(-1);} }
+    @keyframes cloud-layer-in { from { opacity: 0; } to { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .sky-bg-cloud { animation: none; } .sky-bg { animation: none; opacity: 1; } }
+
+    /* ── Nav (identical structure/engine to index.html / braces-supports.html) ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 100;
+      background: rgba(182,236,239,.97);
+      border-bottom: 1px solid rgba(33,161,168,.22);
+      box-shadow: 0 1px 14px rgba(0,80,90,.06);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    }
+    .nav__clouds {
+      position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; opacity: 1;
+      mask-image: linear-gradient(to bottom, transparent 0%, transparent 8%, black 65%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 8%, black 65%);
+    }
+    .nav__cloud  { position: absolute; left: 0; animation: cloud-drift linear infinite; will-change: transform; max-width: none; display: block; filter: drop-shadow(0 1px 3px rgba(0,60,65,.18)); }
+    .nav__cloud--flip { animation-name: cloud-drift-r; }
+    .nav__cloud:nth-child(1) { width: 950px; height: 235px; top: -100px; animation-duration:175s; animation-delay: -29s; opacity: .85; }
+    .nav__cloud:nth-child(2) { width: 750px; height: 185px; top: -46px; animation-duration:140s; animation-delay: -81s; opacity: .78; }
+    .nav__cloud:nth-child(3) { width: 880px; height: 218px; top: -88px; animation-duration:165s; animation-delay:-126s; opacity: .82; }
+    .nav__cloud:nth-child(4) { width: 680px; height: 168px; top: -36px; animation-duration:125s; animation-delay: -51s; opacity: .76; }
+    .nav__cloud:nth-child(5) { width: 820px; height: 203px; top: -57px; animation-duration:150s; animation-delay:-102s; opacity: .80; }
+    .nav__cloud:nth-child(6) { width: 900px; height: 223px; top: -70px; animation-duration:130s; animation-delay: 0s; opacity: .80; }
+    @media (max-width: 768px) { .nav__cloud:nth-child(4), .nav__cloud:nth-child(5) { display: none; } }
     .nav__inner {
-      max-width: 1100px; margin: 0 auto;
-      display: flex; align-items: center;
-      justify-content: space-between;
-      padding: 0 1.5rem; height: 56px;
+      max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: flex-start;
+      padding: 0 max(1.5rem, env(safe-area-inset-right)) 0 max(1.5rem, env(safe-area-inset-left));
+      height: 64px; position: relative; z-index: 1;
     }
     .nav__brand {
-      display: flex; align-items: center; gap: .55rem;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.15rem; font-weight: 400;
-      color: var(--white); letter-spacing: .06em; white-space: nowrap;
-      text-decoration: none;
+      display: flex; align-items: center; gap: .6rem;
+      font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
+      color: var(--teal-deeper); letter-spacing: .02em; text-transform: uppercase;
+      white-space: nowrap; text-decoration: none;
     }
     .nav__brand__logo { height: 34px; width: auto; display: block; }
-    .nav__links { display: flex; list-style: none; gap: .25rem; }
+    .nav__links { display: flex; align-items: center; list-style: none; gap: .25rem; margin-left: auto; }
+    .nav__links > li { display: flex; align-items: center; }
     .nav__links a {
-      color: rgba(255,255,255,.85); font-size: .875rem; font-weight: 500;
-      padding: .45rem .75rem; border-radius: 6px;
+      display: inline-flex; align-items: center; color: #2c5457;
+      font-size: .875rem; font-weight: 500; line-height: 1;
+      padding: .5rem .8rem; border-radius: 7px;
       transition: background .15s, color .15s;
     }
-    .nav__links a:hover { background: rgba(255,255,255,.12); color: var(--white); }
-    .nav__links a.active { background: rgba(255,255,255,.18); color: var(--white); }
-    .nav__links .nav__cta a { background: var(--teal-bright); color: var(--white); }
-    .nav__links .nav__cta a:hover { background: var(--teal-mid); }
-    .nav__toggle { display: none; background: none; border: none; cursor: pointer; padding: .4rem; }
-    .nav__toggle span {
-      display: block; width: 22px; height: 2px;
-      background: var(--white); margin: 4px 0; border-radius: 2px;
+    .nav__links a:hover { background: #eef9fa; color: var(--teal-deeper); }
+    .nav__links a.active { background: #eef9fa; color: var(--teal-deeper); font-weight: 700; }
+    .nav__links .nav__cta a { background: var(--teal-bright); color: var(--white); font-weight: 600; box-shadow: 0 3px 10px rgba(33,161,168,.25); }
+    .nav__links .nav__cta a:hover { background: var(--teal-dark); color: var(--white); }
+    .nav__toggle { display: none; background: none; border: none; cursor: pointer; padding: .4rem; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+    .nav__toggle span { display: block; width: 22px; height: 2px; background: var(--teal-deeper); margin: 4px 0; border-radius: 2px; transition: transform .2s, opacity .2s; }
+    .nav__has-dropdown { position: relative; }
+    .nav__has-dropdown > a { gap: .3rem; }
+    .nav__has-dropdown > a::after { content: '▾'; font-size: .65rem; opacity: .65; transition: transform .2s; line-height: 1; }
+    .nav__has-dropdown:hover > a::after { transform: rotate(180deg); }
+    .nav__has-dropdown::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 10px; }
+    .nav__dropdown {
+      display: none; position: absolute; top: calc(100% + 9px); left: 0;
+      background: #fff; border: 1px solid #e9f4f5; border-radius: 10px;
+      box-shadow: 0 12px 32px rgba(0,60,66,.12); padding: .4rem; min-width: 210px;
+      z-index: 200; list-style: none; margin: 0;
     }
+    .nav__dropdown li { list-style: none; }
+    .nav__has-dropdown:hover .nav__dropdown,
+    .nav__has-dropdown.open .nav__dropdown { display: block; }
+    .nav__dropdown a { display: block; padding: .55rem .85rem; font-size: .85rem; font-weight: 500; color: #2c5457; border-radius: 7px; white-space: nowrap; }
+    .nav__dropdown a:hover { background: #eef9fa; color: var(--teal-deeper); }
+    .nav__dropdown a.active { background: #eef9fa; color: var(--teal-deeper); font-weight: 700; }
 
     /* ── Portal header ───────────────────────────────── */
     .portal-header {
-      background: var(--teal-deeper);
+      background: linear-gradient(140deg, var(--teal-deeper) 0%, #003a40 100%);
       color: var(--white);
-      padding: 2rem 1.5rem 1.75rem;
+      padding: calc(2rem + 64px) 1.5rem 1.75rem;
       text-align: center;
     }
     .portal-header h1 {
@@ -163,34 +222,96 @@
     .footer__links a { font-size: .82rem; }
 
     /* ── Responsive ──────────────────────────────────── */
+    @media (max-width: 860px) and (min-width: 769px) {
+      .nav__brand span { display: none; }
+    }
     @media (max-width: 768px) {
-      .nav__links { display: none; position: absolute; top: 56px; left: 0; right: 0; background: var(--teal-deeper); flex-direction: column; padding: .5rem 1rem 1rem; gap: .1rem; }
+      .nav__links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e9f4f5; box-shadow: 0 8px 20px rgba(0,60,66,.08); flex-direction: column; align-items: stretch; padding: .5rem 1rem 1rem; gap: .1rem; margin-left: 0; }
       .nav__links.open { display: flex; }
-      .nav__toggle { display: block; }
+      .nav__links > li { display: block; }
+      .nav__links a { display: flex; width: 100%; min-height: 44px; }
+      .nav__toggle { display: block; margin-left: auto; }
+      .nav__has-dropdown::after { display: none; }
+      .nav__dropdown { position: static; border: none; box-shadow: none; border-radius: 0; padding: 0; background: #f3fafb; margin: .2rem 0 .2rem .75rem; min-width: 0; }
+      .nav__has-dropdown .nav__dropdown,
+      .nav__has-dropdown:hover .nav__dropdown { display: none; }
+      .nav__has-dropdown.open .nav__dropdown { display: block; }
+      .nav__has-dropdown > a::after { margin-left: auto; }
+      .nav__has-dropdown:hover > a::after { transform: none; }
+      .nav__has-dropdown.open > a::after { transform: rotate(180deg); }
+      .nav__brand span { font-size: .8rem; letter-spacing: .01em; }
+      .nav__toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+      .nav__toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+      .nav__toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+      .portal-header { padding: calc(1.5rem + 64px) 1rem 1.5rem; }
       .portal-frame, .portal-frame iframe { min-height: 1200px; }
     }
   </style>
 </head>
 <body>
 
-<nav class="nav">
+<div class="sky-bg" aria-hidden="true">
+  <img src="cloud2.webp" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="102" data-delay="-60" style="transform:translateX(45.9vw) scaleX(-1)" alt="">
+  <img src="cloud2.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="122" data-delay="-85" style="transform:translateX(65.4vw) scaleX(-1)" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud" data-dur="96" data-delay="-12" style="transform:translateX(-37.5vw)" alt="">
+  <img src="cloud2.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="116" data-delay="-40" style="transform:translateX(2.1vw) scaleX(-1)" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud" data-dur="128" data-delay="-18" style="transform:translateX(-34.7vw)" alt="">
+  <img src="cloud2.webp" class="sky-bg-cloud" data-dur="110" data-delay="-72" style="transform:translateX(57.8vw)" alt="">
+  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="94" data-delay="-95" style="transform:translateX(-58.1vw) scaleX(-1)" alt="">
+</div>
+
+<nav class="nav" id="nav">
+  <div class="nav__clouds" aria-hidden="true">
+    <img src="cloud2.webp" class="nav__cloud" data-dur="175" data-delay="-29" style="transform:translateX(-30.6vw)" alt="">
+    <img src="cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="140" data-delay="-81" style="transform:translateX(44.7vw) scaleX(-1)" alt="">
+    <img src="cloud2.webp" class="nav__cloud nav__cloud--flip" data-dur="165" data-delay="-126" style="transform:translateX(77.6vw) scaleX(-1)" alt="">
+    <img src="cloud.png"  class="nav__cloud" data-dur="125" data-delay="-51" style="transform:translateX(13.8vw)" alt="">
+    <img src="cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="150" data-delay="-102" style="transform:translateX(-8vw) scaleX(-1)" alt="">
+    <img src="cloud2.webp" class="nav__cloud" data-dur="130" data-delay="0" style="transform:translateX(-60vw)" alt="">
+  </div>
   <div class="nav__inner">
-    <a href="index.html" class="nav__brand">
+    <a href="index.html#welcome" class="nav__brand">
       <img src="logo.png" alt="" class="nav__brand__logo" />
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
-    <button class="nav__toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
+    <button class="nav__toggle" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
-    <ul class="nav__links">
+    <ul class="nav__links" id="navLinks">
       <li><a href="index.html#welcome">Home</a></li>
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
+      <li class="nav__has-dropdown">
+        <a href="index.html#services">Services</a>
+        <ul class="nav__dropdown">
+          <li><a href="portal.html" class="active" aria-current="page">Patient Portal</a></li>
+          <li><a href="index.html#services">Ailment Assessment</a></li>
+          <li><a href="index.html#services">Medication Reviews</a></li>
+          <li><a href="index.html#services">Vaccinations</a></li>
+          <li><a href="index.html#services">Smoking Cessation</a></li>
+          <li><a href="index.html#services">Free Naloxone Kits</a></li>
+          <li><a href="index.html#drug-checker">Drug Checker</a></li>
+          <li><a href="index.html#services">Insurance</a></li>
+        </ul>
+      </li>
+      <li class="nav__has-dropdown">
+        <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
+        <ul class="nav__dropdown">
+          <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Order on Uber</a></li>
+          <li><a href="braces-supports.html">Braces &amp; Supports</a></li>
+        </ul>
+      </li>
       <li><a href="blog/index.html">Blog</a></li>
-      <li><a href="index.html#about">About</a></li>
-      <li><a href="portal.html" class="active">Patient Portal</a></li>
-      <li class="nav__cta"><a href="index.html#booking">Book Appointment</a></li>
+      <li class="nav__has-dropdown">
+        <a href="index.html#faq">Got Questions?</a>
+        <ul class="nav__dropdown">
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#team">Meet the Team</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+          <li><a href="index.html#reviews">Ratings (4.9 ⭐)</a></li>
+          <li><a href="index.html#contact">Find Us</a></li>
+        </ul>
+      </li>
+      <li class="nav__cta"><a href="index.html#booking">Book Now</a></li>
     </ul>
   </div>
 </nav>
@@ -224,10 +345,67 @@
 </footer>
 
 <script>
-  document.querySelectorAll('.nav__links a').forEach(link => {
-    link.addEventListener('click', () => {
-      document.querySelector('.nav__links').classList.remove('open');
+  (function() {
+    var els = document.querySelectorAll('.nav__cloud, .sky-bg-cloud');
+    var items = [];
+    els.forEach(function(el) {
+      var dur = parseFloat(el.dataset.dur);
+      var delay = parseFloat(el.dataset.delay) || 0;
+      if (!dur) return;
+      el.style.animation = 'none';
+      items.push({ el: el, dur: dur, delay: delay, flip: el.className.indexOf('--flip') !== -1 });
     });
+    if (!items.length) return;
+    var minInterval = 1000 / 30;
+    var lastFrame = 0, lastDelta = 0, slowStreak = 0, powerSaveOn = false;
+    function enterPowerSave() {
+      if (powerSaveOn) return;
+      powerSaveOn = true;
+      minInterval = 1000 / 18;
+      items.forEach(function(it, i) { if (i % 2 === 1) it.el.style.display = 'none'; });
+    }
+    function tick(now) {
+      if (now - lastFrame < minInterval) { requestAnimationFrame(tick); return; }
+      if (lastDelta) {
+        var gap = now - lastDelta;
+        slowStreak = gap > 70 ? slowStreak + 1 : Math.max(0, slowStreak - 1);
+        if (slowStreak > 12) enterPowerSave();
+      }
+      lastDelta = now;
+      lastFrame = now;
+      var t = now / 1000;
+      for (var i = 0; i < items.length; i++) {
+        var it = items[i];
+        if (powerSaveOn && it.el.style.display === 'none') continue;
+        var prog = (((t - it.delay) % it.dur) + it.dur) % it.dur / it.dur;
+        var vw = -60 + prog * 180;
+        it.el.style.transform = 'translateX(' + vw.toFixed(2) + 'vw)' + (it.flip ? ' scaleX(-1)' : '');
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+
+  document.querySelectorAll('.nav__links a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      var parent = link.closest('.nav__has-dropdown');
+      if (parent && link === parent.querySelector(':scope > a') && window.innerWidth <= 768) {
+        e.preventDefault();
+        parent.classList.toggle('open');
+        return;
+      }
+      document.querySelector('.nav__links').classList.remove('open');
+      document.querySelector('.nav__toggle').classList.remove('open');
+      document.querySelectorAll('.nav__has-dropdown').forEach(function(d) { d.classList.remove('open'); });
+    });
+  });
+  document.addEventListener('click', function(e) {
+    var nav = document.querySelector('nav');
+    if (!nav.contains(e.target)) {
+      document.querySelector('.nav__links').classList.remove('open');
+      document.querySelector('.nav__toggle').classList.remove('open');
+      document.querySelectorAll('.nav__has-dropdown').forEach(function(d) { d.classList.remove('open'); });
+    }
   });
 </script>
 </body>
