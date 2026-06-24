@@ -419,23 +419,29 @@
     .welcome-modal-overlay.open { opacity:1; visibility:visible; pointer-events:auto; }
     .welcome-modal {
       position: relative;
-      background:#fff; border-radius:var(--radius); width:100%; max-width:440px;
-      box-shadow:0 24px 64px rgba(0,0,0,.35); overflow:hidden;
+      background: rgba(255,255,255,.74);
+      backdrop-filter: blur(22px) saturate(160%); -webkit-backdrop-filter: blur(22px) saturate(160%);
+      border: 1px solid rgba(255,255,255,.55);
+      border-radius:var(--radius); width:100%; max-width:440px;
+      box-shadow:0 24px 60px rgba(0,30,32,.28); overflow:hidden;
       text-align:center;
       transform: scale(.94) translateY(10px);
       transition: transform .6s cubic-bezier(.2,.9,.3,1.2);
     }
     .welcome-modal-overlay.open .welcome-modal { transform: scale(1) translateY(0); }
     .welcome-modal__close { position:absolute; top:.6rem; right:.6rem; background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:1.2rem; line-height:1; padding:.4rem; z-index:2; }
-    .welcome-modal__top { background: linear-gradient(135deg, var(--teal-ice), #fff); padding: 1.6rem 1.75rem 1rem; }
-    .welcome-modal__icon { width:56px; height:56px; border-radius:50%; background:#fff; border:1.5px solid var(--border); box-shadow:0 6px 16px rgba(0,90,95,.12); display:flex; align-items:center; justify-content:center; margin:0 auto .75rem; overflow:hidden; }
+    .welcome-modal__top { background: rgba(196,238,240,.4); padding: 1.6rem 1.75rem 1rem; border-bottom: 1px solid rgba(255,255,255,.5); }
+    .welcome-modal__icon { width:56px; height:56px; border-radius:50%; background:rgba(255,255,255,.85); border:1.5px solid var(--border); box-shadow:0 6px 16px rgba(0,90,95,.12); display:flex; align-items:center; justify-content:center; margin:0 auto .75rem; overflow:hidden; }
     .welcome-modal__icon img { width:38px; height:auto; display:block; }
     .welcome-modal__title { font-size:1.15rem; font-weight:800; color:var(--teal-deeper); margin-bottom:.5rem; }
     .welcome-modal__badge { display:inline-block; font-size:.65rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; background:var(--teal-bright); color:#fff; border-radius:4px; padding:.15rem .5rem; margin-bottom:.65rem; }
     .welcome-modal__text { font-size:.9rem; color:var(--text-muted); line-height:1.55; margin-bottom:0; }
     .welcome-modal__body { padding: 1.1rem 1.75rem 1.5rem; }
     .welcome-modal__tags { display:flex; flex-wrap:wrap; justify-content:center; gap:.4rem; margin:.9rem 0 1rem; }
-    .welcome-modal__tags span { font-size:.72rem; font-weight:700; color:var(--teal-dark); background:var(--teal-ice); border:1px solid var(--border); border-radius:100px; padding:.28rem .65rem; }
+    .welcome-modal__tags span, .welcome-modal__tag { font-size:.72rem; font-weight:700; color:var(--teal-dark); background:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.7); border-radius:100px; padding:.32rem .7rem; }
+    .welcome-modal__tag { cursor:pointer; text-decoration:none; transition: background .15s, color .15s, transform .12s, box-shadow .15s; }
+    .welcome-modal__tag:hover { background:var(--teal-bright); color:#fff; border-color:var(--teal-bright); transform:translateY(-1px); box-shadow:0 4px 12px rgba(33,161,168,.3); }
+    .welcome-modal__tag-more { opacity: .75; }
     .welcome-modal__rating { font-size:.78rem; font-weight:700; color:var(--text-muted); margin-bottom:1.15rem; }
     .welcome-modal__cta { display:inline-block; background:var(--teal-bright); color:#fff; font-weight:700; font-size:.88rem; text-decoration:none; padding:.7rem 1.6rem; border-radius:30px; transition:background .15s, transform .15s; box-shadow:0 8px 20px rgba(33,161,168,.3); }
     .welcome-modal__cta:hover { background:var(--teal-dark); transform:translateY(-1px); }
@@ -2478,7 +2484,15 @@
       <div class="welcome-modal__text">Feeling under the weather? Our pharmacists can now assess &amp; prescribe for <strong>28 common conditions</strong> — no doctor's referral needed.</div>
     </div>
     <div class="welcome-modal__body">
-      <div class="welcome-modal__tags"><span>UTIs</span><span>Pink eye</span><span>Cold sores</span><span>Allergies</span><span>+24 more</span></div>
+      <div class="welcome-modal__tags">
+        <a href="#booking" class="welcome-modal__tag js-condition" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=23">💧 UTIs</a>
+        <a href="#booking" class="welcome-modal__tag js-condition" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=22">👁️ Pink eye</a>
+        <a href="#booking" class="welcome-modal__tag js-condition" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=3">💋 Cold sores</a>
+        <a href="#booking" class="welcome-modal__tag js-condition" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=25">🤧 Allergies</a>
+        <a href="#booking" class="welcome-modal__tag js-condition" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=24">🔥 Heartburn</a>
+        <a href="#booking" class="welcome-modal__tag js-condition" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=42">🌸 Yeast infection</a>
+        <span class="welcome-modal__tag-more">+22 more</span>
+      </div>
       <div class="welcome-modal__rating">⭐ 4.9/5 from 59 Google reviews</div>
       <a href="#services" class="welcome-modal__cta" id="welcomeModalCta">See conditions →</a>
       <button class="welcome-modal__later" id="welcomeModalLater" type="button">Maybe later</button>
@@ -2520,7 +2534,7 @@
         </div>
       </div>
       <div class="welcome__photo">
-        <img src="storefront_exterior.webp" alt="St. Clair Drug Mart storefront at 1203 St. Clair Ave W, Toronto" loading="lazy" decoding="async" />
+        <img src="storefront_exterior.webp" alt="St. Clair Drug Mart storefront at 1203 St. Clair Ave W, Toronto" loading="eager" fetchpriority="low" decoding="async" />
       </div>
     </div>
 
@@ -3463,7 +3477,7 @@
     <div class="staff-grid">
       <div class="staff-card">
         <div class="staff-card__photo">
-          <img src="team/elizabeth.png" alt="Elizabeth Da Silva, Pharmacist and Designated Manager at St. Clair Drug Mart Pharmacy" width="1122" height="1402" loading="lazy" decoding="async" />
+          <img src="team/elizabeth.png" alt="Elizabeth Da Silva, Pharmacist and Designated Manager at St. Clair Drug Mart Pharmacy" width="1122" height="1402" loading="eager" fetchpriority="low" decoding="async" />
         </div>
         <p class="staff-card__name">Elizabeth Da Silva</p>
         <p class="staff-card__role" style="font-size:.7rem;letter-spacing:.04em;color:var(--teal-dark);margin-bottom:.1rem;">BScPharm, RPh</p>
@@ -3471,21 +3485,21 @@
       </div>
       <div class="staff-card">
         <div class="staff-card__photo">
-          <img src="team/staff-3.png" alt="Madelin, Pharmacy Assistant at St. Clair Drug Mart Pharmacy" width="1122" height="1402" loading="lazy" decoding="async" />
+          <img src="team/staff-3.png" alt="Madelin, Pharmacy Assistant at St. Clair Drug Mart Pharmacy" width="1122" height="1402" loading="eager" fetchpriority="low" decoding="async" />
         </div>
         <p class="staff-card__name">Madelin</p>
         <p class="staff-card__role">Pharmacy Assistant</p>
       </div>
       <div class="staff-card">
         <div class="staff-card__photo">
-          <img src="team/staff-2.png" alt="Fethiye, Pharmacy Assistant at St. Clair Drug Mart Pharmacy" width="1122" height="1402" loading="lazy" decoding="async" />
+          <img src="team/staff-2.png" alt="Fethiye, Pharmacy Assistant at St. Clair Drug Mart Pharmacy" width="1122" height="1402" loading="eager" fetchpriority="low" decoding="async" />
         </div>
         <p class="staff-card__name">Fethiye</p>
         <p class="staff-card__role">Pharmacy Assistant</p>
       </div>
       <div class="staff-card">
         <div class="staff-card__photo">
-          <img src="team/staff-1.png" alt="Karen, Pharmacy Assistant at St. Clair Drug Mart Pharmacy" width="1122" height="1402" loading="lazy" decoding="async" />
+          <img src="team/staff-1.png" alt="Karen, Pharmacy Assistant at St. Clair Drug Mart Pharmacy" width="1122" height="1402" loading="eager" fetchpriority="low" decoding="async" />
         </div>
         <p class="staff-card__name">Karen</p>
         <p class="staff-card__role">Pharmacy Assistant</p>
@@ -3852,24 +3866,24 @@
     <div class="gallery">
       <div class="gallery__row gallery__row--top">
         <div class="gallery__item">
-          <img src="storefront_studio.jpeg" alt="St. Clair Drug Mart Pharmacy exterior — 1203 St. Clair Ave W, Toronto" loading="lazy" decoding="async" />
+          <img src="storefront_studio.jpeg" alt="St. Clair Drug Mart Pharmacy exterior — 1203 St. Clair Ave W, Toronto" loading="eager" fetchpriority="low" decoding="async" />
         </div>
         <div class="gallery__item">
-          <img src="neighbourhood.webp" alt="Corso Italia street on St. Clair Ave W with TTC streetcar and flower baskets" loading="lazy" decoding="async" />
+          <img src="neighbourhood.webp" alt="Corso Italia street on St. Clair Ave W with TTC streetcar and flower baskets" loading="eager" fetchpriority="low" decoding="async" />
         </div>
         <div class="gallery__item">
-          <img src="storefront_angle.jpeg" alt="St. Clair Drug Mart Pharmacy storefront on St. Clair Ave W, Toronto" loading="lazy" decoding="async" />
+          <img src="storefront_angle.jpeg" alt="St. Clair Drug Mart Pharmacy storefront on St. Clair Ave W, Toronto" loading="eager" fetchpriority="low" decoding="async" />
         </div>
       </div>
       <div class="gallery__row gallery__row--bottom">
         <div class="gallery__item">
-          <img src="interior_wide.jpg" alt="Inside St. Clair Drug Mart Pharmacy — pharmacy counter and full store" loading="lazy" decoding="async" />
+          <img src="interior_wide.jpg" alt="Inside St. Clair Drug Mart Pharmacy — pharmacy counter and full store" loading="eager" fetchpriority="low" decoding="async" />
         </div>
         <div class="gallery__item">
-          <img src="interior_shelves.webp" alt="Over-the-counter and health product shelves at St. Clair Drug Mart Pharmacy" loading="lazy" decoding="async" />
+          <img src="interior_shelves.webp" alt="Over-the-counter and health product shelves at St. Clair Drug Mart Pharmacy" loading="eager" fetchpriority="low" decoding="async" />
         </div>
         <div class="gallery__item">
-          <img src="interior_aisle.jpg" alt="Product aisle and counseling room inside St. Clair Drug Mart Pharmacy" loading="lazy" decoding="async" />
+          <img src="interior_aisle.jpg" alt="Product aisle and counseling room inside St. Clair Drug Mart Pharmacy" loading="eager" fetchpriority="low" decoding="async" />
         </div>
       </div>
     </div>
@@ -5771,6 +5785,9 @@ window.FAQS = [
     }
     closeBtn.addEventListener('click', closeWelcome);
     if (laterBtn) laterBtn.addEventListener('click', closeWelcome);
+    overlay.querySelectorAll('.welcome-modal__tag').forEach(function(tag) {
+      tag.addEventListener('click', closeWelcome);
+    });
     cta.addEventListener('click', function() {
       closeWelcome();
       setTimeout(function() {
