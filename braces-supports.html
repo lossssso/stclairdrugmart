@@ -105,16 +105,17 @@
     @keyframes cloud-layer-in { from { opacity: 0; } to { opacity: 1; } }
     @media (prefers-reduced-motion: reduce) { .sky-bg-cloud { animation: none; } .sky-bg { animation: none; opacity: 1; } }
 
-    /* ── Nav (identical structure/engine to index.html) ──── */
+    /* ── Nav (identical structure/engine to index.html) ────
+       Starts fully transparent so it blends into the page header, then fades
+       to frosted glass as the header scrolls past (see nav-fade script below). ── */
     .nav {
       position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 100;
-      background: rgba(182,236,239,.97);
-      border-bottom: 1px solid rgba(33,161,168,.22);
-      box-shadow: 0 1px 14px rgba(0,80,90,.06);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      background: rgba(182,236,239,0);
+      border-bottom: 1px solid rgba(33,161,168,0);
+      box-shadow: none;
     }
     .nav__clouds {
-      position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; opacity: 1;
+      position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; opacity: 0;
       mask-image: linear-gradient(to bottom, transparent 0%, transparent 8%, black 65%);
       -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 8%, black 65%);
     }
@@ -432,7 +433,7 @@
   </div>
 </nav>
 
-<header class="page-header">
+<header class="page-header" id="page-header">
   <div class="page-header__card">
     <nav class="page-header__crumbs" aria-label="Breadcrumb"><a href="index.html#welcome">Home</a> › <span>Braces &amp; Supports</span></nav>
     <span class="page-header__eyebrow">🛍️ In-Store Products</span>
@@ -756,6 +757,38 @@
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
+  })();
+
+  // ── Nav: clouds always drift; background fades in progressively as the
+  //    page header scrolls away, then stays as frosted glass (same engine as index.html) ──
+  (function() {
+    var nav = document.getElementById('nav');
+    var hero = document.getElementById('page-header');
+    var navClouds = nav.querySelector('.nav__clouds');
+    var lastA = -1;
+    function updateNav() {
+      var scrollY = window.scrollY || window.pageYOffset;
+      var heroH = hero ? hero.offsetHeight : 0;
+      var a = heroH < 1 ? 1 : Math.max(0, Math.min(1, scrollY / (heroH * 0.20)));
+      if (Math.abs(a - lastA) < 0.001) return;
+      lastA = a;
+      nav.style.background = 'rgba(182,236,239,' + a.toFixed(3) + ')';
+      var blur = a > 0.01 ? 'blur(' + (14 * a).toFixed(1) + 'px)' : '';
+      nav.style.backdropFilter = blur;
+      nav.style.webkitBackdropFilter = blur;
+      nav.style.borderBottomColor = 'rgba(33,161,168,' + (0.22 * a).toFixed(3) + ')';
+      nav.style.boxShadow = a > 0.05 ? '0 1px 14px rgba(0,80,90,' + (0.06 * a).toFixed(3) + ')' : 'none';
+      if (navClouds) navClouds.style.opacity = a.toFixed(3);
+    }
+    var navTicking = false;
+    function onScrollOrResize() {
+      if (navTicking) return;
+      navTicking = true;
+      requestAnimationFrame(function() { updateNav(); navTicking = false; });
+    }
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
+    updateNav();
   })();
 
   // ── Mobile nav: dropdown toggle + close on link click / outside tap ──
