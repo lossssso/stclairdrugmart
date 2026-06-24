@@ -4133,7 +4133,7 @@ window.FAQS = [
       var a = x.a;
       var href = a.call ? 'tel:+14166548181' : '#booking';
       var dataUrl = (!a.call && window.PHARMA_BASE) ? ' data-url="' + window.PHARMA_BASE + a.id + '"' : '';
-      html += '<button class="ailments-smartsearch__hit js-faq-cond-hit" data-href="' + href + '"' + dataUrl + ' data-call="' + (a.call?'1':'') + '">'
+      html += '<button class="ailments-smartsearch__hit js-faq-cond-hit" data-href="' + href + '"' + dataUrl + ' data-name="' + a.name + '" data-call="' + (a.call?'1':'') + '">'
         + '<span class="ailments-smartsearch__hit-icon">' + a.icon + '</span>'
         + '<span class="ailments-smartsearch__hit-body">'
         + '<span class="ailments-smartsearch__hit-name">' + a.name + '</span>'
@@ -4155,7 +4155,7 @@ window.FAQS = [
         if (paWrap && paIframe && url) {
           paIframe.src = url;
           paIframe.style.height = '900px';
-          if (paLabel) paLabel.textContent = 'Minor Ailment Assessment';
+          if (paLabel) paLabel.textContent = '🩺 ' + this.dataset.name + ' — Assessment';
           paWrap.style.display = '';
           paWrap.classList.remove('collapsed');
           document.querySelectorAll('.pa-card').forEach(function(c){ c.classList.remove('active'); });
@@ -4600,6 +4600,17 @@ window.FAQS = [
   });
 
   // Condition chip clicks
+  function getConditionLabel(chip) {
+    var card = chip.closest('.ailment-card');
+    if (card) {
+      var nameEl = card.querySelector('.ailment-card__name');
+      var icon = card.querySelector('.ailment-card__icon');
+      var name = nameEl ? nameEl.textContent.trim() : 'Condition';
+      var iconText = icon ? icon.textContent.trim() : '🩺';
+      return iconText + ' ' + name + ' — Assessment';
+    }
+    return chip.textContent.trim() + ' — Assessment';
+  }
   document.querySelectorAll('.js-condition').forEach(chip => {
     chip.addEventListener('click', function(e) {
       e.preventDefault();
@@ -4609,6 +4620,7 @@ window.FAQS = [
       conditionsCard.classList.add('active');
       paIframe.style.height = (conditionsCard.dataset.iframeheight || '1200') + 'px';
       paIframe.src = url;
+      if (paLabelText) paLabelText.textContent = getConditionLabel(this);
       // Move panel into primary grid (where the conditions card lives)
       var primaryGrid = conditionsCard.closest('.pa-cards');
       if (primaryGrid && paWrap.parentElement !== primaryGrid) {
@@ -5586,7 +5598,7 @@ window.FAQS = [
       var a = x.a;
       var href = a.call ? 'tel:+14166548181' : '#booking';
       var dataUrl = a.call ? '' : ' data-url="' + PHARMA_BASE + a.id + '"';
-      html += '<button class="ailments-smartsearch__hit js-smart-hit" data-href="' + href + '"' + dataUrl + ' data-call="' + (a.call?'1':'') + '">'
+      html += '<button class="ailments-smartsearch__hit js-smart-hit" data-href="' + href + '"' + dataUrl + ' data-name="' + a.name + '" data-call="' + (a.call?'1':'') + '">'
         + '<span class="ailments-smartsearch__hit-icon">' + a.icon + '</span>'
         + '<span class="ailments-smartsearch__hit-body">'
         + '<span class="ailments-smartsearch__hit-name">' + a.name + '</span>'
@@ -5610,7 +5622,7 @@ window.FAQS = [
         if (paWrap && paIframe && url) {
           paIframe.src = url;
           paIframe.style.height = '900px';
-          if (paLabel) paLabel.textContent = 'Minor Ailment Assessment';
+          if (paLabel) paLabel.textContent = '🩺 ' + this.dataset.name + ' — Assessment';
           if (paWrap) { paWrap.style.display = ''; paWrap.classList.remove('collapsed'); }
           document.querySelectorAll('.pa-card').forEach(function(c) { c.classList.remove('active'); });
         }
@@ -5730,7 +5742,7 @@ window.FAQS = [
     Object.keys(byTag).forEach(function(tag) {
       html += '<div class="site-search__category">' + tag + '</div>';
       byTag[tag].forEach(function(item) {
-        html += '<button class="site-search__result js-site-result" data-anchor="' + (item.anchor||'') + '" data-url="' + (item.url||'') + '" data-open="' + (item.open||'') + '" data-ailment-url="' + (item.ailmentUrl||'') + '">'
+        html += '<button class="site-search__result js-site-result" data-anchor="' + (item.anchor||'') + '" data-url="' + (item.url||'') + '" data-open="' + (item.open||'') + '" data-ailment-url="' + (item.ailmentUrl||'') + '" data-title="' + item.title + '">'
           + '<span class="site-search__result-icon">' + item.icon + '</span>'
           + '<span class="site-search__result-body">'
           + '<span class="site-search__result-title">' + highlightMatch(item.title, query) + '</span>'
@@ -5756,7 +5768,7 @@ window.FAQS = [
           if (paWrap && paIframe) {
             paIframe.src = ailmentUrl;
             paIframe.style.height = '900px';
-            if (paLabel) paLabel.textContent = 'Minor Ailment Assessment';
+            if (paLabel) paLabel.textContent = '🩺 ' + this.dataset.title + ' — Assessment';
             if (paWrap) { paWrap.style.display = ''; paWrap.classList.remove('collapsed'); }
             document.querySelectorAll('.pa-card').forEach(function(c) { c.classList.remove('active'); });
           }
