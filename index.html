@@ -795,7 +795,8 @@
       margin-top: 2rem;
     }
     .pa-cards--book {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      margin-top: .75rem;
       margin-bottom: 0;
     }
     .pa-cards--mid {
@@ -813,32 +814,22 @@
     .pa-cards--mid  > .pa-iframe-wrap,
     .pa-cards--mid  > .conditions-panel,
     .pa-cards--util > .pa-iframe-wrap { grid-column: 1 / -1; }
-    .pa-card__chips {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: .5rem;
-      margin-top: .75rem;
-      text-align: left;
-    }
-    .pa-chip {
-      display: flex; align-items: flex-start; gap: .5rem;
-      background: rgba(255,255,255,.55);
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      padding: .5rem .6rem;
-      cursor: pointer;
-      transition: background .15s, border-color .15s, transform .15s;
-    }
-    .pa-chip:hover { background: var(--white); border-color: var(--teal-bright); transform: translateY(-1px); }
-    .pa-chip__icon { font-size: 1.05rem; line-height: 1; flex-shrink: 0; }
-    .pa-chip__text { display: flex; flex-direction: column; gap: .1rem; min-width: 0; }
-    .pa-chip__text strong { font-size: .76rem; color: var(--text); line-height: 1.25; }
-    .pa-chip__text small { font-size: .68rem; color: var(--text-muted); line-height: 1.3; }
     .pa-chip__learn {
+      display: block;
       font-size: .68rem; font-weight: 600; color: var(--teal-dark);
-      margin-top: .15rem; cursor: pointer; width: fit-content;
+      margin-top: .4rem; cursor: pointer; width: fit-content;
     }
     .pa-chip__learn:hover { text-decoration: underline; }
+    .pa-row-heading {
+      display: flex; align-items: center; gap: .55rem;
+      margin-top: 2rem; margin-bottom: .35rem;
+    }
+    .pa-row-heading__icon { font-size: 1.6rem; line-height: 1; }
+    .pa-row-heading__text {
+      font-family: var(--font-display);
+      font-size: 1.05rem; font-weight: 800;
+      color: var(--teal-deeper);
+    }
     .pa-conditions-arrow {
       display: inline-block;
       font-style: normal;
@@ -2746,49 +2737,46 @@
     <h2 class="section__title">Patient Portal</h2>
     <p class="section__lead">Book appointments, request refills, transfer prescriptions, or sign in — everything loads right here. Need a rapid COVID-19 test, pregnancy test, or blood glucose check? Book Point of Care Testing below.</p>
 
-    <!-- Row 1: Book Appointment — full width -->
+    <!-- Row 1: Book Appointment — heading, then one big dropdown button per service -->
+    <div class="pa-row-heading">
+      <span class="pa-row-heading__icon">📅</span>
+      <span class="pa-row-heading__text">Book a Call or Appointment with Your Pharmacist</span>
+    </div>
+    <p class="section__lead" style="margin-top:.35rem;margin-bottom:0;">In person or over the phone when appropriate — many assessments, like UTIs and other minor ailments, don't need a visit. Choose what you need below:</p>
+
     <div class="pa-cards pa-cards--book">
-      <button class="pa-card" id="pa-card-book" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Book an Appointment">
-        <div class="pa-card__icon">📅</div>
-        <span class="pa-card__label">Book a Call or Appointment with Your Pharmacist &nbsp;<span class="pa-conditions-arrow">▼</span></span>
-        <span class="pa-card__desc">In person or over the phone when appropriate — many assessments, like UTIs and other minor ailments, don't need a visit. For:</span>
-        <div class="pa-card__chips">
-          <div class="pa-chip js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT.">
-            <span class="pa-chip__icon">💉</span>
-            <span class="pa-chip__text">
-              <strong>Vaccinations</strong><small>Flu, COVID-19, shingles &amp; travel shots — most need no appointment</small>
-              <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-vaccines');setTimeout(function(){document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
-            </span>
-          </div>
-          <div class="pa-chip js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand.">
-            <span class="pa-chip__icon">🔬</span>
-            <span class="pa-chip__text">
-              <strong>Point of Care Testing</strong><small>Rapid COVID-19 &amp; pregnancy tests, plus blood glucose checks</small>
-              <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-poct');setTimeout(function(){document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
-            </span>
-          </div>
-          <div class="pa-chip js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Medication Extension or Adaptation" data-hint="Select <strong>Medication Extension or Adaptation</strong> under TYPE OF APPOINTMENT.">
-            <span class="pa-chip__icon">💊</span>
-            <span class="pa-chip__text">
-              <strong>Medication Extensions &amp; Adaptations</strong><small>Prescription renewals &amp; dosage adaptations when your doctor's unreachable</small>
-              <span class="pa-chip__learn" onclick="event.stopPropagation();document.getElementById('rx-extensions').scrollIntoView({behavior:'smooth',block:'center'})">Learn more →</span>
-            </span>
-          </div>
-          <div class="pa-chip js-pa-select" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=16" data-iframeheight="1280" data-label="Smoking Cessation">
-            <span class="pa-chip__icon">🚭</span>
-            <span class="pa-chip__text">
-              <strong>Smoking Cessation</strong><small>Champix, nicotine patches &amp; a personalized quit plan</small>
-              <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-cessation');setTimeout(function(){document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
-            </span>
-          </div>
-          <div class="pa-chip js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Naloxone Kit &amp; Training" data-hint="Select <strong>Naloxone Kit &amp; Training</strong> under TYPE OF APPOINTMENT.">
-            <span class="pa-chip__icon">🆘</span>
-            <span class="pa-chip__text">
-              <strong>Naloxone Kit &amp; Training</strong><small>Free kit &amp; in-person training — usually no appointment needed, walk in anytime</small>
-              <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-naloxone');setTimeout(function(){document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
-            </span>
-          </div>
-        </div>
+      <!-- Hidden anchor: keeps the generic appointment URL/label as the click target for the
+           "Not Sure?" buttons and other links on the page that don't name one specific service. -->
+      <button class="pa-card" id="pa-card-book" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Book an Appointment" style="display:none" aria-hidden="true" tabindex="-1"></button>
+      <button class="pa-card" id="pa-card-vaccinations" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT.">
+        <div class="pa-card__icon">💉</div>
+        <span class="pa-card__label">Vaccinations &nbsp;<span class="pa-conditions-arrow">▼</span></span>
+        <span class="pa-card__desc">Flu, COVID-19, shingles &amp; travel shots — most need no appointment</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-vaccines');setTimeout(function(){document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
+      </button>
+      <button class="pa-card" id="pa-card-poct" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand.">
+        <div class="pa-card__icon">🔬</div>
+        <span class="pa-card__label">Point of Care Testing &nbsp;<span class="pa-conditions-arrow">▼</span></span>
+        <span class="pa-card__desc">Rapid COVID-19 &amp; pregnancy tests, plus blood glucose checks</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-poct');setTimeout(function(){document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
+      </button>
+      <button class="pa-card" id="pa-card-medext" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Medication Extension or Adaptation" data-hint="Select <strong>Medication Extension or Adaptation</strong> under TYPE OF APPOINTMENT.">
+        <div class="pa-card__icon">💊</div>
+        <span class="pa-card__label">Medication Extensions &amp; Adaptations &nbsp;<span class="pa-conditions-arrow">▼</span></span>
+        <span class="pa-card__desc">Prescription renewals &amp; dosage adaptations when your doctor's unreachable</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();document.getElementById('rx-extensions').scrollIntoView({behavior:'smooth',block:'center'})">Learn more →</span>
+      </button>
+      <button class="pa-card" id="pa-card-cessation" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=16" data-iframeheight="1280" data-label="Smoking Cessation">
+        <div class="pa-card__icon">🚭</div>
+        <span class="pa-card__label">Smoking Cessation &nbsp;<span class="pa-conditions-arrow">▼</span></span>
+        <span class="pa-card__desc">Champix, nicotine patches &amp; a personalized quit plan</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-cessation');setTimeout(function(){document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
+      </button>
+      <button class="pa-card" id="pa-card-naloxone" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Naloxone Kit &amp; Training" data-hint="Select <strong>Naloxone Kit &amp; Training</strong> under TYPE OF APPOINTMENT.">
+        <div class="pa-card__icon">🆘</div>
+        <span class="pa-card__label">Naloxone Kit &amp; Training &nbsp;<span class="pa-conditions-arrow">▼</span></span>
+        <span class="pa-card__desc">Free kit &amp; in-person training — usually no appointment needed, walk in anytime</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-naloxone');setTimeout(function(){document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
       </button>
       <div class="pa-iframe-wrap" id="pa-wrap" style="display:none">
         <div class="pa-iframe-label">
@@ -4909,10 +4897,7 @@ window.FAQS = [
       var labelOverride = this.dataset.label || null;
       var hintOverride = this.dataset.hint || null;
       var target = document.querySelector('.pa-card[data-url="' + url + '"]');
-      // The pa-chip sub-buttons live right inside the Book card already, so
-      // jumping the page to the iframe on click just feels like an unwanted
-      // scroll — leave the page where it is for those.
-      var doScroll = !this.classList.contains('pa-chip');
+      var doScroll = true;
       if (target) {
         switchPaTab(target, doScroll, labelOverride, hintOverride);
       } else {
