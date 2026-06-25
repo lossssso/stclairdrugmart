@@ -2436,6 +2436,7 @@
         <a href="#services">Services</a>
         <ul class="nav__dropdown">
           <li><a href="#booking">Patient Portal</a></li>
+          <li><a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/login/306667" data-label="Patient Login — PharmAssess Portal" data-iframeheight="660">Sign In</a></li>
           <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},200)">Condition Assessments</a></li>
           <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},200)">Medication Reviews</a></li>
           <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},200)">Vaccinations</a></li>
@@ -2965,7 +2966,7 @@
       <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="660" data-label="Patient Login — PharmAssess Portal">
         <div class="pa-card__icon">🔑</div>
         <span class="pa-card__label">Patient Login &nbsp;<span class="pa-conditions-arrow">▼</span></span>
-        <span class="pa-card__desc">Sign in to your PharmAssess patient portal</span>
+        <span class="pa-card__desc">Securely sign in to view your prescriptions, request refills, and manage appointments &amp; services — right from your phone or computer</span>
       </button>
     </div>
 
@@ -4036,6 +4037,12 @@ window.FAQS = [
     icon: "🔄",
     q: "How do I transfer my prescriptions to your pharmacy?",
     a: "Transferring is simple. Use the <strong>Transfer Your Rx</strong> button in our <a href=\"#booking\">Patient Portal</a>, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a>, or just walk in. We contact your previous pharmacy on your behalf — you don't need to do anything else. Most transfers are processed within 15–30 minutes, and we'll text or call you when it's ready."
+  },
+  {
+    cat: "prescriptions",
+    icon: "🔐",
+    q: "Can I sign in online to see my prescriptions and request refills?",
+    a: "Yes — sign in to your secure PharmAssess patient profile anytime, from your phone or computer, to view your prescriptions, request refills, book appointments, and access our other pharmacist services without calling or coming in. <a href=\"#booking\" class=\"js-pa-select\" data-url=\"https://app.pharmassess.ca/login/306667\" data-label=\"Patient Login — PharmAssess Portal\" data-iframeheight=\"660\">Sign in to your patient portal →</a>"
   },
   {
     cat: "prescriptions",
