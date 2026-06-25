@@ -2730,21 +2730,21 @@
         <span class="pa-card__label">Book a Call or Appointment with Your Pharmacist &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">In person or over the phone when appropriate — many assessments, like UTIs and other minor ailments, don't need a visit. For:</span>
         <div class="pa-card__chips">
-          <div class="pa-chip">
+          <div class="pa-chip js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Select Immunization in TYPE OF APPOINTMENT">
             <span class="pa-chip__icon">💉</span>
             <span class="pa-chip__text">
               <strong>Vaccinations</strong><small>Flu, COVID-19, shingles &amp; travel shots — most need no appointment</small>
               <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-vaccines');setTimeout(function(){document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
             </span>
           </div>
-          <div class="pa-chip">
+          <div class="pa-chip js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Select Point-of-care Testing in TYPE OF APPOINTMENT, then your test under TYPE OF TEST and the brand you prefer">
             <span class="pa-chip__icon">🔬</span>
             <span class="pa-chip__text">
               <strong>Point of Care Testing</strong><small>Rapid COVID-19 &amp; pregnancy tests, plus blood glucose checks</small>
               <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-poct');setTimeout(function(){document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
             </span>
           </div>
-          <div class="pa-chip">
+          <div class="pa-chip js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Select Medication Extension or Adaptation in TYPE OF APPOINTMENT">
             <span class="pa-chip__icon">💊</span>
             <span class="pa-chip__text">
               <strong>Medication Extensions &amp; Adaptations</strong><small>Prescription renewals &amp; dosage adaptations when your doctor's unreachable</small>
@@ -4728,6 +4728,10 @@ window.FAQS = [
   document.querySelectorAll('.js-pa-select').forEach(el => {
     el.addEventListener('click', function(e) {
       e.preventDefault();
+      // Some triggers (e.g. the booking-card chips) are nested inside another
+      // clickable .pa-card; stop the click bubbling so the parent card's
+      // handler doesn't fire and close the panel we're about to open.
+      e.stopPropagation();
       var url = this.dataset.url;
       var labelOverride = this.dataset.label || null;
       var target = document.querySelector('.pa-card[data-url="' + url + '"]');
