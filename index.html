@@ -5849,6 +5849,27 @@ window.FAQS = [
     return score;
   }
 
+  // Score a Service/Tool/FAQ item from the shared SITE_INDEX so queries like
+  // "quit smoking" or "medication review" surface the relevant service or
+  // FAQ answer here too — not just conditions in AILMENT_DB.
+  function scoreSmartSiteItem(item, query) {
+    var q = query.toLowerCase();
+    var t = item.title.toLowerCase();
+    var d = (item.desc || '').toLowerCase();
+    var k = item.kw ? item.kw.toLowerCase() : '';
+    var s = 0;
+    if (t.indexOf(q) !== -1) s += 5;
+    if (d.indexOf(q) !== -1) s += 2;
+    if (k && k.indexOf(q) !== -1) s += 4;
+    q.split(/\s+/).forEach(function(w) {
+      if (!w || w.length < 3) return;
+      if (t.indexOf(w) !== -1) s += 3;
+      if (d.indexOf(w) !== -1) s += 1;
+      if (k && k.indexOf(w) !== -1) s += 2;
+    });
+    return s;
+  }
+
   function renderSmartResults(scope, query) {
     var resultsEl = document.getElementById('smartsearch-results-' + scope);
     var triageEl = document.getElementById('ailments-triage-' + scope);
@@ -5867,32 +5888,75 @@ window.FAQS = [
       .filter(function(x) { return x.score > 0; })
       .sort(function(a,b) { return b.score - a.score; })
       .slice(0, 8);
+    var siteIdx = (typeof SITE_INDEX !== 'undefined') ? SITE_INDEX : [];
+    var svcScored = siteIdx.filter(function(it) { return it.tag === 'Service' || it.tag === 'Tool'; })
+      .map(function(it) { return { it:it, score:scoreSmartSiteItem(it, query) }; })
+      .filter(function(x) { return x.score > 0; })
+      .sort(function(a,b) { return b.score - a.score; })
+      .slice(0, 4);
+    var faqScored = siteIdx.filter(function(it) { return it.tag === 'FAQ'; })
+      .map(function(it) { return { it:it, score:scoreSmartSiteItem(it, query) }; })
+      .filter(function(x) { return x.score > 0; })
+      .sort(function(a,b) { return b.score - a.score; })
+      .slice(0, 4);
     triageEl.style.display = 'none';
     sectionsEls.forEach(function(s) { s.style.display = 'none'; });
-    if (!scored.length) {
-      resultsEl.innerHTML = '<div class="ailments-smartsearch__none">No conditions matched "<strong>' + query + '</strong>".<br>Try broader terms or browse by category below.</div>';
+    if (!scored.length && !svcScored.length && !faqScored.length) {
+      resultsEl.innerHTML = '<div class="ailments-smartsearch__none">No results matched "<strong>' + query + '</strong>".<br>Try broader terms or browse by category below.</div>';
       resultsEl.classList.add('has-results');
       triageEl.style.display = '';
       sectionsEls.forEach(function(s) { s.style.display = s.classList.contains('ailments-cat--topic-only') ? 'none' : ''; });
       return;
     }
-    var html = '<div class="ailments-smartsearch__divider">Best matches for "' + query + '"</div>';
-    scored.forEach(function(x) {
-      var a = x.a;
-      var href = a.call ? 'tel:+14166548181' : '#booking';
-      var dataUrl = a.call ? '' : ' data-url="' + PHARMA_BASE + a.id + '"';
-      html += '<button class="ailments-smartsearch__hit js-smart-hit" data-href="' + href + '"' + dataUrl + ' data-name="' + a.name + '" data-call="' + (a.call?'1':'') + '">'
-        + '<span class="ailments-smartsearch__hit-icon">' + a.icon + '</span>'
-        + '<span class="ailments-smartsearch__hit-body">'
-        + '<span class="ailments-smartsearch__hit-name">' + highlightSearchTerms(a.name, query.toLowerCase().split(/\s+/).filter(function(w){ return w.length >= 2; })) + '</span>'
-        + '<span class="ailments-smartsearch__hit-kw">' + (a.call ? 'Call us for treatment options' : 'Start pharmacist assessment online') + '</span>'
-        + '</span>'
-        + '<span class="ailments-smartsearch__hit-arrow">›</span>'
-        + '</button>';
-    });
+    var queryWords = query.toLowerCase().split(/\s+/).filter(function(w) { return w.length >= 2; });
+    var html = '';
+    if (scored.length) {
+      html += '<div class="ailments-smartsearch__divider">Conditions matching "' + query + '"</div>';
+      scored.forEach(function(x) {
+        var a = x.a;
+        var href = a.call ? 'tel:+14166548181' : '#booking';
+        var dataUrl = a.call ? '' : ' data-url="' + PHARMA_BASE + a.id + '"';
+        html += '<button class="ailments-smartsearch__hit js-smart-hit" data-href="' + href + '"' + dataUrl + ' data-name="' + a.name + '" data-call="' + (a.call?'1':'') + '">'
+          + '<span class="ailments-smartsearch__hit-icon">' + a.icon + '</span>'
+          + '<span class="ailments-smartsearch__hit-body">'
+          + '<span class="ailments-smartsearch__hit-name">' + highlightSearchTerms(a.name, queryWords) + '</span>'
+          + '<span class="ailments-smartsearch__hit-kw">' + (a.call ? 'Call us for treatment options' : 'Start pharmacist assessment online') + '</span>'
+          + '</span>'
+          + '<span class="ailments-smartsearch__hit-arrow">›</span>'
+          + '</button>';
+      });
+    }
+    if (svcScored.length) {
+      html += '<div class="ailments-smartsearch__divider">Services &amp; vaccines matching "' + query + '"</div>';
+      svcScored.forEach(function(x) {
+        var it = x.it;
+        html += '<button class="ailments-smartsearch__hit js-smart-svc-hit" data-anchor="' + (it.anchor || '') + '" data-open="' + (it.open || '') + '" data-url="' + (it.url || '') + '">'
+          + '<span class="ailments-smartsearch__hit-icon">' + it.icon + '</span>'
+          + '<span class="ailments-smartsearch__hit-body">'
+          + '<span class="ailments-smartsearch__hit-name">' + highlightSearchTerms(it.title, queryWords) + '</span>'
+          + '<span class="ailments-smartsearch__hit-kw">' + it.desc + '</span>'
+          + '</span>'
+          + '<span class="ailments-smartsearch__hit-arrow">›</span>'
+          + '</button>';
+      });
+    }
+    if (faqScored.length) {
+      html += '<div class="ailments-smartsearch__divider">FAQ matching "' + query + '"</div>';
+      faqScored.forEach(function(x) {
+        var it = x.it;
+        html += '<button class="ailments-smartsearch__hit js-smart-faq-hit" data-title="' + it.title + '">'
+          + '<span class="ailments-smartsearch__hit-icon">' + it.icon + '</span>'
+          + '<span class="ailments-smartsearch__hit-body">'
+          + '<span class="ailments-smartsearch__hit-name">' + highlightSearchTerms(it.title, queryWords) + '</span>'
+          + '<span class="ailments-smartsearch__hit-kw">' + it.desc + '</span>'
+          + '</span>'
+          + '<span class="ailments-smartsearch__hit-arrow">›</span>'
+          + '</button>';
+      });
+    }
     resultsEl.innerHTML = html;
     resultsEl.classList.add('has-results');
-    // Wire up hit buttons
+    // Wire up condition hit buttons
     resultsEl.querySelectorAll('.js-smart-hit').forEach(function(btn) {
       btn.addEventListener('click', function() {
         var call = this.dataset.call === '1';
@@ -5912,6 +5976,39 @@ window.FAQS = [
         }
         var bookingEl = document.getElementById('booking');
         if (bookingEl) bookingEl.scrollIntoView({ behavior:'smooth', block:'start' });
+      });
+    });
+    // Wire up service/vaccine hit buttons
+    resultsEl.querySelectorAll('.js-smart-svc-hit').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var anchor = this.dataset.anchor;
+        var openId = this.dataset.open;
+        var url = this.dataset.url;
+        if (url) { window.location.href = url; return; }
+        if (openId && window.openAcc) {
+          window.openAcc(openId);
+          setTimeout(function() { var el = document.getElementById(openId); if (el) el.scrollIntoView({ behavior:'smooth', block:'start' }); }, 120);
+        } else if (anchor) {
+          var el = document.querySelector(anchor); if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+        }
+      });
+    });
+    // Wire up FAQ hit buttons — scroll to FAQ section and run its search for this question
+    resultsEl.querySelectorAll('.js-smart-faq-hit').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var title = this.dataset.title;
+        var faqSection = document.getElementById('faq');
+        if (faqSection) faqSection.scrollIntoView({ behavior:'smooth', block:'start' });
+        setTimeout(function() {
+          var faqInput = document.getElementById('faqSearchInput');
+          if (!faqInput) return;
+          faqInput.value = title;
+          faqInput.dispatchEvent(new Event('input'));
+          setTimeout(function() {
+            var best = document.querySelector('.faq-best-match');
+            if (best) best.scrollIntoView({ behavior:'smooth', block:'start' });
+          }, 350);
+        }, 450);
       });
     });
   }
@@ -5970,6 +6067,11 @@ window.FAQS = [
     { icon:'🦵', title:'Braces, Supports & Compression Stockings', desc:'Champion, OTC Professional & Truform — in-store now', tag:'Shop', url:'braces-supports.html', kw:'back brace lumbar support knee brace sleeve wrist brace splint elbow strap ankle support abdominal binder compression socks stockings orthopedic champion otc professional truform medical device' },
   ].concat(AILMENT_DB.map(function(a) {
     return { icon:a.icon, title:a.name, desc: a.call ? 'Minor ailment — call us for treatment options' : 'Minor ailment — pharmacist can prescribe', tag:'Condition', anchor:'#booking', ailmentUrl: a.call ? null : (PHARMA_BASE + a.id), kw: a.kw.join(' ') };
+  })).concat((window.FAQS || []).map(function(f) {
+    var plain = document.createElement('div');
+    plain.innerHTML = f.a;
+    var body = (plain.textContent || '').trim().replace(/&/g, '&amp;');
+    return { icon: f.icon || '❓', title: f.q, desc: body.length > 110 ? body.slice(0, 110) + '…' : body, tag:'FAQ', anchor:'#faq', isFaq:true, kw: body };
   }));
 
   var siteOverlay = document.getElementById('siteSearch');
@@ -6048,7 +6150,7 @@ window.FAQS = [
     Object.keys(byTag).forEach(function(tag) {
       html += '<div class="site-search__category">' + tag + '</div>';
       byTag[tag].forEach(function(item) {
-        html += '<button class="site-search__result js-site-result" data-anchor="' + (item.anchor||'') + '" data-url="' + (item.url||'') + '" data-open="' + (item.open||'') + '" data-ailment-url="' + (item.ailmentUrl||'') + '" data-title="' + item.title + '">'
+        html += '<button class="site-search__result js-site-result" data-anchor="' + (item.anchor||'') + '" data-url="' + (item.url||'') + '" data-open="' + (item.open||'') + '" data-ailment-url="' + (item.ailmentUrl||'') + '" data-faq="' + (item.isFaq ? '1' : '') + '" data-title="' + item.title + '">'
           + '<span class="site-search__result-icon">' + item.icon + '</span>'
           + '<span class="site-search__result-body">'
           + '<span class="site-search__result-title">' + highlightMatch(item.title, query) + '</span>'
@@ -6065,8 +6167,25 @@ window.FAQS = [
         var url = this.dataset.url;
         var openAcc = this.dataset.open;
         var ailmentUrl = this.dataset.ailmentUrl;
+        var isFaq = this.dataset.faq === '1';
+        var title = this.dataset.title;
         closeSiteSearch();
         if (url) { window.location.href = url; return; }
+        if (isFaq) {
+          var faqSection = document.getElementById('faq');
+          if (faqSection) faqSection.scrollIntoView({ behavior:'smooth', block:'start' });
+          setTimeout(function() {
+            var faqInput = document.getElementById('faqSearchInput');
+            if (!faqInput) return;
+            faqInput.value = title;
+            faqInput.dispatchEvent(new Event('input'));
+            setTimeout(function() {
+              var best = document.querySelector('.faq-best-match');
+              if (best) best.scrollIntoView({ behavior:'smooth', block:'start' });
+            }, 350);
+          }, 450);
+          return;
+        }
         if (ailmentUrl) {
           var paWrap = document.getElementById('pa-wrap');
           var paIframe = document.getElementById('pa-iframe');
