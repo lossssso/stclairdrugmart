@@ -2756,9 +2756,9 @@
             <button class="ailments-triage__btn" data-triage="portal" data-cat="gut">🔥 Stomach &amp; Bowel</button>
             <button class="ailments-triage__btn" data-triage="portal" data-cat="groin">🏃 Groin &amp; Pelvic</button>
             <button class="ailments-triage__btn" data-triage="portal" data-cat="feet">🦶 Feet</button>
+            <button class="ailments-triage__btn" data-triage="portal" data-cat="pain">🦴 Pain &amp; Injury</button>
             <button class="ailments-triage__btn" data-triage="portal" data-cat="womens">🌸 Women's Health</button>
             <button class="ailments-triage__btn" data-triage="portal" data-cat="children">🧒 Children's Health</button>
-            <button class="ailments-triage__btn" data-triage="portal" data-cat="pain">🦴 Pain &amp; Injury</button>
             <button class="ailments-triage__btn" data-triage="portal" data-cat="contagious">🦠 Contagious / Infections</button>
             <button class="ailments-triage__btn" data-triage="portal" data-cat="bites">🐝 Bites &amp; Stings</button>
             <button class="ailments-triage__btn ailments-triage__btn--unsure" data-cat="unsure" onclick="event.stopPropagation();var c=document.getElementById('pa-card-book');if(c)c.click();">❓ Not Sure? Book Assessment with Pharmacist</button>
@@ -2814,6 +2814,13 @@
           <div class="ailment-card"><div class="ailment-card__icon">👣</div><h3 class="ailment-card__name">Calluses &amp; Corns</h3><p class="ailment-card__desc">Hard, thickened patches on feet or toes causing discomfort when walking.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=45">Start Assessment →</a></div>
         </div>
       </div>
+      <div class="ailments-cat-section portal-cat" data-triage-scope="portal" data-cat="pain">
+        <div class="ailments-cat__hd">🦴 Pain &amp; Injury</div>
+        <div class="ailments-grid">
+          <div class="ailment-card"><div class="ailment-card__icon">🤕</div><h3 class="ailment-card__name">Mild Headache</h3><p class="ailment-card__desc">A dull ache or pressure around the forehead, temples, or back of the neck.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=12">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🦴</div><h3 class="ailment-card__name">Sprains &amp; Strains</h3><p class="ailment-card__desc">Pain, swelling, or bruising around a joint or muscle after twisting or overstretching.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=21">Start Assessment →</a></div>
+        </div>
+      </div>
       <div class="ailments-cat-section portal-cat" data-triage-scope="portal" data-cat="womens">
         <div class="ailments-cat__hd">🌸 Women's Health</div>
         <div class="ailments-grid">
@@ -2831,13 +2838,6 @@
           <div class="ailment-card"><div class="ailment-card__icon">🐛</div><h3 class="ailment-card__name">Pinworms</h3><p class="ailment-card__desc">Intense itching around the anus at night — most common in children but can affect the whole family.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=43">Start Assessment →</a></div>
           <div class="ailment-card"><div class="ailment-card__icon">🔍</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Intense scalp itching — small eggs (nits) attached to hair, common in children.</p><a class="ailment-card__link" href="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
           <div class="ailment-card"><div class="ailment-card__icon">🐝</div><h3 class="ailment-card__name">Insect Bites &amp; Stings</h3><p class="ailment-card__desc">Redness, swelling, or itching at a bite from a mosquito, bee, or wasp.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=19">Start Assessment →</a></div>
-        </div>
-      </div>
-      <div class="ailments-cat-section portal-cat" data-triage-scope="portal" data-cat="pain">
-        <div class="ailments-cat__hd">🦴 Pain &amp; Injury</div>
-        <div class="ailments-grid">
-          <div class="ailment-card"><div class="ailment-card__icon">🤕</div><h3 class="ailment-card__name">Mild Headache</h3><p class="ailment-card__desc">A dull ache or pressure around the forehead, temples, or back of the neck.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=12">Start Assessment →</a></div>
-          <div class="ailment-card"><div class="ailment-card__icon">🦴</div><h3 class="ailment-card__name">Sprains &amp; Strains</h3><p class="ailment-card__desc">Pain, swelling, or bruising around a joint or muscle after twisting or overstretching.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=21">Start Assessment →</a></div>
         </div>
       </div>
       <div class="ailments-cat-section portal-cat ailments-cat--topic-only" data-triage-scope="portal" data-cat="contagious">
@@ -2924,9 +2924,9 @@
               <button class="ailments-triage__btn" data-triage="main" data-cat="gut">🔥 Stomach &amp; Bowel</button>
               <button class="ailments-triage__btn" data-triage="main" data-cat="groin">🏃 Groin &amp; Pelvic</button>
               <button class="ailments-triage__btn" data-triage="main" data-cat="feet">🦶 Feet</button>
+              <button class="ailments-triage__btn" data-triage="main" data-cat="pain">🦴 Pain &amp; Injury</button>
               <button class="ailments-triage__btn" data-triage="main" data-cat="womens">🌸 Women's Health</button>
               <button class="ailments-triage__btn" data-triage="main" data-cat="children">🧒 Children's Health</button>
-              <button class="ailments-triage__btn" data-triage="main" data-cat="pain">🦴 Pain &amp; Injury</button>
               <button class="ailments-triage__btn" data-triage="main" data-cat="contagious">🦠 Contagious / Infections</button>
               <button class="ailments-triage__btn" data-triage="main" data-cat="bites">🐝 Bites &amp; Stings</button>
               <button class="ailments-triage__btn ailments-triage__btn--unsure" data-cat="unsure" onclick="event.stopPropagation();document.getElementById('booking').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){var c=document.getElementById('pa-card-book');if(c)c.click();},120);">❓ Not Sure? Book Assessment with Pharmacist</button>
@@ -2982,6 +2982,13 @@
             <div class="ailment-card"><div class="ailment-card__icon">👣</div><h3 class="ailment-card__name">Calluses &amp; Corns</h3><p class="ailment-card__desc">Hard, thickened patches of skin on your feet or toes causing discomfort when walking or wearing shoes.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=45">Start Assessment →</a></div>
           </div>
         </div>
+        <div class="ailments-cat-section main-cat" data-triage-scope="main" data-cat="pain">
+          <div class="ailments-cat__hd">🦴 Pain &amp; Injury</div>
+          <div class="ailments-grid">
+            <div class="ailment-card"><div class="ailment-card__icon">🤕</div><h3 class="ailment-card__name">Mild Headache</h3><p class="ailment-card__desc">A dull ache or pressure in your head — around the forehead, temples, or back of the neck — not caused by injury.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=12">Start Assessment →</a></div>
+            <div class="ailment-card"><div class="ailment-card__icon">🦴</div><h3 class="ailment-card__name">Sprains &amp; Strains</h3><p class="ailment-card__desc">Pain, swelling, or bruising around a joint or muscle after twisting, overstretching, or a minor injury.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=21">Start Assessment →</a></div>
+          </div>
+        </div>
         <div class="ailments-cat-section main-cat" data-triage-scope="main" data-cat="womens">
           <div class="ailments-cat__hd">🌸 Women's Health</div>
           <div class="ailments-grid">
@@ -3000,13 +3007,6 @@
             <div class="ailment-card"><div class="ailment-card__icon">🔍</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Intense itching on the scalp — small eggs (nits) attached to hair, common in schools and daycares.</p><a class="ailment-card__link" href="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">🐝</div><h3 class="ailment-card__name">Insect Bites &amp; Stings</h3><p class="ailment-card__desc">Redness, swelling, or itching from a mosquito, bee, or wasp bite — common in children spending time outdoors.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=19">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">💊</div><h3 class="ailment-card__name">Acne</h3><p class="ailment-card__desc">Pimples, blackheads, or inflamed spots — common in teens and young adults.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=13">Start Assessment →</a></div>
-          </div>
-        </div>
-        <div class="ailments-cat-section main-cat" data-triage-scope="main" data-cat="pain">
-          <div class="ailments-cat__hd">🦴 Pain &amp; Injury</div>
-          <div class="ailments-grid">
-            <div class="ailment-card"><div class="ailment-card__icon">🤕</div><h3 class="ailment-card__name">Mild Headache</h3><p class="ailment-card__desc">A dull ache or pressure in your head — around the forehead, temples, or back of the neck — not caused by injury.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=12">Start Assessment →</a></div>
-            <div class="ailment-card"><div class="ailment-card__icon">🦴</div><h3 class="ailment-card__name">Sprains &amp; Strains</h3><p class="ailment-card__desc">Pain, swelling, or bruising around a joint or muscle after twisting, overstretching, or a minor injury.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=21">Start Assessment →</a></div>
           </div>
         </div>
         <div class="ailments-cat-section main-cat ailments-cat--topic-only" data-triage-scope="main" data-cat="contagious">
