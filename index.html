@@ -6156,6 +6156,31 @@ window.FAQS = [
     updateNav();
   })();
 
+  // ── Clear a stale URL hash once the visitor scrolls back to the top ──
+  // Anchor links elsewhere on the page set #section-id hashes for direct
+  // linking. If someone arrives via one of those (a shared link, a deep
+  // link from search, etc.) and then scrolls back up to the hero, the hash
+  // would otherwise sit in the address bar forever — so copying the link
+  // from the top of the page would hand out wherever they entered from,
+  // not the homepage.
+  (function() {
+    var threshold = 80;
+    var ticking = false;
+    function clearHashAtTop() {
+      ticking = false;
+      if (!window.location.hash) return;
+      var scrollY = window.scrollY || window.pageYOffset;
+      if (scrollY <= threshold) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    }
+    window.addEventListener('scroll', function() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(clearHashAtTop);
+    }, { passive: true });
+  })();
+
   // ── Transit/Parking logo scroll + highlight ───────────────
   function goToCard(id, subId) {
     var el = document.getElementById(id);
