@@ -646,8 +646,13 @@
     .conditions-panel__hd {
       font-family: var(--font-display);
       font-size: 1rem; font-weight: 700; letter-spacing: .06em;
-      text-transform: uppercase; color: var(--teal-deeper); margin-bottom: 1rem;
+      text-transform: uppercase; color: var(--teal-deeper); margin-bottom: .4rem;
     }
+    .conditions-panel__sub {
+      font-size: .85rem; font-weight: 500; color: var(--text-muted);
+      line-height: 1.5; margin-bottom: 1.1rem;
+    }
+    .conditions-panel__sub strong { color: var(--teal-dark); font-weight: 700; }
     .conditions-panel__note { margin-top: 1rem; font-size: .78rem; color: var(--text-muted); text-align: center; }
 
     /* ── Minor Ailment cards (descriptive, SEO-rich) ──── */
@@ -2571,7 +2576,7 @@
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)">🚭 I want to successfully quit smoking!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)">🆘 I need a free naloxone kit</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-poct');document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},200)">🤰 I might be pregnant!</a>
-          <a href="#booking" class="welcome__pill" onclick="setTimeout(function(){var c=document.querySelector('[data-label=\'Book an Appointment\']');if(c)c.click();},200)">🦠 I need a COVID-19 test and certificate!</a>
+          <a href="#booking" class="welcome__pill js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Point-of-Care Testing">🦠 I need a COVID-19 test and certificate!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)">🩸 I need better blood sugar control</a>
         </div>
       </div>
@@ -2605,7 +2610,7 @@
         <div class="welcome-box__desc">Submit a photo of your new Rx or request a refill from your profile and we will get it ready.</div>
         <span class="welcome-box__cta">Submit new Rx or refill →</span>
       </a>
-      <a href="#booking" class="welcome-box" onclick="setTimeout(function(){var c=document.querySelector('[data-label=\'Book an Appointment\']');if(c)c.click();},150)">
+      <a href="#booking" class="welcome-box js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Point-of-Care Testing">
         <div class="welcome-box__icon">🔬</div>
         <div class="welcome-box__title">Point of Care Testing</div>
         <div class="welcome-box__desc">Rapid COVID-19, pregnancy, and blood glucose tests — performed by your pharmacist, results in minutes.</div>
@@ -2622,7 +2627,7 @@
         <span class="rx-ext__learn" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},120)">Learn more →</span>
       </div>
       <div class="rx-ext__actions">
-        <a class="rx-ext__btn" href="#booking" onclick="setTimeout(function(){var c=document.querySelector('[data-label=\'Book an Appointment\']');if(c)c.click();},150)">📅 Request an Extension / Adaptation</a>
+        <a class="rx-ext__btn js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Medication Extension or Adaptation">📅 Request an Extension / Adaptation</a>
         <a class="rx-ext__btn rx-ext__btn--ghost" href="tel:+14166548181">📞 Call (416) 654-8181</a>
       </div>
     </div>
@@ -2766,7 +2771,7 @@
 
     <!-- Row 2: Medication Review + Common Conditions (2-col) -->
     <div class="pa-cards pa-cards--mid">
-      <button class="pa-card" id="pa-card-medscheck" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1300" data-label="Medication Review (MedsCheck)">
+      <button class="pa-card" id="pa-card-medscheck" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1300" data-label="Medication Review">
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Free OHIP-covered review if you take 3+ medications — includes optional blood glucose test</span>
@@ -2780,6 +2785,7 @@
     <!-- Conditions panel (inside mid-row grid, spans full width) -->
     <div class="conditions-panel" id="conditions-panel">
       <div class="conditions-panel__hd">Which condition are you dealing with?</div>
+      <div class="conditions-panel__sub"><strong>Type your symptoms</strong> in the search box — or <strong>tap the buttons below</strong> for your symptom area. Use whichever's easier, or both!</div>
       <div class="ailments-smartsearch" id="smartsearch-portal">
         <div class="ailments-smartsearch__wrap">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
@@ -3093,7 +3099,7 @@
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Pneumococcal</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--new">NEW JUL 1</span><span class="vaccine-card__badge badge--funded">FREE</span></span></div><div class="vaccine-card__who">Adults 65+ · Younger adults at high risk</div><p class="vaccine-card__desc">Protects against pneumococcal pneumonia. Recommended for those with heart disease, diabetes, lung or kidney disease.</p></div>
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">RSV</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--new">NEW JUL 1</span><span class="vaccine-card__badge badge--funded">FREE</span></span></div><div class="vaccine-card__who">Adults 75+ · Adults 60+ at high risk · Long-term care residents</div><p class="vaccine-card__desc">Single dose protecting against RSV-related lower respiratory illness. Publicly funded for older adults at highest risk; available privately for others 60+.</p></div>
           </div>
-          <p style="text-align:center;margin-bottom:.75rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667">Book a Vaccine (Immunization) Appointment</a></p>
+          <p style="text-align:center;margin-bottom:.75rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Select Immunization in TYPE OF APPOINTMENT">Book a Vaccine (Immunization) Appointment</a></p>
           <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-bottom:2rem;">Publicly funded vaccines require a valid Ontario health card. Eligibility criteria apply. Call (416) 654-8181 for current stock.</p>
 
           <div class="vaccines__sub-heading" style="margin-bottom:.75rem;">✈️ Travel &amp; Private Vaccines</div>
@@ -3104,7 +3110,7 @@
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Meningococcal (ACYW)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Travellers · Students</div><p class="vaccine-card__desc">Recommended for sub-Saharan Africa travel, Hajj, and adult catch-up.</p></div>
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">HPV (Gardasil 9)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Adult catch-up · Up to age 45</div><p class="vaccine-card__desc">Authorized by Health Canada for protection against 9 HPV strains associated with certain cancers and genital warts. Many extended health plans cover this series.</p></div>
           </div>
-          <p style="text-align:center;margin-top:1.25rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667">Book a Travel Vaccine (Immunization) Appointment →</a></p>
+          <p style="text-align:center;margin-top:1.25rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Select Immunization in TYPE OF APPOINTMENT">Book a Travel Vaccine (Immunization) Appointment →</a></p>
           <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">Many travel vaccines are covered by extended health benefits — ask our team to check your plan.</p>
         </div>
       </div>
@@ -3302,7 +3308,7 @@
 
           </div>
 
-          <p style="text-align:center;margin-top:1.25rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600">Book a Test →</a></p>
+          <p style="text-align:center;margin-top:1.25rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Point-of-Care Testing">Book a Test →</a></p>
           <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:.4rem;">Walk-ins welcome · No doctor's order required · Results reviewed with your pharmacist</p>
         </div>
       </div>
@@ -4567,7 +4573,7 @@ window.FAQS = [
     }
   });
 
-  function switchPaTab(card, doScroll) {
+  function switchPaTab(card, doScroll, labelOverride) {
     document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
     card.classList.add('active');
     paIframe.style.height = (card.dataset.iframeheight || '1200') + 'px';
@@ -4575,7 +4581,11 @@ window.FAQS = [
     paExpanded = false;
     var expandBtn = document.getElementById('pa-iframe-expand');
     if (expandBtn) expandBtn.textContent = 'Need more room? Expand ↓';
-    if (card.dataset.label) paLabelText.textContent = card.dataset.label;
+    // A button can pass its own label (e.g. "Select Immunization in TYPE OF
+    // APPOINTMENT") to guide the patient even when several buttons share one
+    // PharmAssess URL; otherwise fall back to the destination card's label.
+    var lbl = labelOverride || card.dataset.label;
+    if (lbl) paLabelText.textContent = lbl;
     // Move the panel into the same grid as the clicked card so it drops down under it
     var parentGrid = card.closest('.pa-cards');
     if (parentGrid && paWrap.parentElement !== parentGrid) {
@@ -4611,7 +4621,9 @@ window.FAQS = [
         if (!wasOpen) {
           conditionsPanel.classList.add('open');
           this.classList.add('active');
-          setTimeout(function() { conditionsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+          // Don't auto-scroll on open — leave the patient where they are. We
+          // only scroll once they pick a category (see the triage handler),
+          // to bring that category's conditions into view.
         }
       } else {
         const alreadyActive = this.classList.contains('active');
@@ -4712,15 +4724,17 @@ window.FAQS = [
     el.addEventListener('click', function(e) {
       e.preventDefault();
       var url = this.dataset.url;
+      var labelOverride = this.dataset.label || null;
       var target = document.querySelector('.pa-card[data-url="' + url + '"]');
       if (target) {
-        switchPaTab(target, true);
+        switchPaTab(target, true, labelOverride);
       } else {
         // No matching pa-card — load URL directly into the iframe
         document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
         paIframe.src = url;
-        paIframe.style.height = '1500px';
+        paIframe.style.height = (this.dataset.iframeheight || '1500') + 'px';
         paExpanded = false;
+        if (labelOverride && paLabelText) paLabelText.textContent = labelOverride;
         paOpen();
         setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
       }
@@ -6004,7 +6018,8 @@ window.FAQS = [
       var cat = this.dataset.cat;
       document.querySelectorAll('.ailments-triage__btn[data-triage="' + scope + '"]').forEach(function(b) { b.classList.remove('active'); });
       this.classList.add('active');
-      document.querySelectorAll('.ailments-cat-section[data-triage-scope="' + scope + '"]').forEach(function(s) {
+      var sections = document.querySelectorAll('.ailments-cat-section[data-triage-scope="' + scope + '"]');
+      sections.forEach(function(s) {
         if (cat === 'all') {
           s.style.display = s.classList.contains('ailments-cat--topic-only') ? 'none' : '';
         } else {
@@ -6012,6 +6027,18 @@ window.FAQS = [
           s.style.display = cats.indexOf(cat) !== -1 ? '' : 'none';
         }
       });
+      // In the patient portal, scroll the chosen category's conditions into
+      // view so the patient sees them (the panel itself no longer auto-scrolls
+      // on open). Skip "All Conditions" — that's just the default full list.
+      if (scope === 'portal' && cat !== 'all') {
+        var firstVisible = null;
+        sections.forEach(function(s) {
+          if (!firstVisible && s.style.display !== 'none') firstVisible = s;
+        });
+        if (firstVisible) {
+          setTimeout(function() { firstVisible.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 60);
+        }
+      }
     });
   });
 
