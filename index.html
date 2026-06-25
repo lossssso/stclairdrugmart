@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
   <title>St. Clair Drug Mart | Top-Rated Clinical Pharmacy in Toronto, Ontario</title>
   <meta name="description" content="Often searched as the best pharmacy in Toronto, Ontario — St. Clair Drug Mart is a 4.9-star rated clinical pharmacy on St. Clair West in Corso Italia. Walk-ins welcome, no appointment needed. Serving Via Italia, Davenport, Dufferin, Wychwood &amp; surrounding neighbourhoods. Vaccines, prescriptions, minor ailments, medication reviews, free naloxone kits &amp; training, smoking cessation support &amp; free GTA delivery. Call (416) 654-8181." />
-  <meta name="keywords" content="best pharmacy Toronto, best pharmacy Ontario, top rated pharmacy Toronto Ontario, top rated pharmacy near me, best independent pharmacy Toronto, clinical pharmacy Toronto, pharmacy Corso Italia, pharmacy Via Italia, pharmacy St. Clair West, pharmacy Davenport Toronto, pharmacy Dufferin St Clair, pharmacy Wychwood Toronto, pharmacy Earlscourt Toronto, walk-in pharmacy Toronto, walk-in clinic pharmacy Toronto, St. Clair West pharmacy, independent pharmacy Toronto, minor ailments pharmacy, prescription refill Toronto, flu shot Toronto, vaccines pharmacy, medication review, blister packs, UTI treatment pharmacist, pharmacy near me, pharmacy 1203 St Clair Ave W, farmacia Corso Italia, farmacia Toronto, naloxone Toronto, free naloxone kit Toronto, narcan Toronto, free narcan kit, naloxone near me, naloxone pharmacy Toronto, Ontario Naloxone Program pharmacy, opioid overdose prevention Toronto, free naloxone St Clair West, harm reduction pharmacy Toronto, where to get naloxone Ontario, smoking cessation Toronto, quit smoking pharmacy Toronto, Champix prescription Toronto, varenicline pharmacist Ontario, Zyban pharmacist Toronto, stop smoking help Toronto, nicotine replacement therapy Toronto, quit smoking support pharmacy, free naloxone delivery Toronto, naloxone kit home delivery GTA, free naloxone delivery near me, free quit smoking aids Ontario, ODB covered smoking cessation, smoking cessation prescription covered Ontario, point of care testing pharmacy Toronto, rapid antigen test Toronto pharmacy, COVID test pharmacy Toronto, pregnancy test pharmacy Toronto, medication extension pharmacist Toronto, prescription extension pharmacist Ontario, emergency prescription refill Toronto, common condition assessment pharmacist Toronto, pharmacist prescribing Ontario, minor ailment prescribing pharmacy Toronto" />
+  <meta name="keywords" content="best pharmacy Toronto, best pharmacy Ontario, top rated pharmacy Toronto Ontario, top rated pharmacy near me, best independent pharmacy Toronto, clinical pharmacy Toronto, pharmacy Corso Italia, pharmacy Via Italia, pharmacy St. Clair West, pharmacy Davenport Toronto, pharmacy Dufferin St Clair, pharmacy Wychwood Toronto, pharmacy Earlscourt Toronto, walk-in pharmacy Toronto, walk-in clinic pharmacy Toronto, St. Clair West pharmacy, independent pharmacy Toronto, minor ailments pharmacy, prescription refill Toronto, flu shot Toronto, vaccines pharmacy, medication review, blister packs, UTI treatment pharmacist, pharmacy near me, pharmacy 1203 St Clair Ave W, farmacia Corso Italia, farmacia Toronto, naloxone Toronto, free naloxone kit Toronto, narcan Toronto, free narcan kit, naloxone near me, naloxone pharmacy Toronto, Ontario Naloxone Program pharmacy, opioid overdose prevention Toronto, free naloxone St Clair West, harm reduction pharmacy Toronto, where to get naloxone Ontario, smoking cessation Toronto, quit smoking pharmacy Toronto, Champix prescription Toronto, varenicline pharmacist Ontario, Zyban pharmacist Toronto, stop smoking help Toronto, nicotine replacement therapy Toronto, quit smoking support pharmacy, free naloxone delivery Toronto, naloxone kit home delivery GTA, free naloxone delivery near me, free quit smoking aids Ontario, ODB covered smoking cessation, smoking cessation prescription covered Ontario, point of care testing pharmacy Toronto, rapid antigen test Toronto pharmacy, COVID test pharmacy Toronto, pregnancy test pharmacy Toronto, medication extension pharmacist Toronto, prescription extension pharmacist Ontario, emergency prescription refill Toronto, common condition assessment pharmacist Toronto, pharmacist prescribing Ontario, minor ailment prescribing pharmacy Toronto, generic semaglutide Toronto, generic semaglutide Ontario, semaglutide interchangeable with Ozempic, generic Ozempic pharmacy Toronto, affordable semaglutide pharmacy" />
   <meta name="author" content="St. Clair Drug Mart Pharmacy" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="theme-color" content="#b6ecef" />
@@ -796,9 +796,14 @@
       gap: .75rem;
       margin-top: 2rem;
     }
+    .pa-cards--top {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      margin-top: .75rem;
+      margin-bottom: 0;
+    }
     .pa-cards--book {
       grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      margin-top: .75rem;
+      margin-top: 1.25rem;
       margin-bottom: 0;
     }
     .pa-cards--util {
@@ -807,8 +812,9 @@
       margin-bottom: 2rem;
     }
     /* Panels and iframe span the full width of their containing grid row */
+    .pa-cards--top > .pa-iframe-wrap,
+    .pa-cards--top > .conditions-panel,
     .pa-cards--book > .pa-iframe-wrap,
-    .pa-cards--book > .conditions-panel,
     .pa-cards--util > .pa-iframe-wrap { grid-column: 1 / -1; }
     .pa-chip__learn {
       display: block;
@@ -2204,7 +2210,7 @@
     .faq-search__clear { background: var(--teal-ice); border: none; cursor: pointer; color: var(--teal-dark); font-size: 1rem; line-height: 1; width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; }
     .faq-search__status { text-align: center; font-size: .8rem; color: rgba(255,255,255,.7); margin-top: .65rem; min-height: 1.2em; }
     .faq-search__status strong { color: #fff; }
-    .faq-item__q-text mark, .faq-item__a mark { background: rgba(33,161,168,.22); color: var(--teal-deeper); border-radius: 3px; padding: 0 .1em; }
+    .faq-item__q-text mark, .faq-item__a mark, .ailments-smartsearch__hit-name mark { background: rgba(33,161,168,.22); color: var(--teal-deeper); border-radius: 3px; padding: 0 .1em; }
     .faq-item.faq-hidden { display: none; }
     .faq-item.faq-best-match { border-left-color: var(--teal-bright); }
     .faq-empty { background: rgba(255,255,255,.92); border-radius: 14px; padding: 1.4rem 1.3rem; text-align: center; }
@@ -2295,8 +2301,8 @@
       display:flex; align-items:center; gap:.75rem; padding:.65rem 1.25rem;
       cursor:pointer; transition:background .12s; border:none; background:none; width:100%; text-align:left;
     }
-    .site-search__result:hover { background:var(--teal-ice); }
-    .site-search__result-icon { font-size:1.2rem; flex-shrink:0; width:1.6rem; text-align:center; line-height:1; }
+    .site-search__result:hover, .site-search__result.active { background:var(--teal-ice); }
+    .site-search__result-icon { font-size:1.2rem; flex-shrink:0; width:1.6rem; height:1.6rem; display:flex; align-items:center; justify-content:center; line-height:1; }
     .site-search__result-body { flex:1; min-width:0; display:flex; flex-direction:column; gap:.18rem; }
     .site-search__result-title { display:block; font-size:.88rem; font-weight:700; color:var(--teal-deeper); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.25; }
     .site-search__result-title mark { background:none; color:var(--teal-bright); font-weight:700; }
@@ -2328,7 +2334,7 @@
     }
     .ailments-smartsearch__hit:last-child { border-bottom: none; }
     .ailments-smartsearch__hit:hover { background:var(--teal-ice); }
-    .ailments-smartsearch__hit-icon { font-size:1.3rem; width:1.75rem; text-align:center; flex-shrink:0; background:var(--teal-ice); border-radius:50%; padding:.3rem; line-height:1; }
+    .ailments-smartsearch__hit-icon { font-size:1.3rem; width:1.75rem; height:1.75rem; flex-shrink:0; background:var(--teal-ice); border-radius:50%; display:flex; align-items:center; justify-content:center; line-height:1; }
     .ailments-smartsearch__hit-body { flex:1; min-width:0; display:flex; flex-direction:column; gap:.22rem; }
     .ailments-smartsearch__hit-name { font-size:.9rem; font-weight:700; color:var(--teal-deeper); line-height:1.2; }
     .ailments-smartsearch__hit-kw { font-size:.74rem; color:var(--text-muted); line-height:1.3; }
@@ -2731,48 +2737,14 @@
     <h2 class="section__title">Patient Portal</h2>
     <p class="section__lead">Book appointments, request refills, transfer prescriptions, or sign in — everything loads right here. Need a rapid COVID-19 test, pregnancy test, or blood glucose check? Book Point of Care Testing below.</p>
 
-    <!-- Row 1: Book Appointment — heading, then one big dropdown button per service
-         (includes Medication Review & Common Condition Assessment) -->
+    <!-- Row 1: Medication Review & Common Condition Assessment (2 big boxes) -->
     <div class="pa-row-heading">
       <span class="pa-row-heading__icon">📅</span>
       <span class="pa-row-heading__text">Book a Call or Appointment with Your Pharmacist</span>
     </div>
     <p class="section__lead" style="margin-top:.35rem;margin-bottom:0;">In person or over the phone when appropriate — many assessments, like UTIs and other minor ailments, don't need a visit. Choose what you need below:</p>
 
-    <div class="pa-cards pa-cards--book">
-      <!-- Hidden anchor: keeps the generic appointment URL/label as the click target for the
-           "Not Sure?" buttons and other links on the page that don't name one specific service. -->
-      <button class="pa-card" id="pa-card-book" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Book an Appointment" style="display:none" aria-hidden="true" tabindex="-1"></button>
-      <button class="pa-card" id="pa-card-vaccinations" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT.">
-        <div class="pa-card__icon">💉</div>
-        <span class="pa-card__label">Vaccinations &nbsp;<span class="pa-conditions-arrow">▼</span></span>
-        <span class="pa-card__desc">Flu, COVID-19, shingles &amp; travel shots — most need no appointment</span>
-        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-vaccines');setTimeout(function(){document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
-      </button>
-      <button class="pa-card" id="pa-card-poct" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand.">
-        <div class="pa-card__icon">🔬</div>
-        <span class="pa-card__label">Point of Care Testing &nbsp;<span class="pa-conditions-arrow">▼</span></span>
-        <span class="pa-card__desc">Rapid COVID-19 &amp; pregnancy tests, plus blood glucose checks</span>
-        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-poct');setTimeout(function(){document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
-      </button>
-      <button class="pa-card" id="pa-card-medext" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Medication Extension or Adaptation" data-hint="Select <strong>Medication Extension or Adaptation</strong> under TYPE OF APPOINTMENT.">
-        <div class="pa-card__icon">💊</div>
-        <span class="pa-card__label">Medication Extensions &amp; Adaptations &nbsp;<span class="pa-conditions-arrow">▼</span></span>
-        <span class="pa-card__desc">Prescription renewals &amp; dosage adaptations when your doctor's unreachable</span>
-        <span class="pa-chip__learn" onclick="event.stopPropagation();document.getElementById('rx-extensions').scrollIntoView({behavior:'smooth',block:'center'})">Learn more →</span>
-      </button>
-      <button class="pa-card" id="pa-card-cessation" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=16" data-iframeheight="1280" data-label="Smoking Cessation">
-        <div class="pa-card__icon">🚭</div>
-        <span class="pa-card__label">Smoking Cessation &nbsp;<span class="pa-conditions-arrow">▼</span></span>
-        <span class="pa-card__desc">Champix, nicotine patches &amp; a personalized quit plan</span>
-        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-cessation');setTimeout(function(){document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
-      </button>
-      <button class="pa-card" id="pa-card-naloxone" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Naloxone Kit &amp; Training" data-hint="Select <strong>Naloxone Kit &amp; Training</strong> under TYPE OF APPOINTMENT.">
-        <div class="pa-card__icon">🆘</div>
-        <span class="pa-card__label">Naloxone Kit &amp; Training &nbsp;<span class="pa-conditions-arrow">▼</span></span>
-        <span class="pa-card__desc">Free kit &amp; in-person training — usually no appointment needed, walk in anytime</span>
-        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-naloxone');setTimeout(function(){document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
-      </button>
+    <div class="pa-cards pa-cards--top">
       <button class="pa-card" id="pa-card-medscheck" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1120" data-label="Medication Review">
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review &nbsp;<span class="pa-conditions-arrow">▼</span></span>
@@ -2928,7 +2900,44 @@
       </div>
     </div>
 
-    <!-- Row 2: Rx, Transfer, Login (3-col) -->
+    <!-- Row 2: Vaccinations, Point-of-Care Testing, Medication Extensions, Smoking Cessation, Naloxone -->
+    <div class="pa-cards pa-cards--book">
+      <!-- Hidden anchor: keeps the generic appointment URL/label as the click target for the
+           "Not Sure?" buttons and other links on the page that don't name one specific service. -->
+      <button class="pa-card" id="pa-card-book" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Book an Appointment" style="display:none" aria-hidden="true" tabindex="-1"></button>
+      <button class="pa-card" id="pa-card-vaccinations" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT.">
+        <div class="pa-card__icon">💉</div>
+        <span class="pa-card__label">Vaccinations &nbsp;<span class="pa-conditions-arrow">▼</span></span>
+        <span class="pa-card__desc">Flu, COVID-19, shingles &amp; travel shots — most need no appointment</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-vaccines');setTimeout(function(){document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
+      </button>
+      <button class="pa-card" id="pa-card-poct" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand.">
+        <div class="pa-card__icon">🔬</div>
+        <span class="pa-card__label">Point of Care Testing &nbsp;<span class="pa-conditions-arrow">▼</span></span>
+        <span class="pa-card__desc">Rapid COVID-19 &amp; pregnancy tests, plus blood glucose checks</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-poct');setTimeout(function(){document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
+      </button>
+      <button class="pa-card" id="pa-card-medext" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Medication Extension or Adaptation" data-hint="Select <strong>Medication Extension or Adaptation</strong> under TYPE OF APPOINTMENT.">
+        <div class="pa-card__icon">💊</div>
+        <span class="pa-card__label">Medication Extensions &amp; Adaptations &nbsp;<span class="pa-conditions-arrow">▼</span></span>
+        <span class="pa-card__desc">Prescription renewals &amp; dosage adaptations when your doctor's unreachable</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();document.getElementById('rx-extensions').scrollIntoView({behavior:'smooth',block:'center'})">Learn more →</span>
+      </button>
+      <button class="pa-card" id="pa-card-cessation" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=16" data-iframeheight="1280" data-label="Smoking Cessation">
+        <div class="pa-card__icon">🚭</div>
+        <span class="pa-card__label">Smoking Cessation &nbsp;<span class="pa-conditions-arrow">▼</span></span>
+        <span class="pa-card__desc">Champix, nicotine patches &amp; a personalized quit plan</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-cessation');setTimeout(function(){document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
+      </button>
+      <button class="pa-card" id="pa-card-naloxone" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Naloxone Kit &amp; Training" data-hint="Select <strong>Naloxone Kit &amp; Training</strong> under TYPE OF APPOINTMENT.">
+        <div class="pa-card__icon">🆘</div>
+        <span class="pa-card__label">Naloxone Kit &amp; Training &nbsp;<span class="pa-conditions-arrow">▼</span></span>
+        <span class="pa-card__desc">Free kit &amp; in-person training — usually no appointment needed, walk in anytime</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-naloxone');setTimeout(function(){document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
+      </button>
+    </div>
+
+    <!-- Row 3: Rx, Transfer, Login (3-col) -->
     <div class="pa-cards pa-cards--util">
       <button class="pa-card" id="pa-new-rx" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="700" data-label="New Prescription &amp; Refill Requests">
         <div class="pa-card__icon">📝</div>
@@ -3231,8 +3240,8 @@
             <div class="cessation-option">
               <div class="cessation-option__icon">🩹</div>
               <div class="cessation-option__name">Nicotine Replacement Therapy (NRT)</div>
-              <p class="cessation-option__desc">Patches, gum, lozenges, oral inhaler, and mouth spray — available without a prescription and covered by most insurance plans. The patch delivers a steady nicotine background; faster-acting forms (gum, lozenge) handle sudden cravings.</p>
-              <span class="cessation-option__tag">First-line · No Rx needed · ODB covered</span>
+              <p class="cessation-option__desc">Patches, gum, lozenges, oral inhaler, and mouth spray — available over-the-counter without a doctor's visit, and often covered by private insurance. The patch delivers a steady nicotine background; faster-acting forms (gum, lozenge) handle sudden cravings. If you're ODB-eligible (Trillium, OHIP+, social assistance, or 65+), ask us about the ODB Smoking Cessation Program — it can cover one course per year, but our pharmacist needs to issue a prescription/order first so the claim can be submitted.</p>
+              <span class="cessation-option__tag">First-line · OTC · ODB Smoking Cessation Program may apply</span>
             </div>
             <div class="cessation-option">
               <div class="cessation-option__icon">💊</div>
@@ -3275,7 +3284,7 @@
           </div>
 
           <p style="text-align:center;margin-top:2rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=16">Start Your Quit Journey →</a></p>
-          <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">No referral needed · Most treatments covered by insurance &amp; ODB · Walk-ins welcome</p>
+          <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">No referral needed · Coverage varies by plan &amp; ODB eligibility · Walk-ins welcome</p>
         </div>
       </div>
 
@@ -3983,13 +3992,13 @@ window.FAQS = [
     cat: "ailments",
     icon: "🚭",
     q: "Can a pharmacist help me quit smoking in Ontario?",
-    a: "Yes — Ontario pharmacists can independently assess you and prescribe all first-line smoking cessation treatments, including <strong>varenicline (Champix)</strong> and <strong>bupropion (Zyban)</strong>, without a doctor's referral. We also carry the full range of nicotine replacement therapies (patches, gum, lozenges, inhaler). Our pharmacist will work with you on a personalized quit plan and follow-up support. Many treatments are covered by ODB and private insurance. <a href=\"#booking\" class=\"js-pa-select\" data-url=\"https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=16\">Start your quit assessment online →</a>"
+    a: "Yes — Ontario pharmacists can independently assess you and prescribe all first-line smoking cessation treatments, including <strong>varenicline (Champix)</strong> and <strong>bupropion (Zyban)</strong>, without a doctor's referral. We also carry the full range of nicotine replacement therapies (patches, gum, lozenges, inhaler), available over-the-counter. Our pharmacist will work with you on a personalized quit plan and follow-up support. Coverage varies by plan — many treatments are covered by private insurance, and ODB-eligible patients may qualify through the ODB Smoking Cessation Program. <a href=\"#booking\" class=\"js-pa-select\" data-url=\"https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=16\">Start your quit assessment online →</a>"
   },
   {
     cat: "ailments",
     icon: "🚭",
     q: "Are smoking cessation aids free in Ontario?",
-    a: "The pharmacist consultation and quit assessment are always free, with no appointment required. Whether the medication itself (NRT patches/gum, Champix, Zyban) is free to you depends on your coverage — many patients pay little to nothing thanks to the Ontario Drug Benefit (ODB), OHIP+, or private insurance, while others pay out-of-pocket. Bring your insurance or ODB card and we'll tell you your exact cost before you commit to anything. <a href=\"#booking\" class=\"js-pa-select\" data-url=\"https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=16\">Start your free quit assessment →</a>"
+    a: "The pharmacist consultation and quit assessment are always free, with no appointment required. The medications themselves (NRT patches/gum, Champix, Zyban) aren't automatically free — NRT is sold over-the-counter, and Champix/Zyban require a prescription. Whether you pay out-of-pocket depends on your coverage: private insurance often covers part or all of the cost, and if you're ODB-eligible (Trillium, OHIP+, social assistance, or 65+) you may qualify for coverage through the ODB Smoking Cessation Program. Bring your insurance or ODB card and we'll tell you your exact cost before you commit to anything. <a href=\"#booking\" class=\"js-pa-select\" data-url=\"https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=16\">Start your free quit assessment →</a>"
   },
   {
     cat: "ailments",
@@ -4024,8 +4033,8 @@ window.FAQS = [
   {
     cat: "prescriptions",
     icon: "💊",
-    q: "Do you carry Ozempic, Wegovy, or other weight-loss and diabetes medications?",
-    a: "We carry these when supply allows — they've been subject to periodic national shortages, so availability can change week to week. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to check current stock, ask about transferring an existing prescription, or talk through insurance coverage before you switch pharmacies."
+    q: "Do you carry Ozempic, Wegovy, generic semaglutide, or other weight-loss and diabetes medications?",
+    a: "We carry these when supply allows — they've been subject to periodic national shortages, so availability can change week to week. Generic semaglutide is now available and considered interchangeable with brand-name Ozempic, which can make this medication more accessible and affordable for patients — ask us if switching to the generic is right for you. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to check current stock, ask about transferring an existing prescription, switching to a generic, or talk through insurance coverage before you switch pharmacies."
   },
   {
     cat: "prescriptions",
@@ -4308,7 +4317,7 @@ window.FAQS = [
       html += '<button class="ailments-smartsearch__hit js-faq-cond-hit" data-href="' + href + '"' + dataUrl + ' data-name="' + a.name + '" data-call="' + (a.call?'1':'') + '">'
         + '<span class="ailments-smartsearch__hit-icon">' + a.icon + '</span>'
         + '<span class="ailments-smartsearch__hit-body">'
-        + '<span class="ailments-smartsearch__hit-name">' + a.name + '</span>'
+        + '<span class="ailments-smartsearch__hit-name">' + highlight(a.name, query.toLowerCase().split(/\s+/).filter(function(w){ return w.length >= 2; })) + '</span>'
         + '<span class="ailments-smartsearch__hit-kw">' + (a.call ? 'Call us for treatment options' : 'Start pharmacist assessment online') + '</span>'
         + '</span>'
         + '<span class="ailments-smartsearch__hit-arrow">›</span>'
@@ -4369,7 +4378,7 @@ window.FAQS = [
       html += '<button class="ailments-smartsearch__hit js-faq-svc-hit" data-anchor="' + (it.anchor || '') + '" data-open="' + (it.open || '') + '" data-url="' + (it.url || '') + '">'
         + '<span class="ailments-smartsearch__hit-icon">' + it.icon + '</span>'
         + '<span class="ailments-smartsearch__hit-body">'
-        + '<span class="ailments-smartsearch__hit-name">' + it.title + '</span>'
+        + '<span class="ailments-smartsearch__hit-name">' + highlight(it.title, query.toLowerCase().split(/\s+/).filter(function(w){ return w.length >= 2; })) + '</span>'
         + '<span class="ailments-smartsearch__hit-kw">' + it.desc + '</span>'
         + '</span>'
         + '<span class="ailments-smartsearch__hit-arrow">›</span>'
@@ -4531,6 +4540,18 @@ window.FAQS = [
     clearTimeout(debounce);
     var q = this.value.trim();
     debounce = setTimeout(function(){ runSearch(q); }, 200);
+  });
+  input.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') {
+      if (this.value) { this.value = ''; resetView(); }
+      else { this.blur(); }
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      clearTimeout(debounce);
+      runSearch(this.value.trim());
+      var top = list.querySelector('.faq-best-match');
+      if (top) top.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   });
   clearBtn.addEventListener('click', function(){
     input.value = '';
@@ -5711,6 +5732,15 @@ window.FAQS = [
   })();
 
   // ── Smart Symptom Search ──────────────────────────────────
+  function escapeSearchRx(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  function highlightSearchTerms(text, terms){
+    var out = text;
+    terms.forEach(function(t){
+      if (!t) return;
+      out = out.replace(new RegExp('(' + escapeSearchRx(t) + ')', 'gi'), '<mark>$1</mark>');
+    });
+    return out;
+  }
   var AILMENT_DB = [
     { name:'Pink Eye', icon:'👁️', id:22, call:false,
       kw:['eye','red eye','pink eye','discharge','crusty','sticky','goopy','conjunctivitis','itchy eye','watery eye','swollen eye','eye infection'] },
@@ -5820,7 +5850,7 @@ window.FAQS = [
       html += '<button class="ailments-smartsearch__hit js-smart-hit" data-href="' + href + '"' + dataUrl + ' data-name="' + a.name + '" data-call="' + (a.call?'1':'') + '">'
         + '<span class="ailments-smartsearch__hit-icon">' + a.icon + '</span>'
         + '<span class="ailments-smartsearch__hit-body">'
-        + '<span class="ailments-smartsearch__hit-name">' + a.name + '</span>'
+        + '<span class="ailments-smartsearch__hit-name">' + highlightSearchTerms(a.name, query.toLowerCase().split(/\s+/).filter(function(w){ return w.length >= 2; })) + '</span>'
         + '<span class="ailments-smartsearch__hit-kw">' + (a.call ? 'Call us for treatment options' : 'Start pharmacist assessment online') + '</span>'
         + '</span>'
         + '<span class="ailments-smartsearch__hit-arrow">›</span>'
@@ -5860,6 +5890,20 @@ window.FAQS = [
       var val = this.value.trim();
       debounce = setTimeout(function() { renderSmartResults(scope, val); }, 180);
     });
+    inp.addEventListener('keydown', function(e) {
+      var scope = this.dataset.scope;
+      if (e.key === 'Escape') {
+        if (this.value) { this.value = ''; renderSmartResults(scope, ''); }
+        else { this.blur(); }
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        clearTimeout(debounce);
+        renderSmartResults(scope, this.value.trim());
+        var resultsEl = document.getElementById('smartsearch-results-' + scope);
+        var firstHit = resultsEl && resultsEl.querySelector('.ailments-smartsearch__hit');
+        if (firstHit) firstHit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
   });
   document.querySelectorAll('.ailments-smartsearch__clear').forEach(function(btn) {
     btn.addEventListener('click', function() {
@@ -5898,10 +5942,17 @@ window.FAQS = [
   var siteInput = document.getElementById('siteSearchInput');
   var siteResults = document.getElementById('siteSearchResults');
   var siteDebounce;
+  var siteActiveIdx = -1;
+  function siteHilite(){
+    var items = siteResults.querySelectorAll('.site-search__result');
+    items.forEach(function(it, i){ it.classList.toggle('active', i === siteActiveIdx); });
+    if (siteActiveIdx >= 0 && items[siteActiveIdx]) items[siteActiveIdx].scrollIntoView({ block: 'nearest' });
+  }
 
   function openSiteSearch() {
     siteOverlay.classList.add('open');
     siteInput.value = '';
+    siteActiveIdx = -1;
     siteResults.innerHTML = '<div class="site-search__tip">Type to search conditions, services, vaccines, FAQ and more.</div>';
     setTimeout(function() { siteInput.focus(); }, 60);
     document.body.style.overflow = 'hidden';
@@ -5939,6 +5990,7 @@ window.FAQS = [
   }
 
   function renderSiteSearch(query) {
+    siteActiveIdx = -1;
     if (!query || query.length < 2) {
       siteResults.innerHTML = '<div class="site-search__tip">Type to search conditions, services, vaccines, FAQ and more.</div>';
       return;
@@ -6043,6 +6095,25 @@ window.FAQS = [
     clearTimeout(siteDebounce);
     var q = this.value.trim();
     siteDebounce = setTimeout(function() { renderSiteSearch(q); }, 180);
+  });
+  siteInput.addEventListener('keydown', function(e) {
+    var items = siteResults.querySelectorAll('.site-search__result');
+    if (e.key === 'ArrowDown') {
+      if (!items.length) return;
+      e.preventDefault();
+      siteActiveIdx = Math.min(siteActiveIdx + 1, items.length - 1);
+      siteHilite();
+    } else if (e.key === 'ArrowUp') {
+      if (!items.length) return;
+      e.preventDefault();
+      siteActiveIdx = Math.max(siteActiveIdx - 1, 0);
+      siteHilite();
+    } else if (e.key === 'Enter') {
+      if (!items.length) return;
+      e.preventDefault();
+      var target = items[siteActiveIdx >= 0 ? siteActiveIdx : 0];
+      if (target) target.click();
+    }
   });
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && siteOverlay.classList.contains('open')) closeSiteSearch();
