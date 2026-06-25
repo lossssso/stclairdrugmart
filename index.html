@@ -2774,6 +2774,13 @@
               <span class="pa-chip__learn" onclick="event.stopPropagation();document.getElementById('rx-extensions').scrollIntoView({behavior:'smooth',block:'center'})">Learn more →</span>
             </span>
           </div>
+          <div class="pa-chip js-pa-select" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=16" data-iframeheight="1280" data-label="Smoking Cessation">
+            <span class="pa-chip__icon">🚭</span>
+            <span class="pa-chip__text">
+              <strong>Smoking Cessation</strong><small>Champix, nicotine patches &amp; a personalized quit plan</small>
+              <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-cessation');setTimeout(function(){document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
+            </span>
+          </div>
         </div>
       </button>
       <div class="pa-iframe-wrap" id="pa-wrap" style="display:none">
@@ -4910,7 +4917,9 @@ window.FAQS = [
         if (labelOverride && paLabelText) paLabelText.textContent = labelOverride;
         setPaHint(hintOverride || '');
         paOpen();
-        setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+        if (doScroll) {
+          setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+        }
       }
     });
   });
