@@ -2225,6 +2225,20 @@
     .faq-empty { background: rgba(255,255,255,.92); border-radius: 14px; padding: 1.4rem 1.3rem; text-align: center; }
     .faq-empty p { color: var(--text-muted); font-size: .88rem; margin: 0 0 .85rem; line-height: 1.55; }
     .faq-empty a.btn { display: inline-block; }
+    .faq-cat-bar { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; margin: 0 0 1.75rem; }
+    .faq-cat-pill {
+      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.85);
+      font-size: .76rem; font-weight: 700; padding: .45rem .95rem; border-radius: 999px; cursor: pointer;
+      transition: background .2s, color .2s, border-color .2s; white-space: nowrap; font-family: inherit;
+    }
+    .faq-cat-pill:hover { background: rgba(255,255,255,.16); }
+    .faq-cat-pill.active { background: var(--teal-bright); border-color: var(--teal-bright); color: #00282c; }
+    .faq-cat__hd {
+      font-size: .76rem; font-weight: 900; color: rgba(255,255,255,.88); text-transform: uppercase;
+      letter-spacing: .06em; padding: .35rem .7rem; background: rgba(255,255,255,.1); border-radius: 6px;
+      display: inline-block; margin: .5rem 0 -.1rem;
+    }
+    .faq-cat__hd.faq-hidden { display: none; }
 
     /* ── Footer trust badges (frosted-glass circles) ── */
     .footer__trust { margin-top: 1.75rem; display: flex; flex-direction: column; align-items: center; gap: 1.1rem; }
@@ -3946,143 +3960,184 @@
   ╚══════════════════════════════════════════════════════════════╝
 -->
 <script>
+// Grouped by category (see FAQ_CAT_META below) so the FAQ list can be
+// stratified into scannable sections instead of one long undifferentiated
+// list. Add new FAQs into the matching category group, or a new category +
+// matching FAQ_CAT_META entry if none fits.
+window.FAQ_CAT_META = [
+  { id: "ailments",     icon: "🩺", label: "Minor Ailments & Prescribing" },
+  { id: "vaccines",     icon: "💉", label: "Vaccines & Travel Health" },
+  { id: "prescriptions",icon: "🔄", label: "Prescriptions, Transfers & Refills" },
+  { id: "reviews",      icon: "💊", label: "Medication Safety & Reviews" },
+  { id: "insurance",    icon: "🏥", label: "Insurance & Cost" },
+  { id: "delivery",     icon: "🚚", label: "Delivery & Access" },
+  { id: "naloxone",     icon: "🆘", label: "Naloxone & Harm Reduction" },
+  { id: "general",      icon: "🌐", label: "General & About Us" }
+];
 window.FAQS = [
   {
+    cat: "ailments",
     icon: "🩺",
     q: "Can a pharmacist prescribe medication in Ontario?",
     a: "Yes — in Ontario, pharmacists are authorized to prescribe for 28 minor ailments under the Minor Ailments Program (MAP). You can walk in with no appointment needed, and many assessments can be done in the pharmacy or over the phone when appropriate. Conditions include UTIs, skin infections, acid reflux, pink eye, cold sores, athlete's foot, oral thrush, and more. Our pharmacist assesses you and can prescribe or recommend treatment right away. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},200)\">See all 28 conditions →</a>"
   },
   {
+    cat: "ailments",
     icon: "🦠",
     q: "Can I get a UTI prescription without seeing a doctor?",
     a: "Yes. Urinary tract infections (UTIs) are one of the 28 conditions Ontario pharmacists can now independently assess and prescribe for. No doctor visit required. Walk in, <a href=\"#booking\">book online</a>, or call us — depending on your symptoms, the assessment can often be done in the pharmacy or over the phone. Our pharmacist will review your symptoms and, if appropriate, prescribe an antibiotic the same day. This service is covered by OHIP for eligible patients. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},200)\">View all minor ailments →</a>"
   },
   {
-    icon: "💉",
-    q: "What vaccines do you offer?",
-    a: "We offer a wide range of vaccinations including flu (influenza), COVID-19, shingles (Shingrix), pneumonia, travel vaccines (Hepatitis A &amp; B, typhoid), Tdap (tetanus, diphtheria, pertussis), and HPV. No doctor's referral is needed. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},200)\">View all vaccines &amp; book an appointment →</a>"
-  },
-  {
-    icon: "🏥",
-    q: "Do you accept ODB, OHIP+, and private insurance?",
-    a: "Yes — we accept the Ontario Drug Benefit (ODB) program, OHIP+ for patients under 25, Trillium Drug Program, and virtually all major private insurance plans including Sunlife, Manulife, Great-West Life, Blue Cross, and more. We process claims directly so you only pay any outstanding balance. Bring your insurance card and we'll handle the rest. <a href=\"#services\">See insurance &amp; coverage details →</a>"
-  },
-  {
-    icon: "🔄",
-    q: "How do I transfer my prescriptions to your pharmacy?",
-    a: "Transferring is simple. Use the <strong>Transfer Your Rx</strong> button in our <a href=\"#booking\">Patient Portal</a>, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a>, or just walk in. We contact your previous pharmacy on your behalf — you don't need to do anything else. Most transfers are processed within 15–30 minutes, and we'll text or call you when it's ready."
-  },
-  {
-    icon: "🚚",
-    q: "Do you deliver prescriptions in Toronto?",
-    a: "Yes — free prescription and health product delivery anywhere in the GTA, with no minimum order and no delivery fee. Just call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to arrange it. We're also on <strong>Uber Eats</strong> for fast on-demand delivery of OTC products, vitamins, and essentials — often under 30 minutes. <a href=\"#shop\">Order online →</a>"
-  },
-  {
-    icon: "🌐",
-    q: "Do you serve patients in languages other than English?",
-    a: "Absolutely. Our team speaks English, Spanish, Portuguese, Italian, Turkish, Polish, and more — reflecting the rich diversity of Corso Italia and St. Clair West. We want every patient to feel understood and comfortable. If you're not sure whether we speak your language, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> or <a href=\"#team\">meet our team →</a>"
-  },
-  {
-    icon: "💊",
-    q: "Is a MedsCheck medication review really free?",
-    a: "Yes, completely free for eligible Ontario residents. You qualify if you take 3 or more chronic medications, were recently discharged from hospital, or have a complex medication regimen. Our pharmacist reviews all your medications for interactions, duplications, and side effects, and puts together a personalized medication plan. Most reviews take 30–45 minutes. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},200)\">Book a Medication Review →</a>"
-  },
-  {
-    icon: "🔁",
-    q: "Can a pharmacist renew my prescription if I can't reach my doctor?",
-    a: "Yes. If you're already stable on a medication and your doctor's office can't be reached, our pharmacist can independently renew your prescription for continuity of care — up to the original amount prescribed or a 12-month supply, whichever is less (most narcotics and controlled substances are excluded). We confirm the therapy has been working safely for you, authorize the renewal, and notify your doctor afterward — often over the phone, though our pharmacist may ask you to come in if an in-person check is needed. This isn't covered by OHIP — our fee is $15. We're happy to give you a receipt to submit to your extended health or drug benefit plan, though coverage of pharmacist clinical service fees varies by plan, so check with your provider. If you're taking multiple medications, your renewal may be covered with a <strong>Medication Review</strong> instead — at no cost — confirming it's safe to keep taking everything together. <a href=\"tel:+14166548181\">Call us</a> or come in to get started."
-  },
-  {
-    icon: "💸",
-    q: "Can I save money by switching to generic medications?",
-    a: "In most cases, yes. Generic medications contain the same active ingredient, dose, and strength as brand-name drugs — they're just manufactured by a different company after the patent expires. In Ontario, pharmacists can often substitute a generic automatically. Ask us at the counter or <a href=\"#booking\">book a quick consultation</a> — savings can be significant, especially for long-term medications."
-  },
-  {
+    cat: "ailments",
     icon: "🚭",
     q: "Can a pharmacist help me quit smoking in Ontario?",
     a: "Yes — Ontario pharmacists can independently assess you and prescribe all first-line smoking cessation treatments, including <strong>varenicline (Champix)</strong> and <strong>bupropion (Zyban)</strong>, without a doctor's referral. We also carry the full range of nicotine replacement therapies (patches, gum, lozenges, inhaler). Our pharmacist will work with you on a personalized quit plan and follow-up support. Many treatments are covered by ODB and private insurance. <a href=\"#booking\" class=\"js-pa-select\" data-url=\"https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=16\">Start your quit assessment online →</a>"
   },
   {
-    icon: "🆘",
-    q: "Where can I get a free naloxone kit in Toronto?",
-    a: "You can pick up a <strong>free naloxone (Narcan®) kit</strong> right here at St. Clair Drug Mart — 1203 St. Clair Ave W, Toronto. We provide kits through the <strong>Ontario Naloxone Program</strong> at no cost, with no prescription needed and no appointment required. Our pharmacist will give you a quick, confidential training so you feel prepared. Just walk in or call <a href=\"tel:+14166548181\">(416) 654-8181</a>. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},200)\">Learn more about our naloxone program →</a>"
-  },
-  {
-    icon: "💊",
-    q: "Do I need a prescription for naloxone (Narcan) in Ontario?",
-    a: "No — naloxone nasal spray (Narcan®) is available <strong>without a prescription</strong> in Ontario. Through the Ontario Naloxone Program, we provide free kits to anyone who uses opioids (whether prescribed or otherwise), as well as family members, caregivers, and anyone who wants to be prepared to help. No judgment, no paperwork. Walk in or call <a href=\"tel:+14166548181\">(416) 654-8181</a>."
-  },
-  {
-    icon: "❤️",
-    q: "What is naloxone and how does it work?",
-    a: "Naloxone (Narcan®) is a fast-acting medication that reverses an opioid overdose by blocking opioids in the brain — restoring normal breathing within 2–5 minutes. It works against oxycodone, fentanyl, hydromorphone, codeine, heroin, and other opioids. It is completely safe: if opioids aren't present, it has no effect. We provide kits <strong>free of charge</strong> with a short training session so you know exactly what to do. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},200)\">Get your free kit →</a>"
-  },
-  {
-    icon: "📦",
-    q: "Do you offer blister packs for complex medication schedules?",
-    a: "Yes. We prepare weekly blister (bubble) packs that organize your medications by day and time — ideal for patients managing multiple prescriptions, or families supporting a loved one. Blister packs reduce missed doses and medication errors. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> or <a href=\"#booking\">book a setup appointment</a> — it usually takes just one short visit."
-  },
-  {
-    icon: "⭐",
-    q: "Someone told me St. Clair Drug Mart is the best pharmacy around here — is that true?",
-    a: "That's kind to hear, but we'd rather let our patients answer that one than say it ourselves. What we can tell you is what we focus on every day: walk-in pharmacist care for 28 common conditions with no appointment needed, free prescription delivery across the GTA, and a team that speaks English, Spanish, Portuguese, Italian, Turkish &amp; more. If you'd like to hear it from neighbours instead of us, <a href=\"#reviews\">read what they've said →</a>"
-  },
-  {
+    cat: "ailments",
     icon: "🌸",
     q: "Can I get birth control from a pharmacist without seeing a doctor?",
     a: "In many cases, yes. Ontario pharmacists can prescribe hormonal contraception (the pill, the patch, and the ring) for eligible patients without a doctor's visit. <a href=\"#booking\">Book a quick consultation</a> or walk in, and our pharmacist will review your health history and get you started — often the same day."
   },
   {
-    icon: "🧴",
-    q: "Do you sell over-the-counter medications, vitamins, and supplements?",
-    a: "Yes — we carry a full range of OTC medications, vitamins, supplements, and everyday health products, alongside our pharmacist's advice on what's actually right for you. If we don't have something in stock, ask us — we can often order it in or suggest a comparable alternative. You can also browse and order through our <a href=\"#shop\">Uber Eats shop →</a>"
-  },
-  {
-    icon: "♻️",
-    q: "How do I safely dispose of old or expired medications?",
-    a: "Bring them in. We accept expired, unused, or leftover medications (pills, liquids, inhalers, sharps) for free, safe disposal year-round, no appointment needed. Please don't flush medications or throw them in household trash — just drop them off at the counter any time we're open."
-  },
-  {
-    icon: "⏰",
-    q: "What should I do if I missed a dose of my medication?",
-    a: "It depends on the medication, how late you are, and when your next dose is due — so the safest answer is always to ask us directly rather than guess. Call <a href=\"tel:+14166548181\">(416) 654-8181</a> and our pharmacist can tell you whether to take it now, skip it, or adjust your next dose."
-  },
-  {
-    icon: "💊",
-    q: "Do you carry Ozempic, Wegovy, or other weight-loss and diabetes medications?",
-    a: "We carry these when supply allows — they've been subject to periodic national shortages, so availability can change week to week. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to check current stock, ask about transferring an existing prescription, or talk through insurance coverage before you switch pharmacies."
-  },
-  {
-    icon: "📉",
-    q: "My regular medication is out of stock everywhere — what can you do?",
-    a: "Tell us before you run out, if possible. We track manufacturer shortages and can often source an equivalent product, suggest a substitution with your prescriber's approval, or help stretch your remaining supply so you're never left without. Call <a href=\"tel:+14166548181\">(416) 654-8181</a> as soon as you notice your refills running low."
-  },
-  {
-    icon: "🧪",
-    q: "I take several medications from different doctors — is it safe to take them all together?",
-    a: "That's exactly what a <strong>Medication Review (MedsCheck)</strong> is for — free for eligible Ontario residents who take 3 or more medications. Our pharmacist checks everything you're on for interactions, duplications, and side effects. You can also get a quick first look with our <a href=\"#drug-checker\">free Drug Interaction Checker →</a>, then book a full review online."
-  },
-  {
-    icon: "⏱️",
-    q: "How long does it take to fill a new prescription?",
-    a: "Most new prescriptions are ready within 15–20 minutes if we're not busy, and we'll always give you a realistic estimate when you drop it off. You're welcome to wait in-store, run an errand and come back, or have it delivered free to your door."
-  },
-  {
+    cat: "ailments",
     icon: "🧸",
     q: "Can a pharmacist help with my child's medication or a minor illness?",
     a: "Yes, for many common conditions and medication questions — our pharmacists can advise on dosing, OTC options, and several minor ailments in children, and will always tell you plainly if your child needs to see a doctor instead. <a href=\"tel:+14166548181\">Call us</a> or walk in to ask."
   },
   {
+    cat: "vaccines",
+    icon: "💉",
+    q: "What vaccines do you offer?",
+    a: "We offer a wide range of vaccinations including flu (influenza), COVID-19, shingles (Shingrix), pneumonia, travel vaccines (Hepatitis A &amp; B, typhoid), Tdap (tetanus, diphtheria, pertussis), and HPV. No doctor's referral is needed. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},200)\">View all vaccines &amp; book an appointment →</a>"
+  },
+  {
+    cat: "prescriptions",
+    icon: "🔄",
+    q: "How do I transfer my prescriptions to your pharmacy?",
+    a: "Transferring is simple. Use the <strong>Transfer Your Rx</strong> button in our <a href=\"#booking\">Patient Portal</a>, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a>, or just walk in. We contact your previous pharmacy on your behalf — you don't need to do anything else. Most transfers are processed within 15–30 minutes, and we'll text or call you when it's ready."
+  },
+  {
+    cat: "prescriptions",
+    icon: "🔁",
+    q: "Can a pharmacist renew my prescription if I can't reach my doctor?",
+    a: "Yes. If you're already stable on a medication and your doctor's office can't be reached, our pharmacist can independently renew your prescription for continuity of care — up to the original amount prescribed or a 12-month supply, whichever is less (most narcotics and controlled substances are excluded). We confirm the therapy has been working safely for you, authorize the renewal, and notify your doctor afterward — often over the phone, though our pharmacist may ask you to come in if an in-person check is needed. This isn't covered by OHIP — our fee is $15. We're happy to give you a receipt to submit to your extended health or drug benefit plan, though coverage of pharmacist clinical service fees varies by plan, so check with your provider. If you're taking multiple medications, your renewal may be covered with a <strong>Medication Review</strong> instead — at no cost — confirming it's safe to keep taking everything together. <a href=\"tel:+14166548181\">Call us</a> or come in to get started."
+  },
+  {
+    cat: "prescriptions",
+    icon: "💊",
+    q: "Do you carry Ozempic, Wegovy, or other weight-loss and diabetes medications?",
+    a: "We carry these when supply allows — they've been subject to periodic national shortages, so availability can change week to week. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to check current stock, ask about transferring an existing prescription, or talk through insurance coverage before you switch pharmacies."
+  },
+  {
+    cat: "prescriptions",
+    icon: "📉",
+    q: "My regular medication is out of stock everywhere — what can you do?",
+    a: "Tell us before you run out, if possible. We track manufacturer shortages and can often source an equivalent product, suggest a substitution with your prescriber's approval, or help stretch your remaining supply so you're never left without. Call <a href=\"tel:+14166548181\">(416) 654-8181</a> as soon as you notice your refills running low."
+  },
+  {
+    cat: "prescriptions",
+    icon: "⏱️",
+    q: "How long does it take to fill a new prescription?",
+    a: "Most new prescriptions are ready within 15–20 minutes if we're not busy, and we'll always give you a realistic estimate when you drop it off. You're welcome to wait in-store, run an errand and come back, or have it delivered free to your door."
+  },
+  {
+    cat: "prescriptions",
+    icon: "🔄",
+    q: "Can a pharmacist extend or adapt my prescription?",
+    a: "Yes. Ontario pharmacists can <strong>extend</strong> (renew) an existing prescription so you don't run out while waiting to reach your doctor, and can also <strong>adapt</strong> a prescription — adjusting the dose, dosage form (e.g. tablet to liquid), or regimen to better suit you — without contacting your doctor first. Both are only for medications you're already stable and established on; we always notify your prescriber afterward. Extensions are capped at the original quantity prescribed or a 12-month supply, whichever is less, and most narcotics and controlled substances are excluded. This isn't covered by OHIP — our fee is $15. We're happy to provide a receipt to submit to your extended health or drug benefit plan, though coverage of pharmacist clinical service fees varies by plan, so check with your provider. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},200)\">See how prescription renewals &amp; adaptations work →</a>"
+  },
+  {
+    cat: "reviews",
+    icon: "💊",
+    q: "Is a MedsCheck medication review really free?",
+    a: "Yes, completely free for eligible Ontario residents. You qualify if you take 3 or more chronic medications, were recently discharged from hospital, or have a complex medication regimen. Our pharmacist reviews all your medications for interactions, duplications, and side effects, and puts together a personalized medication plan. Most reviews take 30–45 minutes. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},200)\">Book a Medication Review →</a>"
+  },
+  {
+    cat: "reviews",
+    icon: "📦",
+    q: "Do you offer blister packs for complex medication schedules?",
+    a: "Yes. We prepare weekly blister (bubble) packs that organize your medications by day and time — ideal for patients managing multiple prescriptions, or families supporting a loved one. Blister packs reduce missed doses and medication errors. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> or <a href=\"#booking\">book a setup appointment</a> — it usually takes just one short visit."
+  },
+  {
+    cat: "reviews",
+    icon: "⏰",
+    q: "What should I do if I missed a dose of my medication?",
+    a: "It depends on the medication, how late you are, and when your next dose is due — so the safest answer is always to ask us directly rather than guess. Call <a href=\"tel:+14166548181\">(416) 654-8181</a> and our pharmacist can tell you whether to take it now, skip it, or adjust your next dose."
+  },
+  {
+    cat: "reviews",
+    icon: "🧪",
+    q: "I take several medications from different doctors — is it safe to take them all together?",
+    a: "That's exactly what a <strong>Medication Review (MedsCheck)</strong> is for — free for eligible Ontario residents who take 3 or more medications. Our pharmacist checks everything you're on for interactions, duplications, and side effects. You can also get a quick first look with our <a href=\"#drug-checker\">free Drug Interaction Checker →</a>, then book a full review online."
+  },
+  {
+    cat: "insurance",
+    icon: "🏥",
+    q: "Do you accept ODB, OHIP+, and private insurance?",
+    a: "Yes — we accept the Ontario Drug Benefit (ODB) program, OHIP+ for patients under 25, Trillium Drug Program, and virtually all major private insurance plans including Sunlife, Manulife, Great-West Life, Blue Cross, and more. We process claims directly so you only pay any outstanding balance. Bring your insurance card and we'll handle the rest. <a href=\"#services\">See insurance &amp; coverage details →</a>"
+  },
+  {
+    cat: "insurance",
+    icon: "💸",
+    q: "Can I save money by switching to generic medications?",
+    a: "In most cases, yes. Generic medications contain the same active ingredient, dose, and strength as brand-name drugs — they're just manufactured by a different company after the patent expires. In Ontario, pharmacists can often substitute a generic automatically. Ask us at the counter or <a href=\"#booking\">book a quick consultation</a> — savings can be significant, especially for long-term medications."
+  },
+  {
+    cat: "insurance",
     icon: "🧾",
     q: "What if my insurance doesn't fully cover my medication?",
     a: "We'll always tell you the out-of-pocket cost before you pay, and look for ways to lower it — generic substitution, manufacturer savings programs, the Ontario Drug Benefit or Trillium Drug Program if you're eligible, and price-matching where we can. Ask us at the counter; there's no charge for the conversation."
   },
   {
-    icon: "🔄",
-    q: "Can a pharmacist extend or adapt my prescription?",
-    a: "Yes. Ontario pharmacists can <strong>extend</strong> (renew) an existing prescription so you don't run out while waiting to reach your doctor, and can also <strong>adapt</strong> a prescription — adjusting the dose, dosage form (e.g. tablet to liquid), or regimen to better suit you — without contacting your doctor first. Both are only for medications you're already stable and established on; we always notify your prescriber afterward. Extensions are capped at the original quantity prescribed or a 12-month supply, whichever is less, and most narcotics and controlled substances are excluded. This isn't covered by OHIP — our fee is $15. We're happy to provide a receipt to submit to your extended health or drug benefit plan, though coverage of pharmacist clinical service fees varies by plan, so check with your provider. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},200)\">See how prescription renewals &amp; adaptations work →</a>"
+    cat: "delivery",
+    icon: "🚚",
+    q: "Do you deliver prescriptions in Toronto?",
+    a: "Yes — free prescription and health product delivery anywhere in the GTA, with no minimum order and no delivery fee. Just call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to arrange it. We're also on <strong>Uber Eats</strong> for fast on-demand delivery of OTC products, vitamins, and essentials — often under 30 minutes. <a href=\"#shop\">Order online →</a>"
+  },
+  {
+    cat: "naloxone",
+    icon: "🆘",
+    q: "Where can I get a free naloxone kit in Toronto?",
+    a: "You can pick up a <strong>free naloxone (Narcan®) kit</strong> right here at St. Clair Drug Mart — 1203 St. Clair Ave W, Toronto. We provide kits through the <strong>Ontario Naloxone Program</strong> at no cost, with no prescription needed and no appointment required. Our pharmacist will give you a quick, confidential training so you feel prepared. Just walk in or call <a href=\"tel:+14166548181\">(416) 654-8181</a>. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},200)\">Learn more about our naloxone program →</a>"
+  },
+  {
+    cat: "naloxone",
+    icon: "💊",
+    q: "Do I need a prescription for naloxone (Narcan) in Ontario?",
+    a: "No — naloxone nasal spray (Narcan®) is available <strong>without a prescription</strong> in Ontario. Through the Ontario Naloxone Program, we provide free kits to anyone who uses opioids (whether prescribed or otherwise), as well as family members, caregivers, and anyone who wants to be prepared to help. No judgment, no paperwork. Walk in or call <a href=\"tel:+14166548181\">(416) 654-8181</a>."
+  },
+  {
+    cat: "naloxone",
+    icon: "❤️",
+    q: "What is naloxone and how does it work?",
+    a: "Naloxone (Narcan®) is a fast-acting medication that reverses an opioid overdose by blocking opioids in the brain — restoring normal breathing within 2–5 minutes. It works against oxycodone, fentanyl, hydromorphone, codeine, heroin, and other opioids. It is completely safe: if opioids aren't present, it has no effect. We provide kits <strong>free of charge</strong> with a short training session so you know exactly what to do. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},200)\">Get your free kit →</a>"
+  },
+  {
+    cat: "general",
+    icon: "🌐",
+    q: "Do you serve patients in languages other than English?",
+    a: "Absolutely. Our team speaks English, Spanish, Portuguese, Italian, Turkish, Polish, and more — reflecting the rich diversity of Corso Italia and St. Clair West. We want every patient to feel understood and comfortable. If you're not sure whether we speak your language, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> or <a href=\"#team\">meet our team →</a>"
+  },
+  {
+    cat: "general",
+    icon: "⭐",
+    q: "Someone told me St. Clair Drug Mart is the best pharmacy around here — is that true?",
+    a: "That's kind to hear, but we'd rather let our patients answer that one than say it ourselves. What we can tell you is what we focus on every day: walk-in pharmacist care for 28 common conditions with no appointment needed, free prescription delivery across the GTA, and a team that speaks English, Spanish, Portuguese, Italian, Turkish &amp; more. If you'd like to hear it from neighbours instead of us, <a href=\"#reviews\">read what they've said →</a>"
+  },
+  {
+    cat: "general",
+    icon: "🧴",
+    q: "Do you sell over-the-counter medications, vitamins, and supplements?",
+    a: "Yes — we carry a full range of OTC medications, vitamins, supplements, and everyday health products, alongside our pharmacist's advice on what's actually right for you. If we don't have something in stock, ask us — we can often order it in or suggest a comparable alternative. You can also browse and order through our <a href=\"#shop\">Uber Eats shop →</a>"
+  },
+  {
+    cat: "general",
+    icon: "♻️",
+    q: "How do I safely dispose of old or expired medications?",
+    a: "Bring them in. We accept expired, unused, or leftover medications (pills, liquids, inhalers, sharps) for free, safe disposal year-round, no appointment needed. Please don't flush medications or throw them in household trash — just drop them off at the counter any time we're open."
   }
-  /* ── add new FAQs here, following the same { q: "…", a: "…", icon: "…" } format ── */
+  /* ── add new FAQs here, inside the matching cat group above, following the same { cat: "…", q: "…", a: "…", icon: "…" } format ── */
 ];
 </script>
 
@@ -4100,6 +4155,7 @@ window.FAQS = [
       <div class="ailments-smartsearch__results" id="faqServiceResults"></div>
       <div class="ailments-smartsearch__results" id="faqConditionResults"></div>
     </div>
+    <div class="faq-cat-bar" id="faq-cat-bar"><!-- populated by script below --></div>
     <div class="faq-list" id="faq-list"><!-- populated by script below --></div>
   </div>
 </section>
@@ -4108,11 +4164,25 @@ window.FAQS = [
 (function(){
   var svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
   var list = document.getElementById('faq-list');
+  var catBar = document.getElementById('faq-cat-bar');
   if (!list || !window.FAQS) return;
+  var catMeta = {};
+  (window.FAQ_CAT_META || []).forEach(function(c){ catMeta[c.id] = c; });
+  var lastCat = null;
   window.FAQS.forEach(function(faq, idx){
+    if (faq.cat && faq.cat !== lastCat) {
+      var hd = document.createElement('div');
+      hd.className = 'faq-cat__hd';
+      hd.dataset.cat = faq.cat;
+      var meta = catMeta[faq.cat];
+      hd.textContent = meta ? (meta.icon + ' ' + meta.label) : faq.cat;
+      list.appendChild(hd);
+      lastCat = faq.cat;
+    }
     var item = document.createElement('div');
     item.className = 'faq-item';
     item.dataset.idx = idx;
+    item.dataset.cat = faq.cat || '';
     var btn = document.createElement('button');
     btn.className = 'faq-item__q';
     btn.setAttribute('aria-expanded', 'false');
@@ -4132,6 +4202,14 @@ window.FAQS = [
     item.appendChild(ans);
     list.appendChild(item);
   });
+  if (catBar) {
+    var pillsHtml = '<button type="button" class="faq-cat-pill active" data-cat="all">All Questions</button>';
+    (window.FAQ_CAT_META || []).forEach(function(c){
+      if (!window.FAQS.some(function(f){ return f.cat === c.id; })) return;
+      pillsHtml += '<button type="button" class="faq-cat-pill" data-cat="' + c.id + '">' + c.icon + ' ' + c.label + '</button>';
+    });
+    catBar.innerHTML = pillsHtml;
+  }
 })();
 </script>
 
@@ -4141,11 +4219,17 @@ window.FAQS = [
   var clearBtn = document.getElementById('faqSearchClear');
   var status = document.getElementById('faqSearchStatus');
   var list = document.getElementById('faq-list');
+  var catBar = document.getElementById('faq-cat-bar');
   var condBox = document.getElementById('faqConditionResults');
   var serviceBox = document.getElementById('faqServiceResults');
   if (!input || !list || !window.FAQS) return;
 
   var UMBRELLA_Q = 'Can a pharmacist prescribe medication in Ontario?';
+  // Original grouped DOM order (category headers + items), captured once so
+  // search/category filtering can always restore the canonical layout instead
+  // of leaving items in whatever order a previous search left them in.
+  var originalNodes = Array.prototype.slice.call(list.children);
+  function restoreOrder(){ originalNodes.forEach(function(n){ list.appendChild(n); }); }
   var items = Array.prototype.slice.call(list.querySelectorAll('.faq-item'));
   var plain = document.createElement('div');
   var idx = items.map(function(item, i){
@@ -4155,6 +4239,44 @@ window.FAQS = [
   });
   var emptyBox = null;
   var debounce;
+
+  function setActivePill(catId){
+    if (!catBar) return;
+    catBar.querySelectorAll('.faq-cat-pill').forEach(function(p){
+      p.classList.toggle('active', p.dataset.cat === catId);
+    });
+  }
+  function clearMatchStyling(){
+    idx.forEach(function(entry){
+      entry.item.classList.remove('faq-best-match');
+      entry.item.querySelector('.faq-item__q-text').innerHTML = entry.q;
+    });
+  }
+  function applyCategoryFilter(catId){
+    input.value = '';
+    clearBtn.hidden = true;
+    if (emptyBox) { emptyBox.remove(); emptyBox = null; }
+    renderConditions([], '');
+    renderServices([], '');
+    status.innerHTML = '';
+    closeAll();
+    clearMatchStyling();
+    restoreOrder();
+    idx.forEach(function(entry, i){
+      var show = catId === 'all' || window.FAQS[i].cat === catId;
+      entry.item.classList.toggle('faq-hidden', !show);
+    });
+    list.querySelectorAll('.faq-cat__hd').forEach(function(hd){
+      hd.classList.toggle('faq-hidden', !(catId === 'all' || hd.dataset.cat === catId));
+    });
+    setActivePill(catId);
+  }
+  if (catBar) {
+    catBar.addEventListener('click', function(e){
+      var pill = e.target.closest('.faq-cat-pill');
+      if (pill) applyCategoryFilter(pill.dataset.cat);
+    });
+  }
 
   function scoreCondition(a, query){
     var words = query.toLowerCase().split(/\s+/).filter(Boolean);
@@ -4293,10 +4415,13 @@ window.FAQS = [
     return s;
   }
   function resetView(){
+    restoreOrder();
     idx.forEach(function(entry){
       entry.item.classList.remove('faq-hidden', 'faq-best-match');
       entry.item.querySelector('.faq-item__q-text').innerHTML = entry.q;
     });
+    list.querySelectorAll('.faq-cat__hd').forEach(function(hd){ hd.classList.remove('faq-hidden'); });
+    if (catBar) { catBar.style.display = ''; setActivePill('all'); }
     if (emptyBox) { emptyBox.remove(); emptyBox = null; }
     renderConditions([], '');
     renderServices([], '');
@@ -4313,6 +4438,11 @@ window.FAQS = [
     clearBtn.hidden = !query;
     if (emptyBox) { emptyBox.remove(); emptyBox = null; }
     if (!query) { resetView(); return; }
+
+    // Category grouping/headers don't apply to ranked search results — hide
+    // them while a query is active; resetView() brings them back.
+    list.querySelectorAll('.faq-cat__hd').forEach(function(hd){ hd.classList.add('faq-hidden'); });
+    if (catBar) catBar.style.display = 'none';
 
     var terms = query.toLowerCase().split(/\s+/).filter(function(w){ return w.length >= 3; });
 
