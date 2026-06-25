@@ -4567,7 +4567,7 @@ window.FAQS = [
     }
   });
 
-  function switchPaTab(card) {
+  function switchPaTab(card, doScroll) {
     document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
     card.classList.add('active');
     paIframe.style.height = (card.dataset.iframeheight || '1200') + 'px';
@@ -4583,9 +4583,14 @@ window.FAQS = [
     }
     paWrap.style.gridColumn = '';
     paOpen(); // always ensure the panel is visible
-    setTimeout(function() {
-      paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 80);
+    // Only auto-scroll when triggered from elsewhere on the page (e.g. a jump
+    // button). When the user clicks a portal card directly, leave them where
+    // they are and let them scroll to the assessment themselves.
+    if (doScroll) {
+      setTimeout(function() {
+        paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 80);
+    }
   }
 
   const conditionsCard  = document.getElementById('pa-card-conditions');
@@ -4709,7 +4714,7 @@ window.FAQS = [
       var url = this.dataset.url;
       var target = document.querySelector('.pa-card[data-url="' + url + '"]');
       if (target) {
-        switchPaTab(target);
+        switchPaTab(target, true);
       } else {
         // No matching pa-card — load URL directly into the iframe
         document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
