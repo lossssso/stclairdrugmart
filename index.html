@@ -909,6 +909,15 @@
       font-size: 1.1rem; cursor: pointer; line-height: 1; padding: 0;
     }
     .pa-iframe-label__close:hover { color: #fff; }
+    .pa-iframe-hint {
+      display: none;
+      padding: .5rem 1rem;
+      background: var(--teal-ice); color: var(--teal-deeper);
+      font-size: .76rem; line-height: 1.4;
+      border-bottom: 1px solid var(--border);
+    }
+    .pa-iframe-hint.show { display: block; }
+    .pa-iframe-hint strong { font-weight: 800; }
     .pa-iframe-expand {
       display: block; width: 100%; border: none; outline: none;
       background: var(--teal-ice); color: var(--teal-dark);
@@ -2576,7 +2585,7 @@
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)">🚭 I want to successfully quit smoking!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)">🆘 I need a free naloxone kit</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-poct');document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},200)">🤰 I might be pregnant!</a>
-          <a href="#booking" class="welcome__pill js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Select Point-of-care Testing in TYPE OF APPOINTMENT, then your test under TYPE OF TEST and the brand you prefer">🦠 I need a COVID-19 test and certificate!</a>
+          <a href="#booking" class="welcome__pill js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand.">🦠 I need a COVID-19 test and certificate!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)">🩸 I need better blood sugar control</a>
         </div>
       </div>
@@ -2610,7 +2619,7 @@
         <div class="welcome-box__desc">Submit a photo of your new Rx or request a refill from your profile and we will get it ready.</div>
         <span class="welcome-box__cta">Submit new Rx or refill →</span>
       </a>
-      <a href="#booking" class="welcome-box js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Select Point-of-care Testing in TYPE OF APPOINTMENT, then your test under TYPE OF TEST and the brand you prefer">
+      <a href="#booking" class="welcome-box js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand.">
         <div class="welcome-box__icon">🔬</div>
         <div class="welcome-box__title">Point of Care Testing</div>
         <div class="welcome-box__desc">Rapid COVID-19, pregnancy, and blood glucose tests — performed by your pharmacist, results in minutes.</div>
@@ -2627,7 +2636,7 @@
         <span class="rx-ext__learn" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},120)">Learn more →</span>
       </div>
       <div class="rx-ext__actions">
-        <a class="rx-ext__btn js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Select Medication Extension or Adaptation in TYPE OF APPOINTMENT">📅 Request an Extension / Adaptation</a>
+        <a class="rx-ext__btn js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Medication Extension or Adaptation" data-hint="Select <strong>Medication Extension or Adaptation</strong> under TYPE OF APPOINTMENT.">📅 Request an Extension / Adaptation</a>
         <a class="rx-ext__btn rx-ext__btn--ghost" href="tel:+14166548181">📞 Call (416) 654-8181</a>
       </div>
     </div>
@@ -2730,21 +2739,21 @@
         <span class="pa-card__label">Book a Call or Appointment with Your Pharmacist &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">In person or over the phone when appropriate — many assessments, like UTIs and other minor ailments, don't need a visit. For:</span>
         <div class="pa-card__chips">
-          <div class="pa-chip js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Select Immunization in TYPE OF APPOINTMENT">
+          <div class="pa-chip js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT.">
             <span class="pa-chip__icon">💉</span>
             <span class="pa-chip__text">
               <strong>Vaccinations</strong><small>Flu, COVID-19, shingles &amp; travel shots — most need no appointment</small>
               <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-vaccines');setTimeout(function(){document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
             </span>
           </div>
-          <div class="pa-chip js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Select Point-of-care Testing in TYPE OF APPOINTMENT, then your test under TYPE OF TEST and the brand you prefer">
+          <div class="pa-chip js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand.">
             <span class="pa-chip__icon">🔬</span>
             <span class="pa-chip__text">
               <strong>Point of Care Testing</strong><small>Rapid COVID-19 &amp; pregnancy tests, plus blood glucose checks</small>
               <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-poct');setTimeout(function(){document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
             </span>
           </div>
-          <div class="pa-chip js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Select Medication Extension or Adaptation in TYPE OF APPOINTMENT">
+          <div class="pa-chip js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Medication Extension or Adaptation" data-hint="Select <strong>Medication Extension or Adaptation</strong> under TYPE OF APPOINTMENT.">
             <span class="pa-chip__icon">💊</span>
             <span class="pa-chip__text">
               <strong>Medication Extensions &amp; Adaptations</strong><small>Prescription renewals &amp; dosage adaptations when your doctor's unreachable</small>
@@ -2758,6 +2767,7 @@
           <span id="pa-iframe-label-text">📅 Book an Appointment</span>
           <button class="pa-iframe-label__close" id="pa-iframe-close" aria-label="Collapse" title="Collapse">✕</button>
         </div>
+        <div class="pa-iframe-hint" id="pa-iframe-hint"></div>
         <iframe
           id="pa-iframe"
           src="about:blank"
@@ -3099,7 +3109,7 @@
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Pneumococcal</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--new">NEW JUL 1</span><span class="vaccine-card__badge badge--funded">FREE</span></span></div><div class="vaccine-card__who">Adults 65+ · Younger adults at high risk</div><p class="vaccine-card__desc">Protects against pneumococcal pneumonia. Recommended for those with heart disease, diabetes, lung or kidney disease.</p></div>
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">RSV</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--new">NEW JUL 1</span><span class="vaccine-card__badge badge--funded">FREE</span></span></div><div class="vaccine-card__who">Adults 75+ · Adults 60+ at high risk · Long-term care residents</div><p class="vaccine-card__desc">Single dose protecting against RSV-related lower respiratory illness. Publicly funded for older adults at highest risk; available privately for others 60+.</p></div>
           </div>
-          <p style="text-align:center;margin-bottom:.75rem;"><a href="#booking" class="svc-acc__link js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Select Immunization in TYPE OF APPOINTMENT">Book Now →</a></p>
+          <p style="text-align:center;margin-bottom:.75rem;"><a href="#booking" class="svc-acc__link js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT.">Book Now →</a></p>
           <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-bottom:2rem;">Publicly funded vaccines require a valid Ontario health card. Eligibility criteria apply. Call (416) 654-8181 for current stock.</p>
 
           <div class="vaccines__sub-heading" style="margin-bottom:.75rem;">✈️ Travel &amp; Private Vaccines</div>
@@ -3110,7 +3120,7 @@
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Meningococcal (ACYW)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Travellers · Students</div><p class="vaccine-card__desc">Recommended for sub-Saharan Africa travel, Hajj, and adult catch-up.</p></div>
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">HPV (Gardasil 9)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Adult catch-up · Up to age 45</div><p class="vaccine-card__desc">Authorized by Health Canada for protection against 9 HPV strains associated with certain cancers and genital warts. Many extended health plans cover this series.</p></div>
           </div>
-          <p style="text-align:center;margin-top:1.25rem;"><a href="#booking" class="svc-acc__link js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Select Immunization in TYPE OF APPOINTMENT">Book Now →</a></p>
+          <p style="text-align:center;margin-top:1.25rem;"><a href="#booking" class="svc-acc__link js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT.">Book Now →</a></p>
           <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">Many travel vaccines are covered by extended health benefits — ask our team to check your plan.</p>
         </div>
       </div>
@@ -3275,7 +3285,7 @@
           <div class="poct-cards">
 
             <!-- COVID-19 -->
-            <a class="poct-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Select Point-of-care Testing in TYPE OF APPOINTMENT, then COVID-19 Test under TYPE OF TEST and the brand you prefer">
+            <a class="poct-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="COVID-19 Rapid Antigen Test" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then <strong>COVID-19 Test</strong> under TYPE OF TEST and your preferred brand.">
               <div class="poct-card__icon">🦠</div>
               <div class="poct-card__name">COVID-19 Rapid Antigen Test</div>
               <p class="poct-card__desc">Health Canada–approved antigen test. Results in under 15 minutes — documentation available for travel or work.</p>
@@ -3285,7 +3295,7 @@
             </a>
 
             <!-- Pregnancy -->
-            <a class="poct-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Select Point-of-care Testing in TYPE OF APPOINTMENT, then Pregnancy Test under TYPE OF TEST and the brand you prefer">
+            <a class="poct-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Pregnancy Test" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then <strong>Pregnancy Test</strong> under TYPE OF TEST and your preferred brand.">
               <div class="poct-card__icon">🤰</div>
               <div class="poct-card__name">Pregnancy Test</div>
               <p class="poct-card__desc">Clinical urine HCG test — more sensitive than home tests. You take the test privately in the washroom; your pharmacist then reviews the result with you in the counselling room and advises on next steps.</p>
@@ -3303,12 +3313,12 @@
               <div class="poct-card__cta">
                 <a href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},200);return true;" style="color:var(--teal-dark);text-decoration:none;font-weight:700;">Book a Free Medication Review →</a>
               </div>
-              <div class="poct-card__cta--alt">Standalone: <a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Select Point-of-care Testing in TYPE OF APPOINTMENT, then Blood Glucose Test under TYPE OF TEST and the brand you prefer">Book for $15 →</a></div>
+              <div class="poct-card__cta--alt">Standalone: <a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Blood Glucose Check" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then <strong>Blood Glucose Test</strong> under TYPE OF TEST and your preferred brand.">Book for $15 →</a></div>
             </div>
 
           </div>
 
-          <p style="text-align:center;margin-top:1.25rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Select Point-of-care Testing in TYPE OF APPOINTMENT, then your test under TYPE OF TEST and the brand you prefer">Book a Test →</a></p>
+          <p style="text-align:center;margin-top:1.25rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1600" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand.">Book a Test →</a></p>
           <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:.4rem;">Walk-ins welcome · No doctor's order required · Results reviewed with your pharmacist</p>
         </div>
       </div>
@@ -4192,6 +4202,7 @@ window.FAQS = [
           paIframe.src = url;
           paIframe.style.height = '900px';
           if (paLabel) paLabel.textContent = '🩺 ' + this.dataset.name + ' — Assessment';
+          if (window.setPaHint) window.setPaHint('');
           paWrap.style.display = '';
           paWrap.classList.remove('collapsed');
           document.querySelectorAll('.pa-card').forEach(function(c){ c.classList.remove('active'); });
@@ -4532,6 +4543,20 @@ window.FAQS = [
   const paIframe    = document.getElementById('pa-iframe');
   const paWrap      = document.querySelector('.pa-iframe-wrap');
   const paLabelText = document.getElementById('pa-iframe-label-text');
+  const paHintEl    = document.getElementById('pa-iframe-hint');
+  // Window title stays short and normal; booking guidance (which dropdown
+  // option to pick in PharmAssess) lives in its own hint banner instead of
+  // being crammed into the title text.
+  window.setPaHint = function(html) {
+    if (!paHintEl) return;
+    if (html) {
+      paHintEl.innerHTML = '💡 ' + html;
+      paHintEl.classList.add('show');
+    } else {
+      paHintEl.classList.remove('show');
+      paHintEl.innerHTML = '';
+    }
+  };
 
   // Set initial height and label from the default active card
   (function() {
@@ -4539,6 +4564,7 @@ window.FAQS = [
     if (active) {
       paIframe.style.height = (active.dataset.iframeheight || '1200') + 'px';
       if (active.dataset.label) paLabelText.textContent = active.dataset.label;
+      setPaHint(active.dataset.hint || '');
     }
   })();
 
@@ -4578,7 +4604,7 @@ window.FAQS = [
     }
   });
 
-  function switchPaTab(card, doScroll, labelOverride) {
+  function switchPaTab(card, doScroll, labelOverride, hintOverride) {
     document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
     card.classList.add('active');
     paIframe.style.height = (card.dataset.iframeheight || '1200') + 'px';
@@ -4586,11 +4612,14 @@ window.FAQS = [
     paExpanded = false;
     var expandBtn = document.getElementById('pa-iframe-expand');
     if (expandBtn) expandBtn.textContent = 'Need more room? Expand ↓';
-    // A button can pass its own label (e.g. "Select Immunization in TYPE OF
-    // APPOINTMENT") to guide the patient even when several buttons share one
-    // PharmAssess URL; otherwise fall back to the destination card's label.
+    // A button can pass its own short title (e.g. "Vaccinations") to guide
+    // the patient even when several buttons share one PharmAssess URL;
+    // otherwise fall back to the destination card's label. Any booking
+    // guidance (which PharmAssess dropdown option to pick) goes in the
+    // separate hint banner below the title, not the title itself.
     var lbl = labelOverride || card.dataset.label;
     if (lbl) paLabelText.textContent = lbl;
+    setPaHint(hintOverride || card.dataset.hint || '');
     // Move the panel into the same grid as the clicked card so it drops down under it
     var parentGrid = card.closest('.pa-cards');
     if (parentGrid && paWrap.parentElement !== parentGrid) {
@@ -4665,6 +4694,7 @@ window.FAQS = [
       paIframe.style.height = (conditionsCard.dataset.iframeheight || '1200') + 'px';
       paIframe.src = url;
       if (paLabelText) paLabelText.textContent = getConditionLabel(this);
+      setPaHint('');
       // Move panel into primary grid (where the conditions card lives)
       var primaryGrid = conditionsCard.closest('.pa-cards');
       if (primaryGrid && paWrap.parentElement !== primaryGrid) {
@@ -4734,9 +4764,10 @@ window.FAQS = [
       e.stopPropagation();
       var url = this.dataset.url;
       var labelOverride = this.dataset.label || null;
+      var hintOverride = this.dataset.hint || null;
       var target = document.querySelector('.pa-card[data-url="' + url + '"]');
       if (target) {
-        switchPaTab(target, true, labelOverride);
+        switchPaTab(target, true, labelOverride, hintOverride);
       } else {
         // No matching pa-card — load URL directly into the iframe
         document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
@@ -4744,6 +4775,7 @@ window.FAQS = [
         paIframe.style.height = (this.dataset.iframeheight || '1500') + 'px';
         paExpanded = false;
         if (labelOverride && paLabelText) paLabelText.textContent = labelOverride;
+        setPaHint(hintOverride || '');
         paOpen();
         setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
       }
@@ -5673,6 +5705,7 @@ window.FAQS = [
           paIframe.src = url;
           paIframe.style.height = '900px';
           if (paLabel) paLabel.textContent = '🩺 ' + this.dataset.name + ' — Assessment';
+          if (window.setPaHint) window.setPaHint('');
           if (paWrap) { paWrap.style.display = ''; paWrap.classList.remove('collapsed'); }
           document.querySelectorAll('.pa-card').forEach(function(c) { c.classList.remove('active'); });
         }
@@ -5819,6 +5852,7 @@ window.FAQS = [
             paIframe.src = ailmentUrl;
             paIframe.style.height = '900px';
             if (paLabel) paLabel.textContent = '🩺 ' + this.dataset.title + ' — Assessment';
+            if (window.setPaHint) window.setPaHint('');
             if (paWrap) { paWrap.style.display = ''; paWrap.classList.remove('collapsed'); }
             document.querySelectorAll('.pa-card').forEach(function(c) { c.classList.remove('active'); });
           }
