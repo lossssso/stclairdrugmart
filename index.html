@@ -819,7 +819,8 @@
     .pa-chip__learn {
       display: block;
       font-size: .68rem; font-weight: 600; color: var(--teal-dark);
-      margin-top: .4rem; cursor: pointer; width: fit-content;
+      margin-top: auto; padding-top: .4rem; cursor: pointer; width: fit-content;
+      align-self: center;
     }
     .pa-chip__learn:hover { text-decoration: underline; }
     .pa-row-heading {
@@ -855,7 +856,8 @@
       text-align: center;
       box-shadow: var(--shadow);
       border-top: 3px solid var(--teal-bright);
-      display: block;
+      display: flex;
+      flex-direction: column;
       transition: transform .15s, box-shadow .15s, background .15s;
       cursor: pointer;
       font: inherit;
@@ -868,9 +870,17 @@
       background: var(--teal-ice);
       box-shadow: 0 0 0 2px var(--teal-bright), 0 4px 16px rgba(30,107,99,.15);
     }
-    .pa-card__icon { font-size: 1.75rem; margin-bottom: .5rem; }
+    .pa-card__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 2.1rem;
+      font-size: 1.75rem;
+      margin-bottom: .5rem;
+    }
     .pa-card__label {
       display: block;
+      min-height: 2.4em;
       font-size: .9rem;
       font-weight: 600;
       color: var(--teal-deeper);
@@ -1386,7 +1396,8 @@
       /* Blog cards — slightly tighter padding */
       .blog-card { padding: 1.15rem; }
       /* pa-card icon — shrink on tiny screens */
-      .pa-card__icon { font-size: 1.4rem; }
+      .pa-card__icon { font-size: 1.4rem; height: 1.7rem; }
+      .pa-card__label { min-height: 2.2em; }
     }
 
     /* ── Alert banner ─────────────────────────────── */
@@ -2748,11 +2759,13 @@
         <div class="pa-card__icon">📋</div>
         <span class="pa-card__label">Medication Review &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Free OHIP-covered review if you take 3+ medications — includes optional blood glucose test</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-med-reviews');setTimeout(function(){document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},100)">See reviews →</span>
       </button>
       <button class="pa-card" id="pa-card-conditions" data-url="https://app.pharmassess.ca/self-assessment/306667" data-iframeheight="1280" data-label="Common Condition Assessment">
         <div class="pa-card__icon">🩺</div>
         <span class="pa-card__label">Common Condition Assessment &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Pharmacist prescribing for 28 conditions — no appointment needed, in person or by phone when appropriate</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-ailments');setTimeout(function(){document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},100)">See conditions →</span>
       </button>
 
     <!-- Conditions panel (spans full width of this row) -->
@@ -2908,31 +2921,31 @@
         <div class="pa-card__icon">💉</div>
         <span class="pa-card__label">Vaccinations &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Flu, COVID-19, shingles &amp; travel shots — most need no appointment</span>
-        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-vaccines');setTimeout(function(){document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-vaccines');setTimeout(function(){document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},100)">See vaccines →</span>
       </button>
       <button class="pa-card" id="pa-card-poct" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand.">
         <div class="pa-card__icon">🔬</div>
         <span class="pa-card__label">Point of Care Testing &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Rapid COVID-19 &amp; pregnancy tests, plus blood glucose checks</span>
-        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-poct');setTimeout(function(){document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-poct');setTimeout(function(){document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},100)">See tests →</span>
       </button>
       <button class="pa-card" id="pa-card-medext" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Medication Extension or Adaptation" data-hint="Select <strong>Medication Extension or Adaptation</strong> under TYPE OF APPOINTMENT.">
         <div class="pa-card__icon">💊</div>
         <span class="pa-card__label">Medication Extensions &amp; Adaptations &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Prescription renewals &amp; dosage adaptations when your doctor's unreachable</span>
-        <span class="pa-chip__learn" onclick="event.stopPropagation();document.getElementById('rx-extensions').scrollIntoView({behavior:'smooth',block:'center'})">Learn more →</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();document.getElementById('rx-extensions').scrollIntoView({behavior:'smooth',block:'center'})">See extensions →</span>
       </button>
       <button class="pa-card" id="pa-card-cessation" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=16" data-iframeheight="1280" data-label="Smoking Cessation">
         <div class="pa-card__icon">🚭</div>
         <span class="pa-card__label">Smoking Cessation &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Champix, nicotine patches &amp; a personalized quit plan</span>
-        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-cessation');setTimeout(function(){document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-cessation');setTimeout(function(){document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},100)">See quit plans →</span>
       </button>
       <button class="pa-card" id="pa-card-naloxone" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Naloxone Kit &amp; Training" data-hint="Select <strong>Naloxone Kit &amp; Training</strong> under TYPE OF APPOINTMENT.">
         <div class="pa-card__icon">🆘</div>
         <span class="pa-card__label">Naloxone Kit &amp; Training &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Free kit &amp; in-person training — usually no appointment needed, walk in anytime</span>
-        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-naloxone');setTimeout(function(){document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},100)">Learn more →</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-naloxone');setTimeout(function(){document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},100)">See naloxone info →</span>
       </button>
     </div>
 
@@ -2947,6 +2960,7 @@
         <div class="pa-card__icon">🔀</div>
         <span class="pa-card__label">Transfer Your Rx &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Move your prescription to St. Clair Drug Mart</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-transfer');setTimeout(function(){document.getElementById('acc-transfer').scrollIntoView({behavior:'smooth',block:'start'})},100)">See transfers →</span>
       </button>
       <button class="pa-card" data-url="https://app.pharmassess.ca/login/306667" data-iframeheight="660" data-label="Patient Login — PharmAssess Portal">
         <div class="pa-card__icon">🔑</div>
@@ -3412,7 +3426,7 @@
         </div>
       </div>
 
-      <div class="svc-acc-item">
+      <div class="svc-acc-item" id="acc-transfer">
         <button class="svc-acc__head" aria-expanded="false">
           <span class="svc-acc__icon">🔀</span>
           <span class="svc-acc__title">Prescription Transfers</span>
