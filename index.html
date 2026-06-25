@@ -2068,6 +2068,7 @@
     @media (max-width: 600px) {
       .dc-card { padding: 1.5rem 1.25rem; }
       .dc-input-row { flex-direction: column; }
+      .dc-input { font-size: 16px; }
     }
 
     /* severity badges */
@@ -2219,6 +2220,7 @@
     .faq-search__input { flex: 1; border: none; outline: none; font-size: .92rem; font-family: inherit; color: var(--text); background: none; min-width: 0; }
     .faq-search__input::placeholder { color: var(--text-muted); }
     .faq-search__clear { background: var(--teal-ice); border: none; cursor: pointer; color: var(--teal-dark); font-size: 1rem; line-height: 1; width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; }
+    @media (max-width: 600px) { .faq-search__input { font-size: 16px; } }
     .faq-search__status { text-align: center; font-size: .8rem; color: rgba(255,255,255,.7); margin-top: .65rem; min-height: 1.2em; }
     .faq-search__status strong { color: #fff; }
     .faq-item__q-text mark, .faq-item__a mark, .ailments-smartsearch__hit-name mark { background: rgba(33,161,168,.22); color: var(--teal-deeper); border-radius: 3px; padding: 0 .1em; }
@@ -2333,6 +2335,7 @@
     .ailments-smartsearch__input { flex:1; border:none; outline:none; font-size:.9rem; font-family:inherit; color:var(--text); background:none; min-width:0; }
     .ailments-smartsearch__input::placeholder { color:var(--text-muted); font-size:.85rem; }
     .ailments-smartsearch__clear { background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:.95rem; line-height:1; padding:.2rem; display:none; }
+    @media (max-width: 600px) { .ailments-smartsearch__input { font-size: 16px; } }
     .ailments-smartsearch__results {
       display:none; background:#fff; border:1.5px solid var(--border); border-radius:var(--radius);
       padding:.5rem 0; margin-top:.5rem; box-shadow:var(--shadow);
@@ -2821,7 +2824,7 @@
           <div class="ailment-card"><div class="ailment-card__icon">🦠</div><h3 class="ailment-card__name">Impetigo</h3><p class="ailment-card__desc">Red sores that crust over honey-coloured — common in children, around nose and mouth.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=2">Start Assessment →</a></div>
           <div class="ailment-card"><div class="ailment-card__icon">⭕</div><h3 class="ailment-card__name">Ringworm</h3><p class="ailment-card__desc">A circular, scaly, itchy rash on the skin — a fungal infection, not a worm.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=9">Start Assessment →</a></div>
           <div class="ailment-card"><div class="ailment-card__icon">🌱</div><h3 class="ailment-card__name">Warts</h3><p class="ailment-card__desc">Small, rough, skin-coloured bumps on hands, feet, or body that may spread.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=46">Start Assessment →</a></div>
-          <div class="ailment-card"><div class="ailment-card__icon">🔍</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Intense scalp itching — small eggs (nits) attached to hair, common in children.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🐜</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Intense scalp itching — small eggs (nits) attached to hair, common in children.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
         </div>
       </div>
       <div class="ailments-cat-section portal-cat" data-triage-scope="portal" data-cat="gut">
@@ -2829,7 +2832,7 @@
         <div class="ailments-grid">
           <div class="ailment-card"><div class="ailment-card__icon">🔥</div><h3 class="ailment-card__name">Heartburn / GERD</h3><p class="ailment-card__desc">A burning feeling in your chest or throat after eating, especially when lying down.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=24">Start Assessment →</a></div>
           <div class="ailment-card"><div class="ailment-card__icon">🩹</div><h3 class="ailment-card__name">Hemorrhoids</h3><p class="ailment-card__desc">Itching, pain, or swelling around your rectum, or blood on toilet paper.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=4">Start Assessment →</a></div>
-          <div class="ailment-card"><div class="ailment-card__icon">🐛</div><h3 class="ailment-card__name">Pinworms</h3><p class="ailment-card__desc">Intense itching around the anus, especially at night — common in children.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=43">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🐌</div><h3 class="ailment-card__name">Pinworms</h3><p class="ailment-card__desc">Intense itching around the anus, especially at night — common in children.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=43">Start Assessment →</a></div>
         </div>
       </div>
       <div class="ailments-cat-section portal-cat" data-triage-scope="portal" data-cat="groin">
@@ -2869,8 +2872,8 @@
         <div class="ailments-grid">
           <div class="ailment-card"><div class="ailment-card__icon">👁️</div><h3 class="ailment-card__name">Pink Eye</h3><p class="ailment-card__desc">Red, irritated eyes with discharge — sticky or crusty in the morning.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=22">Start Assessment →</a></div>
           <div class="ailment-card"><div class="ailment-card__icon">🦠</div><h3 class="ailment-card__name">Impetigo</h3><p class="ailment-card__desc">Red sores that crust over honey-coloured — common in children, around nose and mouth.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=2">Start Assessment →</a></div>
-          <div class="ailment-card"><div class="ailment-card__icon">🐛</div><h3 class="ailment-card__name">Pinworms</h3><p class="ailment-card__desc">Intense itching around the anus at night — most common in children but can affect the whole family.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=43">Start Assessment →</a></div>
-          <div class="ailment-card"><div class="ailment-card__icon">🔍</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Intense scalp itching — small eggs (nits) attached to hair, common in children.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🐌</div><h3 class="ailment-card__name">Pinworms</h3><p class="ailment-card__desc">Intense itching around the anus at night — most common in children but can affect the whole family.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=43">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🐜</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Intense scalp itching — small eggs (nits) attached to hair, common in children.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
           <div class="ailment-card"><div class="ailment-card__icon">🐝</div><h3 class="ailment-card__name">Insect Bites &amp; Stings</h3><p class="ailment-card__desc">Redness, swelling, or itching at a bite from a mosquito, bee, or wasp.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=19">Start Assessment →</a></div>
         </div>
       </div>
@@ -2881,8 +2884,8 @@
           <div class="ailment-card"><div class="ailment-card__icon">🦠</div><h3 class="ailment-card__name">Impetigo</h3><p class="ailment-card__desc">Red sores with honey-coloured crusting — very contagious bacterial skin infection.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=2">Start Assessment →</a></div>
           <div class="ailment-card"><div class="ailment-card__icon">💋</div><h3 class="ailment-card__name">Cold Sores</h3><p class="ailment-card__desc">Blistering around the lips caused by HSV — contagious through direct contact.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=3">Start Assessment →</a></div>
           <div class="ailment-card"><div class="ailment-card__icon">⭕</div><h3 class="ailment-card__name">Ringworm</h3><p class="ailment-card__desc">A circular fungal rash that spreads through skin contact, shared items, or animals.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=9">Start Assessment →</a></div>
-          <div class="ailment-card"><div class="ailment-card__icon">🔍</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Spread by head-to-head contact — common in schools and daycares.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
-          <div class="ailment-card"><div class="ailment-card__icon">🐛</div><h3 class="ailment-card__name">Pinworms</h3><p class="ailment-card__desc">Tiny worms spread by ingesting eggs — from contaminated hands, surfaces, or bedding. Easily passed through households.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=43">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🐜</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Spread by head-to-head contact — common in schools and daycares.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
+          <div class="ailment-card"><div class="ailment-card__icon">🐌</div><h3 class="ailment-card__name">Pinworms</h3><p class="ailment-card__desc">Tiny worms spread by ingesting eggs — from contaminated hands, surfaces, or bedding. Easily passed through households.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=43">Start Assessment →</a></div>
           <div class="ailment-card"><div class="ailment-card__icon">👄</div><h3 class="ailment-card__name">Oral Thrush</h3><p class="ailment-card__desc">A fungal mouth infection — can pass between infants and nursing mothers.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=18">Start Assessment →</a></div>
         </div>
       </div>
@@ -3042,7 +3045,7 @@
             <div class="ailment-card"><div class="ailment-card__icon">🦠</div><h3 class="ailment-card__name">Impetigo</h3><p class="ailment-card__desc">Red sores that quickly burst and leave a honey-coloured crust, usually around the nose and mouth — common in children.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=2">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">⭕</div><h3 class="ailment-card__name">Ringworm</h3><p class="ailment-card__desc">A circular, scaly, itchy rash on the skin — despite the name, it's a fungal infection, not an actual worm.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=9">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">🌱</div><h3 class="ailment-card__name">Warts</h3><p class="ailment-card__desc">Small, rough, skin-coloured bumps on your hands, feet (plantar warts), or body that may be uncomfortable or spreading.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=46">Start Assessment →</a></div>
-            <div class="ailment-card"><div class="ailment-card__icon">🔍</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Intense itching on the scalp, neck, or behind the ears — you or your child may have small eggs (nits) attached to the hair.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
+            <div class="ailment-card"><div class="ailment-card__icon">🐜</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Intense itching on the scalp, neck, or behind the ears — you or your child may have small eggs (nits) attached to the hair.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
           </div>
         </div>
         <div class="ailments-cat-section main-cat" data-triage-scope="main" data-cat="gut">
@@ -3050,7 +3053,7 @@
           <div class="ailments-grid">
             <div class="ailment-card"><div class="ailment-card__icon">🔥</div><h3 class="ailment-card__name">Heartburn / GERD</h3><p class="ailment-card__desc">A burning feeling in your chest or throat after eating, especially when lying down — sometimes with an acidic taste in your mouth.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=24">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">🩹</div><h3 class="ailment-card__name">Hemorrhoids</h3><p class="ailment-card__desc">Itching, pain, or swelling around your rectum, or noticing blood on the toilet paper after a bowel movement.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=4">Start Assessment →</a></div>
-            <div class="ailment-card"><div class="ailment-card__icon">🐛</div><h3 class="ailment-card__name">Pinworms</h3><p class="ailment-card__desc">Intense itching around the anus, especially at night — most common in children but can affect the whole family.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=43">Start Assessment →</a></div>
+            <div class="ailment-card"><div class="ailment-card__icon">🐌</div><h3 class="ailment-card__name">Pinworms</h3><p class="ailment-card__desc">Intense itching around the anus, especially at night — most common in children but can affect the whole family.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=43">Start Assessment →</a></div>
           </div>
         </div>
         <div class="ailments-cat-section main-cat" data-triage-scope="main" data-cat="groin">
@@ -3090,8 +3093,8 @@
           <div class="ailments-grid">
             <div class="ailment-card"><div class="ailment-card__icon">👁️</div><h3 class="ailment-card__name">Pink Eye</h3><p class="ailment-card__desc">Red, irritated eyes with discharge — highly contagious, common in school-aged children.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=22">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">🦠</div><h3 class="ailment-card__name">Impetigo</h3><p class="ailment-card__desc">Red sores that quickly burst and leave a honey-coloured crust — common in children, very contagious.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=2">Start Assessment →</a></div>
-            <div class="ailment-card"><div class="ailment-card__icon">🐛</div><h3 class="ailment-card__name">Pinworms</h3><p class="ailment-card__desc">Intense itching around the anus, especially at night — most common in children but can affect the whole family.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=43">Start Assessment →</a></div>
-            <div class="ailment-card"><div class="ailment-card__icon">🔍</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Intense itching on the scalp — small eggs (nits) attached to hair, common in schools and daycares.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
+            <div class="ailment-card"><div class="ailment-card__icon">🐌</div><h3 class="ailment-card__name">Pinworms</h3><p class="ailment-card__desc">Intense itching around the anus, especially at night — most common in children but can affect the whole family.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=43">Start Assessment →</a></div>
+            <div class="ailment-card"><div class="ailment-card__icon">🐜</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Intense itching on the scalp — small eggs (nits) attached to hair, common in schools and daycares.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">🐝</div><h3 class="ailment-card__name">Insect Bites &amp; Stings</h3><p class="ailment-card__desc">Redness, swelling, or itching from a mosquito, bee, or wasp bite — common in children spending time outdoors.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=19">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">💊</div><h3 class="ailment-card__name">Acne</h3><p class="ailment-card__desc">Pimples, blackheads, or inflamed spots — common in teens and young adults.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=13">Start Assessment →</a></div>
           </div>
@@ -3103,8 +3106,8 @@
             <div class="ailment-card"><div class="ailment-card__icon">🦠</div><h3 class="ailment-card__name">Impetigo</h3><p class="ailment-card__desc">Red sores with honey-coloured crusting — a very contagious bacterial skin infection.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=2">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">💋</div><h3 class="ailment-card__name">Cold Sores</h3><p class="ailment-card__desc">Blistering around the lips caused by HSV — contagious through direct contact, especially during an outbreak.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=3">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">⭕</div><h3 class="ailment-card__name">Ringworm</h3><p class="ailment-card__desc">A circular fungal rash that spreads through skin contact, shared items, or contact with animals.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=9">Start Assessment →</a></div>
-            <div class="ailment-card"><div class="ailment-card__icon">🔍</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Spread by head-to-head contact — common in schools and daycares, easily treated with pharmacy products.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
-            <div class="ailment-card"><div class="ailment-card__icon">🐛</div><h3 class="ailment-card__name">Pinworms</h3><p class="ailment-card__desc">Tiny worms spread by ingesting eggs from contaminated hands, surfaces, or bedding — easily passed through households and daycares.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=43">Start Assessment →</a></div>
+            <div class="ailment-card"><div class="ailment-card__icon">🐜</div><h3 class="ailment-card__name">Head Lice</h3><p class="ailment-card__desc">Spread by head-to-head contact — common in schools and daycares, easily treated with pharmacy products.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=65">Start Assessment →</a></div>
+            <div class="ailment-card"><div class="ailment-card__icon">🐌</div><h3 class="ailment-card__name">Pinworms</h3><p class="ailment-card__desc">Tiny worms spread by ingesting eggs from contaminated hands, surfaces, or bedding — easily passed through households and daycares.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=43">Start Assessment →</a></div>
             <div class="ailment-card"><div class="ailment-card__icon">👄</div><h3 class="ailment-card__name">Oral Thrush</h3><p class="ailment-card__desc">A fungal mouth infection — can pass between infants and nursing mothers, or occur after antibiotics.</p><a class="ailment-card__link js-condition" href="#booking" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=18">Start Assessment →</a></div>
           </div>
         </div>
@@ -3253,8 +3256,8 @@
             <div class="cessation-option">
               <div class="cessation-option__icon">🩹</div>
               <div class="cessation-option__name">Nicotine Replacement Therapy (NRT)</div>
-              <p class="cessation-option__desc">Patches, gum, lozenges, oral inhaler, and mouth spray — available over-the-counter, no doctor's visit needed. The patch gives a steady nicotine background; faster-acting forms handle sudden cravings. Some insurers (including ODB programs) may cover it.</p>
-              <span class="cessation-option__tag">First-line · OTC · Some insurers may cover</span>
+              <p class="cessation-option__desc">Patches, gum, lozenges, oral inhaler, and mouth spray (Nicorette, Zonnic, and similar) — available over-the-counter with pharmacist guidance, no doctor's visit needed. As OTC products, they're generally not covered by insurance.</p>
+              <span class="cessation-option__tag">First-line · OTC · Not insurance-covered</span>
             </div>
             <div class="cessation-option">
               <div class="cessation-option__icon">💊</div>
@@ -3297,7 +3300,7 @@
           </div>
 
           <p style="text-align:center;margin-top:2rem;"><a href="#booking" class="btn js-pa-select" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=16">Start Your Quit Journey →</a></p>
-          <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">No referral needed · Coverage varies by plan &amp; ODB eligibility · Walk-ins welcome</p>
+          <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">No referral needed · ODB recipients 18+ may qualify for a covered cessation consultation &amp; prescription medications · Walk-ins welcome</p>
         </div>
       </div>
 
@@ -5800,7 +5803,7 @@ window.FAQS = [
       kw:['ringworm','circular rash','round rash','fungal','ring shaped','tinea','spreading rash','circular','ring','scaly ring'] },
     { name:'Warts', icon:'🌱', id:46, call:false,
       kw:['wart','bumps','rough skin','skin growth','plantar wart','hand wart','foot wart','spreading bump','hard bump','HPV skin'] },
-    { name:'Head Lice', icon:'🔍', id:null, call:false, url:'https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=65',
+    { name:'Head Lice', icon:'🐜', id:null, call:false, url:'https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=65',
       kw:['lice','nits','head lice','itchy head','scalp itch','eggs in hair','louse','school lice','kids lice','infestation'] },
     { name:'Athlete\'s Foot', icon:'🦶', id:10, call:false,
       kw:['athlete foot','foot fungus','itchy toes','cracked foot','peeling foot','between toes','burning feet','foot itch','toe fungus','tinea pedis'] },
@@ -5812,7 +5815,7 @@ window.FAQS = [
       kw:['heartburn','acid reflux','burning chest','gerd','indigestion','after eating','chest burn','stomach acid','lying down','acid taste','reflux'] },
     { name:'Hemorrhoids', icon:'🩹', id:4, call:false,
       kw:['hemorrhoids','piles','rectum','anal itch','rectal pain','blood stool','bleeding toilet','bowel pain','anal swelling','sitting pain'] },
-    { name:'Pinworms', icon:'🐛', id:43, call:false,
+    { name:'Pinworms', icon:'🐌', id:43, call:false,
       kw:['pinworms','worms','anal itch at night','nighttime itch','bottom itch','rectal itch','children worms','intestinal worm','threadworm'] },
     { name:'Sprains & Strains', icon:'🦴', id:21, call:false,
       kw:['sprain','strain','twisted ankle','muscle pain','swollen joint','injury','bruise','pulled muscle','knee','ankle','wrist','rolled ankle','hurt muscle'] },
