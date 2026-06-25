@@ -1,26 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="flag-icons-ve" viewBox="0 0 640 480" overflow="hidden">
-  <defs>
-    <g id="ve-d" transform="translate(0 -36)">
-      <g id="ve-c">
-        <g id="ve-b">
-          <path id="ve-a" fill="#fff" d="M0-5-1.5-.2l2.8.9z"/>
-          <use xlink:href="#ve-a" width="180" height="120" transform="scale(-1 1)"/>
-        </g>
-        <use xlink:href="#ve-b" width="180" height="120" transform="rotate(72)"/>
-      </g>
-      <use xlink:href="#ve-b" width="180" height="120" transform="rotate(-72)"/>
-      <use xlink:href="#ve-c" width="180" height="120" transform="rotate(144)"/>
-    </g>
-  </defs>
-  <path fill="#cf142b" d="M0 0h640v480H0z"/>
-  <path fill="#00247d" d="M0 0h640v320H0z"/>
-  <path fill="#fc0" d="M0 0h640v160H0z"/>
-  <g id="ve-f" transform="matrix(4 0 0 4 320 336)">
-    <g id="ve-e">
-      <use xlink:href="#ve-d" width="180" height="120" transform="rotate(10)"/>
-      <use xlink:href="#ve-d" width="180" height="120" transform="rotate(30)"/>
-    </g>
-    <use xlink:href="#ve-e" width="180" height="120" transform="rotate(40)"/>
-  </g>
-  <use xlink:href="#ve-f" width="180" height="120" transform="rotate(-80 320 336)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480">
+  <rect width="640" height="480" fill="#cf142b"/>
+  <rect width="640" height="320" fill="#00247d"/>
+  <rect width="640" height="160" fill="#fc0"/>
+  <path fill="#fff" d="M165.89,279.91 180.21,280.12 185.38,266.76 189.61,280.45 203.91,281.24 192.2,289.49 195.87,303.33 184.41,294.74 172.37,302.51 176.99,288.95Z"/>
+  <path fill="#fff" d="M194.37,230.58 207.75,235.68 217.18,224.89 216.47,239.2 229.64,244.83 215.82,248.58 214.53,262.84 206.69,250.86 192.73,254.04 201.71,242.88Z"/>
+  <path fill="#fff" d="M238.0,193.97 248.84,203.34 261.38,196.43 255.83,209.63 266.27,219.43 252.0,218.22 245.91,231.18 242.65,217.24 228.44,215.45 240.69,208.04Z"/>
+  <path fill="#fff" d="M291.52,174.49 298.5,187.0 312.65,184.8 302.92,195.3 309.38,208.08 296.38,202.07 286.23,212.16 287.93,197.94 275.19,191.4 289.24,188.63Z"/>
+  <path fill="#fff" d="M348.48,174.49 350.76,188.63 364.81,191.4 352.07,197.94 353.77,212.16 343.62,202.07 330.62,208.08 337.08,195.3 327.35,184.8 341.5,187.0Z"/>
+  <path fill="#fff" d="M402.0,193.97 399.31,208.04 411.56,215.45 397.35,217.24 394.09,231.18 388.0,218.22 373.73,219.43 384.17,209.63 378.62,196.43 391.16,203.34Z"/>
+  <path fill="#fff" d="M445.63,230.58 438.29,242.88 447.27,254.04 433.31,250.86 425.47,262.84 424.18,248.58 410.36,244.83 423.53,239.2 422.82,224.89 432.25,235.68Z"/>
+  <path fill="#fff" d="M474.11,279.91 463.01,288.95 467.63,302.51 455.59,294.74 444.13,303.33 447.8,289.49 436.09,281.24 450.39,280.45 454.62,266.76 459.79,280.12Z"/>
 </svg>
