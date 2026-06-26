@@ -6526,6 +6526,12 @@ window.FAQS = [
     });
     if (!items.length) return;
     var minInterval = 1000 / 24;
+    // On load, clouds glide in from off-screen-left over ENTER_DUR instead of
+    // materializing already mid-flight — without this they'd just sit still
+    // and fade into view in place, which reads as "popping in" rather than
+    // drifting in (most noticeable on mobile, where fewer clouds are shown).
+    var ENTER_DUR = 2.6;
+    function easeOutCubic(x) { return 1 - Math.pow(1 - x, 3); }
     var lastFrame = 0, lastDelta = 0, slowStreak = 0, powerSaveOn = false, origin = null, running = false;
     function enterPowerSave() {
       if (powerSaveOn) return;
@@ -6558,6 +6564,10 @@ window.FAQS = [
         if (it.el.style.display === 'none') continue;
         var prog = (((t - it.delay) % it.dur) + it.dur) % it.dur / it.dur;
         var vw = -60 + prog * 180;
+        if (t < ENTER_DUR) {
+          var p = easeOutCubic(t / ENTER_DUR);
+          vw = -60 + (vw + 60) * p;
+        }
         it.el.style.transform = 'translateX(' + vw.toFixed(2) + 'vw)' + (it.flip ? ' scaleX(-1)' : '');
       }
       requestAnimationFrame(tick);
