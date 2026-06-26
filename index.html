@@ -465,8 +465,6 @@
       border: 1.5px solid rgba(33,161,168,.18);
       border-radius: 100px;
       box-shadow: 0 4px 20px rgba(0,80,90,.13), 0 1px 3px rgba(0,80,90,.07);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       padding: .6rem 1.25rem;
       gap: .65rem;
     }
@@ -492,8 +490,6 @@
       border: 1.5px solid rgba(33,161,168,.18);
       border-radius: 100px;
       box-shadow: 0 4px 20px rgba(0,80,90,.18), 0 1px 3px rgba(0,80,90,.08);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       padding: .6rem 1.25rem;
       gap: .65rem;
     }
@@ -556,7 +552,7 @@
     .welcome__pill { display: inline-flex; align-items: center; gap: .4rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 100px; padding: .52rem 1.05rem; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; transition: background .15s, color .15s, transform .12s, box-shadow .15s; }
     .welcome__pill:hover { background: var(--teal-bright); color: #fff; border-color: var(--teal-bright); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(33,161,168,.25); }
     .welcome__boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-top: 2.25rem; }
-    .welcome-box { background: rgba(255,255,255,0.78); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1.5px solid rgba(255,255,255,0.55); border-top: 3.5px solid var(--teal-bright); border-radius: 14px; padding: 1.4rem 1.25rem 1.3rem; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: .35rem; transition: box-shadow .2s, transform .15s, border-color .15s; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+    .welcome-box { background: rgba(255,255,255,0.9); border: 1.5px solid rgba(255,255,255,0.55); border-top: 3.5px solid var(--teal-bright); border-radius: 14px; padding: 1.4rem 1.25rem 1.3rem; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: .35rem; transition: box-shadow .2s, transform .15s, border-color .15s; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
     .welcome-box:hover { box-shadow: 0 8px 28px rgba(0,115,124,.14); transform: translateY(-3px); border-color: var(--teal-bright); }
     .welcome-box__icon { font-size: 1.9rem; margin-bottom: .3rem; }
     .welcome-box__title { font-size: 1rem; font-weight: 800; color: var(--text); }
@@ -604,9 +600,7 @@
       margin-top: 2rem;
     }
     .service-card {
-      background: rgba(255,255,255,0.78);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background: rgba(255,255,255,0.92);
       border-radius: var(--radius);
       padding: 1.25rem 1.4rem;
       display: flex;
@@ -848,9 +842,7 @@
       margin: 2.5rem 0 .75rem;
     }
     .pa-card {
-      background: rgba(255,255,255,0.78);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background: rgba(255,255,255,0.92);
       border-radius: var(--radius);
       padding: 1.25rem 1rem;
       text-align: center;
@@ -1269,9 +1261,7 @@
       margin-top: 2rem;
     }
     .blog-card {
-      background: rgba(215,251,252,0.72);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background: rgba(215,251,252,0.92);
       border-radius: var(--radius);
       padding: 1.5rem;
       box-shadow: var(--shadow);
@@ -1885,6 +1875,7 @@
       display: flex; gap: 2rem; align-items: flex-end;
       animation: scroll-flags 22s linear infinite;
       width: max-content;
+      will-change: transform;
     }
     .flags-track:hover { animation-play-state: paused; }
     @keyframes scroll-flags {
