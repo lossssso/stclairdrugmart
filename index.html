@@ -576,9 +576,9 @@
     .welcome__pills { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem .6rem; }
     .welcome__pill { position: relative; display: flex; align-items: center; justify-content: center; text-align: center; gap: .4rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 14px; padding: .6rem 1rem; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; line-height: 1.3; transition: background .15s, color .15s, transform .12s, box-shadow .15s; }
     .welcome__pill::before,
-    .welcome__pill::after { content: ''; position: absolute; left: 20px; border-radius: 3px 65% 65% 65%; transform: rotate(45deg); transition: background .15s; }
-    .welcome__pill::before { bottom: -8px; width: 17px; height: 17px; background: var(--border); }
-    .welcome__pill::after { bottom: -6.5px; left: 21.5px; width: 14px; height: 14px; background: var(--teal-ice); }
+    .welcome__pill::after { content: ''; position: absolute; clip-path: polygon(40% 0%, 100% 0%, 0% 100%); transition: background .15s; }
+    .welcome__pill::before { bottom: -17px; left: 16px; width: 26px; height: 22px; background: var(--border); }
+    .welcome__pill::after { bottom: -15px; left: 18.5px; width: 22px; height: 18px; background: var(--teal-ice); }
     .welcome__pill:hover { background: var(--teal-bright); color: #fff; border-color: var(--teal-bright); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(33,161,168,.25); }
     .welcome__pill:hover::before { background: var(--teal-bright); }
     .welcome__pill:hover::after { background: var(--teal-bright); }
@@ -3020,12 +3020,12 @@
 
     <!-- Row 3: Rx, Transfer, Login (3-col) -->
     <div class="pa-cards pa-cards--util">
-      <button class="pa-card" id="pa-new-rx" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="900" data-label="New Prescription &amp; Refill Requests">
+      <button class="pa-card" id="pa-new-rx" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="1300" data-label="New Prescription &amp; Refill Requests">
         <div class="pa-card__icon">📝</div>
         <span class="pa-card__label">New Prescription &amp; Refill Requests &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Submit a photo of your new Rx or request a refill from your profile and we will get it ready</span>
       </button>
-      <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="950" data-label="Transfer Your Prescription">
+      <button class="pa-card" data-url="https://app.pharmassess.ca/transfer-rx/306667" data-iframeheight="1400" data-label="Transfer Your Prescription">
         <div class="pa-card__icon">🔀</div>
         <span class="pa-card__label">Transfer Your Rx &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Move your prescription to St. Clair Drug Mart</span>
