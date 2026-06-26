@@ -246,7 +246,11 @@
       height: 34px;
       width: auto;
       display: block;
+      transition: transform .25s cubic-bezier(.2,.8,.3,1.1);
     }
+    .nav__brand span { display: inline-block; transition: transform .25s cubic-bezier(.2,.8,.3,1.1), color .2s ease; }
+    .nav__brand:hover .nav__brand__logo { transform: scale(1.1); }
+    .nav__brand:hover span { transform: scale(1.06); color: var(--teal-bright); }
     .nav__links {
       display: flex;
       align-items: center;
@@ -541,14 +545,13 @@
       margin-top: 2rem;
     }
     .welcome__text p { margin-bottom: 1rem; color: var(--text-muted); }
-    .welcome__heading-row { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
-    .welcome__heading-row .section__title { margin-bottom: 0; flex-shrink: 0; }
+    .welcome__photo-col { display: flex; flex-direction: column; gap: 1rem; }
     .welcome__map {
       border-radius: var(--radius);
       overflow: hidden;
       box-shadow: 0 4px 24px rgba(30,107,99,.18);
-      flex: 1 1 320px;
-      height: 100px;
+      width: 100%;
+      height: 140px;
     }
     .welcome__map iframe { width: 100%; height: 100%; border: 0; display: block; }
     .welcome__photo {
@@ -558,9 +561,15 @@
     }
     .welcome__photo img { width: 100%; height: auto; display: block; }
     .welcome__question { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--teal-bright); margin: 1.6rem 0 .7rem; }
-    .welcome__pills { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
-    .welcome__pill { display: flex; align-items: center; justify-content: center; text-align: center; gap: .4rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 14px; padding: .6rem 1rem; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; line-height: 1.3; transition: background .15s, color .15s, transform .12s, box-shadow .15s; }
+    .welcome__pills { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem .6rem; }
+    .welcome__pill { position: relative; display: flex; align-items: center; justify-content: center; text-align: center; gap: .4rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 14px; padding: .6rem 1rem; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; line-height: 1.3; transition: background .15s, color .15s, transform .12s, box-shadow .15s; }
+    .welcome__pill::before,
+    .welcome__pill::after { content: ''; position: absolute; left: 22px; width: 0; height: 0; border-style: solid; }
+    .welcome__pill::before { bottom: -9px; border-width: 9px 7px 0 7px; border-color: var(--border) transparent transparent transparent; }
+    .welcome__pill::after { bottom: -7px; left: 23.5px; border-width: 7px 5.5px 0 5.5px; border-color: var(--teal-ice) transparent transparent transparent; transition: border-color .15s; }
     .welcome__pill:hover { background: var(--teal-bright); color: #fff; border-color: var(--teal-bright); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(33,161,168,.25); }
+    .welcome__pill:hover::before { border-color: var(--teal-bright) transparent transparent transparent; }
+    .welcome__pill:hover::after { border-color: var(--teal-bright) transparent transparent transparent; }
     .welcome__boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-top: 2.25rem; }
     .welcome-box { background: rgba(255,255,255,0.9); border: 1.5px solid rgba(255,255,255,0.55); border-top: 3.5px solid var(--teal-bright); border-radius: 14px; padding: 1.4rem 1.25rem 1.3rem; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: .35rem; transition: box-shadow .2s, transform .15s, border-color .15s; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
     .welcome-box:hover { box-shadow: 0 8px 28px rgba(0,115,124,.14); transform: translateY(-3px); border-color: var(--teal-bright); }
@@ -1330,8 +1339,8 @@
       .find-us__map-card iframe { min-height: 260px; }
       .services__grid { grid-template-columns: 1fr 1fr; }
       .services__grid .service-card:last-child { grid-column: unset; max-width: unset; margin: 0; }
-      .welcome__photo { order: -1; }
-      .welcome__map { width: 100%; height: 130px; }
+      .welcome__photo-col { order: -1; }
+      .welcome__map { height: 130px; }
       .gallery__row { grid-template-columns: 1fr 1fr; }
       section { padding: 2.75rem 1rem; }
       .hero { padding: calc(2.75rem + 64px) 1rem 3rem; }
@@ -2611,18 +2620,7 @@
 <!-- ── Welcome ───────────────────────────────────────────── -->
 <section id="welcome">
   <div class="section__inner">
-    <div class="welcome__heading-row">
-      <h2 class="section__title">Welcome to Our Pharmacy</h2>
-      <div class="welcome__map">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.234!2d-79.4468996!3d43.6773961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b35d5e572114b%3A0x899add08acb1e556!2sSt.+Clair+Drug+Mart+Pharmacy!5e0!3m2!1sen!2sca!4v1700000000000"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          title="St. Clair Drug Mart Pharmacy — map location"
-        ></iframe>
-      </div>
-    </div>
+    <h2 class="section__title">Welcome to Our Pharmacy</h2>
     <div class="welcome__grid">
       <div class="welcome__text">
         <p>
@@ -2653,8 +2651,19 @@
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)">🌿 Need advice on natural health products &amp; supplements</a>
         </div>
       </div>
-      <div class="welcome__photo">
-        <img src="storefront_exterior.webp" alt="St. Clair Drug Mart storefront at 1203 St. Clair Ave W, Toronto" loading="eager" fetchpriority="low" decoding="async" />
+      <div class="welcome__photo-col">
+        <div class="welcome__map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.234!2d-79.4468996!3d43.6773961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b35d5e572114b%3A0x899add08acb1e556!2sSt.+Clair+Drug+Mart+Pharmacy!5e0!3m2!1sen!2sca!4v1700000000000"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="St. Clair Drug Mart Pharmacy — map location"
+          ></iframe>
+        </div>
+        <div class="welcome__photo">
+          <img src="storefront_exterior.webp" alt="St. Clair Drug Mart storefront at 1203 St. Clair Ave W, Toronto" loading="eager" fetchpriority="low" decoding="async" />
+        </div>
       </div>
     </div>
 
