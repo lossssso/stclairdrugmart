@@ -5609,7 +5609,7 @@ window.FAQS = [
       return 'Opens Monday at ' + fmt(openMin);
     }
 
-    function render(key, openMin, closeMin, verb) {
+    function render(key, openMin, closeMin, verb, typicalOpenMin) {
       var dots = document.querySelectorAll('[data-sb-dot="' + key + '"]');
       var vals = document.querySelectorAll('[data-sb-val="' + key + '"]');
       if (!dots.length && !vals.length) return;
@@ -5623,7 +5623,7 @@ window.FAQS = [
         if (openMin >= 0 && mins < openMin) {
           text = 'Closed · Opens today at ' + fmt(openMin);
         } else {
-          text = 'Closed · ' + nextOpen(day, openMin >= 0 ? openMin : 9*60);
+          text = 'Closed · ' + nextOpen(day, openMin >= 0 ? openMin : typicalOpenMin);
         }
       } else if (left <= 30) {
         dotClass = 'status-dot status-dot--soon';
@@ -5649,13 +5649,13 @@ window.FAQS = [
       if (day >= 1 && day <= 5) { stO = 9*60; stC = 18*60; }
       else if (day === 6) { stO = 9*60; stC = 14*60; }
 
-      // Order with Uber Eats: same hours as store
+      // Order with Uber Eats: Mon-Fri 8:45am-6:30pm, Sat 8:45am-4pm
       var ubO = -1, ubC = -1;
-      if (day >= 1 && day <= 5) { ubO = 9*60; ubC = 18*60; }
-      else if (day === 6) { ubO = 9*60; ubC = 14*60; }
+      if (day >= 1 && day <= 5) { ubO = 8*60+45; ubC = 18*60+30; }
+      else if (day === 6) { ubO = 8*60+45; ubC = 16*60; }
 
-      render('store', stO, stC, 'Open Now');
-      render('uber',  ubO, ubC, 'Accepting Orders');
+      render('store', stO, stC, 'Open Now', 9*60);
+      render('uber',  ubO, ubC, 'Accepting Orders', 8*60+45);
 
       // Highlight today's hours row — colour based on whether store is open right now
       var rowId = (day >= 1 && day <= 5) ? 'hours-row-1' : (day === 6 ? 'hours-row-6' : 'hours-row-0');
