@@ -541,6 +541,14 @@
       margin-top: 2rem;
     }
     .welcome__text p { margin-bottom: 1rem; color: var(--text-muted); }
+    .welcome__photo-col { display: flex; flex-direction: column; gap: 1rem; }
+    .welcome__map {
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(30,107,99,.18);
+      height: 150px;
+    }
+    .welcome__map iframe { width: 100%; height: 100%; border: 0; display: block; }
     .welcome__photo {
       border-radius: var(--radius);
       overflow: hidden;
@@ -1320,7 +1328,8 @@
       .find-us__map-card iframe { min-height: 260px; }
       .services__grid { grid-template-columns: 1fr 1fr; }
       .services__grid .service-card:last-child { grid-column: unset; max-width: unset; margin: 0; }
-      .welcome__photo { order: -1; }
+      .welcome__photo-col { order: -1; }
+      .welcome__map { height: 130px; }
       .gallery__row { grid-template-columns: 1fr 1fr; }
       section { padding: 2.75rem 1rem; }
       .hero { padding: calc(2.75rem + 64px) 1rem 3rem; }
@@ -2627,8 +2636,19 @@
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)">🩸 I need better blood sugar control</a>
         </div>
       </div>
-      <div class="welcome__photo">
-        <img src="storefront_exterior.webp" alt="St. Clair Drug Mart storefront at 1203 St. Clair Ave W, Toronto" loading="eager" fetchpriority="low" decoding="async" />
+      <div class="welcome__photo-col">
+        <div class="welcome__map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.234!2d-79.4468996!3d43.6773961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b35d5e572114b%3A0x899add08acb1e556!2sSt.+Clair+Drug+Mart+Pharmacy!5e0!3m2!1sen!2sca!4v1700000000000"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="St. Clair Drug Mart Pharmacy — map location"
+          ></iframe>
+        </div>
+        <div class="welcome__photo">
+          <img src="storefront_exterior.webp" alt="St. Clair Drug Mart storefront at 1203 St. Clair Ave W, Toronto" loading="eager" fetchpriority="low" decoding="async" />
+        </div>
       </div>
     </div>
 
