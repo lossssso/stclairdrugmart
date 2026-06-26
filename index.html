@@ -6526,7 +6526,13 @@ window.FAQS = [
       var delay = parseFloat(el.dataset.delay) || 0;
       if (!dur) return;
       el.style.animation = 'none';
-      items.push({ el: el, dur: dur, delay: delay, flip: el.className.indexOf('--flip') !== -1 });
+      // Cloud images render far wider than the (esp. mobile) viewport — some
+      // are 2-3x the screen width — so a fixed "-60vw" start is nowhere near
+      // off-screen for them; the whole image still covers the viewport there.
+      // Measure each cloud's real rendered width so its entrance start point
+      // is genuinely beyond its own left edge, however big it is.
+      var widthVw = el.getBoundingClientRect().width / window.innerWidth * 100;
+      items.push({ el: el, dur: dur, delay: delay, flip: el.className.indexOf('--flip') !== -1, widthVw: widthVw });
     });
     if (!items.length) return;
     var minInterval = 1000 / 24;
@@ -6534,8 +6540,13 @@ window.FAQS = [
     // materializing already mid-flight — without this they'd just sit still
     // and fade into view in place, which reads as "popping in" rather than
     // drifting in (most noticeable on mobile, where fewer clouds are shown).
-    var ENTER_DUR = 2.6;
-    function easeOutCubic(x) { return 1 - Math.pow(1 - x, 3); }
+    // Matches the 3s container opacity fade (cloud-layer-in) with an
+    // ease-in-out curve so the slide-in is synced with becoming visible —
+    // an ease-out curve here front-loads the travel into the almost-
+    // invisible opening moment, so by the time it's visible enough to see,
+    // it's already nearly arrived and barely moving.
+    var ENTER_DUR = 3;
+    function easeInOutQuad(x) { return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
     var lastFrame = 0, lastDelta = 0, slowStreak = 0, powerSaveOn = false, origin = null, running = false;
     function enterPowerSave() {
       if (powerSaveOn) return;
@@ -6569,8 +6580,9 @@ window.FAQS = [
         var prog = (((t - it.delay) % it.dur) + it.dur) % it.dur / it.dur;
         var vw = -60 + prog * 180;
         if (t < ENTER_DUR) {
-          var p = easeOutCubic(t / ENTER_DUR);
-          vw = -60 + (vw + 60) * p;
+          var p = easeInOutQuad(t / ENTER_DUR);
+          var startVw = -(it.widthVw + 15);
+          vw = startVw + (vw - startVw) * p;
         }
         it.el.style.transform = 'translateX(' + vw.toFixed(2) + 'vw)' + (it.flip ? ' scaleX(-1)' : '');
       }
