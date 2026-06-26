@@ -85,7 +85,7 @@
     @keyframes cloud-drift   { from { transform: translateX(-60vw);           } to { transform: translateX(120vw);           } }
     @keyframes cloud-drift-r { from { transform: translateX(-60vw) scaleX(-1);} to { transform: translateX(120vw) scaleX(-1);} }
     @keyframes cloud-layer-in { from { opacity:0; } to { opacity:1; } }
-    @media (prefers-reduced-motion: reduce) { .sky-bg-cloud, .hero__cloud { animation:none; } .sky-bg, .hero__clouds { animation:none; opacity:1; } }
+    @media (prefers-reduced-motion: reduce) { .sky-bg-cloud { animation:none; } .sky-bg { animation:none; opacity:1; } }
     @media (max-width:768px) { .sky-bg-cloud:nth-child(n+5) { display:none; } }
 
     /* ── Nav (same cloud-nav engine as index.html / braces-supports.html) ──
@@ -156,78 +156,49 @@
     }
     @media (max-width:420px) { .nav__brand span { display:none; } }
 
-    /* ── Hero — same cloud-animated hero as the homepage, with the blog's own masthead ── */
-    .blog-hero {
-      background: linear-gradient(180deg, #b6ecef 0%, #cdf5f6 45%, #e4fbfc 100%);
-      padding: calc(3.25rem + 64px) 1.5rem 4rem;
-      text-align: center;
-      color: var(--teal-deeper);
-      position: relative;
-      overflow: hidden;
-    }
-    /* ── Hero clouds (identical engine to index.html's .hero__clouds) ── */
-    .hero__clouds {
-      position:absolute; inset:0; pointer-events:none; z-index:0; overflow:hidden;
-      mask-image: linear-gradient(to bottom, transparent 0, transparent 72px, black 120px);
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 72px, black 120px);
-      animation: cloud-layer-in 3s ease both;
-    }
-    .hero__cloud { position:absolute; left:0; animation:cloud-drift linear infinite; will-change:transform; display:block; max-width:none; }
-    .hero__cloud--flip { animation-name:cloud-drift-r; }
-    .hero__cloud:nth-child(1)  { width:1200px; height:580px; top: 0%; animation-duration:116s; animation-delay: -20s;  opacity:1;   }
-    .hero__cloud:nth-child(2)  { width: 850px; height:220px; top: 8%; animation-duration: 85s; animation-delay: -55s;  opacity:.90; }
-    .hero__cloud:nth-child(3)  { width:1100px; height:520px; top:18%; animation-duration:110s; animation-delay: -80s;  opacity:.98; }
-    .hero__cloud:nth-child(4)  { width: 780px; height:200px; top: 4%; animation-duration: 77s; animation-delay: -35s;  opacity:.86; }
-    .hero__cloud:nth-child(5)  { width:1350px; height:640px; top:28%; animation-duration:132s; animation-delay:-110s;  opacity:.97; }
-    .hero__cloud:nth-child(6)  { width: 900px; height:230px; top:38%; animation-duration: 89s; animation-delay: -12s;  opacity:.85; }
-    .hero__cloud:nth-child(7)  { width:1150px; height:560px; top:46%; animation-duration:113s; animation-delay: -65s;  opacity:.95; }
-    .hero__cloud:nth-child(8)  { width: 820px; height:210px; top:55%; animation-duration: 81s; animation-delay: -48s;  opacity:.82; }
-    .hero__cloud:nth-child(9)  { width:1250px; height:600px; top:63%; animation-duration:122s; animation-delay:-120s;  opacity:.93; }
-    .hero__cloud:nth-child(10) { width: 870px; height:225px; top:72%; animation-duration: 86s; animation-delay: -28s;  opacity:.78; }
-    .hero__cloud:nth-child(11) { width:1050px; height:500px; top:78%; animation-duration:102s; animation-delay: -90s;  opacity:.90; }
-    .hero__cloud:nth-child(12) { width: 800px; height:205px; top:84%; animation-duration: 79s; animation-delay: -70s;  opacity:.72; }
-    @media (max-width:768px) { .hero__cloud:nth-child(n+7) { display:none; } }
-    /* ── "News desk" masthead — frosted glass card on the sky ── */
-    .blog-hero__inner {
-      position:relative; z-index:1; max-width:680px; margin:0 auto;
+    /* ── Page header — no separate hero, just a frosted card floating on the
+       single full-page cloud layer (.sky-bg), same pattern as braces-supports.html ── */
+    .page-header { background: transparent; padding: calc(2.5rem + 64px) 1.5rem 1rem; text-align: center; }
+    .page-header__card {
+      max-width:680px; margin:0 auto;
       background:rgba(255,255,255,.62);
       -webkit-backdrop-filter:blur(11px) saturate(1.1); backdrop-filter:blur(11px) saturate(1.1);
       border:1px solid rgba(255,255,255,.75); border-radius:22px;
       padding:2.25rem 2rem 2rem; text-align:center;
       box-shadow:0 14px 44px rgba(0,80,90,.17);
     }
-    .blog-hero__badge {
+    .page-header__badge {
       display:inline-flex; align-items:center; gap:.5rem;
       font-size:.72rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase;
       color:var(--teal-dark); background:rgba(255,255,255,.72); border:1px solid var(--border);
       padding:.35rem .85rem; border-radius:100px; margin-bottom:1.1rem;
     }
-    .blog-hero__live { width:8px; height:8px; border-radius:50%; background:#e5484d; animation:wire-pulse 2s infinite; }
+    .page-header__live { width:8px; height:8px; border-radius:50%; background:#e5484d; animation:wire-pulse 2s infinite; }
     @keyframes wire-pulse { 0%{box-shadow:0 0 0 0 rgba(229,72,77,.55);} 70%{box-shadow:0 0 0 7px rgba(229,72,77,0);} 100%{box-shadow:0 0 0 0 rgba(229,72,77,0);} }
-    .blog-hero h1 {
+    .page-header h1 {
       font-family:'Georgia','Times New Roman',serif;
       font-size:clamp(2.2rem,5.8vw,3.8rem); font-weight:700; letter-spacing:.01em;
       line-height:1.05; color:var(--teal-deeper); margin-bottom:.6rem;
     }
-    .blog-hero__sub { font-size:1.02rem; color:rgba(0,63,68,.78); max-width:520px; margin:0 auto 1.6rem; line-height:1.6; }
-    .blog-hero__stats { display:flex; align-items:center; justify-content:center; gap:.7rem; flex-wrap:wrap; margin-top:1.5rem; font-size:.8rem; color:var(--text-muted); }
-    .blog-hero__stats strong { color:var(--teal-deeper); font-weight:800; }
-    .blog-hero__stats .dot { width:4px; height:4px; border-radius:50%; background:var(--teal-mid); }
-    .blog-hero__search {
+    .page-header__sub { font-size:1.02rem; color:rgba(0,63,68,.78); max-width:520px; margin:0 auto 1.6rem; line-height:1.6; }
+    .page-header__stats { display:flex; align-items:center; justify-content:center; gap:.7rem; flex-wrap:wrap; margin-top:1.5rem; font-size:.8rem; color:var(--text-muted); }
+    .page-header__stats strong { color:var(--teal-deeper); font-weight:800; }
+    .page-header__stats .dot { width:4px; height:4px; border-radius:50%; background:var(--teal-mid); }
+    .page-header__search {
       display:flex; align-items:center; max-width:440px; margin:0 auto;
       background:var(--white); border:1.5px solid var(--border);
       border-radius:100px; overflow:hidden; box-shadow:var(--shadow);
     }
-    .blog-hero__search input {
+    .page-header__search input {
       flex:1; background:none; border:none; outline:none; padding:.75rem 1.25rem;
       color:var(--text); font-size:.9rem; font-family:inherit;
     }
-    .blog-hero__search input::placeholder { color:var(--text-muted); }
-    .blog-hero__search button {
+    .page-header__search input::placeholder { color:var(--text-muted); }
+    .page-header__search button {
       background:var(--teal-bright); border:none; cursor:pointer; padding:.75rem 1.25rem;
       color:#fff; font-size:.9rem; font-weight:600; font-family:inherit; transition:background .15s;
     }
-    .blog-hero__search button:hover { background:var(--teal-dark); }
+    .page-header__search button:hover { background:var(--teal-dark); }
 
     /* ── Category filters ─────────────────────────── */
     .blog-filters {
@@ -303,10 +274,11 @@
     @media (max-width:900px) { .posts-grid { grid-template-columns:repeat(2,1fr); } }
     @media (max-width:580px) { .posts-grid { grid-template-columns:1fr; } }
     @media (max-width:640px) {
-      .blog-hero { padding: calc(2rem + 64px) 1rem 2.25rem; }
-      .blog-hero h1 { font-size: clamp(1.6rem,6vw,2.4rem); }
-      .blog-hero__sub { font-size: .92rem; margin-bottom: 1.5rem; }
-      .blog-hero__search { max-width: 100%; }
+      .page-header { padding: calc(1.75rem + 64px) 1rem .5rem; }
+      .page-header__card { padding: 1.6rem 1.25rem; border-radius: 16px; }
+      .page-header h1 { font-size: clamp(1.6rem,6vw,2.4rem); }
+      .page-header__sub { font-size: .92rem; margin-bottom: 1.5rem; }
+      .page-header__search { max-width: 100%; }
       .blog-filters { padding: 1.25rem 1rem 0; gap: .4rem; }
       .blog-main { padding: 1.25rem 1rem 3rem; }
       .post-featured__body { padding: 1.25rem 1rem; }
@@ -336,7 +308,7 @@
 
     /* ── Topics sidebar strip ─────────────────────── */
     .blog-topics { max-width:1140px; margin:2.5rem auto 0; padding:0 1.5rem; }
-    .blog-topics__grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+    .blog-topics__grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; }
     .topic-card {
       background:var(--white); border-radius:var(--radius); padding:1.25rem 1rem; text-align:center;
       box-shadow:var(--shadow); cursor:pointer; transition:all .18s; border:1.5px solid var(--border);
@@ -456,31 +428,17 @@
   </div>
 </nav>
 
-<!-- ── Hero ────────────────────────────────────────────────── -->
-<div class="blog-hero" id="blog-hero">
-  <div class="hero__clouds" aria-hidden="true">
-    <img src="../cloud2.webp" class="hero__cloud" data-dur="116" data-delay="-20" style="transform:translateX(-29vw)" alt="">
-    <img src="../cloud.png"  class="hero__cloud hero__cloud--flip" data-dur="85" data-delay="-55" style="transform:translateX(56.5vw) scaleX(-1)" alt="">
-    <img src="../cloud2.webp" class="hero__cloud hero__cloud--flip" data-dur="110" data-delay="-80" style="transform:translateX(70.9vw) scaleX(-1)" alt="">
-    <img src="../cloud.png"  class="hero__cloud" data-dur="77" data-delay="-35" style="transform:translateX(21.8vw)" alt="">
-    <img src="../cloud2.webp" class="hero__cloud" data-dur="132" data-delay="-110" style="transform:translateX(90vw)" alt="">
-    <img src="../cloud.png"  class="hero__cloud hero__cloud--flip" data-dur="89" data-delay="-12" style="transform:translateX(-35.7vw) scaleX(-1)" alt="">
-    <img src="../cloud2.webp" class="hero__cloud hero__cloud--flip" data-dur="113" data-delay="-65" style="transform:translateX(43.5vw) scaleX(-1)" alt="">
-    <img src="../cloud.png"  class="hero__cloud" data-dur="81" data-delay="-48" style="transform:translateX(46.7vw)" alt="">
-    <img src="../cloud2.webp" class="hero__cloud" data-dur="122" data-delay="-120" style="transform:translateX(117.1vw)" alt="">
-    <img src="../cloud.png"  class="hero__cloud hero__cloud--flip" data-dur="86" data-delay="-28" style="transform:translateX(-1.4vw) scaleX(-1)" alt="">
-    <img src="../cloud2.webp" class="hero__cloud hero__cloud--flip" data-dur="102" data-delay="-90" style="transform:translateX(98.8vw) scaleX(-1)" alt="">
-    <img src="../cloud.png"  class="hero__cloud" data-dur="79" data-delay="-70" style="transform:translateX(99.5vw)" alt="">
-  </div>
-  <div class="blog-hero__inner">
-    <div class="blog-hero__badge"><span class="blog-hero__live"></span> St. Clair Drug Mart · Pharmacy News Desk</div>
+<!-- ── Page header ─────────────────────────────────────────── -->
+<header class="page-header" id="page-header">
+  <div class="page-header__card">
+    <div class="page-header__badge"><span class="page-header__live"></span> St. Clair Drug Mart · Pharmacy News Desk</div>
     <h1>The Health Wire</h1>
-    <p class="blog-hero__sub">Plain-language health news, pharmacy updates, and wellness guides from the patient-centred clinical pharmacists at St. Clair Drug Mart.</p>
-    <div class="blog-hero__search">
+    <p class="page-header__sub">Plain-language health news, pharmacy updates, and wellness guides from the patient-centred clinical pharmacists at St. Clair Drug Mart.</p>
+    <div class="page-header__search">
       <input type="text" id="searchInput" placeholder="Search articles…" autocomplete="off"/>
       <button type="button" id="searchBtn">Search</button>
     </div>
-    <div class="blog-hero__stats">
+    <div class="page-header__stats">
       <span><strong>28</strong> conditions we can prescribe for</span>
       <span class="dot"></span>
       <span><strong>New</strong> articles weekly</span>
@@ -488,7 +446,7 @@
       <span><strong>4.9★</strong> patient rating</span>
     </div>
   </div>
-</div>
+</header>
 
 <!-- ── Topic Cards ──────────────────────────────────────────── -->
 <div class="blog-topics">
@@ -513,6 +471,11 @@
       <div class="topic-card__name">Medication Tips</div>
       <div class="topic-card__count">Interactions &amp; safety</div>
     </a>
+    <a class="topic-card filter-topic" data-tag="Natural Health Products" href="#">
+      <div class="topic-card__icon">🌿</div>
+      <div class="topic-card__name">Natural Health Products</div>
+      <div class="topic-card__count">Vitamins, probiotics &amp; herbal remedies</div>
+    </a>
   </div>
 </div>
 
@@ -524,6 +487,7 @@
   <button class="filter-btn" data-filter="Vaccines">Vaccines</button>
   <button class="filter-btn" data-filter="Getting Started">Getting Started</button>
   <button class="filter-btn" data-filter="Medication">Medication</button>
+  <button class="filter-btn" data-filter="Natural Health Products">Natural Health Products</button>
 </div>
 
 <!-- ── Main Content ─────────────────────────────────────────── -->
@@ -600,7 +564,7 @@
 <script>
 (function(){
   var TAG_ICONS = {
-    'Minor Ailments':'💊','Vaccines':'💉','Getting Started':'🏥','Medication':'📋','Wellness':'🌿'
+    'Minor Ailments':'💊','Vaccines':'💉','Getting Started':'🏥','Medication':'📋','Wellness':'🌿','Natural Health Products':'🌿'
   };
 
   var allPosts = [];
@@ -731,7 +695,7 @@
 
 // ── Cloud drift, driven by JS (same engine as index.html / braces-supports.html) ──
 (function() {
-  var els = document.querySelectorAll('.nav__cloud, .sky-bg-cloud, .hero__cloud');
+  var els = document.querySelectorAll('.nav__cloud, .sky-bg-cloud');
   var items = [];
   els.forEach(function(el) {
     var dur = parseFloat(el.dataset.dur);
@@ -776,7 +740,7 @@
 //    scrolls away, then stays as frosted glass (same engine as index.html) ──
 (function() {
   var nav = document.getElementById('nav');
-  var hero = document.getElementById('blog-hero');
+  var hero = document.getElementById('page-header');
   var navClouds = nav.querySelector('.nav__clouds');
   var lastA = -1;
   function updateNav() {

@@ -52,5 +52,14 @@
     "excerpt": "If you take 3 or more medications, a MedsCheck review can uncover interactions, reduce side effects, and simplify your routine — covered by OHIP at most Ontario pharmacies.",
     "tags": ["Medication"],
     "readTime": "5 min read"
+  },
+  {
+    "slug": "natural-health-products-guide",
+    "title": "Vitamins, Probiotics & Herbal Supplements: A Pharmacist's Guide to Natural Health Products",
+    "date": "2026-06-26",
+    "dateLabel": "June 26, 2026",
+    "excerpt": "Vitamins, minerals, probiotics, and herbal remedies can interact with your prescriptions more than you'd think. Here's what to check before you start one.",
+    "tags": ["Natural Health Products"],
+    "readTime": "6 min read"
   }
 ]
