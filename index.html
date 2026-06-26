@@ -559,8 +559,8 @@
     }
     .welcome__photo img { width: 100%; height: auto; display: block; }
     .welcome__question { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--teal-bright); margin: 1.6rem 0 .7rem; }
-    .welcome__pills { display: flex; flex-wrap: wrap; gap: .5rem; }
-    .welcome__pill { display: inline-flex; align-items: center; gap: .4rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 100px; padding: .52rem 1.05rem; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; transition: background .15s, color .15s, transform .12s, box-shadow .15s; }
+    .welcome__pills { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+    .welcome__pill { display: flex; align-items: flex-start; gap: .4rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 14px; padding: .6rem 1rem; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; line-height: 1.3; transition: background .15s, color .15s, transform .12s, box-shadow .15s; }
     .welcome__pill:hover { background: var(--teal-bright); color: #fff; border-color: var(--teal-bright); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(33,161,168,.25); }
     .welcome__boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-top: 2.25rem; }
     .welcome-box { background: rgba(255,255,255,0.9); border: 1.5px solid rgba(255,255,255,0.55); border-top: 3.5px solid var(--teal-bright); border-radius: 14px; padding: 1.4rem 1.25rem 1.3rem; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: .35rem; transition: box-shadow .2s, transform .15s, border-color .15s; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
@@ -1341,8 +1341,8 @@
       .insurance-grid { grid-template-columns: 1fr 1fr; }
       .reviews-grid { grid-template-columns: 1fr; }
       .contact__info-strip { grid-template-columns: 1fr; }
-      /* Welcome pills — full width on mobile */
-      .welcome__pill { width: 100%; box-sizing: border-box; justify-content: center; text-align: center; }
+      /* Welcome pills — single column on mobile */
+      .welcome__pills { grid-template-columns: 1fr; }
       /* Accordion headers — larger touch targets */
       .svc-acc__head { min-height: 52px; }
       /* Shop cards — single column */
@@ -2651,6 +2651,7 @@
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-poct');document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},200)">🤰 I might be pregnant!</a>
           <a href="#booking" class="welcome__pill js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand.">🦠 I need a COVID-19 test and certificate!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)">🩸 I need better blood sugar control</a>
+          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)">🌿 Need advice on natural health products &amp; supplements</a>
         </div>
       </div>
       <div class="welcome__photo">
@@ -2965,7 +2966,7 @@
       <!-- Hidden anchor: keeps the generic appointment URL/label as the click target for the
            "Not Sure?" buttons and other links on the page that don't name one specific service. -->
       <button class="pa-card" id="pa-card-book" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Book an Appointment" style="display:none" aria-hidden="true" tabindex="-1"></button>
-      <button class="pa-card" id="pa-card-vaccinations" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT.">
+      <button class="pa-card" id="pa-card-vaccinations" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT, then choose your vaccine under TYPE OF SERVICE and your preferred brand.">
         <div class="pa-card__icon">💉</div>
         <span class="pa-card__label">Vaccinations &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Flu, COVID-19, shingles &amp; travel shots — most need no appointment</span>
@@ -3188,7 +3189,7 @@
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Pneumococcal</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--new">NEW JUL 1</span><span class="vaccine-card__badge badge--funded">FREE</span></span></div><div class="vaccine-card__who">Adults 65+ · Younger adults at high risk</div><p class="vaccine-card__desc">Protects against pneumococcal pneumonia. Recommended for those with heart disease, diabetes, lung or kidney disease.</p></div>
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">RSV</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--new">NEW JUL 1</span><span class="vaccine-card__badge badge--funded">FREE</span></span></div><div class="vaccine-card__who">Adults 75+ · Adults 60+ at high risk · Long-term care residents</div><p class="vaccine-card__desc">Single dose protecting against RSV-related lower respiratory illness. Publicly funded for older adults at highest risk; available privately for others 60+.</p></div>
           </div>
-          <p style="text-align:center;margin-bottom:.75rem;"><a href="#booking" class="svc-acc__link js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT.">Book Now →</a></p>
+          <p style="text-align:center;margin-bottom:.75rem;"><a href="#booking" class="svc-acc__link js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT, then choose your vaccine under TYPE OF SERVICE and your preferred brand.">Book Now →</a></p>
           <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-bottom:2rem;">Publicly funded vaccines require a valid Ontario health card. Eligibility criteria apply. Call (416) 654-8181 for current stock.</p>
 
           <div class="vaccines__sub-heading" style="margin-bottom:.75rem;">✈️ Travel &amp; Private Vaccines</div>
@@ -3199,7 +3200,7 @@
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Meningococcal (ACYW)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Travellers · Students</div><p class="vaccine-card__desc">Recommended for sub-Saharan Africa travel, Hajj, and adult catch-up.</p></div>
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">HPV (Gardasil 9)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Adult catch-up · Up to age 45</div><p class="vaccine-card__desc">Authorized by Health Canada for protection against 9 HPV strains associated with certain cancers and genital warts. Many extended health plans cover this series.</p></div>
           </div>
-          <p style="text-align:center;margin-top:1.25rem;"><a href="#booking" class="svc-acc__link js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT.">Book Now →</a></p>
+          <p style="text-align:center;margin-top:1.25rem;"><a href="#booking" class="svc-acc__link js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT, then choose your vaccine under TYPE OF SERVICE and your preferred brand.">Book Now →</a></p>
           <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">Many travel vaccines are covered by extended health benefits — ask our team to check your plan.</p>
         </div>
       </div>
