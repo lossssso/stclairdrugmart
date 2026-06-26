@@ -1389,6 +1389,10 @@
       /* pa-card description — slightly smaller on mobile */
       .pa-card__desc { font-size: .75rem; }
       .pa-cards--top { grid-template-columns: 1fr; }
+      /* Medication Extensions & Adaptations gets its own full-width row
+         (like the Row 1 cards) instead of sitting alone next to an empty
+         cell after Smoking Cessation/Naloxone wrap to a 5th, odd row. */
+      #pa-card-medext { grid-column: 1 / -1; }
     }
     @media (max-width: 480px) {
       .find-us__partner-logos img { height: 46px; width: 46px; }
