@@ -6025,7 +6025,7 @@ window.FAQS = [
       });
     }
     if (faqScored.length) {
-      html += '<div class="ailments-smartsearch__divider">FAQ matching "' + query + '"</div>';
+      html += '<div class="ailments-smartsearch__divider">Frequently Asked Questions (FAQ) matching "' + query + '"</div>';
       faqScored.forEach(function(x) {
         var it = x.it;
         html += '<button class="ailments-smartsearch__hit js-smart-faq-hit" data-title="' + it.title + '">'
@@ -6146,7 +6146,7 @@ window.FAQS = [
     { icon:'🏪', title:'About St. Clair Drug Mart', desc:'Your neighbourhood pharmacy since 1960', tag:'About', anchor:'#about' },
     { icon:'❓', title:'FAQ', desc:'Frequently asked questions about our services', tag:'Help', anchor:'#faq' },
     { icon:'📝', title:'Health & Wellness Blog', desc:'Pharmacy tips, health news, and wellness guides', tag:'Blog', url:'blog/index.html' },
-    { icon:'🔄', title:'Prescription Transfers', desc:'Transfer your prescription to us — we call the other pharmacy', tag:'Service', anchor:'#services', kw:'switch pharmacy move prescription shoppers drug mart rexall walmart costco loblaws' },
+    { icon:'🔄', title:'Prescription Transfers', desc:'Transfer your prescription to us — we call the other pharmacy', tag:'Service', anchor:'#services', open:'acc-transfer', kw:'switch pharmacy move prescription shoppers drug mart rexall walmart costco loblaws' },
     { icon:'📸', title:'New Prescription — Send a Photo', desc:'Send a photo of your new prescription online', tag:'Service', anchor:'#booking', kw:'send photo new prescription upload e-prescription fax doctor sent it electronically' },
     { icon:'🦵', title:'Braces, Supports & Compression Stockings', desc:'Champion, OTC Professional & Truform — in-store now', tag:'Shop', url:'braces-supports.html', kw:'back brace lumbar support knee brace sleeve wrist brace splint elbow strap ankle support abdominal binder compression socks stockings orthopedic champion otc professional truform medical device' },
   ].concat(AILMENT_DB.map(function(a) {
@@ -6232,7 +6232,8 @@ window.FAQS = [
     });
     var html = '';
     Object.keys(byTag).forEach(function(tag) {
-      html += '<div class="site-search__category">' + tag + '</div>';
+      var catLabel = tag === 'FAQ' ? 'Frequently Asked Questions (FAQ)' : tag;
+      html += '<div class="site-search__category">' + catLabel + '</div>';
       byTag[tag].forEach(function(item) {
         html += '<button class="site-search__result js-site-result" data-anchor="' + (item.anchor||'') + '" data-url="' + (item.url||'') + '" data-open="' + (item.open||'') + '" data-ailment-url="' + (item.ailmentUrl||'') + '" data-faq="' + (item.isFaq ? '1' : '') + '" data-title="' + item.title + '">'
           + '<span class="site-search__result-icon">' + item.icon + '</span>'
@@ -6249,7 +6250,7 @@ window.FAQS = [
       btn.addEventListener('click', function() {
         var anchor = this.dataset.anchor;
         var url = this.dataset.url;
-        var openAcc = this.dataset.open;
+        var openId = this.dataset.open;
         var ailmentUrl = this.dataset.ailmentUrl;
         var isFaq = this.dataset.faq === '1';
         var title = this.dataset.title;
@@ -6283,8 +6284,8 @@ window.FAQS = [
             document.querySelectorAll('.pa-card').forEach(function(c) { c.classList.remove('active'); });
           }
         }
-        if (openAcc && window.openAcc) { setTimeout(function() { openAcc(openAcc); }, 300); }
-        if (anchor) { var el = document.querySelector(anchor); if (el) setTimeout(function() { el.scrollIntoView({ behavior:'smooth', block:'start' }); }, openAcc ? 400 : 100); }
+        if (openId && window.openAcc) { setTimeout(function() { window.openAcc(openId); }, 300); }
+        if (anchor) { var el = document.querySelector(anchor); if (el) setTimeout(function() { el.scrollIntoView({ behavior:'smooth', block:'start' }); }, openId ? 400 : 100); }
       });
     });
   }
