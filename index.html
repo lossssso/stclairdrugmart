@@ -248,7 +248,7 @@
       display: block;
       transition: transform .25s cubic-bezier(.2,.8,.3,1.1);
     }
-    .nav__brand span { display: inline-block; transition: transform .25s cubic-bezier(.2,.8,.3,1.1), color .2s ease; }
+    .nav__brand span { display: inline-block; transform-origin: left center; transition: transform .25s cubic-bezier(.2,.8,.3,1.1), color .2s ease; }
     .nav__brand:hover .nav__brand__logo { transform: scale(1.1); }
     .nav__brand:hover span { transform: scale(1.06); color: var(--teal-bright); }
     .nav__links {
@@ -387,6 +387,12 @@
       line-height: 1.04;
       margin-bottom: .5rem;
       position: relative; z-index: 1;
+      display: inline-block;
+      transition: transform .45s cubic-bezier(.2,.8,.3,1.1), color .3s ease;
+    }
+    .hero__name:hover {
+      transform: scale(1.04);
+      color: var(--teal-bright);
     }
     .hero__pharmacy-label {
       font-size: 1rem; font-weight: 600;
