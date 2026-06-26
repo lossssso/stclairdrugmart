@@ -1047,24 +1047,6 @@
       border: 1.5px solid var(--border); min-height: 380px;
     }
     .find-us__map-card iframe { width: 100%; height: 100%; min-height: 380px; border: none; display: block; }
-    .find-us__map-placeholder {
-      width: 100%; height: 100%; min-height: 380px; border: none; display: flex;
-      flex-direction: column; align-items: center; justify-content: center; gap: .6rem;
-      cursor: pointer; font-family: inherit;
-      background:
-        linear-gradient(rgba(0,115,124,.06), rgba(0,115,124,.06)),
-        repeating-linear-gradient(0deg, rgba(0,115,124,.08) 0 1px, transparent 1px 32px),
-        repeating-linear-gradient(90deg, rgba(0,115,124,.08) 0 1px, transparent 1px 32px),
-        linear-gradient(135deg, #eafbfc 0%, #d7f7f8 100%);
-    }
-    .find-us__map-placeholder:hover { background-color: rgba(33,161,168,.05); }
-    .find-us__map-placeholder__pin { font-size: 2.4rem; line-height: 1; filter: drop-shadow(0 3px 6px rgba(0,80,90,.25)); }
-    .find-us__map-placeholder__title { font-weight: 800; color: var(--teal-dark); font-size: .95rem; }
-    .find-us__map-placeholder__btn {
-      margin-top: .25rem; padding: .55rem 1.1rem; border-radius: 100px;
-      background: var(--teal-bright); color: #fff; font-weight: 700; font-size: .82rem;
-      box-shadow: 0 4px 14px rgba(0,80,90,.18);
-    }
 
     .find-us__info-card {
       background: var(--white); border-radius: 16px; padding: 1.35rem 1.3rem;
@@ -1601,9 +1583,27 @@
     .svc-acc__link { display: inline-block; font-size: .82rem; font-weight: 700; color: var(--teal-dark); letter-spacing: .02em; text-decoration: none; }
     .svc-acc__link:hover { color: var(--teal-bright); }
     .svc-acc__body--wide { padding-left: 1.25rem; }
-    .svc-acc__group-hd { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--teal-bright); padding: 1.1rem 0 .3rem; margin-top: .4rem; border-top: 2px solid var(--border); }
-    .svc-acc__group-hd:first-child { border-top: none; padding-top: 0; margin-top: 0; }
-    .svc-acc__group-sub { font-size: .85rem; color: var(--text-muted); line-height: 1.55; margin: 0 0 .9rem; }
+    .svc-acc__group { margin-top: 1.6rem; }
+    .svc-acc__group:first-child { margin-top: 0; }
+    .svc-acc__group[data-cat="clinical"] { --cat-color: var(--teal-bright); --cat-tint: rgba(33,161,168,.1); }
+    .svc-acc__group[data-cat="pharmacy"] { --cat-color: #2f9e44; --cat-tint: rgba(47,158,68,.1); }
+    .svc-acc__group[data-cat="tools"]    { --cat-color: #d97706; --cat-tint: rgba(217,119,6,.1); }
+    .svc-acc__group-hd {
+      display: flex; align-items: center; gap: .55rem;
+      padding: .5rem .9rem; border-radius: 100px;
+      background: var(--cat-tint); margin-bottom: .6rem; width: fit-content;
+    }
+    .svc-acc__group-hd__icon { font-size: 1.1rem; line-height: 1; }
+    .svc-acc__group-hd__text {
+      font-family: var(--font-display); font-weight: 800; font-size: .78rem;
+      text-transform: uppercase; letter-spacing: .08em; color: var(--cat-color);
+    }
+    .svc-acc__group-hd__count {
+      font-size: .68rem; font-weight: 700; color: #fff; background: var(--cat-color);
+      border-radius: 100px; padding: .1rem .5rem; line-height: 1.4;
+    }
+    .svc-acc__group-sub { font-size: .85rem; color: var(--text-muted); line-height: 1.55; margin: 0 0 .9rem .4rem; }
+    .svc-acc__group .svc-acc-item { border-left: 3px solid var(--cat-color); }
     .svc-tabs__section-hd { display: flex; align-items: center; gap: 1rem; margin: 2.5rem 0 1.5rem; }
     .svc-tabs__section-hd::before, .svc-tabs__section-hd::after { content: ''; flex: 1; height: 1.5px; background: var(--border); }
     .svc-tabs__section-hd span { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--teal-bright); white-space: nowrap; }
@@ -3004,7 +3004,8 @@
     <p class="section__lead">Everything under one roof — tap any service to see the full details.</p>
     <div class="svc-acc">
 
-      <div class="svc-acc__group-hd">🏥 Clinical Services</div>
+      <div class="svc-acc__group" data-cat="clinical">
+      <div class="svc-acc__group-hd"><span class="svc-acc__group-hd__icon">🏥</span><span class="svc-acc__group-hd__text">Clinical Services</span><span class="svc-acc__group-hd__count">7</span></div>
       <p class="svc-acc__group-sub">Hands-on care from your pharmacist — assessments, prescribing, vaccines &amp; testing, no doctor's visit needed for most.</p>
 
       <div class="svc-acc-item" id="acc-ailments">
@@ -3394,7 +3395,10 @@
         </div>
       </div>
 
-      <div class="svc-acc__group-hd">💊 Pharmacy Services</div>
+      </div>
+
+      <div class="svc-acc__group" data-cat="pharmacy">
+      <div class="svc-acc__group-hd"><span class="svc-acc__group-hd__icon">💊</span><span class="svc-acc__group-hd__text">Pharmacy Services</span><span class="svc-acc__group-hd__count">6</span></div>
       <p class="svc-acc__group-sub">Getting your medications — dispensing, packaging, transfers, delivery &amp; everyday pharmacy products.</p>
 
       <div class="svc-acc-item">
@@ -3486,7 +3490,10 @@
         </div>
       </div>
 
-      <div class="svc-acc__group-hd">🛠️ Tools &amp; Support</div>
+      </div>
+
+      <div class="svc-acc__group" data-cat="tools">
+      <div class="svc-acc__group-hd"><span class="svc-acc__group-hd__icon">🛠️</span><span class="svc-acc__group-hd__text">Tools &amp; Support</span><span class="svc-acc__group-hd__count">6</span></div>
       <p class="svc-acc__group-sub">Free tools, programs &amp; helpful extras — no appointment or sign-up needed.</p>
 
       <div class="svc-acc-item">
@@ -3566,6 +3573,8 @@
         </div>
         <p class="insurance__note" style="margin-top:1.25rem;">Not sure if your plan is covered? <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us</a> — we'll check on the spot.</p>
         </div>
+      </div>
+
       </div>
 
     </div>
@@ -3793,11 +3802,13 @@
     <div class="find-us__main">
       <!-- Map -->
       <div class="find-us__map-card">
-        <button type="button" class="find-us__map-placeholder" aria-label="Load interactive Google map of St. Clair Drug Mart Pharmacy" onclick="(function(b){var f=document.createElement('iframe');f.src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.234!2d-79.4468996!3d43.6773961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b35d5e572114b%3A0x899add08acb1e556!2sSt.+Clair+Drug+Mart+Pharmacy!5e0!3m2!1sen!2sca!4v1700000000000';f.allowFullscreen=true;f.referrerPolicy='no-referrer-when-downgrade';f.title='St. Clair Drug Mart map';b.replaceWith(f);})(this)">
-          <span class="find-us__map-placeholder__pin">📍</span>
-          <span class="find-us__map-placeholder__title">St. Clair Drug Mart Pharmacy</span>
-          <span class="find-us__map-placeholder__btn">Tap to Load Interactive Map →</span>
-        </button>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.234!2d-79.4468996!3d43.6773961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b35d5e572114b%3A0x899add08acb1e556!2sSt.+Clair+Drug+Mart+Pharmacy!5e0!3m2!1sen!2sca!4v1700000000000"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="St. Clair Drug Mart map"
+        ></iframe>
       </div>
 
       <!-- Hours + Live Status -->
