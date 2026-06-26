@@ -1353,6 +1353,9 @@
       .services__grid .service-card:last-child { grid-column: unset; max-width: unset; margin: 0; }
       .welcome__photo-col { order: -1; }
       .welcome__map { height: 130px; }
+      /* WhatsApp button — shrink so it covers less of card/list content in the corner */
+      .wa-float { width: 48px; height: 48px; bottom: 1rem; right: 1rem; }
+      .wa-float svg { width: 26px; height: 26px; }
       .gallery__row { grid-template-columns: 1fr 1fr; }
       section { padding: 2.75rem 1rem; }
       .hero { padding: calc(2.75rem + 64px) 1rem 3rem; }
@@ -2174,9 +2177,12 @@
       box-shadow: 0 4px 18px rgba(37,211,102,.45);
       display: flex; align-items: center; justify-content: center;
       text-decoration: none;
-      transition: transform .2s, box-shadow .2s;
+      transition: transform .2s, box-shadow .2s, opacity .25s;
     }
     .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 24px rgba(37,211,102,.6); }
+    @media (max-width: 768px) {
+      .wa-float.wa-float--hide { opacity: 0; transform: translateY(20px) scale(.85); pointer-events: none; }
+    }
     .wa-float svg { width: 32px; height: 32px; fill: #fff; }
     .wa-float__tip {
       position: absolute; right: 68px; white-space: nowrap;
@@ -4823,6 +4829,7 @@ window.FAQS = [
       const parent = link.closest('.nav__has-dropdown');
       if (parent && link === parent.querySelector(':scope > a') && window.innerWidth <= 768) {
         e.preventDefault();
+        e.stopPropagation();
         parent.classList.toggle('open');
         return;
       }
@@ -4840,6 +4847,28 @@ window.FAQS = [
       document.querySelectorAll('.nav__has-dropdown').forEach(d => d.classList.remove('open'));
     }
   });
+  // On mobile, hide the WhatsApp float while scrolling down (reading) so it
+  // never sits on top of text; reveal it again on scroll-up or once idle near the top.
+  (() => {
+    const waFloat = document.querySelector('.wa-float');
+    if (!waFloat) return;
+    let lastY = window.scrollY;
+    let idleTimer;
+    window.addEventListener('scroll', () => {
+      if (window.innerWidth > 768) return;
+      const y = window.scrollY;
+      if (y < 80) {
+        waFloat.classList.remove('wa-float--hide');
+      } else if (y > lastY + 4) {
+        waFloat.classList.add('wa-float--hide');
+      } else if (y < lastY - 4) {
+        waFloat.classList.remove('wa-float--hide');
+      }
+      lastY = y;
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => waFloat.classList.remove('wa-float--hide'), 2500);
+    }, { passive: true });
+  })();
 
   // PharmAssess tab switching
   const paIframe    = document.getElementById('pa-iframe');
