@@ -1047,6 +1047,24 @@
       border: 1.5px solid var(--border); min-height: 380px;
     }
     .find-us__map-card iframe { width: 100%; height: 100%; min-height: 380px; border: none; display: block; }
+    .find-us__map-placeholder {
+      width: 100%; height: 100%; min-height: 380px; border: none; display: flex;
+      flex-direction: column; align-items: center; justify-content: center; gap: .6rem;
+      cursor: pointer; font-family: inherit;
+      background:
+        linear-gradient(rgba(0,115,124,.06), rgba(0,115,124,.06)),
+        repeating-linear-gradient(0deg, rgba(0,115,124,.08) 0 1px, transparent 1px 32px),
+        repeating-linear-gradient(90deg, rgba(0,115,124,.08) 0 1px, transparent 1px 32px),
+        linear-gradient(135deg, #eafbfc 0%, #d7f7f8 100%);
+    }
+    .find-us__map-placeholder:hover { background-color: rgba(33,161,168,.05); }
+    .find-us__map-placeholder__pin { font-size: 2.4rem; line-height: 1; filter: drop-shadow(0 3px 6px rgba(0,80,90,.25)); }
+    .find-us__map-placeholder__title { font-weight: 800; color: var(--teal-dark); font-size: .95rem; }
+    .find-us__map-placeholder__btn {
+      margin-top: .25rem; padding: .55rem 1.1rem; border-radius: 100px;
+      background: var(--teal-bright); color: #fff; font-weight: 700; font-size: .82rem;
+      box-shadow: 0 4px 14px rgba(0,80,90,.18);
+    }
 
     .find-us__info-card {
       background: var(--white); border-radius: 16px; padding: 1.35rem 1.3rem;
@@ -1585,6 +1603,7 @@
     .svc-acc__body--wide { padding-left: 1.25rem; }
     .svc-acc__group-hd { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--teal-bright); padding: 1.1rem 0 .3rem; margin-top: .4rem; border-top: 2px solid var(--border); }
     .svc-acc__group-hd:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+    .svc-acc__group-sub { font-size: .85rem; color: var(--text-muted); line-height: 1.55; margin: 0 0 .9rem; }
     .svc-tabs__section-hd { display: flex; align-items: center; gap: 1rem; margin: 2.5rem 0 1.5rem; }
     .svc-tabs__section-hd::before, .svc-tabs__section-hd::after { content: ''; flex: 1; height: 1.5px; background: var(--border); }
     .svc-tabs__section-hd span { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--teal-bright); white-space: nowrap; }
@@ -2755,7 +2774,7 @@
       <span class="pa-row-heading__icon">📅</span>
       <span class="pa-row-heading__text">Book a Call or Appointment with Your Pharmacist</span>
     </div>
-    <p class="section__lead" style="margin-top:.35rem;margin-bottom:0;">Everything loads right here — see your pharmacist in person or, for many assessments like UTIs and other minor ailments, over the phone with no visit needed. Or complete the self-assessment online first, and your pharmacist will assess and prescribe for you — by phone, for many conditions. Choose what you need below:</p>
+    <p class="section__lead" style="margin-top:.35rem;margin-bottom:0;">See your pharmacist in person, or by phone with no visit needed, for vaccines, tests, assessments, and other consultations. Complete a self-assessment below for any condition and book your appointment or wait for our call. Our pharmacist will assess and issue a prescription, test result or plan of care where appropriate.</p>
 
     <div class="pa-cards pa-cards--top">
       <button class="pa-card" id="pa-card-medscheck" data-url="https://app.pharmassess.ca/patient/meds/306667" data-iframeheight="1120" data-label="Medication Review">
@@ -2986,6 +3005,7 @@
     <div class="svc-acc">
 
       <div class="svc-acc__group-hd">🏥 Clinical Services</div>
+      <p class="svc-acc__group-sub">Hands-on care from your pharmacist — assessments, prescribing, vaccines &amp; testing, no doctor's visit needed for most.</p>
 
       <div class="svc-acc-item" id="acc-ailments">
         <button class="svc-acc__head" aria-expanded="false">
@@ -3375,6 +3395,7 @@
       </div>
 
       <div class="svc-acc__group-hd">💊 Pharmacy Services</div>
+      <p class="svc-acc__group-sub">Getting your medications — dispensing, packaging, transfers, delivery &amp; everyday pharmacy products.</p>
 
       <div class="svc-acc-item">
         <button class="svc-acc__head" aria-expanded="false">
@@ -3466,6 +3487,7 @@
       </div>
 
       <div class="svc-acc__group-hd">🛠️ Tools &amp; Support</div>
+      <p class="svc-acc__group-sub">Free tools, programs &amp; helpful extras — no appointment or sign-up needed.</p>
 
       <div class="svc-acc-item">
         <button class="svc-acc__head" aria-expanded="false">
@@ -3476,6 +3498,53 @@
         <div class="svc-acc__body">
           <p>Check for interactions between two or more medications — free, no sign-up needed. Enter your medications and our tool will flag any known interactions and their severity.</p>
           <a class="svc-acc__link" href="#drug-checker">Open Drug Interaction Checker →</a>
+        </div>
+      </div>
+
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🔍</span>
+          <span class="svc-acc__title">Pill Identifier</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Found a loose pill and not sure what it is? Use this free lookup tool to identify medications by imprint, shape, and colour — or just bring it in and we'll identify it for you on the spot.</p>
+          <a class="svc-acc__link" href="https://www.drugs.com/pill_identification.html" target="_blank" rel="noopener">Open Pill Identifier →</a>
+        </div>
+      </div>
+
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">♻️</span>
+          <span class="svc-acc__title">Medication &amp; Sharps Disposal</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Don't flush or trash old medications. Drop off expired or unused prescription and over-the-counter medications, as well as used needles and sharps in an approved container, at our pharmacy any time — free, no questions asked.</p>
+        </div>
+      </div>
+
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">🔔</span>
+          <span class="svc-acc__title">Refill &amp; Pickup Reminders</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Never run out or forget a pickup. Ask us to set up free call or text reminders when a prescription is ready, or when it's time to reorder — especially helpful for ongoing medications.</p>
+          <a class="svc-acc__link" href="tel:+14166548181">Call to set up reminders →</a>
+        </div>
+      </div>
+
+      <div class="svc-acc-item">
+        <button class="svc-acc__head" aria-expanded="false">
+          <span class="svc-acc__icon">💬</span>
+          <span class="svc-acc__title">Ask Our Pharmacist</span>
+          <span class="svc-acc__chev">+</span>
+        </button>
+        <div class="svc-acc__body">
+          <p>Have a quick, non-urgent question about a medication, interaction, or side effect? You don't need to book a full appointment — call or email us and a pharmacist will get back to you directly.</p>
+          <a class="svc-acc__link" href="mailto:stclairdrugmart@gmail.com">Email a quick question →</a>
         </div>
       </div>
 
@@ -3724,13 +3793,11 @@
     <div class="find-us__main">
       <!-- Map -->
       <div class="find-us__map-card">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.234!2d-79.4468996!3d43.6773961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b35d5e572114b%3A0x899add08acb1e556!2sSt.+Clair+Drug+Mart+Pharmacy!5e0!3m2!1sen!2sca!4v1700000000000"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          title="St. Clair Drug Mart map"
-        ></iframe>
+        <button type="button" class="find-us__map-placeholder" aria-label="Load interactive Google map of St. Clair Drug Mart Pharmacy" onclick="(function(b){var f=document.createElement('iframe');f.src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.234!2d-79.4468996!3d43.6773961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b35d5e572114b%3A0x899add08acb1e556!2sSt.+Clair+Drug+Mart+Pharmacy!5e0!3m2!1sen!2sca!4v1700000000000';f.allowFullscreen=true;f.referrerPolicy='no-referrer-when-downgrade';f.title='St. Clair Drug Mart map';b.replaceWith(f);})(this)">
+          <span class="find-us__map-placeholder__pin">📍</span>
+          <span class="find-us__map-placeholder__title">St. Clair Drug Mart Pharmacy</span>
+          <span class="find-us__map-placeholder__btn">Tap to Load Interactive Map →</span>
+        </button>
       </div>
 
       <!-- Hours + Live Status -->
