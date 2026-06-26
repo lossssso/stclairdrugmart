@@ -5007,10 +5007,23 @@ window.FAQS = [
     var lbl = labelOverride || card.dataset.label;
     if (lbl) paLabelText.textContent = lbl;
     setPaHint(hintOverride || card.dataset.hint || '');
-    // Move the panel into the same grid as the clicked card so it drops down under it
+    // Move the panel into the same grid as the clicked card, directly after
+    // the clicked card's own row — not just appended to the grid's end,
+    // which only happens to land under the right row when that row is
+    // already the grid's last (e.g. appending always put it after Smoking
+    // Cessation/Naloxone correctly, but after Vaccinations/POCT/Medication
+    // Extensions it would still end up below those later rows too).
     var parentGrid = card.closest('.pa-cards');
-    if (parentGrid && paWrap.parentElement !== parentGrid) {
-      parentGrid.appendChild(paWrap);
+    if (parentGrid) {
+      if (paWrap.parentElement) paWrap.parentElement.removeChild(paWrap);
+      var rowTop = card.offsetTop;
+      var lastInRow = card;
+      Array.prototype.forEach.call(parentGrid.children, function(sib) {
+        if (sib.classList && sib.classList.contains('pa-card') && sib.offsetParent !== null && sib.offsetTop === rowTop) {
+          lastInRow = sib;
+        }
+      });
+      lastInRow.insertAdjacentElement('afterend', paWrap);
     }
     paWrap.style.gridColumn = '';
     paOpen(); // always ensure the panel is visible
