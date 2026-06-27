@@ -1768,8 +1768,8 @@
     /* ── Team experience stat (compact corner badge) ── */
     #team .section__inner { position: relative; }
     .team-stat {
-      position: relative; display: flex; align-items: center; gap: .6rem;
-      width: fit-content; margin: 1rem 0 1.5rem; padding: .7rem 1rem;
+      position: relative; display: flex; align-items: flex-start; gap: .55rem;
+      max-width: 280px; margin: 1rem 0 1.5rem; padding: .75rem 1rem;
       background: rgba(255,255,255,.6); border: 1.5px solid var(--border);
       border-radius: 16px; backdrop-filter: blur(6px);
       opacity: 0; transform: translateY(14px) scale(.96);
@@ -1796,21 +1796,16 @@
       0%, 100% { opacity: .5; transform: scale(1); }
       50% { opacity: .9; transform: scale(1.1); }
     }
-    .team-stat__icon { position: relative; z-index: 1; font-size: 1.4rem; flex-shrink: 0; }
+    .team-stat__icon { position: relative; z-index: 1; font-size: 1.3rem; flex-shrink: 0; margin-top: .1rem; }
     .team-stat__num {
-      position: relative; z-index: 1;
-      font-size: 1.85rem; font-weight: 900; line-height: 1; letter-spacing: -.02em;
-      background: linear-gradient(135deg, var(--teal-deeper) 0%, var(--teal-bright) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .team-stat__plus {
+      font-size: 1.05em; font-weight: 800; letter-spacing: -.01em;
       background: linear-gradient(135deg, var(--teal-deeper) 0%, var(--teal-bright) 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
     .team-stat__label {
       position: relative; z-index: 1;
-      font-size: .68rem; font-weight: 600; color: var(--teal-dark);
-      line-height: 1.25; text-align: left; white-space: nowrap;
+      font-size: .76rem; font-weight: 600; color: var(--teal-dark);
+      line-height: 1.4; text-align: left; margin: 0;
     }
 
     /* ── Patient Reviews ──────────────────────────── */
@@ -3750,10 +3745,7 @@
     <div class="team-stat">
       <div class="team-stat__glow"></div>
       <div class="team-stat__icon">🤝</div>
-      <div class="team-stat__body">
-        <div class="team-stat__num"><span class="js-team-countup" data-target="35">0</span><span class="team-stat__plus">+</span></div>
-        <p class="team-stat__label">Years Experience Each</p>
-      </div>
+      <p class="team-stat__label">All our staff have <span class="team-stat__num"><span class="js-team-countup" data-target="35">0</span>+</span> years of experience in pharmacy practice and patient care.</p>
     </div>
 
     <h2 class="section__title">Meet Our Team</h2>
