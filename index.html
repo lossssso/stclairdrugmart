@@ -1765,6 +1765,50 @@
     .staff-card__name { font-size: .88rem; font-weight: 700; color: var(--teal-deeper); margin-bottom: .15rem; line-height: 1.3; }
     .staff-card__role { font-size: .75rem; color: var(--text-muted); font-weight: 500; }
 
+    /* ── Team experience stat ── */
+    .team-stat {
+      position: relative; max-width: 480px; margin: 1.75rem auto 1.25rem;
+      text-align: center; padding: 1.75rem 1.5rem 1.5rem;
+      background: rgba(255,255,255,.55); border: 1.5px solid var(--border);
+      border-radius: 20px; backdrop-filter: blur(6px);
+      opacity: 0; transform: translateY(18px) scale(.96);
+      transition: box-shadow .3s ease, transform .3s ease;
+      overflow: hidden;
+    }
+    .team-stat.team-stat--in {
+      animation: teamStatIn .6s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    @keyframes teamStatIn {
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .team-stat:hover { box-shadow: 0 10px 32px rgba(0,80,90,.16); transform: translateY(-3px) scale(1); }
+    .team-stat__glow {
+      position: absolute; inset: -40% -10%; z-index: 0; pointer-events: none;
+      background: radial-gradient(circle at 50% 30%, rgba(33,161,168,.28), transparent 65%);
+      opacity: 0; transition: opacity .8s ease;
+    }
+    .team-stat.team-stat--in .team-stat__glow { opacity: 1; animation: teamStatGlowPulse 3.2s ease-in-out .6s infinite; }
+    @keyframes teamStatGlowPulse {
+      0%, 100% { opacity: .55; transform: scale(1); }
+      50% { opacity: .95; transform: scale(1.08); }
+    }
+    .team-stat__icon { position: relative; z-index: 1; font-size: 1.6rem; margin-bottom: .35rem; }
+    .team-stat__num {
+      position: relative; z-index: 1;
+      font-size: 3.2rem; font-weight: 900; line-height: 1; letter-spacing: -.03em;
+      background: linear-gradient(135deg, var(--teal-deeper) 0%, var(--teal-bright) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .team-stat__plus {
+      background: linear-gradient(135deg, var(--teal-deeper) 0%, var(--teal-bright) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .team-stat__label {
+      position: relative; z-index: 1;
+      font-size: .85rem; font-weight: 600; color: var(--teal-dark);
+      margin-top: .35rem; max-width: 320px; margin-left: auto; margin-right: auto; line-height: 1.4;
+    }
+
     /* ── Patient Reviews ──────────────────────────── */
     #reviews { background: var(--white); overflow: hidden; }
     #reviews .section__title::after { background: var(--teal-bright); }
@@ -3709,29 +3753,36 @@
         </div>
         <p class="staff-card__name">Elizabeth Da Silva</p>
         <p class="staff-card__role" style="font-size:.7rem;letter-spacing:.04em;color:var(--teal-dark);margin-bottom:.1rem;">BScPharm, RPh</p>
-        <p class="staff-card__role">Pharmacist · Designated Manager · 35+ yrs experience</p>
+        <p class="staff-card__role">Pharmacist · Designated Manager</p>
       </div>
       <div class="staff-card">
         <div class="staff-card__photo">
-          <img src="team/staff-3.webp" alt="Madelin, Pharmacy Assistant at St. Clair Drug Mart Pharmacy" width="800" height="1000" loading="eager" fetchpriority="low" decoding="async" />
+          <img src="team/staff-3.webp" alt="Madelin Castillo, Pharmacy Assistant at St. Clair Drug Mart Pharmacy" width="800" height="1000" loading="eager" fetchpriority="low" decoding="async" />
         </div>
-        <p class="staff-card__name">Madelin</p>
+        <p class="staff-card__name">Madelin Castillo</p>
         <p class="staff-card__role">Pharmacy Assistant</p>
       </div>
       <div class="staff-card">
         <div class="staff-card__photo">
-          <img src="team/staff-2.webp" alt="Fethiye, Pharmacy Assistant at St. Clair Drug Mart Pharmacy" width="800" height="1000" loading="eager" fetchpriority="low" decoding="async" />
+          <img src="team/staff-2.webp" alt="Fethiye Turham, Pharmacy Assistant at St. Clair Drug Mart Pharmacy" width="800" height="1000" loading="eager" fetchpriority="low" decoding="async" />
         </div>
-        <p class="staff-card__name">Fethiye</p>
+        <p class="staff-card__name">Fethiye Turham</p>
         <p class="staff-card__role">Pharmacy Assistant</p>
       </div>
       <div class="staff-card">
         <div class="staff-card__photo">
-          <img src="team/staff-1.webp" alt="Karen, Pharmacy Assistant at St. Clair Drug Mart Pharmacy" width="800" height="1000" loading="eager" fetchpriority="low" decoding="async" />
+          <img src="team/staff-1.webp" alt="Karen Ruiz, Pharmacy Assistant at St. Clair Drug Mart Pharmacy" width="800" height="1000" loading="eager" fetchpriority="low" decoding="async" />
         </div>
-        <p class="staff-card__name">Karen</p>
+        <p class="staff-card__name">Karen Ruiz</p>
         <p class="staff-card__role">Pharmacy Assistant</p>
       </div>
+    </div>
+
+    <div class="team-stat">
+      <div class="team-stat__glow"></div>
+      <div class="team-stat__icon">🤝</div>
+      <div class="team-stat__num"><span class="js-team-countup" data-target="35">0</span><span class="team-stat__plus">+</span></div>
+      <p class="team-stat__label">Years of Combined Pharmacy &amp; Patient Care Experience</p>
     </div>
 
     <p style="text-align:center;margin-top:.5rem;font-size:.875rem;color:var(--text-muted);">Questions about your medications? We're always happy to chat — <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">call us</a> or stop in.</p>
@@ -5989,6 +6040,40 @@ window.FAQS = [
       new IntersectionObserver(function(entries) {
         if (entries[0].isIntersecting) run();
       }, { threshold: 0.15 }).observe(section);
+    } else {
+      run();
+    }
+  })();
+
+  // ── Team: experience stat count-up + reveal ───────────────
+  (function(){
+    var stat = document.querySelector('.team-stat');
+    var numEl = document.querySelector('.js-team-countup');
+    if (!stat || !numEl) return;
+    var done = false;
+
+    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+    function run() {
+      if (done) return;
+      done = true;
+      stat.classList.add('team-stat--in');
+      var target = parseInt(numEl.dataset.target, 10);
+      var start = null, duration = 1800;
+      function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / duration, 1);
+        numEl.textContent = Math.floor(target * easeOut(p));
+        if (p < 1) requestAnimationFrame(step);
+        else numEl.textContent = target;
+      }
+      requestAnimationFrame(step);
+    }
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) run();
+      }, { threshold: 0.35 }).observe(stat);
     } else {
       run();
     }
