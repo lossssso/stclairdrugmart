@@ -584,11 +584,11 @@
     .welcome__pill { position: relative; display: flex; align-items: center; justify-content: center; text-align: center; gap: .4rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 14px; padding: .6rem 1rem; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; line-height: 1.3; transition: background .15s, color .15s, transform .12s, box-shadow .15s; }
     .welcome__pill::before,
     .welcome__pill::after { content: ''; position: absolute; top: 100%; width: 0; height: 0; border-style: solid; transition: border-color .15s; }
-    .welcome__pill::before { left: 20px; margin-top: -2px; border-width: 20px 15px 0 0; border-color: var(--border) transparent transparent transparent; }
-    .welcome__pill::after { left: 21px; margin-top: -3.5px; border-width: 17px 12.5px 0 0; border-color: var(--teal-ice) transparent transparent transparent; }
+    .welcome__pill::before { left: 20px; margin-top: -1px; border-width: 0 15px 20px 0; border-color: transparent transparent var(--border) transparent; }
+    .welcome__pill::after { left: 21.5px; margin-top: -1px; border-width: 0 12.5px 17px 0; border-color: transparent transparent var(--teal-ice) transparent; }
     .welcome__pill:hover { background: var(--teal-bright); color: #fff; border-color: var(--teal-bright); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(33,161,168,.25); }
-    .welcome__pill:hover::before { border-top-color: var(--teal-bright); }
-    .welcome__pill:hover::after { border-top-color: var(--teal-bright); }
+    .welcome__pill:hover::before { border-bottom-color: var(--teal-bright); }
+    .welcome__pill:hover::after { border-bottom-color: var(--teal-bright); }
     .welcome__boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-top: 2.25rem; }
     .welcome-box { background: rgba(255,255,255,0.9); border: 1.5px solid rgba(255,255,255,0.55); border-top: 3.5px solid var(--teal-bright); border-radius: 14px; padding: 1.4rem 1.25rem 1.3rem; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: .35rem; transition: box-shadow .2s, transform .15s, border-color .15s; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
     .welcome-box:hover { box-shadow: 0 8px 28px rgba(0,115,124,.14); transform: translateY(-3px); border-color: var(--teal-bright); }
