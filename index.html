@@ -1765,15 +1765,19 @@
     .staff-card__name { font-size: .88rem; font-weight: 700; color: var(--teal-deeper); margin-bottom: .15rem; line-height: 1.3; }
     .staff-card__role { font-size: .75rem; color: var(--text-muted); font-weight: 500; }
 
-    /* ── Team experience stat ── */
+    /* ── Team experience stat (compact corner badge) ── */
+    #team .section__inner { position: relative; }
     .team-stat {
-      position: relative; max-width: 480px; margin: 1.75rem auto 1.25rem;
-      text-align: center; padding: 1.75rem 1.5rem 1.5rem;
-      background: rgba(255,255,255,.55); border: 1.5px solid var(--border);
-      border-radius: 20px; backdrop-filter: blur(6px);
-      opacity: 0; transform: translateY(18px) scale(.96);
+      position: relative; display: flex; align-items: center; gap: .6rem;
+      width: fit-content; margin: 1rem 0 1.5rem; padding: .7rem 1rem;
+      background: rgba(255,255,255,.6); border: 1.5px solid var(--border);
+      border-radius: 16px; backdrop-filter: blur(6px);
+      opacity: 0; transform: translateY(14px) scale(.96);
       transition: box-shadow .3s ease, transform .3s ease;
       overflow: hidden;
+    }
+    @media (min-width: 769px) {
+      .team-stat { position: absolute; top: 0; right: 0; margin: 0; }
     }
     .team-stat.team-stat--in {
       animation: teamStatIn .6s cubic-bezier(.22,1,.36,1) forwards;
@@ -1781,21 +1785,21 @@
     @keyframes teamStatIn {
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
-    .team-stat:hover { box-shadow: 0 10px 32px rgba(0,80,90,.16); transform: translateY(-3px) scale(1); }
+    .team-stat:hover { box-shadow: 0 8px 24px rgba(0,80,90,.16); }
     .team-stat__glow {
-      position: absolute; inset: -40% -10%; z-index: 0; pointer-events: none;
-      background: radial-gradient(circle at 50% 30%, rgba(33,161,168,.28), transparent 65%);
+      position: absolute; inset: -60% -20%; z-index: 0; pointer-events: none;
+      background: radial-gradient(circle at 50% 40%, rgba(33,161,168,.3), transparent 65%);
       opacity: 0; transition: opacity .8s ease;
     }
     .team-stat.team-stat--in .team-stat__glow { opacity: 1; animation: teamStatGlowPulse 3.2s ease-in-out .6s infinite; }
     @keyframes teamStatGlowPulse {
-      0%, 100% { opacity: .55; transform: scale(1); }
-      50% { opacity: .95; transform: scale(1.08); }
+      0%, 100% { opacity: .5; transform: scale(1); }
+      50% { opacity: .9; transform: scale(1.1); }
     }
-    .team-stat__icon { position: relative; z-index: 1; font-size: 1.6rem; margin-bottom: .35rem; }
+    .team-stat__icon { position: relative; z-index: 1; font-size: 1.4rem; flex-shrink: 0; }
     .team-stat__num {
       position: relative; z-index: 1;
-      font-size: 3.2rem; font-weight: 900; line-height: 1; letter-spacing: -.03em;
+      font-size: 1.85rem; font-weight: 900; line-height: 1; letter-spacing: -.02em;
       background: linear-gradient(135deg, var(--teal-deeper) 0%, var(--teal-bright) 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
@@ -1805,8 +1809,8 @@
     }
     .team-stat__label {
       position: relative; z-index: 1;
-      font-size: .85rem; font-weight: 600; color: var(--teal-dark);
-      margin-top: .35rem; max-width: 320px; margin-left: auto; margin-right: auto; line-height: 1.4;
+      font-size: .68rem; font-weight: 600; color: var(--teal-dark);
+      line-height: 1.25; text-align: left; white-space: nowrap;
     }
 
     /* ── Patient Reviews ──────────────────────────── */
@@ -3743,6 +3747,15 @@
 <!-- ── Team ───────────────────────────────────────────────── -->
 <section id="team">
   <div class="section__inner">
+    <div class="team-stat">
+      <div class="team-stat__glow"></div>
+      <div class="team-stat__icon">🤝</div>
+      <div class="team-stat__body">
+        <div class="team-stat__num"><span class="js-team-countup" data-target="35">0</span><span class="team-stat__plus">+</span></div>
+        <p class="team-stat__label">Years Experience Each</p>
+      </div>
+    </div>
+
     <h2 class="section__title">Meet Our Team</h2>
     <p class="section__lead">Independent pharmacy means a real relationship — with the same people every time you walk in.</p>
 
@@ -3776,13 +3789,6 @@
         <p class="staff-card__name">Karen Ruiz</p>
         <p class="staff-card__role">Pharmacy Assistant</p>
       </div>
-    </div>
-
-    <div class="team-stat">
-      <div class="team-stat__glow"></div>
-      <div class="team-stat__icon">🤝</div>
-      <div class="team-stat__num"><span class="js-team-countup" data-target="35">0</span><span class="team-stat__plus">+</span></div>
-      <p class="team-stat__label">Years of Pharmacy &amp; Patient Care Experience, Per Team Member</p>
     </div>
 
     <p style="text-align:center;margin-top:.5rem;font-size:.875rem;color:var(--text-muted);">Questions about your medications? We're always happy to chat — <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">call us</a> or stop in.</p>
