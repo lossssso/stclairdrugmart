@@ -1836,12 +1836,10 @@
     }
     @media (min-width: 769px) {
       .team-stat {
-        flex-direction: column; width: auto; max-width: 230px; flex-shrink: 0;
-        gap: .2rem; padding: 1.1rem 1.2rem .95rem;
+        width: auto; max-width: none; flex-shrink: 0; justify-content: flex-start;
+        gap: 1.1rem; padding: 1rem 1.6rem;
       }
-      .team-stat__figure { flex-direction: column; gap: .15rem; }
-      .team-stat__divider { display: none; }
-      .team-stat__copy { align-items: center; text-align: center; }
+      .team-stat__label { white-space: nowrap; }
     }
 
     /* ── Patient Reviews ──────────────────────────── */
