@@ -4498,16 +4498,20 @@ window.FAQS = [
 /* ─────────────────────────────────────────────────────────────
    Shared smart-search matcher — used by every search bar on the
    page (FAQ search, symptom/condition search, and the site-wide
-   nav overlay) so they all rank results the same precise way.
+   nav overlay) so they all rank results the same way.
 
-   Goals: bring up things that actually relate to what was typed,
-   not loose substring noise. We tokenize both the query and each
-   field into whole words, then match query words by exact or
-   prefix match (no arbitrary "is this string anywhere inside that
-   string" matching, which is what produced random hits). A query
-   only ranks an item highly when *all* of its meaningful words
-   land somewhere on that item (coverage gating); weak partial
-   matches are kept as a low-ranked fallback so we never dead-end.
+   Goal: bring up things that relate to what a patient actually
+   typed — in their own words. We tokenize the query and each item
+   into whole words, then match each query word by:
+     • exact word match,
+     • short prefix match (3+ letters, so "vacc" → "vaccine"),
+     • light stemming (so "hurting" / "hurts" / "hurt" all agree),
+     • a curated synonym layer in plain patient language (so
+       "hurting" / "ache" / "sore" surface pain conditions, "shot"
+       finds vaccines, "stuffy" finds congestion, etc.).
+   An item ranks highest when it matches everything that was typed
+   (coverage gating); weaker partial matches still show, lower down,
+   so the search is practical and never dead-ends.
    ───────────────────────────────────────────────────────────── */
 window.SmartMatch = (function(){
   // Common filler words that carry no search intent. Dropping them
@@ -4518,11 +4522,69 @@ window.SmartMatch = (function(){
     do:1,does:1,did:1,can:1,could:1,would:1,should:1,shall:1,will:1,may:1,might:1,
     have:1,has:1,had:1,get:1,got:1,getting:1,need:1,needs:1,want:1,wants:1,
     how:1,what:1,whats:1,when:1,where:1,why:1,which:1,who:1,about:1,
-    feel:1,feeling:1,think:1,maybe:1,really:1,just:1,some:1,any:1,
-    please:1,help:1,there:1,this:1,that:1,these:1,those:1,been:1};
+    feel:1,feels:1,feeling:1,think:1,maybe:1,really:1,just:1,some:1,any:1,
+    please:1,there:1,this:1,that:1,these:1,those:1};
+
+  // Plain-language synonym clusters. Each variant a patient might type maps
+  // to the canonical word(s) that actually appear in our condition/service
+  // keywords — so everyday phrasing finds the right clinical entry.
+  var CLUSTERS = [
+    { words:['hurt','hurts','hurting','hurted','pain','pains','painful','ache','aches','aching','achy','sore','sores','soreness','ouch','tender','throbbing'], canon:['pain','ache'] },
+    { words:['stomach','tummy','belly','abdomen','abdominal','gut','queasy'], canon:['stomach','abdomen','nausea'] },
+    { words:['itch','itchy','itches','itching','scratchy','prickly'], canon:['itch','itchy'] },
+    { words:['burn','burns','burning','stinging','sting','stings','searing'], canon:['burn','burning'] },
+    { words:['swell','swells','swelling','swollen','puffy','inflamed','inflammation','bloated'], canon:['swelling','swollen','inflamed'] },
+    { words:['rash','rashes','breakout','breakouts','bump','bumps','spot','spots','hive','hives','welts','blotchy'], canon:['rash','bumps','hives'] },
+    { words:['red','redness','reddish'], canon:['red'] },
+    { words:['dry','dryness','flaky','flaking','flakes','peeling','cracked','cracking','scaly'], canon:['dry','flaky','cracked'] },
+    { words:['discharge','pus','oozing','weeping','leaking','goopy','crusty'], canon:['discharge'] },
+    { words:['nausea','nauseous','queasy','vomit','vomiting','puke','puking','sick'], canon:['nausea','vomiting','queasy'] },
+    { words:['dizzy','dizziness','lightheaded','vertigo'], canon:['dizzy'] },
+    { words:['fever','feverish','temperature'], canon:['fever'] },
+    { words:['cough','coughing','coughs'], canon:['cough'] },
+    { words:['congested','congestion','stuffy','stuffed','blocked'], canon:['congestion','stuffy','blocked'] },
+    { words:['runny','runnynose','drip','dripping','sniffle','sniffles'], canon:['runny','sniffles'] },
+    { words:['sneeze','sneezing','sneezes'], canon:['sneezing'] },
+    { words:['pee','peeing','urinate','urinating','urination','wee'], canon:['pee','urination'] },
+    { words:['poop','stool','stools','bowel','bowels'], canon:['stool','bowel'] },
+    { words:['period','periods','menstrual','menstruation','cramp','cramps','cramping'], canon:['period','menstrual','cramps'] },
+    { words:['pregnant','pregnancy','expecting'], canon:['pregnant','pregnancy'] },
+    { words:['quit','quitting','stop','stopping','cessation'], canon:['quit'] },
+    { words:['smoke','smokes','smoking','cigarette','cigarettes','vape','vapes','vaping','nicotine'], canon:['smoking','nicotine','vape'] },
+    { words:['shot','shots','jab','jabs','vaccine','vaccines','vaccination','vaccinations','immunization','immunisation','immunize'], canon:['vaccine','immunization','shot'] },
+    { words:['flu','influenza'], canon:['flu','influenza'] },
+    { words:['eye','eyes','ocular'], canon:['eye'] },
+    { words:['tired','tiredness','fatigue','fatigued','exhausted','exhaustion'], canon:['tired','fatigue'] },
+    { words:['allergy','allergies','allergic'], canon:['allergy','allergic'] },
+    { words:['heartburn','reflux','indigestion','acid'], canon:['heartburn','reflux','acid'] },
+    { words:['refill','refills','renew','renews','renewing','renewal'], canon:['refill','renew'] },
+    { words:['prescription','prescriptions','rx','script','meds','medication','medications','medicine','medicines'], canon:['prescription','medication'] },
+    { words:['blister','blisters','blistering'], canon:['blister'] },
+    { words:['weight','obesity','ozempic','wegovy','semaglutide'], canon:['weight','ozempic','wegovy','semaglutide'] }
+  ];
+  // Build a flat lookup: any variant word → array of canonical words.
+  var SYN = {};
+  CLUSTERS.forEach(function(c){
+    c.words.forEach(function(w){
+      SYN[w] = SYN[w] ? SYN[w].concat(c.canon) : c.canon.slice();
+    });
+  });
 
   function tokenize(s){
     return (s || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
+  }
+  // Light stemmer: collapse common English endings so verb/plural forms of
+  // the same word agree (hurting/hurts/hurt, itching/itch, cramps/cramp).
+  // Also drops a trailing "e" so ache/aches/aching reduce alike.
+  function stem(w){
+    if (w.length <= 3) return w;
+    if (w.length > 4 && /ies$/.test(w)) w = w.slice(0, -3) + 'y';
+    else if (w.length > 5 && /ing$/.test(w)) w = w.slice(0, -3);
+    else if (w.length > 4 && /ed$/.test(w)) w = w.slice(0, -2);
+    else if (w.length > 4 && /es$/.test(w)) w = w.slice(0, -2);
+    else if (w.length > 3 && /s$/.test(w) && !/ss$/.test(w)) w = w.slice(0, -1);
+    if (w.length > 4 && /e$/.test(w)) w = w.slice(0, -1);
+    return w;
   }
   // The meaningful words from a query (fillers removed). If a query is
   // nothing but fillers, fall back to the raw words so it still does something.
@@ -4531,6 +4593,16 @@ window.SmartMatch = (function(){
     var sig = raw.filter(function(w){ return w.length >= 2 && !STOP[w]; });
     return sig.length ? sig : raw;
   }
+  // Everything a single query word should be allowed to match: itself, its
+  // stem, and any plain-language synonyms (and their stems).
+  function expand(tok){
+    var set = {};
+    set[tok] = 1;
+    set[stem(tok)] = 1;
+    var canon = SYN[tok] || SYN[stem(tok)];
+    if (canon) canon.forEach(function(c){ set[c] = 1; set[stem(c)] = 1; });
+    return Object.keys(set);
+  }
 
   // fields: { title, kw, desc } — any may be omitted.
   function score(fields, q){
@@ -4538,25 +4610,41 @@ window.SmartMatch = (function(){
     if (!qtokens.length) return 0;
     var phrase = tokenize(q).join(' ');
 
-    var titleTokens = tokenize(fields.title);
-    var kwTokens    = tokenize(fields.kw);
-    var descTokens  = tokenize(fields.desc);
-
-    function inExact(arr, tok){ return arr.indexOf(tok) !== -1; }
-    function inPrefix(arr, tok, min){
-      if (tok.length < min) return false;
-      for (var i = 0; i < arr.length; i++){ if (arr[i].indexOf(tok) === 0) return true; }
-      return false;
+    // For each field keep both the raw word list and a set of stems, so we
+    // can match exact words, prefixes, and stemmed/synonym forms.
+    function prep(text){
+      var toks = tokenize(text);
+      var stems = {};
+      toks.forEach(function(t){ stems[stem(t)] = 1; });
+      return { toks: toks, stems: stems };
     }
-    // Best single-token contribution across the three weighted fields.
-    function tokenScore(tok){
-      if (inExact(titleTokens, tok)) return 6;
-      if (inPrefix(titleTokens, tok, 4)) return 5;
-      if (inExact(kwTokens, tok)) return 4;
-      if (inPrefix(kwTokens, tok, 4)) return 3;
-      if (inExact(descTokens, tok)) return 2;
-      if (inPrefix(descTokens, tok, 5)) return 1;
+    var T = prep(fields.title), K = prep(fields.kw), D = prep(fields.desc);
+
+    // Score one query word against one field. Exact / stem / synonym hits are
+    // worth the full field weight; a looser prefix-only hit is worth one less.
+    function fieldScore(field, tok, exps, strong, weak){
+      var i, j;
+      // exact word, stem-equality, or synonym (exps already include stems)
+      for (i = 0; i < exps.length; i++){
+        var e = exps[i];
+        if (field.toks.indexOf(e) !== -1) return strong;
+        if (field.stems[e]) return strong;
+      }
+      // prefix: a typed fragment of 3+ letters starting a word ("vacc"→vaccine)
+      for (i = 0; i < exps.length; i++){
+        var ex = exps[i];
+        if (ex.length < 3) continue;
+        for (j = 0; j < field.toks.length; j++){ if (field.toks[j].indexOf(ex) === 0) return weak; }
+      }
       return 0;
+    }
+    function tokenScore(tok){
+      var exps = expand(tok);
+      var s = fieldScore(T, tok, exps, 6, 5);
+      if (s) return s;
+      s = fieldScore(K, tok, exps, 4, 3);
+      if (s) return s;
+      return fieldScore(D, tok, exps, 2, 1);
     }
 
     var total = 0, matched = 0;
@@ -4569,23 +4657,23 @@ window.SmartMatch = (function(){
     // Exact multi-word phrase appearing in the title/keywords is a strong
     // signal of relevance (e.g. "pink eye", "quit smoking", "burning pee").
     if (phrase.length >= 3){
-      var titleStr = titleTokens.join(' ');
-      var kwStr = kwTokens.join(' ');
+      var titleStr = T.toks.join(' ');
+      var kwStr = K.toks.join(' ');
       if (titleStr.indexOf(phrase) !== -1) total += 8;
       else if (kwStr.indexOf(phrase) !== -1) total += 5;
     }
 
     // Coverage gating: an item that matches every word you typed is far
     // more relevant than one that caught a single word. Full coverage keeps
-    // the full score; partial matches are scaled down hard so they only
-    // surface when nothing better exists.
+    // the full score; partial matches are scaled down so they only surface
+    // when nothing better exists.
     var coverage = matched / qtokens.length;
-    if (coverage < 1) total *= coverage * 0.5;
+    if (coverage < 1) total *= coverage * 0.6;
 
     return total;
   }
 
-  return { score: score, tokenize: tokenize, queryTokens: queryTokens };
+  return { score: score, tokenize: tokenize, queryTokens: queryTokens, stem: stem, expand: expand };
 })();
 </script>
 
