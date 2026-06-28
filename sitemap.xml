@@ -3,11 +3,11 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.stclairdrugmart.ca/</loc>
-    <lastmod>2026-06-22</lastmod>
+    <lastmod>2026-06-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://www.stclairdrugmart.ca/storefront_new_1.webp</image:loc>
+      <image:loc>https://www.stclairdrugmart.ca/storefront_studio.webp</image:loc>
       <image:title>St. Clair Drug Mart Pharmacy storefront, Toronto</image:title>
     </image:image>
   </url>
@@ -44,6 +44,30 @@
   <url>
     <loc>https://www.stclairdrugmart.ca/blog/posts/transfer-prescription-toronto.html</loc>
     <lastmod>2026-06-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.stclairdrugmart.ca/blog/posts/natural-health-products-guide.html</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.stclairdrugmart.ca/blog/posts/what-pharmacist-can-prescribe-ontario-2026.html</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.stclairdrugmart.ca/blog/posts/pink-eye-vs-allergies.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.stclairdrugmart.ca/blog/posts/medication-review-what-to-expect.html</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
