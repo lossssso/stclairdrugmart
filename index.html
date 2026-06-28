@@ -366,6 +366,23 @@
       .hero__cloud:nth-child(n+7) { display: none; }
       .sky-bg-cloud:nth-child(n+5) { display: none; }
     }
+    /* ── Adaptive performance ──────────────────────────────────
+       On lower-powered machines (few CPU cores / low memory, or a
+       failed frame-rate probe) we thin out the drifting cloud layers
+       so the animation stays smooth instead of janky. ~28 large,
+       semi-transparent, GPU-promoted layers is the bottleneck on
+       older integrated graphics; cutting to a handful fixes it while
+       capable machines keep the full sky. The .lite-clouds class is
+       added to <html> by the probe script near the top of <body>.
+       The faintest (highest nth-child) clouds drop first, so the loss
+       is barely noticeable. */
+    html.lite-clouds .sky-bg-cloud:nth-child(n+4) { display: none; }  /* 8 → 3 */
+    html.lite-clouds .hero__cloud:nth-child(n+6)  { display: none; }  /* 12 → 5 */
+    html.lite-clouds .nav__cloud:nth-child(n+4)   { display: none; }  /* 6 → 3 */
+    @media (max-width: 768px) {
+      html.lite-clouds .hero__cloud:nth-child(n+4) { display: none; }
+      html.lite-clouds .sky-bg-cloud:nth-child(n+3) { display: none; }
+    }
     .hero__logo {
       width: 170px; height: 170px;
       object-fit: contain;
@@ -2565,6 +2582,41 @@
   </style>
 </head>
 <body>
+<script>
+/* Cloud performance guard — decides up-front whether this device should run
+   the full drifting-cloud effect or a thinned-out "lite" version. Runs before
+   the clouds paint so weak hardware never renders the heavy version (no pop). */
+(function(){
+  var root = document.documentElement;
+  try {
+    // Respect reduced-motion — the CSS already stops the animation there.
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Instant downgrade only for the weakest hardware (skip a heavy first
+    // paint). Everything else is judged by how it actually performs below, so
+    // capable quad-cores aren't penalised for their core count alone.
+    if ((navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) ||
+        (navigator.deviceMemory && navigator.deviceMemory <= 2)) {
+      root.classList.add('lite-clouds');
+      return;
+    }
+    // Otherwise measure the real frame rate for ~1s; if the cloud drift is
+    // janky on this machine, thin the layers out. A warm-up window is skipped
+    // so first-paint/image-decode hitches don't cause a false downgrade.
+    var t0 = performance.now(), last = t0, frames = 0, slow = 0;
+    var WARMUP = 500, WINDOW = 1100;
+    (function tick(now){
+      var dt = now - last; last = now;
+      var elapsed = now - t0;
+      if (elapsed > WARMUP){ frames++; if (dt > 28) slow++; }   // >28ms ≈ under ~36fps
+      if (elapsed < WARMUP + WINDOW){ requestAnimationFrame(tick); return; }
+      if (frames > 10){
+        var fps = frames / ((elapsed - WARMUP) / 1000);
+        if (fps < 45 || slow / frames > 0.25) root.classList.add('lite-clouds');
+      }
+    })(t0);
+  } catch(e){}
+})();
+</script>
 <div class="sky-bg" aria-hidden="true">
   <img src="cloud2.webp" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="" aria-hidden="true">
   <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="102" data-delay="-60" style="transform:translateX(45.9vw) scaleX(-1)" alt="" aria-hidden="true">
