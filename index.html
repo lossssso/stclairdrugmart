@@ -4433,8 +4433,8 @@ window.FAQS = [
         <button type="button" id="faqSearchClear" class="faq-search__clear" aria-label="Clear search" hidden>&times;</button>
       </div>
       <div class="faq-search__status" id="faqSearchStatus" aria-live="polite"></div>
-      <div class="ailments-smartsearch__results" id="faqServiceResults"></div>
       <div class="ailments-smartsearch__results" id="faqConditionResults"></div>
+      <div class="ailments-smartsearch__results" id="faqServiceResults"></div>
     </div>
     <div class="faq-cat-bar" id="faq-cat-bar"><!-- populated by script below --></div>
     <div class="faq-list" id="faq-list"><!-- populated by script below --></div>
@@ -4491,6 +4491,101 @@ window.FAQS = [
     });
     catBar.innerHTML = pillsHtml;
   }
+})();
+</script>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   Shared smart-search matcher — used by every search bar on the
+   page (FAQ search, symptom/condition search, and the site-wide
+   nav overlay) so they all rank results the same precise way.
+
+   Goals: bring up things that actually relate to what was typed,
+   not loose substring noise. We tokenize both the query and each
+   field into whole words, then match query words by exact or
+   prefix match (no arbitrary "is this string anywhere inside that
+   string" matching, which is what produced random hits). A query
+   only ranks an item highly when *all* of its meaningful words
+   land somewhere on that item (coverage gating); weak partial
+   matches are kept as a low-ranked fallback so we never dead-end.
+   ───────────────────────────────────────────────────────────── */
+window.SmartMatch = (function(){
+  // Common filler words that carry no search intent. Dropping them
+  // keeps queries like "i think i have a rash" focused on "rash".
+  var STOP = {a:1,an:1,and:1,the:1,is:1,are:1,was:1,were:1,be:1,been:1,am:1,
+    i:1,im:1,me:1,my:1,mine:1,we:1,our:1,us:1,you:1,your:1,it:1,its:1,
+    of:1,to:1,for:1,in:1,on:1,at:1,by:1,with:1,from:1,as:1,or:1,if:1,so:1,
+    do:1,does:1,did:1,can:1,could:1,would:1,should:1,shall:1,will:1,may:1,might:1,
+    have:1,has:1,had:1,get:1,got:1,getting:1,need:1,needs:1,want:1,wants:1,
+    how:1,what:1,whats:1,when:1,where:1,why:1,which:1,who:1,about:1,
+    feel:1,feeling:1,think:1,maybe:1,really:1,just:1,some:1,any:1,
+    please:1,help:1,there:1,this:1,that:1,these:1,those:1,been:1};
+
+  function tokenize(s){
+    return (s || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
+  }
+  // The meaningful words from a query (fillers removed). If a query is
+  // nothing but fillers, fall back to the raw words so it still does something.
+  function queryTokens(q){
+    var raw = tokenize(q);
+    var sig = raw.filter(function(w){ return w.length >= 2 && !STOP[w]; });
+    return sig.length ? sig : raw;
+  }
+
+  // fields: { title, kw, desc } — any may be omitted.
+  function score(fields, q){
+    var qtokens = queryTokens(q);
+    if (!qtokens.length) return 0;
+    var phrase = tokenize(q).join(' ');
+
+    var titleTokens = tokenize(fields.title);
+    var kwTokens    = tokenize(fields.kw);
+    var descTokens  = tokenize(fields.desc);
+
+    function inExact(arr, tok){ return arr.indexOf(tok) !== -1; }
+    function inPrefix(arr, tok, min){
+      if (tok.length < min) return false;
+      for (var i = 0; i < arr.length; i++){ if (arr[i].indexOf(tok) === 0) return true; }
+      return false;
+    }
+    // Best single-token contribution across the three weighted fields.
+    function tokenScore(tok){
+      if (inExact(titleTokens, tok)) return 6;
+      if (inPrefix(titleTokens, tok, 4)) return 5;
+      if (inExact(kwTokens, tok)) return 4;
+      if (inPrefix(kwTokens, tok, 4)) return 3;
+      if (inExact(descTokens, tok)) return 2;
+      if (inPrefix(descTokens, tok, 5)) return 1;
+      return 0;
+    }
+
+    var total = 0, matched = 0;
+    qtokens.forEach(function(tok){
+      var c = tokenScore(tok);
+      if (c > 0){ matched++; total += c; }
+    });
+    if (!matched) return 0;
+
+    // Exact multi-word phrase appearing in the title/keywords is a strong
+    // signal of relevance (e.g. "pink eye", "quit smoking", "burning pee").
+    if (phrase.length >= 3){
+      var titleStr = titleTokens.join(' ');
+      var kwStr = kwTokens.join(' ');
+      if (titleStr.indexOf(phrase) !== -1) total += 8;
+      else if (kwStr.indexOf(phrase) !== -1) total += 5;
+    }
+
+    // Coverage gating: an item that matches every word you typed is far
+    // more relevant than one that caught a single word. Full coverage keeps
+    // the full score; partial matches are scaled down hard so they only
+    // surface when nothing better exists.
+    var coverage = matched / qtokens.length;
+    if (coverage < 1) total *= coverage * 0.5;
+
+    return total;
+  }
+
+  return { score: score, tokenize: tokenize, queryTokens: queryTokens };
 })();
 </script>
 
@@ -4560,18 +4655,7 @@ window.FAQS = [
   }
 
   function scoreCondition(a, query){
-    var words = query.toLowerCase().split(/\s+/).filter(Boolean);
-    if (!words.length) return 0;
-    var s = 0;
-    var kws = a.kw.join(' ');
-    var nameLower = a.name.toLowerCase();
-    words.forEach(function(w){
-      if (w.length < 3) return;
-      if (nameLower.indexOf(w) !== -1) s += 3;
-      a.kw.forEach(function(k){ if (k.indexOf(w) !== -1 || w.indexOf(k) !== -1) s += 2; });
-      if (kws.indexOf(w) !== -1) s += 1;
-    });
-    return s;
+    return window.SmartMatch.score({ title: a.name, kw: a.kw.join(' ') }, query);
   }
 
   function renderConditions(matches, query){
@@ -4620,21 +4704,7 @@ window.FAQS = [
   // like "flu shot", "quit smoking", "travel vaccine", "renew my prescription"
   // surface the relevant service — not just FAQ text matches.
   function scoreService(item, query){
-    var q = query.toLowerCase();
-    var t = item.title.toLowerCase();
-    var d = (item.desc || '').toLowerCase();
-    var k = item.kw ? item.kw.toLowerCase() : '';
-    var s = 0;
-    if (t.indexOf(q) !== -1) s += 5;
-    if (d.indexOf(q) !== -1) s += 2;
-    if (k && k.indexOf(q) !== -1) s += 4;
-    q.split(/\s+/).forEach(function(w){
-      if (!w || w.length < 3) return;
-      if (t.indexOf(w) !== -1) s += 3;
-      if (d.indexOf(w) !== -1) s += 1;
-      if (k && k.indexOf(w) !== -1) s += 2;
-    });
-    return s;
+    return window.SmartMatch.score({ title: item.title, kw: item.kw || '', desc: item.desc || '' }, query);
   }
 
   function renderServices(matches, query){
@@ -4680,20 +4750,7 @@ window.FAQS = [
     return out;
   }
   function score(entry, query){
-    var q = query.toLowerCase();
-    var t = entry.q.toLowerCase();
-    var b = entry.body.toLowerCase();
-    var s = 0;
-    if (t === q) s += 12;
-    else if (t.indexOf(q) !== -1) s += 6;
-    if (b.indexOf(q) !== -1) s += 3;
-    q.split(/\s+/).forEach(function(w){
-      if (!w || w.length < 3) return;
-      var wb = new RegExp('\\b' + escapeRx(w));
-      if (wb.test(t)) s += 3;
-      if (wb.test(b)) s += 1;
-    });
-    return s;
+    return window.SmartMatch.score({ title: entry.q, desc: entry.body }, query);
   }
   function resetView(){
     restoreOrder();
@@ -6191,38 +6248,14 @@ window.FAQS = [
   var PHARMA_BASE = 'https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&diagnosisId=';
 
   function scoreAilment(ailment, query) {
-    var words = query.toLowerCase().split(/\s+/).filter(Boolean);
-    if (!words.length) return 0;
-    var score = 0;
-    var kws = ailment.kw.join(' ');
-    var nameLower = ailment.name.toLowerCase();
-    words.forEach(function(w) {
-      if (nameLower.indexOf(w) !== -1) score += 3;
-      ailment.kw.forEach(function(k) { if (k.indexOf(w) !== -1 || w.indexOf(k) !== -1) score += 2; });
-      if (kws.indexOf(w) !== -1) score += 1;
-    });
-    return score;
+    return window.SmartMatch.score({ title: ailment.name, kw: ailment.kw.join(' ') }, query);
   }
 
   // Score a Service/Tool/FAQ item from the shared SITE_INDEX so queries like
   // "quit smoking" or "medication review" surface the relevant service or
   // FAQ answer here too — not just conditions in AILMENT_DB.
   function scoreSmartSiteItem(item, query) {
-    var q = query.toLowerCase();
-    var t = item.title.toLowerCase();
-    var d = (item.desc || '').toLowerCase();
-    var k = item.kw ? item.kw.toLowerCase() : '';
-    var s = 0;
-    if (t.indexOf(q) !== -1) s += 5;
-    if (d.indexOf(q) !== -1) s += 2;
-    if (k && k.indexOf(q) !== -1) s += 4;
-    q.split(/\s+/).forEach(function(w) {
-      if (!w || w.length < 3) return;
-      if (t.indexOf(w) !== -1) s += 3;
-      if (d.indexOf(w) !== -1) s += 1;
-      if (k && k.indexOf(w) !== -1) s += 2;
-    });
-    return s;
+    return window.SmartMatch.score({ title: item.title, kw: item.kw || '', desc: item.desc || '' }, query);
   }
 
   function renderSmartResults(scope, query) {
@@ -6429,6 +6462,12 @@ window.FAQS = [
     return { icon: f.icon || '❓', title: f.q, desc: body.length > 110 ? body.slice(0, 110) + '…' : body, tag:'FAQ', anchor:'#faq', isFaq:true, kw: body };
   }));
 
+  // Expose the condition/service data so the FAQ search bar (a separate
+  // script block) can surface matching conditions and services too.
+  window.AILMENT_DB = AILMENT_DB;
+  window.SITE_INDEX = SITE_INDEX;
+  window.PHARMA_BASE = PHARMA_BASE;
+
   var siteOverlay = document.getElementById('siteSearch');
   var siteInput = document.getElementById('siteSearchInput');
   var siteResults = document.getElementById('siteSearchResults');
@@ -6460,24 +6499,7 @@ window.FAQS = [
   }
 
   function scoreSiteItem(item, query) {
-    var q = query.toLowerCase();
-    var score = 0;
-    var t = item.title.toLowerCase();
-    var d = item.desc.toLowerCase();
-    var k = item.kw ? item.kw.toLowerCase() : '';
-    if (t === q) score += 10;
-    else if (t.startsWith(q)) score += 7;
-    else if (t.indexOf(q) !== -1) score += 5;
-    if (d.indexOf(q) !== -1) score += 2;
-    if (k && k.indexOf(q) !== -1) score += 4;
-    // word-level
-    q.split(/\s+/).forEach(function(w) {
-      if (!w || w.length < 3) return;
-      if (t.indexOf(w) !== -1) score += 3;
-      if (d.indexOf(w) !== -1) score += 1;
-      if (k && k.indexOf(w) !== -1) score += 2;
-    });
-    return score;
+    return window.SmartMatch.score({ title: item.title, kw: item.kw || '', desc: item.desc || '' }, query);
   }
 
   function renderSiteSearch(query) {
@@ -6501,9 +6523,15 @@ window.FAQS = [
       if (!byTag[tag]) byTag[tag] = [];
       byTag[tag].push(x.item);
     });
+    // Always show conditions first, then the actionable services/tools, then
+    // FAQ, then everything else — so the ordering is coherent, not whatever
+    // order the top-scored items happened to fall in.
+    var TAG_ORDER = ['Condition', 'Service', 'Tool', 'Shop', 'FAQ', 'Help', 'About', 'Contact', 'Blog'];
+    var tagsOrdered = TAG_ORDER.filter(function(t){ return byTag[t]; })
+      .concat(Object.keys(byTag).filter(function(t){ return TAG_ORDER.indexOf(t) === -1; }));
     var html = '';
-    Object.keys(byTag).forEach(function(tag) {
-      var catLabel = tag === 'FAQ' ? 'Frequently Asked Questions (FAQ)' : tag;
+    tagsOrdered.forEach(function(tag) {
+      var catLabel = tag === 'FAQ' ? 'Frequently Asked Questions (FAQ)' : (tag === 'Condition' ? 'Conditions' : (tag === 'Service' ? 'Services' : tag));
       html += '<div class="site-search__category">' + catLabel + '</div>';
       byTag[tag].forEach(function(item) {
         html += '<button class="site-search__result js-site-result" data-anchor="' + (item.anchor||'') + '" data-url="' + (item.url||'') + '" data-open="' + (item.open||'') + '" data-ailment-url="' + (item.ailmentUrl||'') + '" data-faq="' + (item.isFaq ? '1' : '') + '" data-title="' + item.title + '">'
