@@ -1162,26 +1162,26 @@
       border: 1.5px solid #e0f2f3;
     }
     .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .status-dot--open { background: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.18); animation: sb-pulse 2s ease-in-out infinite; }
-    .status-dot--soon { background: #f59e0b; animation: sb-flash-dot 1.1s ease-in-out infinite; }
-    .status-dot--closed { background: #dc2626; }
-    @keyframes sb-pulse {
-      0%, 100% { box-shadow: 0 0 0 3px rgba(22,163,74,.18); }
-      50% { box-shadow: 0 0 0 5px rgba(22,163,74,.06); }
+    .status-dot--open { background: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.18); animation: sb-blink-green 1.6s ease-in-out infinite; }
+    .status-dot--soon { background: #f59e0b; animation: sb-blink-yellow 1.1s ease-in-out infinite; }
+    .status-dot--closed { background: #dc2626; animation: sb-blink-red 2.6s ease-in-out infinite; }
+    @keyframes sb-blink-green {
+      0%, 100% { background: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.18); }
+      50% { background: #4ade80; box-shadow: 0 0 0 5px rgba(74,222,128,.12); }
     }
-    @keyframes sb-flash-dot {
+    @keyframes sb-blink-yellow {
       0%, 100% { background: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,.45); }
       50% { background: #fde047; box-shadow: 0 0 0 5px rgba(253,224,71,.15); }
+    }
+    @keyframes sb-blink-red {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .6; }
     }
     .status-row__label { font-size: .72rem; font-weight: 700; color: var(--text); flex: 0 0 6.5em; letter-spacing: .01em; }
     .status-row__val { font-size: .72rem; color: var(--text-muted); flex: 1; text-align: right; }
     .status-row__val--open { color: #166534; font-weight: 600; }
-    .status-row__val--soon { color: #92400e; font-weight: 700; animation: sb-flash-text 1.1s ease-in-out infinite; }
+    .status-row__val--soon { color: #92400e; font-weight: 700; }
     .status-row__val--closed { color: #991b1b; }
-    @keyframes sb-flash-text {
-      0%, 100% { background-color: rgba(253,224,71,0); }
-      50% { background-color: rgba(253,224,71,.65); }
-    }
 
     .find-us__actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: auto; }
     .find-us__rating { display: flex; flex-direction: column; gap: .15rem; margin-top: .85rem; padding: .7rem .9rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 10px; text-decoration: none; transition: box-shadow .2s; }
