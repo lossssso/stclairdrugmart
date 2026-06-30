@@ -1,14 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+  (function(){
+    var map={
+      '/home':'/#welcome','/services':'/#services','/drug-checker':'/#drug-checker',
+      '/booking':'/#booking','/patient':'/#booking','/patient-portal':'/#booking',
+      '/about':'/#about','/team':'/#team','/meet-the-team':'/#team',
+      '/reviews':'/#reviews','/ratings':'/#reviews',
+      '/faq':'/#faq','/questions':'/#faq',
+      '/contact':'/#contact','/find-us':'/#contact','/blog':'/blog/'
+    };
+    var p=location.pathname.replace(/\/+$/,'');
+    var dest=map[p];
+    if(dest){location.replace(dest);}
+  })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Page Not Found — St. Clair Drug Mart Pharmacy</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="icon" type="image/png" href="logo.png" />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; }
     :root {
       --teal-bright: #21a1a8;
       --teal-deeper: #00737c;
@@ -18,24 +35,22 @@
       --text-muted:  #5a7a7d;
       --white:       #ffffff;
       --font-display: 'Big Shoulders Display', 'Helvetica Neue', Arial, sans-serif;
-      --font-nav: 'Helvetica Neue', Helvetica, 'Arial', 'Inter', sans-serif;
+      --font-nav: 'Helvetica Neue', Helvetica, Arial, 'Inter', sans-serif;
     }
     html { overflow-x: hidden; }
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(180deg, #b6ecef 0%, #cdf5f6 45%, #e4fbfc 100%) fixed;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      padding: calc(2rem + 64px) 1.5rem 2rem;
+      padding: calc(3rem + 64px) 1.25rem 3rem;
       color: var(--teal-deeper);
       overflow-x: hidden;
     }
 
-    /* ── Fixed sky background — same drifting clouds as the main site ── */
+    /* ── Fixed sky background ── */
     .sky-bg {
       position: fixed; inset: 0; z-index: -1;
       overflow: hidden; pointer-events: none;
@@ -56,35 +71,21 @@
     .sky-bg-cloud:nth-child(6) { width:1300px; height:318px; top:33vh; animation-duration:128s; animation-delay: -18s; opacity:.50; }
     .sky-bg-cloud:nth-child(7) { width:1100px; height:272px; top:46vh; animation-duration:110s; animation-delay: -72s; opacity:.44; }
     .sky-bg-cloud:nth-child(8) { width: 960px; height:238px; top:60vh; animation-duration: 94s; animation-delay: -95s; opacity:.38; }
-    @keyframes cloud-drift   { from { transform: translateX(-60vw);           } to { transform: translateX(120vw);           } }
-    @keyframes cloud-drift-r { from { transform: translateX(-60vw) scaleX(-1);} to { transform: translateX(120vw) scaleX(-1);} }
+    @keyframes cloud-drift   { from { transform: translateX(-60vw);            } to { transform: translateX(120vw);            } }
+    @keyframes cloud-drift-r { from { transform: translateX(-60vw) scaleX(-1); } to { transform: translateX(120vw) scaleX(-1); } }
     @keyframes cloud-layer-in { from { opacity: 0; } to { opacity: 1; } }
     @media (prefers-reduced-motion: reduce) { .sky-bg-cloud { animation: none; } .sky-bg { animation: none; opacity: 1; } }
 
-    /* ── Nav (identical structure/engine to index.html / braces-supports.html) ── */
+    /* ── Nav — transparent so sky-bg clouds show through seamlessly ── */
     .nav {
       position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 100;
-      background: rgba(182,236,239,.97);
-      border-bottom: 1px solid rgba(33,161,168,.22);
-      box-shadow: 0 1px 14px rgba(0,80,90,.06);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      background: rgba(182,236,239,.30);
+      border-bottom: 1px solid rgba(33,161,168,.06);
+      box-shadow: none;
+      backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
     }
-    .nav__clouds {
-      position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; opacity: 1;
-      mask-image: linear-gradient(to bottom, transparent 0%, transparent 8%, black 65%);
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 8%, black 65%);
-    }
-    .nav__cloud  { position: absolute; left: 0; animation: cloud-drift linear infinite; will-change: transform; max-width: none; display: block; filter: drop-shadow(0 1px 3px rgba(0,60,65,.18)); }
-    .nav__cloud--flip { animation-name: cloud-drift-r; }
-    .nav__cloud:nth-child(1) { width: 950px; height: 235px; top: -100px; animation-duration:175s; animation-delay: -29s; opacity: .85; }
-    .nav__cloud:nth-child(2) { width: 750px; height: 185px; top: -46px; animation-duration:140s; animation-delay: -81s; opacity: .78; }
-    .nav__cloud:nth-child(3) { width: 880px; height: 218px; top: -88px; animation-duration:165s; animation-delay:-126s; opacity: .82; }
-    .nav__cloud:nth-child(4) { width: 680px; height: 168px; top: -36px; animation-duration:125s; animation-delay: -51s; opacity: .76; }
-    .nav__cloud:nth-child(5) { width: 820px; height: 203px; top: -57px; animation-duration:150s; animation-delay:-102s; opacity: .80; }
-    .nav__cloud:nth-child(6) { width: 900px; height: 223px; top: -70px; animation-duration:130s; animation-delay: 0s; opacity: .80; }
-    @media (max-width: 768px) { .nav__cloud:nth-child(4), .nav__cloud:nth-child(5) { display: none; } }
     .nav__inner {
-      max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: flex-start;
+      max-width: 1100px; margin: 0 auto; display: flex; align-items: center;
       padding: 0 max(1.5rem, env(safe-area-inset-right)) 0 max(1.5rem, env(safe-area-inset-left));
       height: 64px; position: relative; z-index: 1;
     }
@@ -94,17 +95,19 @@
       color: var(--teal-deeper); letter-spacing: .02em; text-transform: uppercase;
       white-space: nowrap; text-decoration: none;
     }
-    .nav__brand__logo { height: 34px; width: auto; display: block; }
+    .nav__brand__logo { height: 34px; width: auto; display: block; transition: transform .25s cubic-bezier(.2,.8,.3,1.1); }
+    .nav__brand span { display: inline-block; transform-origin: left center; transition: transform .25s cubic-bezier(.2,.8,.3,1.1), color .2s ease; }
+    .nav__brand:hover .nav__brand__logo { transform: scale(1.1); }
+    .nav__brand:hover span { transform: scale(1.06); color: var(--teal-bright); }
     .nav__links { display: flex; align-items: center; list-style: none; gap: .25rem; margin-left: auto; }
     .nav__links > li { display: flex; align-items: center; }
     .nav__links a {
-      display: inline-flex; align-items: center; color: #2c5457;
+      display: inline-flex; align-items: center; color: #2c5457; text-decoration: none;
       font-size: .875rem; font-weight: 500; line-height: 1;
       padding: .5rem .8rem; border-radius: 7px;
       transition: background .15s, color .15s;
     }
-    .nav__links a:hover { background: #eef9fa; color: var(--teal-deeper); }
-    .nav__links a.active { background: #eef9fa; color: var(--teal-deeper); font-weight: 700; }
+    .nav__links a:hover { background: #eef9fa; color: var(--teal-deeper); text-decoration: none; }
     .nav__links .nav__cta a { background: var(--teal-bright); color: var(--white); font-weight: 600; box-shadow: 0 3px 10px rgba(33,161,168,.25); }
     .nav__links .nav__cta a:hover { background: var(--teal-deeper); color: var(--white); }
     .nav__toggle { display: none; background: none; border: none; cursor: pointer; padding: .4rem; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
@@ -123,18 +126,15 @@
     .nav__dropdown li { list-style: none; }
     .nav__has-dropdown:hover .nav__dropdown,
     .nav__has-dropdown.open .nav__dropdown { display: block; }
-    .nav__dropdown a { display: block; padding: .55rem .85rem; font-size: .85rem; font-weight: 500; color: #2c5457; border-radius: 7px; white-space: nowrap; }
+    .nav__dropdown a { display: block; padding: .55rem .85rem; font-size: .85rem; font-weight: 500; color: #2c5457; border-radius: 7px; white-space: nowrap; text-decoration: none; }
     .nav__dropdown a:hover { background: #eef9fa; color: var(--teal-deeper); }
-    .nav__dropdown a.active { background: #eef9fa; color: var(--teal-deeper); font-weight: 700; }
-    @media (max-width: 860px) and (min-width: 769px) {
-      .nav__brand span { display: none; }
-    }
+    @media (max-width: 860px) and (min-width: 769px) { .nav__brand span { display: none; } }
     @media (max-width: 768px) {
       .nav__links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e9f4f5; box-shadow: 0 8px 20px rgba(0,60,66,.08); flex-direction: column; align-items: stretch; padding: .5rem 1rem 1rem; gap: .1rem; margin-left: 0; }
       .nav__links.open { display: flex; }
       .nav__links > li { display: block; }
       .nav__links a { display: flex; width: 100%; min-height: 44px; }
-      .nav__toggle { display: block; margin-left: auto; }
+      .nav__toggle { display: flex; margin-left: auto; }
       .nav__has-dropdown::after { display: none; }
       .nav__dropdown { position: static; border: none; box-shadow: none; border-radius: 0; padding: 0; background: #f3fafb; margin: .2rem 0 .2rem .75rem; min-width: 0; }
       .nav__has-dropdown .nav__dropdown,
@@ -147,153 +147,234 @@
       .nav__toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
       .nav__toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
       .nav__toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-      body { padding: calc(1.5rem + 64px) 1rem 1.5rem; }
     }
-    .logo {
-      width: 90px;
-      height: 90px;
+
+    /* ── 404 card ── */
+    .card {
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,.7);
+      border-radius: 24px;
+      box-shadow: 0 12px 48px rgba(0,60,66,.10), 0 2px 8px rgba(0,60,66,.06);
+      padding: 3rem 2.5rem 2.5rem;
+      max-width: 520px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0;
+    }
+    .card__logo {
+      width: 80px;
+      height: 80px;
       object-fit: contain;
       margin-bottom: 1.5rem;
-      filter: drop-shadow(0 4px 12px rgba(0,115,124,.18));
+      filter: drop-shadow(0 4px 14px rgba(0,115,124,.20));
+    }
+    .card__eyebrow {
+      font-family: var(--font-nav);
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--teal-bright);
+      margin-bottom: .6rem;
     }
     .code {
       font-family: var(--font-display);
-      font-size: clamp(5rem, 18vw, 9rem);
+      font-size: clamp(5.5rem, 20vw, 9rem);
       font-weight: 900;
-      line-height: 1;
-      color: var(--teal-bright);
-      letter-spacing: -.02em;
-      margin-bottom: .25rem;
+      line-height: .9;
+      letter-spacing: -.03em;
+      background: linear-gradient(135deg, var(--teal-bright) 0%, var(--teal-deeper) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: .4rem;
     }
-    h1 {
+    .card h1 {
       font-family: var(--font-display);
-      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-size: clamp(1.4rem, 4vw, 1.9rem);
       font-weight: 700;
-      color: var(--teal-deeper);
-      margin-bottom: .75rem;
+      color: var(--teal-dark);
+      margin-bottom: .65rem;
+      line-height: 1.15;
     }
-    p {
-      font-size: .95rem;
+    .card p {
+      font-size: .925rem;
       color: var(--text-muted);
       line-height: 1.65;
-      max-width: 400px;
-      margin-bottom: 2rem;
+      max-width: 340px;
+      margin-bottom: 1.75rem;
+    }
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      justify-content: center;
+      margin-bottom: 1.75rem;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      background: rgba(33,161,168,.08);
+      border: 1px solid rgba(33,161,168,.2);
+      color: var(--teal-deeper);
+      font-size: .8rem;
+      font-weight: 600;
+      padding: .4rem .85rem;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background .15s, border-color .15s, transform .15s;
+    }
+    .chip:hover {
+      background: rgba(33,161,168,.15);
+      border-color: rgba(33,161,168,.4);
+      transform: translateY(-1px);
+      text-decoration: none;
     }
     .actions {
       display: flex;
-      gap: .75rem;
+      gap: .65rem;
       flex-wrap: wrap;
       justify-content: center;
     }
     .btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
       background: var(--teal-bright);
       color: #fff;
       font-size: .9rem;
       font-weight: 700;
-      padding: .7rem 1.5rem;
-      border-radius: 10px;
+      padding: .7rem 1.6rem;
+      border-radius: 12px;
       text-decoration: none;
-      transition: background .15s;
+      transition: background .15s, transform .15s, box-shadow .15s;
+      box-shadow: 0 4px 14px rgba(33,161,168,.28);
     }
-    .btn:hover { background: var(--teal-deeper); }
-    .btn--outline {
-      background: transparent;
+    .btn:hover { background: var(--teal-deeper); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(33,161,168,.35); text-decoration: none; }
+    .btn--ghost {
+      background: rgba(255,255,255,.6);
       color: var(--teal-deeper);
-      border: 2px solid var(--teal-bright);
+      border: 1.5px solid rgba(33,161,168,.3);
+      box-shadow: none;
     }
-    .btn--outline:hover { background: var(--teal-ice); }
+    .btn--ghost:hover { background: rgba(255,255,255,.9); border-color: rgba(33,161,168,.5); box-shadow: 0 4px 12px rgba(0,60,66,.08); }
+
+    /* ── Divider ── */
+    .divider {
+      width: 48px; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(33,161,168,.3), transparent);
+      margin: 0 auto 1.5rem;
+      border-radius: 2px;
+    }
+
+    /* ── Footer ── */
     footer {
-      margin-top: 3rem;
-      font-size: .8rem;
+      margin-top: 1.75rem;
+      font-size: .78rem;
       color: var(--text-muted);
+      text-align: center;
+      line-height: 1.6;
     }
     footer a { color: var(--teal-dark); text-decoration: none; font-weight: 600; }
+    footer a:hover { color: var(--teal-bright); }
+
+    @media (max-width: 500px) {
+      .card { padding: 2.25rem 1.5rem 2rem; border-radius: 20px; }
+    }
   </style>
 </head>
 <body>
 
 <div class="sky-bg" aria-hidden="true">
-  <img src="cloud2.webp" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="">
-  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="102" data-delay="-60" style="transform:translateX(45.9vw) scaleX(-1)" alt="">
-  <img src="cloud2.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="122" data-delay="-85" style="transform:translateX(65.4vw) scaleX(-1)" alt="">
-  <img src="cloud.png"  class="sky-bg-cloud" data-dur="96" data-delay="-12" style="transform:translateX(-37.5vw)" alt="">
-  <img src="cloud2.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="116" data-delay="-40" style="transform:translateX(2.1vw) scaleX(-1)" alt="">
-  <img src="cloud.png"  class="sky-bg-cloud" data-dur="128" data-delay="-18" style="transform:translateX(-34.7vw)" alt="">
-  <img src="cloud2.webp" class="sky-bg-cloud" data-dur="110" data-delay="-72" style="transform:translateX(57.8vw)" alt="">
-  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="94" data-delay="-95" style="transform:translateX(-58.1vw) scaleX(-1)" alt="">
+  <img src="/cloud2.webp" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="">
+  <img src="/cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="102" data-delay="-60" style="transform:translateX(45.9vw) scaleX(-1)" alt="">
+  <img src="/cloud2.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="122" data-delay="-85" style="transform:translateX(65.4vw) scaleX(-1)" alt="">
+  <img src="/cloud.png"  class="sky-bg-cloud" data-dur="96" data-delay="-12" style="transform:translateX(-37.5vw)" alt="">
+  <img src="/cloud2.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="116" data-delay="-40" style="transform:translateX(2.1vw) scaleX(-1)" alt="">
+  <img src="/cloud.png"  class="sky-bg-cloud" data-dur="128" data-delay="-18" style="transform:translateX(-34.7vw)" alt="">
+  <img src="/cloud2.webp" class="sky-bg-cloud" data-dur="110" data-delay="-72" style="transform:translateX(57.8vw)" alt="">
+  <img src="/cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="94" data-delay="-95" style="transform:translateX(-58.1vw) scaleX(-1)" alt="">
 </div>
 
 <nav class="nav" id="nav">
-  <div class="nav__clouds" aria-hidden="true">
-    <img src="cloud2.webp" class="nav__cloud" data-dur="175" data-delay="-29" style="transform:translateX(-30.6vw)" alt="">
-    <img src="cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="140" data-delay="-81" style="transform:translateX(44.7vw) scaleX(-1)" alt="">
-    <img src="cloud2.webp" class="nav__cloud nav__cloud--flip" data-dur="165" data-delay="-126" style="transform:translateX(77.6vw) scaleX(-1)" alt="">
-    <img src="cloud.png"  class="nav__cloud" data-dur="125" data-delay="-51" style="transform:translateX(13.8vw)" alt="">
-    <img src="cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="150" data-delay="-102" style="transform:translateX(-8vw) scaleX(-1)" alt="">
-    <img src="cloud2.webp" class="nav__cloud" data-dur="130" data-delay="0" style="transform:translateX(-60vw)" alt="">
-  </div>
   <div class="nav__inner">
-    <a href="index.html#welcome" class="nav__brand">
-      <img src="logo.png" alt="" class="nav__brand__logo" />
+    <a href="/" class="nav__brand">
+      <img src="/logo.png" alt="" class="nav__brand__logo" />
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
     <button class="nav__toggle" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav__links" id="navLinks">
-      <li><a href="index.html#welcome">Home</a></li>
+      <li><a href="/">Home</a></li>
       <li class="nav__has-dropdown">
-        <a href="index.html#services">Services</a>
+        <a href="/#services">Services</a>
         <ul class="nav__dropdown">
-          <li><a href="portal.html">Patient Portal</a></li>
-          <li><a href="index.html#services">Ailment Assessment</a></li>
-          <li><a href="index.html#services">Medication Reviews</a></li>
-          <li><a href="index.html#services">Vaccinations</a></li>
-          <li><a href="index.html#services">Smoking Cessation</a></li>
-          <li><a href="index.html#services">Free Naloxone Kits</a></li>
-          <li><a href="index.html#drug-checker">Drug Checker</a></li>
-          <li><a href="index.html#services">Insurance</a></li>
+          <li><a href="/portal.html">Patient Portal</a></li>
+          <li><a href="/#services">Ailment Assessment</a></li>
+          <li><a href="/#services">Medication Reviews</a></li>
+          <li><a href="/#services">Vaccinations</a></li>
+          <li><a href="/#services">Smoking Cessation</a></li>
+          <li><a href="/#services">Free Naloxone Kits</a></li>
+          <li><a href="/#drug-checker">Drug Checker</a></li>
+          <li><a href="/#services">Insurance</a></li>
         </ul>
       </li>
       <li class="nav__has-dropdown">
         <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
         <ul class="nav__dropdown">
           <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Order on Uber</a></li>
-          <li><a href="braces-supports.html">Braces &amp; Supports</a></li>
+          <li><a href="/braces-supports.html">Braces &amp; Supports</a></li>
         </ul>
       </li>
-      <li><a href="blog/index.html">Blog</a></li>
+      <li><a href="/blog/">Blog</a></li>
       <li class="nav__has-dropdown">
-        <a href="index.html#faq">Got Questions?</a>
+        <a href="/#faq">Got Questions?</a>
         <ul class="nav__dropdown">
-          <li><a href="index.html#about">About Us</a></li>
-          <li><a href="index.html#team">Meet the Team</a></li>
-          <li><a href="index.html#faq">FAQ</a></li>
-          <li><a href="index.html#reviews">Ratings (4.9 ⭐)</a></li>
-          <li><a href="index.html#contact">Find Us</a></li>
+          <li><a href="/#about">About Us</a></li>
+          <li><a href="/#team">Meet the Team</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+          <li><a href="/#reviews">Ratings (4.9 ⭐)</a></li>
+          <li><a href="/#contact">Find Us</a></li>
         </ul>
       </li>
-      <li class="nav__cta"><a href="index.html#booking">Book Now</a></li>
+      <li class="nav__cta"><a href="/#booking">Book Now</a></li>
     </ul>
   </div>
 </nav>
 
-  <img src="logo.png" alt="St. Clair Drug Mart logo" class="logo" />
+<div class="card">
+  <img src="/logo.png" alt="St. Clair Drug Mart Pharmacy" class="card__logo" />
+  <p class="card__eyebrow">St. Clair Drug Mart · Toronto</p>
   <div class="code">404</div>
   <h1>Page Not Found</h1>
-  <p>Looks like this page went out of stock. Let's get you back to the pharmacy.</p>
+  <p>This page must have transferred to a different pharmacy. Let's get you back to the right aisle.</p>
+  <div class="divider"></div>
+  <div class="quick-links">
+    <a href="/" class="chip">🏠 Home</a>
+    <a href="/#services" class="chip">💊 Services</a>
+    <a href="/#booking" class="chip">📅 Book Now</a>
+    <a href="/blog/" class="chip">📰 Blog</a>
+    <a href="/#contact" class="chip">📍 Find Us</a>
+  </div>
   <div class="actions">
     <a href="/" class="btn">Go to Home</a>
-    <a href="/#contact" class="btn btn--outline">Contact Us</a>
+    <a href="tel:+14166548181" class="btn btn--ghost">📞 (416) 654-8181</a>
   </div>
-  <footer>
-    <p>St. Clair Drug Mart Pharmacy &nbsp;·&nbsp; 1203 St. Clair Ave W, Toronto &nbsp;·&nbsp; <a href="tel:+14166548181">(416) 654-8181</a></p>
-  </footer>
+</div>
+
+<footer>
+  <p>St. Clair Drug Mart Pharmacy &nbsp;·&nbsp; 1203 St. Clair Ave W, Toronto &nbsp;·&nbsp; <a href="tel:+14166548181">(416) 654-8181</a></p>
+</footer>
 
 <script>
   (function() {
-    var els = document.querySelectorAll('.nav__cloud, .sky-bg-cloud');
+    var els = document.querySelectorAll('.sky-bg-cloud');
     var items = [];
     els.forEach(function(el) {
       var dur = parseFloat(el.dataset.dur);

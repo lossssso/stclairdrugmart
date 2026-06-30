@@ -2667,18 +2667,18 @@
         <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
         <ul class="nav__dropdown">
           <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Order on Uber</a></li>
-          <li><a href="braces-supports.html">Braces &amp; Supports</a></li>
+          <li><a href="/braces-supports.html">Braces &amp; Supports</a></li>
         </ul>
       </li>
-      <li><a href="blog/index.html">Blog</a></li>
+      <li><a href="/blog/">Blog</a></li>
       <li class="nav__has-dropdown">
         <a href="#faq">Got Questions?</a>
         <ul class="nav__dropdown">
-          <li><a href="#about">About Us</a></li>
           <li><a href="#team">Meet the Team</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="#reviews">Ratings (4.9 ⭐)</a></li>
           <li><a href="#contact">Find Us</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#reviews">Ratings (4.9 ⭐)</a></li>
+          <li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
         </ul>
       </li>
       <li class="nav__cta"><a href="#booking">Book Now</a></li>
@@ -3694,7 +3694,7 @@
         </button>
         <div class="svc-acc__body">
           <p>We carry Champion, OTC Professional and Truform back &amp; lumbar supports, knee braces, wrist/elbow splints, ankle supports, abdominal binders, and medical compression stockings &amp; socks — in-store now.</p>
-          <a class="svc-acc__link" href="braces-supports.html">Browse braces &amp; supports →</a>
+          <a class="svc-acc__link" href="/braces-supports.html">Browse braces &amp; supports →</a>
         </div>
       </div>
 
@@ -4216,7 +4216,7 @@
         <p class="shop__card__desc">
           Champion, OTC Professional &amp; Truform back, knee, wrist, ankle and abdominal supports plus medical compression stockings — in stock now.
         </p>
-        <a href="braces-supports.html" class="btn btn--outline">🩹 Shop Braces &amp; Supports</a>
+        <a href="/braces-supports.html" class="btn btn--outline">🩹 Shop Braces &amp; Supports</a>
       </div>
     </div>
   </div>
@@ -5040,9 +5040,9 @@ window.SmartMatch = (function(){
     <div class="blog-grid" id="blog-latest">
       <article class="blog-card">
         <span class="blog-card__date">Loading…</span>
-        <h3 class="blog-card__title"><a href="blog/index.html">Visit our blog</a></h3>
+        <h3 class="blog-card__title"><a href="/blog/">Visit our blog</a></h3>
         <p class="blog-card__excerpt">Health tips and pharmacy news from our team.</p>
-        <a href="blog/index.html" class="blog-card__link">Visit the blog →</a>
+        <a href="/blog/" class="blog-card__link">Visit the blog →</a>
       </article>
     </div>
     <script>
@@ -5068,7 +5068,7 @@ window.SmartMatch = (function(){
     })();
     </script>
     <div class="blog__footer">
-      <a href="blog/index.html" class="btn">View All Posts →</a>
+      <a href="/blog/" class="btn">View All Posts →</a>
     </div>
   </div>
 </section>
@@ -5084,7 +5084,7 @@ window.SmartMatch = (function(){
     <a href="#drug-checker">Drug Checker</a>
     <a href="#services">Insurance</a>
     <a href="#shop">Shop</a>
-    <a href="braces-supports.html">Braces &amp; Supports</a>
+    <a href="/braces-supports.html">Braces &amp; Supports</a>
     <a href="#contact">Contact</a>
     <a href="#about">About</a>
   </div>
@@ -6950,6 +6950,36 @@ window.SmartMatch = (function(){
     window.addEventListener('scroll', onScrollOrResize, { passive: true });
     window.addEventListener('resize', onScrollOrResize, { passive: true });
     updateNav();
+  })();
+
+  // ── Clean section URLs: hash → clean path conversion + scrollspy ─────
+  (function() {
+    var pathMap = {
+      'home':'/','welcome':'/home','booking':'/booking','services':'/services',
+      'drug-checker':'/drug-checker','team':'/team','reviews':'/reviews',
+      'contact':'/contact','about':'/about','faq':'/faq'
+    };
+    var ids = ['home','welcome','booking','services','drug-checker','team','reviews','contact','about','faq'];
+    function applyHash(h) {
+      if (h && pathMap[h]) history.replaceState(null, '', pathMap[h]);
+    }
+    applyHash(location.hash.replace('#',''));
+    window.addEventListener('hashchange', function() { applyHash(location.hash.replace('#','')); });
+    var lastPath = location.pathname, ticking = false;
+    function tick() {
+      ticking = false;
+      var threshold = window.innerHeight * 0.4;
+      var current = ids[0];
+      for (var i = 0; i < ids.length; i++) {
+        var el = document.getElementById(ids[i]);
+        if (el && el.getBoundingClientRect().top <= threshold) current = ids[i];
+      }
+      var p = pathMap[current] || '/';
+      if (p !== lastPath) { history.replaceState(null, '', p); lastPath = p; }
+    }
+    window.addEventListener('scroll', function() {
+      if (ticking) return; ticking = true; requestAnimationFrame(tick);
+    }, { passive: true });
   })();
 
   // ── Clear a stale URL hash once the visitor scrolls back to the top ──
