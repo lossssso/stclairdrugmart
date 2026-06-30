@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; }
     :root {
       --teal-bright: #21a1a8;
       --teal-deeper: #00737c;
@@ -62,28 +63,14 @@
     @keyframes cloud-layer-in { from { opacity: 0; } to { opacity: 1; } }
     @media (prefers-reduced-motion: reduce) { .sky-bg-cloud { animation: none; } .sky-bg { animation: none; opacity: 1; } }
 
-    /* ── Nav ── */
+    /* ── Nav — transparent so sky-bg clouds show through seamlessly ── */
     .nav {
       position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 100;
-      background: rgba(182,236,239,.97);
-      border-bottom: 1px solid rgba(33,161,168,.22);
-      box-shadow: 0 1px 14px rgba(0,80,90,.06);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      background: rgba(182,236,239,.30);
+      border-bottom: 1px solid rgba(33,161,168,.06);
+      box-shadow: none;
+      backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
     }
-    .nav__clouds {
-      position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; opacity: 1;
-      mask-image: linear-gradient(to bottom, transparent 0%, transparent 8%, black 65%);
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 8%, black 65%);
-    }
-    .nav__cloud { position: absolute; left: 0; animation: cloud-drift linear infinite; will-change: transform; max-width: none; display: block; filter: drop-shadow(0 1px 3px rgba(0,60,65,.18)); }
-    .nav__cloud--flip { animation-name: cloud-drift-r; }
-    .nav__cloud:nth-child(1) { width: 950px; height: 235px; top: -100px; animation-duration:175s; animation-delay: -29s; opacity: .85; }
-    .nav__cloud:nth-child(2) { width: 750px; height: 185px; top:  -46px; animation-duration:140s; animation-delay: -81s; opacity: .78; }
-    .nav__cloud:nth-child(3) { width: 880px; height: 218px; top:  -88px; animation-duration:165s; animation-delay:-126s; opacity: .82; }
-    .nav__cloud:nth-child(4) { width: 680px; height: 168px; top:  -36px; animation-duration:125s; animation-delay: -51s; opacity: .76; }
-    .nav__cloud:nth-child(5) { width: 820px; height: 203px; top:  -57px; animation-duration:150s; animation-delay:-102s; opacity: .80; }
-    .nav__cloud:nth-child(6) { width: 900px; height: 223px; top:  -70px; animation-duration:130s; animation-delay:   0s; opacity: .80; }
-    @media (max-width: 768px) { .nav__cloud:nth-child(4), .nav__cloud:nth-child(5) { display: none; } }
     .nav__inner {
       max-width: 1100px; margin: 0 auto; display: flex; align-items: center;
       padding: 0 max(1.5rem, env(safe-area-inset-right)) 0 max(1.5rem, env(safe-area-inset-left));
@@ -299,14 +286,6 @@
 </div>
 
 <nav class="nav" id="nav">
-  <div class="nav__clouds" aria-hidden="true">
-    <img src="/cloud2.webp" class="nav__cloud" data-dur="175" data-delay="-29" style="transform:translateX(-30.6vw)" alt="">
-    <img src="/cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="140" data-delay="-81" style="transform:translateX(44.7vw) scaleX(-1)" alt="">
-    <img src="/cloud2.webp" class="nav__cloud nav__cloud--flip" data-dur="165" data-delay="-126" style="transform:translateX(77.6vw) scaleX(-1)" alt="">
-    <img src="/cloud.png"  class="nav__cloud" data-dur="125" data-delay="-51" style="transform:translateX(13.8vw)" alt="">
-    <img src="/cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="150" data-delay="-102" style="transform:translateX(-8vw) scaleX(-1)" alt="">
-    <img src="/cloud2.webp" class="nav__cloud" data-dur="130" data-delay="0" style="transform:translateX(-60vw)" alt="">
-  </div>
   <div class="nav__inner">
     <a href="/" class="nav__brand">
       <img src="/logo.png" alt="" class="nav__brand__logo" />
@@ -379,7 +358,7 @@
 
 <script>
   (function() {
-    var els = document.querySelectorAll('.nav__cloud, .sky-bg-cloud');
+    var els = document.querySelectorAll('.sky-bg-cloud');
     var items = [];
     els.forEach(function(el) {
       var dur = parseFloat(el.dataset.dur);
