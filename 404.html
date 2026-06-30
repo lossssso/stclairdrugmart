@@ -5,9 +5,11 @@
   (function(){
     var map={
       '/home':'/#welcome','/services':'/#services','/drug-checker':'/#drug-checker',
-      '/booking':'/#booking','/about':'/#about','/team':'/#team',
-      '/reviews':'/#reviews','/faq':'/#faq','/contact':'/#contact',
-      '/find-us':'/#contact','/blog':'/blog/'
+      '/booking':'/#booking','/patient':'/#booking','/patient-portal':'/#booking',
+      '/about':'/#about','/team':'/#team',
+      '/reviews':'/#reviews','/ratings':'/#reviews',
+      '/faq':'/#faq','/questions':'/#faq',
+      '/contact':'/#contact','/find-us':'/#contact','/blog':'/blog/'
     };
     var p=location.pathname.replace(/\/+$/,'');
     var dest=map[p];
