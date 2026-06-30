@@ -2678,7 +2678,7 @@
           <li><a href="#team">Meet the Team</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#reviews">Ratings (4.9 ⭐)</a></li>
-          <li><a href="#contact">Find Us</a></li>
+          <li><a href="#contact">Find Us &amp; Contact</a></li>
         </ul>
       </li>
       <li class="nav__cta"><a href="#booking">Book Now</a></li>
@@ -6950,6 +6950,36 @@ window.SmartMatch = (function(){
     window.addEventListener('scroll', onScrollOrResize, { passive: true });
     window.addEventListener('resize', onScrollOrResize, { passive: true });
     updateNav();
+  })();
+
+  // ── Clean section URLs: hash → clean path conversion + scrollspy ─────
+  (function() {
+    var pathMap = {
+      'home':'/','welcome':'/home','booking':'/booking','services':'/services',
+      'drug-checker':'/drug-checker','team':'/team','reviews':'/reviews',
+      'contact':'/contact','about':'/about','faq':'/faq'
+    };
+    var ids = ['home','welcome','booking','services','drug-checker','team','reviews','contact','about','faq'];
+    function applyHash(h) {
+      if (h && pathMap[h]) history.replaceState(null, '', pathMap[h]);
+    }
+    applyHash(location.hash.replace('#',''));
+    window.addEventListener('hashchange', function() { applyHash(location.hash.replace('#','')); });
+    var lastPath = location.pathname, ticking = false;
+    function tick() {
+      ticking = false;
+      var threshold = window.innerHeight * 0.4;
+      var current = ids[0];
+      for (var i = 0; i < ids.length; i++) {
+        var el = document.getElementById(ids[i]);
+        if (el && el.getBoundingClientRect().top <= threshold) current = ids[i];
+      }
+      var p = pathMap[current] || '/';
+      if (p !== lastPath) { history.replaceState(null, '', p); lastPath = p; }
+    }
+    window.addEventListener('scroll', function() {
+      if (ticking) return; ticking = true; requestAnimationFrame(tick);
+    }, { passive: true });
   })();
 
   // ── Clear a stale URL hash once the visitor scrolls back to the top ──

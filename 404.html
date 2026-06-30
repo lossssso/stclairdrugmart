@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+  (function(){
+    var map={
+      '/home':'/#welcome','/services':'/#services','/drug-checker':'/#drug-checker',
+      '/booking':'/#booking','/about':'/#about','/team':'/#team',
+      '/reviews':'/#reviews','/faq':'/#faq','/contact':'/#contact',
+      '/find-us':'/#contact','/blog':'/blog/'
+    };
+    var p=location.pathname.replace(/\/+$/,'');
+    var dest=map[p];
+    if(dest){location.replace(dest);}
+  })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Page Not Found — St. Clair Drug Mart Pharmacy</title>
