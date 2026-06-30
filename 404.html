@@ -4,16 +4,38 @@
   <script>
   (function(){
     var map={
-      '/home':'/#welcome','/services':'/#services','/drug-checker':'/#drug-checker',
+      '/home':'/#home','/welcome':'/#welcome','/services':'/#services','/drug-checker':'/#drug-checker',
       '/booking':'/#booking','/patient':'/#booking','/patient-portal':'/#booking',
       '/about':'/#about','/team':'/#team','/meet-the-team':'/#team',
       '/reviews':'/#reviews','/ratings':'/#reviews',
       '/faq':'/#faq','/questions':'/#faq',
       '/contact':'/#contact','/find-us':'/#contact','/blog':'/blog/'
     };
+    var dl={
+      '/medication-reviews':'med-reviews','/conditions':'conditions',
+      '/vaccines':'vaccines','/vaccinations':'vaccines',
+      '/smoking-cessation':'cessation','/quit-smoking':'cessation',
+      '/naloxone':'naloxone',
+      '/transfer':'transfer','/prescription-transfer':'transfer',
+      '/testing':'poct','/point-of-care-testing':'poct',
+      '/insurance':'insurance','/referrals':'referrals',
+      '/pink-eye':'cond-22','/dry-eye':'cond-41','/allergic-rhinitis':'cond-25',
+      '/nasal-congestion':'cond-38','/oral-thrush':'cond-18','/cold-sores':'cond-3',
+      '/canker-sores':'cond-6','/mild-headache':'cond-12','/acne':'cond-13',
+      '/eczema':'cond-26','/dandruff':'cond-44','/impetigo':'cond-2',
+      '/ringworm':'cond-9','/warts':'cond-46','/head-lice':'cond-65',
+      '/athletes-foot':'cond-10','/calluses':'cond-45','/jock-itch':'cond-8',
+      '/heartburn':'cond-24','/hemorrhoids':'cond-4','/pinworms':'cond-43',
+      '/sprains':'cond-21','/period-pain':'cond-20','/yeast-infection':'cond-42',
+      '/nausea-pregnancy':'cond-30','/uti':'cond-23','/insect-bites':'cond-19',
+      '/tick-bites':'cond-49'
+    };
     var p=location.pathname.replace(/\/+$/,'');
-    var dest=map[p];
-    if(dest){location.replace(dest);}
+    if(map[p]){location.replace(map[p]);}
+    else if(dl[p]){
+      try{sessionStorage.setItem('__dlA',dl[p]);sessionStorage.setItem('__dlP',p);}catch(e){}
+      location.replace('/#booking');
+    }
   })();
   </script>
   <meta charset="UTF-8" />
