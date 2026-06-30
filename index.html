@@ -6989,8 +6989,16 @@ window.SmartMatch = (function(){
     var initHash=location.hash.replace('#','');
     applyHash(initHash);
     window.addEventListener('hashchange',function(){applyHash(location.hash.replace('#',''));});
+    window.addEventListener('beforeunload',function(){
+      try{sessionStorage.setItem('__scrollY',String(window.scrollY));}catch(e){}
+    });
     window.addEventListener('load',function(){
-      if(initHash&&!dlA){
+      if(dlA)return;
+      var savedY;
+      try{savedY=sessionStorage.getItem('__scrollY');sessionStorage.removeItem('__scrollY');}catch(e){}
+      if(savedY!==null&&savedY!==undefined&&savedY!==''){
+        window.scrollTo(0,parseInt(savedY,10));
+      }else if(initHash){
         var el=document.getElementById(initHash);
         if(el)el.scrollIntoView({behavior:'auto',block:'start'});
       }
