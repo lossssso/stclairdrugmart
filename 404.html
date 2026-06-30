@@ -80,7 +80,10 @@
       color: var(--teal-deeper); letter-spacing: .02em; text-transform: uppercase;
       white-space: nowrap; text-decoration: none;
     }
-    .nav__brand__logo { height: 34px; width: auto; display: block; }
+    .nav__brand__logo { height: 34px; width: auto; display: block; transition: transform .25s cubic-bezier(.2,.8,.3,1.1); }
+    .nav__brand span { display: inline-block; transform-origin: left center; transition: transform .25s cubic-bezier(.2,.8,.3,1.1), color .2s ease; }
+    .nav__brand:hover .nav__brand__logo { transform: scale(1.1); }
+    .nav__brand:hover span { transform: scale(1.06); color: var(--teal-bright); }
     .nav__links { display: flex; align-items: center; list-style: none; gap: .25rem; margin-left: auto; }
     .nav__links > li { display: flex; align-items: center; }
     .nav__links a {
