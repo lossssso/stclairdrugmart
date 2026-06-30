@@ -6986,8 +6986,15 @@ window.SmartMatch = (function(){
     function setPath(p){if(p!==lastPath){history.replaceState(null,'',p);lastPath=p;}}
 
     function applyHash(h){if(h&&SEC_PATH[h])setPath(SEC_PATH[h]);}
-    applyHash(location.hash.replace('#',''));
+    var initHash=location.hash.replace('#','');
+    applyHash(initHash);
     window.addEventListener('hashchange',function(){applyHash(location.hash.replace('#',''));});
+    window.addEventListener('load',function(){
+      if(initHash&&!dlA){
+        var el=document.getElementById(initHash);
+        if(el)el.scrollIntoView({behavior:'auto',block:'start'});
+      }
+    });
 
     function tick(){
       ticking=false;
