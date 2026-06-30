@@ -6952,58 +6952,99 @@ window.SmartMatch = (function(){
   })();
 
   // ── Clean section URLs: hash → clean path conversion + scrollspy ─────
-  (function() {
-    var pathMap = {
-      'home':'/','welcome':'/home','booking':'/booking','services':'/services',
+  // ── Section URLs, deep links & sub-section accordion tracking ───────
+  (function(){
+    var SEC_PATH={
+      'home':'/','welcome':'/welcome','booking':'/booking','services':'/services',
       'drug-checker':'/drug-checker','team':'/team','reviews':'/reviews',
       'contact':'/contact','about':'/about','faq':'/faq'
     };
-    var ids = ['home','welcome','booking','services','drug-checker','team','reviews','contact','about','faq'];
-    function applyHash(h) {
-      if (h && pathMap[h]) history.replaceState(null, '', pathMap[h]);
-    }
-    applyHash(location.hash.replace('#',''));
-    window.addEventListener('hashchange', function() { applyHash(location.hash.replace('#','')); });
-    var lastPath = location.pathname, ticking = false;
-    function tick() {
-      ticking = false;
-      var threshold = window.innerHeight * 0.4;
-      var current = ids[0];
-      for (var i = 0; i < ids.length; i++) {
-        var el = document.getElementById(ids[i]);
-        if (el && el.getBoundingClientRect().top <= threshold) current = ids[i];
-      }
-      var p = pathMap[current] || '/';
-      if (p !== lastPath) { history.replaceState(null, '', p); lastPath = p; }
-    }
-    window.addEventListener('scroll', function() {
-      if (ticking) return; ticking = true; requestAnimationFrame(tick);
-    }, { passive: true });
-  })();
+    var SEC_IDS=['home','welcome','booking','services','drug-checker','team','reviews','contact','about','faq'];
+    var ACC_PATH={
+      'acc-med-reviews':'/medication-reviews','acc-ailments':'/conditions',
+      'acc-vaccines':'/vaccines','acc-cessation':'/smoking-cessation',
+      'acc-naloxone':'/naloxone','acc-transfer':'/transfer',
+      'acc-poct':'/testing','acc-insurance':'/insurance','acc-referrals':'/referrals'
+    };
+    var COND_PATH={
+      '22':'/pink-eye','41':'/dry-eye','25':'/allergic-rhinitis','38':'/nasal-congestion',
+      '18':'/oral-thrush','3':'/cold-sores','6':'/canker-sores','12':'/mild-headache',
+      '13':'/acne','26':'/eczema','44':'/dandruff','2':'/impetigo',
+      '9':'/ringworm','46':'/warts','65':'/head-lice','10':'/athletes-foot',
+      '45':'/calluses','8':'/jock-itch','24':'/heartburn','4':'/hemorrhoids',
+      '43':'/pinworms','21':'/sprains','20':'/period-pain','42':'/yeast-infection',
+      '30':'/nausea-pregnancy','23':'/uti','19':'/insect-bites','49':'/tick-bites'
+    };
+    var DL_ACC={
+      'med-reviews':'acc-med-reviews','conditions':'acc-ailments',
+      'vaccines':'acc-vaccines','cessation':'acc-cessation',
+      'naloxone':'acc-naloxone','transfer':'acc-transfer',
+      'poct':'acc-poct','insurance':'acc-insurance','referrals':'acc-referrals'
+    };
 
-  // ── Clear a stale URL hash once the visitor scrolls back to the top ──
-  // Anchor links elsewhere on the page set #section-id hashes for direct
-  // linking. If someone arrives via one of those (a shared link, a deep
-  // link from search, etc.) and then scrolls back up to the hero, the hash
-  // would otherwise sit in the address bar forever — so copying the link
-  // from the top of the page would hand out wherever they entered from,
-  // not the homepage.
-  (function() {
-    var threshold = 80;
-    var ticking = false;
-    function clearHashAtTop() {
-      ticking = false;
-      if (!window.location.hash) return;
-      var scrollY = window.scrollY || window.pageYOffset;
-      if (scrollY <= threshold) {
-        history.replaceState(null, '', window.location.pathname + window.location.search);
+    var lastPath=location.pathname,ticking=false;
+    function setPath(p){if(p!==lastPath){history.replaceState(null,'',p);lastPath=p;}}
+
+    function applyHash(h){if(h&&SEC_PATH[h])setPath(SEC_PATH[h]);}
+    applyHash(location.hash.replace('#',''));
+    window.addEventListener('hashchange',function(){applyHash(location.hash.replace('#',''));});
+
+    function tick(){
+      ticking=false;
+      var threshold=window.innerHeight*0.4,cur=SEC_IDS[0];
+      for(var i=0;i<SEC_IDS.length;i++){
+        var el=document.getElementById(SEC_IDS[i]);
+        if(el&&el.getBoundingClientRect().top<=threshold)cur=SEC_IDS[i];
       }
+      var p=SEC_PATH[cur]||'/';
+      if(cur==='booking'||cur==='services'){
+        var sec=document.getElementById(cur);
+        if(sec){var oa=sec.querySelector('[id].open');if(oa&&ACC_PATH[oa.id])p=ACC_PATH[oa.id];}
+      }
+      setPath(p);
     }
-    window.addEventListener('scroll', function() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(clearHashAtTop);
-    }, { passive: true });
+    window.addEventListener('scroll',function(){if(ticking)return;ticking=true;requestAnimationFrame(tick);},{passive:true});
+
+    var _orig=window.openAcc;
+    if(_orig){
+      window.openAcc=function(id){
+        _orig(id);
+        if(ACC_PATH[id])setPath(ACC_PATH[id]);
+      };
+    }
+
+    document.addEventListener('click',function(e){
+      var el=e.target.closest&&e.target.closest('.js-condition');
+      if(!el)return;
+      var u=el.getAttribute('data-url')||'',m=u.match(/diagnosisId=(\d+)/);
+      if(m&&COND_PATH[m[1]])setPath(COND_PATH[m[1]]);
+    });
+
+    var dlA,dlP;
+    try{dlA=sessionStorage.getItem('__dlA');dlP=sessionStorage.getItem('__dlP');
+      if(dlA){sessionStorage.removeItem('__dlA');sessionStorage.removeItem('__dlP');}
+    }catch(e){}
+    if(dlA){
+      function handleDL(){
+        var bk=document.getElementById('booking');
+        if(bk)bk.scrollIntoView({behavior:'smooth',block:'start'});
+        if(dlA.indexOf('cond-')===0){
+          var dId=dlA.slice(5);
+          if(typeof window.openAcc==='function')window.openAcc('acc-ailments');
+          setTimeout(function(){
+            var c=document.querySelector('[data-url*="diagnosisId='+dId+'"]');
+            if(c)c.scrollIntoView({behavior:'smooth',block:'center'});
+          },400);
+          if(dlP)setPath(dlP);
+        }else if(DL_ACC[dlA]){
+          if(typeof window.openAcc==='function')window.openAcc(DL_ACC[dlA]);
+          if(dlP)setPath(dlP);
+        }
+      }
+      if(document.readyState==='loading'){
+        document.addEventListener('DOMContentLoaded',function(){setTimeout(handleDL,200);});
+      }else{setTimeout(handleDL,200);}
+    }
   })();
 
   // ── Transit/Parking logo scroll + highlight ───────────────
