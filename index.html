@@ -468,7 +468,7 @@
     .hero__socials .uber-word { width: 30px; height: auto; object-fit: contain; }
     .hero__weather { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; width: auto !important; height: 42px; padding: 0 1rem; border-radius: 42px !important; background: rgba(0,115,124,.09); border: 1.5px solid rgba(0,115,124,.24); font-size: .82rem; font-weight: 600; color: var(--teal-deeper); text-decoration: none; transition: background .15s, transform .15s; white-space: nowrap; flex-shrink: 0; }
     .hero__weather:hover { background: rgba(0,115,124,.18); transform: translateY(-2px); }
-    #weather-icon { font-size: 1rem; line-height: 1; }
+    #weather-icon { display: inline-flex; align-items: center; line-height: 0; }
     #weather-temp { font-size: .82rem; font-weight: 700; }
     /* ── Welcome modal ────────────────────────────── */
     .welcome-modal-overlay {
@@ -2759,7 +2759,7 @@
       <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
     </a>
     <a id="weather-btn" class="hero__weather" href="https://wttr.in/Toronto" target="_blank" rel="noopener" aria-label="Toronto weather">
-      <span id="weather-icon">🌤️</span><span id="weather-temp">--°C</span>
+      <span id="weather-icon"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="7" r="2.8"/><path d="M8 1.6v1.3M3.4 3.4l.9.9M1.8 8h1.3M12.6 3.4l-.9.9"/><path d="M17 20a3.6 3.6 0 0 0 .2-7.2 4.8 4.8 0 0 0-9.1-.3A3.4 3.4 0 0 0 8 20z" fill="currentColor" stroke="none"/></svg></span><span id="weather-temp">--°C</span>
     </a>
   </div>
 
@@ -7206,22 +7206,29 @@ window.SmartMatch = (function(){
   var tempEl = document.getElementById('weather-temp');
   var iconEl = document.getElementById('weather-icon');
   if (!tempEl) return;
+  var A='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">',Z='</svg>';
+  var ICON = {
+    sun:   A+'<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.5 1.5M17.9 17.9l1.5 1.5M2.5 12h2M19.5 12h2M4.6 19.4l1.5-1.5M17.9 6.1l1.5-1.5"/>'+Z,
+    part:  A+'<circle cx="8" cy="7" r="2.8"/><path d="M8 1.6v1.3M3.4 3.4l.9.9M1.8 8h1.3M12.6 3.4l-.9.9"/><path d="M17 20a3.6 3.6 0 0 0 .2-7.2 4.8 4.8 0 0 0-9.1-.3A3.4 3.4 0 0 0 8 20z" fill="currentColor" stroke="none"/>'+Z,
+    cloud: '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M17.5 19a4.5 4.5 0 0 0 .3-9 6 6 0 0 0-11.6.4A4 4 0 0 0 6.5 19z"/></svg>',
+    rain:  A+'<path d="M17 14.5a3.8 3.8 0 0 0 .3-7.6 5.2 5.2 0 0 0-10-.4A3.5 3.5 0 0 0 7 14.5z" fill="currentColor" stroke="none"/><path d="M8.5 17.5l-1 2.5M12 17.5l-1 2.5M15.5 17.5l-1 2.5"/>'+Z,
+    snow:  A+'<path d="M17 14.5a3.8 3.8 0 0 0 .3-7.6 5.2 5.2 0 0 0-10-.4A3.5 3.5 0 0 0 7 14.5z" fill="currentColor" stroke="none"/><circle cx="8" cy="19" r=".9" fill="currentColor" stroke="none"/><circle cx="12" cy="20" r=".9" fill="currentColor" stroke="none"/><circle cx="16" cy="19" r=".9" fill="currentColor" stroke="none"/>'+Z,
+    storm: A+'<path d="M17 13.5a3.8 3.8 0 0 0 .3-7.6 5.2 5.2 0 0 0-10-.4A3.5 3.5 0 0 0 7 13.5z" fill="currentColor" stroke="none"/><path d="M12.5 14l-2.5 3.8h3l-2.5 3.7"/>'+Z
+  };
+  function pick(code){
+    if (code === 0 || code === 1) return ICON.sun;
+    if (code === 2) return ICON.part;
+    if (code === 3 || (code >= 45 && code <= 48)) return ICON.cloud;
+    if ((code >= 71 && code <= 77) || code === 85 || code === 86) return ICON.snow;
+    if (code >= 95) return ICON.storm;
+    if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return ICON.rain;
+    return ICON.cloud;
+  }
   fetch('https://api.open-meteo.com/v1/forecast?latitude=43.6532&longitude=-79.3832&current=temperature_2m,weather_code&timezone=America/Toronto')
     .then(function(r){ return r.json(); })
     .then(function(d){
-      var temp = Math.round(d.current.temperature_2m);
-      var code = d.current.weather_code;
-      var icon = '🌤️';
-      if (code === 0) icon = '☀️';
-      else if (code <= 2) icon = '⛅';
-      else if (code <= 3) icon = '☁️';
-      else if (code <= 49) icon = '🌫️';
-      else if (code <= 67) icon = '🌧️';
-      else if (code <= 77) icon = '🌨️';
-      else if (code <= 82) icon = '🌦️';
-      else if (code <= 99) icon = '⛈️';
-      tempEl.textContent = temp + '°C';
-      iconEl.textContent = icon;
+      tempEl.textContent = Math.round(d.current.temperature_2m) + '°C';
+      if (iconEl) iconEl.innerHTML = pick(d.current.weather_code);
     })
     .catch(function(){});
 })();
