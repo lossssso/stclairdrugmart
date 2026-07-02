@@ -2598,6 +2598,64 @@
     }
     .pp-close:hover { color: #111; }
     .pp-link { color: rgba(255,255,255,.55); font-size: .7rem; text-decoration: underline; cursor: pointer; background: none; border: none; }
+
+    /* ── Store walk-in 3D (scroll-driven Three.js tour, see walkin3d.js) ──
+       Hidden unless JS activates it (html.w3d-on); classic page otherwise. */
+    .w3d { display: none; }
+    html.w3d-on .w3d { display: block; }
+    .w3d__track { position: relative; height: 380vh; }
+    .w3d__stage {
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 100vh; height: 100dvh;
+      overflow: hidden;
+      background: linear-gradient(180deg, #eafcfd 0%, #cfeff5 100%);
+    }
+    .w3d__stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .w3d__hint {
+      position: absolute; bottom: 4.5vh; left: 50%; transform: translateX(-50%);
+      color: var(--teal-dark); font-weight: 800; font-size: .95rem; text-align: center;
+      text-shadow: 0 1px 10px rgba(255,255,255,.9), 0 0 3px rgba(255,255,255,.9);
+      pointer-events: none; animation: w3d-bob 1.7s ease-in-out infinite;
+    }
+    @keyframes w3d-bob { 0%,100% { transform: translate(-50%,0); } 50% { transform: translate(-50%,7px); } }
+    .w3d__skip {
+      position: absolute; bottom: 4vh; right: 3.5vw;
+      background: rgba(5,44,49,.55); color: #fff; border: 1px solid rgba(255,255,255,.35);
+      border-radius: 999px; padding: .45rem .95rem; font-size: .78rem; font-weight: 700;
+      cursor: pointer; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    }
+    .w3d__skip:hover { background: rgba(5,44,49,.8); }
+    .w3d-spot {
+      position: absolute; display: flex; align-items: center; gap: .45rem;
+      opacity: 0; pointer-events: none; text-decoration: none; z-index: 3;
+      transform-origin: left center; will-change: transform, opacity;
+    }
+    .w3d-spot--flip { flex-direction: row-reverse; transform-origin: right center; }
+    .w3d-spot-dot {
+      width: 17px; height: 17px; border-radius: 50%; flex-shrink: 0;
+      background: var(--teal-bright); border: 3px solid #fff;
+      box-shadow: 0 0 0 5px rgba(33,161,168,.35), 0 2px 8px rgba(0,0,0,.4);
+      animation: w3d-pulse 2s ease-in-out infinite;
+    }
+    @keyframes w3d-pulse {
+      0%,100% { box-shadow: 0 0 0 5px rgba(33,161,168,.35), 0 2px 8px rgba(0,0,0,.4); }
+      50%     { box-shadow: 0 0 0 11px rgba(33,161,168,.12), 0 2px 8px rgba(0,0,0,.4); }
+    }
+    .w3d-spot-label {
+      background: rgba(255,255,255,.95); color: var(--teal-dark);
+      font-size: .8rem; font-weight: 700; line-height: 1.25;
+      padding: .42rem .72rem; border-radius: 999px; white-space: nowrap;
+      box-shadow: 0 3px 12px rgba(0,0,0,.25);
+      transition: background .15s;
+    }
+    .w3d-spot:hover .w3d-spot-label,
+    .w3d-spot:focus-visible .w3d-spot-label { background: #fff; }
+    .w3d-spot:focus-visible .w3d-spot-dot { outline: 3px solid var(--teal-dark); outline-offset: 2px; }
+    @media (max-width: 768px) {
+      .w3d__track { height: 330vh; }
+      .w3d-spot-label { font-size: .7rem; padding: .32rem .55rem; }
+      .w3d__skip { bottom: 3vh; right: 4vw; font-size: .72rem; }
+    }
   </style>
 </head>
 <body>
@@ -2808,6 +2866,25 @@
     </div>
   </div>
 </div>
+
+
+<!-- ── Store walk-in 3D: scroll-driven Three.js tour (walkin3d.js) ── -->
+<section id="store-walkin3d" class="w3d" aria-label="Scroll-through 3D tour: step inside our store">
+  <div class="w3d__track" id="w3d-track">
+    <div class="w3d__stage">
+      <canvas id="w3d-canvas" aria-hidden="true"></canvas>
+      <a class="w3d-spot" data-pos="-2.15,1.35,-4.6" href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🤒 I'm feeling ill</span></a>
+      <a class="w3d-spot" data-pos="-2.3,1.55,-6.6" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">💊 Medication questions</span></a>
+      <a class="w3d-spot" data-pos="-3.05,2.05,-8.4" href="#rx-extensions" onclick="setTimeout(function(){var el=document.getElementById('rx-extensions');el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.remove('rx-ext--flash');void el.offsetWidth;el.classList.add('rx-ext--flash');},60)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🩹 Running out of meds</span></a>
+      <a class="w3d-spot" data-pos="0.4,1.75,-12.7" href="#services" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">✈️ Travel &amp; vaccines</span></a>
+      <a class="w3d-spot w3d-spot--flip" data-pos="2.95,1.95,-4.4" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🌿 Natural health advice</span></a>
+      <a class="w3d-spot w3d-spot--flip" data-pos="2.95,1.5,-6.8" href="#services" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🆘 Free naloxone kit</span></a>
+      <a class="w3d-spot w3d-spot--flip" data-pos="2.95,1.95,-9.4" href="#services" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🚭 Quit smoking</span></a>
+      <div class="w3d__hint" id="w3d-hint">Scroll to step inside<br>&#9660;</div>
+      <button class="w3d__skip" id="w3d-skip" type="button">Skip &darr;</button>
+    </div>
+  </div>
+</section>
 
 <!-- ── Welcome ───────────────────────────────────────────── -->
 <section id="welcome">
@@ -7172,6 +7249,8 @@ window.SmartMatch = (function(){
     });
   });
 </script>
+
+<script type="module" src="walkin3d.js"></script>
 
 <!-- FAQPage structured data updater: refreshes the static #faq-schema-static block in
      <head> from the window.FAQS array, so JS-rendering crawlers always see current FAQs
