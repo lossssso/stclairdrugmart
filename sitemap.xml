@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.stclairdrugmart.ca/</loc>
-    <lastmod>2026-06-28</lastmod>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -19,13 +19,13 @@
   </url>
   <url>
     <loc>https://www.stclairdrugmart.ca/braces-supports.html</loc>
-    <lastmod>2026-06-23</lastmod>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.stclairdrugmart.ca/blog/index.html</loc>
-    <lastmod>2026-06-22</lastmod>
+    <loc>https://www.stclairdrugmart.ca/blog/</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
