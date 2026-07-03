@@ -58,15 +58,32 @@
   function clamp01(t) { return t < 0 ? 0 : t > 1 ? 1 : t; }
   function seg(p, a, b) { var t = clamp01((p - a) / (b - a)); return t * t * (3 - 2 * t); }
 
-  /* ── lazy boot: import three.js when the section is near ─────────── */
+  /* ── lazy boot: import three.js + gsap/ScrollTrigger when near ───── */
   var booted = false, engine = null;
+
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
 
   var nearIO = new IntersectionObserver(function (entries) {
     if (entries[0].isIntersecting && !booted) {
       booted = true;
       nearIO.disconnect();
-      import('./vendor/three.module.min.js').then(function (THREE) {
-        engine = buildEngine(THREE);
+      Promise.all([
+        loadScript('./vendor/gsap.min.js').then(function () {
+          return loadScript('./vendor/ScrollTrigger.min.js');
+        }),
+        import('./vendor/three.module.min.js')
+      ]).then(function (results) {
+        var THREE = results[1];
+        window.gsap.registerPlugin(window.ScrollTrigger);
+        engine = buildEngine(THREE, window.gsap, window.ScrollTrigger);
         if (visible) engine.start();
       }).catch(function () {
         root.classList.remove('w3d-on');
@@ -88,7 +105,8 @@
   });
 
   /* ── the 3D engine ────────────────────────────────────────────── */
-  function buildEngine(THREE) {
+  function buildEngine(THREE, gsap, ScrollTrigger) {
+    var doorEase = gsap.parseEase('back.out(1.4)');
 
     var COL = {
       sky: 0xcfeff5, cream: 0xefe9df, brick: 0x9b6353, dark: 0x3c4448,
@@ -352,8 +370,23 @@
       camera.updateProjectionMatrix();
       path = paths();
     }
-    window.addEventListener('resize', function () { resize(); pin(true); });
+    window.addEventListener('resize', function () { resize(); pin(true); ScrollTrigger.refresh(); });
     resize();
+
+    /* ── scroll-scrubbed progress (GSAP ScrollTrigger) ──────────────
+       scrub: 0.6 gives the camera path a smoothed, inertial "catch-up"
+       to the raw scroll position instead of snapping to it 1:1 — this
+       is what actually reads as "buttery" rather than mechanical. Pin
+       stays off here; the stage is pinned separately via pin() above
+       because body{overflow-x:hidden} breaks ScrollTrigger's own pin. */
+    var scrubP = 0;
+    var st = ScrollTrigger.create({
+      trigger: track,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.6,
+      onUpdate: function (self) { scrubP = self.progress; }
+    });
 
     /* ── frame loop ── */
     var active = false, rafId = null, doneFired = false;
@@ -370,6 +403,7 @@
             else {
               /* still chugging: bow out to the classic page */
               stop();
+              st.kill();
               root.classList.remove('w3d-on');
               return;
             }
@@ -380,10 +414,7 @@
       lastT = now;
 
       pin(false);
-      var vh = window.innerHeight;
-      var rect = track.getBoundingClientRect();
-      var total = rect.height - vh;
-      var p = total > 0 ? clamp01(-rect.top / total) : 1;
+      var p = scrubP;
 
       /* camera along path */
       var u = seg(p, 0, 1);
@@ -401,8 +432,8 @@
         camera.lookAt(cl);
       }
 
-      /* door opens as you approach */
-      hinge.rotation.y = -1.9 * seg(p, 0.2, 0.42);
+      /* door opens as you approach, with a slight spring-hinge overshoot */
+      hinge.rotation.y = -1.9 * doorEase(clamp01((p - 0.2) / (0.42 - 0.2)));
 
       /* gentle cloud drift */
       var t = now * 0.00004;
