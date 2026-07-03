@@ -1,0 +1,13 @@
+# Netlify config for branch-preview hosting only. This has no effect on the
+# live site (stclairdrugmart.ca), which is served by GitHub Pages from
+# `main`. Netlify is used purely to give the `dev` branch a persistent
+# preview URL so changes can be reviewed before merging to main.
+#
+# Static site, no build step — publish the repo root as-is.
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
