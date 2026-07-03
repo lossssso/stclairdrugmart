@@ -83,6 +83,7 @@
       ]).then(function (results) {
         var THREE = results[1];
         window.gsap.registerPlugin(window.ScrollTrigger);
+        if (window.lenis) window.lenis.on('scroll', window.ScrollTrigger.update);
         engine = buildEngine(THREE, window.gsap, window.ScrollTrigger);
         if (visible) engine.start();
       }).catch(function () {

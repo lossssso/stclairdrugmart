@@ -161,6 +161,9 @@
       --shadow:      0 2px 12px rgba(0,115,124,.10);
       /* modern Helvetica-style display font for the name/branding */
       --font-display: 'Helvetica Neue', Helvetica, 'Arial', 'Inter', sans-serif;
+      /* ── Apple-signature easing — default + spring-out, used on hover/press ── */
+      --ease-apple:  cubic-bezier(.25,.1,.25,1);
+      --ease-spring: cubic-bezier(.175,.885,.32,1.275);
     }
     html { scroll-behavior: smooth; }
     html {
@@ -617,12 +620,13 @@
     .welcome__photo img { width: 100%; height: auto; display: block; transition: transform .35s ease; }
     .welcome__question { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--teal-bright); margin: 1.6rem 0 .7rem; }
     .welcome__pills { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem .6rem; }
-    .welcome__pill { position: relative; display: flex; align-items: center; justify-content: center; text-align: center; gap: .4rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 14px; padding: .6rem 1rem; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; line-height: 1.3; transition: background .15s, color .15s, transform .12s, box-shadow .15s; }
+    .welcome__pill { position: relative; display: flex; align-items: center; justify-content: center; text-align: center; gap: .4rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 14px; padding: .6rem 1rem; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; line-height: 1.3; transition: background .2s var(--ease-apple), color .2s var(--ease-apple), transform .3s var(--ease-spring), box-shadow .2s var(--ease-apple); }
+    .welcome__pill:active { transform: scale(.97); transition-duration: .12s; }
     .welcome__pill::before,
     .welcome__pill::after { content: ''; position: absolute; top: 100%; width: 0; height: 0; border-style: solid; transition: border-color .15s; }
     .welcome__pill::before { left: 26px; margin-top: -1px; border-width: 18px 12px 0 12px; border-color: var(--border) transparent transparent transparent; }
     .welcome__pill::after { left: 27.5px; margin-top: -2.5px; border-width: 15px 10.5px 0 10.5px; border-color: var(--teal-ice) transparent transparent transparent; }
-    .welcome__pill:hover { background: var(--teal-bright); color: #fff; border-color: var(--teal-bright); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(33,161,168,.25); }
+    .welcome__pill:hover { background: var(--teal-bright); color: #fff; border-color: var(--teal-bright); transform: translateY(-1px) scale(1.03); box-shadow: 0 4px 14px rgba(33,161,168,.25); }
     .welcome__pill:hover::before { border-top-color: var(--teal-bright); }
     .welcome__pill:hover::after { border-top-color: var(--teal-bright); }
     .welcome__boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-top: 2.25rem; }
@@ -770,9 +774,10 @@
       border-radius: 6px;
       border: none;
       cursor: pointer;
-      transition: background .15s, transform .1s, box-shadow .15s;
+      transition: background .2s var(--ease-apple), transform .3s var(--ease-spring), box-shadow .2s var(--ease-apple);
     }
-    .btn:hover { background: #003f44; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,63,68,.25); }
+    .btn:hover { background: #003f44; transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 20px rgba(0,63,68,.25); }
+    .btn:active { transform: scale(.97); transition-duration: .12s; }
     .btn--outline {
       background: transparent;
       color: var(--teal-dark);
@@ -2373,9 +2378,9 @@
       border-radius: 14px; overflow: hidden;
       box-shadow: 0 4px 22px rgba(0,0,0,.18);
       border-left: 4px solid var(--teal-mid);
-      transition: box-shadow .25s, transform .25s, border-color .2s;
+      transition: box-shadow .25s var(--ease-apple), transform .25s var(--ease-apple), border-color .2s var(--ease-apple);
     }
-    .faq-item:hover { box-shadow: 0 10px 32px rgba(0,0,0,.28); transform: translateY(-2px); }
+    .faq-item:hover { box-shadow: 0 10px 32px rgba(0,0,0,.28); transform: translateY(-2px) scale(1.01); }
     .faq-item.open { border-left-color: var(--teal-bright); }
     .faq-item__q {
       width: 100%; text-align: left; background: none; border: none;
@@ -2656,6 +2661,24 @@
       .w3d-spot-label { font-size: .7rem; padding: .32rem .55rem; }
       .w3d__skip { bottom: 3vh; right: 4vw; font-size: .72rem; }
     }
+
+    /* ── Scroll reveals — native CSS scroll-timeline, zero JS ──────────
+       Progressive enhancement only: browsers without support (or with
+       reduced-motion) simply show cards in their normal, already-visible
+       state — nothing to fall back to since there's no JS observer here. */
+    @media (prefers-reduced-motion: no-preference) {
+      @supports (animation-timeline: view()) {
+        .blog-card, .faq-item {
+          animation: reveal-up linear both;
+          animation-timeline: view();
+          animation-range: entry 0% cover 28%;
+        }
+        @keyframes reveal-up {
+          from { opacity: 0; transform: translateY(28px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      }
+    }
   </style>
 </head>
 <body>
@@ -2691,6 +2714,23 @@
         if (fps < 45 || slow / frames > 0.25) root.classList.add('lite-clouds');
       }
     })(t0);
+  } catch(e){}
+})();
+</script>
+<script src="vendor/lenis.min.js"></script>
+<script>
+/* Site-wide smooth scroll (Lenis) — adds inertial momentum to wheel/touch
+   scrolling. Skipped for reduced-motion or weak/lite devices, same gates as
+   the cloud guard above. autoRaf drives it independently so it works even
+   before GSAP loads; if the 3D walk-in later loads GSAP+ScrollTrigger,
+   walkin3d.js hooks lenis.on('scroll', ScrollTrigger.update) so the two
+   stay in sync instead of fighting over scroll position. */
+(function(){
+  try {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (document.documentElement.classList.contains('lite-clouds')) return;
+    if (typeof Lenis === 'undefined') return;
+    window.lenis = new Lenis({ autoRaf: true, duration: 1.05 });
   } catch(e){}
 })();
 </script>
