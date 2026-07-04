@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
+  <script src="../pagefade.js"></script>
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2YQ9FDLMCV"></script>
   <script>
@@ -227,11 +228,13 @@
     .featured-wrap { margin-bottom:2rem; }
     .featured-label { font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--teal-dark); margin-bottom:.65rem; }
     .post-featured {
-      background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow);
+      background:var(--white); border-radius:16px;
+      box-shadow:0 1px 2px rgba(13,45,46,.04), 0 12px 30px -10px rgba(13,45,46,.12);
+      border:1px solid rgba(0,115,124,.10);
       display:grid; grid-template-columns:1fr 1.6fr; overflow:hidden;
-      border-top:4px solid var(--teal-bright); transition:box-shadow .2s;
+      transition:box-shadow .25s cubic-bezier(.25,.1,.25,1);
     }
-    .post-featured:hover { box-shadow:0 6px 28px rgba(0,115,124,.18); }
+    .post-featured:hover { box-shadow:0 4px 10px rgba(13,45,46,.05), 0 20px 44px -12px rgba(0,115,124,.22); }
     .post-featured__img {
       background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal-bright) 100%);
       display:flex; align-items:center; justify-content:center;
@@ -260,11 +263,14 @@
     /* ── Posts grid ───────────────────────────────── */
     .posts-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
     .post-card {
-      background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow);
-      border-top:3px solid var(--teal-bright); display:flex; flex-direction:column;
-      gap:.5rem; padding:1.5rem; transition:box-shadow .2s, transform .2s;
+      background:linear-gradient(180deg,#ffffff 0%,#f2fbfc 100%); border-radius:16px;
+      box-shadow:0 1px 2px rgba(13,45,46,.04), 0 12px 30px -10px rgba(13,45,46,.12);
+      border:1px solid rgba(0,115,124,.10);
+      display:flex; flex-direction:column;
+      gap:.5rem; padding:1.5rem;
+      transition:box-shadow .25s cubic-bezier(.25,.1,.25,1), transform .25s cubic-bezier(.175,.885,.32,1.275);
     }
-    .post-card:hover { box-shadow:0 6px 28px rgba(0,115,124,.16); transform:translateY(-2px); }
+    .post-card:hover { box-shadow:0 4px 10px rgba(13,45,46,.05), 0 18px 40px -12px rgba(13,45,46,.18); transform:translateY(-2px); }
     .post-card__icon { font-size:2rem; margin-bottom:.2rem; }
     .post-card__meta { display:flex; gap:.75rem; font-size:.75rem; color:var(--text-muted); }
     .post-card__title { font-size:1rem; font-weight:700; line-height:1.35; color:var(--teal-deeper); }

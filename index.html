@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <script src="pagefade.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
   <title>St. Clair Drug Mart Pharmacy | Top-Rated Clinical Pharmacy in Toronto</title>
   <meta name="description" content="St. Clair Drug Mart — 4.9★ pharmacy on St. Clair West, Toronto. Assessments, prescriptions & vaccines — walk in or book by phone. (416) 654-8181." />
@@ -175,7 +176,11 @@
       background: linear-gradient(180deg, #b6ecef 0%, #cdf5f6 35%, #e4fbfc 100%) fixed;
       color: var(--text);
       line-height: 1.65;
+      /* clip (not hidden): hidden makes <body> a scroll container, which
+         silently breaks position:sticky and view()-timeline animations.
+         Old browsers ignore clip and fall back to the hidden line. */
       overflow-x: hidden;
+      overflow-x: clip;
     }
     /* ── Fixed sky background — clouds drift behind all sections ── */
     .sky-bg {
@@ -642,8 +647,9 @@
     /* ── Medication Extensions & Adaptations callout ──────────── */
     .rx-ext { margin-top: 2.25rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
       background: linear-gradient(135deg, var(--teal-ice), #fff);
-      border: 1.5px solid var(--border); border-left: 5px solid var(--teal-bright);
-      border-radius: 16px; padding: 1.5rem 1.75rem; box-shadow: 0 4px 18px rgba(0,80,90,.07); }
+      border: 1px solid rgba(0,115,124,.10);
+      border-radius: 16px; padding: 1.5rem 1.75rem;
+      box-shadow: 0 1px 2px rgba(13,45,46,.04), 0 14px 34px -10px rgba(0,80,90,.15); }
     .rx-ext__icon { font-size: 2.6rem; line-height: 1; flex-shrink: 0; }
     .rx-ext__body { flex: 1 1 320px; }
     .rx-ext__title { font-size: 1.15rem; font-weight: 800; color: var(--teal-deeper); margin-bottom: .35rem; }
@@ -922,22 +928,22 @@
     }
     .pa-card {
       background: rgba(255,255,255,0.92);
-      border-radius: var(--radius);
+      border-radius: 14px;
       padding: 1.25rem 1rem;
       text-align: center;
-      box-shadow: var(--shadow);
-      border-top: 3px solid var(--teal-bright);
+      box-shadow: 0 1px 2px rgba(13,45,46,.04), 0 10px 26px -8px rgba(13,45,46,.10);
+      border: 1px solid rgba(0,115,124,.10);
       display: flex;
       flex-direction: column;
-      transition: transform .15s, box-shadow .15s, background .15s;
+      transition: transform .18s var(--ease-apple), box-shadow .22s var(--ease-apple), background .15s;
       cursor: pointer;
       font: inherit;
-      border-left: none; border-right: none; border-bottom: none;
       width: 100%;
+      transform: perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
     }
-    .pa-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(30,107,99,.18); }
+    .pa-card:hover { transform: perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-3px); box-shadow: 0 4px 10px rgba(13,45,46,.06), 0 18px 38px -10px rgba(30,107,99,.22); }
     .pa-card.active {
-      border-top-color: var(--teal-dark);
+      border-color: var(--teal-bright);
       background: var(--teal-ice);
       box-shadow: 0 0 0 2px var(--teal-bright), 0 4px 16px rgba(30,107,99,.15);
     }
@@ -1340,15 +1346,18 @@
       margin-top: 2rem;
     }
     .blog-card {
-      background: rgba(215,251,252,0.92);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      box-shadow: var(--shadow);
-      border-top: 3px solid var(--teal-bright);
+      background: linear-gradient(180deg, #ffffff 0%, #f2fbfc 100%);
+      border-radius: 16px;
+      padding: 1.6rem;
+      box-shadow: 0 1px 2px rgba(13,45,46,.04), 0 12px 30px -10px rgba(13,45,46,.12);
+      border: 1px solid rgba(0,115,124,.10);
       display: flex;
       flex-direction: column;
       gap: .55rem;
+      transform: perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+      transition: transform .18s var(--ease-apple), box-shadow .25s var(--ease-apple);
     }
+    .blog-card:hover { box-shadow: 0 4px 10px rgba(13,45,46,.05), 0 18px 40px -12px rgba(13,45,46,.18); }
     .blog-card__date { font-size: .78rem; color: var(--text-muted); }
     .blog-card__title { font-size: 1rem; font-weight: 700; line-height: 1.3; }
     .blog-card__title a { color: var(--teal-deeper); transition: color .15s; }
@@ -1517,10 +1526,12 @@
     }
     .step {
       background: var(--white);
-      border-radius: var(--radius);
+      border-radius: 16px;
       padding: 2rem 1.5rem;
-      box-shadow: var(--shadow);
-      border-top: 4px solid var(--teal-bright);
+      box-shadow: 0 1px 2px rgba(13,45,46,.04), 0 12px 30px -10px rgba(13,45,46,.10);
+      border: 1px solid rgba(0,115,124,.10);
+      transform: perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+      transition: transform .18s var(--ease-apple), box-shadow .25s var(--ease-apple);
     }
     .step__num {
       width: 44px; height: 44px; border-radius: 50%;
@@ -2236,8 +2247,8 @@
     .dc-loading { font-size: .9rem; color: var(--text-muted); }
     .dc-disclaimer {
       margin-top: 1.25rem; font-size: .8rem; color: var(--text-muted);
-      background: var(--teal-ice); border-left: 3px solid var(--teal-bright);
-      padding: .65rem .85rem; border-radius: 0 6px 6px 0; line-height: 1.55;
+      background: var(--teal-ice); border: 1px solid rgba(0,115,124,.14);
+      padding: .65rem .85rem; border-radius: 10px; line-height: 1.55;
     }
     .dc-credit {
       display: flex; align-items: center; flex-wrap: wrap; gap: .4rem;
@@ -2374,14 +2385,13 @@
     .faq .section__lead { color: rgba(255,255,255,.65); }
     .faq-list { display: grid; grid-template-columns: 1fr; gap: .85rem; margin-top: 2rem; border: none; align-items: start; }
     .faq-item {
-      background: #fff;
-      border-radius: 14px; overflow: hidden;
-      box-shadow: 0 4px 22px rgba(0,0,0,.18);
-      border-left: 4px solid var(--teal-mid);
-      transition: box-shadow .25s var(--ease-apple), transform .25s var(--ease-apple), border-color .2s var(--ease-apple);
+      background: linear-gradient(180deg, #ffffff 0%, #f7fdfd 100%);
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 1px 2px rgba(0,0,0,.10), 0 14px 34px -12px rgba(0,0,0,.30);
+      transition: box-shadow .25s var(--ease-apple), transform .25s var(--ease-apple);
     }
-    .faq-item:hover { box-shadow: 0 10px 32px rgba(0,0,0,.28); transform: translateY(-2px) scale(1.01); }
-    .faq-item.open { border-left-color: var(--teal-bright); }
+    .faq-item:hover { box-shadow: 0 4px 10px rgba(0,0,0,.12), 0 22px 44px -14px rgba(0,0,0,.38); transform: translateY(-2px) scale(1.01); }
+    .faq-item.open { box-shadow: 0 0 0 1.5px var(--teal-bright), 0 14px 34px -12px rgba(0,0,0,.30); }
     .faq-item__q {
       width: 100%; text-align: left; background: none; border: none;
       cursor: pointer; padding: 1.1rem 1.2rem;
@@ -2647,20 +2657,57 @@
       50%     { box-shadow: 0 0 0 11px rgba(33,161,168,.12), 0 2px 8px rgba(0,0,0,.4); }
     }
     .w3d-spot-label {
-      background: rgba(255,255,255,.95); color: var(--teal-dark);
+      position: relative;
+      background: #fff; color: var(--teal-dark);
       font-size: .8rem; font-weight: 700; line-height: 1.25;
-      padding: .42rem .72rem; border-radius: 999px; white-space: nowrap;
-      box-shadow: 0 3px 12px rgba(0,0,0,.25);
+      padding: .45rem .8rem; border-radius: 13px;
+      border: 1.5px solid var(--border);
+      white-space: nowrap;
+      box-shadow: 0 3px 14px rgba(0,0,0,.28);
       transition: background .15s;
     }
+    .w3d-spot-label::before,
+    .w3d-spot-label::after { content: ''; position: absolute; top: 50%; width: 0; height: 0; border-style: solid; }
+    .w3d-spot .w3d-spot-label::before { left: -8px; margin-top: -7px; border-width: 7px 8px 7px 0; border-color: transparent var(--border) transparent transparent; }
+    .w3d-spot .w3d-spot-label::after  { left: -6px; margin-top: -5.5px; border-width: 5.5px 6.5px 5.5px 0; border-color: transparent #fff transparent transparent; }
+    .w3d-spot--flip .w3d-spot-label::before { left: auto; right: -8px; border-width: 7px 0 7px 8px; border-color: transparent transparent transparent var(--border); }
+    .w3d-spot--flip .w3d-spot-label::after  { left: auto; right: -6px; border-width: 5.5px 0 5.5px 6.5px; border-color: transparent transparent transparent #fff; }
     .w3d-spot:hover .w3d-spot-label,
-    .w3d-spot:focus-visible .w3d-spot-label { background: #fff; }
+    .w3d-spot:focus-visible .w3d-spot-label { background: var(--teal-ice); }
+    .w3d-spot:hover .w3d-spot-label::after,
+    .w3d-spot:focus-visible .w3d-spot-label::after { border-right-color: var(--teal-ice); }
+    .w3d-spot--flip:hover .w3d-spot-label::after,
+    .w3d-spot--flip:focus-visible .w3d-spot-label::after { border-right-color: transparent; border-left-color: var(--teal-ice); }
     .w3d-spot:focus-visible .w3d-spot-dot { outline: 3px solid var(--teal-dark); outline-offset: 2px; }
     @media (max-width: 768px) {
       .w3d__track { height: 330vh; }
       .w3d-spot-label { font-size: .7rem; padding: .32rem .55rem; }
       .w3d__skip { bottom: 3vh; right: 4vw; font-size: .72rem; }
     }
+
+    /* ── Trust ticker — slow marquee of proof points under the hero ── */
+    .trust-ticker {
+      overflow: hidden; position: relative; z-index: 2;
+      background: rgba(255,255,255,.55);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      border-top: 1px solid rgba(0,115,124,.10);
+      border-bottom: 1px solid rgba(0,115,124,.10);
+      padding: .6rem 0;
+    }
+    .trust-ticker__track { display: flex; width: max-content; animation: ticker-scroll 46s linear infinite; }
+    .trust-ticker:hover .trust-ticker__track { animation-play-state: paused; }
+    .trust-ticker__seq {
+      display: flex; gap: 2.4rem; padding-right: 2.4rem;
+      font-size: .8rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+      color: var(--teal-dark); white-space: nowrap;
+    }
+    .trust-ticker__seq span { display: inline-flex; align-items: center; gap: .45rem; }
+    @keyframes ticker-scroll { to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .trust-ticker__track { animation: none; } }
+    @media (max-width: 768px) { .trust-ticker__seq { font-size: .72rem; gap: 1.6rem; padding-right: 1.6rem; } }
+
+    /* Magnetic CTA needs a transformable box */
+    .nav__cta a { display: inline-block; will-change: transform; }
 
     /* ── Scroll reveals — native CSS scroll-timeline, zero JS ──────────
        Progressive enhancement only: browsers without support (or with
@@ -2879,6 +2926,14 @@
     </div>
   </div>
 </header>
+
+<!-- Trust ticker — proof points, decorative (all facts appear elsewhere on page) -->
+<div class="trust-ticker" aria-hidden="true">
+  <div class="trust-ticker__track">
+    <span class="trust-ticker__seq"><span>&#11088; 4.9 Google Rating</span><span>&#127942; Uber Eats Top Store in Toronto</span><span>&#128666; Free GTA Delivery</span><span>&#129658; 28 Conditions Treated</span><span>&#128137; Vaccines &amp; Travel Health</span><span>&#128483;&#65039; Serving You in 6+ Languages</span><span>&#128694; Walk-Ins Welcome</span></span>
+    <span class="trust-ticker__seq"><span>&#11088; 4.9 Google Rating</span><span>&#127942; Uber Eats Top Store in Toronto</span><span>&#128666; Free GTA Delivery</span><span>&#129658; 28 Conditions Treated</span><span>&#128137; Vaccines &amp; Travel Health</span><span>&#128483;&#65039; Serving You in 6+ Languages</span><span>&#128694; Walk-Ins Welcome</span></span>
+  </div>
+</div>
 
 <!-- Welcome / news modal -->
 <div class="welcome-modal-overlay" id="welcomeModal" role="dialog" aria-modal="true" aria-label="Welcome">
@@ -7291,6 +7346,58 @@ window.SmartMatch = (function(){
 </script>
 
 <script type="module" src="walkin3d.js"></script>
+
+<!-- Micro-interactions: magnetic nav CTA + subtle 3D card tilt.
+     Desktop fine-pointer devices only; skipped for reduced-motion and lite devices. -->
+<script>
+(function(){
+  try {
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (document.documentElement.classList.contains('lite-clouds')) return;
+  } catch(e){ return; }
+
+  /* magnetic Book Now: the button drifts toward the cursor, springs back */
+  var cta = document.querySelector('.nav__cta a');
+  if (cta) {
+    var mx = 0, my = 0, tx = 0, ty = 0, raf = null;
+    var tick = function(){
+      raf = null;
+      tx += (mx - tx) * .16; ty += (my - ty) * .16;
+      cta.style.transform = 'translate(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px)';
+      if (Math.abs(mx - tx) > .15 || Math.abs(my - ty) > .15) raf = requestAnimationFrame(tick);
+    };
+    cta.addEventListener('mousemove', function(e){
+      var r = cta.getBoundingClientRect();
+      mx = Math.max(-12, Math.min(12, (e.clientX - (r.left + r.width / 2)) * .32));
+      my = Math.max(-7,  Math.min(7,  (e.clientY - (r.top + r.height / 2)) * .38));
+      if (!raf) raf = requestAnimationFrame(tick);
+    });
+    cta.addEventListener('mouseleave', function(){
+      mx = 0; my = 0;
+      if (!raf) raf = requestAnimationFrame(tick);
+    });
+  }
+
+  /* subtle 3D tilt on cards (max ~3.5deg), via --rx/--ry CSS vars.
+     Delegated at document level so cards injected later (e.g. the blog
+     grid re-rendered from posts.json) still get the effect. */
+  var MAXD = 3.5, curCard = null;
+  document.addEventListener('mousemove', function(e){
+    var card = e.target && e.target.closest ? e.target.closest('.blog-card, .step, .pa-card') : null;
+    if (card !== curCard) {
+      if (curCard) { curCard.style.setProperty('--rx', '0deg'); curCard.style.setProperty('--ry', '0deg'); }
+      curCard = card;
+    }
+    if (!card) return;
+    var r = card.getBoundingClientRect();
+    var px = (e.clientX - r.left) / r.width - .5;
+    var py = (e.clientY - r.top) / r.height - .5;
+    card.style.setProperty('--ry', (px * 2 * MAXD).toFixed(2) + 'deg');
+    card.style.setProperty('--rx', (-py * 2 * MAXD).toFixed(2) + 'deg');
+  }, { passive: true });
+})();
+</script>
 
 <!-- FAQPage structured data updater: refreshes the static #faq-schema-static block in
      <head> from the window.FAQS array, so JS-rendering crawlers always see current FAQs
