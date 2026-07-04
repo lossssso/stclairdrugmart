@@ -159,7 +159,8 @@
       --text-muted:  #3a6062;
       --border:      #b8e8ea;
       --radius:      10px;
-      --shadow:      0 2px 12px rgba(0,115,124,.10);
+      /* layered depth: tight near shadow + soft far ambient */
+      --shadow:      0 1px 2px rgba(13,45,46,.05), 0 10px 26px -8px rgba(13,45,46,.10);
       /* modern Helvetica-style display font for the name/branding */
       --font-display: 'Helvetica Neue', Helvetica, 'Arial', 'Inter', sans-serif;
       /* ── Apple-signature easing — default + spring-out, used on hover/press ── */
@@ -191,21 +192,20 @@
          same gradient, so the layer fades over an identical sky — no flash/seam. */
       animation: cloud-layer-in 3s ease both;
     }
-    .sky-bg-cloud {
-      position: absolute; left: 0; animation: cloud-drift linear infinite;
-      will-change: transform; display: block; pointer-events: none;
-      max-width: none;
+    /* ── Cloud bands — the whole sky is 3 composited layers (was 26).
+       Each band is a seamless marquee: its strip holds two identical
+       cloud sequences and loops via translateX(-50%). Only transform
+       and opacity are animated (GPU-composited; no left/top). ── */
+    .sky-band { position: absolute; left: 0; width: 100%; pointer-events: none; }
+    .sky-band--far { top: -2vh; opacity: .8; }
+    .sky-band--mid { top: 30vh; opacity: .5; }
+    .sky-band__strip {
+      display: flex; align-items: flex-start; width: max-content;
+      animation: band-drift var(--band-dur, 150s) linear infinite;
+      will-change: transform;
     }
-    .sky-bg-cloud--flip { animation-name: cloud-drift-r; }
-    /* 8 clouds cover the full viewport height — same clouds seen through hero, nav, and all sections */
-    .sky-bg-cloud:nth-child(1) { width:1350px; height:330px; top: 1vh; animation-duration:132s; animation-delay: -25s; opacity:.80; }
-    .sky-bg-cloud:nth-child(2) { width:1050px; height:260px; top: 5vh; animation-duration:102s; animation-delay: -60s; opacity:.70; }
-    .sky-bg-cloud:nth-child(3) { width:1250px; height:305px; top: 2vh; animation-duration:122s; animation-delay: -85s; opacity:.75; }
-    .sky-bg-cloud:nth-child(4) { width: 980px; height:245px; top: 9vh; animation-duration: 96s; animation-delay: -12s; opacity:.65; }
-    .sky-bg-cloud:nth-child(5) { width:1200px; height:295px; top:22vh; animation-duration:116s; animation-delay: -40s; opacity:.58; }
-    .sky-bg-cloud:nth-child(6) { width:1300px; height:318px; top:33vh; animation-duration:128s; animation-delay: -18s; opacity:.50; }
-    .sky-bg-cloud:nth-child(7) { width:1100px; height:272px; top:46vh; animation-duration:110s; animation-delay: -72s; opacity:.44; }
-    .sky-bg-cloud:nth-child(8) { width: 960px; height:238px; top:60vh; animation-duration: 94s; animation-delay: -95s; opacity:.38; }
+    .sky-band__strip img { display: block; max-width: none; flex-shrink: 0; }
+    @keyframes band-drift { to { transform: translateX(-50%); } }
     /* White & light sections become slightly translucent so clouds peek through */
     #welcome, #services, #about, #blog, #drug-checker, #shop, #insurance, #booking { background: rgba(255,255,255,.84); }
     #welcome  { background: rgba(215,251,252,.84); }
@@ -231,21 +231,9 @@
       border-bottom: 1px solid rgba(33,161,168,0);
       box-shadow: none;
     }
-    /* ── Nav clouds — embedded inside nav so they're always visible regardless of section backgrounds ── */
-    .nav__clouds {
-      position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; opacity: 0;
-      mask-image: linear-gradient(to bottom, transparent 0%, transparent 8%, black 65%);
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 8%, black 65%);
-    }
-    .nav__cloud  { position: absolute; left: 0; animation: cloud-drift linear infinite; will-change: transform; max-width: none; display: block; }
-    .nav__cloud--flip { animation-name: cloud-drift-r; }
-    .nav__cloud:nth-child(1) { width: 950px; height: 235px; top: -100px; animation-duration:175s; animation-delay: -29s; opacity: .85; }
-    .nav__cloud:nth-child(2) { width: 750px; height: 185px; top: -46px; animation-duration:140s; animation-delay: -81s; opacity: .78; }
-    .nav__cloud:nth-child(3) { width: 880px; height: 218px; top: -88px; animation-duration:165s; animation-delay:-126s; opacity: .82; }
-    .nav__cloud:nth-child(4) { width: 680px; height: 168px; top: -36px; animation-duration:125s; animation-delay: -51s; opacity: .76; }
-    .nav__cloud:nth-child(5) { width: 820px; height: 203px; top: -57px; animation-duration:150s; animation-delay:-102s; opacity: .80; }
-    .nav__cloud:nth-child(6) { width: 900px; height: 223px; top: -70px; animation-duration:130s; animation-delay: 0s; opacity: .80; }
-    @media (max-width: 768px) { .nav__cloud:nth-child(4), .nav__cloud:nth-child(5) { display: none; } }
+    /* Nav clouds removed: the nav stays translucent frosted glass, so the
+       fixed sky bands behind it show through — clouds drift behind the
+       navbar without a single extra composited layer. */
     .nav__inner {
       max-width: 1100px;
       margin: 0 auto;
@@ -374,25 +362,15 @@
       -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 72px, black 120px);
       animation: cloud-layer-in 3s ease both;
     }
-    .hero__cloud  { position: absolute; left: 0; animation: cloud-drift linear infinite; will-change: transform; display: block; max-width: none; }
-    .hero__cloud--flip { animation-name: cloud-drift-r; }
-    .hero__cloud:nth-child(1)  { width:1200px; height:580px; top: 0%; animation-duration:116s; animation-delay: -20s;  opacity:1;   }
-    .hero__cloud:nth-child(2)  { width: 850px; height:220px; top: 8%; animation-duration: 85s; animation-delay: -55s;  opacity:.90; }
-    .hero__cloud:nth-child(3)  { width:1100px; height:520px; top:18%; animation-duration:110s; animation-delay: -80s;  opacity:.98; }
-    .hero__cloud:nth-child(4)  { width: 780px; height:200px; top: 4%; animation-duration: 77s; animation-delay: -35s;  opacity:.86; }
-    .hero__cloud:nth-child(5)  { width:1350px; height:640px; top:28%; animation-duration:132s; animation-delay:-110s;  opacity:.97; }
-    .hero__cloud:nth-child(6)  { width: 900px; height:230px; top:38%; animation-duration: 89s; animation-delay: -12s;  opacity:.85; }
-    .hero__cloud:nth-child(7)  { width:1150px; height:560px; top:46%; animation-duration:113s; animation-delay: -65s;  opacity:.95; }
-    .hero__cloud:nth-child(8)  { width: 820px; height:210px; top:55%; animation-duration: 81s; animation-delay: -48s;  opacity:.82; }
-    .hero__cloud:nth-child(9)  { width:1250px; height:600px; top:63%; animation-duration:122s; animation-delay:-120s;  opacity:.93; }
-    .hero__cloud:nth-child(10) { width: 870px; height:225px; top:72%; animation-duration: 86s; animation-delay: -28s;  opacity:.78; }
-    .hero__cloud:nth-child(11) { width:1050px; height:500px; top:78%; animation-duration:102s; animation-delay: -90s;  opacity:.90; }
-    .hero__cloud:nth-child(12) { width: 800px; height:205px; top:84%; animation-duration: 79s; animation-delay: -70s;  opacity:.72; }
-    @media (prefers-reduced-motion: reduce) { .hero__cloud, .sky-bg-cloud { animation: none; } .sky-bg, .hero__clouds { animation: none; opacity: 1; } }
-    /* On mobile: fewer clouds for performance */
+    .sky-band--near { top: 6%; opacity: .96; }
+    /* reduced motion: clouds freeze in place as a static painted sky */
+    @media (prefers-reduced-motion: reduce) {
+      .sky-band__strip { animation: none; }
+      .sky-bg, .hero__clouds { animation: none; opacity: 1; }
+    }
+    /* mobile: drop the mid band; two layers carry the sky */
     @media (max-width: 768px) {
-      .hero__cloud:nth-child(n+7) { display: none; }
-      .sky-bg-cloud:nth-child(n+5) { display: none; }
+      .sky-band--mid { display: none; }
     }
     /* ── Adaptive performance ──────────────────────────────────
        On lower-powered machines (few CPU cores / low memory, or a
@@ -404,13 +382,8 @@
        added to <html> by the probe script near the top of <body>.
        The faintest (highest nth-child) clouds drop first, so the loss
        is barely noticeable. */
-    html.lite-clouds .sky-bg-cloud:nth-child(n+4) { display: none; }  /* 8 → 3 */
-    html.lite-clouds .hero__cloud:nth-child(n+6)  { display: none; }  /* 12 → 5 */
-    html.lite-clouds .nav__cloud:nth-child(n+4)   { display: none; }  /* 6 → 3 */
-    @media (max-width: 768px) {
-      html.lite-clouds .hero__cloud:nth-child(n+4) { display: none; }
-      html.lite-clouds .sky-bg-cloud:nth-child(n+3) { display: none; }
-    }
+    html.lite-clouds .sky-band--mid, html.lite-clouds .hero__clouds { display: none; }
+    html.lite-clouds .sky-band__strip { animation-play-state: paused; }  /* one static band */
     .hero__logo {
       width: 170px; height: 170px;
       object-fit: contain;
@@ -569,6 +542,7 @@
     section { padding: 5rem 1.5rem; }
     .section__inner { max-width: 1100px; margin: 0 auto; }
     .section__title {
+      text-wrap: balance;
       font-family: var(--font-display);
       font-size: clamp(1.6rem, 3.5vw, 2.4rem);
       font-weight: 700;
@@ -2685,6 +2659,15 @@
       .w3d__skip { bottom: 3vh; right: 4vw; font-size: .72rem; }
     }
 
+    /* Frosted glass on the hero status rows where the browser supports it */
+    @supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
+      .hero__status .status-row {
+        background: rgba(244,251,251,.66);
+        -webkit-backdrop-filter: blur(10px) saturate(1.15);
+        backdrop-filter: blur(10px) saturate(1.15);
+      }
+    }
+
     /* ── Trust ticker — slow marquee of proof points under the hero ── */
     .trust-ticker {
       overflow: hidden; position: relative; z-index: 2;
@@ -2782,28 +2765,50 @@
 })();
 </script>
 <div class="sky-bg" aria-hidden="true">
-  <img src="cloud2.webp" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="" aria-hidden="true">
-  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="102" data-delay="-60" style="transform:translateX(45.9vw) scaleX(-1)" alt="" aria-hidden="true">
-  <img src="cloud2.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="122" data-delay="-85" style="transform:translateX(65.4vw) scaleX(-1)" alt="" aria-hidden="true">
-  <img src="cloud.png"  class="sky-bg-cloud" data-dur="96" data-delay="-12" style="transform:translateX(-37.5vw)" alt="" aria-hidden="true">
-  <img src="cloud2.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="116" data-delay="-40" style="transform:translateX(2.1vw) scaleX(-1)" alt="" aria-hidden="true">
-  <img src="cloud.png"  class="sky-bg-cloud" data-dur="128" data-delay="-18" style="transform:translateX(-34.7vw)" alt="" aria-hidden="true">
-  <img src="cloud2.webp" class="sky-bg-cloud" data-dur="110" data-delay="-72" style="transform:translateX(57.8vw)" alt="" aria-hidden="true">
-  <img src="cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="94" data-delay="-95" style="transform:translateX(-58.1vw) scaleX(-1)" alt="" aria-hidden="true">
+  <div class="sky-band sky-band--far" data-par="0.05">
+    <div class="sky-band__strip" style="--band-dur:170s;animation-delay:-64s">
+      <img src="cloud2.webp" alt="" style="width:1300px;margin:0vh 0 0 0;opacity:.9"><img src="cloud.png" alt="" style="width:950px;margin:7vh 0 0 -260px;opacity:.72"><img src="cloud2.webp" alt="" style="width:1150px;margin:2vh 0 0 -180px;opacity:.85"><img src="cloud.png" alt="" style="width:900px;margin:11vh 0 0 -240px;opacity:.68"><img src="cloud2.webp" alt="" style="width:1200px;margin:4vh 0 0 -160px;opacity:.8">
+      <img src="cloud2.webp" alt="" style="width:1300px;margin:0vh 0 0 0;opacity:.9"><img src="cloud.png" alt="" style="width:950px;margin:7vh 0 0 -260px;opacity:.72"><img src="cloud2.webp" alt="" style="width:1150px;margin:2vh 0 0 -180px;opacity:.85"><img src="cloud.png" alt="" style="width:900px;margin:11vh 0 0 -240px;opacity:.68"><img src="cloud2.webp" alt="" style="width:1200px;margin:4vh 0 0 -160px;opacity:.8">
+    </div>
+  </div>
+  <div class="sky-band sky-band--mid" data-par="0.11">
+    <div class="sky-band__strip" style="--band-dur:115s;animation-delay:-38s">
+      <img src="cloud.png" alt="" style="width:1000px;margin:0vh 0 0 0;opacity:.8"><img src="cloud2.webp" alt="" style="width:880px;margin:6vh 0 0 -200px;opacity:.7"><img src="cloud.png" alt="" style="width:950px;margin:2vh 0 0 -150px;opacity:.75"><img src="cloud2.webp" alt="" style="width:820px;margin:9vh 0 0 -220px;opacity:.65"><img src="cloud.png" alt="" style="width:900px;margin:4vh 0 0 -120px;opacity:.7">
+      <img src="cloud.png" alt="" style="width:1000px;margin:0vh 0 0 0;opacity:.8"><img src="cloud2.webp" alt="" style="width:880px;margin:6vh 0 0 -200px;opacity:.7"><img src="cloud.png" alt="" style="width:950px;margin:2vh 0 0 -150px;opacity:.75"><img src="cloud2.webp" alt="" style="width:820px;margin:9vh 0 0 -220px;opacity:.65"><img src="cloud.png" alt="" style="width:900px;margin:4vh 0 0 -120px;opacity:.7">
+    </div>
+  </div>
 </div>
+<script>
+/* Cloud parallax — one transform per fixed sky band per frame, coalesced
+   through rAF. Vanilla on purpose: GSAP would cost an eager ~117KB load
+   for a two-line effect. Skipped for reduced-motion and lite devices. */
+(function(){
+  try {
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (document.documentElement.classList.contains('lite-clouds')) return;
+  } catch(e){ return; }
+  var bands = [].slice.call(document.querySelectorAll('.sky-bg .sky-band'));
+  if (!bands.length) return;
+  var rates = bands.map(function(b){ return parseFloat(b.getAttribute('data-par')) || 0; });
+  var ticking = false, lastY = -1;
+  function apply(){
+    ticking = false;
+    var y = window.scrollY || 0;
+    if (y === lastY) return;
+    lastY = y;
+    if (y > window.innerHeight * 2.5) return;
+    for (var i = 0; i < bands.length; i++)
+      bands[i].style.transform = 'translate3d(0,' + (-y * rates[i]).toFixed(1) + 'px,0)';
+  }
+  window.addEventListener('scroll', function(){ if (!ticking){ ticking = true; requestAnimationFrame(apply); } }, { passive: true });
+  apply();
+})();
+</script>
 
 <!-- alert banner removed — announcement moved to hero news card -->
 
 <!-- ── Nav ──────────────────────────────────────────────── -->
 <nav class="nav" id="nav">
-  <div class="nav__clouds" aria-hidden="true">
-    <img src="cloud2.webp" class="nav__cloud" data-dur="175" data-delay="-29" style="transform:translateX(-30.6vw)" alt="" aria-hidden="true">
-    <img src="cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="140" data-delay="-81" style="transform:translateX(44.7vw) scaleX(-1)" alt="" aria-hidden="true">
-    <img src="cloud2.webp" class="nav__cloud nav__cloud--flip" data-dur="165" data-delay="-126" style="transform:translateX(77.6vw) scaleX(-1)" alt="" aria-hidden="true">
-    <img src="cloud.png"  class="nav__cloud" data-dur="125" data-delay="-51" style="transform:translateX(13.8vw)" alt="" aria-hidden="true">
-    <img src="cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="150" data-delay="-102" style="transform:translateX(-8vw) scaleX(-1)" alt="" aria-hidden="true">
-    <img src="cloud2.webp" class="nav__cloud" data-dur="130" data-delay="0" style="transform:translateX(-60vw)" alt="" aria-hidden="true">
-  </div>
   <div class="nav__inner">
     <a href="#home" class="nav__brand">
       <img src="logo.png" alt="St. Clair Drug Mart Pharmacy" class="nav__brand__logo" />
@@ -2870,18 +2875,12 @@
 <!-- ── Hero ─────────────────────────────────────────────── -->
 <header class="hero" id="home">
   <div class="hero__clouds" aria-hidden="true">
-    <img src="cloud2.webp" class="hero__cloud" data-dur="116" data-delay="-20" style="transform:translateX(-29vw)" alt="" aria-hidden="true">
-    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" data-dur="85" data-delay="-55" style="transform:translateX(56.5vw) scaleX(-1)" alt="" aria-hidden="true">
-    <img src="cloud2.webp" class="hero__cloud hero__cloud--flip" data-dur="110" data-delay="-80" style="transform:translateX(70.9vw) scaleX(-1)" alt="" aria-hidden="true">
-    <img src="cloud.png"  class="hero__cloud" data-dur="77" data-delay="-35" style="transform:translateX(21.8vw)" alt="" aria-hidden="true">
-    <img src="cloud2.webp" class="hero__cloud" data-dur="132" data-delay="-110" style="transform:translateX(90vw)" alt="" aria-hidden="true">
-    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" data-dur="89" data-delay="-12" style="transform:translateX(-35.7vw) scaleX(-1)" alt="" aria-hidden="true">
-    <img src="cloud2.webp" class="hero__cloud hero__cloud--flip" data-dur="113" data-delay="-65" style="transform:translateX(43.5vw) scaleX(-1)" alt="" aria-hidden="true">
-    <img src="cloud.png"  class="hero__cloud" data-dur="81" data-delay="-48" style="transform:translateX(46.7vw)" alt="" aria-hidden="true">
-    <img src="cloud2.webp" class="hero__cloud" data-dur="122" data-delay="-120" style="transform:translateX(117.1vw)" alt="" aria-hidden="true">
-    <img src="cloud.png"  class="hero__cloud hero__cloud--flip" data-dur="86" data-delay="-28" style="transform:translateX(-1.4vw) scaleX(-1)" alt="" aria-hidden="true">
-    <img src="cloud2.webp" class="hero__cloud hero__cloud--flip" data-dur="102" data-delay="-90" style="transform:translateX(98.8vw) scaleX(-1)" alt="" aria-hidden="true">
-    <img src="cloud.png"  class="hero__cloud" data-dur="79" data-delay="-70" style="transform:translateX(99.5vw)" alt="" aria-hidden="true">
+    <div class="sky-band sky-band--near">
+      <div class="sky-band__strip" style="--band-dur:95s;animation-delay:-51s">
+      <img src="cloud2.webp" alt="" style="width:1350px;margin:0% 0 0 0;opacity:1"><img src="cloud.png" alt="" style="width:900px;margin:22% 0 0 -300px;opacity:.88"><img src="cloud2.webp" alt="" style="width:1250px;margin:8% 0 0 -200px;opacity:.95"><img src="cloud.png" alt="" style="width:850px;margin:38% 0 0 -260px;opacity:.8"><img src="cloud2.webp" alt="" style="width:1150px;margin:18% 0 0 -140px;opacity:.9">
+      <img src="cloud2.webp" alt="" style="width:1350px;margin:0% 0 0 0;opacity:1"><img src="cloud.png" alt="" style="width:900px;margin:22% 0 0 -300px;opacity:.88"><img src="cloud2.webp" alt="" style="width:1250px;margin:8% 0 0 -200px;opacity:.95"><img src="cloud.png" alt="" style="width:850px;margin:38% 0 0 -260px;opacity:.8"><img src="cloud2.webp" alt="" style="width:1150px;margin:18% 0 0 -140px;opacity:.9">
+      </div>
+    </div>
   </div>
   <img src="logo.png" alt="St. Clair Drug Mart Pharmacy logo" class="hero__logo" width="940" height="922" fetchpriority="high" />
   <h1 class="hero__name">St. Clair Drug Mart Pharmacy</h1>
@@ -7025,89 +7024,8 @@ window.SmartMatch = (function(){
     }
   });
 
-  // ── Cloud drift, driven by JS (not CSS @keyframes) so it can't be silently
-  //    disabled by a browser's animation engine, reduced-motion override, or
-  //    power-saving mode — these clouds are purely decorative (aria-hidden).
-  //    Self-throttling: caps to ~24fps (plenty for a 77-175s drift) and, if it
-  //    detects even a handful of real frame drops (a genuinely slow/older
-  //    machine, not just a one-off hiccup), quickly drops to showing only a
-  //    third of the clouds at ~12fps so this decorative layer never competes
-  //    with real interaction (scroll/clicks) for the CPU on weaker hardware.
-  //    Fully paused while the tab isn't visible so it costs nothing in the
-  //    background.
-  (function() {
-    var els = document.querySelectorAll('.nav__cloud, .hero__cloud, .sky-bg-cloud');
-    var items = [];
-    els.forEach(function(el) {
-      var dur = parseFloat(el.dataset.dur);
-      var delay = parseFloat(el.dataset.delay) || 0;
-      if (!dur) return;
-      el.style.animation = 'none';
-      // Cloud images render far wider than the (esp. mobile) viewport — some
-      // are 2-3x the screen width — so a fixed "-60vw" start is nowhere near
-      // off-screen for them; the whole image still covers the viewport there.
-      // Measure each cloud's real rendered width so its entrance start point
-      // is genuinely beyond its own left edge, however big it is.
-      var widthVw = el.getBoundingClientRect().width / window.innerWidth * 100;
-      items.push({ el: el, dur: dur, delay: delay, flip: el.className.indexOf('--flip') !== -1, widthVw: widthVw });
-    });
-    if (!items.length) return;
-    var minInterval = 1000 / 24;
-    // On load, clouds glide in from off-screen-left over ENTER_DUR instead of
-    // materializing already mid-flight — without this they'd just sit still
-    // and fade into view in place, which reads as "popping in" rather than
-    // drifting in (most noticeable on mobile, where fewer clouds are shown).
-    // Matches the 3s container opacity fade (cloud-layer-in) with an
-    // ease-in-out curve so the slide-in is synced with becoming visible —
-    // an ease-out curve here front-loads the travel into the almost-
-    // invisible opening moment, so by the time it's visible enough to see,
-    // it's already nearly arrived and barely moving.
-    var ENTER_DUR = 3;
-    function easeInOutQuad(x) { return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
-    var lastFrame = 0, lastDelta = 0, slowStreak = 0, powerSaveOn = false, origin = null, running = false;
-    function enterPowerSave() {
-      if (powerSaveOn) return;
-      powerSaveOn = true;
-      minInterval = 1000 / 12;
-      items.forEach(function(it, i) { if (i % 3 !== 0) it.el.style.display = 'none'; });
-    }
-    document.addEventListener('visibilitychange', function() {
-      if (document.hidden) return;
-      // Coming back from a hidden tab: re-anchor the origin so clouds don't
-      // jump-snap to wherever they "would have" drifted while paused.
-      origin = null;
-      lastFrame = 0;
-      if (!running) { running = true; requestAnimationFrame(tick); }
-    });
-    function tick(now) {
-      if (document.hidden) { running = false; return; }
-      if (origin === null) origin = now;
-      if (now - lastFrame < minInterval) { requestAnimationFrame(tick); return; }
-      if (lastDelta) {
-        var gap = now - lastDelta;
-        slowStreak = gap > 70 ? slowStreak + 1 : Math.max(0, slowStreak - 1);
-        if (slowStreak > 5) enterPowerSave();
-      }
-      lastDelta = now;
-      lastFrame = now;
-      var t = (now - origin) / 1000;
-      for (var i = 0; i < items.length; i++) {
-        var it = items[i];
-        if (it.el.style.display === 'none') continue;
-        var prog = (((t - it.delay) % it.dur) + it.dur) % it.dur / it.dur;
-        var vw = -60 + prog * 180;
-        if (t < ENTER_DUR) {
-          var p = easeInOutQuad(t / ENTER_DUR);
-          var startVw = -(it.widthVw + 15);
-          vw = startVw + (vw - startVw) * p;
-        }
-        it.el.style.transform = 'translateX(' + vw.toFixed(2) + 'vw)' + (it.flip ? ' scaleX(-1)' : '');
-      }
-      requestAnimationFrame(tick);
-    }
-    running = true;
-    requestAnimationFrame(tick);
-  })();
+  // (Legacy JS cloud-drift engine removed — the band strips animate via a
+  //  single CSS transform each; see .sky-band__strip.)
 
   // ── Nav: clouds always drift; background fades in progressively as hero scrolls away,
   //    then stays as frosted glass (semi-transparent + blur) throughout the whole site ──
@@ -7119,7 +7037,6 @@ window.SmartMatch = (function(){
     var nav = document.getElementById('nav');
     var hero = document.getElementById('home');
     var tcMeta = document.querySelector('meta[name="theme-color"]');
-    var navClouds = nav.querySelector('.nav__clouds');
     var lastA = -1;
     function updateNav() {
       var scrollY = window.scrollY || window.pageYOffset;
@@ -7129,14 +7046,13 @@ window.SmartMatch = (function(){
       if (Math.abs(a - lastA) < 0.001) return;
       lastA = a;
       // Fades to fully opaque so it matches the browser chrome colour exactly, no seam
-      nav.style.background = 'rgba(182,236,239,' + a.toFixed(3) + ')';
+      /* cap at translucent so the fixed sky bands stay visible through the frost */
+      nav.style.background = 'rgba(182,236,239,' + (0.78 * a).toFixed(3) + ')';
       var blur = a > 0.01 ? 'blur(' + (14 * a).toFixed(1) + 'px)' : '';
       nav.style.backdropFilter = blur;
       nav.style.webkitBackdropFilter = blur;
       nav.style.borderBottomColor = 'rgba(33,161,168,' + (0.22 * a).toFixed(3) + ')';
       nav.style.boxShadow = a > 0.05 ? '0 1px 14px rgba(0,80,90,' + (0.06 * a).toFixed(3) + ')' : 'none';
-      // Fade nav clouds in with the glass
-      if (navClouds) navClouds.style.opacity = a.toFixed(3);
       // Sync browser chrome (iOS/Android theme-color) to match nav frosting
       if (tcMeta) {
         var r = Math.round(235 + (182 - 235) * a);
