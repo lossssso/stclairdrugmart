@@ -2681,13 +2681,16 @@
     /* ── Trust ticker — slow marquee of proof points under the hero ── */
     .trust-ticker {
       overflow: hidden; position: relative; z-index: 2;
-      background: rgba(255,255,255,.55);
-      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-      border-top: 1px solid rgba(0,115,124,.10);
-      border-bottom: 1px solid rgba(0,115,124,.10);
-      padding: .6rem 0;
+      background: linear-gradient(180deg, rgba(233,252,253,.94), rgba(224,247,248,.94));
+      border-top: 1px solid rgba(0,115,124,.12);
+      border-bottom: 1px solid rgba(0,115,124,.12);
+      padding: .62rem 0;
     }
-    .trust-ticker__track { display: flex; width: max-content; animation: ticker-scroll 46s linear infinite; }
+    .trust-ticker__track {
+      display: flex; width: max-content;
+      animation: ticker-scroll 60s linear infinite;
+      transform: translateZ(0); will-change: transform; backface-visibility: hidden;
+    }
     .trust-ticker:hover .trust-ticker__track { animation-play-state: paused; }
     .trust-ticker__seq {
       display: flex; gap: 2.4rem; padding-right: 2.4rem;
@@ -2775,49 +2778,23 @@
 })();
 </script>
 <div class="sky-bg" aria-hidden="true">
-<div class="sky-band sky-band--far" data-par="0.05">
+<div class="sky-band sky-band--far">
   <div class="sky-band__zoom">
-    <div class="sky-band__strip" style="--band-dur:175s;animation-delay:-66s">
-        <img src="cloud2.webp" alt="" style="width:1300px;margin:0vh 0 0 0;opacity:.9"><img src="cloud.png" alt="" style="width:950px;margin:8vh 0 0 -320px;opacity:.7"><img src="cloud2.webp" alt="" style="width:1150px;margin:3vh 0 0 -260px;opacity:.85"><img src="cloud.png" alt="" style="width:880px;margin:13vh 0 0 -300px;opacity:.65"><img src="cloud2.webp" alt="" style="width:1250px;margin:1vh 0 0 -220px;opacity:.8"><img src="cloud.png" alt="" style="width:900px;margin:10vh 0 0 -280px;opacity:.7">
-        <img src="cloud2.webp" alt="" style="width:1300px;margin:0vh 0 0 0;opacity:.9"><img src="cloud.png" alt="" style="width:950px;margin:8vh 0 0 -320px;opacity:.7"><img src="cloud2.webp" alt="" style="width:1150px;margin:3vh 0 0 -260px;opacity:.85"><img src="cloud.png" alt="" style="width:880px;margin:13vh 0 0 -300px;opacity:.65"><img src="cloud2.webp" alt="" style="width:1250px;margin:1vh 0 0 -220px;opacity:.8"><img src="cloud.png" alt="" style="width:900px;margin:10vh 0 0 -280px;opacity:.7">
+    <div class="sky-band__strip" style="--band-dur:190s;animation-delay:-71s">
+    <img src="cloud2.webp" alt="" style="width:2100px;margin:-2vh 0 0 0;opacity:.85"><img src="cloud.png" alt="" style="width:1300px;margin:6vh 0 0 -520px;opacity:.7"><img src="cloud2.webp" alt="" style="width:1900px;margin:0vh 0 0 -420px;opacity:.8"><img src="cloud.png" alt="" style="width:1250px;margin:10vh 0 0 -480px;opacity:.66">
+    <img src="cloud2.webp" alt="" style="width:2100px;margin:-2vh 0 0 0;opacity:.85"><img src="cloud.png" alt="" style="width:1300px;margin:6vh 0 0 -520px;opacity:.7"><img src="cloud2.webp" alt="" style="width:1900px;margin:0vh 0 0 -420px;opacity:.8"><img src="cloud.png" alt="" style="width:1250px;margin:10vh 0 0 -480px;opacity:.66">
     </div>
   </div>
 </div>
-<div class="sky-band sky-band--mid" data-par="0.11">
+<div class="sky-band sky-band--mid">
   <div class="sky-band__zoom">
-    <div class="sky-band__strip" style="--band-dur:120s;animation-delay:-41s">
-        <img src="cloud.png" alt="" style="width:1000px;margin:0vh 0 0 0;opacity:.8"><img src="cloud2.webp" alt="" style="width:900px;margin:7vh 0 0 -260px;opacity:.7"><img src="cloud.png" alt="" style="width:950px;margin:14vh 0 0 -240px;opacity:.72"><img src="cloud2.webp" alt="" style="width:850px;margin:3vh 0 0 -300px;opacity:.66"><img src="cloud.png" alt="" style="width:920px;margin:10vh 0 0 -200px;opacity:.75"><img src="cloud2.webp" alt="" style="width:880px;margin:18vh 0 0 -260px;opacity:.6">
-        <img src="cloud.png" alt="" style="width:1000px;margin:0vh 0 0 0;opacity:.8"><img src="cloud2.webp" alt="" style="width:900px;margin:7vh 0 0 -260px;opacity:.7"><img src="cloud.png" alt="" style="width:950px;margin:14vh 0 0 -240px;opacity:.72"><img src="cloud2.webp" alt="" style="width:850px;margin:3vh 0 0 -300px;opacity:.66"><img src="cloud.png" alt="" style="width:920px;margin:10vh 0 0 -200px;opacity:.75"><img src="cloud2.webp" alt="" style="width:880px;margin:18vh 0 0 -260px;opacity:.6">
+    <div class="sky-band__strip" style="--band-dur:135s;animation-delay:-44s">
+    <img src="cloud.png" alt="" style="width:1500px;margin:0vh 0 0 0;opacity:.72"><img src="cloud2.webp" alt="" style="width:1800px;margin:8vh 0 0 -500px;opacity:.6"><img src="cloud.png" alt="" style="width:1400px;margin:16vh 0 0 -460px;opacity:.64">
+    <img src="cloud.png" alt="" style="width:1500px;margin:0vh 0 0 0;opacity:.72"><img src="cloud2.webp" alt="" style="width:1800px;margin:8vh 0 0 -500px;opacity:.6"><img src="cloud.png" alt="" style="width:1400px;margin:16vh 0 0 -460px;opacity:.64">
     </div>
   </div>
 </div>
 </div>
-<script>
-/* Cloud parallax — one transform per fixed sky band per frame, coalesced
-   through rAF. Vanilla on purpose: GSAP would cost an eager ~117KB load
-   for a two-line effect. Skipped for reduced-motion and lite devices. */
-(function(){
-  try {
-    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (document.documentElement.classList.contains('lite-clouds')) return;
-  } catch(e){ return; }
-  var bands = [].slice.call(document.querySelectorAll('.sky-bg .sky-band'));
-  if (!bands.length) return;
-  var rates = bands.map(function(b){ return parseFloat(b.getAttribute('data-par')) || 0; });
-  var ticking = false, lastY = -1;
-  function apply(){
-    ticking = false;
-    var y = window.scrollY || 0;
-    if (y === lastY) return;
-    lastY = y;
-    if (y > window.innerHeight * 2.5) return;
-    for (var i = 0; i < bands.length; i++)
-      bands[i].style.transform = 'translate3d(0,' + (-y * rates[i]).toFixed(1) + 'px,0)';
-  }
-  window.addEventListener('scroll', function(){ if (!ticking){ ticking = true; requestAnimationFrame(apply); } }, { passive: true });
-  apply();
-})();
-</script>
 
 <!-- alert banner removed — announcement moved to hero news card -->
 
@@ -2826,9 +2803,9 @@
   <div class="nav__clouds" aria-hidden="true">
     <div class="sky-band sky-band--nav">
       <div class="sky-band__zoom">
-        <div class="sky-band__strip" style="--band-dur:130s;animation-delay:-49s">
-        <img src="cloud2.webp" alt="" style="width:820px;margin:-70px 0 0 0;opacity:.85"><img src="cloud.png" alt="" style="width:650px;margin:-30px 0 0 -200px;opacity:.78"><img src="cloud2.webp" alt="" style="width:760px;margin:-55px 0 0 -180px;opacity:.8"><img src="cloud.png" alt="" style="width:620px;margin:-20px 0 0 -220px;opacity:.75"><img src="cloud2.webp" alt="" style="width:780px;margin:-62px 0 0 -160px;opacity:.8">
-        <img src="cloud2.webp" alt="" style="width:820px;margin:-70px 0 0 0;opacity:.85"><img src="cloud.png" alt="" style="width:650px;margin:-30px 0 0 -200px;opacity:.78"><img src="cloud2.webp" alt="" style="width:760px;margin:-55px 0 0 -180px;opacity:.8"><img src="cloud.png" alt="" style="width:620px;margin:-20px 0 0 -220px;opacity:.75"><img src="cloud2.webp" alt="" style="width:780px;margin:-62px 0 0 -160px;opacity:.8">
+        <div class="sky-band__strip" style="--band-dur:140s;animation-delay:-52s">
+        <img src="cloud2.webp" alt="" style="width:1200px;margin:-70px 0 0 0;opacity:.85"><img src="cloud.png" alt="" style="width:900px;margin:-26px 0 0 -360px;opacity:.78"><img src="cloud2.webp" alt="" style="width:1150px;margin:-58px 0 0 -320px;opacity:.8"><img src="cloud.png" alt="" style="width:880px;margin:-18px 0 0 -380px;opacity:.75">
+        <img src="cloud2.webp" alt="" style="width:1200px;margin:-70px 0 0 0;opacity:.85"><img src="cloud.png" alt="" style="width:900px;margin:-26px 0 0 -360px;opacity:.78"><img src="cloud2.webp" alt="" style="width:1150px;margin:-58px 0 0 -320px;opacity:.8"><img src="cloud.png" alt="" style="width:880px;margin:-18px 0 0 -380px;opacity:.75">
         </div>
       </div>
     </div>
@@ -2901,17 +2878,17 @@
   <div class="hero__clouds" aria-hidden="true">
     <div class="sky-band sky-band--heroA">
       <div class="sky-band__zoom">
-        <div class="sky-band__strip" style="--band-dur:98s;animation-delay:-27s">
-        <img src="cloud2.webp" alt="" style="width:1350px;margin:0vh 0 0 0;opacity:1"><img src="cloud.png" alt="" style="width:900px;margin:12vh 0 0 -340px;opacity:.9"><img src="cloud2.webp" alt="" style="width:1250px;margin:4vh 0 0 -260px;opacity:.96"><img src="cloud.png" alt="" style="width:860px;margin:22vh 0 0 -320px;opacity:.85"><img src="cloud2.webp" alt="" style="width:1200px;margin:8vh 0 0 -200px;opacity:.92"><img src="cloud.png" alt="" style="width:880px;margin:26vh 0 0 -300px;opacity:.85">
-        <img src="cloud2.webp" alt="" style="width:1350px;margin:0vh 0 0 0;opacity:1"><img src="cloud.png" alt="" style="width:900px;margin:12vh 0 0 -340px;opacity:.9"><img src="cloud2.webp" alt="" style="width:1250px;margin:4vh 0 0 -260px;opacity:.96"><img src="cloud.png" alt="" style="width:860px;margin:22vh 0 0 -320px;opacity:.85"><img src="cloud2.webp" alt="" style="width:1200px;margin:8vh 0 0 -200px;opacity:.92"><img src="cloud.png" alt="" style="width:880px;margin:26vh 0 0 -300px;opacity:.85">
+        <div class="sky-band__strip" style="--band-dur:105s;animation-delay:-31s">
+        <img src="cloud2.webp" alt="" style="width:2300px;margin:-2vh 0 0 0;opacity:.95"><img src="cloud.png" alt="" style="width:1500px;margin:12vh 0 0 -620px;opacity:.9"><img src="cloud2.webp" alt="" style="width:2000px;margin:2vh 0 0 -460px;opacity:.92"><img src="cloud.png" alt="" style="width:1450px;margin:22vh 0 0 -560px;opacity:.85">
+        <img src="cloud2.webp" alt="" style="width:2300px;margin:-2vh 0 0 0;opacity:.95"><img src="cloud.png" alt="" style="width:1500px;margin:12vh 0 0 -620px;opacity:.9"><img src="cloud2.webp" alt="" style="width:2000px;margin:2vh 0 0 -460px;opacity:.92"><img src="cloud.png" alt="" style="width:1450px;margin:22vh 0 0 -560px;opacity:.85">
         </div>
       </div>
     </div>
     <div class="sky-band sky-band--heroB">
       <div class="sky-band__zoom">
-        <div class="sky-band__strip" style="--band-dur:84s;animation-delay:-58s">
-        <img src="cloud.png" alt="" style="width:950px;margin:0vh 0 0 0;opacity:.9"><img src="cloud2.webp" alt="" style="width:1150px;margin:10vh 0 0 -300px;opacity:.85"><img src="cloud.png" alt="" style="width:900px;margin:20vh 0 0 -260px;opacity:.8"><img src="cloud2.webp" alt="" style="width:1100px;margin:5vh 0 0 -340px;opacity:.88"><img src="cloud.png" alt="" style="width:870px;margin:14vh 0 0 -240px;opacity:.78">
-        <img src="cloud.png" alt="" style="width:950px;margin:0vh 0 0 0;opacity:.9"><img src="cloud2.webp" alt="" style="width:1150px;margin:10vh 0 0 -300px;opacity:.85"><img src="cloud.png" alt="" style="width:900px;margin:20vh 0 0 -260px;opacity:.8"><img src="cloud2.webp" alt="" style="width:1100px;margin:5vh 0 0 -340px;opacity:.88"><img src="cloud.png" alt="" style="width:870px;margin:14vh 0 0 -240px;opacity:.78">
+        <div class="sky-band__strip" style="--band-dur:90s;animation-delay:-58s">
+        <img src="cloud.png" alt="" style="width:1600px;margin:0vh 0 0 0;opacity:.88"><img src="cloud2.webp" alt="" style="width:2000px;margin:14vh 0 0 -560px;opacity:.82"><img src="cloud.png" alt="" style="width:1500px;margin:26vh 0 0 -520px;opacity:.8">
+        <img src="cloud.png" alt="" style="width:1600px;margin:0vh 0 0 0;opacity:.88"><img src="cloud2.webp" alt="" style="width:2000px;margin:14vh 0 0 -560px;opacity:.82"><img src="cloud.png" alt="" style="width:1500px;margin:26vh 0 0 -520px;opacity:.8">
         </div>
       </div>
     </div>
@@ -7083,7 +7060,7 @@ window.SmartMatch = (function(){
       // Fades to fully opaque so it matches the browser chrome colour exactly, no seam
       /* cap at translucent so the fixed sky bands stay visible through the frost */
       nav.style.background = 'rgba(182,236,239,' + (0.78 * a).toFixed(3) + ')';
-      var blur = a > 0.01 ? 'blur(' + (14 * a).toFixed(1) + 'px)' : '';
+      var blur = a > 0.01 ? 'blur(' + (7 * a).toFixed(1) + 'px)' : '';
       nav.style.backdropFilter = blur;
       nav.style.webkitBackdropFilter = blur;
       nav.style.borderBottomColor = 'rgba(33,161,168,' + (0.22 * a).toFixed(3) + ')';
