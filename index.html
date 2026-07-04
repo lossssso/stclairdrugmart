@@ -2678,29 +2678,6 @@
       }
     }
 
-    /* ── Trust ticker — slow marquee of proof points under the hero ── */
-    .trust-ticker {
-      overflow: hidden; position: relative; z-index: 2;
-      background: linear-gradient(180deg, rgba(233,252,253,.94), rgba(224,247,248,.94));
-      border-top: 1px solid rgba(0,115,124,.12);
-      border-bottom: 1px solid rgba(0,115,124,.12);
-      padding: .62rem 0;
-    }
-    .trust-ticker__track {
-      display: flex; width: max-content;
-      animation: ticker-scroll 60s linear infinite;
-      transform: translateZ(0); will-change: transform; backface-visibility: hidden;
-    }
-    .trust-ticker:hover .trust-ticker__track { animation-play-state: paused; }
-    .trust-ticker__seq {
-      display: flex; gap: 2.4rem; padding-right: 2.4rem;
-      font-size: .8rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
-      color: var(--teal-dark); white-space: nowrap;
-    }
-    .trust-ticker__seq span { display: inline-flex; align-items: center; gap: .45rem; }
-    @keyframes ticker-scroll { to { transform: translateX(-50%); } }
-    @media (prefers-reduced-motion: reduce) { .trust-ticker__track { animation: none; } }
-    @media (max-width: 768px) { .trust-ticker__seq { font-size: .72rem; gap: 1.6rem; padding-right: 1.6rem; } }
 
     /* Magnetic CTA needs a transformable box */
     .nav__cta a { display: inline-block; will-change: transform; }
@@ -2936,14 +2913,6 @@
     </div>
   </div>
 </header>
-
-<!-- Trust ticker — proof points, decorative (all facts appear elsewhere on page) -->
-<div class="trust-ticker" aria-hidden="true">
-  <div class="trust-ticker__track">
-    <span class="trust-ticker__seq"><span>&#11088; 4.9 Google Rating</span><span>&#127942; Uber Eats Top Store in Toronto</span><span>&#128666; Free GTA Delivery</span><span>&#129658; 28 Conditions Treated</span><span>&#128137; Vaccines &amp; Travel Health</span><span>&#128483;&#65039; Serving You in 6+ Languages</span><span>&#128694; Walk-Ins Welcome</span></span>
-    <span class="trust-ticker__seq"><span>&#11088; 4.9 Google Rating</span><span>&#127942; Uber Eats Top Store in Toronto</span><span>&#128666; Free GTA Delivery</span><span>&#129658; 28 Conditions Treated</span><span>&#128137; Vaccines &amp; Travel Health</span><span>&#128483;&#65039; Serving You in 6+ Languages</span><span>&#128694; Walk-Ins Welcome</span></span>
-  </div>
-</div>
 
 <!-- Welcome / news modal -->
 <div class="welcome-modal-overlay" id="welcomeModal" role="dialog" aria-modal="true" aria-label="Welcome">
