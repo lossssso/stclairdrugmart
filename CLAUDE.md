@@ -106,11 +106,8 @@ This site must NOT look AI-generated. Before writing any CSS, commit to a clear 
 - Normalize.css: https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css
 - Lazysizes: https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js
 - Lucide Icons: https://unpkg.com/lucide@latest
-## Never Use
-- Three.js, Babylon.js, A-Frame, Spline, Locomotive Scroll, Barba.js
-- Inter, Roboto, Arial, Space Grotesk fonts
-- Purple gradients, generic card grids, carousels without purpose
-- Anything requiring npm install
+## Library Selection Rule
+Choose the lightest possible tool for each task. Prefer CSS-only solutions first, then vanilla JS, then a CDN library via script tag only if genuinely needed. Never use anything that requires npm install or a build step. No Three.js, Babylon.js, A-Frame, Spline, or any WebGL engine — these are too heavy for a general pharmacy audience.
 ## Storefront Animation Rules
 - Lives in storefront.js + one scoped CSS block — fully swappable
 - Tier 1 (navigator.hardwareConcurrency > 4): full layered parallax + CSS door open
