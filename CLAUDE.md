@@ -1,0 +1,123 @@
+# St. Clair Drug Mart — Pharmacy Website
+
+Static marketing/informational site for St. Clair Drug Mart Pharmacy (1203 St. Clair Ave W,
+Toronto, ON). Deployed at `www.stclairdrugmart.ca` (see `CNAME`). See "Project Rules" below
+for the stack and design/dev rules.
+
+## Structure
+
+- `index.html` — the homepage. Large single file (~7,200 lines) with the site's CSS in one
+  `<style>` block and JS in several inline `<script>` blocks. Contains hero, welcome section,
+  conditions/services list, team, reviews, FAQ (with client-side smart search), patient
+  portal preview, find-us/map, and footer. Also carries most of the SEO metadata (OG/Twitter
+  tags, `Pharmacy` JSON-LD schema).
+- `portal.html` — patient portal landing page (appointment booking categories, links out to
+  PharmAssess at `app.pharmassess.ca`).
+- `braces-supports.html` — standalone service/landing page (braces & supports offering).
+- `404.html` — custom 404 page, styled to match the homepage (clouds, nav, frosted card).
+- `contact/index.html`, `find-us/index.html` — thin redirect/alias stubs for clean URLs.
+- `blog/` — static blog:
+  - `blog/index.html` — blog listing page with static FAQ schema and static post cards.
+  - `blog/posts/*.html` — individual posts, one file per post.
+  - `blog/posts.json` — post metadata index (title, slug, date, etc.) consumed by the listing
+    page and by the generator script.
+  - `blog/post.css`, `blog/post.js` — shared styling/behavior for post pages.
+- `scripts/generate_blog.py` — generates a new SEO-targeted blog post via the Anthropic API
+  (`anthropic` Python package). Has a fixed `PHARMACY` details dict and a `TOPICS` list of
+  (description, primary keyword, secondary keywords) tuples to draft from.
+- `.github/workflows/blog.yml` — runs `generate_blog.py` every Monday 9 AM ET (and on manual
+  dispatch), commits the new post + updated `posts.json`, and pushes directly to the branch
+  the workflow runs on. Requires the `ANTHROPIC_API_KEY` repo secret.
+- Images: root-level `*.webp`/`*.png` (storefront, interior, neighbourhood photos), `team/`
+  (staff photos), `logos/` (partner/service logos — Uber, TTC, Green P, OCP, PharmAssess,
+  Bike Share), `flags/` (country flag SVGs, used for language/community sections).
+- `sitemap.xml`, `robots.txt` — kept in sync manually with actual pages (see TODO.md history
+  of "sitemap fix" commits).
+- `TODO.md` — running list of open follow-ups, deferred features, and business/owner action
+  items (not code state — read it for context on what's intentionally unfinished).
+
+## Conventions
+
+- Edit HTML/CSS/JS files directly; changes are live as soon as they're committed/deployed
+  (GitHub Pages via `CNAME`).
+- Key business facts are hardcoded in many places and must stay consistent across files
+  when changed: phone `(416) 654-8181`, address `1203 St. Clair Avenue West`, OCP
+  accreditation No. 306667, rating "4.9★ / 59 reviews" (repeated ~18+ places — see TODO.md),
+  hours (closed Sunday, Sat 9–2). Grep across `index.html`, `portal.html`,
+  `braces-supports.html`, `blog/`, and JSON-LD blocks when updating any of these.
+- SEO/AEO structured data (JSON-LD `Pharmacy` schema, FAQ schema) lives inline in the pages
+  it describes — keep it in sync with visible content when editing copy.
+- Booking/appointments link out to PharmAssess (`app.pharmassess.ca/appointment/306667`);
+  don't assume any booking logic lives in this repo.
+- Google Analytics (`G-2YQ9FDLMCV`) tag is inlined near the top of `<head>` on every page —
+  replicate it if adding a new top-level page.
+- Prefer editing existing inline `<style>`/`<script>` blocks over introducing new files.
+
+## Working branch
+
+Active development happens on `claude/review-claude-md-cxv4mc` (the repo's dev branch for
+Claude sessions), not `main`. See "Git Rules" below for push policy.
+
+# St. Clair Drug Mart — Project Rules
+## What This Project Is
+A modern community pharmacy website (stclairdrugmart.ca) serving a general Toronto population — seniors, patients on older/slower devices, all mobile types. The goal is a premium, distinctive, non-generic look that feels trusted and modern, like Apple.com or Linear.app, while loading fast for everyone. This is a healthcare site — accessibility and speed are never sacrificed for aesthetics.
+## Stack
+- Plain HTML/CSS/JS only
+- No React, no npm, no build tools, no package.json
+- Hosted on GitHub Pages (main branch = live site)
+- Previewed on Cloudflare Pages (dev branch)
+- Domain via Canspace DNS
+- Do not change the stack under any circumstances
+## File Structure
+- index.html — main page
+- storefront.js — storefront animation only, self-contained, swappable
+- All JS at bottom of body or using defer
+- One scoped <style> block per major feature section
+## Git Rules
+- Never push to GitHub without explicit instruction
+- Dev branch only — never push to main
+- One commit per completed task — never commit after every small change
+- Always state what you are about to commit before doing it
+## Design Direction (critical — read before writing any CSS)
+This site must NOT look AI-generated. Before writing any CSS, commit to a clear aesthetic direction and execute it with intention.
+- Aesthetic target: luxury/refined pharmacy — think Apple.com meets a premium European clinic
+- Typography: use Plus Jakarta Sans or DM Sans via Google Fonts — never Inter, Roboto, Arial, or Space Grotesk
+- Color: dominant brand color with sharp accents — avoid timid evenly-distributed palettes and purple gradients
+- Layouts: use asymmetry, overlap, generous negative space — avoid generic card grids stacked on top of each other
+- Borders: 1px brand-color borders with layered box-shadow for depth — never flat single shadow or gradient glow borders
+- Motion: one well-orchestrated reveal per section — never scattered micro-interactions everywhere
+- Backgrounds: create atmosphere and depth — never default to plain white or solid color sections
+- Every screen needs one single strong visual anchor — never fill every inch with content
+## Performance Rules (non-negotiable)
+- Only animate transform and opacity — never top, left, width, margin, height, or box-shadow
+- prefers-reduced-motion fallback on every animation — show static state immediately
+- will-change: transform only on actively animating elements, removed after via onLeave callback
+- No animation on off-screen elements
+- All images need width and height attributes to prevent layout shift
+- No render-blocking scripts
+## CSS Rules
+- Mobile-first — base styles for mobile, scale up with min-width media queries
+- Under 768px: collapse all parallax to single image, simplify all 3D
+- All CSS 3D inside @supports (transform-style: preserve-3d) with flat fallback
+## Approved CDN Libraries (no npm — link tags only)
+- GSAP: https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js
+- ScrollTrigger: https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js
+- AOS: https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js
+- Normalize.css: https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css
+- Lazysizes: https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js
+- Lucide Icons: https://unpkg.com/lucide@latest
+## Library Selection Rule
+Choose the lightest possible tool for each task. Prefer CSS-only solutions first, then vanilla JS, then a CDN library via script tag only if genuinely needed. Never use anything that requires npm install or a build step. No Three.js, Babylon.js, A-Frame, Spline, or any WebGL engine — these are too heavy for a general pharmacy audience.
+## Skills
+You have access to Claude skills. Use them when they genuinely improve output quality. Preferred skills for this project: frontend-design (for non-generic aesthetics), gsap-scrolltrigger (for scroll animation). Use lightweight-3d-effects or similar only if the CSS-only approach is insufficient. Never activate a skill that pulls in npm dependencies or a build tool.
+## Storefront Animation Rules
+- Lives in storefront.js + one scoped CSS block — fully swappable
+- Tier 1 (navigator.hardwareConcurrency > 4): full layered parallax + CSS door open
+- Tier 2 (low-power): simple opacity crossfade only
+- prefers-reduced-motion: static interior shown immediately
+- Mobile under 768px: single image zoom + door open, no parallax
+## Accessibility
+- Descriptive alt text on all images
+- All interactive elements keyboard accessible
+- WCAG AA color contrast minimum
+- Critical pharmacy information never hidden inside animations
