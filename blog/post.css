@@ -1,13 +1,18 @@
 /* Shared styles for blog posts — St. Clair Drug Mart */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --teal-bright:#21a1a8; --teal-mid:#5cb9bc; --teal-dark:#00737c; --teal-deeper:#00737c;
+  --teal-bright:#21a1a8; --teal-mid:#5cb9bc; --teal-dark:#00737c; --teal-deeper:var(--teal-dark);
   --teal-ice:#d7fbfc; --white:#fff; --text:#0d2d2e; --text-muted:#3a6062; --border:#b8e8ea;
-  --radius:12px; --shadow:0 2px 14px rgba(0,115,124,.10);
-  --font-nav: 'Helvetica Neue', Helvetica, 'Arial', 'Inter', sans-serif;
+  --radius-sm:10px; --radius:14px; --radius-lg:20px;
+  --shadow-card:0 1px 2px rgba(0,115,124,.07), 0 8px 22px -6px rgba(0,45,49,.16), inset 0 0 0 1px rgba(255,255,255,.4);
+  --shadow-hover:0 2px 4px rgba(0,115,124,.10), 0 14px 34px -8px rgba(0,45,49,.22), inset 0 0 0 1px rgba(255,255,255,.55);
+  --shadow:var(--shadow-card);
+  --font-display:'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body:'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-nav: var(--font-display);
 }
 html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; overflow-x:hidden; }
-body { font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif; background:linear-gradient(180deg, #b6ecef 0%, #cdf5f6 35%, #e4fbfc 100%) fixed; color:var(--text); line-height:1.75; overflow-x:hidden; }
+body { font-family:var(--font-body); background:linear-gradient(180deg, #b6ecef 0%, #cdf5f6 35%, #e4fbfc 100%) fixed; color:var(--text); line-height:1.75; overflow-x:hidden; }
 a { color:var(--teal-dark); }
 img { display:block; max-width:100%; }
 
@@ -98,7 +103,7 @@ img { display:block; max-width:100%; }
 .post__breadcrumb { font-size:.8rem; color:var(--text-muted); margin-bottom:1rem; }
 .post__breadcrumb a { color:var(--teal-dark); text-decoration:none; }
 .post__breadcrumb a:hover { text-decoration:underline; }
-.post h1 { font-size:clamp(1.7rem,4vw,2.4rem); font-weight:800; color:var(--teal-deeper); line-height:1.2; margin-bottom:.6rem; }
+.post h1 { font-family:var(--font-display); font-size:clamp(1.7rem,4vw,2.4rem); font-weight:800; color:var(--teal-deeper); line-height:1.2; margin-bottom:.6rem; }
 .post__meta { font-size:.82rem; color:var(--text-muted); margin-bottom:1.5rem; }
 .post__hero-img { width:100%; height:300px; object-fit:cover; border-radius:14px; margin-bottom:1.75rem; box-shadow:var(--shadow); }
 
@@ -119,8 +124,8 @@ img { display:block; max-width:100%; }
 .post__toc a::before { counter-increment:toc; content:counter(toc); position:absolute; left:0; top:.32rem; width:1.15rem; height:1.15rem; font-size:.66rem; font-weight:700; color:var(--teal-dark); background:#fff; border:1px solid var(--border); border-radius:50%; display:flex; align-items:center; justify-content:center; }
 .post__toc a:hover { color:var(--teal-bright); }
 
-.post h2 { font-size:1.3rem; font-weight:700; color:var(--teal-deeper); margin:2rem 0 .6rem; scroll-margin-top:84px; }
-.post h3 { font-size:1.1rem; font-weight:700; color:var(--teal-deeper); margin:1.5rem 0 .5rem; scroll-margin-top:84px; }
+.post h2 { font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:var(--teal-deeper); margin:2rem 0 .6rem; scroll-margin-top:84px; }
+.post h3 { font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:var(--teal-deeper); margin:1.5rem 0 .5rem; scroll-margin-top:84px; }
 .post p { margin-bottom:1rem; }
 .post ul, .post ol { margin:0 0 1.1rem 1.25rem; }
 .post li { margin-bottom:.45rem; }

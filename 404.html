@@ -52,24 +52,33 @@
   <meta name="robots" content="noindex" />
   <link rel="icon" type="image/png" href="/logo.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     a { text-decoration: none; }
     :root {
       --teal-bright: #21a1a8;
       --teal-deeper: #00737c;
-      --teal-dark:   #2c5457;
+      --teal-dark:   #00737c;
       --teal-ice:    #d7fbfc;
-      --text:        #1a2e30;
-      --text-muted:  #5a7a7d;
+      --teal-mid:    #5cb9bc;
+      --text:        #0d2d2e;
+      --text-muted:  #3a6062;
       --white:       #ffffff;
-      --font-display: 'Big Shoulders Display', 'Helvetica Neue', Arial, sans-serif;
-      --font-nav: 'Helvetica Neue', Helvetica, Arial, 'Inter', sans-serif;
+      --border:      #b8e8ea;
+      --radius-sm:   10px;
+      --radius:      14px;
+      --radius-lg:   20px;
+      --shadow-card:  0 1px 2px rgba(0,115,124,.07), 0 8px 22px -6px rgba(0,45,49,.16), inset 0 0 0 1px rgba(255,255,255,.4);
+      --shadow-hover: 0 2px 4px rgba(0,115,124,.10), 0 14px 34px -8px rgba(0,45,49,.22), inset 0 0 0 1px rgba(255,255,255,.55);
+      --shadow:      var(--shadow-card);
+      --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-body:    'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-nav:     var(--font-display);
     }
     html { overflow-x: hidden; }
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: var(--font-body);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
