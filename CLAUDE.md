@@ -58,3 +58,68 @@ package.json, no framework. Plain HTML/CSS/JS served as-is.
 
 Active development happens on `claude/review-claude-md-cxv4mc` (the repo's dev branch for
 Claude sessions), not `main`. Commit and push there unless told otherwise.
+
+# St. Clair Drug Mart — Project Rules
+## What This Project Is
+A modern community pharmacy website (stclairdrugmart.ca) serving a general Toronto population — seniors, patients on older/slower devices, all mobile types. The goal is a premium, distinctive, non-generic look that feels trusted and modern, like Apple.com or Linear.app, while loading fast for everyone. This is a healthcare site — accessibility and speed are never sacrificed for aesthetics.
+## Stack
+- Plain HTML/CSS/JS only
+- No React, no npm, no build tools, no package.json
+- Hosted on GitHub Pages (main branch = live site)
+- Previewed on Cloudflare Pages (dev branch)
+- Domain via Canspace DNS
+- Do not change the stack under any circumstances
+## File Structure
+- index.html — main page
+- storefront.js — storefront animation only, self-contained, swappable
+- All JS at bottom of body or using defer
+- One scoped <style> block per major feature section
+## Git Rules
+- Never push to GitHub without explicit instruction
+- Dev branch only — never push to main
+- One commit per completed task — never commit after every small change
+- Always state what you are about to commit before doing it
+## Design Direction (critical — read before writing any CSS)
+This site must NOT look AI-generated. Before writing any CSS, commit to a clear aesthetic direction and execute it with intention.
+- Aesthetic target: luxury/refined pharmacy — think Apple.com meets a premium European clinic
+- Typography: use Plus Jakarta Sans or DM Sans via Google Fonts — never Inter, Roboto, Arial, or Space Grotesk
+- Color: dominant brand color with sharp accents — avoid timid evenly-distributed palettes and purple gradients
+- Layouts: use asymmetry, overlap, generous negative space — avoid generic card grids stacked on top of each other
+- Borders: 1px brand-color borders with layered box-shadow for depth — never flat single shadow or gradient glow borders
+- Motion: one well-orchestrated reveal per section — never scattered micro-interactions everywhere
+- Backgrounds: create atmosphere and depth — never default to plain white or solid color sections
+- Every screen needs one single strong visual anchor — never fill every inch with content
+## Performance Rules (non-negotiable)
+- Only animate transform and opacity — never top, left, width, margin, height, or box-shadow
+- prefers-reduced-motion fallback on every animation — show static state immediately
+- will-change: transform only on actively animating elements, removed after via onLeave callback
+- No animation on off-screen elements
+- All images need width and height attributes to prevent layout shift
+- No render-blocking scripts
+## CSS Rules
+- Mobile-first — base styles for mobile, scale up with min-width media queries
+- Under 768px: collapse all parallax to single image, simplify all 3D
+- All CSS 3D inside @supports (transform-style: preserve-3d) with flat fallback
+## Approved CDN Libraries (no npm — link tags only)
+- GSAP: https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js
+- ScrollTrigger: https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js
+- AOS: https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js
+- Normalize.css: https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css
+- Lazysizes: https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js
+- Lucide Icons: https://unpkg.com/lucide@latest
+## Never Use
+- Three.js, Babylon.js, A-Frame, Spline, Locomotive Scroll, Barba.js
+- Inter, Roboto, Arial, Space Grotesk fonts
+- Purple gradients, generic card grids, carousels without purpose
+- Anything requiring npm install
+## Storefront Animation Rules
+- Lives in storefront.js + one scoped CSS block — fully swappable
+- Tier 1 (navigator.hardwareConcurrency > 4): full layered parallax + CSS door open
+- Tier 2 (low-power): simple opacity crossfade only
+- prefers-reduced-motion: static interior shown immediately
+- Mobile under 768px: single image zoom + door open, no parallax
+## Accessibility
+- Descriptive alt text on all images
+- All interactive elements keyboard accessible
+- WCAG AA color contrast minimum
+- Critical pharmacy information never hidden inside animations
