@@ -57,6 +57,9 @@
     '.sf__stage { position: relative; height: 100vh; height: 100svh; overflow: hidden;',
     '  background: linear-gradient(180deg,#eafcfd 0%,#cdf3f5 60%,#b6ecef 100%); }',
     '.sf__scene { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }',
+    '.sf__street { position: absolute; inset: 0; overflow: hidden; }',
+    '.sf__street img { width: 100%; height: 100%; object-fit: cover; max-width: none;',
+    '  will-change: transform, filter; transform-origin: 26% 58%; }',
     '.sf__photo { position: relative; height: 90%; aspect-ratio: 850/1190; border-radius: 18px;',
     '  overflow: hidden; box-shadow: 0 24px 70px rgba(6,60,66,.32); will-change: transform;',
     '  transform-origin: ' + G.origin + '; }',
@@ -134,6 +137,11 @@
   var section = el('section', 'sf sf--' + tier, mount, { id: 'store-flyin', 'aria-label': 'Step inside our pharmacy' });
   var stage = el('div', 'sf__stage', section);
   var scene = el('div', 'sf__scene', stage);
+  var street = null, streetImg = null;
+  if (tier === 'full') {
+    street = el('div', 'sf__street', scene);
+    streetImg = img('storefront/street.webp', '', street, 'St. Clair Ave W streetscape outside the pharmacy');
+  }
   var photo = el('div', 'sf__photo', scene);
 
   var base = img('storefront_studio.webp', 'sf__base', photo, 'St. Clair Drug Mart storefront at 1203 St. Clair Ave W');
@@ -228,7 +236,7 @@
       scrollTrigger: {
         trigger: section,
         start: 'top top',
-        end: '+=' + (tier === 'fade' ? '140%' : '280%'),
+        end: '+=' + (tier === 'fade' ? '140%' : tier === 'full' ? '340%' : '280%'),
         pin: stage,
         scrub: scrub,
         anticipatePin: 1
@@ -247,38 +255,52 @@
       return;
     }
 
+    /* Google-Earth stage 1 (full tier): the street scene establishes,
+       zooms toward the shop, and dissolves into the clean facade. */
+    var O = 0;
+    if (tier === 'full' && street) {
+      O = .22;
+      gsap.set(photo, { autoAlpha: 0, scale: .94, transformOrigin: '50% 50%' });
+      tl.fromTo(streetImg, { scale: 1, filter: 'contrast(1) saturate(1)' },
+        { scale: 2.05, filter: 'contrast(1.1) saturate(1.15)', ease: 'power2.in', duration: .24 }, 0);
+      tl.to(photo, { autoAlpha: 1, scale: 1, ease: 'power1.out', duration: .07 }, .16);
+      tl.to(street, { autoAlpha: 0, duration: .05 }, .19);
+      /* hand the transform-origin back to the door for the flight */
+      tl.set(photo, { transformOrigin: G.origin }, .23);
+    }
+
     /* full + flat share the zoom & door; full adds the depth planes */
-    tl.to(photo, { scale: mobile ? 2.6 : 3.15, transformOrigin: G.origin, ease: 'power2.inOut', duration: .62 }, 0);
+    tl.to(photo, { scale: mobile ? 2.6 : 3.15, transformOrigin: G.origin, ease: 'power2.inOut', duration: .62 }, O);
     /* hyperreal rack focus — composited layers only */
-    tl.fromTo(base, { filter: 'contrast(1) saturate(1)' }, { filter: 'contrast(1.15) saturate(1.2)', ease: 'power1.in', duration: .5 }, .06);
+    tl.fromTo(base, { filter: 'contrast(1) saturate(1)' }, { filter: 'contrast(1.15) saturate(1.2)', ease: 'power1.in', duration: .5 }, O + .06);
 
     if (tier === 'full') {
-      tl.fromTo(sign, { filter: 'contrast(1) saturate(1)' }, { yPercent: -7, filter: 'contrast(1.15) saturate(1.2)', duration: .55 }, 0);
-      tl.to(logo,  { yPercent: -9, duration: .55 }, 0);
-      tl.to(trunk, { xPercent: -170, autoAlpha: 0, ease: 'power1.in', duration: .4 }, 0);
-      tl.to(ftl,   { scale: 1.95, xPercent: -42, yPercent: -38, autoAlpha: 0, ease: 'power1.in', duration: .44, transformOrigin: '0% 0%' }, 0);
-      tl.to(ftr,   { scale: 1.95, xPercent: 44, yPercent: -36, autoAlpha: 0, ease: 'power1.in', duration: .44, transformOrigin: '100% 0%' }, 0);
+      tl.fromTo(sign, { filter: 'contrast(1) saturate(1)' }, { yPercent: -7, filter: 'contrast(1.15) saturate(1.2)', duration: .55 }, O);
+      tl.to(logo,  { yPercent: -9, duration: .55 }, O);
+      tl.to(trunk, { xPercent: -170, autoAlpha: 0, ease: 'power1.in', duration: .4 }, O);
+      tl.to(ftl,   { scale: 1.95, xPercent: -42, yPercent: -38, autoAlpha: 0, ease: 'power1.in', duration: .44, transformOrigin: '0% 0%' }, O);
+      tl.to(ftr,   { scale: 1.95, xPercent: 44, yPercent: -36, autoAlpha: 0, ease: 'power1.in', duration: .44, transformOrigin: '100% 0%' }, O);
       /* logo pulse — a small welcome acknowledgment right before the door */
-      tl.to(logo, { scale: 1.08, duration: .035, ease: 'power1.out' }, .46);
-      tl.to(logo, { scale: 1, duration: .035, ease: 'power1.in' }, .495);
+      tl.to(logo, { scale: 1.08, duration: .035, ease: 'power1.out' }, O + .46);
+      tl.to(logo, { scale: 1, duration: .035, ease: 'power1.in' }, O + .495);
     }
 
     /* door swings open at peak zoom */
     if (has3d) {
-      tl.to(leafL, { rotationY: -82, ease: 'power2.in', duration: .16 }, .5);
-      tl.to(leafR, { rotationY: 82, ease: 'power2.in', duration: .16 }, .5);
+      tl.to(leafL, { rotationY: -82, ease: 'power2.in', duration: .16 }, O + .5);
+      tl.to(leafR, { rotationY: 82, ease: 'power2.in', duration: .16 }, O + .5);
     } else {
-      tl.to(leafL, { xPercent: -100, ease: 'power2.in', duration: .16 }, .5);
-      tl.to(leafR, { xPercent: 100, ease: 'power2.in', duration: .16 }, .5);
+      tl.to(leafL, { xPercent: -100, ease: 'power2.in', duration: .16 }, O + .5);
+      tl.to(leafR, { xPercent: 100, ease: 'power2.in', duration: .16 }, O + .5);
     }
-    tl.fromTo(patch, { scale: 1.14 }, { scale: 1, duration: .3 }, .44);
+    tl.fromTo(patch, { scale: 1.14 }, { scale: 1, duration: .3 }, O + .44);
 
     /* through the door: interior takes over */
-    tl.to(interior, { autoAlpha: 1, duration: .16 }, .66);
-    tl.fromTo(interior.querySelector('img'), { scale: 1.16 }, { scale: 1.02, duration: .32, ease: 'power1.out' }, .66);
+    tl.to(interior, { autoAlpha: 1, duration: .16 }, O + .66);
+    tl.fromTo(interior.querySelector('img'), { scale: 1.16 }, { scale: 1.02, duration: .32, ease: 'power1.out' }, O + .66);
 
     /* the conversation begins */
-    tl.to(bubbles, { y: 0, autoAlpha: 1, stagger: .028, duration: .12, ease: 'power2.out' }, .78);
+    tl.to(bubbles, { y: 0, autoAlpha: 1, stagger: .028, duration: .12, ease: 'power2.out' }, O + .78);
   }
 
   function boot() {
