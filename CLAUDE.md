@@ -108,6 +108,8 @@ This site must NOT look AI-generated. Before writing any CSS, commit to a clear 
 - Lucide Icons: https://unpkg.com/lucide@latest
 ## Library Selection Rule
 Choose the lightest possible tool for each task. Prefer CSS-only solutions first, then vanilla JS, then a CDN library via script tag only if genuinely needed. Never use anything that requires npm install or a build step. No Three.js, Babylon.js, A-Frame, Spline, or any WebGL engine — these are too heavy for a general pharmacy audience.
+## Skills
+You have access to Claude skills. Use them when they genuinely improve output quality. Preferred skills for this project: frontend-design (for non-generic aesthetics), gsap-scrolltrigger (for scroll animation). Use lightweight-3d-effects or similar only if the CSS-only approach is insufficient. Never activate a skill that pulls in npm dependencies or a build tool.
 ## Storefront Animation Rules
 - Lives in storefront.js + one scoped CSS block — fully swappable
 - Tier 1 (navigator.hardwareConcurrency > 4): full layered parallax + CSS door open
