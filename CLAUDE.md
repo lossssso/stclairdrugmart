@@ -1,8 +1,8 @@
 # St. Clair Drug Mart — Pharmacy Website
 
 Static marketing/informational site for St. Clair Drug Mart Pharmacy (1203 St. Clair Ave W,
-Toronto, ON). Deployed at `www.stclairdrugmart.ca` (see `CNAME`) — no build step, no
-package.json, no framework. Plain HTML/CSS/JS served as-is.
+Toronto, ON). Deployed at `www.stclairdrugmart.ca` (see `CNAME`). See "Project Rules" below
+for the stack and design/dev rules.
 
 ## Structure
 
@@ -38,8 +38,8 @@ package.json, no framework. Plain HTML/CSS/JS served as-is.
 
 ## Conventions
 
-- No bundler, no npm, no build/test command. Edit HTML/CSS/JS files directly; changes are
-  live as soon as they're committed/deployed (GitHub Pages via `CNAME`).
+- Edit HTML/CSS/JS files directly; changes are live as soon as they're committed/deployed
+  (GitHub Pages via `CNAME`).
 - Key business facts are hardcoded in many places and must stay consistent across files
   when changed: phone `(416) 654-8181`, address `1203 St. Clair Avenue West`, OCP
   accreditation No. 306667, rating "4.9★ / 59 reviews" (repeated ~18+ places — see TODO.md),
@@ -51,13 +51,12 @@ package.json, no framework. Plain HTML/CSS/JS served as-is.
   don't assume any booking logic lives in this repo.
 - Google Analytics (`G-2YQ9FDLMCV`) tag is inlined near the top of `<head>` on every page —
   replicate it if adding a new top-level page.
-- Prefer editing existing inline `<style>`/`<script>` blocks over introducing new files or a
-  build tool; the site is intentionally dependency-free.
+- Prefer editing existing inline `<style>`/`<script>` blocks over introducing new files.
 
 ## Working branch
 
 Active development happens on `claude/review-claude-md-cxv4mc` (the repo's dev branch for
-Claude sessions), not `main`. Commit and push there unless told otherwise.
+Claude sessions), not `main`. See "Git Rules" below for push policy.
 
 # St. Clair Drug Mart — Project Rules
 ## What This Project Is
