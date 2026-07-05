@@ -2607,95 +2607,6 @@
     }
     .pp-close:hover { color: #111; }
     .pp-link { color: rgba(255,255,255,.55); font-size: .7rem; text-decoration: underline; cursor: pointer; background: none; border: none; }
-
-    /* ── Store walk-in 3D (welcome photo morphs into a stylized tour, see walkin3d.js) ──
-       Hidden unless JS activates it (html.w3d-on); classic page otherwise. */
-    .w3d { display: none; }
-    html.w3d-on .w3d { display: block; }
-    /* The stage is a fixed full-viewport overlay. It stays hidden until the
-       welcome-section pin activates it, so the page reads normally otherwise. */
-    .w3d__stage {
-      position: fixed; inset: 0;
-      height: 100vh; height: 100dvh;
-      overflow: hidden; z-index: 45;
-      opacity: 0; visibility: hidden; pointer-events: none;
-      background: radial-gradient(120% 90% at 50% 15%, #f2fbfc 0%, #e0f2f4 45%, #c7dcdd 100%);
-      transition: opacity .35s ease;
-    }
-    html.w3d-on .w3d__stage.is-active { opacity: 1; visibility: visible; pointer-events: auto; }
-    .w3d__stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-    /* While the tour runs, the real welcome photo is hidden so the zoomed
-       overlay clone is the only copy on screen (seamless FLIP). */
-    html.w3d-on #welcome.w3d-tour .welcome__photo { opacity: 0; }
-    html.w3d-on #welcome.w3d-tour .welcome__photo img { transform: none; }
-    .w3d__photocard {
-      position: absolute; overflow: hidden; z-index: 2;
-      box-shadow: 0 24px 70px -18px rgba(13,45,46,.45);
-      will-change: opacity;
-    }
-    .w3d__photocard img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-      max-width: none; will-change: transform;
-    }
-    .w3d__q {
-      position: absolute; top: 10vh; left: 50%; transform: translate(-50%, 16px);
-      z-index: 4; opacity: 0; pointer-events: none;
-      background: #fff; color: var(--teal-dark);
-      font-size: 1rem; font-weight: 800; line-height: 1.3;
-      padding: .7rem 1.15rem; border-radius: 20px 20px 20px 6px;
-      border: 1px solid rgba(0,115,124,.12);
-      box-shadow: 0 10px 30px -8px rgba(13,45,46,.35);
-      white-space: nowrap;
-    }
-    .w3d__hint {
-      position: absolute; bottom: 4.5vh; left: 50%; transform: translateX(-50%);
-      z-index: 4; color: var(--teal-dark); font-weight: 800; font-size: .95rem; text-align: center;
-      text-shadow: 0 1px 10px rgba(255,255,255,.9), 0 0 3px rgba(255,255,255,.9);
-      pointer-events: none; animation: w3d-bob 1.7s ease-in-out infinite;
-    }
-    @keyframes w3d-bob { 0%,100% { transform: translate(-50%,0); } 50% { transform: translate(-50%,7px); } }
-    .w3d__skip {
-      position: absolute; bottom: 4vh; right: 3.5vw; z-index: 4;
-      background: rgba(5,44,49,.55); color: #fff; border: 1px solid rgba(255,255,255,.35);
-      border-radius: 999px; padding: .45rem .95rem; font-size: .78rem; font-weight: 700;
-      cursor: pointer; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-    }
-    .w3d__skip:hover { background: rgba(5,44,49,.8); }
-    .w3d-spot {
-      position: absolute; display: flex; align-items: center; gap: .45rem;
-      opacity: 0; pointer-events: none; text-decoration: none; z-index: 3;
-      transform-origin: left center; will-change: transform, opacity;
-    }
-    .w3d-spot--flip { flex-direction: row-reverse; transform-origin: right center; }
-    .w3d-spot-dot {
-      width: 17px; height: 17px; border-radius: 50%; flex-shrink: 0;
-      background: var(--teal-bright); border: 3px solid #fff;
-      box-shadow: 0 0 0 5px rgba(33,161,168,.35), 0 2px 8px rgba(0,0,0,.4);
-      animation: w3d-pulse 2s ease-in-out infinite;
-    }
-    @keyframes w3d-pulse {
-      0%,100% { box-shadow: 0 0 0 5px rgba(33,161,168,.35), 0 2px 8px rgba(0,0,0,.4); }
-      50%     { box-shadow: 0 0 0 11px rgba(33,161,168,.12), 0 2px 8px rgba(0,0,0,.4); }
-    }
-    .w3d-spot-label {
-      position: relative;
-      background: #fff; color: var(--teal-dark);
-      font-size: .8rem; font-weight: 700; line-height: 1.25;
-      padding: .45rem .8rem; border-radius: 16px 16px 16px 5px;
-      border: 1px solid rgba(0,115,124,.14);
-      white-space: nowrap;
-      box-shadow: 0 6px 18px -4px rgba(13,45,46,.35);
-      transition: background .15s;
-    }
-    .w3d-spot--flip .w3d-spot-label { border-radius: 16px 16px 5px 16px; }
-    .w3d-spot:hover .w3d-spot-label,
-    .w3d-spot:focus-visible .w3d-spot-label { background: var(--teal-ice); }
-    .w3d-spot:focus-visible .w3d-spot-dot { outline: 3px solid var(--teal-dark); outline-offset: 2px; }
-    @media (max-width: 768px) {
-      .w3d__q { font-size: .85rem; padding: .55rem .85rem; top: 9vh; }
-      .w3d-spot-label { font-size: .7rem; padding: .32rem .55rem; }
-      .w3d__skip { bottom: 3vh; right: 4vw; font-size: .72rem; }
-    }
   </style>
 </head>
 <body>
@@ -3006,28 +2917,6 @@
     </div>
   </div>
 </section>
-
-<!-- ── Store walk-in: the welcome photo above zooms in and comes alive as a
-     realistic 3D tour of the store. Fixed overlay driven by pinning the
-     welcome section; hidden until the effect activates (walkin3d.js). ── -->
-<div id="w3d-stage" class="w3d w3d__stage" aria-hidden="true">
-  <canvas id="w3d-canvas"></canvas>
-  <div class="w3d__photocard" id="w3d-photocard">
-    <img src="storefront_exterior.webp" alt="" aria-hidden="true" decoding="async" />
-  </div>
-  <a class="w3d-spot" data-pos="-2.15,1.35,-4.6" href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🤒 I'm feeling ill</span></a>
-  <a class="w3d-spot" data-pos="-2.3,1.55,-6.6" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">💊 Medication questions</span></a>
-  <a class="w3d-spot" data-pos="-3.05,2.05,-8.4" href="#rx-extensions" onclick="setTimeout(function(){var el=document.getElementById('rx-extensions');el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.remove('rx-ext--flash');void el.offsetWidth;el.classList.add('rx-ext--flash');},60)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🩹 Running out of meds</span></a>
-  <a class="w3d-spot" data-pos="0.4,2.5,-14.3" data-at="0.79" href="#services" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">✈️ Travel &amp; vaccines</span></a>
-  <a class="w3d-spot" data-pos="2.2,1.0,-12.4" data-at="0.84" href="#services" onclick="setTimeout(function(){openAcc('acc-poct');document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},200)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🤰 I might be pregnant</span></a>
-  <a class="w3d-spot w3d-spot--flip" data-pos="2.95,0.6,-10.6" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🌿 Natural health advice</span></a>
-  <a class="w3d-spot w3d-spot--flip" data-pos="2.95,1.8,-6.8" href="#services" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🆘 Free naloxone kit</span></a>
-  <a class="w3d-spot w3d-spot--flip" data-pos="2.95,2.4,-9.4" href="#services" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🚭 Quit smoking</span></a>
-  <div class="w3d__q" id="w3d-q">👋 Welcome in! What brings you in today?</div>
-  <div class="w3d__hint" id="w3d-hint">Keep scrolling to step inside<br>&#9660;</div>
-  <button class="w3d__skip" id="w3d-skip" type="button">Skip &darr;</button>
-</div>
-<script src="walkin3d.js" defer></script>
 
 <!-- ── Flags / Multiculturalism ──────────────────────────────── -->
 <section id="flags">
