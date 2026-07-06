@@ -30,8 +30,8 @@ push per WP (never batch); verify at 375px + 1280px before the next.
 ## Status
 | WP | File | Status | Notes |
 |----|------|--------|-------|
-| — | scaffolding | In Progress | this folder + tracker |
-| 1 | 01-shadow-radius-tokens.md | Not Started | pure CSS, safest first |
+| — | scaffolding | Done | this folder + tracker (commit c8ca4d9) |
+| 1 | 01-shadow-radius-tokens.md | Done | commit bfc21d5 — see notes below |
 | 2 | 02-tactile-button-system.md | Not Started | depends on WP1 radius scale |
 | 3 | 03-extract-js-utils.md | Not Started | initMagnetic + revealOnce |
 | 4 | 04-apply-magnetic-press.md | Not Started | depends on WP2, WP3 |
@@ -50,5 +50,18 @@ push per WP (never batch); verify at 375px + 1280px before the next.
 - Touch = first-class: every pointer effect gated to fine-pointer + ships a real touch branch
   (press `:active`, or scroll-driven tilt). Never leave touch with nothing.
 
+## Per-WP handoff notes
+- **WP1 (done, bfc21d5):** All resting/hover shadows on shop/info-strip/reviews-badges+buttons/
+  vaccine/medscheck/pa-card/blog-card/step now use `--shadow-card`/`--shadow-hover`. pa-card ink
+  fixed to token palette. Dead duplicate `.reviews-metric:hover` removed (metric hover works now).
+  `.btn` radius 6px→`--radius`. Verified computed shadows resolve to token at 375+1280, no page
+  errors (only sandbox-blocked external ERR_CONNECTION_RESET, present on untouched site too).
+  LEFT FOR LATER: full radius unification (nav__cta 7px, modal 30px, contact-float) deferred to
+  WP2 where the button pass touches those anyway. Uber green shadows intentionally kept (brand).
+  The flat `--shadow` back-compat alias still exists in `:root` — harmless, a few non-card spots
+  still use it; can retire once all call sites migrate.
+
 ## Deviations from original plan
-- (none yet)
+- WP1 spec included radius unification; only `.btn` radius moved in WP1. Remaining radius
+  outliers folded into WP2 (button system) to keep each commit coherent. Not a scope change,
+  just resequencing within the approved plan.
