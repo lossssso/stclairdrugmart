@@ -602,16 +602,6 @@
     }
     .welcome__text p { margin-bottom: 1rem; color: var(--text-muted); }
     .welcome__photo-col { display: flex; flex-direction: column; gap: 1rem; }
-    .welcome__map {
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: 0 4px 24px rgba(30,107,99,.18);
-      width: 100%;
-      height: 140px;
-      transition: box-shadow .3s ease;
-    }
-    .welcome__map iframe { width: 100%; height: 100%; border: 0; display: block; }
-    .welcome__map:hover { box-shadow: 0 10px 30px rgba(30,107,99,.3); }
     .welcome__photo { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-card); }
     .welcome__photo img { width: 100%; height: auto; display: block; }
     .welcome__question { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--teal-bright); margin: 1.6rem 0 .7rem; }
@@ -625,7 +615,7 @@
     .welcome__pill:hover { background: var(--teal-bright); color: #fff; border-color: var(--teal-bright); transform: translateY(-1px) scale(1.03); box-shadow: 0 4px 14px rgba(33,161,168,.25); }
     .welcome__pill:hover::before { border-top-color: var(--teal-bright); }
     .welcome__pill:hover::after { border-top-color: var(--teal-bright); }
-    .welcome__boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-top: 2.25rem; }
+    .welcome__boxes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.25rem; }
     .welcome-box { background: rgba(255,255,255,0.9); border: 1px solid var(--border); border-top: 3.5px solid var(--teal-bright); border-radius: var(--radius); padding: 1.4rem 1.25rem 1.3rem; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: .35rem; transition: box-shadow .2s, transform .15s, border-color .15s; box-shadow: var(--shadow-card); }
     .welcome-box:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); border-color: var(--teal-bright); }
     .welcome-box__icon { font-size: 1.9rem; margin-bottom: .3rem; }
@@ -635,41 +625,13 @@
     @media (max-width: 768px) {
       .welcome__boxes { grid-template-columns: repeat(2, 1fr); }
     }
-    /* ── Medication Extensions & Adaptations callout ──────────── */
-    .rx-ext { position: relative; margin-top: 2.25rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
-      background: linear-gradient(135deg, var(--teal-ice), #fff);
-      border: 1px solid rgba(0,115,124,.10);
-      border-radius: 16px; padding: 1.5rem 1.75rem;
-      box-shadow: 0 1px 2px rgba(13,45,46,.04), 0 14px 34px -10px rgba(0,80,90,.15); }
-    .rx-ext__icon { font-size: 2.6rem; line-height: 1; flex-shrink: 0; }
-    .rx-ext__body { flex: 1 1 320px; }
-    .rx-ext__title { font-size: 1.15rem; font-weight: 800; color: var(--teal-deeper); margin-bottom: .35rem; }
-    .rx-ext__text { font-size: .9rem; color: var(--text-muted); line-height: 1.55; margin: 0; }
-    .rx-ext__learn { display: inline-block; font-size: .85rem; font-weight: 700; color: var(--teal-dark); margin-top: .5rem; cursor: pointer; width: fit-content; }
-    .rx-ext__learn:hover { text-decoration: underline; }
-    .rx-ext__actions { display: flex; flex-direction: column; gap: .55rem; flex-shrink: 0; }
-    .rx-ext__btn { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; white-space: nowrap;
-      background: var(--teal-bright); color: #fff; font-weight: 700; font-size: .86rem; text-decoration: none;
-      padding: .65rem 1.3rem; border-radius: 30px; transition: background .15s, transform .15s;
-      box-shadow: 0 6px 16px rgba(33,161,168,.25); border: none; cursor: pointer; }
-    .rx-ext__btn:hover { background: var(--teal-dark); transform: translateY(-1px); }
-    .rx-ext__btn--ghost { background: #fff; color: var(--teal-dark); border: 1.5px solid var(--border); box-shadow: none; }
-    .rx-ext__btn--ghost:hover { background: var(--teal-ice); color: var(--teal-deeper); transform: translateY(-1px); }
     /* Ring-pulse: a static-shadow pseudo-element whose opacity/scale is animated,
-       instead of interpolating box-shadow itself — transform/opacity only. */
+       instead of interpolating box-shadow itself — transform/opacity only.
+       Shared by other highlight-flash effects (see line ~1020). */
     @keyframes ring-pulse-in {
       0%   { opacity: 0; transform: scale(.94); }
       30%  { opacity: 1; transform: scale(1); }
       100% { opacity: 0; transform: scale(1.05); }
-    }
-    .rx-ext--flash::after {
-      content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-      box-shadow: 0 0 0 5px rgba(33,161,168,.28);
-      animation: ring-pulse-in 1.6s ease forwards;
-    }
-    @media (max-width: 560px) {
-      .rx-ext__actions { width: 100%; }
-      .rx-ext__btn { width: 100%; }
     }
 
     /* ── Services ─────────────────────────────────────── */
@@ -1381,7 +1343,6 @@
       .services__grid { grid-template-columns: 1fr 1fr; }
       .services__grid .service-card:last-child { grid-column: unset; max-width: unset; margin: 0; }
       .welcome__photo-col { order: -1; }
-      .welcome__map { height: 130px; }
       /* Contact button — shrink so it covers less of card/list content in the corner */
       .contact-float { bottom: 1rem; right: 1rem; }
       .contact-float__toggle { width: 48px; height: 48px; }
@@ -1406,8 +1367,6 @@
       .find-us__addr-left { flex: 1 1 100%; }
       /* hero pharmacy label — reduce massive letter-spacing on tablets */
       .hero__pharmacy-label { letter-spacing: .14em; }
-      /* welcome boxes — 3-col on tablet avoids lone orphan with 5 items */
-      .welcome__boxes { grid-template-columns: repeat(3, 1fr); }
       /* pa-card description — slightly smaller on mobile */
       .pa-card__desc { font-size: .75rem; }
       .pa-cards--top { grid-template-columns: 1fr; }
@@ -1424,7 +1383,6 @@
       .info-strip__card { padding: 1rem .9rem; }
       .ailments-triage__btn { min-height: 40px; }
       .conditions-panel { padding: 1.1rem .9rem; }
-      .welcome__boxes { grid-template-columns: repeat(2, 1fr); }
       .pa-cards--util { grid-template-columns: 1fr; }
       .staff-grid { grid-template-columns: 1fr 1fr; }
       .insurance-grid { grid-template-columns: 1fr; }
@@ -2958,7 +2916,7 @@
         <div class="welcome__pills">
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},120)">🤒 I'm feeling ill</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)">💊 I'm worried about my medication side effects</a>
-          <a href="#rx-extensions" class="welcome__pill" onclick="setTimeout(function(){var el=document.getElementById('rx-extensions');el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.remove('rx-ext--flash');void el.offsetWidth;el.classList.add('rx-ext--flash');},60)">🩹 Can't reach my doctor & I'm running out of medication!</a>
+          <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},120)">🩹 Can't reach my doctor & I'm running out of medication!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)">✈️ I'm travelling & want to stay healthy!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)">🚭 I want to successfully quit smoking!</a>
           <a href="#services" class="welcome__pill" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)">🆘 I need a free naloxone kit</a>
@@ -2969,15 +2927,6 @@
         </div>
       </div>
       <div class="welcome__photo-col">
-        <div class="welcome__map">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.234!2d-79.4468996!3d43.6773961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b35d5e572114b%3A0x899add08acb1e556!2sSt.+Clair+Drug+Mart+Pharmacy!5e0!3m2!1sen!2sca!4v1700000000000"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="St. Clair Drug Mart Pharmacy — map location"
-          ></iframe>
-        </div>
         <div class="welcome__photo">
           <img src="storefront_exterior.webp" alt="St. Clair Drug Mart storefront at 1203 St. Clair Ave W, Toronto" width="1227" height="1281" loading="lazy" decoding="async" />
         </div>
@@ -3015,6 +2964,12 @@
         <div class="welcome-box__desc">Rapid COVID-19, pregnancy, and blood glucose tests — performed by your pharmacist, results in minutes.</div>
         <span class="welcome-box__cta">Book a test →</span>
       </a>
+      <a href="#services" class="welcome-box" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},200)">
+        <div class="welcome-box__icon">🔁</div>
+        <div class="welcome-box__title">Medication Extensions &amp; Adaptations</div>
+        <div class="welcome-box__desc">Out of refills and can't reach your doctor? Our pharmacist can extend, renew, or adapt your prescription so you're never left without your medication.</div>
+        <span class="welcome-box__cta">Request an extension →</span>
+      </a>
     </div>
 
     <!-- ── Store walk-in 3D: scroll-driven Three.js tour (walkin3d.js).
@@ -3033,7 +2988,7 @@
           <a class="w3d-spot" data-pos="-2.15,1.35,-4.6" href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🤒 I'm feeling ill</span></a>
           <a class="w3d-spot w3d-spot--flip" data-pos="2.95,1.5,-6.8" href="#services" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🆘 I need a free naloxone kit</span></a>
           <a class="w3d-spot" data-pos="-2.3,1.6,-6.4" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">💊 Medication side effects</span></a>
-          <a class="w3d-spot" data-pos="-3.05,2.05,-8.4" href="#rx-extensions" onclick="setTimeout(function(){var el=document.getElementById('rx-extensions');el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.remove('rx-ext--flash');void el.offsetWidth;el.classList.add('rx-ext--flash');},60)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🩹 Running out of medication</span></a>
+          <a class="w3d-spot" data-pos="-3.05,2.05,-8.4" href="#services" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🩹 Running out of medication</span></a>
           <a class="w3d-spot w3d-spot--flip" data-pos="2.95,2.0,-9.3" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🌿 Natural health advice</span></a>
           <a class="w3d-spot w3d-spot--flip" data-pos="2.8,1.9,-11.5" href="#services" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🚭 I want to quit smoking!</span></a>
           <a class="w3d-spot" data-pos="0.0,1.8,-12.8" href="#services" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">✈️ Travel &amp; vaccines</span></a>
@@ -3041,20 +2996,6 @@
           <div class="w3d__hint" id="w3d-hint">Scroll to walk in<br>&#9660;</div>
           <button class="w3d__skip" id="w3d-skip" type="button">Skip &darr;</button>
         </div>
-      </div>
-    </div>
-
-    <!-- Medication Extensions & Adaptations callout -->
-    <div class="rx-ext" id="rx-extensions">
-      <div class="rx-ext__icon">💊</div>
-      <div class="rx-ext__body">
-        <div class="rx-ext__title">Out of refills? Can't reach your doctor?</div>
-        <p class="rx-ext__text">Run out before you can reach your prescriber? Our pharmacists can <strong>extend, renew, or adapt your prescription</strong> so you don't go without. We just need a copy of — or reference to — your original Rx: if you're our patient it's likely on file; if not, <strong>bring in your vial or send a clear photo of the label</strong>. Whether we can renew, and whether it's done by phone, is always <strong>up to the pharmacist's discretion</strong>.</p>
-        <span class="rx-ext__learn" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},120)">Learn more →</span>
-      </div>
-      <div class="rx-ext__actions">
-        <a class="rx-ext__btn js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Medication Extension or Adaptation" data-hint="Select <strong>Medication Extension or Adaptation</strong> under TYPE OF APPOINTMENT.">📅 Request an Extension / Adaptation</a>
-        <a class="rx-ext__btn rx-ext__btn--ghost" href="tel:+14166548181">📞 Call (416) 654-8181</a>
       </div>
     </div>
   </div>
@@ -3334,7 +3275,7 @@
         <div class="pa-card__icon">💊</div>
         <span class="pa-card__label">Medication Extensions &amp; Adaptations &nbsp;<span class="pa-conditions-arrow">▼</span></span>
         <span class="pa-card__desc">Prescription renewals &amp; dosage adaptations when your doctor's unreachable</span>
-        <span class="pa-chip__learn" onclick="event.stopPropagation();document.getElementById('rx-extensions').scrollIntoView({behavior:'smooth',block:'center'})">See extensions →</span>
+        <span class="pa-chip__learn" onclick="event.stopPropagation();openAcc('acc-rx-renewal');setTimeout(function(){document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},100)">See extensions →</span>
       </button>
       <button class="pa-card" id="pa-card-cessation" data-url="https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=16" data-iframeheight="1280" data-label="Smoking Cessation">
         <div class="pa-card__icon">🚭</div>
