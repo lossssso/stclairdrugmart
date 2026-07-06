@@ -33,7 +33,7 @@ push per WP (never batch); verify at 375px + 1280px before the next.
 | — | scaffolding | Done | this folder + tracker (commit c8ca4d9) |
 | 1 | 01-shadow-radius-tokens.md | Done | commit bfc21d5 — see notes below |
 | 2 | 02-tactile-button-system.md | Done | commit 8b015cb — press states + nav CTA pill |
-| 3 | 03-extract-js-utils.md | Not Started | initMagnetic + revealOnce |
+| 3 | 03-extract-js-utils.md | Done | commit c74b79d — 3 globals + .reveal-ready recipe |
 | 4 | 04-apply-magnetic-press.md | Not Started | depends on WP2, WP3 |
 | 5 | 05-scroll-reveal-safe-sections.md | Not Started | depends on WP3 |
 | 6 | 06-card-tilt-touch.md | Not Started | depends on WP3 |
@@ -68,6 +68,19 @@ push per WP (never batch); verify at 375px + 1280px before the next.
   `initMagnetic` to some of these same elements — it must COMPOSE its `translate()` with the
   `:active scale(.97)` (put translate on the element, keep scale on :active) so they don't clobber
   each other's `transform`. `.find-us__logo-btn:active` press assumes that class exists — verify.
+
+- **WP3 (done, c74b79d):** Three globals now available for WP4-6: `initMagnetic(el,opts)`,
+  `revealOnce(el,cb,opts)`, `staggerReveal(container,opts)`. CSS recipe `.reveal-ready > *`
+  (hidden) + `.is-revealed` (plays rvSlideIn), crawler-safe (JS adds `.reveal-ready`; no-JS shows
+  all). Reduced-motion + fine-pointer gating computed once at top of the util IIFE.
+  - **WP4 compose note:** for cards with a hover `transform` (pa-card translateY, etc.), call
+    `initMagnetic(el, {compose:true})` AND give that element CSS
+    `transform: translate(var(--mag-x,0),var(--mag-y,0)) <its own hover/scale>` so magnetic +
+    hover + `:active` press don't clobber each other. For plain buttons/badges/FAB, default
+    (direct transform) is fine. Nav CTA uses default and still works.
+  - **WP5 usage:** `staggerReveal(document.querySelector('.welcome__boxes'))` etc. Children get
+    `animation-delay` automatically. Existing reviews/team count-ups were NOT re-pointed (left
+    working as-is) to keep this WP a pure add; optional cleanup later.
 
 ## Deviations from original plan
 - WP1 spec included radius unification; only `.btn` radius moved in WP1. Remaining radius
