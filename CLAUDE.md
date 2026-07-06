@@ -97,7 +97,9 @@ This site must NOT look AI-generated. Before writing any CSS, commit to a clear 
 - No render-blocking scripts
 ## CSS Rules
 - Mobile-first — base styles for mobile, scale up with min-width media queries
-- Under 768px: collapse all parallax to single image, simplify all 3D
+- Under 768px: collapse parallax to fewer/simpler depth layers by default (this is a layout
+  simplification for smaller viewports, separate from the capability-based gating below —
+  a phone can still be high-powered, and a desktop can still be weak hardware)
 - All CSS 3D inside @supports (transform-style: preserve-3d) with flat fallback
 ## Approved CDN Libraries (no npm — link tags only)
 - GSAP: https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js
@@ -106,10 +108,43 @@ This site must NOT look AI-generated. Before writing any CSS, commit to a clear 
 - Normalize.css: https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css
 - Lazysizes: https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js
 - Lucide Icons: https://unpkg.com/lucide@latest
+- `<model-viewer>` (preferred when a real 3D model/object is needed — handles DPR capping,
+  progressive loading, and iOS AR fallback out of the box):
+  https://unpkg.com/@google/model-viewer@4.3.1/dist/model-viewer.min.js
+- Three.js (only for the one scoped 3D feature described below, with all required gating):
+  https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.min.js
 ## Library Selection Rule
-Choose the lightest possible tool for each task. Prefer CSS-only solutions first, then vanilla JS, then a CDN library via script tag only if genuinely needed. Never use anything that requires npm install or a build step. No Three.js, Babylon.js, A-Frame, Spline, or any WebGL engine — these are too heavy for a general pharmacy audience.
+Choose the lightest possible tool for each task. Prefer CSS-only solutions first, then vanilla
+JS, then a CDN library via script tag only if genuinely needed. Never use anything that
+requires npm install or a build step.
+
+For "premium 3D-feel" moments (product reveals, storefront/interior tours), default to a
+**canvas scroll-scrubbed image sequence** — pre-rendered/photographed frames drawn to
+`<canvas>` and scrubbed by scroll position. This is how Apple.com's own "3D product" pages
+actually work: it reads as real 3D, has no WebGL context to lose, no shader compilation, and
+performs identically on old and new phones. Try this before reaching for a 3D engine.
+
+WebGL (Three.js or `<model-viewer>`) is allowed, but only for a single, clearly-scoped
+feature — never general page decoration — and only when it ships with ALL of the following:
+- A capability gate before any WebGL context is created: bail to the flat/static fallback on
+  `navigator.hardwareConcurrency <= 2`, `navigator.deviceMemory <= 2` (where available), no
+  WebGL support, or `prefers-reduced-motion`.
+- A live FPS sentinel once running: sample real frame times; if a meaningful share run slower
+  than ~34ms (under ~29fps), drop pixel ratio first, then fully bail to the static fallback.
+- `renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))` — never render at native DPR.
+- The render loop pauses when the element is off-screen or the tab is hidden.
+- A real fallback image, not a blank canvas, if the WebGL context is lost.
+
+Babylon.js, A-Frame, and Spline remain out of scope for this project. Three.js (hand-rolled,
+for a bespoke scene) or `<model-viewer>` (preferred for displaying a single 3D object/model)
+are the only 3D-engine options, and only under the gating above.
 ## Skills
-You have access to Claude skills. Use them when they genuinely improve output quality. Preferred skills for this project: frontend-design (for non-generic aesthetics), gsap-scrolltrigger (for scroll animation). Use lightweight-3d-effects or similar only if the CSS-only approach is insufficient. Never activate a skill that pulls in npm dependencies or a build tool.
+You have access to Claude skills. Use them when they genuinely improve output quality.
+Preferred skills for this project: frontend-design (for non-generic aesthetics),
+gsap-scrolltrigger (for scroll animation). Use lightweight-3d-effects or similar for CSS/canvas
+techniques first; only reach for a 3D-engine skill when a scoped WebGL feature is justified
+under the Library Selection Rule above. Never activate a skill that pulls in npm dependencies
+or a build tool.
 ## Storefront Animation Rules
 - Lives in storefront.js + one scoped CSS block — fully swappable
 - Tier 1 (navigator.hardwareConcurrency > 4): full layered parallax + CSS door open

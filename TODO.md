@@ -1,5 +1,41 @@
 # St. Clair Drug Mart — To-Do
 
+## 3D / cinematic direction for dev branch (in planning — July 2026)
+
+Owner wants a modern, "Apple.com meets premium European clinic" feel, mobile-first (most
+traffic is expected to be on phones). CLAUDE.md's Library Selection Rule has been updated to
+allow WebGL (Three.js / `<model-viewer>`) for scoped, gated features — see that file for the
+required performance gating before building any of this. Two concrete pieces requested so far;
+a further plan (from a separate "Fable 5" session) is expected to be pasted in and reconciled
+with these:
+
+### About Us section — Apple-style photo sequence
+Build the canvas scroll-scrubbed image-sequence technique (see CLAUDE.md Library Selection
+Rule) for the About Us section, using real pharmacy photos (existing storefront/interior/team
+photos in the repo root and `team/` — confirm final shot list before building).
+
+### Welcome section — revived 3D walk-through model
+Owner liked the previously-built 3D-modelled pharmacy walk-through (Three.js, from the
+`cloud-3d-experiment` branch — a real modelled interior you move through, camera-dollied on
+scroll) — **not** the photo-zoom/parallax version that's currently live in `storefront.js`.
+Requirements for the rebuild:
+- **Placement**: goes in the Welcome section, positioned *after* the section title, *after*
+  the text description, and *after* the current storefront picture — i.e. it's an additional
+  element appended to the existing Welcome content, not a replacement for what's there.
+- **Hotspots inside the 3D space**: the "I'm pregnant", "I'm ill", etc. self-assessment
+  chat-bubble prompts (the ones already used elsewhere on the site to jump into the booking/
+  self-assessment flow) should be placed as clickable hotspots *inside* the modelled pharmacy
+  scene (e.g. anchored to relevant shelves/areas), not as a separate UI overlay. Clicking one
+  should scroll/zoom past to the matching booking or info section, exactly like the current
+  site's self-assessment flow does.
+- **Must be more polished than the original attempt**: owner's feedback on the original
+  (`cloud-3d-experiment` branch, `walkin3d.js`) was that it was "cool, but too basic" and
+  didn't feature the pharmacy's actual branding — the rebuild needs more visual detail/realism
+  and must incorporate the real logo (e.g. as in-scene signage) rather than a generic model.
+- Reuse the device/FPS guardrail pattern already proven on that branch (hardwareConcurrency/
+  deviceMemory gate, live FPS sentinel, capped pixel ratio, static fallback) — see updated
+  CLAUDE.md rules.
+
 ## Prescription Extensions & Adaptations — custom intake form (deferred)
 
 The "Out of refills? Can't reach your doctor?" callout (Welcome section, anchor
