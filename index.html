@@ -1949,6 +1949,13 @@
     @keyframes rvSlideIn {
       to { opacity: 1; transform: translateY(0); }
     }
+    /* WP3 reusable stagger recipe — children hidden ONLY once JS adds .reveal-ready
+       (no-JS / crawlers see everything); .is-revealed plays the shared rvSlideIn. */
+    .reveal-ready > * { opacity: 0; transform: translateY(22px); }
+    .reveal-ready.is-revealed > * { animation: rvSlideIn .5s var(--ease-apple) forwards; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-ready > *, .reveal-ready.is-revealed > * { opacity: 1; transform: none; animation: none; }
+    }
     .reviews-metric__num {
       font-size: 2.2rem; font-weight: 900; color: var(--teal-deeper);
       line-height: 1; margin-bottom: .35rem; letter-spacing: -.02em;
@@ -7289,32 +7296,78 @@ window.SmartMatch = (function(){
   });
 </script>
 
-<!-- Magnetic Book Now: drifts toward the cursor, springs back. Fine pointers only. -->
+<!-- Reusable interaction utilities: initMagnetic (cursor spring, fine-pointer only) and
+     revealOnce (one-shot IntersectionObserver). WP4/WP5/WP6 build on these. -->
 <script>
 (function(){
+  var reduce = false, finePointer = false;
   try {
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  } catch(e){ return; }
-  var cta = document.querySelector('.nav__cta a');
-  if (!cta) return;
-  var mx = 0, my = 0, tx = 0, ty = 0, raf = null;
-  function tick(){
-    raf = null;
-    tx += (mx - tx) * .16; ty += (my - ty) * .16;
-    cta.style.transform = 'translate(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px)';
-    if (Math.abs(mx - tx) > .15 || Math.abs(my - ty) > .15) raf = requestAnimationFrame(tick);
-  }
-  cta.addEventListener('mousemove', function(e){
-    var r = cta.getBoundingClientRect();
-    mx = Math.max(-12, Math.min(12, (e.clientX - (r.left + r.width / 2)) * .32));
-    my = Math.max(-7,  Math.min(7,  (e.clientY - (r.top + r.height / 2)) * .38));
-    if (!raf) raf = requestAnimationFrame(tick);
-  });
-  cta.addEventListener('mouseleave', function(){
-    mx = 0; my = 0;
-    if (!raf) raf = requestAnimationFrame(tick);
-  });
+    reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  } catch(e){}
+
+  /* initMagnetic(el, opts): el drifts toward the cursor via an rAF spring and springs back on
+     leave. Inert under reduced-motion or on touch/coarse pointers. Compose-safety: by default
+     writes el.style.transform directly (preserves prior nav-CTA behavior). Pass
+     {compose:true} to instead drive CSS custom props --mag-x/--mag-y so a caller whose own
+     CSS transform references them (e.g. translate(var(--mag-x,0),var(--mag-y,0)) scale(...))
+     keeps its hover/press transform intact. */
+  window.initMagnetic = function(el, opts){
+    if (!el || reduce || !finePointer) return;
+    opts = opts || {};
+    var maxX = opts.maxX != null ? opts.maxX : 12,
+        maxY = opts.maxY != null ? opts.maxY : 7,
+        pullX = opts.pullX != null ? opts.pullX : 0.32,
+        pullY = opts.pullY != null ? opts.pullY : 0.38,
+        stiff = opts.stiffness != null ? opts.stiffness : 0.16,
+        compose = !!opts.compose;
+    var mx=0,my=0,tx=0,ty=0,raf=null;
+    function apply(){
+      if (compose){ el.style.setProperty('--mag-x', tx.toFixed(2)+'px'); el.style.setProperty('--mag-y', ty.toFixed(2)+'px'); }
+      else { el.style.transform = 'translate('+tx.toFixed(2)+'px,'+ty.toFixed(2)+'px)'; }
+    }
+    function tick(){
+      raf=null; tx += (mx-tx)*stiff; ty += (my-ty)*stiff; apply();
+      if (Math.abs(mx-tx)>.15 || Math.abs(my-ty)>.15) raf=requestAnimationFrame(tick);
+    }
+    el.addEventListener('mousemove', function(e){
+      var r = el.getBoundingClientRect();
+      mx = Math.max(-maxX, Math.min(maxX, (e.clientX-(r.left+r.width/2))*pullX));
+      my = Math.max(-maxY, Math.min(maxY, (e.clientY-(r.top+r.height/2))*pullY));
+      if(!raf) raf=requestAnimationFrame(tick);
+    });
+    el.addEventListener('mouseleave', function(){ mx=0; my=0; if(!raf) raf=requestAnimationFrame(tick); });
+  };
+
+  /* revealOnce(el, cb, opts): fire cb(el) once when el first enters view; synchronous fallback
+     when IntersectionObserver is unavailable. One-shot (disconnects after firing). */
+  window.revealOnce = function(el, cb, opts){
+    if (!el) return;
+    opts = opts || {};
+    if (!('IntersectionObserver' in window)){ cb(el); return; }
+    var io = new IntersectionObserver(function(entries){
+      if (entries[0].isIntersecting){ io.disconnect(); cb(el); }
+    }, { threshold: opts.threshold != null ? opts.threshold : 0.15 });
+    io.observe(el);
+  };
+
+  /* staggerReveal(container, opts): crawler-safe staggered entrance for a container's children.
+     Adds .reveal-ready (which hides children only once JS is present), then on first view adds
+     .is-revealed + per-child animation-delay. Reduced-motion → reveal instantly, no motion. */
+  window.staggerReveal = function(container, opts){
+    if (!container) return;
+    opts = opts || {};
+    var kids = container.children, step = opts.step != null ? opts.step : 0.08;
+    if (reduce){ container.classList.add('reveal-ready','is-revealed'); return; }
+    container.classList.add('reveal-ready');
+    window.revealOnce(container, function(){
+      for (var i=0;i<kids.length;i++){ kids[i].style.animationDelay = (i*step).toFixed(2)+'s'; }
+      container.classList.add('is-revealed');
+    }, { threshold: opts.threshold != null ? opts.threshold : 0.15 });
+  };
+
+  // Preserve the original Magnetic Book Now behavior through the new util.
+  window.initMagnetic(document.querySelector('.nav__cta a'));
 })();
 </script>
 
