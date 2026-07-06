@@ -2606,6 +2606,114 @@
     .pp-close:hover { color: #111; }
     .pp-link { color: rgba(255,255,255,.55); font-size: .7rem; text-decoration: underline; cursor: pointer; background: none; border: none; }
   </style>
+  <!-- ── Store walk-in 3D — scoped styles (feature lives here + walkin3d.js, fully swappable).
+       Hidden unless JS activates it (html.w3d-on); classic page — including the classic
+       "What brings you in today?" pills — otherwise. ── -->
+  <style id="w3d-styles">
+    .w3d { display: none; }
+    html.w3d-on .w3d { display: block; margin-top: 2.5rem; }
+    /* With the 3D walk-in active, the consultation pills live inside the store
+       as hotspots — hide the classic text-column copies so they exist once. */
+    html.w3d-on .welcome__text .welcome__question,
+    html.w3d-on .welcome__pills { display: none; }
+    .w3d__lead { text-align: center; margin-bottom: 1.1rem; }
+    .w3d__lead-q {
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 2.4vw, 1.5rem); font-weight: 800;
+      color: var(--teal-deeper); margin: 0 0 .25rem;
+    }
+    .w3d__lead-sub { font-size: .9rem; color: var(--text-muted); margin: 0; }
+    .w3d__track { position: relative; height: 380vh; }
+    .w3d__stage {
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 100vh; height: 100dvh;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, #eafcfd 0%, #cfeff5 100%);
+      box-shadow: var(--shadow-card);
+    }
+    .w3d__stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .w3d__hint {
+      position: absolute; bottom: 4.5vh; left: 50%; transform: translateX(-50%);
+      color: var(--teal-dark); font-weight: 800; font-size: .95rem; text-align: center;
+      text-shadow: 0 1px 10px rgba(255,255,255,.9), 0 0 3px rgba(255,255,255,.9);
+      pointer-events: none; animation: w3d-bob 1.7s ease-in-out infinite;
+    }
+    @keyframes w3d-bob { 0%,100% { transform: translate(-50%,0); } 50% { transform: translate(-50%,7px); } }
+    .w3d__skip {
+      position: absolute; bottom: 4vh; right: 3.5vw;
+      background: rgba(5,44,49,.55); color: #fff; border: 1px solid rgba(255,255,255,.35);
+      border-radius: 999px; padding: .45rem .95rem; font-size: .78rem; font-weight: 700;
+      cursor: pointer; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    }
+    .w3d__skip:hover { background: rgba(5,44,49,.8); }
+    .w3d-spot {
+      position: absolute; display: flex; align-items: center; gap: .45rem;
+      opacity: 0; pointer-events: none; text-decoration: none; z-index: 3;
+      transform-origin: left center; will-change: transform, opacity;
+    }
+    .w3d-spot--flip { flex-direction: row-reverse; transform-origin: right center; }
+    .w3d-spot-dot {
+      width: 17px; height: 17px; border-radius: 50%; flex-shrink: 0;
+      background: var(--teal-bright); border: 3px solid #fff;
+      box-shadow: 0 0 0 5px rgba(33,161,168,.35), 0 2px 8px rgba(0,0,0,.4);
+      animation: w3d-pulse 2s ease-in-out infinite;
+    }
+    @keyframes w3d-pulse {
+      0%,100% { box-shadow: 0 0 0 5px rgba(33,161,168,.35), 0 2px 8px rgba(0,0,0,.4); }
+      50%     { box-shadow: 0 0 0 11px rgba(33,161,168,.12), 0 2px 8px rgba(0,0,0,.4); }
+    }
+    .w3d-spot-label {
+      position: relative;
+      background: #fff; color: var(--teal-dark);
+      font-size: .8rem; font-weight: 700; line-height: 1.25;
+      padding: .45rem .8rem; border-radius: 13px;
+      border: 1.5px solid var(--border);
+      white-space: nowrap;
+      box-shadow: 0 3px 14px rgba(0,0,0,.28);
+      transition: background .15s;
+    }
+    .w3d-spot-label::before,
+    .w3d-spot-label::after { content: ''; position: absolute; top: 50%; width: 0; height: 0; border-style: solid; }
+    .w3d-spot .w3d-spot-label::before { left: -8px; margin-top: -7px; border-width: 7px 8px 7px 0; border-color: transparent var(--border) transparent transparent; }
+    .w3d-spot .w3d-spot-label::after  { left: -6px; margin-top: -5.5px; border-width: 5.5px 6.5px 5.5px 0; border-color: transparent #fff transparent transparent; }
+    .w3d-spot--flip .w3d-spot-label::before { left: auto; right: -8px; border-width: 7px 0 7px 8px; border-color: transparent transparent transparent var(--border); }
+    .w3d-spot--flip .w3d-spot-label::after  { left: auto; right: -6px; border-width: 5.5px 0 5.5px 6.5px; border-color: transparent transparent transparent #fff; }
+    .w3d-spot:hover .w3d-spot-label,
+    .w3d-spot:focus-visible .w3d-spot-label { background: var(--teal-ice); }
+    .w3d-spot:hover .w3d-spot-label::after,
+    .w3d-spot:focus-visible .w3d-spot-label::after { border-right-color: var(--teal-ice); }
+    .w3d-spot--flip:hover .w3d-spot-label::after,
+    .w3d-spot--flip:focus-visible .w3d-spot-label::after { border-right-color: transparent; border-left-color: var(--teal-ice); }
+    .w3d-spot:focus-visible .w3d-spot-dot { outline: 3px solid var(--teal-dark); outline-offset: 2px; }
+    @media (max-width: 768px) {
+      .w3d__track { height: 330vh; }
+      .w3d-spot-label { font-size: .7rem; padding: .32rem .55rem; }
+      .w3d__skip { bottom: 3vh; right: 4vw; font-size: .72rem; }
+    }
+  </style>
+  <!-- ── About photo sequence — scoped styles (scroll-scrubbed 2D canvas;
+       hidden unless JS activates html.abtseq-on, static gallery otherwise) ── -->
+  <style id="abtseq-styles">
+    .abt-seq { display: none; }
+    html.abtseq-on .abt-seq { display: block; margin-top: 2rem; }
+    html.abtseq-on #about .gallery { display: none; }
+    .abt-seq__frame {
+      position: relative; width: 100%;
+      aspect-ratio: 16 / 9; max-height: 72vh;
+      border-radius: var(--radius-lg); overflow: hidden;
+      background: var(--teal-ice);
+      box-shadow: var(--shadow-card);
+    }
+    .abt-seq__frame canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .abt-seq__caption {
+      text-align: center; font-size: .85rem; font-weight: 600;
+      color: var(--text-muted); margin: .7rem 0 0; min-height: 1.3em;
+    }
+    @media (max-width: 768px) {
+      .abt-seq__frame { aspect-ratio: 4 / 3; }
+    }
+  </style>
 </head>
 <body>
 <script>
@@ -2907,6 +3015,33 @@
         <div class="welcome-box__desc">Rapid COVID-19, pregnancy, and blood glucose tests — performed by your pharmacist, results in minutes.</div>
         <span class="welcome-box__cta">Book a test →</span>
       </a>
+    </div>
+
+    <!-- ── Store walk-in 3D: scroll-driven Three.js tour (walkin3d.js).
+         Hidden unless JS activates it (html.w3d-on); the classic pills in
+         .welcome__text carry these same prompts for everyone else. ── -->
+    <div class="w3d" id="store-walkin3d" role="region" aria-label="Scroll-through 3D tour: step inside our pharmacy">
+      <div class="w3d__lead">
+        <p class="w3d__lead-q">What brings you in today?</p>
+        <p class="w3d__lead-sub">Step inside our pharmacy — tap a bubble to get what you need.</p>
+      </div>
+      <div class="w3d__track" id="w3d-track">
+        <div class="w3d__stage">
+          <canvas id="w3d-canvas" aria-hidden="true"></canvas>
+          <a class="w3d-spot" data-pos="-2.45,1.55,-3.35" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🩸 Better blood sugar control</span></a>
+          <a class="w3d-spot w3d-spot--flip" data-pos="2.95,1.9,-4.4" href="#services" onclick="setTimeout(function(){openAcc('acc-poct');document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},200)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🤰 I might be pregnant!</span></a>
+          <a class="w3d-spot" data-pos="-2.15,1.35,-4.6" href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🤒 I'm feeling ill</span></a>
+          <a class="w3d-spot w3d-spot--flip" data-pos="2.95,1.5,-6.8" href="#services" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🆘 I need a free naloxone kit</span></a>
+          <a class="w3d-spot" data-pos="-2.3,1.6,-6.4" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">💊 Medication side effects</span></a>
+          <a class="w3d-spot" data-pos="-3.05,2.05,-8.4" href="#rx-extensions" onclick="setTimeout(function(){var el=document.getElementById('rx-extensions');el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.remove('rx-ext--flash');void el.offsetWidth;el.classList.add('rx-ext--flash');},60)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🩹 Running out of medication</span></a>
+          <a class="w3d-spot w3d-spot--flip" data-pos="2.95,2.0,-9.3" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🌿 Natural health advice</span></a>
+          <a class="w3d-spot w3d-spot--flip" data-pos="2.8,1.9,-11.5" href="#services" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🚭 I want to quit smoking!</span></a>
+          <a class="w3d-spot" data-pos="0.0,1.8,-12.8" href="#services" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">✈️ Travel &amp; vaccines</span></a>
+          <a class="w3d-spot w3d-spot--flip js-pa-select" data-pos="1.7,1.55,-12.7" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand."><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🦠 COVID-19 test &amp; certificate</span></a>
+          <div class="w3d__hint" id="w3d-hint">Scroll to walk in<br>&#9660;</div>
+          <button class="w3d__skip" id="w3d-skip" type="button">Skip &darr;</button>
+        </div>
+      </div>
     </div>
 
     <!-- Medication Extensions & Adaptations callout -->
@@ -4273,6 +4408,17 @@
         As an independent pharmacy, every decision we make is guided by what's best for our community,
         not a corporate bottom line. Come in and experience the difference.
       </p>
+    </div>
+
+    <!-- ── About photo sequence: scroll-scrubbed canvas "walk toward & inside"
+         (Apple-style image sequence, 2D canvas — no WebGL). Hidden unless JS
+         activates it (html.abtseq-on); the classic photo gallery below is the
+         no-JS / reduced-motion / fallback state. ── -->
+    <div class="abt-seq" id="abt-seq" role="img" aria-label="A scroll-through photo tour: the Corso Italia street, our storefront, and inside the pharmacy">
+      <div class="abt-seq__frame">
+        <canvas id="abt-seq-canvas" aria-hidden="true"></canvas>
+      </div>
+      <p class="abt-seq__caption" id="abt-seq-caption" aria-hidden="true">Corso Italia — St. Clair Ave W</p>
     </div>
 
     <div class="gallery">
@@ -7281,5 +7427,118 @@ window.SmartMatch = (function(){
     .catch(function(){});
 })();
 </script>
+
+<script>
+// ── About photo sequence: scroll-scrubbed canvas crossfade ─────────
+// 2D canvas only (no WebGL) — draws a "walk toward & inside" tour
+// through the same six photos the static gallery shows. Activates
+// html.abtseq-on; reduced-motion / no-IO / load-failure keep the
+// classic gallery. Vanilla JS, no library.
+(function () {
+  'use strict';
+  var host = document.getElementById('abt-seq');
+  if (!host) return;
+  try {
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!('IntersectionObserver' in window)) return;
+  } catch (e) { return; }
+
+  var FRAMES = [
+    ['neighbourhood.webp',      'Corso Italia — St. Clair Ave W'],
+    ['storefront_angle.webp',   'Our storefront on St. Clair West'],
+    ['storefront_studio.webp',  '1203 St. Clair Avenue West'],
+    ['interior_wide.webp',      'Step inside — the pharmacy counter'],
+    ['interior_shelves.webp',   'Health & wellness, stocked'],
+    ['interior_aisle.webp',     'Aisles & private counselling room']
+  ];
+
+  var canvas = document.getElementById('abt-seq-canvas');
+  var caption = document.getElementById('abt-seq-caption');
+  var frame = host.querySelector('.abt-seq__frame');
+  var ctx = null, imgs = [], loaded = 0, activated = false, lastIdx = -1;
+  var ticking = false, lastP = -1;
+
+  function coverDraw(img, alpha, zoom) {
+    var cw = canvas.width, ch = canvas.height;
+    var iw = img.naturalWidth, ih = img.naturalHeight;
+    var s = Math.max(cw / iw, ch / ih) * zoom;
+    var dw = iw * s, dh = ih * s;
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+  }
+
+  function draw(p) {
+    var f = p * (FRAMES.length - 1);
+    var i = Math.min(Math.floor(f), FRAMES.length - 2);
+    var t = f - i;
+    // ease the crossfade so each photo holds, then hands off smoothly
+    var e = t * t * (3 - 2 * t);
+    if (imgs[i].complete) coverDraw(imgs[i], 1, 1.02 + 0.06 * e);
+    if (e > 0 && imgs[i + 1] && imgs[i + 1].complete) coverDraw(imgs[i + 1], e, 1.02 + 0.06 * (1 - e) * 0.4);
+    ctx.globalAlpha = 1;
+    var idx = e > 0.5 ? i + 1 : i;
+    if (idx !== lastIdx) { lastIdx = idx; caption.textContent = FRAMES[idx][1]; }
+  }
+
+  function progress() {
+    var r = host.getBoundingClientRect();
+    var vh = window.innerHeight;
+    // 0 when the frame enters from the bottom → 1 as it leaves the top
+    return Math.max(0, Math.min(1, (vh - r.top) / (vh + r.height * 0.6)));
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      ticking = false;
+      var p = progress();
+      if (Math.abs(p - lastP) < 0.002) return;
+      lastP = p;
+      draw(p);
+    });
+  }
+
+  function resize() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(frame.clientWidth * dpr);
+    canvas.height = Math.round(frame.clientHeight * dpr);
+    lastP = -1;
+    onScroll();
+  }
+
+  function activate() {
+    if (activated) return;
+    activated = true;
+    ctx = canvas.getContext('2d');
+    document.documentElement.classList.add('abtseq-on');
+    resize();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', resize);
+  }
+
+  // Preload once the About section is near; only activate (and swap out the
+  // static gallery) after the first frame is ready, so there's never a blank.
+  // NB: observe #about, not the host — the host is display:none until
+  // activation, and hidden elements never intersect.
+  var aboutSec = document.getElementById('about') || host;
+  var io = new IntersectionObserver(function (entries) {
+    if (!entries[0].isIntersecting) return;
+    io.disconnect();
+    FRAMES.forEach(function (fr, i) {
+      var im = new Image();
+      im.onload = function () {
+        loaded++;
+        if (i === 0) activate();
+        if (activated) { lastP = -1; onScroll(); }
+      };
+      im.src = fr[0];
+      imgs.push(im);
+    });
+  }, { rootMargin: '100% 0%' });
+  io.observe(aboutSec);
+})();
+</script>
+<script src="walkin3d.js" defer></script>
 </body>
 </html>

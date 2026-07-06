@@ -145,14 +145,33 @@ gsap-scrolltrigger (for scroll animation). Use lightweight-3d-effects or similar
 techniques first; only reach for a 3D-engine skill when a scoped WebGL feature is justified
 under the Library Selection Rule above. Never activate a skill that pulls in npm dependencies
 or a build tool.
-## Storefront / Welcome-Section 3D Walk-In (in progress)
-The old `storefront.js` photo-cinematic (parallax zoom into a flat photo) has been retired —
-it was structurally buggy (no alpha/cutout photo assets exist to fake real depth from) and
-the user explicitly didn't want the zoom-into-photo effect. `.welcome__photo-col` currently
-shows a plain static photo with no animation. A real 3D-modelled walk-through (procedural
-Three.js geometry, not photo-textured) is planned to replace it — see `TODO.md` for the full
-spec (placement, hotspots, logo/plant requirements) and the Library Selection Rule above for
-the required performance gating. When built, document its guardrails/tiers here.
+## Welcome-Section 3D Walk-In (`walkin3d.js` — live on dev)
+A scroll-driven Three.js walk-through of a stylized, procedurally-built St. Clair Drug Mart
+(flat-color primitives — no photo textures), embedded in `#welcome` after `.welcome__boxes`.
+The real `logo.png` is composited into the sign + back-wall textures at runtime. The ten
+"What brings you in today?" consultation pills live *inside* the scene as `.w3d-spot`
+hotspots (world-space `data-pos`, projected to screen each frame); the classic text-column
+pills are hidden only under `html.w3d-on`, so every gated-off visitor keeps them.
+Guardrails (all in `walkin3d.js`, markup/CSS in `index.html` `#w3d-styles` — fully swappable):
+- Boot gate: bails on `prefers-reduced-motion`, `hardwareConcurrency <= 2`,
+  `deviceMemory <= 2`, `lite-clouds` (the measured perf-guard signal), no
+  IntersectionObserver, or no WebGL — the `.w3d` block stays `display:none` (classic page).
+  Do NOT gate on core counts above 2: modern iPhones report as few as 4 cores.
+- Lazy boot: GSAP → ScrollTrigger → Three.js (all vendored in `vendor/`) fetch only when
+  scroll nears the section (IO rootMargin 150%); reduced-motion visitors download zero bytes.
+- Runtime FPS sentinel: 90-frame rolling window; >35% frames slower than 34ms → first drop
+  pixel ratio to 1x, then kill the effect and revert to the classic page live.
+- Pixel ratio capped at 1.5; render loop fully stops when the section is off-screen.
+- Stage pinning is hand-rolled (`pin()`), NOT ScrollTrigger's pin — `body{overflow-x:hidden}`
+  breaks native pinning. Never add a transform/filter to `#welcome` ancestors (breaks fixed).
+
+## About-Section Photo Sequence (`#abt-seq` — live on dev)
+Apple-style scroll-scrubbed 2D-canvas crossfade through the six real gallery photos
+(street → storefront → inside), vanilla JS inline near the end of `<body>`, styles in
+`#abtseq-styles`. Activates `html.abtseq-on` (which hides the static `.gallery`); the static
+gallery is the reduced-motion / no-JS / pre-activation state. It observes `#about` (not its
+own hidden block — `display:none` elements never intersect). No WebGL, no library; DPR
+capped at 2; draws only on scroll-progress change.
 ## Accessibility
 - Descriptive alt text on all images
 - All interactive elements keyboard accessible

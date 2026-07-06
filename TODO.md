@@ -24,29 +24,23 @@ starting a fresh session. Two pieces of work:
   as static HTML with zero JS changes (existing click-bindings run once after page parse and
   will catch relocated copies) as long as no unique target IDs get duplicated.
 
-### 🔲 Still to build (needs Fable / complex 3D work) — revived Welcome-section 3D walk-through
-Owner liked the previously-built 3D-modelled pharmacy walk-through (Three.js, from the
-`cloud-3d-experiment` branch, `walkin3d.js`) — a real modelled interior you move through,
-camera-dollied on scroll — **not** a photo-zoom effect. Port that file as the starting point
-(its engineering — capability gate, lazy boot, FPS sentinel, camera-spline approach — is sound
-and should be reused, not redesigned), then upgrade:
-- **Placement**: insert as a new block *after* `.welcome__boxes` and *before* `.rx-ext` — it's
-  the "then it transitions into this professional architectural model" moment, following the
-  title/text/photo/services-row group, not embedded in the photo slot.
-- **Real logo, not a fabricated cross**: the old file never loads `logo.png` — it hand-draws a
-  fake plus-sign via canvas. Load and composite the real logo texture instead.
-- **Lots of plants, inside and out**: only one crude placeholder plant exists today. Add a
-  parametric `plant()` helper (mirroring the existing `cloud()` helper's pattern) so several
-  can be placed cheaply — exterior planters at the entrance, interior pots at aisle ends/near
-  the counter/consultation area.
-- **More elevated architectural feel**: refine facade/window/awning proportions within the same
-  flat-material budget (no new textures, no perf cost) — the "premium" read should come from
-  composition and plants, not expensive materials.
-- **Hotspots**: relocate all 10 `.welcome__pill` chips (see above) into the scene as
-  `data-pos="x,y,z"` world-space hotspots, reusing the old branch's exact per-frame
-  `Vector3.project(camera)` → screen-position pattern — don't duplicate unique target IDs.
-- Full technical detail (scene composition, camera-path splines, hotspot projection math,
-  guardrail thresholds, vendored asset sizes) is in the plan doc referenced above.
+### ✅ Built (July 2026) — Welcome-section 3D walk-through + About photo sequence
+Both features from the plan are now live on `dev` (see CLAUDE.md for the full guardrail
+documentation):
+- **Welcome 3D walk-in** (`walkin3d.js` + `#w3d-styles` + markup after `.welcome__boxes`):
+  ported from `cloud-3d-experiment` and upgraded — real `logo.png` composited into the sign
+  and back-wall textures (replacing the fabricated cross), parametric `plant()` helper with
+  7 placements inside and out plus a window planter row, striped European-pharmacy awning,
+  framed/mullioned windows with sills, pendant lights over the counter, entry step. All ten
+  consultation pills relocated into the scene as projected hotspots (classic pills auto-hide
+  only when the 3D is active, so gated-off visitors lose nothing). Verified in headless
+  Chromium: boot gating, tier fallbacks, reduced-motion (zero animation bytes), hotspot click
+  → correct accordion + scroll.
+- **About photo sequence** (`#abt-seq` + inline script): scroll-scrubbed canvas crossfade
+  through the six gallery photos with captions; static gallery remains the fallback state.
+Follow-ups if desired: tune hotspot `data-pos` placements after viewing on the Cloudflare
+preview; consider a short in-scene "consultation room" camera beat; real-device spot checks
+(iPhone Safari + a budget Android) to confirm the FPS sentinel thresholds feel right.
 
 ## Prescription Extensions & Adaptations — custom intake form (deferred)
 
