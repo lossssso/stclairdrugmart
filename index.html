@@ -304,9 +304,11 @@
       background: var(--teal-bright);
       color: var(--white);
       font-weight: 600;
-      box-shadow: 0 3px 10px rgba(33,161,168,.25);
+      border-radius: 100px;
+      box-shadow: var(--shadow-card);
+      transition: background .2s var(--ease-apple), box-shadow .2s var(--ease-apple);
     }
-    .nav__links .nav__cta a:hover { background: var(--teal-dark); color: var(--white); }
+    .nav__links .nav__cta a:hover { background: var(--teal-dark); color: var(--white); box-shadow: var(--shadow-hover); }
     .nav__toggle { display: none; background: none; border: none; cursor: pointer; padding: .4rem; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
     .nav__toggle span {
       display: block; width: 22px; height: 2px;
@@ -716,6 +718,15 @@
     }
     .btn:hover { background: #003f44; transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 20px rgba(0,63,68,.25); }
     .btn:active { transform: scale(.97); transition-duration: .12s; }
+    /* WP2 — shared tactile press: primary touch feedback layer (mirrors .btn/.welcome__pill) */
+    .pa-card:active, .welcome-box:active, .shop__card:active,
+    .reviews-google-btn:active, .reviews-uber-btn:active, .reviews-read-btn:active,
+    .reviews-google-badge:active, .reviews-uber-badge:active,
+    .contact-float__toggle:active, .nav__links .nav__cta a:active,
+    .find-us__logo-btn:active {
+      transform: scale(.97);
+      transition-duration: .12s;
+    }
     .btn--outline {
       background: transparent;
       color: var(--teal-dark);
