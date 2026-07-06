@@ -32,7 +32,7 @@ push per WP (never batch); verify at 375px + 1280px before the next.
 |----|------|--------|-------|
 | — | scaffolding | Done | this folder + tracker (commit c8ca4d9) |
 | 1 | 01-shadow-radius-tokens.md | Done | commit bfc21d5 — see notes below |
-| 2 | 02-tactile-button-system.md | Not Started | depends on WP1 radius scale |
+| 2 | 02-tactile-button-system.md | Done | commit 8b015cb — press states + nav CTA pill |
 | 3 | 03-extract-js-utils.md | Not Started | initMagnetic + revealOnce |
 | 4 | 04-apply-magnetic-press.md | Not Started | depends on WP2, WP3 |
 | 5 | 05-scroll-reveal-safe-sections.md | Not Started | depends on WP3 |
@@ -60,6 +60,14 @@ push per WP (never batch); verify at 375px + 1280px before the next.
   WP2 where the button pass touches those anyway. Uber green shadows intentionally kept (brand).
   The flat `--shadow` back-compat alias still exists in `:root` — harmless, a few non-card spots
   still use it; can retire once all call sites migrate.
+
+- **WP2 (done, 8b015cb):** Shared `:active` press rule added (grouped selector after `.btn:active`)
+  covering pa-card, welcome-box, shop__card, reviews btns+badges, contact-float toggle, nav CTA,
+  find-us logo btns. Nav CTA now 100px pill + token shadows + apple easing. All press targets
+  have `transform` in their base transition so the press animates. NEXT SESSION: WP4 will add
+  `initMagnetic` to some of these same elements — it must COMPOSE its `translate()` with the
+  `:active scale(.97)` (put translate on the element, keep scale on :active) so they don't clobber
+  each other's `transform`. `.find-us__logo-btn:active` press assumes that class exists — verify.
 
 ## Deviations from original plan
 - WP1 spec included radius unification; only `.btn` radius moved in WP1. Remaining radius
