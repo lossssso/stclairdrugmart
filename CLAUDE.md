@@ -145,12 +145,14 @@ gsap-scrolltrigger (for scroll animation). Use lightweight-3d-effects or similar
 techniques first; only reach for a 3D-engine skill when a scoped WebGL feature is justified
 under the Library Selection Rule above. Never activate a skill that pulls in npm dependencies
 or a build tool.
-## Storefront Animation Rules
-- Lives in storefront.js + one scoped CSS block — fully swappable
-- Tier 1 (navigator.hardwareConcurrency > 4): full layered parallax + CSS door open
-- Tier 2 (low-power): simple opacity crossfade only
-- prefers-reduced-motion: static interior shown immediately
-- Mobile under 768px: single image zoom + door open, no parallax
+## Storefront / Welcome-Section 3D Walk-In (in progress)
+The old `storefront.js` photo-cinematic (parallax zoom into a flat photo) has been retired —
+it was structurally buggy (no alpha/cutout photo assets exist to fake real depth from) and
+the user explicitly didn't want the zoom-into-photo effect. `.welcome__photo-col` currently
+shows a plain static photo with no animation. A real 3D-modelled walk-through (procedural
+Three.js geometry, not photo-textured) is planned to replace it — see `TODO.md` for the full
+spec (placement, hotspots, logo/plant requirements) and the Library Selection Rule above for
+the required performance gating. When built, document its guardrails/tiers here.
 ## Accessibility
 - Descriptive alt text on all images
 - All interactive elements keyboard accessible

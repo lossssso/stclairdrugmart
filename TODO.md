@@ -5,36 +5,48 @@
 Owner wants a modern, "Apple.com meets premium European clinic" feel, mobile-first (most
 traffic is expected to be on phones). CLAUDE.md's Library Selection Rule has been updated to
 allow WebGL (Three.js / `<model-viewer>`) for scoped, gated features — see that file for the
-required performance gating before building any of this. Two concrete pieces requested so far;
-a further plan (from a separate "Fable 5" session) is expected to be pasted in and reconciled
-with these:
+required performance gating before building any of this. Full implementation plan (from a
+"Fable 5" planning session, reconciled with the owner's direct feedback) is saved at
+`/root/.claude/plans/optimized-brewing-acorn.md` in this environment — re-derive/re-save it if
+starting a fresh session. Two pieces of work:
 
-### About Us section — Apple-style photo sequence
-Build the canvas scroll-scrubbed image-sequence technique (see CLAUDE.md Library Selection
-Rule) for the About Us section, using real pharmacy photos (existing storefront/interior/team
-photos in the repo root and `team/` — confirm final shot list before building).
+### ✅ Done (Sonnet, easy/mechanical prep)
+- Retired `storefront.js` and its `.sf`/`.sf__*` scroll-cinematic entirely (structurally buggy —
+  see plan doc for the 5 diagnosed defects — and the owner explicitly didn't want the
+  zoom-into-photo effect). `.welcome__photo-col` now shows a plain static
+  `storefront_exterior.webp` photo, no animation, in a new minimal `.welcome__photo` wrapper.
+- Confirmed the "services row before entering the pharmacy" ordering is **already correct** —
+  `.welcome__boxes` already sits right after the photo column and before `.rx-ext`; no DOM
+  move was needed for that part.
+- The 10 `.welcome__pill` chat-bubble prompts ("🤒 I'm feeling ill", "🤰 I might be pregnant!",
+  etc.) are **still in `.welcome__text`** for now, unchanged — they're meant to relocate into
+  the new 3D scene as hotspots once it exists (see below), not before. Confirmed they can move
+  as static HTML with zero JS changes (existing click-bindings run once after page parse and
+  will catch relocated copies) as long as no unique target IDs get duplicated.
 
-### Welcome section — revived 3D walk-through model
+### 🔲 Still to build (needs Fable / complex 3D work) — revived Welcome-section 3D walk-through
 Owner liked the previously-built 3D-modelled pharmacy walk-through (Three.js, from the
-`cloud-3d-experiment` branch — a real modelled interior you move through, camera-dollied on
-scroll) — **not** the photo-zoom/parallax version that's currently live in `storefront.js`.
-Requirements for the rebuild:
-- **Placement**: goes in the Welcome section, positioned *after* the section title, *after*
-  the text description, and *after* the current storefront picture — i.e. it's an additional
-  element appended to the existing Welcome content, not a replacement for what's there.
-- **Hotspots inside the 3D space**: the "I'm pregnant", "I'm ill", etc. self-assessment
-  chat-bubble prompts (the ones already used elsewhere on the site to jump into the booking/
-  self-assessment flow) should be placed as clickable hotspots *inside* the modelled pharmacy
-  scene (e.g. anchored to relevant shelves/areas), not as a separate UI overlay. Clicking one
-  should scroll/zoom past to the matching booking or info section, exactly like the current
-  site's self-assessment flow does.
-- **Must be more polished than the original attempt**: owner's feedback on the original
-  (`cloud-3d-experiment` branch, `walkin3d.js`) was that it was "cool, but too basic" and
-  didn't feature the pharmacy's actual branding — the rebuild needs more visual detail/realism
-  and must incorporate the real logo (e.g. as in-scene signage) rather than a generic model.
-- Reuse the device/FPS guardrail pattern already proven on that branch (hardwareConcurrency/
-  deviceMemory gate, live FPS sentinel, capped pixel ratio, static fallback) — see updated
-  CLAUDE.md rules.
+`cloud-3d-experiment` branch, `walkin3d.js`) — a real modelled interior you move through,
+camera-dollied on scroll — **not** a photo-zoom effect. Port that file as the starting point
+(its engineering — capability gate, lazy boot, FPS sentinel, camera-spline approach — is sound
+and should be reused, not redesigned), then upgrade:
+- **Placement**: insert as a new block *after* `.welcome__boxes` and *before* `.rx-ext` — it's
+  the "then it transitions into this professional architectural model" moment, following the
+  title/text/photo/services-row group, not embedded in the photo slot.
+- **Real logo, not a fabricated cross**: the old file never loads `logo.png` — it hand-draws a
+  fake plus-sign via canvas. Load and composite the real logo texture instead.
+- **Lots of plants, inside and out**: only one crude placeholder plant exists today. Add a
+  parametric `plant()` helper (mirroring the existing `cloud()` helper's pattern) so several
+  can be placed cheaply — exterior planters at the entrance, interior pots at aisle ends/near
+  the counter/consultation area.
+- **More elevated architectural feel**: refine facade/window/awning proportions within the same
+  flat-material budget (no new textures, no perf cost) — the "premium" read should come from
+  composition and plants, not expensive materials.
+- **Hotspots**: relocate all 10 `.welcome__pill` chips (see above) into the scene as
+  `data-pos="x,y,z"` world-space hotspots, reusing the old branch's exact per-frame
+  `Vector3.project(camera)` → screen-position pattern — don't duplicate unique target IDs.
+- Full technical detail (scene composition, camera-path splines, hotspot projection math,
+  guardrail thresholds, vendored asset sizes) is in the plan doc referenced above.
 
 ## Prescription Extensions & Adaptations — custom intake form (deferred)
 

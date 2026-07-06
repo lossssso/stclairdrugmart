@@ -612,8 +612,8 @@
     }
     .welcome__map iframe { width: 100%; height: 100%; border: 0; display: block; }
     .welcome__map:hover { box-shadow: 0 10px 30px rgba(30,107,99,.3); }
-    /* .welcome__photo replaced by the #storefront-cinematic stage — see the scoped
-       storefront <style> block after this one, and storefront.js. */
+    .welcome__photo { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-card); }
+    .welcome__photo img { width: 100%; height: auto; display: block; }
     .welcome__question { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--teal-bright); margin: 1.6rem 0 .7rem; }
     .welcome__pills { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem .6rem; }
     .welcome__pill { position: relative; display: flex; align-items: center; justify-content: center; text-align: center; gap: .4rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 14px; padding: .6rem 1rem; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; line-height: 1.3; transition: background .2s var(--ease-apple), color .2s var(--ease-apple), transform .3s var(--ease-spring), box-shadow .2s var(--ease-apple); }
@@ -2606,59 +2606,6 @@
     .pp-close:hover { color: #111; }
     .pp-link { color: rgba(255,255,255,.55); font-size: .7rem; text-decoration: underline; cursor: pointer; background: none; border: none; }
   </style>
-  <!-- ── Storefront cinematic — scoped styles (feature lives here + storefront.js, fully swappable) ── -->
-  <style id="sf-styles">
-    .sf { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-card); }
-    .sf__stage {
-      position: relative; width: 100%;
-      aspect-ratio: 1227 / 1281; /* matches storefront_exterior.webp — no layout shift */
-      overflow: hidden; background: var(--teal-ice);
-    }
-    .sf__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-    /* Depth planes: crops of the same photo, pixel-aligned over the base at rest
-       (zero visual difference until JS scales them at different rates). */
-    .sf__plane {
-      position: absolute; inset: 0; pointer-events: none;
-      background-image: url('storefront_exterior.webp');
-      background-size: 100% 100%;
-    }
-    .sf__plane--sign { clip-path: inset(29% 12% 52% 14%); }
-    .sf__plane--tree { clip-path: inset(0 34% 4% 38%); }
-    .sf__logo {
-      /* sits directly over the sign's printed cross so the pulse reads as the
-         sign itself lighting up, not a second floating logo */
-      position: absolute; left: 19.5%; top: 31%; width: 12.5%; height: auto;
-      opacity: 0; pointer-events: none;
-      filter: drop-shadow(0 4px 14px rgba(0,45,49,.4));
-    }
-    .sf__vignette {
-      position: absolute; inset: 0; pointer-events: none; opacity: 0;
-      background: radial-gradient(ellipse at 36% 62%, transparent 38%, rgba(0,45,49,.38) 100%);
-    }
-    .sf__door-stage {
-      position: absolute; left: 26%; top: 46%; width: 18%; height: 41%;
-      perspective: 900px; pointer-events: none;
-    }
-    @supports (transform-style: preserve-3d) {
-      .sf__door-stage { transform-style: preserve-3d; }
-    }
-    .sf__door {
-      position: absolute; top: 0; bottom: 0; width: 50%; opacity: 0;
-      background: linear-gradient(160deg, rgba(255,255,255,.5), rgba(140,190,195,.2) 45%, rgba(10,52,56,.32));
-      border: 1px solid #c7d3d4;
-      box-shadow: inset 0 0 0 1px rgba(33,161,168,.3);
-      backface-visibility: hidden;
-    }
-    .sf__door--l { left: 0; transform-origin: left center; }
-    .sf__door--r { right: 0; transform-origin: right center; }
-    .sf__interior { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; }
-    /* Reduced motion: static interior immediately (per project storefront rules);
-       storefront.js also skips loading GSAP entirely in this case. */
-    @media (prefers-reduced-motion: reduce) {
-      .sf__plane, .sf__door-stage, .sf__vignette, .sf__logo { display: none; }
-      .sf__interior { opacity: 1; }
-    }
-  </style>
 </head>
 <body>
 <script>
@@ -2679,8 +2626,9 @@
       root.setAttribute('data-perf-tier', '2');
       return;
     }
-    // Shared tier signal for other features (storefront.js reads this): tier 1 =
-    // >4 cores; refined below to tier 2 if measured fps lands us in lite-clouds.
+    // Shared tier signal for other features (e.g. the Welcome 3D walk-in) to read
+    // instead of re-probing: tier 1 = >4 cores; refined below to tier 2 if
+    // measured fps lands us in lite-clouds.
     root.setAttribute('data-perf-tier',
       (navigator.hardwareConcurrency && navigator.hardwareConcurrency > 4) ? '1' : '2');
     // Otherwise measure the real frame rate for ~1s; if the cloud drift is
@@ -2922,19 +2870,8 @@
             title="St. Clair Drug Mart Pharmacy — map location"
           ></iframe>
         </div>
-        <div class="sf" id="storefront-cinematic">
-          <div class="sf__stage">
-            <img class="sf__photo" src="storefront_exterior.webp" alt="St. Clair Drug Mart storefront at 1203 St. Clair Ave W, Toronto" width="1227" height="1281" loading="lazy" decoding="async" />
-            <div class="sf__plane sf__plane--sign" aria-hidden="true"></div>
-            <div class="sf__plane sf__plane--tree" aria-hidden="true"></div>
-            <img class="sf__logo" src="logo.png" alt="" aria-hidden="true" width="940" height="922" loading="lazy" decoding="async" />
-            <div class="sf__vignette" aria-hidden="true"></div>
-            <div class="sf__door-stage" aria-hidden="true">
-              <div class="sf__door sf__door--l"></div>
-              <div class="sf__door sf__door--r"></div>
-            </div>
-            <img class="sf__interior" src="interior_wide.webp" alt="Inside St. Clair Drug Mart Pharmacy — prescription counter and aisles" width="850" height="899" loading="lazy" decoding="async" />
-          </div>
+        <div class="welcome__photo">
+          <img src="storefront_exterior.webp" alt="St. Clair Drug Mart storefront at 1203 St. Clair Ave W, Toronto" width="1227" height="1281" loading="lazy" decoding="async" />
         </div>
       </div>
     </div>
@@ -7344,6 +7281,5 @@ window.SmartMatch = (function(){
     .catch(function(){});
 })();
 </script>
-<script src="storefront.js" defer></script>
 </body>
 </html>
