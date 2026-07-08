@@ -617,9 +617,31 @@
     .welcome__pill:hover { background: var(--teal-bright); color: #fff; border-color: var(--teal-bright); transform: translateY(-1px) scale(1.03); box-shadow: 0 4px 14px rgba(33,161,168,.25); }
     .welcome__pill:hover::before { border-top-color: var(--teal-bright); }
     .welcome__pill:hover::after { border-top-color: var(--teal-bright); }
+    /* WP3 reusable stagger recipe — children hidden ONLY once JS adds .reveal-ready
+       (no-JS / crawlers see everything); .is-revealed plays the shared rvSlideIn.
+       Hoisted ABOVE the interactive compose rules below (WP2/WP4/WP6) so equal-specificity
+       per-component base rules (e.g. `.staff-card { transform: rotateX(...) }`) win the
+       cascade by source order even when the element is also a .reveal-ready child — see
+       06-card-tilt-touch.md handoff notes for the bug this fixes. */
+    .reveal-ready > * { opacity: 0; transform: translateY(22px); }
+    .reveal-ready.is-revealed > * { animation: rvSlideIn .5s var(--ease-apple) forwards; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-ready > *, .reveal-ready.is-revealed > * { opacity: 1; transform: none; animation: none; }
+    }
     .welcome__boxes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.25rem; }
+    @supports (transform-style: preserve-3d) { .welcome__boxes, .staff-grid, .pa-cards--top, .shop__cards { perspective: 900px; } }
     .welcome-box { background: rgba(255,255,255,0.9); border: 1px solid var(--border); border-top: 3.5px solid var(--teal-bright); border-radius: var(--radius); padding: 1.4rem 1.25rem 1.3rem; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: .35rem; transition: box-shadow .2s, transform .15s, border-color .15s; box-shadow: var(--shadow-card); }
-    .welcome-box:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); border-color: var(--teal-bright); }
+    .welcome-box:hover { box-shadow: var(--shadow-hover); border-color: var(--teal-bright); transform: translateY(-3px); }
+    .welcome-box:active { transform: scale(.97); transition-duration: .12s; }
+    /* WP6 — subtle pointer tilt (desktop only; --tilt-x/--tilt-y default to 0 via var()
+       fallback, so touch/reduced-motion/no-JS get the exact prior flat hover/press). The
+       flat rules above are the @supports fallback; this block overrides with the tilt
+       composed in for browsers with real 3D transform support. */
+    @supports (transform-style: preserve-3d) {
+      .welcome-box { transform: rotateX(var(--tilt-x, 0)) rotateY(var(--tilt-y, 0)); }
+      .welcome-box:hover { transform: rotateX(var(--tilt-x, 0)) rotateY(var(--tilt-y, 0)) translateY(-3px); }
+      .welcome-box:active { transform: rotateX(var(--tilt-x, 0)) rotateY(var(--tilt-y, 0)) scale(.97); }
+    }
     .welcome-box__icon { font-size: 1.9rem; margin-bottom: .3rem; }
     .welcome-box__title { font-size: 1rem; font-weight: 800; color: var(--text); }
     .welcome-box__desc { font-size: .82rem; color: var(--text-muted); line-height: 1.5; flex: 1; margin-top: .1rem; }
@@ -718,8 +740,10 @@
     }
     .btn:hover { background: #003f44; transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 20px rgba(0,63,68,.25); }
     .btn:active { transform: scale(.97); transition-duration: .12s; }
-    /* WP2 — shared tactile press: primary touch feedback layer (mirrors .btn/.welcome__pill) */
-    .pa-card:active, .welcome-box:active, .shop__card:active,
+    /* WP2 — shared tactile press: primary touch feedback layer (mirrors .btn/.welcome__pill).
+       .welcome-box:active lives with its tilt rules above (WP6) instead of here, since it
+       needs to compose with --tilt-x/--tilt-y rather than a bare scale(.97). */
+    .pa-card:active, .shop__card:active,
     .reviews-google-btn:active, .reviews-uber-btn:active, .reviews-read-btn:active,
     .reviews-google-badge:active, .reviews-uber-badge:active,
     .contact-float__toggle:active, .nav__links .nav__cta a:active,
@@ -744,6 +768,15 @@
     .reviews-uber-btn:active { transform: translate(var(--mag-x, 0), var(--mag-y, 0)) scale(.97); }
     .reviews-read-btn:hover { transform: translate(var(--mag-x, 0), var(--mag-y, 0)) translateY(-2px); }
     .reviews-read-btn:active { transform: translate(var(--mag-x, 0), var(--mag-y, 0)) scale(.97); }
+    /* WP6 — layer tilt into the pa-card/shop-card compose chain (magnetic translate + tilt
+       rotate + hover/press transform, all at once; --tilt-x/--tilt-y default to 0). */
+    @supports (transform-style: preserve-3d) {
+      .pa-card, .shop__card { transform: translate(var(--mag-x, 0), var(--mag-y, 0)) rotateX(var(--tilt-x, 0)) rotateY(var(--tilt-y, 0)); }
+      .pa-card:hover { transform: translate(var(--mag-x, 0), var(--mag-y, 0)) rotateX(var(--tilt-x, 0)) rotateY(var(--tilt-y, 0)) translateY(-3px) scale(1.015); }
+      .pa-card:active { transform: translate(var(--mag-x, 0), var(--mag-y, 0)) rotateX(var(--tilt-x, 0)) rotateY(var(--tilt-y, 0)) scale(.97); }
+      .shop__card:hover { transform: translate(var(--mag-x, 0), var(--mag-y, 0)) rotateX(var(--tilt-x, 0)) rotateY(var(--tilt-y, 0)) translateY(-2px); }
+      .shop__card:active { transform: translate(var(--mag-x, 0), var(--mag-y, 0)) rotateX(var(--tilt-x, 0)) rotateY(var(--tilt-y, 0)) scale(.97); }
+    }
     .contact-float__toggle:hover { transform: translate(var(--mag-x, 0), var(--mag-y, 0)) scale(1.1); }
     .contact-float__toggle:active { transform: translate(var(--mag-x, 0), var(--mag-y, 0)) scale(.97); }
     .btn--outline {
@@ -1767,7 +1800,12 @@
     /* ── Team grid ── */
     .staff-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin: 1.25rem 0 1.5rem; max-width: 100%; }
     #team .section__inner { max-width: 1400px; }
-    .staff-card { text-align: center; }
+    .staff-card { text-align: center; transition: transform .2s var(--ease-apple); }
+    /* WP6 — whole-card tilt only (never the photo alone, so faces don't skew/wobble
+       independently of the card); smaller max angle than other cards, subtler by design. */
+    @supports (transform-style: preserve-3d) {
+      .staff-card { transform: rotateX(var(--tilt-x, 0)) rotateY(var(--tilt-y, 0)); }
+    }
     .staff-card__photo {
       position: relative; aspect-ratio: 3/4; overflow: hidden;
       border-radius: 14px; margin-bottom: .75rem;
@@ -1967,13 +2005,6 @@
     }
     @keyframes rvSlideIn {
       to { opacity: 1; transform: translateY(0); }
-    }
-    /* WP3 reusable stagger recipe — children hidden ONLY once JS adds .reveal-ready
-       (no-JS / crawlers see everything); .is-revealed plays the shared rvSlideIn. */
-    .reveal-ready > * { opacity: 0; transform: translateY(22px); }
-    .reveal-ready.is-revealed > * { animation: rvSlideIn .5s var(--ease-apple) forwards; }
-    @media (prefers-reduced-motion: reduce) {
-      .reveal-ready > *, .reveal-ready.is-revealed > * { opacity: 1; transform: none; animation: none; }
     }
     .reviews-metric__num {
       font-size: 2.2rem; font-weight: 900; color: var(--teal-deeper);
@@ -7380,7 +7411,22 @@ window.SmartMatch = (function(){
     if (reduce){ container.classList.add('reveal-ready','is-revealed'); return; }
     container.classList.add('reveal-ready');
     window.revealOnce(container, function(){
-      for (var i=0;i<kids.length;i++){ kids[i].style.animationDelay = (i*step).toFixed(2)+'s'; }
+      for (var i=0;i<kids.length;i++){
+        var kid = kids[i];
+        kid.style.animationDelay = (i*step).toFixed(2)+'s';
+        // WP6 fix: a filled (forwards) CSS animation permanently owns `transform` even after
+        // it finishes, silently blocking any later hover/tilt/magnetic transform on the same
+        // element. Once the reveal animation completes, drop it so normal transform rules
+        // (tilt, magnetic, hover, :active) regain control — opacity/position are unaffected
+        // since .is-revealed's end state matches the element's normal resting state.
+        kid.addEventListener('animationend', function(e){
+          // Pin the animation's terminal values inline before removing it, since dropping
+          // `animation` also drops its forwards-filled opacity — the base .reveal-ready > *
+          // rule would otherwise snap the (already revealed) element back to opacity:0.
+          e.currentTarget.style.opacity = '1';
+          e.currentTarget.style.animation = 'none';
+        }, { once: true });
+      }
       container.classList.add('is-revealed');
     }, { threshold: opts.threshold != null ? opts.threshold : 0.15 });
   };
@@ -7419,6 +7465,53 @@ window.SmartMatch = (function(){
     window.initMagnetic(document.querySelector(sel), { compose: true, maxX: 12, maxY: 7 });
   });
   window.initMagnetic(document.querySelector('.contact-float__toggle'), { compose: true, maxX: 6, maxY: 6 });
+})();
+</script>
+
+<!-- WP6: subtle pointer tilt with real depth (desktop only). Touch decision (documented in
+     spec/modernization/PROGRESS.md): press-only, NOT scroll-driven tilt — the site's audience
+     skews toward older/lower-power phones, and WP2's :active press already gives solid touch
+     feedback on every one of these targets, so a second scroll-rAF listener running on every
+     card grid was judged not worth the battery/perf cost for a "nice to have" tilt. -->
+<script>
+(function(){
+  var reduce = false, finePointer = false;
+  try {
+    reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  } catch(e){}
+
+  window.initTilt = function(el, opts){
+    if (!el || reduce || !finePointer) return;
+    opts = opts || {};
+    var max = opts.max != null ? opts.max : 5;
+    var rx=0, ry=0, trx=0, try_=0, raf=null, leaveTimer=null;
+    function apply(){
+      el.style.setProperty('--tilt-x', trx.toFixed(2)+'deg');
+      el.style.setProperty('--tilt-y', try_.toFixed(2)+'deg');
+    }
+    function tick(){
+      raf=null; trx += (rx-trx)*.2; try_ += (ry-try_)*.2; apply();
+      if (Math.abs(rx-trx)>.05 || Math.abs(ry-try_)>.05) raf=requestAnimationFrame(tick);
+    }
+    el.addEventListener('mousemove', function(e){
+      var r = el.getBoundingClientRect();
+      var px = (e.clientX-r.left)/r.width - 0.5, py = (e.clientY-r.top)/r.height - 0.5;
+      ry = px*max*2; rx = -py*max*2;
+      el.style.willChange = 'transform';
+      if (leaveTimer){ clearTimeout(leaveTimer); leaveTimer=null; }
+      if (!raf) raf=requestAnimationFrame(tick);
+    });
+    el.addEventListener('mouseleave', function(){
+      rx=0; ry=0; if(!raf) raf=requestAnimationFrame(tick);
+      leaveTimer = setTimeout(function(){ el.style.willChange='auto'; }, 300);
+    });
+  };
+
+  document.querySelectorAll('.welcome-box').forEach(function(el){ window.initTilt(el, { max: 5 }); });
+  document.querySelectorAll('.pa-cards--top .pa-card').forEach(function(el){ window.initTilt(el, { max: 4 }); });
+  document.querySelectorAll('.shop__card').forEach(function(el){ window.initTilt(el, { max: 5 }); });
+  document.querySelectorAll('.staff-card').forEach(function(el){ window.initTilt(el, { max: 3 }); }); // subtler — faces stay calm
 })();
 </script>
 
