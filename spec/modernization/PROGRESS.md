@@ -35,7 +35,7 @@ push per WP (never batch); verify at 375px + 1280px before the next.
 | 2 | 02-tactile-button-system.md | Done | commit 8b015cb — press states + nav CTA pill |
 | 3 | 03-extract-js-utils.md | Done | commit c74b79d — 3 globals + .reveal-ready recipe |
 | 4 | 04-apply-magnetic-press.md | Not Started | depends on WP2, WP3 |
-| 5 | 05-scroll-reveal-safe-sections.md | Not Started | depends on WP3 |
+| 5 | 05-scroll-reveal-safe-sections.md | Done | commit cdcc09e — see notes + deviation below |
 | 6 | 06-card-tilt-touch.md | Not Started | depends on WP3 |
 | 7 | 07-section-rhythm-focal-depth.md | Not Started | after mechanical passes |
 | 8 | 08-emoji-to-svg-icons.md | Not Started | large; sub-batched commits |
@@ -82,7 +82,18 @@ push per WP (never batch); verify at 375px + 1280px before the next.
     `animation-delay` automatically. Existing reviews/team count-ups were NOT re-pointed (left
     working as-is) to keep this WP a pure add; optional cleanup later.
 
+- **WP5 (done, cdcc09e):** `staggerReveal()` wired to `.welcome__boxes`, `.staff-grid`,
+  `.blog-grid`, `.steps` (new-patients) — all verified reaching opacity 1 after scroll-in at
+  375+1280, reduced-motion instant end-state. Call sites live in a small script block right
+  after the WP3 utils IIFE (search "WP5: staggered scroll-reveal"). Reviews/team count-ups were
+  left on their original observers (not migrated), per the WP3 note.
+
 ## Deviations from original plan
 - WP1 spec included radius unification; only `.btn` radius moved in WP1. Remaining radius
   outliers folded into WP2 (button system) to keep each commit coherent. Not a scope change,
   just resequencing within the approved plan.
+- WP5 spec named `.services__grid` as a reveal target — that class doesn't exist on `origin/dev`;
+  `services` is actually an accordion (`.svc-acc` with 3 `.svc-acc__group` children, not a card
+  grid). Substituted a lighter per-group reveal (3 groups, not per-accordion-item), consistent
+  with the site audit's explicit "services: lean still, at most a per-group fade-in" guidance —
+  not a scope expansion, a correction to match what's actually in the DOM.
