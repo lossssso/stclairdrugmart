@@ -37,7 +37,7 @@ push per WP (never batch); verify at 375px + 1280px before the next.
 | 4 | 04-apply-magnetic-press.md | Done | commit 6c9f83e — see notes + QA gotcha below |
 | 5 | 05-scroll-reveal-safe-sections.md | Done | commit cdcc09e — see notes + deviation below |
 | 6 | 06-card-tilt-touch.md | Done | commit 5cc46cf — see notes + cascade-bug fixes below |
-| 7 | 07-section-rhythm-focal-depth.md | Not Started | after mechanical passes |
+| 7 | 07-section-rhythm-focal-depth.md | Done | commit c41dc34 — see notes below |
 | 8 | 08-emoji-to-svg-icons.md | Not Started | large; sub-batched commits |
 | 9 | 09-welcome-3d-guardrails.md | Not Started | walkin3d.js compliance |
 
@@ -152,6 +152,48 @@ push per WP (never batch); verify at 375px + 1280px before the next.
     the pointer gate holds. `prefers-reduced-motion` — flat `transform:none`, `opacity:1`,
     instant, no `--tilt-x` set. No new console errors beyond the pre-existing sandboxed
     `ERR_CONNECTION_RESET` on external resources (present on untouched site too).
+
+- **WP7 (done, c41dc34):** New `:root` tokens `--sec-pad-sm/-md/-lg` (3.25rem/5rem/7rem,
+  1.5rem sides). Base `section{padding:var(--sec-pad-md)}` unchanged in value; `#booking,
+  #reviews` bumped to `--sec-pad-lg`, `#drug-checker, .faq` tightened to `--sec-pad-sm`. Left
+  `#flags` alone — it already has its own dedicated `#flags{padding:.75rem 1.5rem 2.5rem}`
+  override later in the file that would've silently beaten a rhythm-scale assignment anyway
+  (same id-selector specificity, later source wins); didn't touch `#shop`'s inline
+  `style="padding-top:2rem"` for the same reason (inline always wins). The `@media (max-width:
+  480px) { section{padding:2rem .875rem} }` global small-phone override (existing, ~1453) still
+  applies on top of all of this unchanged — verified booking/new-patients padding-top values at
+  375px reflect it correctly.
+  - New `.section__eyebrow` (small tracked uppercase label + short rule) applied to Services
+    ("What We Treat") and Team ("The Team"); `.section__title--center` / `.section__lead--center`
+    modifiers applied to Reviews only. 3 sections get a distinct signature; everything else keeps
+    the standard left-aligned title+underline molecule, per spec ("variety ≠ chaos").
+  - Focal card promotion: `.welcome-box--focal` (added to the free/OHIP-covered Medication
+    Reviews box — 1st of 6) spans 2 grid columns with a badge + tinted gradient bg; explicit
+    `grid-column: span 1` override inside the existing `max-width:480px` breakpoint (where
+    `.welcome__boxes` itself drops to `1fr`) so it collapses cleanly instead of leaving an
+    invalid/ignored span. `.reviews-metric--focal` (added to the "59 Google Reviews" metric —
+    1st of 6) gets a solid `--teal-bright` fill instead of the shared `--teal-ice` card look.
+  - Sectional depth: `#services` background is now a layered
+    `linear-gradient(180deg,var(--teal-ice),transparent 220px), var(--white)` — a background
+    LAYER on the element itself, not a `::before` pseudo-element, specifically to dodge a
+    stacking-context/z-index trap (an absolutely-positioned pseudo-element with default
+    `position:relative` on a non-z-indexed parent paints ABOVE non-positioned in-flow content
+    unless given `z-index:-1`, which then risks bleeding into the *previous* section if the
+    parent doesn't establish its own stacking context — layering it into `background` sidesteps
+    this entirely since backgrounds always paint behind an element's own content). `.reviews-hero`
+    got a matching treatment: teal-ice-to-transparent gradient panel + border + `--shadow-card` +
+    padding, reading as "an elevated panel behind the focal group" per spec.
+  - Note: there are two duplicate `#services{background:...}` rules in the file (an older dead
+    one at ~698, the real one used by the live accordion markup at ~1690 — only the latter was
+    edited, since later-source wins for equal id specificity and the first was already
+    inert/pre-existing dead weight, not introduced by this WP).
+  - Verified via Playwright: 1280px — focal welcome-box measured 728px vs 356px sibling width
+    (correct 2:1 span), `#booking` padding-top computed 112px (=7rem), `#new-patients` 80px
+    (=5rem, unaffected). 375px — focal welcome-box measured 347px = sibling width (correctly
+    collapsed to span 1), `#new-patients` padding-top 32px (=2rem, correctly picking up the
+    existing global 480px override), zero horizontal scroll overflow at either width. Screenshots
+    confirm: eyebrow labels render above Services/Team titles, Reviews title/lead centered with
+    the elevated panel and focal teal metric tile visible, no layout breaks or overlap.
 
 ## Deviations from original plan
 - WP1 spec included radius unification; only `.btn` radius moved in WP1. Remaining radius
