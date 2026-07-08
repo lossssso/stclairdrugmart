@@ -166,6 +166,11 @@
       --ease-spring: cubic-bezier(.175,.885,.32,1.275);
       --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-body:    'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      /* ── Section rhythm scale (WP7) — vary vertical breathing room instead of a flat 5rem
+         everywhere. sm = dense/tool sections, md = default, lg = focal/hero-adjacent. ── */
+      --sec-pad-sm: 3.25rem 1.5rem;
+      --sec-pad-md: 5rem 1.5rem;
+      --sec-pad-lg: 7rem 1.5rem;
     }
     html { scroll-behavior: smooth; }
     html {
@@ -566,8 +571,22 @@
     .contact__status-board .status-row__val--closed { color: #991b1b; font-weight: 400; }
 
     /* ── Sections shared ──────────────────────────────── */
-    section { padding: 5rem 1.5rem; }
+    section { padding: var(--sec-pad-md); }
+    /* WP7 rhythm: lg for focal/social-proof sections, sm for dense tool/list sections.
+       Everything else stays on the md default above — vary, don't randomize. */
+    #booking, #reviews { padding: var(--sec-pad-lg); }
+    #drug-checker, .faq { padding: var(--sec-pad-sm); }
     .section__inner { max-width: 1100px; margin: 0 auto; }
+    .section__eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--font-display); font-size: .78rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--teal-bright);
+      margin-bottom: .6rem;
+    }
+    .section__eyebrow::before { content: ''; width: 22px; height: 2px; background: var(--teal-bright); border-radius: 1px; }
+    .section__title--center { text-align: center; }
+    .section__title--center::after { margin-left: auto; margin-right: auto; }
+    .section__lead--center { margin-left: auto; margin-right: auto; text-align: center; }
     .section__title {
       font-family: var(--font-display);
       font-size: clamp(1.6rem, 3.5vw, 2.4rem);
@@ -646,8 +665,25 @@
     .welcome-box__title { font-size: 1rem; font-weight: 800; color: var(--text); }
     .welcome-box__desc { font-size: .82rem; color: var(--text-muted); line-height: 1.5; flex: 1; margin-top: .1rem; }
     .welcome-box__cta { font-size: .82rem; font-weight: 700; color: var(--teal-dark); margin-top: .5rem; }
+    /* WP7 focal card: promote the free MedsCheck box so the grid isn't 6 equal tiles. */
+    .welcome-box--focal {
+      grid-column: span 2;
+      border-top-width: 4px;
+      background: linear-gradient(135deg, rgba(215,251,252,.65), rgba(255,255,255,.92));
+      position: relative;
+    }
+    .welcome-box__badge {
+      align-self: flex-start;
+      font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em;
+      color: var(--teal-dark); background: var(--teal-ice); border: 1px solid var(--border);
+      border-radius: 100px; padding: .22rem .6rem; margin-bottom: .2rem;
+    }
     @media (max-width: 768px) {
       .welcome__boxes { grid-template-columns: repeat(2, 1fr); }
+      .welcome-box--focal { grid-column: span 2; }
+    }
+    @media (max-width: 480px) {
+      .welcome-box--focal { grid-column: span 1; }
     }
     /* Ring-pulse: a static-shadow pseudo-element whose opacity/scale is animated,
        instead of interpolating box-shadow itself — transform/opacity only.
@@ -1651,7 +1687,10 @@
     }
 
     /* ── Our Services accordion ───────────────────── */
-    #services { background: var(--white); }
+    /* WP7 sectional depth: soft teal-ice fade at the top, easing out of #booking's wash
+       instead of a hard cut to flat white. Background layer only — no pseudo-element,
+       so it can't sit above content regardless of stacking context. */
+    #services { background: linear-gradient(180deg, var(--teal-ice), transparent 220px), var(--white); }
     .svc-acc { margin: 2rem auto 0; display: flex; flex-direction: column; gap: .7rem; }
     .svc-acc-item {
       background: var(--white); border: 1.5px solid var(--border);
@@ -1897,7 +1936,15 @@
     #new-patients .section__lead { max-width: 760px; }
 
     /* Reviews hero — two platforms side by side */
-    .reviews-hero { margin: 2rem 0 0; }
+    /* WP7 sectional depth: faint elevated panel behind the focal rating group. */
+    .reviews-hero {
+      margin: 2rem 0 0;
+      background: linear-gradient(180deg, var(--teal-ice), rgba(215,251,252,.35));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: 2rem 1.5rem;
+    }
     .reviews-platforms {
       display: flex; align-items: stretch; justify-content: center; flex-wrap: wrap;
     }
@@ -2012,6 +2059,13 @@
     }
     .reviews-metric__label { font-size: .72rem; color: var(--text-muted); line-height: 1.5; }
     .reviews-metric__icon { font-size: 1.35rem; margin-bottom: .45rem; }
+    /* WP7 focal card: promote the review-count metric so the 6-tile grid isn't uniform. */
+    .reviews-metric--focal {
+      background: var(--teal-bright); border-color: var(--teal-bright);
+    }
+    .reviews-metric--focal .reviews-metric__num,
+    .reviews-metric--focal .reviews-metric__label { color: #fff; }
+    .reviews-metric--focal:hover { border-color: var(--teal-dark); }
 
     /* CTA buttons */
     .reviews-actions { display: flex; justify-content: center; gap: .75rem; flex-wrap: wrap; }
@@ -3001,7 +3055,8 @@
     </div>
 
     <div class="welcome__boxes">
-      <a href="#services" class="welcome-box" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},200)">
+      <a href="#services" class="welcome-box welcome-box--focal" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},200)">
+        <span class="welcome-box__badge">Free &amp; OHIP-covered</span>
         <div class="welcome-box__icon">📋</div>
         <div class="welcome-box__title">Medication Reviews</div>
         <div class="welcome-box__desc">Free for eligible Ontario residents — includes an optional blood glucose test at no cost. Our pharmacist reviews all your medications and optimizes your therapy.</div>
@@ -3387,6 +3442,7 @@
 <!-- ── Our Services (accordion) ───────────────────────────── -->
 <section id="services">
   <div class="section__inner">
+    <span class="section__eyebrow">What We Treat</span>
     <h2 class="section__title">What We Offer</h2>
     <p class="section__lead">Everything under one roof — tap any service to see the full details.</p>
     <div class="svc-acc">
@@ -4011,6 +4067,7 @@
   <div class="section__inner">
     <div class="team-header-row">
       <div class="team-header-row__text">
+        <span class="section__eyebrow">The Team</span>
         <h2 class="section__title">Meet Our Team</h2>
         <p class="section__lead">Independent pharmacy means a real relationship — with the same people every time you walk in.</p>
       </div>
@@ -4063,8 +4120,8 @@
 <!-- ── Reviews ────────────────────────────────────────────── -->
 <section id="reviews">
   <div class="section__inner">
-    <h2 class="section__title">What Patients Say</h2>
-    <p class="section__lead">Real reviews from real neighbours in St. Clair West.</p>
+    <h2 class="section__title section__title--center">What Patients Say</h2>
+    <p class="section__lead section__lead--center">Real reviews from real neighbours in St. Clair West.</p>
 
     <div class="reviews-hero">
       <div class="reviews-platforms">
@@ -4115,7 +4172,7 @@
 
     <!-- Metrics -->
     <div class="reviews-metrics">
-      <div class="reviews-metric">
+      <div class="reviews-metric reviews-metric--focal">
         <div class="reviews-metric__icon">⭐</div>
         <div class="reviews-metric__num"><span class="js-countup" data-target="59">59</span></div>
         <div class="reviews-metric__label">Google Reviews<br>from Real Patients</div>
