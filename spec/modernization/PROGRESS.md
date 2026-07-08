@@ -38,7 +38,7 @@ push per WP (never batch); verify at 375px + 1280px before the next.
 | 5 | 05-scroll-reveal-safe-sections.md | Done | commit cdcc09e — see notes + deviation below |
 | 6 | 06-card-tilt-touch.md | Done | commit 5cc46cf — see notes + cascade-bug fixes below |
 | 7 | 07-section-rhythm-focal-depth.md | Done | commit c41dc34 — see notes below |
-| 8 | 08-emoji-to-svg-icons.md | In Progress | batch 2/3 done, commit 868a5a0 — see notes below |
+| 8 | 08-emoji-to-svg-icons.md | In Progress | batch 3 partial, commit 90d3741 — see notes below |
 | 9 | 09-welcome-3d-guardrails.md | Not Started | walkin3d.js compliance |
 
 ## Decision log
@@ -275,6 +275,58 @@ push per WP (never batch); verify at 375px + 1280px before the next.
     2x scale — all icons render as clean, legible, correctly-teal-colored glyphs with proper
     spacing, no layout shift, no broken/blank icon slots. Zero leftover emoji confirmed
     programmatically across every batch-2 selector plus the `AILMENT_DB` block.
+
+- **WP8 batch 3 (PARTIAL, commit 90d3741):** Did the items the spec bullet explicitly names that
+  were still outstanding: all 6 `.reviews-metric__icon` (added `i-bike`, `i-home`, `i-globe` —
+  3 new symbols), the 10 `.w3d-spot-label` walk-in-3D hotspot icons (pure reuse of batch-1
+  symbols — these are the SAME 10 "what brings you in" prompts as `.welcome__pill`, just
+  duplicated inside `walkin3d.js`'s scene per CLAUDE.md's own description of that feature), and
+  4 small decorative phone glyphs (new `i-phone`, reusing the exact path already used by the
+  existing `.contact-float` phone icon so it's visually identical to an icon already on the
+  page). Fixed a contrast bug the reviews-metric pass surfaced: `.reviews-metric--focal`'s white
+  text-color override (WP7) only listed `__num`/`__label`, leaving the icon dark-on-teal — added
+  `.reviews-metric__icon` to that rule.
+  **NOT done — "any remaining emoji" is a much bigger surface than the named bullet items,
+  confirmed via a full-file emoji sweep after this batch (176 emoji chars remained, minus the
+  ~26 `★` text-glyphs used by `.reviews-stars-bg/-fill` which are a deliberate animated rating
+  widget, not an icon-emoji, and out of scope for this spec — don't "fix" those without a
+  separate decision, reworking that animation is a different task):**
+  - **`SITE_INDEX` array** (~line 6892+, search `var SITE_INDEX = [`) — 17 static entries with
+    their own `icon:` emoji field, feeds the top-nav site-wide search
+    (`.site-search__result-icon`). NOT the same data as `AILMENT_DB` (which IS already fixed) —
+    don't assume fixing one fixed both, they're concatenated together but only the AILMENT_DB
+    slice inherited the SVG fix.
+  - **`window.FAQS` array** (~line 4587+) — 32 entries, each with an `icon:` field consumed via
+    `btn.innerHTML = '...' + (faq.icon || '💬') + ...` (line ~4823) — drop-in SVG-string swap
+    works here same as AILMENT_DB, but note the `'💬'` fallback literal also needs replacing.
+  - **`window.FAQ_CAT_META` array** (~line 4577+) — 8 category entries. **Gotcha: its icon is
+    rendered via `hd.textContent = meta.icon + ' ' + meta.label` (line ~4812) — `.textContent`,
+    NOT `.innerHTML`.** An SVG string assigned through `.textContent` renders as literal visible
+    `<svg...` text, not an icon. This ONE call site needs an actual code change
+    (`.textContent` → `.innerHTML`) alongside the data swap, unlike every other icon field in
+    the site so far which was a pure data change. There's a second consumer of the same
+    `c.icon` field (~line 4833, `pillsHtml += ... c.icon ...`) that IS innerHTML-based and fine.
+  - **Misc standalone literals** — a `renderServices`/smart-search-services path
+    (~line 5150-5160, `it.icon` where `it` is yet another small services array, not
+    `AILMENT_DB`/`SITE_INDEX`) and at least one hardcoded inline emoji
+    (`paLabel.textContent = '🩺 ' + this.dataset.name + ' — Assessment'`, ~line 5132 — also a
+    `.textContent` assignment, same gotcha) plus small accessibility/link glyphs in the find-us
+    section (♿, 🔗, etc.) — grep the file fresh for `[\u{1F300}-\u{1FAFF}]` (excluding `★`) to
+    get the current authoritative list before starting, since exact line numbers will have
+    drifted.
+  - Recommended approach for whoever picks this up: reuse the existing 31-symbol sprite
+    (`i-clipboard, i-stethoscope, i-syringe, i-pencil, i-testtube, i-refresh, i-thermometer,
+    i-pill, i-bandage, i-plane, i-no-smoking, i-lifebuoy, i-baby, i-virus, i-droplet, i-leaf,
+    i-check, i-star, i-eye, i-spot, i-wind, i-flame, i-flower, i-headache, i-mouth, i-flake,
+    i-bug, i-foot, i-bone, i-help, i-calendar, i-key, i-bike, i-home, i-globe, i-phone` — 35
+    total) for the SITE_INDEX/FAQS entries first (most map cleanly onto concepts already covered
+    — 🩺→i-stethoscope, 💉→i-syringe, 📋→i-clipboard, 🔄/🔁→i-refresh, 🚭→i-no-smoking,
+    🩹→i-bandage/i-lifebuoy depending on context, 💊→i-pill, etc.) and only add new symbols for
+    genuinely new concepts (📦 box/package, 🚚 truck, 💸 money, 🧾 receipt, ❤️ heart, ♻️ recycle,
+    🧸 teddy/child, 🏥 building-cross, ⏰ clock, 📉 chart, 🔗 link, ♿ accessibility, 📸 camera,
+    🦵 leg/brace). Same "screenshot at 3x zoom before trusting the SVG source" discipline as
+    batches 1-2 — several icons that looked fine in the abstract needed rebuilding after actual
+    render inspection.
 
 ## Deviations from original plan
 - WP1 spec included radius unification; only `.btn` radius moved in WP1. Remaining radius
