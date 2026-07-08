@@ -27,6 +27,8 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://www.google.com" />
+  <link rel="preconnect" href="https://maps.gstatic.com" crossorigin />
   <link rel="preload" as="image" href="logo.png" fetchpriority="high" />
   <meta property="og:type"        content="business.business" />
   <meta property="og:site_name"   content="St. Clair Drug Mart Pharmacy" />
@@ -4300,9 +4302,8 @@
       <!-- Map -->
       <div class="find-us__map-card">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.234!2d-79.4468996!3d43.6773961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b35d5e572114b%3A0x899add08acb1e556!2sSt.+Clair+Drug+Mart+Pharmacy!5e0!3m2!1sen!2sca!4v1700000000000"
+          data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.234!2d-79.4468996!3d43.6773961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b35d5e572114b%3A0x899add08acb1e556!2sSt.+Clair+Drug+Mart+Pharmacy!5e0!3m2!1sen!2sca!4v1700000000000"
           allowfullscreen=""
-          loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
           title="St. Clair Drug Mart map"
         ></iframe>
@@ -7663,6 +7664,26 @@ window.SmartMatch = (function(){
 })();
 </script>
 
+<script>
+// ── Find-us map: load well before it's in view ──────────────────────
+// Native loading="lazy" only starts the fetch once the iframe is already
+// near the viewport, and the Maps embed is heavy enough that it's still
+// visibly loading by the time a scrolling user reaches it. Swap to a
+// data-src + IntersectionObserver with a large rootMargin instead, so the
+// fetch starts a couple of screens early and the map is ready on arrival.
+(function () {
+  'use strict';
+  var iframe = document.querySelector('.find-us__map-card iframe[data-src]');
+  if (!iframe) return;
+  if (!('IntersectionObserver' in window)) { iframe.src = iframe.dataset.src; return; }
+  var io = new IntersectionObserver(function (entries) {
+    if (!entries[0].isIntersecting) return;
+    io.disconnect();
+    iframe.src = iframe.dataset.src;
+  }, { rootMargin: '600% 0%' });
+  io.observe(iframe);
+})();
+</script>
 <script src="walkin3d.js" defer></script>
 </body>
 </html>
