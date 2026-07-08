@@ -36,7 +36,7 @@ push per WP (never batch); verify at 375px + 1280px before the next.
 | 3 | 03-extract-js-utils.md | Done | commit c74b79d — 3 globals + .reveal-ready recipe |
 | 4 | 04-apply-magnetic-press.md | Done | commit 6c9f83e — see notes + QA gotcha below |
 | 5 | 05-scroll-reveal-safe-sections.md | Done | commit cdcc09e — see notes + deviation below |
-| 6 | 06-card-tilt-touch.md | Not Started | depends on WP3 |
+| 6 | 06-card-tilt-touch.md | Done | commit 5cc46cf — see notes + cascade-bug fixes below |
 | 7 | 07-section-rhythm-focal-depth.md | Not Started | after mechanical passes |
 | 8 | 08-emoji-to-svg-icons.md | Not Started | large; sub-batched commits |
 | 9 | 09-welcome-3d-guardrails.md | Not Started | walkin3d.js compliance |
@@ -104,6 +104,54 @@ push per WP (never batch); verify at 375px + 1280px before the next.
   *after* `page.goto()` is too late (the timer's already scheduled) and it reopens 1.4s later,
   intercepting all pointer events. Must use `page.addInitScript()` before `page.goto()` in any
   Playwright QA that involves hover/click on main-page content.
+
+- **WP6 (done, 5cc46cf):** `initTilt(el, opts)` added (4th global, alongside WP3's three) —
+  same rAF-spring pattern as `initMagnetic` but writes `--tilt-x`/`--tilt-y` (deg) instead of
+  `--mag-x`/`--mag-y` (px), so it composes on the same element. Wired to `.welcome-box` (max 5°),
+  `.pa-cards--top .pa-card` (max 4°), `.shop__card` (max 5°), `.staff-card` (max 3°, deliberately
+  subtler — faces shouldn't spin much). `perspective: 900px` added to the 4 parent grids inside
+  `@supports (transform-style: preserve-3d)`. Flat fallback (no rotate) is the default/outside-
+  `@supports` rule for every element; the 3D rotate only applies inside the supports block, per
+  CLAUDE.md's CSS Rules. Touch/coarse-pointer gets zero tilt init (matches `initMagnetic`'s
+  existing gating) — its feedback is the WP2 `:active scale(.97)` press, already present on all
+  four targets.
+  - **Two CSS cascade bugs found + fixed while wiring this (important for WP7/WP8):**
+    1. `staggerReveal`'s `.is-revealed > *` rule played `animation: rvSlideIn ... forwards`. A
+       forwards-filled animation keeps *animation-level* ownership of every property it animates
+       (here `opacity` + `transform`) even after finishing — this beats plain stylesheet rules on
+       those same properties regardless of specificity/source order, because animations are a
+       higher origin in the cascade than normal declarations. Any card that both scroll-revealed
+       AND had a hover/tilt/magnetic transform (`.welcome-box`, `.staff-card`) stayed frozen at
+       the animation's final `transform` value and ignored later JS-driven `--tilt-x`/`--mag-x`
+       changes. **Fix:** `staggerReveal` now adds an `animationend` listener per child that first
+       pins `style.opacity = '1'` inline, THEN sets `style.animation = 'none'` (order matters —
+       clearing the animation before pinning opacity would flash back to the base rule's
+       `opacity:0` for one frame). Once `animation` is cleared, normal cascade rules govern
+       `transform`/`opacity` again.
+    2. Even after fix #1, `.staff-card` alone was still stuck (showed `translateY(22px)`, the
+       *static* `.reveal-ready > *` rule's declared transform — not the animation, the plain
+       rule). Root cause: `.reveal-ready > *` and `.staff-card`'s own base tilt rule
+       (`.staff-card { transform: rotateX(...) }`) have EQUAL specificity (0,1,0 each), and
+       `.reveal-ready > *` was declared later in the stylesheet (near the `rvSlideIn` keyframe,
+       far below the WP2/WP4/WP6 component blocks), so it won by source order alone for any
+       `.staff-card` that is also a `.reveal-ready` child (i.e. any card inside `.staff-grid`,
+       per WP5). `.welcome-box` didn't show this in ad-hoc `:hover` testing only because
+       `:hover` (0,2,0) naturally outranks it — the same latent bug was there on `.welcome-box`'s
+       base (non-hover) tilt rule too, which matters since tilt updates continuously via
+       `mousemove`, not just on `:hover`. **Fix:** hoisted the whole `.reveal-ready > *` /
+       `.reveal-ready.is-revealed > *` / reduced-motion recipe from its old spot (near
+       `rvSlideIn`) to directly above the WP2/WP4/WP6 interactive compose rules (now right before
+       `.welcome__boxes` at ~line 620). **Standing rule for WP7/WP8:** any new compose-safe
+       interactive rule for an element that might live inside a `.reveal-ready` container must be
+       declared AFTER this hoisted recipe (i.e. anywhere below ~line 632) — it already is, since
+       everything in the file lives below that point; just don't reintroduce a second copy of the
+       `.reveal-ready` recipe further down.
+  - Verified via Playwright: 1280px desktop — `.staff-card`/`.welcome-box`/`.pa-card` all show
+    non-identity `matrix3d(...)` with `opacity:1` after scroll-reveal + hover/mousemove. 375px
+    touch emulation — `.staff-card` shows identity `matrix(1,0,0,1,0,0)` (no tilt), confirming
+    the pointer gate holds. `prefers-reduced-motion` — flat `transform:none`, `opacity:1`,
+    instant, no `--tilt-x` set. No new console errors beyond the pre-existing sandboxed
+    `ERR_CONNECTION_RESET` on external resources (present on untouched site too).
 
 ## Deviations from original plan
 - WP1 spec included radius unification; only `.btn` radius moved in WP1. Remaining radius
