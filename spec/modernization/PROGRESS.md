@@ -34,7 +34,7 @@ push per WP (never batch); verify at 375px + 1280px before the next.
 | 1 | 01-shadow-radius-tokens.md | Done | commit bfc21d5 — see notes below |
 | 2 | 02-tactile-button-system.md | Done | commit 8b015cb — press states + nav CTA pill |
 | 3 | 03-extract-js-utils.md | Done | commit c74b79d — 3 globals + .reveal-ready recipe |
-| 4 | 04-apply-magnetic-press.md | Not Started | depends on WP2, WP3 |
+| 4 | 04-apply-magnetic-press.md | Done | commit 6c9f83e — see notes + QA gotcha below |
 | 5 | 05-scroll-reveal-safe-sections.md | Done | commit cdcc09e — see notes + deviation below |
 | 6 | 06-card-tilt-touch.md | Not Started | depends on WP3 |
 | 7 | 07-section-rhythm-focal-depth.md | Not Started | after mechanical passes |
@@ -87,6 +87,23 @@ push per WP (never batch); verify at 375px + 1280px before the next.
   375+1280, reduced-motion instant end-state. Call sites live in a small script block right
   after the WP3 utils IIFE (search "WP5: staggered scroll-reveal"). Reviews/team count-ups were
   left on their original observers (not migrated), per the WP3 note.
+
+- **WP4 (done, 6c9f83e):** Magnetic wired on `.pa-cards--top .pa-card` (2 cards), `.shop__card`
+  (×3), `.reviews-google-btn`/`.reviews-uber-btn`/`.reviews-read-btn`, `.contact-float__toggle`
+  — all via `initMagnetic(el, {compose:true, ...})`. Each target's base rule now carries
+  `transform: translate(var(--mag-x,0),var(--mag-y,0))` and its hover/:active variants extend
+  that same translate with the original hover/press transform; the *old* hover rules (further
+  down in the file) had their redundant `transform` stripped so they don't fight the new
+  composed rule on the cascade (same selector specificity — later-source wins per property, so
+  leaving stale `transform` there would have silently overridden the compose). If you add
+  magnetic to any NEW element later, follow this same pattern: put the compose base rule BEFORE
+  the element's original hover rule in source order, and strip `transform` from the original.
+  **QA gotcha worth knowing**: the welcome promo modal (`#welcomeModal`) opens via
+  `setTimeout(...,1400)` on every fresh load unless `welcomeModalDismissedUntil_v2` is already
+  in localStorage AT THE TIME THE PAGE'S OWN SCRIPT RUNS — setting it via `page.evaluate()`
+  *after* `page.goto()` is too late (the timer's already scheduled) and it reopens 1.4s later,
+  intercepting all pointer events. Must use `page.addInitScript()` before `page.goto()` in any
+  Playwright QA that involves hover/click on main-page content.
 
 ## Deviations from original plan
 - WP1 spec included radius unification; only `.btn` radius moved in WP1. Remaining radius
