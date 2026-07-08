@@ -39,7 +39,7 @@ push per WP (never batch); verify at 375px + 1280px before the next.
 | 6 | 06-card-tilt-touch.md | Done | commit 5cc46cf — see notes + cascade-bug fixes below |
 | 7 | 07-section-rhythm-focal-depth.md | Done | commit c41dc34 — see notes below |
 | 8 | 08-emoji-to-svg-icons.md | In Progress | batch 3 partial, commit 90d3741 — see notes below |
-| 9 | 09-welcome-3d-guardrails.md | Not Started | walkin3d.js compliance |
+| 9 | 09-welcome-3d-guardrails.md | Done | commit 3fd26b7 — see notes below |
 
 ## Decision log
 - (session start) Palette ban on Three.js was lifted on `dev` → graduated perf-gated 3D rule;
@@ -327,6 +327,39 @@ push per WP (never batch); verify at 375px + 1280px before the next.
     🦵 leg/brace). Same "screenshot at 3x zoom before trusting the SVG source" discipline as
     batches 1-2 — several icons that looked fine in the abstract needed rebuilding after actual
     render inspection.
+
+- **WP9 (done, 3fd26b7):** `walkin3d.js` now has both guardrails CLAUDE.md's 3D rule requires
+  that were previously missing. `webglcontextlost`/`webglcontextrestored` listeners on
+  `#w3d-canvas` (registered near the top of the IIFE, right after `spotEls` is set) call a new
+  `showStaticFallback()` which adds `.w3d--lost` to `#w3d-stage` (new `id` added to the existing
+  `.w3d__stage` div) and stops the engine. CSS (search `WP9 — WebGL context-loss fallback`) hides
+  canvas/hotspots/hint/skip and reveals a new `#w3d-fallback-img` (`storefront_exterior.webp`,
+  same photo already used in `.welcome__photo`, with `width`/`height` attrs to avoid CLS) sitting
+  in the DOM right after the `<canvas>`. **Deliberately does NOT attempt to rebuild the scene on
+  `webglcontextrestored`** — stays on the static photo permanently once lost. This was a
+  judgment call: the `buildEngine()` closure creates the renderer/scene/geometry once and returns
+  `{start,stop}`, it isn't structured to be torn down and re-entered, and a real rebuild would be
+  a much larger, riskier change than the guardrail actually calls for ("small, correctness-only"
+  per the spec). If a future session wants live recovery instead of a permanent fallback, that's
+  a deliberate scope expansion, not an oversight.
+  - Tab-hidden pause: a `visibilitychange` listener calls the SAME `engine.start()`/`stop()` used
+    by the existing on-screen `IntersectionObserver` — `document.hidden` → stop, visible again →
+    start only if still on-screen (checks the existing `visible` flag) AND not context-lost.
+    Also added a `!contextLost` guard to the on-screen observer's own `start()` call, so scrolling
+    the section back into view after a context loss can't try to restart a dead GL context.
+  - **QA gotcha worth recording**: `canvas.toDataURL()` before/after diffing is NOT a reliable
+    way to verify a WebGL render loop is paused in headless Chromium — got `false` (no change
+    detected) in BOTH the visible and hidden cases, almost certainly because the renderer wasn't
+    created with `preserveDrawingBuffer:true` so the buffer can be cleared before an async
+    `toDataURL()` read captures it. The reliable technique: monkeypatch
+    `WebGLRenderingContext.prototype.drawArrays`/`drawElements` via `page.addInitScript()` BEFORE
+    `page.goto()` to count actual GL draw calls in a time window — this cleanly showed
+    728 draws/500ms while visible, exactly 0 while `document.hidden`, and 728 again on resume.
+    Use this pattern for any future WebGL pause/gating verification on this page.
+  - Verified: forcing `WEBGL_lose_context.loseContext()` mid-tour (30% scrolled into the 380vh
+    track) flips to the fallback photo with zero console errors and no blank/frozen frame;
+    screenshot confirms a full, real storefront image fills the stage. Did not touch scene,
+    camera paths, capability gate, or FPS watchdog (already correct).
 
 ## Deviations from original plan
 - WP1 spec included radius unification; only `.btn` radius moved in WP1. Remaining radius
