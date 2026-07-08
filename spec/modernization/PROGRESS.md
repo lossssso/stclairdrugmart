@@ -38,7 +38,7 @@ push per WP (never batch); verify at 375px + 1280px before the next.
 | 5 | 05-scroll-reveal-safe-sections.md | Done | commit cdcc09e — see notes + deviation below |
 | 6 | 06-card-tilt-touch.md | Done | commit 5cc46cf — see notes + cascade-bug fixes below |
 | 7 | 07-section-rhythm-focal-depth.md | Done | commit c41dc34 — see notes below |
-| 8 | 08-emoji-to-svg-icons.md | Not Started | large; sub-batched commits |
+| 8 | 08-emoji-to-svg-icons.md | In Progress | batch 1/3 done, commit bfc5341 — see notes below |
 | 9 | 09-welcome-3d-guardrails.md | Not Started | walkin3d.js compliance |
 
 ## Decision log
@@ -194,6 +194,46 @@ push per WP (never batch); verify at 375px + 1280px before the next.
     existing global 480px override), zero horizontal scroll overflow at either width. Screenshots
     confirm: eyebrow labels render above Services/Team titles, Reviews title/lead centered with
     the elevated panel and focal teal metric tile visible, no layout breaks or overlap.
+
+- **WP8 batch 1/3 (done, bfc5341):** Shared icon infrastructure now exists for the remaining
+  batches to reuse — a `<svg style="display:none">` `<symbol>` sprite inserted right after
+  `<body>` (search `WP8 shared icon sprite`), and a generic `.icon` CSS class
+  (`width/height:1em; fill:none; stroke:currentColor; stroke-width:1.6`) defined in the
+  "Sections shared" CSS block (search `.icon {`). **To add a new icon for batch 2/3:** add a
+  `<symbol id="i-name" viewBox="0 0 24 24">...</symbol>` to the existing sprite `<defs>`, then
+  use it anywhere as `<svg class="icon" aria-hidden="true"><use href="#i-name"></use></svg>`. No
+  new CSS needed per call site — any container that already sized its emoji via `font-size`
+  (which is most of them, e.g. `.pa-card__icon`, `.ailment-card__icon`) sizes the SVG identically
+  for free via the 1em rule.
+  22 symbols exist so far: `i-clipboard, i-stethoscope, i-syringe, i-pencil, i-testtube,
+  i-refresh, i-thermometer, i-pill, i-bandage, i-plane, i-no-smoking, i-lifebuoy, i-baby,
+  i-virus, i-droplet, i-leaf, i-check, i-star, i-eye, i-spot, i-wind, i-flame, i-flower` — reuse
+  any that fit a batch-2/3 concept (e.g. `i-droplet` for another blood/liquid-related condition,
+  `i-thermometer` for another fever-adjacent one) rather than inventing near-duplicates.
+  **Hard-won lesson (re-verify for every new icon, don't skip this):** hand-written icon paths
+  that look plausible in the abstract can render as illegible blobs at real call-site size
+  (~14-30px) — this happened to the first-draft syringe, point-of-care test, pill, plane,
+  no-smoking, and leaf icons here, only caught by actually screenshotting the rendered page at
+  3x device-scale zoom (`deviceScaleFactor:3` + `page.screenshot({clip: boundingBox})` on the
+  container), NOT by eyeballing the SVG source. Prefer simple axis-aligned primitives (circles,
+  rects, straight lines) over multi-point curved paths; for anything that needs to read at an
+  angle, build it upright with simple shapes inside a `<g>` and rotate the whole group once
+  (`transform="rotate(-45 12 12)"` on the `<g>`, not per-child) rather than rotating individual
+  shapes around different centers, which is what produced the first broken syringe.
+  Star icon kept `#FBBF24` (the site's existing `.reviews-stars-fill` amber) via an inline
+  `style="color:#FBBF24"` on that one `<svg>` — a pre-existing brand exception (same category as
+  the Uber green), not a new hue.
+  **Scope done this batch:** all 6 `.welcome-box__icon`, all 10 `.welcome__pill`, and the
+  welcome-modal badge + rating + 6 condition tags (`.welcome-modal__badge`,
+  `.welcome-modal__rating`, `.welcome-modal__tag`) — batch 1 exactly as scoped in the spec.
+  **NOT done yet (batches 2 and 3, still Not Started):** `.pa-card__icon`,
+  `.pa-row-heading__icon`, the dozens of `.ailment-card__icon` + `.ailments-triage__btn` icons,
+  and the `AILMENT_DB` icon field in JS (batch 2); `.reviews-metric__icon`, hero status glyphs,
+  any remaining emoji (batch 3). Batch 2 is the largest remaining surface — budget real time for
+  it and expect to add ~15-20 more symbols to the sprite (condition-specific: UTI/pink-eye/etc.
+  already exist from the modal tags, but the full `AILMENT_DB` list is longer). Verify no leftover
+  emoji per batch with the same programmatic check used here (regex `[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]`
+  over `.textContent` of the batch's container selectors).
 
 ## Deviations from original plan
 - WP1 spec included radius unification; only `.btn` radius moved in WP1. Remaining radius
