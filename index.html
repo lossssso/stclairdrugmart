@@ -2788,28 +2788,6 @@
       .w3d__skip { bottom: 3vh; right: 4vw; font-size: .72rem; }
     }
   </style>
-  <!-- ── About photo sequence — scoped styles (scroll-scrubbed 2D canvas;
-       hidden unless JS activates html.abtseq-on, static gallery otherwise) ── -->
-  <style id="abtseq-styles">
-    .abt-seq { display: none; }
-    html.abtseq-on .abt-seq { display: block; margin-top: 2rem; }
-    html.abtseq-on #about .gallery { display: none; }
-    .abt-seq__frame {
-      position: relative; width: 100%;
-      aspect-ratio: 16 / 9; max-height: 72vh;
-      border-radius: var(--radius-lg); overflow: hidden;
-      background: var(--teal-ice);
-      box-shadow: var(--shadow-card);
-    }
-    .abt-seq__frame canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-    .abt-seq__caption {
-      text-align: center; font-size: .85rem; font-weight: 600;
-      color: var(--text-muted); margin: .7rem 0 0; min-height: 1.3em;
-    }
-    @media (max-width: 768px) {
-      .abt-seq__frame { aspect-ratio: 4 / 3; }
-    }
-  </style>
 </head>
 <body>
 <!-- WP8 shared icon sprite — stroked-teal line icons (currentColor, ~1.6 stroke) replacing
@@ -4536,17 +4514,6 @@
         As an independent pharmacy, every decision we make is guided by what's best for our community,
         not a corporate bottom line. Come in and experience the difference.
       </p>
-    </div>
-
-    <!-- ── About photo sequence: scroll-scrubbed canvas "walk toward & inside"
-         (Apple-style image sequence, 2D canvas — no WebGL). Hidden unless JS
-         activates it (html.abtseq-on); the classic photo gallery below is the
-         no-JS / reduced-motion / fallback state. ── -->
-    <div class="abt-seq" id="abt-seq" role="img" aria-label="A scroll-through photo tour: the Corso Italia street, our storefront, and inside the pharmacy">
-      <div class="abt-seq__frame">
-        <canvas id="abt-seq-canvas" aria-hidden="true"></canvas>
-      </div>
-      <p class="abt-seq__caption" id="abt-seq-caption" aria-hidden="true">Corso Italia — St. Clair Ave W</p>
     </div>
 
     <div class="gallery">
@@ -7696,117 +7663,6 @@ window.SmartMatch = (function(){
 })();
 </script>
 
-<script>
-// ── About photo sequence: scroll-scrubbed canvas crossfade ─────────
-// 2D canvas only (no WebGL) — draws a "walk toward & inside" tour
-// through the same six photos the static gallery shows. Activates
-// html.abtseq-on; reduced-motion / no-IO / load-failure keep the
-// classic gallery. Vanilla JS, no library.
-(function () {
-  'use strict';
-  var host = document.getElementById('abt-seq');
-  if (!host) return;
-  try {
-    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (!('IntersectionObserver' in window)) return;
-  } catch (e) { return; }
-
-  var FRAMES = [
-    ['neighbourhood.webp',      'Corso Italia — St. Clair Ave W'],
-    ['storefront_angle.webp',   'Our storefront on St. Clair West'],
-    ['storefront_studio.webp',  '1203 St. Clair Avenue West'],
-    ['interior_wide.webp',      'Step inside — the pharmacy counter'],
-    ['interior_shelves.webp',   'Health & wellness, stocked'],
-    ['interior_aisle.webp',     'Aisles & private counselling room']
-  ];
-
-  var canvas = document.getElementById('abt-seq-canvas');
-  var caption = document.getElementById('abt-seq-caption');
-  var frame = host.querySelector('.abt-seq__frame');
-  var ctx = null, imgs = [], loaded = 0, activated = false, lastIdx = -1;
-  var ticking = false, lastP = -1;
-
-  function coverDraw(img, alpha, zoom) {
-    var cw = canvas.width, ch = canvas.height;
-    var iw = img.naturalWidth, ih = img.naturalHeight;
-    var s = Math.max(cw / iw, ch / ih) * zoom;
-    var dw = iw * s, dh = ih * s;
-    ctx.globalAlpha = alpha;
-    ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
-  }
-
-  function draw(p) {
-    var f = p * (FRAMES.length - 1);
-    var i = Math.min(Math.floor(f), FRAMES.length - 2);
-    var t = f - i;
-    // ease the crossfade so each photo holds, then hands off smoothly
-    var e = t * t * (3 - 2 * t);
-    if (imgs[i].complete) coverDraw(imgs[i], 1, 1.02 + 0.06 * e);
-    if (e > 0 && imgs[i + 1] && imgs[i + 1].complete) coverDraw(imgs[i + 1], e, 1.02 + 0.06 * (1 - e) * 0.4);
-    ctx.globalAlpha = 1;
-    var idx = e > 0.5 ? i + 1 : i;
-    if (idx !== lastIdx) { lastIdx = idx; caption.textContent = FRAMES[idx][1]; }
-  }
-
-  function progress() {
-    var r = host.getBoundingClientRect();
-    var vh = window.innerHeight;
-    // 0 when the frame enters from the bottom → 1 as it leaves the top
-    return Math.max(0, Math.min(1, (vh - r.top) / (vh + r.height * 0.6)));
-  }
-
-  function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(function () {
-      ticking = false;
-      var p = progress();
-      if (Math.abs(p - lastP) < 0.002) return;
-      lastP = p;
-      draw(p);
-    });
-  }
-
-  function resize() {
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(frame.clientWidth * dpr);
-    canvas.height = Math.round(frame.clientHeight * dpr);
-    lastP = -1;
-    onScroll();
-  }
-
-  function activate() {
-    if (activated) return;
-    activated = true;
-    ctx = canvas.getContext('2d');
-    document.documentElement.classList.add('abtseq-on');
-    resize();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', resize);
-  }
-
-  // Preload once the About section is near; only activate (and swap out the
-  // static gallery) after the first frame is ready, so there's never a blank.
-  // NB: observe #about, not the host — the host is display:none until
-  // activation, and hidden elements never intersect.
-  var aboutSec = document.getElementById('about') || host;
-  var io = new IntersectionObserver(function (entries) {
-    if (!entries[0].isIntersecting) return;
-    io.disconnect();
-    FRAMES.forEach(function (fr, i) {
-      var im = new Image();
-      im.onload = function () {
-        loaded++;
-        if (i === 0) activate();
-        if (activated) { lastP = -1; onScroll(); }
-      };
-      im.src = fr[0];
-      imgs.push(im);
-    });
-  }, { rootMargin: '100% 0%' });
-  io.observe(aboutSec);
-})();
-</script>
 <script src="walkin3d.js" defer></script>
 </body>
 </html>
