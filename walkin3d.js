@@ -42,6 +42,36 @@
   var skip = document.getElementById('w3d-skip');
   var spotEls = [].slice.call(track.querySelectorAll('.w3d-spot'));
 
+  /* ── WebGL context-loss fallback (required guardrail) ─────────────
+     Swaps to the real storefront photo already sitting in the DOM
+     (never a blank/frozen canvas). Once lost, this scene stays on the
+     fallback rather than attempting a full renderer/geometry rebuild —
+     the engine closure isn't designed to be re-entered, and a photo is
+     a perfectly good permanent landing state for the rare case a GPU
+     actually drops context mid-tour. */
+  var contextLost = false;
+  function showStaticFallback() {
+    contextLost = true;
+    stage.classList.add('w3d--lost');
+    if (engine) engine.stop();
+  }
+  canvas.addEventListener('webglcontextlost', function (e) {
+    e.preventDefault();
+    showStaticFallback();
+  });
+  canvas.addEventListener('webglcontextrestored', function () {
+    /* Intentionally stay on the static fallback — see comment above. */
+  });
+
+  /* ── tab-hidden pause (required guardrail) — combines with the
+     existing on-screen IntersectionObserver below via the same
+     engine.start()/stop(); whichever gate is stricter wins. ── */
+  document.addEventListener('visibilitychange', function () {
+    if (!engine || contextLost) return;
+    if (document.hidden) engine.stop();
+    else if (visible) engine.start();
+  });
+
   /* ── stage pinning (body{overflow-x:hidden} breaks position:sticky) ── */
   var pinState = -1;
   function pin(force) {
@@ -104,7 +134,7 @@
   var visible = false;
   new IntersectionObserver(function (entries) {
     visible = entries[0].isIntersecting;
-    if (engine) { if (visible) engine.start(); else { engine.stop(); pin(true); } }
+    if (engine) { if (visible && !contextLost) engine.start(); else { engine.stop(); pin(true); } }
     else if (!visible) pin(true);
   }).observe(track);
 

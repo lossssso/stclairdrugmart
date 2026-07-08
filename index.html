@@ -2721,6 +2721,14 @@
       box-shadow: var(--shadow-card);
     }
     .w3d__stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    /* WP9 — WebGL context-loss fallback: a real photo, never a blank canvas.
+       Hidden unless walkin3d.js adds .w3d--lost after a webglcontextlost event. */
+    .w3d__fallback-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
+    .w3d__stage.w3d--lost canvas,
+    .w3d__stage.w3d--lost .w3d-spot,
+    .w3d__stage.w3d--lost .w3d__hint,
+    .w3d__stage.w3d--lost .w3d__skip { display: none; }
+    .w3d__stage.w3d--lost .w3d__fallback-img { display: block; }
     .w3d__hint {
       position: absolute; bottom: 4.5vh; left: 50%; transform: translateX(-50%);
       color: var(--teal-dark); font-weight: 800; font-size: .95rem; text-align: center;
@@ -3157,8 +3165,9 @@
         <p class="w3d__lead-sub">Step inside our pharmacy — tap a bubble to get what you need.</p>
       </div>
       <div class="w3d__track" id="w3d-track">
-        <div class="w3d__stage">
+        <div class="w3d__stage" id="w3d-stage">
           <canvas id="w3d-canvas" aria-hidden="true"></canvas>
+          <img id="w3d-fallback-img" class="w3d__fallback-img" src="storefront_exterior.webp" width="1227" height="1281" alt="St. Clair Drug Mart storefront at 1203 St. Clair Ave W, Toronto" loading="lazy" decoding="async" />
           <a class="w3d-spot" data-pos="-2.45,1.55,-3.35" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-droplet"></use></svg> Better blood sugar control</span></a>
           <a class="w3d-spot w3d-spot--flip" data-pos="2.95,1.9,-4.4" href="#services" onclick="setTimeout(function(){openAcc('acc-poct');document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},200)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-baby"></use></svg> I might be pregnant!</span></a>
           <a class="w3d-spot" data-pos="-2.15,1.35,-4.6" href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-thermometer"></use></svg> I'm feeling ill</span></a>
