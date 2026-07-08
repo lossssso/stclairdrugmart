@@ -7371,6 +7371,19 @@ window.SmartMatch = (function(){
 })();
 </script>
 
+<!-- WP5: staggered scroll-reveal on SAFE sections only (welcome boxes, service category
+     groups, staff photos, blog cards, new-patient steps). Explicitly skipped: FAQ answers,
+     drug-checker, booking iframe, contact map/status — see spec/modernization/05-*.md. -->
+<script>
+(function(){
+  window.staggerReveal(document.querySelector('.welcome__boxes'));
+  window.staggerReveal(document.querySelector('.svc-acc'), { step: 0.12 });
+  window.staggerReveal(document.querySelector('.staff-grid'));
+  window.staggerReveal(document.querySelector('.blog-grid'));
+  window.staggerReveal(document.querySelector('.steps'));
+})();
+</script>
+
 <!-- FAQPage structured data updater: refreshes the static #faq-schema-static block in
      <head> from the window.FAQS array, so JS-rendering crawlers always see current FAQs
      while non-JS crawlers get the baked-in static version. Never creates a duplicate. -->
