@@ -2072,7 +2072,8 @@
       background: var(--teal-bright); border-color: var(--teal-bright);
     }
     .reviews-metric--focal .reviews-metric__num,
-    .reviews-metric--focal .reviews-metric__label { color: #fff; }
+    .reviews-metric--focal .reviews-metric__label,
+    .reviews-metric--focal .reviews-metric__icon { color: #fff; }
     .reviews-metric--focal:hover { border-color: var(--teal-dark); }
 
     /* CTA buttons */
@@ -2841,6 +2842,11 @@
     <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.3 9.3a2.7 2.7 0 1 1 3.7 2.5c-.9.4-1.4 1-1.4 2"/><circle cx="12" cy="17" r=".35" fill="currentColor" stroke="none"/></symbol>
     <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></symbol>
     <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="4"/><path d="M10.5 12.5 19 4M15.5 8l2.5 2.5M18 5.5 20.5 8"/></symbol>
+    <!-- WP8 batch 3 (reviews-metric) additions -->
+    <symbol id="i-bike" viewBox="0 0 24 24"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17 10 9h5l3 8M10 9l2.5 5H6M13.5 9 16 5h2.5"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9.5h12V10"/><path d="M10 19.5V14h4v5.5"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.3 3.8 5.4 3.8 8.5s-1.3 6.2-3.8 8.5c-2.5-2.3-3.8-5.4-3.8-8.5S9.5 5.8 12 3.5Z"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.5 2.5.8 3.9.8.6 0 1 .4 1 1V20.5c0 .6-.4 1-1 1C10.6 21.5 2.5 13.4 2.5 3.3c0-.6.4-1 1-1H7.2c.6 0 1 .4 1 1 0 1.4.3 2.7.8 3.9.1.4 0 .8-.2 1l-2.2 2.6z"/></symbol>
   </defs>
 </svg>
 <script>
@@ -3021,7 +3027,7 @@
         <span class="status-dot" data-sb-dot="store"></span>
         <span class="status-row__label">Pharmacy</span>
         <span class="status-row__val" data-sb-val="store">Loading…</span>
-        <span style="font-size:.65rem;opacity:.4;flex-shrink:0;">📞</span>
+        <span style="font-size:.65rem;opacity:.4;flex-shrink:0;"><svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg></span>
       </a>
       <a class="status-row" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" style="text-decoration:none;">
         <span class="status-dot" data-sb-dot="uber"></span>
@@ -3153,16 +3159,16 @@
       <div class="w3d__track" id="w3d-track">
         <div class="w3d__stage">
           <canvas id="w3d-canvas" aria-hidden="true"></canvas>
-          <a class="w3d-spot" data-pos="-2.45,1.55,-3.35" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🩸 Better blood sugar control</span></a>
-          <a class="w3d-spot w3d-spot--flip" data-pos="2.95,1.9,-4.4" href="#services" onclick="setTimeout(function(){openAcc('acc-poct');document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},200)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🤰 I might be pregnant!</span></a>
-          <a class="w3d-spot" data-pos="-2.15,1.35,-4.6" href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🤒 I'm feeling ill</span></a>
-          <a class="w3d-spot w3d-spot--flip" data-pos="2.95,1.5,-6.8" href="#services" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🆘 I need a free naloxone kit</span></a>
-          <a class="w3d-spot" data-pos="-2.3,1.6,-6.4" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">💊 Medication side effects</span></a>
-          <a class="w3d-spot" data-pos="-3.05,2.05,-8.4" href="#services" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🩹 Running out of medication</span></a>
-          <a class="w3d-spot w3d-spot--flip" data-pos="2.95,2.0,-9.3" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🌿 Natural health advice</span></a>
-          <a class="w3d-spot w3d-spot--flip" data-pos="2.8,1.9,-11.5" href="#services" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🚭 I want to quit smoking!</span></a>
-          <a class="w3d-spot" data-pos="0.0,1.8,-12.8" href="#services" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">✈️ Travel &amp; vaccines</span></a>
-          <a class="w3d-spot w3d-spot--flip js-pa-select" data-pos="1.7,1.55,-12.7" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand."><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🦠 COVID-19 test &amp; certificate</span></a>
+          <a class="w3d-spot" data-pos="-2.45,1.55,-3.35" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-droplet"></use></svg> Better blood sugar control</span></a>
+          <a class="w3d-spot w3d-spot--flip" data-pos="2.95,1.9,-4.4" href="#services" onclick="setTimeout(function(){openAcc('acc-poct');document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},200)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-baby"></use></svg> I might be pregnant!</span></a>
+          <a class="w3d-spot" data-pos="-2.15,1.35,-4.6" href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-thermometer"></use></svg> I'm feeling ill</span></a>
+          <a class="w3d-spot w3d-spot--flip" data-pos="2.95,1.5,-6.8" href="#services" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-lifebuoy"></use></svg> I need a free naloxone kit</span></a>
+          <a class="w3d-spot" data-pos="-2.3,1.6,-6.4" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-pill"></use></svg> Medication side effects</span></a>
+          <a class="w3d-spot" data-pos="-3.05,2.05,-8.4" href="#services" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-bandage"></use></svg> Running out of medication</span></a>
+          <a class="w3d-spot w3d-spot--flip" data-pos="2.95,2.0,-9.3" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-leaf"></use></svg> Natural health advice</span></a>
+          <a class="w3d-spot w3d-spot--flip" data-pos="2.8,1.9,-11.5" href="#services" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-no-smoking"></use></svg> I want to quit smoking!</span></a>
+          <a class="w3d-spot" data-pos="0.0,1.8,-12.8" href="#services" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg> Travel &amp; vaccines</span></a>
+          <a class="w3d-spot w3d-spot--flip js-pa-select" data-pos="1.7,1.55,-12.7" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand."><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-virus"></use></svg> COVID-19 test &amp; certificate</span></a>
           <div class="w3d__hint" id="w3d-hint">Scroll to walk in<br>&#9660;</div>
           <button class="w3d__skip" id="w3d-skip" type="button">Skip &darr;</button>
         </div>
@@ -4221,32 +4227,32 @@
     <!-- Metrics -->
     <div class="reviews-metrics">
       <div class="reviews-metric reviews-metric--focal">
-        <div class="reviews-metric__icon">⭐</div>
+        <div class="reviews-metric__icon"><svg class="icon" aria-hidden="true"><use href="#i-star"></use></svg></div>
         <div class="reviews-metric__num"><span class="js-countup" data-target="59">59</span></div>
         <div class="reviews-metric__label">Google Reviews<br>from Real Patients</div>
       </div>
       <div class="reviews-metric">
-        <div class="reviews-metric__icon">🚴</div>
+        <div class="reviews-metric__icon"><svg class="icon" aria-hidden="true"><use href="#i-bike"></use></svg></div>
         <div class="reviews-metric__num"><span class="js-countup" data-target="15000" data-suffix="+">15000+</span></div>
         <div class="reviews-metric__label">Delivery Orders<br>Completed</div>
       </div>
       <div class="reviews-metric">
-        <div class="reviews-metric__icon">🏘️</div>
+        <div class="reviews-metric__icon"><svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg></div>
         <div class="reviews-metric__num"><span class="js-countup" data-target="300" data-suffix="+">300+</span></div>
         <div class="reviews-metric__label">Families Served in the<br>Greater Toronto Area</div>
       </div>
       <div class="reviews-metric">
-        <div class="reviews-metric__icon">🩺</div>
+        <div class="reviews-metric__icon"><svg class="icon" aria-hidden="true"><use href="#i-stethoscope"></use></svg></div>
         <div class="reviews-metric__num"><span class="js-countup" data-target="28">28</span></div>
         <div class="reviews-metric__label">Conditions Treated<br>On-Site, No Referral</div>
       </div>
       <div class="reviews-metric">
-        <div class="reviews-metric__icon">🌍</div>
+        <div class="reviews-metric__icon"><svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg></div>
         <div class="reviews-metric__num"><span class="js-countup" data-target="8" data-suffix="+">8+</span></div>
         <div class="reviews-metric__label">Languages Spoken<br>by Our Team</div>
       </div>
       <div class="reviews-metric">
-        <div class="reviews-metric__icon">📅</div>
+        <div class="reviews-metric__icon"><svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg></div>
         <div class="reviews-metric__num"><span class="js-countup" data-target="8" data-suffix="+">8+</span></div>
         <div class="reviews-metric__label">Years Serving<br>St. Clair West</div>
       </div>
@@ -4297,7 +4303,7 @@
         </div>
       </div>
       <div class="find-us__contact-pills">
-        <a href="tel:+14166548181" class="find-us__cpill find-us__cpill--call">📞 (416) 654-8181</a>
+        <a href="tel:+14166548181" class="find-us__cpill find-us__cpill--call"><svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg> (416) 654-8181</a>
         <a href="mailto:stclairdrugmart@gmail.com" class="find-us__cpill find-us__cpill--email">✉️ Email Us</a>
       </div>
     </div>
@@ -4344,7 +4350,7 @@
             <span class="status-dot" data-sb-dot="store"></span>
             <span class="status-row__label">Pharmacy</span>
             <span class="status-row__val" data-sb-val="store">Loading…</span>
-            <span style="font-size:.65rem;opacity:.5;flex-shrink:0;">📞</span>
+            <span style="font-size:.65rem;opacity:.5;flex-shrink:0;"><svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg></span>
           </a>
           <a class="status-row" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" style="text-decoration:none;">
             <span class="status-dot" data-sb-dot="uber"></span>
@@ -4488,7 +4494,7 @@
         <p class="shop__card__desc">
           We deliver prescriptions and health essentials free anywhere in the GTA. No minimums, no fees — just give us a call.
         </p>
-        <a href="tel:+14166548181" class="btn btn--outline">📞 Call to Arrange Delivery</a>
+        <a href="tel:+14166548181" class="btn btn--outline"><svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg> Call to Arrange Delivery</a>
       </div>
       <div class="shop__card">
         <div class="shop__card__head">
