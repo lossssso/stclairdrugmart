@@ -38,7 +38,7 @@ push per WP (never batch); verify at 375px + 1280px before the next.
 | 5 | 05-scroll-reveal-safe-sections.md | Done | commit cdcc09e — see notes + deviation below |
 | 6 | 06-card-tilt-touch.md | Done | commit 5cc46cf — see notes + cascade-bug fixes below |
 | 7 | 07-section-rhythm-focal-depth.md | Done | commit c41dc34 — see notes below |
-| 8 | 08-emoji-to-svg-icons.md | In Progress | batch 1/3 done, commit bfc5341 — see notes below |
+| 8 | 08-emoji-to-svg-icons.md | In Progress | batch 2/3 done, commit 868a5a0 — see notes below |
 | 9 | 09-welcome-3d-guardrails.md | Not Started | walkin3d.js compliance |
 
 ## Decision log
@@ -234,6 +234,47 @@ push per WP (never batch); verify at 375px + 1280px before the next.
   already exist from the modal tags, but the full `AILMENT_DB` list is longer). Verify no leftover
   emoji per batch with the same programmatic check used here (regex `[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]`
   over `.textContent` of the batch's container selectors).
+
+- **WP8 batch 2/3 (done, 868a5a0):** Full services/ailments emoji surface converted — 89
+  `.ailment-card__icon` instances (28 unique conditions, replaced via a Python script matching
+  `<div class="ailment-card">...<h3 class="ailment-card__name">NAME</h3>` so every duplicate
+  occurrence across the portal-triage / main-triage / topic-only children's+contagious groupings
+  got fixed in one pass per condition), 10 `.ailments-triage__btn` category filters + the "Not
+  Sure?" button, 8 `.ailments-cat__hd` headers (×2 scopes = 16, plus 2 more "topic-only" headers
+  for children's-health/contagious found by a leftover-emoji sweep after the first pass — grep
+  `data-cat="children"` if you need to find that markup again, it's NOT inside the main 8
+  `data-triage-scope` cat-sections and is easy to miss), 10 `.pa-card__icon`, 1
+  `.pa-row-heading__icon`, and the `icon:` field on all 28 `AILMENT_DB` entries (~line 6634+ —
+  line drifts, search `var AILMENT_DB = [`). The DB icon field is consumed via string
+  concatenation into `innerHTML` (`'<span class="ailments-smartsearch__hit-icon">' + a.icon +
+  '</span>'`), so swapping the emoji string for an SVG-markup string there was a drop-in data
+  change with zero JS logic touched — confirmed no console errors after.
+  - 9 new symbols added this batch: `i-headache, i-mouth, i-flake, i-bug, i-foot, i-bone,
+    i-help, i-calendar, i-key`. Reused batch-1 symbols heavily by CONCEPT rather than 1:1 per
+    original emoji — e.g. every insect/parasite condition (lice, pinworms, insect bites, ticks)
+    shares `i-bug`; every fungal/ring/blemish condition (ringworm, acne, eczema, cold sores)
+    shares `i-spot`. This was a deliberate call, not a shortcut: with 28 conditions the spec
+    itself warns against "60 hand-inlined blobs" and asks for "a small shared symbol set" — a
+    handful of category-level icons reused across semantically-related conditions reads as more
+    consistent/professional than 28 one-off bespoke glyphs would, and is what the spec's own
+    wording points at.
+  - **Found but explicitly NOT touched this batch (confirmed out of batch-2's named scope,
+    left for batch 3):** a SEPARATE `SITE_INDEX` array (~line 6892+) that feeds the top-nav
+    site-wide search (`.site-search__result-icon`) still has its own emoji `icon:` field — it is
+    NOT the same data as `AILMENT_DB` despite covering some overlapping condition names, so
+    fixing `AILMENT_DB` did not fix it. There is also a `serviceBox`/`renderServices` smart-search
+    path (~line 5150+, `.ailments-smartsearch__hit-icon` fed by `it.icon` where `it` comes from a
+    services array, not `AILMENT_DB`) with its own emoji, and at least one hardcoded inline emoji
+    literal (`paLabel.textContent = '🩺 ' + this.dataset.name + ' — Assessment'`, ~line 5132) that
+    isn't a data-field at all — a plain string concat to grep for directly. A Playwright search
+    smoke-test (typing "itchy rash" into the accordion's smart search) surfaced these as
+    `contains emoji: true` even after batch 2 was fully clean by its own defined scope — useful
+    regression check to re-run once batch 3 claims to have caught "any remaining emoji."
+  - Verified via Playwright: opened the `#acc-ailments` accordion, screenshotted the Groin &
+    Pelvic / Feet / Pain & Injury / Women's Health / Children's Health category groups at 1280px
+    2x scale — all icons render as clean, legible, correctly-teal-colored glyphs with proper
+    spacing, no layout shift, no broken/blank icon slots. Zero leftover emoji confirmed
+    programmatically across every batch-2 selector plus the `AILMENT_DB` block.
 
 ## Deviations from original plan
 - WP1 spec included radius unification; only `.btn` radius moved in WP1. Remaining radius
