@@ -195,21 +195,10 @@
     var logoImg = new Image();
     var logoReady = false;
 
-    function roundRect(ctx, x, y, w, h, r) {
-      ctx.beginPath();
-      ctx.moveTo(x + r, y);
-      ctx.arcTo(x + w, y, x + w, y + h, r);
-      ctx.arcTo(x + w, y + h, x, y + h, r);
-      ctx.arcTo(x, y + h, x, y, r);
-      ctx.arcTo(x, y, x + w, y, r);
-      ctx.closePath();
-    }
     function drawLogoBadge(ctx, x, y, size) {
-      /* white rounded badge with the real logo inside (or a drawn cross
-         fallback), preserving the logo's aspect ratio */
-      ctx.fillStyle = '#ffffff';
-      roundRect(ctx, x, y, size, size, size * 0.22);
-      ctx.fill();
+      /* just the real logo (it's already got its own transparent
+         background) — or a drawn cross fallback — preserving aspect ratio,
+         no added white card behind it. */
       var pad = size * 0.12;
       if (logoReady) {
         var iw = logoImg.naturalWidth, ih = logoImg.naturalHeight;
@@ -233,10 +222,10 @@
       ctx.fillStyle = '#1794a0'; ctx.fillRect(0, 0, 1024, 128);
       drawLogoBadge(ctx, 34, 18, 92);
       ctx.fillStyle = '#ffffff'; ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
-      ctx.font = '700 30px "Plus Jakarta Sans", Arial, sans-serif';
-      ctx.fillText('ST. CLAIR', 162, 38);
-      ctx.font = '800 60px "Plus Jakarta Sans", Arial, sans-serif';
-      ctx.fillText('DRUG MART', 162, 88);
+      ctx.font = '700 33px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.fillText('ST. CLAIR', 162, 33);
+      ctx.font = '800 74px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.fillText('DRUG MART', 162, 91);
       ctx.font = '700 34px "Plus Jakarta Sans", Arial, sans-serif';
       ctx.textAlign = 'right';
       ctx.fillText('416.654.8181', 985, 42);
@@ -468,18 +457,15 @@
     }
     box(1.6, 0.02, 1.0, COL.mat, -0.95, 0.012, -1.2);          /* welcome mat */
 
-    /* pendant lights over the counter — warm boutique touch */
+    /* pod lights over the counter — flush recessed discs, same style as the
+       ceiling pods running down the aisle (no hanging cords/shades — the
+       real store doesn't have pendant lighting). */
     [-3.5, -5.5, -7.5].forEach(function (pz) {
-      var cord = new THREE.Mesh(new THREE.CylinderGeometry(0.008, 0.008, 0.5, 6), lam(0x3c4448));
-      cord.position.set(-2.55, 2.95, pz);
-      scene.add(cord);
-      var shade = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.16, 0.18, 12), lam(COL.tealDark));
-      shade.position.set(-2.55, 2.64, pz);
-      scene.add(shade);
-      var bulb = new THREE.Mesh(new THREE.SphereGeometry(0.05, 8, 8),
-        new THREE.MeshBasicMaterial({ color: 0xfff3d6 }));
-      bulb.position.set(-2.55, 2.55, pz);
-      scene.add(bulb);
+      var pod = new THREE.Mesh(new THREE.CircleGeometry(0.16, 20),
+        new THREE.MeshBasicMaterial({ color: 0xfffbe8 }));
+      pod.rotation.x = Math.PI / 2;
+      pod.position.set(-2.55, 3.19, pz);
+      scene.add(pod);
     });
 
     /* left counter run + white top + register */
