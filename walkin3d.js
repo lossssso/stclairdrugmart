@@ -301,6 +301,29 @@
       return g;
     }
 
+    /* ── street tree — matches the real storefront photo: a trunk on the
+       sidewalk beside the door with a wide canopy overhanging the sign ── */
+    function tree(x, z, s) {
+      var g = new THREE.Group();
+      var trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.19, 3.6, 8), lam(COL.wood));
+      trunk.position.y = 1.8;
+      g.add(trunk);
+      var blobs = [
+        [-0.9, 4.6, 0.1, 1.05], [0.5, 4.9, 0.35, 1.15], [1.6, 4.55, -0.1, 0.95],
+        [0.1, 5.6, -0.3, 0.85], [-0.2, 4.15, 0.5, 0.8], [1.05, 5.3, 0.4, 0.75],
+        [-1.5, 4.85, -0.2, 0.7]
+      ];
+      blobs.forEach(function (b, i) {
+        var leaf = new THREE.Mesh(new THREE.SphereGeometry(b[3], 10, 8), lam(GREENS[i % 3]));
+        leaf.position.set(b[0], b[1], b[2]);
+        g.add(leaf);
+      });
+      g.position.set(x, 0, z);
+      g.scale.setScalar(s || 1);
+      scene.add(g);
+      return g;
+    }
+
     /* ── outdoors ── */
     var ground = new THREE.Mesh(new THREE.PlaneGeometry(30, 15), lam(COL.sidewalk));
     ground.rotation.x = -Math.PI / 2;
@@ -387,10 +410,14 @@
     box(1.36, 0.1, 0.14, 0xcfd6d8, -0.95, 2.55, 0.05);         /* jamb top */
     box(1.5, 0.06, 0.55, 0xd6dddd, -0.95, 0.03, 0.42);         /* entry step */
 
-    /* greenery out front: tall planters flank the door, bushes under the window */
-    plant(-2.05, 0.55, 1.15, true, 0x9a8f83);
+    /* greenery out front: tall planters flank the door, bushes under the window.
+       The left planter sits well clear of the hinge (-1.55,0.05) and the
+       door's full 1.2-unit swing radius — moved back against the pier
+       instead of directly beside the doorway so the door never clips it. */
+    plant(-2.5, 0.45, 1.15, true, 0x9a8f83);
     plant(0.2, 0.55, 1.05, true, 0x9a8f83);
     box(3.15, 0.26, 0.34, COL.wood, 1.6, 0.13, 0.52);          /* window planter */
+    tree(-2.85, 2.15, 1.0);                                    /* street tree by the door, per the real photo */
     for (var pb = 0; pb < 4; pb++) {
       var bush = new THREE.Mesh(new THREE.SphereGeometry(0.19, 10, 8), lam(GREENS[pb % 3]));
       bush.position.set(0.5 + pb * 0.74, 0.4, 0.52);
