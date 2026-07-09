@@ -492,22 +492,25 @@
     /* pod lights over the counter — flush recessed discs, same style as the
        ceiling pods running down the aisle (no hanging cords/shades — the
        real store doesn't have pendant lighting). */
-    [-3.5, -5.5, -7.5].forEach(function (pz) {
+    [-2.8, -4.3, -5.8].forEach(function (pz) {
       var pod = new THREE.Mesh(new THREE.CircleGeometry(0.16, 20),
         new THREE.MeshBasicMaterial({ color: 0xfffbe8 }));
       pod.rotation.x = Math.PI / 2;
-      pod.position.set(-2.55, 3.19, pz);
+      pod.position.set(-2.2, 3.19, pz);
       scene.add(pod);
     });
 
-    /* left counter run + white top + register */
-    box(0.9, 1.05, 6.5, COL.counter, -2.55, 0.525, -5.75);
-    box(1.05, 0.06, 6.7, COL.top, -2.55, 1.08, -5.75);
-    box(0.34, 0.3, 0.05, 0x2b3134, -2.45, 1.4, -3.4);          /* register screen */
-    box(0.4, 0.05, 0.3, 0x3a4144, -2.45, 1.14, -3.35);
+    /* left counter run + white top + register — shorter and pulled off the
+       wall/shelving (real store photos show a clear walkway behind it, not
+       the counter jammed against the dispensary shelves) */
+    box(0.9, 1.05, 4.6, COL.counter, -2.2, 0.525, -4.3);
+    box(1.05, 0.06, 4.8, COL.top, -2.2, 1.08, -4.3);
+    box(0.34, 0.3, 0.05, 0x2b3134, -2.1, 1.4, -2.9);           /* register screen */
+    box(0.4, 0.05, 0.3, 0x3a4144, -2.1, 1.14, -2.85);
 
-    /* left back-wall dispensary shelving (light) */
-    for (var si = 0; si < 3; si++) box(0.35, 2.1, 1.9, COL.shelfLight, -3.4, 1.05, -3.6 - si * 2.2);
+    /* left back-wall dispensary shelving (light) — set off the wall with a
+       real walkway gap to the counter, per the reference photos */
+    for (var si = 0; si < 3; si++) box(0.35, 2.1, 1.9, COL.shelfLight, -3.3, 1.05, -3.6 - si * 2.2);
 
     /* right shelf units (dark) */
     var rightZ = [-2.8, -5.4, -8, -10.6];
@@ -517,14 +520,44 @@
     });
     for (var b2 = 0; b2 < 3; b2++)
       for (var r2 = 0; r2 < 4; r2++)
-        box(0.3, 0.03, 1.9, 0xffffff, -3.18, 0.295 + r2 * 0.5, -3.6 - b2 * 2.2);
+        box(0.3, 0.03, 1.9, 0xffffff, -3.08, 0.295 + r2 * 0.5, -3.6 - b2 * 2.2);
     box(1.1, 0.012, 9.5, 0xcbeef1, 0, 0.007, -6.75);           /* teal runner */
 
-    /* back-wall brand mark: the real logo on a white card */
+    /* back-wall brand mark: the real logo on a white card, over the back
+       dispensary (kept clear of the consultation room built below) */
     var wallLogo = new THREE.Mesh(new THREE.PlaneGeometry(0.72, 0.72),
       new THREE.MeshBasicMaterial({ map: wallTex, transparent: true }));
-    wallLogo.position.set(-1.9, 2.5, -14.38);
+    wallLogo.position.set(2.15, 2.5, -14.38);
     scene.add(wallLogo);
+
+    /* ── consultation room, back-left corner (per interior_aisle.webp: a
+       small frosted-glass-door counseling room at the end of the dispensary
+       run, with its own wall sign) ── */
+    var consultTex = textCanvas(function (ctx) {
+      ctx.fillStyle = '#1794a0'; ctx.fillRect(0, 0, 512, 160);
+      ctx.fillStyle = '#ffffff'; ctx.textBaseline = 'middle'; ctx.textAlign = 'center';
+      ctx.font = '800 46px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.fillText('COUNSELING', 256, 58);
+      ctx.fillText('ROOM', 256, 110);
+    }, 512, 160);
+    /* partition wall (door-bearing wall), split around a door opening */
+    box(0.75, 2.4, 0.12, COL.wall, -3.275, 1.2, -12.5);        /* partition L of door */
+    box(0.6, 2.4, 0.12, COL.wall, -1.7, 1.2, -12.5);           /* partition R of door */
+    box(2.25, 0.35, 0.12, COL.wall, -2.525, 2.575, -12.5);     /* partition header */
+    /* side wall enclosing the room (aisle-facing) */
+    box(0.12, 2.4, 2.05, COL.wall, -1.4, 1.2, -13.525);
+    /* frosted glass door in the opening */
+    box(0.85, 2.25, 0.06, 0xe9f6f7, -2.45, 1.125, -12.5,
+      { transparent: true, opacity: 0.6 });
+    box(0.03, 2.25, 0.08, COL.frame, -2.02, 1.125, -12.5);     /* door frame edge */
+    /* room sign, mounted beside the door */
+    var consultSign = new THREE.Mesh(new THREE.PlaneGeometry(0.62, 0.19),
+      new THREE.MeshBasicMaterial({ map: consultTex }));
+    consultSign.position.set(-1.7, 2.05, -12.44);
+    scene.add(consultSign);
+    /* dim glimpse of a chair inside, visible through the frosted glass */
+    box(0.32, 0.42, 0.32, 0x454b4f, -2.5, 0.21, -13.6);
+    box(0.32, 0.36, 0.04, 0x454b4f, -2.5, 0.55, -13.76);       /* chair back */
 
     /* products: instanced pastel boxes on left-light and right-dark shelves */
     var prodGeo = new THREE.BoxGeometry(0.16, 0.22, 0.12);
@@ -538,7 +571,7 @@
     for (var su = 0; su < 3; su++)
       for (var row2 = 0; row2 < 4; row2++)
         for (var k2 = 0; k2 < 7; k2++)
-          slots.push([-3.18, 0.42 + row2 * 0.5, -4.4 - su * 2.2 + k2 * 0.25, 1]);
+          slots.push([-3.08, 0.42 + row2 * 0.5, -4.4 - su * 2.2 + k2 * 0.25, 1]);
     var inst = new THREE.InstancedMesh(prodGeo, prodMat, slots.length);
     var dummy = new THREE.Object3D();
     var colC = new THREE.Color();
@@ -551,18 +584,19 @@
     });
     scene.add(inst);
 
-    /* back dispensary */
-    box(3.6, 1.0, 0.6, COL.top, 0.4, 0.5, -12.9);
-    box(3.6, 0.35, 0.62, COL.teal, 0.4, 1.02, -12.9);
-    box(3.0, 1.6, 0.1, COL.shelfLight, 0.4, 2.2, -14.45);      /* back shelf grid */
-    box(1.1, 0.65, 0.04, 0x22282b, 0.4, 2.55, -14.32);         /* TV */
-    box(0.9, 2.1, 0.08, 0xe6eeee, -2.6, 1.05, -14.45);         /* consult door */
+    /* back dispensary — shifted right so it doesn't crowd the consultation
+       room's shared wall at x=-1.4 */
+    box(3.2, 1.0, 0.6, COL.top, 0.8, 0.5, -12.9);
+    box(3.2, 0.35, 0.62, COL.teal, 0.8, 1.02, -12.9);
+    box(2.8, 1.6, 0.1, COL.shelfLight, 0.8, 2.2, -14.45);      /* back shelf grid */
+    box(1.1, 0.65, 0.04, 0x22282b, 0.8, 2.55, -14.32);         /* TV */
 
-    /* greenery inside: window nook, aisle ends, counter end, consult + back corners */
+    /* greenery inside: window nook, aisle ends, counter end, consult-room
+       doorway and back corners */
     plant(2.9, -1.3, 1.0, false);
     plant(-2.5, -9.35, 0.8, false, 0xcdd6d6);
     plant(2.95, -11.9, 0.85, false, 0xcdd6d6);
-    plant(-2.6, -13.55, 1.05, true);
+    plant(-1.1, -13.0, 0.95, true);                            /* by the consult-room door */
     plant(2.85, -13.4, 1.0, true, 0x9a8f83);
 
     /* ── camera path ── */
@@ -587,10 +621,13 @@
     }
     var path = paths();
 
-    /* ── hotspot anchors (world space) ── */
+    /* ── hotspot anchors (world space) ── DOM order is 5 left/right pairs;
+       both halves of a pair share one timing "station" (at) so only ever
+       two hotspots are visible together, on opposite screen sides — this
+       is what keeps the labels from stacking/overlapping. */
     var anchors = spotEls.map(function (el, i) {
       var v = (el.dataset.pos || '0,1.5,-5').split(',').map(Number);
-      return { el: el, v3: new THREE.Vector3(v[0], v[1], v[2]), at: 0.5 + i * 0.042 };
+      return { el: el, v3: new THREE.Vector3(v[0], v[1], v[2]), at: 0.48 + Math.floor(i / 2) * 0.095 };
     });
     var proj = new THREE.Vector3();
 
@@ -677,10 +714,15 @@
       skip.style.opacity = (1 - seg(p, 0.55, 0.65)).toFixed(3);
       skip.style.pointerEvents = p > 0.6 ? 'none' : 'auto';
 
-      /* hotspots: project anchors to screen, dot-anchored labels */
+      /* hotspots: project anchors to screen, dot-anchored labels. Each
+         anchor fades IN then OUT within its own window (seg() alone only
+         ramps up and holds at 1 forever after — that's what let every
+         passed hotspot stay stuck on screen, stacking into clutter). */
       var w = stage.clientWidth, h = stage.clientHeight;
       anchors.forEach(function (a) {
-        var vis2 = seg(p, a.at, a.at + 0.08);
+        var fadeIn = seg(p, a.at, a.at + 0.03);
+        var fadeOut = 1 - seg(p, a.at + 0.045, a.at + 0.075);
+        var vis2 = Math.min(fadeIn, fadeOut);
         if (vis2 <= 0.01) { a.el.style.opacity = '0'; a.el.style.pointerEvents = 'none'; a.el.tabIndex = -1; return; }
         proj.copy(a.v3).project(camera);
         var behind = proj.z > 1 || proj.z < -1;
