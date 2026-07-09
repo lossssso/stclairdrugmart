@@ -73,6 +73,10 @@ A modern community pharmacy website (stclairdrugmart.ca) serving a general Toron
 - storefront.js — storefront animation only, self-contained, swappable
 - All JS at bottom of body or using defer
 - One scoped <style> block per major feature section
+## Code Review
+- Day-to-day checks on the working diff: use the native `/review` / built-in code-review skill.
+- The installed `code-review` plugin is only for actual pull requests — and run it as
+  `/code-review medium`, never inheriting a higher session effort setting.
 ## Git Rules
 - Never push to GitHub without explicit instruction
 - Dev branch only — never push to main
