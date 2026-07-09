@@ -144,11 +144,16 @@ for a bespoke scene) or `<model-viewer>` (preferred for displaying a single 3D o
 are the only 3D-engine options, and only under the gating above.
 ## Skills
 You have access to Claude skills. Use them when they genuinely improve output quality.
-Preferred skills for this project: frontend-design (for non-generic aesthetics),
-gsap-scrolltrigger (for scroll animation). Use lightweight-3d-effects or similar for CSS/canvas
-techniques first; only reach for a 3D-engine skill when a scoped WebGL feature is justified
-under the Library Selection Rule above. Never activate a skill that pulls in npm dependencies
-or a build tool.
+Preferred skills for this project: impeccable (design/redesign/audit/critique/polish — 23
+`/impeccable` commands) and frontend-design (non-generic aesthetics), plus gsap-scrolltrigger
+(for scroll animation). impeccable and frontend-design are installed at PROJECT scope (see
+`.claude/settings.json`) so they auto-load on every device/session working on this repo. Use
+lightweight-3d-effects or similar for CSS/canvas techniques first; only reach for a 3D-engine
+skill when a scoped WebGL feature is justified under the Library Selection Rule above.
+Never activate a skill that pulls in npm dependencies or a build tool *into the site's own
+stack* — this rule governs shipped site assets, not Claude's tooling. (impeccable itself runs
+local Node `.mjs` helper scripts and a PostToolUse hook; that is harness tooling, it adds
+nothing to the deployed site and does not touch the no-build/no-npm rule for `index.html` et al.)
 ## Welcome-Section 3D Walk-In (`walkin3d.js` — live on dev)
 A scroll-driven Three.js walk-through of a stylized, procedurally-built St. Clair Drug Mart
 (flat-color primitives — no photo textures), embedded in `#welcome` after `.welcome__boxes`.
