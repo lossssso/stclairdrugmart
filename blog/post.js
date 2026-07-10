@@ -90,7 +90,7 @@
       var total = post.offsetHeight - window.innerHeight;
       var scrolled = Math.min(Math.max(-rect.top, 0), Math.max(total, 1));
       var pct = total > 0 ? (scrolled / total) * 100 : 0;
-      bar.style.width = pct.toFixed(2) + '%';
+      bar.style.transform = 'scaleX(' + (pct / 100).toFixed(4) + ')';
     }
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);

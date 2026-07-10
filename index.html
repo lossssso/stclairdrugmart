@@ -306,14 +306,14 @@
       background: #eef9fa;
       color: var(--teal-deeper);
     }
-    .nav__links .nav__cta a { display: inline-block; will-change: transform; }
+    .nav__links .nav__cta a { display: inline-block; }
     .nav__links .nav__cta a {
       background: var(--teal-bright);
       color: var(--white);
       font-weight: 600;
       border-radius: 100px;
       box-shadow: var(--shadow-card);
-      transition: background .2s var(--ease-apple), box-shadow .2s var(--ease-apple);
+      transition: background .2s var(--ease-apple);
     }
     .nav__links .nav__cta a:hover { background: var(--teal-dark); color: var(--white); box-shadow: var(--shadow-hover); }
     .nav__toggle { display: none; background: none; border: none; cursor: pointer; padding: .4rem; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
@@ -395,7 +395,7 @@
     .hero__cloud:nth-child(10) { width: 870px; height:225px; top:72%; animation-duration: 86s; animation-delay: -28s;  opacity:.78; }
     .hero__cloud:nth-child(11) { width:1050px; height:500px; top:78%; animation-duration:102s; animation-delay: -90s;  opacity:.90; }
     .hero__cloud:nth-child(12) { width: 800px; height:205px; top:84%; animation-duration: 79s; animation-delay: -70s;  opacity:.72; }
-    @media (prefers-reduced-motion: reduce) { .hero__cloud, .sky-bg-cloud { animation: none; } .sky-bg, .hero__clouds { animation: none; opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .hero__cloud, .sky-bg-cloud, .nav__cloud { animation: none; } .sky-bg, .hero__clouds { animation: none; opacity: 1; } }
     /* On mobile: fewer clouds for performance */
     @media (max-width: 768px) {
       .hero__cloud:nth-child(n+7) { display: none; }
@@ -516,7 +516,7 @@
     .welcome-modal__body { padding: 1.1rem 1.75rem 1.5rem; }
     .welcome-modal__tags { display:flex; flex-wrap:wrap; justify-content:center; gap:.4rem; margin:.9rem 0 1rem; }
     .welcome-modal__tags span, .welcome-modal__tag { font-size:.72rem; font-weight:700; color:var(--teal-dark); background:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.7); border-radius:100px; padding:.32rem .7rem; }
-    .welcome-modal__tag { cursor:pointer; text-decoration:none; transition: background .15s, color .15s, transform .12s, box-shadow .15s; }
+    .welcome-modal__tag { cursor:pointer; text-decoration:none; transition: background .15s, color .15s, transform .12s; }
     .welcome-modal__tag:hover { background:var(--teal-bright); color:#fff; border-color:var(--teal-bright); transform:translateY(-1px); box-shadow:0 4px 12px rgba(33,161,168,.3); }
     .welcome-modal__tag-more { opacity: .75; }
     .welcome-modal__rating { font-size:.78rem; font-weight:700; color:var(--text-muted); margin-bottom:1.15rem; }
@@ -637,7 +637,7 @@
     .welcome__photo img { width: 100%; height: auto; display: block; }
     .welcome__question { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--teal-bright); margin: 1.6rem 0 .7rem; }
     .welcome__pills { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem .6rem; }
-    .welcome__pill { position: relative; display: flex; align-items: center; justify-content: center; text-align: center; gap: .4rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 14px; padding: .6rem 1rem; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; line-height: 1.3; transition: background .2s var(--ease-apple), color .2s var(--ease-apple), transform .3s var(--ease-spring), box-shadow .2s var(--ease-apple); }
+    .welcome__pill { position: relative; display: flex; align-items: center; justify-content: center; text-align: center; gap: .4rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 14px; padding: .6rem 1rem; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; line-height: 1.3; transition: background .2s var(--ease-apple), color .2s var(--ease-apple), transform .3s var(--ease-spring); }
     .welcome__pill:active { transform: scale(.97); transition-duration: .12s; }
     .welcome__pill::before,
     .welcome__pill::after { content: ''; position: absolute; top: 100%; width: 0; height: 0; border-style: solid; transition: border-color .15s; }
@@ -656,12 +656,45 @@
     .reveal-ready.is-revealed > * { animation: rvSlideIn .5s var(--ease-apple) forwards; }
     @media (prefers-reduced-motion: reduce) {
       .reveal-ready > *, .reveal-ready.is-revealed > * { opacity: 1; transform: none; animation: none; }
+      /* Catch-all for decorative/infinite animations that lacked individual fallbacks
+         (flag marquee, pulsing dots, team-stat glow/pop, heading pop, highlight rings,
+         booking cloud floats, star sweep). Reduced motion = fewer and gentler, not a
+         broken page — forwards-entrances get their end-state pinned explicitly. */
+      .flags-track,
+      .hours__row.today.open-today .hours__day::before,
+      .status-dot--closed, .status-dot--open::after, .status-dot--soon::after,
+      .booking__logo-cloud, .booking__logo-cloud--2, .booking__logo-cloud--3,
+      .booking__logo-cloud--4, .booking__logo-cloud--5, .booking__logo-glow,
+      .info-strip__title--highlight,
+      .team-stat.team-stat--in, .team-stat.team-stat--in .team-stat__glow,
+      .team-stat.team-stat--in .team-stat__num,
+      .reviews-stars-fill, .reviews-stars-fill__inner {
+        animation: none !important; transition: none !important;
+      }
+      /* teamStatIn is a forwards-entrance from opacity 0 — pin the visible end-state */
+      .team-stat.team-stat--in { opacity: 1; transform: none; }
+      /* highlight flash rings are transient feedback — without motion, hide them */
+      .info-strip__card--highlight::after, .info-strip__subgroup--highlight::after { animation: none !important; opacity: 0; }
+      /* stars render fully swept */
+      .reviews-stars-fill { transform: translateX(-2%); }
+      .reviews-stars-fill__inner { transform: translateX(2%); }
     }
     .welcome__boxes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.25rem; }
     @supports (transform-style: preserve-3d) { .welcome__boxes, .staff-grid, .pa-cards--top, .shop__cards { perspective: 900px; } }
-    .welcome-box { background: rgba(255,255,255,0.9); border: 1px solid var(--border); border-top: 3.5px solid var(--teal-bright); border-radius: var(--radius); padding: 1.4rem 1.25rem 1.3rem; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: .35rem; transition: box-shadow .2s, transform .15s, border-color .15s; box-shadow: var(--shadow-card); }
-    .welcome-box:hover { box-shadow: var(--shadow-hover); border-color: var(--teal-bright); transform: translateY(-3px); }
+    .welcome-box { background: rgba(255,255,255,0.9); border: 1px solid var(--border); border-top: 3.5px solid var(--teal-bright); border-radius: var(--radius); padding: 1.4rem 1.25rem 1.3rem; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: .35rem; transition: transform .15s, border-color .15s; box-shadow: var(--shadow-card); }
+    .welcome-box:hover { border-color: var(--teal-bright); transform: translateY(-3px); }
     .welcome-box:active { transform: scale(.97); transition-duration: .12s; }
+    /* Hover elevation crossfade — box-shadow itself is never transitioned (paint-heavy,
+       banned by CLAUDE.md); a pre-rendered ::after hover shadow fades via opacity on
+       the compositor instead. The ::after is transparent (shadow only), so it can sit
+       above content without occluding it — no z-index:-1 stacking traps. */
+    .welcome-box, .pa-card, .shop__card { position: relative; }
+    .welcome-box::after, .pa-card::after, .shop__card::after {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      box-shadow: var(--shadow-hover); opacity: 0;
+      transition: opacity .2s var(--ease-apple); pointer-events: none;
+    }
+    .welcome-box:hover::after, .pa-card:hover::after, .shop__card:hover::after { opacity: 1; }
     /* WP6 — subtle pointer tilt (desktop only; --tilt-x/--tilt-y default to 0 via var()
        fallback, so touch/reduced-motion/no-JS get the exact prior flat hover/press). The
        flat rules above are the @supports fallback; this block overrides with the tilt
@@ -723,7 +756,7 @@
       box-shadow: var(--shadow-card);
       text-decoration: none;
       color: inherit;
-      transition: border-color .2s, box-shadow .2s, transform .15s;
+      transition: border-color .2s, transform .15s;
     }
     .service-card:hover {
       border-color: var(--teal-bright);
@@ -782,7 +815,7 @@
       border-radius: var(--radius);
       border: none;
       cursor: pointer;
-      transition: background .2s var(--ease-apple), transform .3s var(--ease-spring), box-shadow .2s var(--ease-apple);
+      transition: background .2s var(--ease-apple), transform .3s var(--ease-spring);
     }
     .btn:hover { background: #003f44; transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 20px rgba(0,63,68,.25); }
     .btn:active { transform: scale(.97); transition-duration: .12s; }
@@ -976,12 +1009,11 @@
       border: 1px solid rgba(0,115,124,.10);
       display: flex;
       flex-direction: column;
-      transition: transform .18s var(--ease-apple), box-shadow .22s var(--ease-apple), background .15s;
+      transition: transform .18s var(--ease-apple), background .15s;
       cursor: pointer;
       font: inherit;
       width: 100%;
     }
-    .pa-card:hover { box-shadow: var(--shadow-hover); }
     .pa-card.active {
       border-color: var(--teal-bright);
       background: var(--teal-ice);
@@ -1074,9 +1106,8 @@
       background: #fff; border-radius: 14px; padding: 1.75rem 1.5rem;
       border: 1.5px solid var(--border);
       box-shadow: var(--shadow-card);
-      transition: box-shadow .2s, transform .15s;
+      transition: transform .15s;
     }
-    .shop__card:hover { box-shadow: var(--shadow-hover); }
     .shop__card__head { display: flex; align-items: center; gap: 1rem; }
     .shop__card__icon-wrap {
       width: 52px; height: 52px; border-radius: 12px; flex-shrink: 0;
@@ -1117,7 +1148,7 @@
     /* ── Find Us section ───────────────────────────────── */
     .find-us__section-hd { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.1rem; }
     .find-us__partner-logos { display: flex; align-items: center; gap: .75rem; }
-    .find-us__partner-logos img { height: 64px; width: 64px; object-fit: contain; border-radius: 50%; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.18); transition: transform .15s, box-shadow .15s; }
+    .find-us__partner-logos img { height: 64px; width: 64px; object-fit: contain; border-radius: 50%; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.18); transition: transform .15s; }
     .find-us__logo-btn { background: none; border: none; cursor: pointer; padding: 0; display: block; border-radius: 50%; }
     .find-us__logo-btn:hover img { transform: scale(1.1); box-shadow: 0 4px 20px rgba(0,115,124,.35); }
     /* Highlight flashes reuse the shared ring-pulse-in keyframe (opacity/transform on a
@@ -1257,7 +1288,7 @@
     .status-row__val--closed { color: #991b1b; }
 
     .find-us__actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: auto; }
-    .find-us__rating { display: flex; flex-direction: column; gap: .15rem; margin-top: .85rem; padding: .7rem .9rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 10px; text-decoration: none; transition: box-shadow .2s; }
+    .find-us__rating { display: flex; flex-direction: column; gap: .15rem; margin-top: .85rem; padding: .7rem .9rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 10px; text-decoration: none;  }
     .find-us__rating:hover { box-shadow: 0 2px 10px rgba(0,0,0,.1); }
     .find-us__rating-stars { color: #f5a623; font-size: 1.1rem; letter-spacing: .05em; line-height: 1; }
     .find-us__rating-meta { display: flex; align-items: baseline; gap: .35rem; }
@@ -1278,7 +1309,7 @@
       border-top: 3.5px solid var(--teal-bright);
       box-shadow: var(--shadow-card);
       display: flex; flex-direction: column;
-      transition: box-shadow .2s, transform .15s;
+      transition: transform .15s;
     }
     .info-strip__card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
     .info-strip__body { flex: 1 1 auto; }
@@ -1398,7 +1429,7 @@
       display: flex;
       flex-direction: column;
       gap: .55rem;
-      transition: transform .25s var(--ease-spring), box-shadow .25s var(--ease-apple);
+      transition: transform .25s var(--ease-spring);
     }
     .blog-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
     .blog-card__date { font-size: .78rem; color: var(--text-muted); }
@@ -1569,7 +1600,7 @@
       padding: 2rem 1.5rem;
       box-shadow: var(--shadow-card);
       border: 1px solid rgba(0,115,124,.10);
-      transition: transform .25s var(--ease-spring), box-shadow .25s var(--ease-apple);
+      transition: transform .25s var(--ease-spring);
     }
     .step:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
     .step__num {
@@ -1581,7 +1612,7 @@
     }
     .step h3 { font-size: 1rem; font-weight: 700; color: var(--teal-deeper); margin-bottom: .5rem; }
     .step p  { font-size: .875rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 0; }
-    .step--clickable { transition: box-shadow .15s, transform .15s; display:flex; flex-direction:column; }
+    .step--clickable { transition: transform .15s; display:flex; flex-direction:column; }
     .step--clickable:hover { box-shadow: 0 6px 24px rgba(30,107,99,.18); transform: translateY(-2px); }
     .step__btn { display:inline-block; margin-top:1.1rem; font-size:.8rem; font-weight:700; color:var(--teal-dark); letter-spacing:.02em; }
     .step--clickable:hover .step__btn { color: var(--teal-bright); }
@@ -1680,7 +1711,7 @@
       border: 1.5px solid var(--border);
       padding: 1.4rem 1.2rem;
       display: flex; flex-direction: column; gap: .45rem;
-      transition: box-shadow .15s;
+      
     }
     .medscheck-card:hover { box-shadow: var(--shadow-hover); }
     .medscheck-card__icon { font-size: 1.55rem; line-height: 1; }
@@ -1705,7 +1736,7 @@
     .svc-acc-item {
       background: var(--white); border: 1.5px solid var(--border);
       border-radius: var(--radius); overflow: hidden;
-      transition: box-shadow .18s, border-color .18s;
+      transition: border-color .18s;
     }
     .svc-acc-item.open { border-color: var(--teal-bright); box-shadow: 0 6px 22px rgba(30,107,99,.12); }
     .svc-acc__head {
@@ -1773,7 +1804,7 @@
       border: 1.5px solid var(--border);
       padding: 1.2rem 1.15rem;
       display: flex; flex-direction: column; gap: .4rem;
-      transition: box-shadow .15s, transform .15s;
+      transition: transform .15s;
     }
     .vaccine-card { cursor: pointer; }
     .vaccine-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); border-color: var(--teal-bright); }
@@ -1830,7 +1861,7 @@
       box-shadow: var(--shadow-card);
       padding: 1.25rem 1rem;
       text-align: center;
-      transition: box-shadow .15s, transform .15s, border-color .15s;
+      transition: transform .15s, border-color .15s;
     }
     .insurance-card:hover { box-shadow: var(--shadow-hover); border-color: var(--teal-bright); transform: translateY(-2px); }
     .insurance-card__abbr {
@@ -1883,7 +1914,7 @@
       border-radius: var(--radius-lg); backdrop-filter: blur(6px);
       box-shadow: var(--shadow-card);
       opacity: 0; transform: translateY(14px) scale(.97);
-      transition: box-shadow .3s ease, transform .3s ease, border-color .3s ease;
+      transition: transform .3s ease, border-color .3s ease;
       overflow: hidden;
     }
     .team-stat.team-stat--in {
@@ -1976,7 +2007,7 @@
       box-shadow: var(--shadow-card);
       margin-bottom: 1.5rem;
       text-decoration: none; cursor: pointer;
-      transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease;
+      transition: transform .18s ease, border-color .18s ease;
     }
     .reviews-google-badge:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); border-color: #4285F4; }
     .reviews-google-badge__text { font-size: .83rem; font-weight: 700; color: #3c4043; }
@@ -1990,7 +2021,7 @@
       box-shadow: var(--shadow-card);
       margin-bottom: 1.5rem;
       text-decoration: none; cursor: pointer;
-      transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease;
+      transition: transform .18s ease, border-color .18s ease;
     }
     .reviews-uber-badge:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); border-color: #000; }
     .reviews-uber-badge img { height: 22px; width: auto; }
@@ -2022,14 +2053,14 @@
       position: absolute; top: 0; left: 0;
       color: #FBBF24; overflow: hidden; width: 100%; white-space: nowrap;
       transform: translateX(-100%);
-      transition: transform 2s cubic-bezier(.22,1,.36,1) .4s;
+      transition: transform .9s cubic-bezier(.22,1,.36,1) .15s;
       filter: drop-shadow(0 1px 4px rgba(251,191,36,.45));
       pointer-events: none;
     }
     .reviews-stars-fill__inner {
       display: inline-block;
       transform: translateX(100%);
-      transition: transform 2s cubic-bezier(.22,1,.36,1) .4s;
+      transition: transform .9s cubic-bezier(.22,1,.36,1) .15s;
     }
     .reviews-stars-fill.anim { transform: translateX(-2%); }
     .reviews-stars-fill.anim .reviews-stars-fill__inner { transform: translateX(2%); }
@@ -2053,7 +2084,7 @@
       background: var(--teal-ice); border: 1px solid var(--border);
       box-shadow: var(--shadow-card);
       border-radius: var(--radius-lg); padding: 1.4rem .85rem 1.2rem; text-align: center;
-      transition: box-shadow .22s, transform .22s, border-color .22s;
+      transition: transform .22s, border-color .22s;
       opacity: 0; transform: translateY(22px);
     }
     .reviews-metric:hover { box-shadow: var(--shadow-hover); border-color: var(--teal-bright); transform: translateY(-2px); }
@@ -2087,7 +2118,7 @@
       padding: .75rem 1.6rem; font-weight: 700; font-size: .9rem;
       font-family: var(--font-body); text-decoration: none;
       box-shadow: var(--shadow-card);
-      transition: box-shadow .2s, transform .15s, background .15s;
+      transition: transform .15s, background .15s;
     }
     .reviews-google-btn:hover { box-shadow: var(--shadow-hover); background: #f8f9fa; }
     .reviews-uber-btn {
@@ -2097,7 +2128,7 @@
       padding: .75rem 1.6rem; font-weight: 700; font-size: .9rem;
       font-family: var(--font-body); text-decoration: none;
       box-shadow: 0 2px 10px rgba(6,193,103,.25);
-      transition: box-shadow .2s, transform .15s, background .15s;
+      transition: transform .15s, background .15s;
     }
     .reviews-uber-btn img { height: 18px; width: auto; }
     .reviews-uber-btn:hover { box-shadow: 0 5px 18px rgba(6,193,103,.4); background: #05a857; border-color: #05a857; }
@@ -2107,7 +2138,7 @@
       border: 1.5px solid var(--border); border-radius: 100px;
       padding: .75rem 1.6rem; font-weight: 700; font-size: .9rem;
       font-family: var(--font-body); text-decoration: none;
-      transition: box-shadow .2s, transform .15s, background .15s;
+      transition: transform .15s, background .15s;
     }
     .reviews-read-btn:hover { background: var(--border); box-shadow: var(--shadow-hover); }
 
@@ -2184,7 +2215,7 @@
       border-radius: var(--radius); padding: 1.1rem 1rem;
       display: flex; flex-direction: column; gap: .35rem;
       box-shadow: var(--shadow-card);
-      transition: box-shadow .2s, border-color .2s, transform .15s;
+      transition: border-color .2s, transform .15s;
     }
     .ailment-card:hover { box-shadow: var(--shadow-hover); border-color: var(--teal-bright); transform: translateY(-2px); }
     .ailment-card__icon { font-size: 1.4rem; line-height: 1; }
@@ -2204,7 +2235,7 @@
     .ailments-triage__btn--all { width: 100%; text-align: center; margin-bottom: .6rem; }
     .ailments-triage__group { margin-top: .7rem; }
     .ailments-triage__btns { display: flex; flex-wrap: wrap; gap: .45rem; }
-    .ailments-triage__btn { background: var(--white); border: 1.5px solid var(--border); border-radius: 999px; padding: .42rem .95rem; font-size: .8rem; font-weight: 600; cursor: pointer; transition: all .15s; color: var(--text); }
+    .ailments-triage__btn { background: var(--white); border: 1.5px solid var(--border); border-radius: 999px; padding: .42rem .95rem; font-size: .8rem; font-weight: 600; cursor: pointer; transition: background .15s, color .15s, border-color .15s, transform .15s; color: var(--text); }
     .ailments-triage__btn:hover, .ailments-triage__btn.active { background: var(--teal-bright); color: #fff; border-color: var(--teal-bright); }
     .ailments-triage__btn--unsure { border-style: dashed; border-color: var(--teal-dark); color: var(--teal-dark); }
     .ailments-triage__btn--unsure:hover { background: var(--teal-dark); color: #fff; border-color: var(--teal-dark); }
@@ -2401,7 +2432,7 @@
       background: var(--teal-bright); color: #fff; border: none; cursor: pointer;
       box-shadow: 0 4px 18px rgba(33,161,168,.45);
       display: flex; align-items: center; justify-content: center;
-      transition: transform .2s, box-shadow .2s, opacity .25s, background .15s;
+      transition: transform .2s, opacity .25s, background .15s;
     }
     .contact-float__toggle:hover { box-shadow: 0 6px 24px rgba(33,161,168,.6); background: var(--teal-dark); }
     .contact-float__toggle svg { width: 28px; height: 28px; }
@@ -2467,7 +2498,7 @@
       background: linear-gradient(180deg, #ffffff 0%, #f7fdfd 100%);
       border-radius: 16px; overflow: hidden;
       box-shadow: 0 1px 2px rgba(0,0,0,.10), 0 14px 34px -12px rgba(0,0,0,.30);
-      transition: box-shadow .25s var(--ease-apple), transform .25s var(--ease-apple);
+      transition: transform .25s var(--ease-apple);
     }
     .faq-item:hover { box-shadow: 0 4px 10px rgba(0,0,0,.12), 0 22px 44px -14px rgba(0,0,0,.38); transform: translateY(-2px) scale(1.01); }
     .faq-item.open { box-shadow: 0 0 0 1.5px var(--teal-bright), 0 14px 34px -12px rgba(0,0,0,.30); }
@@ -2490,15 +2521,19 @@
     .faq-item__q-text { flex: 1; line-height: 1.35; }
     .faq-item__q svg { width: 18px; height: 18px; flex-shrink: 0; transition: transform .25s; stroke: var(--teal-bright); }
     .faq-item.open .faq-item__q svg { transform: rotate(45deg); }
-    /* Accepted exception to the transform/opacity-only rule: click-triggered (never
-       continuous or scroll-linked), one bounded reflow per toggle; a transform-only
-       accordion would distort text (scaleY) or need per-item JS height measurement. */
+    /* Accordion animates grid-template-rows 0fr→1fr — click-triggered (never
+       continuous or scroll-linked), one bounded reflow per toggle, and correct at
+       any content height: no max-height guess, so no clipped long answers and no
+       dead time on short ones. Bottom spacing lives on the inner wrapper's ::after
+       so the closed state collapses to a true 0 height. */
     .faq-item__a {
-      max-height: 0; overflow: hidden;
-      transition: max-height .38s ease, padding .3s;
+      display: grid; grid-template-rows: 0fr;
+      transition: grid-template-rows .3s var(--ease-apple);
       padding: 0 1.2rem; color: var(--text-muted); line-height: 1.72; font-size: .875rem;
     }
-    .faq-item.open .faq-item__a { max-height: 500px; padding: 0 1.2rem 1.15rem; }
+    .faq-item__a-inner { min-height: 0; overflow: hidden; }
+    .faq-item__a-inner::after { content: ''; display: block; height: 1.15rem; }
+    .faq-item.open .faq-item__a { grid-template-rows: 1fr; }
     .faq-item__a a { color: var(--teal-bright); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--teal-mid); white-space: nowrap; }
     .faq-item__a a:hover { color: var(--teal-deeper); border-color: var(--teal-deeper); }
 
@@ -2509,7 +2544,7 @@
       background: #fff; border-radius: 100px; padding: .8rem 1.1rem;
       box-shadow: 0 8px 26px rgba(0,0,0,.22);
       border: 1.5px solid transparent;
-      transition: box-shadow .2s, border-color .2s;
+      transition: border-color .2s;
     }
     .faq-search__bar:focus-within { border-color: var(--teal-bright); box-shadow: 0 8px 26px rgba(0,0,0,.22), 0 0 0 3px rgba(33,161,168,.25); }
     .faq-search__bar svg { width: 19px; height: 19px; stroke: var(--teal-bright); flex-shrink: 0; }
@@ -2624,7 +2659,7 @@
     .ailments-smartsearch__wrap {
       display:flex; align-items:center; gap:.55rem; background:#fff;
       border:2px solid var(--teal-bright); border-radius:100px; padding:.45rem .6rem .45rem 1rem;
-      box-shadow:0 2px 12px rgba(33,161,168,.12); transition:box-shadow .15s;
+      box-shadow:0 2px 12px rgba(33,161,168,.12); 
     }
     .ailments-smartsearch__wrap:focus-within { box-shadow:0 2px 22px rgba(33,161,168,.25); }
     .ailments-smartsearch__wrap svg { width:16px; height:16px; stroke:var(--teal-bright); fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; }
@@ -2658,7 +2693,7 @@
       background:var(--white); border:1.5px solid var(--border);
       border-radius:var(--radius); padding:1.3rem 1.2rem;
       text-decoration:none; cursor:pointer; position:relative;
-      transition:border-color .15s, box-shadow .15s, transform .15s;
+      transition:border-color .15s, transform .15s;
     }
     .poct-card:hover { border-color:var(--teal-bright); box-shadow:0 6px 22px rgba(30,107,99,.13); transform:translateY(-2px); }
     .poct-card--free { background:rgba(33,161,168,.04); border-color:rgba(33,161,168,.35); }
@@ -2906,7 +2941,7 @@
   </div>
   <div class="nav__inner">
     <a href="#home" class="nav__brand">
-      <img src="logo.png" alt="St. Clair Drug Mart Pharmacy" class="nav__brand__logo" />
+      <img width="940" height="922" src="logo.png" alt="St. Clair Drug Mart Pharmacy" class="nav__brand__logo" />
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
     <button class="nav__toggle" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
@@ -2998,7 +3033,7 @@
       <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
     </a>
     <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" aria-label="Order on Uber Eats">
-      <img src="logos/uber-teal.png" alt="Uber Eats" class="uber-word">
+      <img width="900" height="313" src="logos/uber-teal.png" alt="Uber Eats" class="uber-word">
     </a>
     <a href="https://www.google.com/maps/place/St.+Clair+Drug+Mart+Pharmacy/@43.6773961,-79.4468996,17z/data=!3m1!4b1!4m6!3m5!1s0x882b35d5e572114b:0x899add08acb1e556!8m2!3d43.6773551!4d-79.4443087!16s%2Fg%2F11f716bxm1" target="_blank" rel="noopener" aria-label="Find us on Google Maps">
       <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
@@ -3033,7 +3068,7 @@
   <div class="welcome-modal">
     <button class="welcome-modal__close" id="welcomeModalClose" aria-label="Close">&times;</button>
     <div class="welcome-modal__top">
-      <div class="welcome-modal__icon"><img src="logo.png" alt="" /></div>
+      <div class="welcome-modal__icon"><img width="940" height="922" src="logo.png" alt="" /></div>
       <span class="welcome-modal__badge"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg> Now Available</span>
       <div class="welcome-modal__title">Welcome to St. Clair Drug Mart Pharmacy</div>
       <div class="welcome-modal__text">Feeling under the weather? Our pharmacists can now assess &amp; prescribe for <strong>28 common conditions</strong> — no doctor's appointment needed.</div>
@@ -3174,37 +3209,37 @@
     <div class="flags-viewport">
       <div class="flags-track">
         <!-- set 1 -->
-        <div class="flag-item"><img src="flags/ca.svg" alt="Canada"><span class="flag-item__label">Canada</span></div>
-        <div class="flag-item"><img src="flags/cu.svg" alt="Cuba"><span class="flag-item__label">Cuba</span></div>
-        <div class="flag-item"><img src="flags/jm.svg" alt="Jamaica"><span class="flag-item__label">Jamaica</span></div>
-        <div class="flag-item"><img src="flags/tt.svg" alt="Trinidad"><span class="flag-item__label">Trinidad</span></div>
-        <div class="flag-item"><img src="flags/mx.svg" alt="Mexico"><span class="flag-item__label">Mexico</span></div>
-        <div class="flag-item"><img src="flags/co.svg" alt="Colombia"><span class="flag-item__label">Colombia</span></div>
-        <div class="flag-item"><img src="flags/ec.svg" alt="Ecuador"><span class="flag-item__label">Ecuador</span></div>
-        <div class="flag-item"><img src="flags/pl.svg" alt="Poland"><span class="flag-item__label">Poland</span></div>
-        <div class="flag-item"><img src="flags/it.svg" alt="Italy"><span class="flag-item__label">Italy</span></div>
-        <div class="flag-item"><img src="flags/pt.svg" alt="Portugal"><span class="flag-item__label">Portugal</span></div>
-        <div class="flag-item"><img src="flags/ve.svg" alt="Venezuela"><span class="flag-item__label">Venezuela</span></div>
-        <div class="flag-item"><img src="flags/sv.svg" alt="El Salvador"><span class="flag-item__label">El Salvador</span></div>
-        <div class="flag-item"><img src="flags/es.svg" alt="Spain"><span class="flag-item__label">Spain</span></div>
-        <div class="flag-item"><img src="flags/tr.svg" alt="Turkey"><span class="flag-item__label">Turkey</span></div>
-        <div class="flag-item"><img src="flags/ph.svg" alt="Philippines"><span class="flag-item__label">Philippines</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/ca.svg" alt="Canada"><span class="flag-item__label">Canada</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/cu.svg" alt="Cuba"><span class="flag-item__label">Cuba</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/jm.svg" alt="Jamaica"><span class="flag-item__label">Jamaica</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/tt.svg" alt="Trinidad"><span class="flag-item__label">Trinidad</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/mx.svg" alt="Mexico"><span class="flag-item__label">Mexico</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/co.svg" alt="Colombia"><span class="flag-item__label">Colombia</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/ec.svg" alt="Ecuador"><span class="flag-item__label">Ecuador</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/pl.svg" alt="Poland"><span class="flag-item__label">Poland</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/it.svg" alt="Italy"><span class="flag-item__label">Italy</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/pt.svg" alt="Portugal"><span class="flag-item__label">Portugal</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/ve.svg" alt="Venezuela"><span class="flag-item__label">Venezuela</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/sv.svg" alt="El Salvador"><span class="flag-item__label">El Salvador</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/es.svg" alt="Spain"><span class="flag-item__label">Spain</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/tr.svg" alt="Turkey"><span class="flag-item__label">Turkey</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/ph.svg" alt="Philippines"><span class="flag-item__label">Philippines</span></div>
         <!-- set 2 (duplicate for seamless loop) -->
-        <div class="flag-item"><img src="flags/ca.svg" alt="Canada"><span class="flag-item__label">Canada</span></div>
-        <div class="flag-item"><img src="flags/cu.svg" alt="Cuba"><span class="flag-item__label">Cuba</span></div>
-        <div class="flag-item"><img src="flags/jm.svg" alt="Jamaica"><span class="flag-item__label">Jamaica</span></div>
-        <div class="flag-item"><img src="flags/tt.svg" alt="Trinidad"><span class="flag-item__label">Trinidad</span></div>
-        <div class="flag-item"><img src="flags/mx.svg" alt="Mexico"><span class="flag-item__label">Mexico</span></div>
-        <div class="flag-item"><img src="flags/co.svg" alt="Colombia"><span class="flag-item__label">Colombia</span></div>
-        <div class="flag-item"><img src="flags/ec.svg" alt="Ecuador"><span class="flag-item__label">Ecuador</span></div>
-        <div class="flag-item"><img src="flags/pl.svg" alt="Poland"><span class="flag-item__label">Poland</span></div>
-        <div class="flag-item"><img src="flags/it.svg" alt="Italy"><span class="flag-item__label">Italy</span></div>
-        <div class="flag-item"><img src="flags/pt.svg" alt="Portugal"><span class="flag-item__label">Portugal</span></div>
-        <div class="flag-item"><img src="flags/ve.svg" alt="Venezuela"><span class="flag-item__label">Venezuela</span></div>
-        <div class="flag-item"><img src="flags/sv.svg" alt="El Salvador"><span class="flag-item__label">El Salvador</span></div>
-        <div class="flag-item"><img src="flags/es.svg" alt="Spain"><span class="flag-item__label">Spain</span></div>
-        <div class="flag-item"><img src="flags/tr.svg" alt="Turkey"><span class="flag-item__label">Turkey</span></div>
-        <div class="flag-item"><img src="flags/ph.svg" alt="Philippines"><span class="flag-item__label">Philippines</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/ca.svg" alt="Canada"><span class="flag-item__label">Canada</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/cu.svg" alt="Cuba"><span class="flag-item__label">Cuba</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/jm.svg" alt="Jamaica"><span class="flag-item__label">Jamaica</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/tt.svg" alt="Trinidad"><span class="flag-item__label">Trinidad</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/mx.svg" alt="Mexico"><span class="flag-item__label">Mexico</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/co.svg" alt="Colombia"><span class="flag-item__label">Colombia</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/ec.svg" alt="Ecuador"><span class="flag-item__label">Ecuador</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/pl.svg" alt="Poland"><span class="flag-item__label">Poland</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/it.svg" alt="Italy"><span class="flag-item__label">Italy</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/pt.svg" alt="Portugal"><span class="flag-item__label">Portugal</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/ve.svg" alt="Venezuela"><span class="flag-item__label">Venezuela</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/sv.svg" alt="El Salvador"><span class="flag-item__label">El Salvador</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/es.svg" alt="Spain"><span class="flag-item__label">Spain</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/tr.svg" alt="Turkey"><span class="flag-item__label">Turkey</span></div>
+        <div class="flag-item"><img width="640" height="480" src="flags/ph.svg" alt="Philippines"><span class="flag-item__label">Philippines</span></div>
       </div>
     </div>
   </div>
@@ -3251,7 +3286,7 @@
     <img src="cloud.png" alt="" aria-hidden="true" class="booking__logo-cloud--4" loading="lazy" decoding="async" />
     <img src="cloud.png" alt="" aria-hidden="true" class="booking__logo-cloud--5" loading="lazy" decoding="async" />
     <div class="booking__logo-glow" aria-hidden="true"></div>
-    <img src="logo.png" alt="St. Clair Drug Mart Pharmacy" class="booking__logo" loading="lazy" decoding="async" />
+    <img width="940" height="922" src="logo.png" alt="St. Clair Drug Mart Pharmacy" class="booking__logo" loading="lazy" decoding="async" />
     <h2 class="section__title">Patient Portal</h2>
 
     <!-- Row 1: Medication Review & Common Condition Assessment (2 big boxes) -->
@@ -4118,7 +4153,7 @@
         <div class="team-stat__glow"></div>
         <div class="team-stat__icon">🤝</div>
         <div class="team-stat__copy">
-          <div class="team-stat__num"><span class="js-team-countup" data-target="35">0</span>+ <span class="team-stat__num-unit">years</span></div>
+          <div class="team-stat__num"><span class="js-team-countup" data-target="35">35</span>+ <span class="team-stat__num-unit">years</span></div>
           <p class="team-stat__label">of experience in pharmacy practice and patient care</p>
         </div>
       </div>
@@ -4183,7 +4218,7 @@
             <span class="reviews-stars-bg" aria-hidden="true">★★★★★</span>
             <span class="reviews-stars-fill" aria-hidden="true"><span class="reviews-stars-fill__inner">★★★★★</span></span>
           </div>
-          <div class="reviews-score"><span class="js-countup" data-target="4.9" data-decimals="1">4.9</span></div>
+          <div class="reviews-score"><span>4.9</span></div>
           <div class="reviews-score-sub">out of 5 &nbsp;·&nbsp; 59 verified reviews</div>
         </div>
 
@@ -4193,14 +4228,14 @@
         <div class="reviews-platform reviews-platform--uber">
           <div class="reviews-uber-rating">
             <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" class="reviews-uber-badge" aria-label="Order from St. Clair Drug Mart Pharmacy on Uber Eats">
-              <img src="logos/uber.png" alt="Uber" class="reviews-uber-badge__icon">
+              <img width="363" height="363" src="logos/uber.png" alt="Uber" class="reviews-uber-badge__icon">
               <span class="reviews-uber-badge__text">Uber Orders</span>
             </a>
             <div class="reviews-stars-wrap" aria-label="4.9 out of 5 stars">
               <span class="reviews-stars-bg" aria-hidden="true">★★★★★</span>
               <span class="reviews-stars-fill" aria-hidden="true"><span class="reviews-stars-fill__inner">★★★★★</span></span>
             </div>
-            <div class="reviews-score"><span class="js-countup" data-target="4.9" data-decimals="1">4.9</span></div>
+            <div class="reviews-score"><span>4.9</span></div>
             <div class="reviews-score-sub">out of 5 &nbsp;·&nbsp; 600+ ratings</div>
           </div>
           <div class="reviews-uber-award">
@@ -4259,7 +4294,7 @@
         Write a Review on Google
       </a>
       <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" class="reviews-uber-btn">
-        <img src="logos/uber-white.png" alt="">
+        <img width="900" height="313" src="logos/uber-white.png" alt="">
         Order on Uber
       </a>
       <a href="https://www.google.com/search?q=St.+Clair+Drug+Mart+Pharmacy+Reviews" target="_blank" rel="noopener" class="reviews-read-btn">
@@ -4276,9 +4311,9 @@
     <div class="find-us__section-hd">
       <h2 class="section__title" style="margin-bottom:0;">Find Us &amp; Contact</h2>
       <div class="find-us__partner-logos">
-        <button class="find-us__logo-btn" onclick="goToCard('transit-card')" aria-label="View TTC transit directions"><img src="logos/ttc.webp" alt="TTC — Toronto Transit Commission"></button>
-        <button class="find-us__logo-btn" onclick="goToCard('parking-card', 'parking-car-group')" aria-label="View parking info"><img src="logos/greenp.png" alt="Green P Municipal Parking"></button>
-        <button class="find-us__logo-btn" onclick="goToCard('parking-card', 'parking-bike-group')" aria-label="View Bike Share info"><img src="logos/bikeshare.png" alt="Bike Share Toronto"></button>
+        <button class="find-us__logo-btn" onclick="goToCard('transit-card')" aria-label="View TTC transit directions"><img width="600" height="353" src="logos/ttc.webp" alt="TTC — Toronto Transit Commission"></button>
+        <button class="find-us__logo-btn" onclick="goToCard('parking-card', 'parking-car-group')" aria-label="View parking info"><img width="250" height="248" src="logos/greenp.png" alt="Green P Municipal Parking"></button>
+        <button class="find-us__logo-btn" onclick="goToCard('parking-card', 'parking-bike-group')" aria-label="View Bike Share info"><img width="383" height="383" src="logos/bikeshare.png" alt="Bike Share Toronto"></button>
       </div>
     </div>
 
@@ -4459,7 +4494,7 @@
       <div class="shop__card">
         <div class="shop__card__head">
           <div class="shop__card__icon-wrap shop__card__icon-wrap--uber">
-            <img src="logos/uber.png" alt="Uber Eats">
+            <img width="363" height="363" src="logos/uber.png" alt="Uber Eats">
           </div>
           <div class="shop__card__title">Uber Orders</div>
         </div>
@@ -4468,7 +4503,7 @@
         </p>
         <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ"
            target="_blank" rel="noopener" class="btn--uber">
-          <img src="logos/uber.png" alt="">
+          <img width="363" height="363" src="logos/uber.png" alt="">
           Order on Uber
         </a>
       </div>
@@ -4531,13 +4566,13 @@
       </div>
       <div class="gallery__row gallery__row--bottom">
         <div class="gallery__item">
-          <img src="interior_wide.webp" alt="Inside St. Clair Drug Mart Pharmacy — pharmacy counter and full store" loading="lazy" decoding="async" />
+          <img width="850" height="899" src="interior_wide.webp" alt="Inside St. Clair Drug Mart Pharmacy — pharmacy counter and full store" loading="lazy" decoding="async" />
         </div>
         <div class="gallery__item">
-          <img src="interior_shelves.webp" alt="Over-the-counter and health product shelves at St. Clair Drug Mart Pharmacy" loading="lazy" decoding="async" />
+          <img width="850" height="899" src="interior_shelves.webp" alt="Over-the-counter and health product shelves at St. Clair Drug Mart Pharmacy" loading="lazy" decoding="async" />
         </div>
         <div class="gallery__item">
-          <img src="interior_aisle.webp" alt="Product aisle and counseling room inside St. Clair Drug Mart Pharmacy" loading="lazy" decoding="async" />
+          <img width="850" height="899" src="interior_aisle.webp" alt="Product aisle and counseling room inside St. Clair Drug Mart Pharmacy" loading="lazy" decoding="async" />
         </div>
       </div>
     </div>
@@ -4806,7 +4841,7 @@ window.FAQS = [
     btn.innerHTML = '<span class="faq-item__q-icon">' + (faq.icon || '💬') + '</span><span class="faq-item__q-text">' + faq.q + '</span>' + svg;
     var ans = document.createElement('div');
     ans.className = 'faq-item__a';
-    ans.innerHTML = faq.a;
+    ans.innerHTML = '<div class="faq-item__a-inner">' + faq.a + '</div>';
     btn.addEventListener('click', function(){
       var isOpen = item.classList.contains('open');
       document.querySelectorAll('.faq-item').forEach(function(i){
@@ -5391,7 +5426,7 @@ window.SmartMatch = (function(){
       <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
     </a>
     <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener" aria-label="Uber">
-      <img src="logos/uber-white.png" alt="Uber" class="uber-word uber-word--footer">
+      <img width="900" height="313" src="logos/uber-white.png" alt="Uber" class="uber-word uber-word--footer">
     </a>
   </div>
 
@@ -5399,17 +5434,17 @@ window.SmartMatch = (function(){
     <div class="footer__badges">
       <!-- OCP logo + licence number (no link) -->
       <div class="trust-badge">
-        <div class="trust-badge__disc"><img src="logos/ocp.png" alt="Ontario College of Pharmacists" class="trust-badge__logo"></div>
+        <div class="trust-badge__disc"><img width="149" height="130" src="logos/ocp.png" alt="Ontario College of Pharmacists" class="trust-badge__logo"></div>
         <span class="trust-badge__caption">OCP Accreditation<br>No. 306667</span>
       </div>
       <!-- PharmAssess -->
       <div class="trust-badge">
-        <div class="trust-badge__disc"><img src="logos/pharmassess.png" alt="PharmAssess — Online Pharmacy Booking" class="trust-badge__logo"></div>
+        <div class="trust-badge__disc"><img width="433" height="436" src="logos/pharmassess.png" alt="PharmAssess — Online Pharmacy Booking" class="trust-badge__logo"></div>
         <span class="trust-badge__caption">PharmAssess<br>Online Booking</span>
       </div>
       <!-- MedSask -->
       <div class="trust-badge trust-badge--wordmark">
-        <div class="trust-badge__disc"><img src="logos/medsask.png" alt="MedSask — Your Medication Information Service" class="trust-badge__logo"></div>
+        <div class="trust-badge__disc"><img width="300" height="160" src="logos/medsask.png" alt="MedSask — Your Medication Information Service" class="trust-badge__logo"></div>
         <span class="trust-badge__caption">Medication<br>Information Partner</span>
       </div>
     </div>
@@ -5494,8 +5529,11 @@ window.SmartMatch = (function(){
     if (!contactFloat) return;
     let lastY = window.scrollY;
     let idleTimer;
-    window.addEventListener('scroll', () => {
-      if (window.innerWidth > 768 || contactFloat.classList.contains('open')) return;
+    let ticking = false;
+    const mobileMq = window.matchMedia('(max-width: 768px)');
+    function update() {
+      ticking = false;
+      if (!mobileMq.matches || contactFloat.classList.contains('open')) return;
       const y = window.scrollY;
       if (y < 80) {
         contactFloat.classList.remove('contact-float--hide');
@@ -5507,6 +5545,11 @@ window.SmartMatch = (function(){
       lastY = y;
       clearTimeout(idleTimer);
       idleTimer = setTimeout(() => contactFloat.classList.remove('contact-float--hide'), 2500);
+    }
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
     }, { passive: true });
   })();
 
@@ -6562,7 +6605,7 @@ window.SmartMatch = (function(){
         var target   = parseFloat(el.dataset.target);
         var decimals = parseInt(el.dataset.decimals || '0');
         var suffix   = el.dataset.suffix || '';
-        countUp(el, target, decimals, suffix, 3200);
+        countUp(el, target, decimals, suffix, 1000);
       });
       // Staggered slide-in for metric cards
       section.querySelectorAll('.reviews-metric').forEach(function(card, i) {
@@ -6587,22 +6630,14 @@ window.SmartMatch = (function(){
     if (!stat || !numEl) return;
     var done = false;
 
-    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-
     function run() {
       if (done) return;
       done = true;
+      // Years-of-experience is a trust fact — never counts up from zero
+      // (a scroller must never see "0+ years"). The reveal is the
+      // team-stat--in entrance animation; the number renders true immediately.
       stat.classList.add('team-stat--in');
-      var target = parseInt(numEl.dataset.target, 10);
-      var start = null, duration = 1800;
-      function step(ts) {
-        if (!start) start = ts;
-        var p = Math.min((ts - start) / duration, 1);
-        numEl.textContent = Math.floor(target * easeOut(p));
-        if (p < 1) requestAnimationFrame(step);
-        else numEl.textContent = target;
-      }
-      requestAnimationFrame(step);
+      numEl.textContent = numEl.dataset.target;
     }
 
     if ('IntersectionObserver' in window) {
@@ -7298,12 +7333,25 @@ window.SmartMatch = (function(){
       }
     });
 
-    function tick(){
-      ticking=false;
-      var threshold=window.innerHeight*0.4,cur=SEC_IDS[0];
+    // Section tops are cached and re-measured only when layout actually changes
+    // (resize, accordion open/close via body ResizeObserver) — the old version did
+    // a getBoundingClientRect per section per scrolled frame.
+    var secTops={};
+    function measureSecs(){
+      var sy=window.scrollY;
       for(var i=0;i<SEC_IDS.length;i++){
         var el=document.getElementById(SEC_IDS[i]);
-        if(el&&el.getBoundingClientRect().top<=threshold)cur=SEC_IDS[i];
+        if(el)secTops[SEC_IDS[i]]=el.getBoundingClientRect().top+sy;
+      }
+    }
+    measureSecs();
+    window.addEventListener('resize',measureSecs);
+    if(window.ResizeObserver)new ResizeObserver(measureSecs).observe(document.body);
+    function tick(){
+      ticking=false;
+      var y=window.scrollY+window.innerHeight*0.4,cur=SEC_IDS[0];
+      for(var i=0;i<SEC_IDS.length;i++){
+        if(secTops[SEC_IDS[i]]!=null&&y>=secTops[SEC_IDS[i]])cur=SEC_IDS[i];
       }
       var p=SEC_PATH[cur]||'/';
       if(cur==='booking'||cur==='services'){

@@ -91,7 +91,7 @@ img { display:block; max-width:100%; }
 }
 
 /* Reading-progress bar (injected by post.js) */
-.reading-progress { position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg, var(--teal-bright), var(--teal-dark)); z-index:300; transition:width .12s ease-out; }
+.reading-progress { position:fixed; top:0; left:0; height:3px; width:100%; transform:scaleX(0); transform-origin:left; background:linear-gradient(90deg, var(--teal-bright), var(--teal-dark)); z-index:300; transition:transform .12s ease-out; }
 
 /* Post body — a white "sheet" floating over the sky so text is always legible */
 .post {
