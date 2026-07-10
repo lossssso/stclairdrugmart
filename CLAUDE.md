@@ -144,6 +144,8 @@ for a bespoke scene) or `<model-viewer>` (preferred for displaying a single 3D o
 are the only 3D-engine options, and only under the gating above.
 ## Skills
 You have access to Claude skills. Use them when they genuinely improve output quality.
+**Full installed plugin/skill inventory (what's available, sources, when to use each):
+see `CLAUDE_PLUGINS.md`.** Quick version below.
 Preferred skills for this project: impeccable (design/redesign/audit/critique/polish — 23
 `/impeccable` commands) and frontend-design (non-generic aesthetics), plus gsap-scrolltrigger
 (for scroll animation). impeccable and frontend-design are installed at PROJECT scope (see
