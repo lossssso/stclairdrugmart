@@ -604,10 +604,13 @@
       letter-spacing: .015em;
       text-transform: uppercase;
       color: var(--teal-deeper);
-      margin-bottom: .5rem;
+      margin-bottom: .65rem;
       line-height: 1.04;
     }
-    .section__title::after {
+    /* The underline device is reserved for ONE anchor section (Welcome) — stamping
+       it under every H2 was the templated rhythm the design audit flagged. Everywhere
+       else, type hierarchy carries the heading on its own. */
+    #welcome .section__title::after {
       content: '';
       display: block;
       width: 56px; height: 4px;
@@ -681,7 +684,7 @@
     }
     .welcome__boxes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.25rem; }
     @supports (transform-style: preserve-3d) { .welcome__boxes, .staff-grid, .pa-cards--top, .shop__cards { perspective: 900px; } }
-    .welcome-box { background: rgba(255,255,255,0.9); border: 1px solid var(--border); border-top: 3.5px solid var(--teal-bright); border-radius: var(--radius); padding: 1.4rem 1.25rem 1.3rem; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: .35rem; transition: transform .15s, border-color .15s; box-shadow: var(--shadow-card); }
+    .welcome-box { background: rgba(255,255,255,0.9); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.4rem 1.25rem 1.3rem; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: .35rem; transition: transform .15s, border-color .15s; box-shadow: var(--shadow-card); }
     .welcome-box:hover { border-color: var(--teal-bright); transform: translateY(-3px); }
     .welcome-box:active { transform: scale(.97); transition-duration: .12s; }
     /* Hover elevation crossfade — box-shadow itself is never transitioned (paint-heavy,
@@ -711,7 +714,6 @@
     /* WP7 focal card: promote the free MedsCheck box so the grid isn't 6 equal tiles. */
     .welcome-box--focal {
       grid-column: span 2;
-      border-top-width: 4px;
       background: linear-gradient(135deg, rgba(215,251,252,.65), rgba(255,255,255,.92));
       position: relative;
     }
@@ -1143,7 +1145,6 @@
     /* ── Contact ──────────────────────────────────────── */
     #contact { background: linear-gradient(140deg, var(--teal-deeper) 0%, #003a40 100%); }
     #contact .section__title { color: #fff; }
-    #contact .section__title::after { background: var(--teal-bright); }
     #contact .section__lead { color: rgba(255,255,255,.75); }
     /* ── Find Us section ───────────────────────────────── */
     .find-us__section-hd { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.1rem; }
@@ -1306,7 +1307,6 @@
       background: #fff;
       border-radius: 14px; padding: 1.25rem 1.2rem 1.25rem;
       border: 1.5px solid var(--border);
-      border-top: 3.5px solid var(--teal-bright);
       box-shadow: var(--shadow-card);
       display: flex; flex-direction: column;
       transition: transform .15s;
@@ -1775,7 +1775,6 @@
       border-radius: 100px; padding: .1rem .5rem; line-height: 1.4;
     }
     .svc-acc__group-sub { font-size: .85rem; color: var(--text-muted); line-height: 1.55; margin: 0 0 .9rem .4rem; }
-    .svc-acc__group .svc-acc-item { border-left: 3px solid var(--cat-color); }
     .svc-tabs__section-hd { display: flex; align-items: center; gap: 1rem; margin: 2.5rem 0 1.5rem; }
     .svc-tabs__section-hd::before, .svc-tabs__section-hd::after { content: ''; flex: 1; height: 1.5px; background: var(--border); }
     .svc-tabs__section-hd span { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--teal-bright); white-space: nowrap; }
@@ -2134,13 +2133,13 @@
     .reviews-uber-btn:hover { box-shadow: 0 5px 18px rgba(6,193,103,.4); background: #05a857; border-color: #05a857; }
     .reviews-read-btn {
       display: inline-flex; align-items: center; gap: .5rem;
-      background: var(--teal-ice); color: var(--teal-deeper);
-      border: 1.5px solid var(--border); border-radius: 100px;
+      background: transparent; color: var(--teal-dark);
+      border: 2px solid var(--teal-dark); border-radius: 100px;
       padding: .75rem 1.6rem; font-weight: 700; font-size: .9rem;
       font-family: var(--font-body); text-decoration: none;
-      transition: transform .15s, background .15s;
+      transition: transform .15s, background .15s, color .15s;
     }
-    .reviews-read-btn:hover { background: var(--border); box-shadow: var(--shadow-hover); }
+    .reviews-read-btn:hover { background: var(--teal-dark); color: var(--white); }
 
     @media (max-width: 900px) {
       .reviews-metrics { grid-template-columns: repeat(3, 1fr); }
@@ -2284,7 +2283,7 @@
       font-size: .88rem; font-weight: 600; line-height: 1.5;
     }
     .dc-summary__status--ok { background: rgba(255,255,255,.12); }
-    .dc-summary__status--warn { background: rgba(232,163,61,.25); border-left: 3px solid #E8A33D; }
+    .dc-summary__status--warn { background: rgba(232,163,61,.25); }
     .dc-summary__detail { font-size: .82rem; opacity: .85; margin-bottom: .6rem; line-height: 1.6; }
     .dc-summary__cta {
       margin-top: 1.25rem; padding-top: 1.25rem;
@@ -2341,7 +2340,7 @@
     }
     .dc-chip button:hover { background: var(--teal-dark); }
     .dc-actions { display: flex; gap: .6rem; margin-top: 1.25rem; flex-wrap: wrap; }
-    .dc-actions .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+    .dc-actions .btn:disabled { background: var(--border); color: var(--text-muted); cursor: not-allowed; transform: none; box-shadow: none; }
     .dc-results { margin-top: 1.5rem; display: none; }
     .dc-results.open { display: block; }
     .dc-result {
@@ -2365,7 +2364,7 @@
       margin-top: 1rem; font-size: .78rem; color: var(--text-muted);
     }
     .dc-credit__logo {
-      font-weight: 800; font-size: 1rem; color: #FF6600;
+      font-weight: 800; font-size: 1rem; color: var(--teal-dark);
       letter-spacing: -.01em; text-decoration: none;
     }
     .dc-credit__logo span { color: var(--teal-deeper); }
@@ -2404,8 +2403,8 @@
     .dc-result__medscheck-link:hover { color: var(--teal-bright); text-decoration: underline; }
     .dc-external-link  { margin-top: .75rem; font-size: .82rem; }
     .dc-external-link a { color: var(--teal-dark); font-weight: 600; }
-    .dc-summary__status--contra   { background: rgba(254,226,226,.3); border-left: 3px solid #EF4444; }
-    .dc-summary__status--moderate { background: rgba(255,237,213,.3); border-left: 3px solid #F97316; }
+    .dc-summary__status--contra   { background: rgba(254,226,226,.3); }
+    .dc-summary__status--moderate { background: rgba(255,237,213,.3); }
     .dc-emergency-alert { background: rgba(254,226,226,.25); border: 1.5px solid #EF4444; border-radius: 8px; padding: .9rem 1rem; margin-bottom: .9rem; font-size: .83rem; line-height: 1.55; }
 
     /* ── Extra responsive ─────────────────────────── */
@@ -2870,6 +2869,24 @@
     <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9.5h12V10"/><path d="M10 19.5V14h4v5.5"/></symbol>
     <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.3 3.8 5.4 3.8 8.5s-1.3 6.2-3.8 8.5c-2.5-2.3-3.8-5.4-3.8-8.5S9.5 5.8 12 3.5Z"/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.5 2.5.8 3.9.8.6 0 1 .4 1 1V20.5c0 .6-.4 1-1 1C10.6 21.5 2.5 13.4 2.5 3.3c0-.6.4-1 1-1H7.2c.6 0 1 .4 1 1 0 1.4.3 2.7.8 3.9.1.4 0 .8-.2 1l-2.2 2.6z"/></symbol>
+    <!-- Batch-3 completion symbols (simple axis-aligned primitives, per WP8 lesson) -->
+    <symbol id="i-truck" viewBox="0 0 24 24"><rect x="2" y="7" width="12" height="9" rx="1"/><path d="M14 10h4l3 3v3h-3"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="12" rx="1.5"/><path d="M4 11h16M12 7v4"/><path d="M8 7l1.5-3h5L16 7"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.2 1.2"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.2-1.2"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5.5 5.5"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5.5h16v11H10L5.5 20v-3.5H4z"/><path d="M8 9.5h8M8 12.5h5"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-9.3-9.3C1.5 7.6 3.6 4.5 6.8 4.5c2.1 0 3.9 1.2 5.2 3 1.3-1.8 3.1-3 5.2-3 3.2 0 5.3 3.1 4.1 6.2C19.5 15.4 12 20 12 20Z"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M2.5 10h19M6 14.5h5"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><circle cx="16.5" cy="9.5" r="2.4"/><path d="M16.5 14.5c2.6 0 4.5 1.8 4.5 4.4"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.4"/></symbol>
+    <symbol id="i-transit" viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="14" rx="2.5"/><path d="M5 11h14M9 3.5v7.5M15 3.5v7.5"/><circle cx="9" cy="14.5" r=".6" fill="currentColor"/><circle cx="15" cy="14.5" r=".6" fill="currentColor"/><path d="M8 17.5 6 21M16 17.5 18 21"/></symbol>
+    <symbol id="i-parking" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M10 17V7h3.2a2.9 2.9 0 1 1 0 5.8H10"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M4 13.5 5.8 8.5c.3-.8 1-1.3 1.9-1.3h8.6c.9 0 1.6.5 1.9 1.3L20 13.5"/><rect x="3" y="13.5" width="18" height="4.5" rx="1.5"/><circle cx="7.5" cy="18.8" r="1.6"/><circle cx="16.5" cy="18.8" r="1.6"/></symbol>
+    <symbol id="i-access" viewBox="0 0 24 24"><circle cx="12" cy="4.6" r="1.9"/><path d="M12 7v6h5l2.5 5.5"/><path d="M12 9.5h4.2"/><path d="M14.5 15.5a5 5 0 1 1-6-6.3"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="m4 7 8 6.5L20 7"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4 21 19.5H3z"/><path d="M12 10v4.5"/><circle cx="12" cy="17" r=".7" fill="currentColor"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8.5 7 10 4.5h4L15.5 7"/><circle cx="12" cy="13.2" r="3.6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></symbol>
   </defs>
 </svg>
 <script>
@@ -2976,7 +2993,7 @@
           <li><a href="#team">Meet the Team</a></li>
           <li><a href="#contact">Find Us &amp; Contact</a></li>
           <li><a href="#about">About Us</a></li>
-          <li><a href="#reviews">Ratings (4.9 ⭐)</a></li>
+          <li><a href="#reviews">Ratings (4.9 ★)</a></li>
           <li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
         </ul>
       </li>
@@ -3183,16 +3200,16 @@
         <div class="w3d__stage" id="w3d-stage">
           <canvas id="w3d-canvas" aria-hidden="true"></canvas>
           <img id="w3d-fallback-img" class="w3d__fallback-img" src="storefront_exterior.webp" width="1227" height="1281" alt="St. Clair Drug Mart storefront at 1203 St. Clair Ave W, Toronto" loading="lazy" decoding="async" />
-          <a class="w3d-spot" data-pos="-2.1,1.55,-3.0" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🩸 Better blood sugar control</span></a>
-          <a class="w3d-spot w3d-spot--flip" data-pos="3.05,1.6,-3.4" href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🤒 I'm feeling ill</span></a>
-          <a class="w3d-spot" data-pos="-3.1,1.6,-5.5" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">💊 Medication side effects</span></a>
-          <a class="w3d-spot w3d-spot--flip" data-pos="3.05,1.9,-5.9" href="#services" onclick="setTimeout(function(){openAcc('acc-poct');document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},200)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🤰 I might be pregnant!</span></a>
-          <a class="w3d-spot" data-pos="-3.1,1.65,-8.0" href="#services" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🩹 Running out of medication</span></a>
-          <a class="w3d-spot w3d-spot--flip" data-pos="3.05,1.5,-8.3" href="#services" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🆘 I need a free naloxone kit</span></a>
-          <a class="w3d-spot" data-pos="-2.3,1.6,-10.5" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🌿 Natural health advice</span></a>
-          <a class="w3d-spot w3d-spot--flip" data-pos="3.05,1.9,-10.9" href="#services" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🚭 I want to quit smoking!</span></a>
-          <a class="w3d-spot w3d-spot--flip" data-pos="-0.6,1.8,-12.6" href="#services" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label">✈️ Travel &amp; vaccines</span></a>
-          <a class="w3d-spot js-pa-select" data-pos="2.15,1.55,-12.75" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand."><span class="w3d-spot-dot"></span><span class="w3d-spot-label">🦠 COVID-19 test &amp; certificate</span></a>
+          <a class="w3d-spot" data-pos="-2.1,1.55,-3.0" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-droplet"></use></svg> Better blood sugar control</span></a>
+          <a class="w3d-spot w3d-spot--flip" data-pos="3.05,1.6,-3.4" href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-thermometer"></use></svg> I'm feeling ill</span></a>
+          <a class="w3d-spot" data-pos="-3.1,1.6,-5.5" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-pill"></use></svg> Medication side effects</span></a>
+          <a class="w3d-spot w3d-spot--flip" data-pos="3.05,1.9,-5.9" href="#services" onclick="setTimeout(function(){openAcc('acc-poct');document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},200)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-baby"></use></svg> I might be pregnant!</span></a>
+          <a class="w3d-spot" data-pos="-3.1,1.65,-8.0" href="#services" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-bandage"></use></svg> Running out of medication</span></a>
+          <a class="w3d-spot w3d-spot--flip" data-pos="3.05,1.5,-8.3" href="#services" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-lifebuoy"></use></svg> I need a free naloxone kit</span></a>
+          <a class="w3d-spot" data-pos="-2.3,1.6,-10.5" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-leaf"></use></svg> Natural health advice</span></a>
+          <a class="w3d-spot w3d-spot--flip" data-pos="3.05,1.9,-10.9" href="#services" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-no-smoking"></use></svg> I want to quit smoking!</span></a>
+          <a class="w3d-spot w3d-spot--flip" data-pos="-0.6,1.8,-12.6" href="#services" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg> Travel &amp; vaccines</span></a>
+          <a class="w3d-spot js-pa-select" data-pos="2.15,1.55,-12.75" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand."><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-virus"></use></svg> COVID-19 test &amp; certificate</span></a>
           <div class="w3d__hint" id="w3d-hint">Scroll to walk in<br>&#9660;</div>
           <button class="w3d__skip" id="w3d-skip" type="button">Skip &darr;</button>
         </div>
@@ -3439,7 +3456,7 @@
     </div>
     <div class="pa-iframe-wrap" id="pa-wrap" style="display:none">
         <div class="pa-iframe-label">
-          <span id="pa-iframe-label-text">📅 Book an Appointment</span>
+          <span id="pa-iframe-label-text"><svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg> Book an Appointment</span>
           <button class="pa-iframe-label__close" id="pa-iframe-close" aria-label="Collapse" title="Collapse">✕</button>
         </div>
         <div class="pa-iframe-hint" id="pa-iframe-hint"></div>
@@ -3526,12 +3543,12 @@
     <div class="svc-acc">
 
       <div class="svc-acc__group" data-cat="clinical">
-      <div class="svc-acc__group-hd"><span class="svc-acc__group-hd__icon">🏥</span><span class="svc-acc__group-hd__text">Clinical Services</span><span class="svc-acc__group-hd__count">7</span></div>
+      <div class="svc-acc__group-hd"><span class="svc-acc__group-hd__icon"><svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg></span><span class="svc-acc__group-hd__text">Clinical Services</span><span class="svc-acc__group-hd__count">7</span></div>
       <p class="svc-acc__group-sub">Hands-on care from your pharmacist — assessments, prescribing, vaccines &amp; testing, no doctor's visit needed for most.</p>
 
       <div class="svc-acc-item" id="acc-ailments">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🩺</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-stethoscope"></use></svg></span>
           <span class="svc-acc__title">Common Condition Assessments</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -3666,7 +3683,7 @@
 
       <div class="svc-acc-item" id="acc-vaccines">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">💉</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-syringe"></use></svg></span>
           <span class="svc-acc__title">Vaccines &amp; Travel Health</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -3686,7 +3703,7 @@
           <p style="text-align:center;margin-bottom:.75rem;"><a href="#booking" class="svc-acc__link js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT, then choose your vaccine under TYPE OF SERVICE and your preferred brand.">Book Now →</a></p>
           <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-bottom:2rem;">Publicly funded vaccines require a valid Ontario health card. Eligibility criteria apply. Call (416) 654-8181 for current stock.</p>
 
-          <div class="vaccines__sub-heading" style="margin-bottom:.75rem;">✈️ Travel &amp; Private Vaccines</div>
+          <div class="vaccines__sub-heading" style="margin-bottom:.75rem;"><svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg> Travel &amp; Private Vaccines</div>
           <p style="margin-bottom:1rem;">Heading abroad? We'll review your destinations, recommend the right vaccines and medications, and get you travel-ready — all in one visit.</p>
           <div class="vaccine-grid" style="margin-bottom:1.5rem;">
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Hepatitis A &amp; B (Twinrix)</div><span class="vaccine-card__badge badge--private">PRIVATE / INSURANCE</span></div><div class="vaccine-card__who">Travellers · At-risk individuals</div><p class="vaccine-card__desc">Recommended for travel to Asia, Africa, Latin America, and the Middle East. Many benefit plans cover travel vaccines.</p></div>
@@ -3701,7 +3718,7 @@
 
       <div class="svc-acc-item" id="acc-med-reviews">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">📋</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-clipboard"></use></svg></span>
           <span class="svc-acc__title">Medication Reviews</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -3709,28 +3726,28 @@
 <p class="section__lead" style="margin-bottom:1.5rem;">A MedsCheck medication review is a free, OHIP-covered appointment with your pharmacist to review everything you take — and you qualify if you take three or more chronic medications or have Type 2 diabetes. At St. Clair Drug Mart, our pharmacist catches interactions, simplifies your regimen, and makes sure every medication is working for you. Bring in your vitamins, probiotics, and herbal remedies too — natural health products are checked alongside your prescriptions (more on <a href="blog/posts/natural-health-products-guide.html" style="color:var(--teal-dark);font-weight:600;">supplement interactions here</a>).</p>
         <div class="medscheck-grid">
           <div class="medscheck-card">
-            <div class="medscheck-card__icon">📋</div>
+            <div class="medscheck-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-clipboard"></use></svg></div>
             <div class="medscheck-card__title">Annual Medication Review</div>
             <p class="medscheck-card__desc">A face-to-face or phone consultation covering all your prescriptions, over-the-counter medications, vitamins, and supplements. We identify interactions, duplications, and medications that may no longer be appropriate for you. An <strong>optional blood glucose test at no cost</strong> is available during your review.</p>
             <span class="medscheck-card__tag">Eligible if taking 3 or more chronic medications · Optional blood glucose test included free</span>
             <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" style="margin-top:.75rem;display:inline-block;">Book a Review →</a>
           </div>
           <div class="medscheck-card">
-            <div class="medscheck-card__icon">🩺</div>
+            <div class="medscheck-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-stethoscope"></use></svg></div>
             <div class="medscheck-card__title">Diabetes Medication Review</div>
             <p class="medscheck-card__desc">A specialized review for patients living with Type 2 diabetes. We assess your diabetes medications, discuss blood sugar targets, and help coordinate care with your healthcare team. Includes an <strong>optional blood glucose test at no cost</strong> — your pharmacist checks your reading on the spot and reviews what it means for your therapy.</p>
             <span class="medscheck-card__tag">For patients with Type 2 diabetes · Optional blood glucose test included free</span>
             <a class="svc-acc__link js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" style="margin-top:.75rem;display:inline-block;">Book a Review →</a>
           </div>
           <div class="medscheck-card">
-            <div class="medscheck-card__icon">🏥</div>
+            <div class="medscheck-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg></div>
             <div class="medscheck-card__title">Post-Hospital Reconciliation</div>
             <p class="medscheck-card__desc">Coming home from the hospital? We'll compare your discharge medications with your existing prescriptions to prevent dangerous errors, duplications, or gaps in your care during this critical transition.</p>
             <span class="medscheck-card__tag">Following hospital discharge or a care transition</span>
             <a class="svc-acc__link" href="#booking" style="margin-top:.75rem;display:inline-block;">Book a Review →</a>
           </div>
           <div class="medscheck-card">
-            <div class="medscheck-card__icon">🔄</div>
+            <div class="medscheck-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg></div>
             <div class="medscheck-card__title">Follow-Up Review</div>
             <p class="medscheck-card__desc">When your medications change significantly — a new diagnosis, a new prescription, or a concern about side effects — we schedule a focused follow-up to make sure your therapy stays on track.</p>
             <span class="medscheck-card__tag">After a significant medication change or concern</span>
@@ -3743,7 +3760,7 @@
 
       <div class="svc-acc-item" id="acc-rx-renewal">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🔁</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg></span>
           <span class="svc-acc__title">Medication Extensions &amp; Adaptations</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -3751,19 +3768,19 @@
 <p class="section__lead" style="margin-bottom:1.5rem;">Yes — a pharmacist in Ontario can renew (extend) most prescriptions without a doctor, so you're never left without your medication. At St. Clair Drug Mart, if you're out of refills and your doctor's office is closed, unreachable, or booking weeks out, our pharmacist can independently renew your prescription for continuity of care while you wait for an appointment. Pharmacists can also <strong>adapt</strong> an existing prescription — adjusting the dose, dosage form, or regimen to better suit you — without needing to contact your doctor first.</p>
         <div class="medscheck-grid">
           <div class="medscheck-card">
-            <div class="medscheck-card__icon">✅</div>
+            <div class="medscheck-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></div>
             <div class="medscheck-card__title">Who Qualifies</div>
             <p class="medscheck-card__desc">You must already be established on the medication — taking it safely and effectively on an ongoing basis. Renewals are for continuity of an existing, stable therapy, not for starting something new or treating a new condition.</p>
             <span class="medscheck-card__tag">Stable, ongoing therapy only</span>
           </div>
           <div class="medscheck-card">
-            <div class="medscheck-card__icon">🔍</div>
+            <div class="medscheck-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg></div>
             <div class="medscheck-card__title">What Our Pharmacist Reviews</div>
             <p class="medscheck-card__desc">We confirm the medication has been well-tolerated, safe, and effective for you, weigh the risks and benefits of continuing without a new doctor's visit, and make sure a renewal is in your best interest before authorizing it.</p>
             <span class="medscheck-card__tag">Case-by-case clinical assessment</span>
           </div>
           <div class="medscheck-card">
-            <div class="medscheck-card__icon">💳</div>
+            <div class="medscheck-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-card"></use></svg></div>
             <div class="medscheck-card__title">Pay</div>
             <p class="medscheck-card__desc">This isn't an OHIP-covered service, so there's a fee — <strong>$15</strong> for the assessment and renewal, confirmed with you before we charge anything. We'll give you a receipt you can submit to your extended health / drug benefit plan — coverage of pharmacist clinical service fees varies by plan, so check with your provider.</p>
             <span class="medscheck-card__tag">$15 fee · Receipt provided for your insurer</span>
@@ -3777,14 +3794,14 @@
 
       <div class="svc-acc-item" id="acc-cessation">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🚭</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-no-smoking"></use></svg></span>
           <span class="svc-acc__title">Smoking Cessation — Quit with Expert Support</span>
           <span class="svc-acc__chev">+</span>
         </button>
         <div class="svc-acc__body svc-acc__body--wide">
           <p class="section__lead" style="margin-bottom:1.5rem;">Yes — a pharmacist in Ontario can prescribe smoking cessation medication. At St. Clair Drug Mart, our pharmacist can assess your situation, prescribe all first-line quit therapies, and support you through the full journey — no doctor's referral, no wait list, no judgment.</p>
 
-          <div class="cessation-timeline-label">⏱️ What happens to your body when you quit</div>
+          <div class="cessation-timeline-label"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg> What happens to your body when you quit</div>
           <div class="cessation-timeline">
             <div class="cessation-milestone"><div class="cessation-milestone__time">12 hrs</div><p class="cessation-milestone__text">Heart rate and blood pressure drop back to normal levels, and carbon monoxide in your blood returns to normal — more oxygen reaches your organs</p></div>
             <div class="cessation-milestone"><div class="cessation-milestone__time">2 weeks</div><p class="cessation-milestone__text">Circulation improves and lung function increases by up to 30%</p></div>
@@ -3793,35 +3810,35 @@
             <div class="cessation-milestone"><div class="cessation-milestone__time">10–15 yrs</div><p class="cessation-milestone__text">Lung cancer risk is half that of someone still smoking by year 10, and heart disease risk matches a lifetime non-smoker's by year 15</p></div>
           </div>
 
-          <div class="cessation-section-hd" style="margin-top:2rem;margin-bottom:.85rem;">💊 Treatment Options We Can Prescribe</div>
+          <div class="cessation-section-hd" style="margin-top:2rem;margin-bottom:.85rem;"><svg class="icon" aria-hidden="true"><use href="#i-pill"></use></svg> Treatment Options We Can Prescribe</div>
           <div class="cessation-options">
             <div class="cessation-option">
-              <div class="cessation-option__icon">🩹</div>
+              <div class="cessation-option__icon"><svg class="icon" aria-hidden="true"><use href="#i-bandage"></use></svg></div>
               <div class="cessation-option__name">Nicotine Replacement Therapy (NRT)</div>
               <p class="cessation-option__desc">Patches, gum, lozenges, oral inhaler, and mouth spray (Nicorette, Zonnic, and similar) — available over-the-counter with pharmacist guidance, no doctor's visit needed. ODB doesn't cover NRT directly, but some private plans do.</p>
               <span class="cessation-option__tag">First-line · OTC · Some private insurers may cover</span>
             </div>
             <div class="cessation-option">
-              <div class="cessation-option__icon">💊</div>
+              <div class="cessation-option__icon"><svg class="icon" aria-hidden="true"><use href="#i-pill"></use></svg></div>
               <div class="cessation-option__name">Varenicline (Champix)</div>
               <p class="cessation-option__desc">The most effective single prescription therapy for quitting. Varenicline reduces the satisfaction from smoking while easing withdrawal — so cigarettes simply become less rewarding. Our pharmacist can prescribe this directly, without a doctor's visit.</p>
               <span class="cessation-option__tag">Most effective · Rx required · Pharmacist can prescribe</span>
             </div>
             <div class="cessation-option">
-              <div class="cessation-option__icon">🔵</div>
+              <div class="cessation-option__icon"><svg class="icon" aria-hidden="true"><use href="#i-droplet"></use></svg></div>
               <div class="cessation-option__name">Bupropion (Zyban)</div>
               <p class="cessation-option__desc">An antidepressant that also significantly reduces nicotine cravings and withdrawal. A strong option if you have a history of depression or anxiety alongside your smoking, or if varenicline isn't right for you. Our pharmacist can prescribe this too.</p>
               <span class="cessation-option__tag">Rx required · Also supports mood · Pharmacist can prescribe</span>
             </div>
             <div class="cessation-option">
-              <div class="cessation-option__icon">🔗</div>
+              <div class="cessation-option__icon"><svg class="icon" aria-hidden="true"><use href="#i-link"></use></svg></div>
               <div class="cessation-option__name">Combination Therapy</div>
               <p class="cessation-option__desc">Pairing a long-acting nicotine patch with a faster-acting form (gum or lozenge) — or combining NRT with a prescription medication — is significantly more effective than any single approach alone. Your pharmacist will recommend what combination makes sense for you.</p>
               <span class="cessation-option__tag">Highest success rates · Tailored to you</span>
             </div>
           </div>
 
-          <div class="cessation-section-hd" style="margin-top:2rem;margin-bottom:.85rem;">📋 What Happens at Your Consultation</div>
+          <div class="cessation-section-hd" style="margin-top:2rem;margin-bottom:.85rem;"><svg class="icon" aria-hidden="true"><use href="#i-clipboard"></use></svg> What Happens at Your Consultation</div>
           <div class="cessation-consult-steps">
             <div class="cessation-consult-step">
               <div class="cessation-consult-step__num">1</div>
@@ -3848,7 +3865,7 @@
 
       <div class="svc-acc-item" id="acc-poct">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🔬</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-testtube"></use></svg></span>
           <span class="svc-acc__title">Point of Care Testing (POCT)</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -3859,7 +3876,7 @@
 
             <!-- COVID-19 -->
             <a class="poct-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="COVID-19 Rapid Antigen Test" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then <strong>COVID-19 Test</strong> under TYPE OF TEST and your preferred brand.">
-              <div class="poct-card__icon">🦠</div>
+              <div class="poct-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-virus"></use></svg></div>
               <div class="poct-card__name">COVID-19 Rapid Antigen Test</div>
               <p class="poct-card__desc">Health Canada–approved antigen test. Results in under 15 minutes — documentation available for travel or work.</p>
               <div class="poct-card__price">$30 · 15-minute results</div>
@@ -3869,7 +3886,7 @@
 
             <!-- Pregnancy -->
             <a class="poct-card js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Pregnancy Test" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then <strong>Pregnancy Test</strong> under TYPE OF TEST and your preferred brand.">
-              <div class="poct-card__icon">🤰</div>
+              <div class="poct-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-baby"></use></svg></div>
               <div class="poct-card__name">Pregnancy Test</div>
               <p class="poct-card__desc">Clinical urine HCG test — more sensitive than home tests. You take the test privately in the washroom; your pharmacist then reviews the result with you in the counselling room and advises on next steps.</p>
               <div class="poct-card__price">$25 · Private &amp; confidential</div>
@@ -3879,7 +3896,7 @@
 
             <!-- Blood Glucose -->
             <div class="poct-card poct-card--free">
-              <div class="poct-card__icon">🩸</div>
+              <div class="poct-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-droplet"></use></svg></div>
               <div class="poct-card__name">Blood Glucose Check</div>
               <span class="poct-card__free-badge">✓ Free with Medication Review</span>
               <p class="poct-card__desc" style="margin-top:.3rem;">Quick fingerstick reading — results in seconds. <strong style="color:var(--teal-deeper);">Included free</strong> with any MedsCheck (Medication Review); standalone check available for $15.</p>
@@ -3898,19 +3915,19 @@
 
       <div class="svc-acc-item" id="acc-referrals">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🔗</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-link"></use></svg></span>
           <span class="svc-acc__title">Specialist Referrals</span>
           <span class="svc-acc__chev">+</span>
         </button>
         <div class="svc-acc__body">
           <p>Not sure where to go next? We can point you toward trusted healthcare providers in the St. Clair West neighbourhood. Just ask at the counter or call us — we're happy to help you find the right specialist.</p>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.7rem;margin:.9rem 0;">
-            <div class="info-chip"><span class="info-chip__icon">👁️</span><span><strong>Optometrists</strong> — eye exams &amp; vision care</span></div>
-            <div class="info-chip"><span class="info-chip__icon">🦴</span><span><strong>Physiotherapy</strong> — rehab &amp; injury recovery</span></div>
-            <div class="info-chip"><span class="info-chip__icon">🧠</span><span><strong>Mental health</strong> — counsellors &amp; psychologists</span></div>
-            <div class="info-chip"><span class="info-chip__icon">🫀</span><span><strong>Cardiologists &amp; internists</strong></span></div>
-            <div class="info-chip"><span class="info-chip__icon">🦷</span><span><strong>Dentists</strong> — clinics accepting new patients</span></div>
-            <div class="info-chip"><span class="info-chip__icon">🤝</span><span><strong>Social work &amp; community support</strong></span></div>
+            <div class="info-chip"><span class="info-chip__icon"><svg class="icon" aria-hidden="true"><use href="#i-eye"></use></svg></span><span><strong>Optometrists</strong> — eye exams &amp; vision care</span></div>
+            <div class="info-chip"><span class="info-chip__icon"><svg class="icon" aria-hidden="true"><use href="#i-bone"></use></svg></span><span><strong>Physiotherapy</strong> — rehab &amp; injury recovery</span></div>
+            <div class="info-chip"><span class="info-chip__icon"><svg class="icon" aria-hidden="true"><use href="#i-headache"></use></svg></span><span><strong>Mental health</strong> — counsellors &amp; psychologists</span></div>
+            <div class="info-chip"><span class="info-chip__icon"><svg class="icon" aria-hidden="true"><use href="#i-heart"></use></svg></span><span><strong>Cardiologists &amp; internists</strong></span></div>
+            <div class="info-chip"><span class="info-chip__icon"><svg class="icon" aria-hidden="true"><use href="#i-mouth"></use></svg></span><span><strong>Dentists</strong> — clinics accepting new patients</span></div>
+            <div class="info-chip"><span class="info-chip__icon"><svg class="icon" aria-hidden="true"><use href="#i-people"></use></svg></span><span><strong>Social work &amp; community support</strong></span></div>
           </div>
           <p style="font-size:.82rem;color:var(--text-muted);margin-top:.6rem;"><a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">Call us at (416) 654-8181</a> or ask at the counter — we'll match you with the right provider.</p>
         </div>
@@ -3919,12 +3936,12 @@
       </div>
 
       <div class="svc-acc__group" data-cat="pharmacy">
-      <div class="svc-acc__group-hd"><span class="svc-acc__group-hd__icon">💊</span><span class="svc-acc__group-hd__text">Pharmacy Services</span><span class="svc-acc__group-hd__count">7</span></div>
+      <div class="svc-acc__group-hd"><span class="svc-acc__group-hd__icon"><svg class="icon" aria-hidden="true"><use href="#i-pill"></use></svg></span><span class="svc-acc__group-hd__text">Pharmacy Services</span><span class="svc-acc__group-hd__count">7</span></div>
       <p class="svc-acc__group-sub">Getting your medications — dispensing, packaging, transfers, delivery &amp; everyday pharmacy products.</p>
 
       <div class="svc-acc-item">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">💊</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-pill"></use></svg></span>
           <span class="svc-acc__title">Prescription Dispensing &amp; Refills</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -3936,7 +3953,7 @@
 
       <div class="svc-acc-item" id="acc-naloxone">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🆘</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-lifebuoy"></use></svg></span>
           <span class="svc-acc__title">Free Naloxone Kits — Opioid Overdose Prevention</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -3944,17 +3961,17 @@
           <p class="section__lead" style="margin-bottom:1.25rem;">You can get a free naloxone kit in Toronto at St. Clair Drug Mart — no prescription, no appointment, and no questions asked. Naloxone (Narcan®) is a safe, fast-acting medication that reverses an opioid overdose and can save a life. We provide kits <strong>free of charge</strong> through the Ontario Naloxone Program, with no judgment.</p>
           <div class="naloxone-grid">
             <div class="naloxone-card">
-              <div class="naloxone-card__icon">👥</div>
+              <div class="naloxone-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-people"></use></svg></div>
               <div class="naloxone-card__title">Who it's for</div>
               <p class="naloxone-card__desc">Anyone who uses opioids — whether prescribed (oxycodone, hydromorphone, codeine, fentanyl) or obtained outside a prescription — is encouraged to have a kit. Family members, caregivers, and anyone who cares about someone who uses opioids are equally welcome to pick one up.</p>
             </div>
             <div class="naloxone-card">
-              <div class="naloxone-card__icon">🧰</div>
+              <div class="naloxone-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-box"></use></svg></div>
               <div class="naloxone-card__title">What's in the kit</div>
               <p class="naloxone-card__desc">Each kit contains naloxone nasal spray (or injectable solution), gloves, step-by-step rescue instructions, and a short in-person training with our pharmacist so you feel prepared and confident if you ever need it.</p>
             </div>
             <div class="naloxone-card">
-              <div class="naloxone-card__icon">💚</div>
+              <div class="naloxone-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-heart"></use></svg></div>
               <div class="naloxone-card__title">Completely free &amp; confidential</div>
               <p class="naloxone-card__desc">Provided at no cost through the <strong>Ontario Naloxone Program</strong>. Just walk in and ask our pharmacist, or call <a href="tel:+14166548181" style="color:var(--teal-dark);font-weight:600;">(416) 654-8181</a>. No appointment, no paperwork, no insurance needed.</p>
             </div>
@@ -3965,7 +3982,7 @@
 
       <div class="svc-acc-item">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">📦</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-box"></use></svg></span>
           <span class="svc-acc__title">Blister Packs (Compliance Packaging)</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -3977,7 +3994,7 @@
 
       <div class="svc-acc-item" id="acc-transfer">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🔀</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg></span>
           <span class="svc-acc__title">Prescription Transfers</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -3989,7 +4006,7 @@
 
       <div class="svc-acc-item">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🚚</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-truck"></use></svg></span>
           <span class="svc-acc__title">Free GTA Delivery</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -4001,7 +4018,7 @@
 
       <div class="svc-acc-item">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🦵</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-bandage"></use></svg></span>
           <span class="svc-acc__title">Braces, Supports &amp; Compression Stockings</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -4013,7 +4030,7 @@
 
       <div class="svc-acc-item">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">♻️</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg></span>
           <span class="svc-acc__title">Medication &amp; Sharps Disposal</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -4025,12 +4042,12 @@
       </div>
 
       <div class="svc-acc__group" data-cat="tools">
-      <div class="svc-acc__group-hd"><span class="svc-acc__group-hd__icon">🛠️</span><span class="svc-acc__group-hd__text">Tools &amp; Support</span><span class="svc-acc__group-hd__count">5</span></div>
+      <div class="svc-acc__group-hd"><span class="svc-acc__group-hd__icon"><svg class="icon" aria-hidden="true"><use href="#i-help"></use></svg></span><span class="svc-acc__group-hd__text">Tools &amp; Support</span><span class="svc-acc__group-hd__count">5</span></div>
       <p class="svc-acc__group-sub">Free tools, programs &amp; helpful extras — no appointment or sign-up needed.</p>
 
       <div class="svc-acc-item">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">💊</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-pill"></use></svg></span>
           <span class="svc-acc__title">Drug Interaction Checker</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -4042,7 +4059,7 @@
 
       <div class="svc-acc-item">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🔍</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg></span>
           <span class="svc-acc__title">Pill Identifier</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -4054,7 +4071,7 @@
 
       <div class="svc-acc-item">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🔔</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg></span>
           <span class="svc-acc__title">Refill &amp; Pickup Reminders</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -4066,7 +4083,7 @@
 
       <div class="svc-acc-item">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">💬</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg></span>
           <span class="svc-acc__title">Ask Our Pharmacist</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -4078,7 +4095,7 @@
 
       <div class="svc-acc-item" id="acc-insurance">
         <button class="svc-acc__head" aria-expanded="false">
-          <span class="svc-acc__icon">🛡️</span>
+          <span class="svc-acc__icon"><svg class="icon" aria-hidden="true"><use href="#i-card"></use></svg></span>
           <span class="svc-acc__title">Insurance Direct-Billing</span>
           <span class="svc-acc__chev">+</span>
         </button>
@@ -4122,11 +4139,11 @@
           <button type="button" id="dc-clear" class="btn btn--outline">Clear</button>
         </div>
         <div id="dc-results" class="dc-results"></div>
-        <p class="dc-disclaimer">⚠️ This tool is for general information only and may not capture every interaction. Always confirm with our pharmacists before starting, stopping, or combining medications. Medication names are sent anonymously to the U.S. National Library of Medicine (NLM RxNav API) — no personal health information is collected or stored by this website.</p>
+        <p class="dc-disclaimer"><svg class="icon" aria-hidden="true"><use href="#i-alert"></use></svg> This tool is for general information only and may not capture every interaction. Always confirm with our pharmacists before starting, stopping, or combining medications. Medication names are sent anonymously to the U.S. National Library of Medicine (NLM RxNav API) — no personal health information is collected or stored by this website.</p>
         <div class="dc-credit"><span>For a complete report, visit</span><a href="https://www.drugs.com/drug_interactions.html" target="_blank" rel="noopener" class="dc-credit__logo">Drugs<span>.com</span></a><span class="dc-credit__data">· Data: NLM RxNav · DrugBank · Health Canada</span></div>
       </div>
       <div class="dc-summary" id="dc-summary">
-        <div class="dc-summary__icon">💊</div>
+        <div class="dc-summary__icon"><svg class="icon" aria-hidden="true"><use href="#i-pill"></use></svg></div>
         <h3 class="dc-summary__title">Your Summary</h3>
         <p class="dc-summary__hint">Add your medications on the left, then click <strong>Check Interactions</strong> to see a summary here.</p>
         <div id="dc-summary-body" class="dc-summary__body"></div>
@@ -4151,7 +4168,7 @@
       </div>
       <div class="team-stat">
         <div class="team-stat__glow"></div>
-        <div class="team-stat__icon">🤝</div>
+        <div class="team-stat__icon"><svg class="icon" aria-hidden="true"><use href="#i-people"></use></svg></div>
         <div class="team-stat__copy">
           <div class="team-stat__num"><span class="js-team-countup" data-target="35">35</span>+ <span class="team-stat__num-unit">years</span></div>
           <p class="team-stat__label">of experience in pharmacy practice and patient care</p>
@@ -4320,7 +4337,7 @@
     <!-- Address bar -->
     <div class="find-us__addr-bar">
       <div class="find-us__addr-left">
-        <span class="find-us__addr-icon">📍</span>
+        <span class="find-us__addr-icon"><svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg></span>
         <div>
           <p class="find-us__addr-text">1203 St. Clair Avenue West, Toronto, ON</p>
           <a href="https://www.google.com/maps/dir/?api=1&destination=St.+Clair+Drug+Mart+Pharmacy+1203+St+Clair+Ave+W+Toronto+ON" target="_blank" rel="noopener" class="find-us__dir-link">Get Directions on Google Maps →</a>
@@ -4328,7 +4345,7 @@
       </div>
       <div class="find-us__contact-pills">
         <a href="tel:+14166548181" class="find-us__cpill find-us__cpill--call"><svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg> (416) 654-8181</a>
-        <a href="mailto:stclairdrugmart@gmail.com" class="find-us__cpill find-us__cpill--email">✉️ Email Us</a>
+        <a href="mailto:stclairdrugmart@gmail.com" class="find-us__cpill find-us__cpill--email"><svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg> Email Us</a>
       </div>
     </div>
 
@@ -4401,10 +4418,10 @@
 
       <!-- Transit -->
       <div class="info-strip__card" id="transit-card">
-        <div class="info-strip__title">🚇 Getting Here by TTC</div>
+        <div class="info-strip__title"><svg class="icon" aria-hidden="true"><use href="#i-transit"></use></svg> Getting Here by TTC</div>
         <div class="info-strip__body">
           <div class="transit-address">
-            <span class="transit-address__pin">📍</span>
+            <span class="transit-address__pin"><svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg></span>
             <span><strong>1203 St. Clair Ave W</strong> — corner of St. Clair &amp; Dufferin</span>
           </div>
           <div class="transit-routes">
@@ -4431,36 +4448,36 @@
             </div>
           </div>
         </div>
-        <a class="transit-btn" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=transit" target="_blank" rel="noopener">🗺️ Transit Directions →</a>
+        <a class="transit-btn" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=transit" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg> Transit Directions →</a>
       </div>
 
       <!-- Parking & Cycling -->
       <div class="info-strip__card" id="parking-card">
-        <div class="info-strip__title">🅿️ Parking &amp; 🚲 Cycling</div>
+        <div class="info-strip__title"><svg class="icon" aria-hidden="true"><use href="#i-parking"></use></svg> Parking &amp; <svg class="icon" aria-hidden="true"><use href="#i-bike"></use></svg> Cycling</div>
         <div class="info-strip__body">
           <div class="info-strip__chips">
             <div class="info-strip__subgroup" id="parking-car-group">
               <div class="info-strip__sub-label">Car Parking</div>
-              <div class="info-chip"><span class="info-chip__icon">🚗</span><span><strong>Street parking</strong> directly in front on St. Clair Ave W — free on evenings &amp; weekends</span></div>
-              <a class="info-chip" href="https://www.google.com/maps/search/?api=1&query=Green+P+Parking+St+Clair+Ave+W+Via+Italia+Toronto" target="_blank" rel="noopener"><span class="info-chip__icon">🅿️</span><span><strong>Green P — Via Italia Lot</strong> (St. Clair Ave W &amp; Via Italia, near Dufferin) <span class="info-chip__map">· Map →</span></span></a>
-              <div class="info-chip"><span class="info-chip__icon">♿</span><span>Accessible entrance &amp; designated parking spaces available</span></div>
+              <div class="info-chip"><span class="info-chip__icon"><svg class="icon" aria-hidden="true"><use href="#i-car"></use></svg></span><span><strong>Street parking</strong> directly in front on St. Clair Ave W — free on evenings &amp; weekends</span></div>
+              <a class="info-chip" href="https://www.google.com/maps/search/?api=1&query=Green+P+Parking+St+Clair+Ave+W+Via+Italia+Toronto" target="_blank" rel="noopener"><span class="info-chip__icon"><svg class="icon" aria-hidden="true"><use href="#i-parking"></use></svg></span><span><strong>Green P — Via Italia Lot</strong> (St. Clair Ave W &amp; Via Italia, near Dufferin) <span class="info-chip__map">· Map →</span></span></a>
+              <div class="info-chip"><span class="info-chip__icon"><svg class="icon" aria-hidden="true"><use href="#i-access"></use></svg></span><span>Accessible entrance &amp; designated parking spaces available</span></div>
             </div>
             <div class="info-strip__subgroup" id="parking-bike-group">
-              <div class="info-strip__sub-label" style="margin-top:.55rem;">🚲 Bike Share Toronto</div>
-              <a class="info-chip" href="https://bikesharetoronto.com/system-map/" target="_blank" rel="noopener"><span class="info-chip__icon">🚲</span><span><strong>91 Via Italia station</strong> — just around the corner from the pharmacy <span class="info-chip__map">· Live map →</span></span></a>
-              <a class="info-chip" href="https://bikesharetoronto.com/system-map/" target="_blank" rel="noopener"><span class="info-chip__icon">🚲</span><span><strong>7 Norton Ave station</strong> — another nearby option <span class="info-chip__map">· Live map →</span></span></a>
+              <div class="info-strip__sub-label" style="margin-top:.55rem;"><svg class="icon" aria-hidden="true"><use href="#i-bike"></use></svg> Bike Share Toronto</div>
+              <a class="info-chip" href="https://bikesharetoronto.com/system-map/" target="_blank" rel="noopener"><span class="info-chip__icon"><svg class="icon" aria-hidden="true"><use href="#i-bike"></use></svg></span><span><strong>91 Via Italia station</strong> — just around the corner from the pharmacy <span class="info-chip__map">· Live map →</span></span></a>
+              <a class="info-chip" href="https://bikesharetoronto.com/system-map/" target="_blank" rel="noopener"><span class="info-chip__icon"><svg class="icon" aria-hidden="true"><use href="#i-bike"></use></svg></span><span><strong>7 Norton Ave station</strong> — another nearby option <span class="info-chip__map">· Live map →</span></span></a>
             </div>
           </div>
         </div>
         <div class="info-strip__btn-row">
-          <a class="transit-btn" style="flex:1;min-width:120px;margin-top:0;" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=driving" target="_blank" rel="noopener">🗺️ Driving →</a>
-          <a class="transit-btn" style="flex:1;min-width:120px;margin-top:0;background:var(--teal-mid);" href="https://www.google.com/maps/dir/?api=1&destination=Via+Italia+%26+St+Clair+Ave+W,+Toronto,+ON&travelmode=bicycling" target="_blank" rel="noopener">🚲 Cycling →</a>
+          <a class="transit-btn" style="flex:1;min-width:120px;margin-top:0;" href="https://www.google.com/maps/dir/?api=1&destination=1203+St+Clair+Ave+W,+Toronto,+ON&travelmode=driving" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg> Driving →</a>
+          <a class="transit-btn" style="flex:1;min-width:120px;margin-top:0;background:var(--teal-mid);" href="https://www.google.com/maps/dir/?api=1&destination=Via+Italia+%26+St+Clair+Ave+W,+Toronto,+ON&travelmode=bicycling" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-bike"></use></svg> Cycling →</a>
         </div>
       </div>
 
       <!-- Languages & Accessibility -->
       <div class="info-strip__card">
-        <div class="info-strip__title">♿ Accessibility</div>
+        <div class="info-strip__title"><svg class="icon" aria-hidden="true"><use href="#i-access"></use></svg> Accessibility</div>
         <div class="info-strip__body">
           <p class="info-strip__intro">Proudly independent and family-operated — our multicultural team speaks your language:</p>
           <div class="lang-flags">
@@ -4469,14 +4486,14 @@
             <div class="lang-flag-item"><span class="lang-flag">🇮🇹</span><span class="lang-name">Italian</span></div>
             <div class="lang-flag-item"><span class="lang-flag">🇵🇹</span><span class="lang-name">Portuguese</span></div>
             <div class="lang-flag-item"><span class="lang-flag">🇹🇷</span><span class="lang-name">Turkish</span></div>
-            <div class="lang-flag-item"><span class="lang-flag">🌍</span><span class="lang-name">&amp; more</span></div>
+            <div class="lang-flag-item"><span class="lang-flag"><svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg></span><span class="lang-name">&amp; more</span></div>
           </div>
           <div class="lang-access-chips">
-            <div class="info-chip"><span class="info-chip__icon">🩺</span><span><strong>Diabetes consultations</strong> — medication reviews &amp; management support</span></div>
-            <div class="info-chip"><span class="info-chip__icon">♿</span><span>Fully accessible entrance &amp; parking available</span></div>
-            <div class="info-chip"><span class="info-chip__icon">🏳️‍🌈</span><span>LGBTQ+ friendly &amp; welcoming space</span></div>
+            <div class="info-chip"><span class="info-chip__icon"><svg class="icon" aria-hidden="true"><use href="#i-stethoscope"></use></svg></span><span><strong>Diabetes consultations</strong> — medication reviews &amp; management support</span></div>
+            <div class="info-chip"><span class="info-chip__icon"><svg class="icon" aria-hidden="true"><use href="#i-access"></use></svg></span><span>Fully accessible entrance &amp; parking available</span></div>
+            <div class="info-chip"><span class="info-chip__icon"><svg class="icon" aria-hidden="true"><use href="#i-heart"></use></svg></span><span>LGBTQ+ friendly &amp; welcoming space</span></div>
           </div>
-          <div class="info-chip" style="margin-top:.9rem;"><span class="info-chip__icon">🔗</span><span><strong>Specialist Referrals</strong> — we can connect you with optometrists, physio, mental health, and more. <a href="#services" style="color:var(--teal-dark);font-weight:600;">See our referral services →</a></span></div>
+          <div class="info-chip" style="margin-top:.9rem;"><span class="info-chip__icon"><svg class="icon" aria-hidden="true"><use href="#i-link"></use></svg></span><span><strong>Specialist Referrals</strong> — we can connect you with optometrists, physio, mental health, and more. <a href="#services" style="color:var(--teal-dark);font-weight:600;">See our referral services →</a></span></div>
         </div>
       </div>
 
@@ -4510,7 +4527,7 @@
       <div class="shop__card">
         <div class="shop__card__head">
           <div class="shop__card__icon-wrap shop__card__icon-wrap--delivery">
-            <span>🚴</span>
+            <span><svg class="icon" aria-hidden="true"><use href="#i-bike"></use></svg></span>
           </div>
           <div class="shop__card__title">Free GTA Delivery</div>
         </div>
@@ -4522,14 +4539,14 @@
       <div class="shop__card">
         <div class="shop__card__head">
           <div class="shop__card__icon-wrap shop__card__icon-wrap--braces">
-            <span>🦵</span>
+            <span><svg class="icon" aria-hidden="true"><use href="#i-bandage"></use></svg></span>
           </div>
           <div class="shop__card__title">Braces &amp; Supports</div>
         </div>
         <p class="shop__card__desc">
           Champion, OTC Professional &amp; Truform back, knee, wrist, ankle and abdominal supports plus medical compression stockings — in stock now.
         </p>
-        <a href="/braces-supports.html" class="btn btn--outline">🩹 Shop Braces &amp; Supports</a>
+        <a href="/braces-supports.html" class="btn btn--outline"><svg class="icon" aria-hidden="true"><use href="#i-bandage"></use></svg> Shop Braces &amp; Supports</a>
       </div>
     </div>
   </div>
@@ -4593,199 +4610,199 @@
 // list. Add new FAQs into the matching category group, or a new category +
 // matching FAQ_CAT_META entry if none fits.
 window.FAQ_CAT_META = [
-  { id: "ailments",     icon: "🩺", label: "Minor Ailments & Prescribing" },
-  { id: "vaccines",     icon: "💉", label: "Vaccines & Travel Health" },
-  { id: "prescriptions",icon: "🔄", label: "Prescriptions, Transfers & Refills" },
-  { id: "reviews",      icon: "💊", label: "Medication Safety & Reviews" },
-  { id: "insurance",    icon: "🏥", label: "Insurance & Cost" },
-  { id: "delivery",     icon: "🚚", label: "Delivery & Access" },
-  { id: "naloxone",     icon: "🆘", label: "Naloxone & Harm Reduction" },
-  { id: "general",      icon: "🌐", label: "General & About Us" }
+  { id: "ailments",     icon: '<svg class="icon" aria-hidden="true"><use href="#i-stethoscope"></use></svg>', label: "Minor Ailments & Prescribing" },
+  { id: "vaccines",     icon: '<svg class="icon" aria-hidden="true"><use href="#i-syringe"></use></svg>', label: "Vaccines & Travel Health" },
+  { id: "prescriptions",icon: '<svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg>', label: "Prescriptions, Transfers & Refills" },
+  { id: "reviews",      icon: '<svg class="icon" aria-hidden="true"><use href="#i-pill"></use></svg>', label: "Medication Safety & Reviews" },
+  { id: "insurance",    icon: '<svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg>', label: "Insurance & Cost" },
+  { id: "delivery",     icon: '<svg class="icon" aria-hidden="true"><use href="#i-truck"></use></svg>', label: "Delivery & Access" },
+  { id: "naloxone",     icon: '<svg class="icon" aria-hidden="true"><use href="#i-lifebuoy"></use></svg>', label: "Naloxone & Harm Reduction" },
+  { id: "general",      icon: '<svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg>', label: "General & About Us" }
 ];
 window.FAQS = [
   {
     cat: "ailments",
-    icon: "🩺",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-stethoscope"></use></svg>',
     q: "Can a pharmacist prescribe medication in Ontario?",
     a: "Yes — in Ontario, pharmacists are authorized to prescribe for 28 minor ailments under the Minor Ailments Program (MAP). You can walk in with no appointment needed, and many assessments can be done in the pharmacy or over the phone when appropriate. Conditions include UTIs, skin infections, acid reflux, pink eye, cold sores, athlete's foot, oral thrush, and more. Our pharmacist assesses you and can prescribe or recommend treatment right away. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},200)\">See all 28 conditions →</a>"
   },
   {
     cat: "ailments",
-    icon: "🦠",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-virus"></use></svg>',
     q: "Can I get a UTI prescription without seeing a doctor?",
     a: "Yes. Urinary tract infections (UTIs) are one of the 28 conditions Ontario pharmacists can now independently assess and prescribe for. No doctor visit required. Walk in, <a href=\"#booking\">book online</a>, or call us — depending on your symptoms, the assessment can often be done in the pharmacy or over the phone. Our pharmacist will review your symptoms and, if appropriate, prescribe an antibiotic the same day. This service is covered by OHIP for eligible patients. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},200)\">View all minor ailments →</a>"
   },
   {
     cat: "ailments",
-    icon: "🚭",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-no-smoking"></use></svg>',
     q: "Can a pharmacist help me quit smoking in Ontario?",
     a: "Yes — Ontario pharmacists can independently assess you and prescribe all first-line smoking cessation treatments, including <strong>varenicline (Champix)</strong> and <strong>bupropion (Zyban)</strong>, without a doctor's referral. We also carry the full range of nicotine replacement therapies (patches, gum, lozenges, inhaler), available over-the-counter. Our pharmacist will work with you on a personalized quit plan and follow-up support. Coverage varies by plan — many treatments are covered by private insurance, and ODB-eligible patients may qualify through the ODB Smoking Cessation Program. <a href=\"#booking\" class=\"js-pa-select\" data-url=\"https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=16\">Start your quit assessment online →</a>"
   },
   {
     cat: "ailments",
-    icon: "🚭",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-no-smoking"></use></svg>',
     q: "Are smoking cessation aids free in Ontario?",
     a: "The pharmacist consultation and quit assessment are always free, with no appointment required. The medications themselves (NRT patches/gum, Champix, Zyban) aren't automatically free — NRT is sold over-the-counter, and Champix/Zyban require a prescription. Whether you pay out-of-pocket depends on your coverage: private insurance often covers part or all of the cost, and if you're ODB-eligible (Trillium, OHIP+, social assistance, or 65+) you may qualify for coverage through the ODB Smoking Cessation Program. Bring your insurance or ODB card and we'll tell you your exact cost before you commit to anything. <a href=\"#booking\" class=\"js-pa-select\" data-url=\"https://app.pharmassess.ca/self-assessment/306667?diagnosisName=true&amp;diagnosisId=16\">Start your free quit assessment →</a>"
   },
   {
     cat: "ailments",
-    icon: "🌸",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-flower"></use></svg>',
     q: "Can I get birth control from a pharmacist without seeing a doctor?",
     a: "In many cases, yes. Ontario pharmacists can prescribe hormonal contraception (the pill, the patch, and the ring) for eligible patients without a doctor's visit. <a href=\"#booking\">Book a quick consultation</a> or walk in, and our pharmacist will review your health history and get you started — often the same day."
   },
   {
     cat: "ailments",
-    icon: "🧸",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-baby"></use></svg>',
     q: "Can a pharmacist help with my child's medication or a minor illness?",
     a: "Yes, for many common conditions and medication questions — our pharmacists can advise on dosing, OTC options, and several minor ailments in children, and will always tell you plainly if your child needs to see a doctor instead. <a href=\"tel:+14166548181\">Call us</a> or walk in to ask."
   },
   {
     cat: "vaccines",
-    icon: "💉",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-syringe"></use></svg>',
     q: "What vaccines do you offer?",
     a: "We offer a wide range of vaccinations including flu (influenza), COVID-19, shingles (Shingrix), pneumonia, travel vaccines (Hepatitis A &amp; B, typhoid), Tdap (tetanus, diphtheria, pertussis), and HPV. No doctor's referral is needed. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},200)\">View all vaccines &amp; book an appointment →</a>"
   },
   {
     cat: "vaccines",
-    icon: "✈️",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg>',
     q: "What am I at risk of when travelling abroad, and what should I get before I go?",
     a: "It depends where you're headed, but common travel health risks include: <strong>food- and water-borne illness</strong> (traveller's diarrhea, hepatitis A, typhoid), <strong>mosquito-borne diseases</strong> (malaria, dengue, yellow fever, Zika, Japanese encephalitis), <strong>hepatitis B</strong> and other blood- or contact-spread infections, <strong>rabies</strong> from animal bites, and <strong>meningococcal disease</strong> (a particular concern for Hajj pilgrims and parts of sub-Saharan Africa). It's also worth making sure your routine shots — tetanus (Tdap), measles, and the like — are up to date. What you actually need depends on your destination, how long you're staying, and what you'll be doing. <strong>Book a travel-health consultation</strong> and our pharmacist will review your itinerary, recommend the right vaccines and medications (and let you know if anything, such as yellow fever, requires a designated travel clinic), and get you travel-ready in one visit. Try to come in <strong>4–6 weeks before you leave</strong> — some vaccines need time, or more than one dose, to fully protect you. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},200)\">View travel vaccines &amp; book →</a>"
   },
   {
     cat: "prescriptions",
-    icon: "🔄",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg>',
     q: "How do I transfer my prescriptions to your pharmacy?",
     a: "Transferring is simple. Use the <strong>Transfer Your Rx</strong> button in our <a href=\"#booking\">Patient Portal</a>, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a>, or just walk in. We contact your previous pharmacy on your behalf — you don't need to do anything else. Most transfers are processed within 15–30 minutes, and we'll text or call you when it's ready."
   },
   {
     cat: "prescriptions",
-    icon: "🔐",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-key"></use></svg>',
     q: "Can I sign in online to see my prescriptions and request refills?",
     a: "Yes — sign in to your secure PharmAssess patient profile anytime, from your phone or computer, to view your prescriptions, request refills, book appointments, and access our other pharmacist services without calling or coming in. <a href=\"#booking\" class=\"js-pa-select\" data-url=\"https://app.pharmassess.ca/login/306667\" data-label=\"Patient Login — PharmAssess Portal\" data-iframeheight=\"660\">Sign in to your patient portal →</a>"
   },
   {
     cat: "prescriptions",
-    icon: "🔁",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg>',
     q: "Can a pharmacist renew my prescription if I can't reach my doctor?",
     a: "Yes. If you're already stable on a medication and your doctor's office can't be reached, our pharmacist can independently renew your prescription for continuity of care — up to the original amount prescribed or a 12-month supply, whichever is less (most narcotics and controlled substances are excluded). We confirm the therapy has been working safely for you, authorize the renewal, and notify your doctor afterward — often over the phone, though our pharmacist may ask you to come in if an in-person check is needed. This isn't covered by OHIP — our fee is $15. We're happy to give you a receipt to submit to your extended health or drug benefit plan, though coverage of pharmacist clinical service fees varies by plan, so check with your provider. If you're taking multiple medications, your renewal may be covered with a <strong>Medication Review</strong> instead — at no cost — confirming it's safe to keep taking everything together. <a href=\"tel:+14166548181\">Call us</a> or come in to get started."
   },
   {
     cat: "prescriptions",
-    icon: "💊",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-pill"></use></svg>',
     q: "Do you carry Ozempic, Wegovy, generic semaglutide, or other weight-loss and diabetes medications?",
     a: "We carry these when supply allows — they've been subject to periodic national shortages, so availability can change week to week. Generic semaglutide is now available and considered interchangeable with brand-name Ozempic, which can make this medication more accessible and affordable for patients — ask us if switching to the generic is right for you. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to check current stock, ask about transferring an existing prescription, switching to a generic, or talk through insurance coverage before you switch pharmacies."
   },
   {
     cat: "prescriptions",
-    icon: "📉",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-box"></use></svg>',
     q: "My regular medication is out of stock everywhere — what can you do?",
     a: "Tell us before you run out, if possible. We track manufacturer shortages and can often source an equivalent product, suggest a substitution with your prescriber's approval, or help stretch your remaining supply so you're never left without. Call <a href=\"tel:+14166548181\">(416) 654-8181</a> as soon as you notice your refills running low."
   },
   {
     cat: "prescriptions",
-    icon: "⏱️",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>',
     q: "How long does it take to fill a new prescription?",
     a: "Most new prescriptions are ready within 15–20 minutes if we're not busy, and we'll always give you a realistic estimate when you drop it off. You're welcome to wait in-store, run an errand and come back, or have it delivered free to your door."
   },
   {
     cat: "prescriptions",
-    icon: "🔄",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg>',
     q: "Can a pharmacist extend or adapt my prescription?",
     a: "Yes. Ontario pharmacists can <strong>extend</strong> (renew) an existing prescription so you don't run out while waiting to reach your doctor, and can also <strong>adapt</strong> a prescription — adjusting the dose, dosage form (e.g. tablet to liquid), or regimen to better suit you — without contacting your doctor first. Both are only for medications you're already stable and established on; we always notify your prescriber afterward. Extensions are capped at the original quantity prescribed or a 12-month supply, whichever is less, and most narcotics and controlled substances are excluded. This isn't covered by OHIP — our fee is $15. We're happy to provide a receipt to submit to your extended health or drug benefit plan, though coverage of pharmacist clinical service fees varies by plan, so check with your provider. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},200)\">See how prescription renewals &amp; adaptations work →</a>"
   },
   {
     cat: "reviews",
-    icon: "💊",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-pill"></use></svg>',
     q: "Is a MedsCheck medication review really free?",
     a: "Yes, completely free for eligible Ontario residents. You qualify if you take 3 or more chronic medications, were recently discharged from hospital, or have a complex medication regimen. Our pharmacist reviews all your medications for interactions, duplications, and side effects, and puts together a personalized medication plan. Most reviews take 30–45 minutes. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},200)\">Book a Medication Review →</a>"
   },
   {
     cat: "reviews",
-    icon: "📦",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-box"></use></svg>',
     q: "Do you offer blister packs for complex medication schedules?",
     a: "Yes. We prepare weekly blister (bubble) packs that organize your medications by day and time — ideal for patients managing multiple prescriptions, or families supporting a loved one. Blister packs reduce missed doses and medication errors. Call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> or <a href=\"#booking\">book a setup appointment</a> — it usually takes just one short visit."
   },
   {
     cat: "reviews",
-    icon: "⏰",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>',
     q: "What should I do if I missed a dose of my medication?",
     a: "It depends on the medication, how late you are, and when your next dose is due — so the safest answer is always to ask us directly rather than guess. Call <a href=\"tel:+14166548181\">(416) 654-8181</a> and our pharmacist can tell you whether to take it now, skip it, or adjust your next dose."
   },
   {
     cat: "reviews",
-    icon: "🧪",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-testtube"></use></svg>',
     q: "I take several medications from different doctors — is it safe to take them all together?",
     a: "That's exactly what a <strong>Medication Review (MedsCheck)</strong> is for — free for eligible Ontario residents who take 3 or more medications. Our pharmacist checks everything you're on for interactions, duplications, and side effects. You can also get a quick first look with our <a href=\"#drug-checker\">free Drug Interaction Checker →</a>, then book a full review online."
   },
   {
     cat: "insurance",
-    icon: "🏥",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg>',
     q: "Do you accept ODB, OHIP+, and private insurance?",
     a: "Yes — we accept the Ontario Drug Benefit (ODB) program, OHIP+ for patients under 25, Trillium Drug Program, and virtually all major private insurance plans including Sunlife, Manulife, Great-West Life, Blue Cross, and more. We process claims directly so you only pay any outstanding balance. Bring your insurance card and we'll handle the rest. <a href=\"#services\">See insurance &amp; coverage details →</a>"
   },
   {
     cat: "insurance",
-    icon: "💸",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-card"></use></svg>',
     q: "Can I save money by switching to generic medications?",
     a: "In most cases, yes. Generic medications contain the same active ingredient, dose, and strength as brand-name drugs — they're just manufactured by a different company after the patent expires. In Ontario, pharmacists can often substitute a generic automatically. Ask us at the counter or <a href=\"#booking\">book a quick consultation</a> — savings can be significant, especially for long-term medications."
   },
   {
     cat: "insurance",
-    icon: "🧾",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-card"></use></svg>',
     q: "What if my insurance doesn't fully cover my medication?",
     a: "We'll always tell you the out-of-pocket cost before you pay, and look for ways to lower it — generic substitution, manufacturer savings programs, the Ontario Drug Benefit or Trillium Drug Program if you're eligible, and price-matching where we can. Ask us at the counter; there's no charge for the conversation."
   },
   {
     cat: "delivery",
-    icon: "🚚",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-truck"></use></svg>',
     q: "Do you deliver prescriptions in Toronto?",
     a: "Yes — free prescription and health product delivery anywhere in the GTA, with no minimum order and no delivery fee. Just call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> to arrange it. We're also on <strong>Uber Eats</strong> for fast on-demand delivery of OTC products, vitamins, and essentials — often under 30 minutes. <a href=\"#shop\">Order online →</a>"
   },
   {
     cat: "naloxone",
-    icon: "🆘",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-lifebuoy"></use></svg>',
     q: "Where can I get a free naloxone kit in Toronto?",
     a: "You can pick up a <strong>free naloxone (Narcan®) kit</strong> right here at St. Clair Drug Mart — 1203 St. Clair Ave W, Toronto. We provide kits through the <strong>Ontario Naloxone Program</strong> at no cost, with no prescription needed and no appointment required. Our pharmacist will give you a quick, confidential training so you feel prepared. Just walk in or call <a href=\"tel:+14166548181\">(416) 654-8181</a>. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},200)\">Learn more about our naloxone program →</a>"
   },
   {
     cat: "naloxone",
-    icon: "💊",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-pill"></use></svg>',
     q: "Do I need a prescription for naloxone (Narcan) in Ontario?",
     a: "No — naloxone nasal spray (Narcan®) is available <strong>without a prescription</strong> in Ontario. Through the Ontario Naloxone Program, we provide free kits to anyone who uses opioids (whether prescribed or otherwise), as well as family members, caregivers, and anyone who wants to be prepared to help. No judgment, no paperwork. Walk in or call <a href=\"tel:+14166548181\">(416) 654-8181</a>."
   },
   {
     cat: "naloxone",
-    icon: "❤️",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-heart"></use></svg>',
     q: "What is naloxone and how does it work?",
     a: "Naloxone (Narcan®) is a fast-acting medication that reverses an opioid overdose by blocking opioids in the brain — restoring normal breathing within 2–5 minutes. It works against oxycodone, fentanyl, hydromorphone, codeine, heroin, and other opioids. It is completely safe: if opioids aren't present, it has no effect. We provide kits <strong>free of charge</strong> with a short training session so you know exactly what to do. <a href=\"#services\" onclick=\"setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},200)\">Get your free kit →</a>"
   },
   {
     cat: "naloxone",
-    icon: "🚚",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-truck"></use></svg>',
     q: "Can I get a free naloxone kit delivered to my home in Toronto?",
     a: "Yes — if you can't make it in, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> and we'll arrange <strong>free naloxone kit delivery</strong> anywhere in the GTA as part of our free prescription and health product delivery service, with no minimum order and no delivery fee. Your kit through the Ontario Naloxone Program is free either way — in-store or delivered to your door — and we're happy to walk you through the training over the phone."
   },
   {
     cat: "general",
-    icon: "🌐",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg>',
     q: "Do you serve patients in languages other than English?",
     a: "Absolutely. Our team speaks English, Spanish, Portuguese, Italian, Turkish, Polish, and more — reflecting the rich diversity of Corso Italia and St. Clair West. We want every patient to feel understood and comfortable. If you're not sure whether we speak your language, call us at <a href=\"tel:+14166548181\">(416) 654-8181</a> or <a href=\"#team\">meet our team →</a>"
   },
   {
     cat: "general",
-    icon: "⭐",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-star"></use></svg>',
     q: "Someone told me St. Clair Drug Mart is the best pharmacy around here — is that true?",
     a: "That's kind to hear, but we'd rather let our patients answer that one than say it ourselves. What we can tell you is what we focus on every day: walk-in pharmacist care for 28 common conditions with no appointment needed, free prescription delivery across the GTA, and a team that speaks English, Spanish, Portuguese, Italian, Turkish &amp; more. If you'd like to hear it from neighbours instead of us, <a href=\"#reviews\">read what they've said →</a>"
   },
   {
     cat: "general",
-    icon: "🧴",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-pill"></use></svg>',
     q: "Do you sell over-the-counter medications, vitamins, and supplements?",
     a: "Yes — we carry a full range of OTC medications, vitamins, supplements, and everyday health products, alongside our pharmacist's advice on what's actually right for you. If we don't have something in stock, ask us — we can often order it in or suggest a comparable alternative. You can also browse and order through our <a href=\"#shop\">Uber Eats shop →</a>"
   },
   {
     cat: "general",
-    icon: "♻️",
+    icon: '<svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg>',
     q: "How do I safely dispose of old or expired medications?",
     a: "Bring them in. We accept expired, unused, or leftover medications (pills, liquids, inhalers, sharps) for free, safe disposal year-round, no appointment needed. Please don't flush medications or throw them in household trash — just drop them off at the counter any time we're open."
   }
@@ -4827,7 +4844,7 @@ window.FAQS = [
       hd.className = 'faq-cat__hd';
       hd.dataset.cat = faq.cat;
       var meta = catMeta[faq.cat];
-      hd.textContent = meta ? (meta.icon + ' ' + meta.label) : faq.cat;
+      if (meta) { hd.innerHTML = meta.icon + ' ' + meta.label; } else { hd.textContent = faq.cat; }
       list.appendChild(hd);
       lastCat = faq.cat;
     }
@@ -4838,7 +4855,7 @@ window.FAQS = [
     var btn = document.createElement('button');
     btn.className = 'faq-item__q';
     btn.setAttribute('aria-expanded', 'false');
-    btn.innerHTML = '<span class="faq-item__q-icon">' + (faq.icon || '💬') + '</span><span class="faq-item__q-text">' + faq.q + '</span>' + svg;
+    btn.innerHTML = '<span class="faq-item__q-icon">' + (faq.icon || '<svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg>') + '</span><span class="faq-item__q-text">' + faq.q + '</span>' + svg;
     var ans = document.createElement('div');
     ans.className = 'faq-item__a';
     ans.innerHTML = '<div class="faq-item__a-inner">' + faq.a + '</div>';
@@ -5147,7 +5164,7 @@ window.SmartMatch = (function(){
         if (paWrap && paIframe && url) {
           paIframe.src = url;
           paIframe.style.height = '900px';
-          if (paLabel) paLabel.textContent = '🩺 ' + this.dataset.name + ' — Assessment';
+          if (paLabel) paLabel.textContent = this.dataset.name + ' — Assessment';
           if (window.setPaHint) window.setPaHint('');
           paWrap.style.display = '';
           paWrap.classList.remove('collapsed');
@@ -5564,7 +5581,7 @@ window.SmartMatch = (function(){
   window.setPaHint = function(html) {
     if (!paHintEl) return;
     if (html) {
-      paHintEl.innerHTML = '💡 ' + html;
+      paHintEl.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-help"></use></svg> ' + html;
       paHintEl.classList.add('show');
     } else {
       paHintEl.classList.remove('show');
@@ -5704,10 +5721,8 @@ window.SmartMatch = (function(){
     var card = chip.closest('.ailment-card');
     if (card) {
       var nameEl = card.querySelector('.ailment-card__name');
-      var icon = card.querySelector('.ailment-card__icon');
       var name = nameEl ? nameEl.textContent.trim() : 'Condition';
-      var iconText = icon ? icon.textContent.trim() : '🩺';
-      return iconText + ' ' + name + ' — Assessment';
+      return name + ' — Assessment';
     }
     return chip.textContent.trim() + ' — Assessment';
   }
@@ -6046,10 +6061,10 @@ window.SmartMatch = (function(){
 
     const SEV_ORDER = { contraindicated:0, major:1, moderate:2, minor:3 };
     const SEV_LABEL = {
-      contraindicated: { label:'⛔ Contraindicated', cls:'sev-contra',  result:'dc-result--contra' },
-      major:           { label:'🔴 Major',           cls:'sev-major',   result:'dc-result--major'  },
-      moderate:        { label:'🟡 Moderate',         cls:'sev-moderate',result:''                 },
-      minor:           { label:'🟢 Minor',            cls:'sev-minor',   result:''                 },
+      contraindicated: { label:'Contraindicated', cls:'sev-contra',  result:'dc-result--contra' },
+      major:           { label:'Major',           cls:'sev-major',   result:'dc-result--major'  },
+      moderate:        { label:'Moderate',         cls:'sev-moderate',result:''                 },
+      minor:           { label:'Minor',            cls:'sev-minor',   result:''                 },
     };
 
     function norm(s) {
@@ -6285,7 +6300,7 @@ window.SmartMatch = (function(){
 
       if (!pairs.length) {
         html += `<div class="dc-result">
-          <div class="dc-result__title">✅ No known interactions found</div>
+          <div class="dc-result__title"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg> No known interactions found</div>
           <div class="dc-result__text">No interactions were identified between <strong>${drugs.map(esc).join(' and ')}</strong> in the NLM RxNav database or our curated reference.<br><br>
           This does not guarantee these medications are safe to combine in your specific situation. Always confirm with our pharmacists — especially if you are on multiple medications, have kidney or liver conditions, or are pregnant.</div>
         </div>`;
@@ -6294,7 +6309,7 @@ window.SmartMatch = (function(){
           const s = SEV_LABEL[p.sev] || { label:p.sev, cls:'sev-minor', result:'' };
           const showCta = p.sev==='contraindicated'||p.sev==='major'||p.sev==='moderate';
           const ctaHtml = showCta
-            ? `<div class="dc-result__cta"><a href="#booking" class="dc-result__medscheck-link js-pa-select" data-url="https://app.pharmassess.ca/patient/meds/306667">📋 Book a Medication Review →</a></div>`
+            ? `<div class="dc-result__cta"><a href="#booking" class="dc-result__medscheck-link js-pa-select" data-url="https://app.pharmassess.ca/patient/meds/306667"><svg class="icon" aria-hidden="true"><use href="#i-clipboard"></use></svg> Book a Medication Review →</a></div>`
             : '';
           html += `<div class="dc-result dc-result--ix ${s.result}">
             <div class="dc-result__header">
@@ -6331,19 +6346,19 @@ window.SmartMatch = (function(){
       const mod   =pairs.filter(p=>p.sev==='moderate').length;
       let html='', showCta=false;
       if (!pairs.length) {
-        html = `<div class="dc-summary__status dc-summary__status--ok">✅ No interactions found</div>
+        html = `<div class="dc-summary__status dc-summary__status--ok"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg> No interactions found</div>
           <div class="dc-summary__detail">NLM RxNav and our curated reference found no known interactions between <strong>${drugs.map(esc).join(' and ')}</strong>.<br><br>Always confirm with our pharmacists before making changes to your medications.</div>`;
       } else {
         const topSev = contra>0 ? 'contraindicated' : major>0 ? 'major' : 'moderate';
         const statusCls = {contraindicated:'dc-summary__status--contra', major:'dc-summary__status--warn', moderate:'dc-summary__status--moderate'}[topSev];
-        const statusLabel = contra>0 ? '⛔ Contraindicated combination' : major>0 ? '🔴 Major interaction(s) found' : '🟡 Moderate interaction(s) found';
+        const statusLabel = contra>0 ? 'Contraindicated combination' : major>0 ? 'Major interaction(s) found' : 'Moderate interaction(s) found';
         html = `<div class="dc-summary__status ${statusCls}">${statusLabel}</div><div class="dc-summary__detail">`;
         if (contra) html += `<strong>${contra} contraindicated</strong> pair${contra>1?'s':''} detected. `;
         if (major)  html += `<strong>${major} major</strong> interaction${major>1?'s':''} detected. `;
         if (mod)    html += `<strong>${mod} moderate</strong> interaction${mod>1?'s':''} detected. `;
         html += `<br><br>A Medication Review with our pharmacist is strongly recommended.</div>`;
         if (contra > 0) {
-          sc.innerHTML = `<div class="dc-emergency-alert"><strong>⚠️ If you are currently taking both of these medications, contact your pharmacist or physician immediately.</strong> If you are experiencing symptoms, call 911 or go to the nearest emergency department.</div>
+          sc.innerHTML = `<div class="dc-emergency-alert"><strong><svg class="icon" aria-hidden="true"><use href="#i-alert"></use></svg> If you are currently taking both of these medications, contact your pharmacist or physician immediately.</strong> If you are experiencing symptoms, call 911 or go to the nearest emergency department.</div>
             <a href="tel:+14166548181" class="btn" style="width:100%;text-align:center;margin-top:.75rem;">Call Our Pharmacist: (416) 654-8181</a>
             <div class="dc-pharmacist" style="margin-top:.85rem;">Or <a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/patient/meds/306667">book an urgent medication review</a></div>`;
         } else {
@@ -6829,7 +6844,7 @@ window.SmartMatch = (function(){
         if (paWrap && paIframe && url) {
           paIframe.src = url;
           paIframe.style.height = '900px';
-          if (paLabel) paLabel.textContent = '🩺 ' + this.dataset.name + ' — Assessment';
+          if (paLabel) paLabel.textContent = this.dataset.name + ' — Assessment';
           if (window.setPaHint) window.setPaHint('');
           if (paWrap) { paWrap.style.display = ''; paWrap.classList.remove('collapsed'); }
           document.querySelectorAll('.pa-card').forEach(function(c) { c.classList.remove('active'); });
@@ -6908,30 +6923,30 @@ window.SmartMatch = (function(){
 
   // ── Site-Wide Search ──────────────────────────────────────
   var SITE_INDEX = [
-    { icon:'🩺', title:'Common Conditions', desc:'No doctor needed — pharmacist can assess and prescribe for 28 conditions', tag:'Service', anchor:'#services', open:'acc-ailments', kw:'uti urinary tract infection pink eye conjunctivitis cold sore yeast infection rash acne acid reflux heartburn allergies allergic reaction hives bladder infection minor ailment' },
-    { icon:'🏥', title:'Patient Portal & Online Booking', desc:'Book appointments, self-assessment, refill requests', tag:'Service', anchor:'#booking', kw:'book appointment online refill request self assessment schedule visit' },
-    { icon:'💉', title:'Vaccines & Travel Health', desc:'Flu, COVID, shingles, Tdap, RSV, travel vaccines', tag:'Service', anchor:'#services', open:'acc-vaccines', kw:'flu shot influenza covid booster shingles shingrix pneumonia pneumococcal travel vaccine yellow fever typhoid hepatitis a b tdap tetanus diphtheria hpv rsv immunization' },
-    { icon:'📋', title:'Medication Reviews (MedsCheck)', desc:'One-on-one review of all your medications — OHIP covered', tag:'Service', anchor:'#services', open:'acc-med-reviews', kw:'polypharmacy multiple medications too many pills side effects senior medication list review medscheck safe together' },
-    { icon:'🔁', title:'Medication Extensions & Adaptations', desc:'Pharmacist can renew your Rx if your doctor cannot be reached', tag:'Service', anchor:'#services', open:'acc-rx-renewal', kw:'refill extension renew expired no refills left ran out doctor unreachable continuity of care' },
-    { icon:'🚭', title:'Smoking Cessation', desc:'Champix, nicotine patches, personalized quit plan', tag:'Service', anchor:'#services', open:'acc-cessation', kw:'champix chantix varenicline zyban bupropion nicotine patch gum lozenge inhaler quit smoking vape vaping' },
-    { icon:'🩹', title:'Free Naloxone Kits', desc:'Free naloxone kits and training — no prescription needed', tag:'Service', anchor:'#services', open:'acc-naloxone', kw:'narcan opioid overdose fentanyl heroin oxycodone hydromorphone codeine reversal' },
-    { icon:'💊', title:'Drug Interaction Checker', desc:'Check if your medications interact safely', tag:'Tool', anchor:'#drug-checker', kw:'tylenol advil ibuprofen acetaminophen aspirin warfarin blood thinner antibiotic statin lipitor metformin ozempic wegovy eliquis xarelto ssri interaction safe together check medications' },
-    { icon:'📦', title:'Order on Uber Eats', desc:'Pharmacy items delivered to your door', tag:'Shop', anchor:'#shop', kw:'over the counter otc vitamins supplements household items' },
-    { icon:'👩‍⚕️', title:'Meet Our Team', desc:'Elizabeth Da Silva BScPharm and our pharmacy staff', tag:'About', anchor:'#team' },
-    { icon:'📍', title:'Find Us & Hours', desc:'1203 St. Clair Ave W — Mon–Fri 9am–6pm, Sat 9am–2pm', tag:'Contact', anchor:'#contact' },
-    { icon:'🏪', title:'About St. Clair Drug Mart', desc:'Your neighbourhood pharmacy since 1960', tag:'About', anchor:'#about' },
-    { icon:'❓', title:'FAQ', desc:'Frequently asked questions about our services', tag:'Help', anchor:'#faq' },
-    { icon:'📝', title:'Health & Wellness Blog', desc:'Pharmacy tips, health news, and wellness guides', tag:'Blog', url:'blog/index.html' },
-    { icon:'🔄', title:'Prescription Transfers', desc:'Transfer your prescription to us — we call the other pharmacy', tag:'Service', anchor:'#services', open:'acc-transfer', kw:'switch pharmacy move prescription shoppers drug mart rexall walmart costco loblaws' },
-    { icon:'📸', title:'New Prescription — Send a Photo', desc:'Send a photo of your new prescription online', tag:'Service', anchor:'#booking', kw:'send photo new prescription upload e-prescription fax doctor sent it electronically' },
-    { icon:'🦵', title:'Braces, Supports & Compression Stockings', desc:'Champion, OTC Professional & Truform — in-store now', tag:'Shop', url:'braces-supports.html', kw:'back brace lumbar support knee brace sleeve wrist brace splint elbow strap ankle support abdominal binder compression socks stockings orthopedic champion otc professional truform medical device' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-stethoscope"></use></svg>', title:'Common Conditions', desc:'No doctor needed — pharmacist can assess and prescribe for 28 conditions', tag:'Service', anchor:'#services', open:'acc-ailments', kw:'uti urinary tract infection pink eye conjunctivitis cold sore yeast infection rash acne acid reflux heartburn allergies allergic reaction hives bladder infection minor ailment' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg>', title:'Patient Portal & Online Booking', desc:'Book appointments, self-assessment, refill requests', tag:'Service', anchor:'#booking', kw:'book appointment online refill request self assessment schedule visit' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-syringe"></use></svg>', title:'Vaccines & Travel Health', desc:'Flu, COVID, shingles, Tdap, RSV, travel vaccines', tag:'Service', anchor:'#services', open:'acc-vaccines', kw:'flu shot influenza covid booster shingles shingrix pneumonia pneumococcal travel vaccine yellow fever typhoid hepatitis a b tdap tetanus diphtheria hpv rsv immunization' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-clipboard"></use></svg>', title:'Medication Reviews (MedsCheck)', desc:'One-on-one review of all your medications — OHIP covered', tag:'Service', anchor:'#services', open:'acc-med-reviews', kw:'polypharmacy multiple medications too many pills side effects senior medication list review medscheck safe together' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg>', title:'Medication Extensions & Adaptations', desc:'Pharmacist can renew your Rx if your doctor cannot be reached', tag:'Service', anchor:'#services', open:'acc-rx-renewal', kw:'refill extension renew expired no refills left ran out doctor unreachable continuity of care' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-no-smoking"></use></svg>', title:'Smoking Cessation', desc:'Champix, nicotine patches, personalized quit plan', tag:'Service', anchor:'#services', open:'acc-cessation', kw:'champix chantix varenicline zyban bupropion nicotine patch gum lozenge inhaler quit smoking vape vaping' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-bandage"></use></svg>', title:'Free Naloxone Kits', desc:'Free naloxone kits and training — no prescription needed', tag:'Service', anchor:'#services', open:'acc-naloxone', kw:'narcan opioid overdose fentanyl heroin oxycodone hydromorphone codeine reversal' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-pill"></use></svg>', title:'Drug Interaction Checker', desc:'Check if your medications interact safely', tag:'Tool', anchor:'#drug-checker', kw:'tylenol advil ibuprofen acetaminophen aspirin warfarin blood thinner antibiotic statin lipitor metformin ozempic wegovy eliquis xarelto ssri interaction safe together check medications' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-box"></use></svg>', title:'Order on Uber Eats', desc:'Pharmacy items delivered to your door', tag:'Shop', anchor:'#shop', kw:'over the counter otc vitamins supplements household items' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-people"></use></svg>', title:'Meet Our Team', desc:'Elizabeth Da Silva BScPharm and our pharmacy staff', tag:'About', anchor:'#team' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg>', title:'Find Us & Hours', desc:'1203 St. Clair Ave W — Mon–Fri 9am–6pm, Sat 9am–2pm', tag:'Contact', anchor:'#contact' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg>', title:'About St. Clair Drug Mart', desc:'Your neighbourhood pharmacy since 1960', tag:'About', anchor:'#about' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-help"></use></svg>', title:'FAQ', desc:'Frequently asked questions about our services', tag:'Help', anchor:'#faq' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-pencil"></use></svg>', title:'Health & Wellness Blog', desc:'Pharmacy tips, health news, and wellness guides', tag:'Blog', url:'blog/index.html' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg>', title:'Prescription Transfers', desc:'Transfer your prescription to us — we call the other pharmacy', tag:'Service', anchor:'#services', open:'acc-transfer', kw:'switch pharmacy move prescription shoppers drug mart rexall walmart costco loblaws' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-camera"></use></svg>', title:'New Prescription — Send a Photo', desc:'Send a photo of your new prescription online', tag:'Service', anchor:'#booking', kw:'send photo new prescription upload e-prescription fax doctor sent it electronically' },
+    { icon: '<svg class="icon" aria-hidden="true"><use href="#i-bandage"></use></svg>', title:'Braces, Supports & Compression Stockings', desc:'Champion, OTC Professional & Truform — in-store now', tag:'Shop', url:'braces-supports.html', kw:'back brace lumbar support knee brace sleeve wrist brace splint elbow strap ankle support abdominal binder compression socks stockings orthopedic champion otc professional truform medical device' },
   ].concat(AILMENT_DB.map(function(a) {
     return { icon:a.icon, title:a.name, desc: a.call ? 'Minor ailment — call us for treatment options' : 'Minor ailment — pharmacist can prescribe', tag:'Condition', anchor:'#booking', ailmentUrl: a.call ? null : (PHARMA_BASE + a.id), kw: a.kw.join(' ') };
   })).concat((window.FAQS || []).map(function(f) {
     var plain = document.createElement('div');
     plain.innerHTML = f.a;
     var body = (plain.textContent || '').trim().replace(/&/g, '&amp;');
-    return { icon: f.icon || '❓', title: f.q, desc: body.length > 110 ? body.slice(0, 110) + '…' : body, tag:'FAQ', anchor:'#faq', isFaq:true, kw: body };
+    return { icon: f.icon || '<svg class="icon" aria-hidden="true"><use href="#i-help"></use></svg>', title: f.q, desc: body.length > 110 ? body.slice(0, 110) + '…' : body, tag:'FAQ', anchor:'#faq', isFaq:true, kw: body };
   }));
 
   // Expose the condition/service data so the FAQ search bar (a separate
@@ -7049,7 +7064,7 @@ window.SmartMatch = (function(){
           if (paWrap && paIframe) {
             paIframe.src = ailmentUrl;
             paIframe.style.height = '900px';
-            if (paLabel) paLabel.textContent = '🩺 ' + this.dataset.title + ' — Assessment';
+            if (paLabel) paLabel.textContent = this.dataset.title + ' — Assessment';
             if (window.setPaHint) window.setPaHint('');
             if (paWrap) { paWrap.style.display = ''; paWrap.classList.remove('collapsed'); }
             document.querySelectorAll('.pa-card').forEach(function(c) { c.classList.remove('active'); });
