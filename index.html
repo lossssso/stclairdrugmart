@@ -2413,6 +2413,29 @@
     @media (max-width: 700px)  { .ailments-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 440px)  { .ailments-grid { grid-template-columns: 1fr; } }
 
+    /* ── Services grid rhythm (design audit): break the identical-white-card
+       fields with one focal card per grid, subtle alternating tint, and
+       varied density — structure, not decoration. No new motion: these
+       grids inherit the section's single staggerReveal. ── */
+    @media (min-width: 701px) {
+      /* the flu shot — the most-booked vaccine — anchors its grid */
+      .vaccine-grid > .vaccine-card:first-child {
+        grid-column: span 2;
+        background: linear-gradient(135deg, var(--teal-ice) 0%, #eefcfd 100%);
+        border: 1px solid var(--teal-bright);
+        box-shadow: 0 1px 2px rgba(5,44,49,.06), 0 12px 32px -8px rgba(23,148,160,.28);
+      }
+      .vaccine-grid > .vaccine-card:first-child .vaccine-card__name { font-size: 1.15rem; }
+    }
+    /* vaccines read airy vs. the denser ailments grid */
+    .vaccine-card { padding: 1.45rem 1.3rem; }
+    /* soft diagonal tint rhythm across the big card fields */
+    .ailment-card:nth-child(3n) { background: rgba(215,251,252,.45); }
+    .naloxone-card:nth-child(odd) { background: rgba(215,251,252,.45); }
+    .cessation-option:nth-child(odd) { background: rgba(215,251,252,.45); }
+    /* insurance: soft column stripes instead of a flat teal field */
+    .insurance-card:nth-child(even) { background: var(--white); }
+
     /* ── Drug Interaction Checker ─────────────────── */
     #drug-checker { background: #fff; padding-top: 2.5rem; }
     .dc-layout {
