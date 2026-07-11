@@ -159,10 +159,18 @@ nothing to the deployed site and does not touch the no-build/no-npm rule for `in
 ## Welcome-Section 3D Walk-In (`walkin3d.js` — live on dev)
 A scroll-driven Three.js walk-through of a stylized, procedurally-built St. Clair Drug Mart
 (flat-color primitives — no photo textures), embedded in `#welcome` after `.welcome__boxes`.
-The real `logo.png` is composited into the sign + back-wall textures at runtime. The ten
-"What brings you in today?" consultation pills live *inside* the scene as `.w3d-spot`
-hotspots (world-space `data-pos`, projected to screen each frame); the classic text-column
-pills are hidden only under `html.w3d-on`, so every gated-off visitor keeps them.
+The stage is full-bleed (`.w3d__track` escapes the 1100px `.section__inner` via
+`width:100vw; margin-left:calc(50% - 50vw)`) so it covers the whole viewport width on wide
+monitors. The real `logo.png` is composited into the sign texture and onto the
+counselling-room wall at runtime. Interior layout mirrors the real store photos: long
+charcoal counter w/ white top down the LEFT (white dispensary wall behind it), more dark
+product shelving on the left past the counter, full espresso shelf run on the RIGHT, cream
+tile + dark runner mats, TV on the back wall, frosted-glass counselling room in the
+back-RIGHT corner (logo only, no text sign). ACES filmic tone mapping + a scroll-speed-scaled
+head-bob give it the game-walkthrough feel. The ten "What brings you in today?" consultation
+pills appear together as one organized menu overlay (`#w3d-menu`, CSS grid, staggered spring
+pop-in toggled at ~80% walk progress) over the back wall; the classic text-column pills are
+hidden only under `html.w3d-on`, so every gated-off visitor keeps them.
 Guardrails (all in `walkin3d.js`, markup/CSS in `index.html` `#w3d-styles` — fully swappable):
 - Boot gate: bails on `prefers-reduced-motion`, `hardwareConcurrency <= 2`,
   `deviceMemory <= 2`, `lite-clouds` (the measured perf-guard signal), no

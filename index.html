@@ -2799,7 +2799,8 @@
     .w3d { display: none; }
     html.w3d-on .w3d { display: block; margin-top: 2.5rem; }
     /* With the 3D walk-in active, the consultation pills live inside the store
-       as hotspots — hide the classic text-column copies so they exist once. */
+       as the end-of-walk menu — hide the classic text-column copies so they
+       exist once. */
     html.w3d-on .welcome__text .welcome__question,
     html.w3d-on .welcome__pills { display: none; }
     .w3d__lead { text-align: center; margin-bottom: 1.1rem; }
@@ -2809,22 +2810,27 @@
       color: var(--teal-deeper); margin: 0 0 .25rem;
     }
     .w3d__lead-sub { font-size: .9rem; color: var(--text-muted); margin: 0; }
-    .w3d__track { position: relative; height: 380vh; }
+    /* Full-bleed: the track escapes the 1100px .section__inner so the scene
+       covers the whole viewport width on wide monitors — no white gutters.
+       (body{overflow-x:hidden} absorbs the scrollbar-width overshoot.) */
+    .w3d__track {
+      position: relative; height: 380vh;
+      width: 100vw; margin-left: calc(50% - 50vw);
+    }
     .w3d__stage {
       position: absolute; top: 0; left: 0; right: 0;
       height: 100vh; height: 100dvh;
       overflow: hidden;
-      border-radius: var(--radius-lg);
       background: linear-gradient(180deg, #eafcfd 0%, #cfeff5 100%);
-      box-shadow: var(--shadow-card);
     }
     .w3d__stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
     /* WP9 — WebGL context-loss fallback: a real photo, never a blank canvas.
        Hidden unless walkin3d.js adds .w3d--lost after a webglcontextlost event. */
     .w3d__fallback-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
     .w3d__stage.w3d--lost canvas,
-    .w3d__stage.w3d--lost .w3d-spot,
+    .w3d__stage.w3d--lost .w3d__menu,
     .w3d__stage.w3d--lost .w3d__hint,
+    .w3d__stage.w3d--lost .w3d__progress,
     .w3d__stage.w3d--lost .w3d__skip { display: none; }
     .w3d__stage.w3d--lost .w3d__fallback-img { display: block; }
     .w3d__hint {
@@ -2835,55 +2841,104 @@
     }
     @keyframes w3d-bob { 0%,100% { transform: translate(-50%,0); } 50% { transform: translate(-50%,7px); } }
     .w3d__skip {
-      position: absolute; bottom: 4vh; right: 3.5vw;
+      /* sits above the floating chat bubble (bottom-right corner) */
+      position: absolute; bottom: 11vh; right: 3.5vw;
       background: rgba(5,44,49,.55); color: #fff; border: 1px solid rgba(255,255,255,.35);
       border-radius: 999px; padding: .45rem .95rem; font-size: .78rem; font-weight: 700;
-      cursor: pointer; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      cursor: pointer; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      transition: transform .15s ease-out, background .15s ease-out;
     }
     .w3d__skip:hover { background: rgba(5,44,49,.8); }
-    .w3d-spot {
-      position: absolute; display: flex; align-items: center; gap: .45rem;
-      opacity: 0; pointer-events: none; text-decoration: none; z-index: 3;
-      transform-origin: left center; will-change: transform, opacity;
+    .w3d__skip:active { transform: scale(.96); }
+    /* thin scroll-progress bar along the bottom of the stage (transform-only) */
+    .w3d__progress {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+      background: var(--teal-bright);
+      transform: scaleX(0); transform-origin: left center;
+      will-change: transform; pointer-events: none;
     }
-    .w3d-spot--flip { flex-direction: row-reverse; transform-origin: right center; }
+    /* ── end-of-walk consultation menu: all ten bubbles, organized at once
+       over the back wall, staggered spring pop-in ── */
+    .w3d__menu {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%, -54%);
+      width: min(720px, 92%);
+      text-align: center;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity .3s ease-out, visibility 0s linear .3s;
+      z-index: 3;
+    }
+    .w3d__menu.is-on {
+      opacity: 1; visibility: visible; pointer-events: auto;
+      transition: opacity .25s ease-out;
+    }
+    .w3d__menu-title {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 2vw, 1.4rem); font-weight: 800;
+      color: var(--teal-deeper);
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(23,148,160,.25);
+      border-radius: 999px;
+      padding: .5rem 1.3rem; margin: 0 0 1rem;
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 1px 2px rgba(5,44,49,.08), 0 12px 32px rgba(5,44,49,.14);
+    }
+    .w3d__menu-grid {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .55rem .7rem; justify-items: stretch;
+    }
+    .w3d-spot {
+      display: flex; align-items: center; gap: .55rem;
+      text-decoration: none;
+      background: rgba(255,255,255,.92);
+      color: var(--teal-dark);
+      font-size: .84rem; font-weight: 700; line-height: 1.25;
+      padding: .55rem .85rem; border-radius: 999px;
+      border: 1px solid rgba(23,148,160,.28);
+      box-shadow: 0 1px 2px rgba(5,44,49,.1), 0 8px 24px rgba(5,44,49,.16);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      /* pop-in: starts lower + smaller, springs up on .is-on (per-item
+         stagger via --d); transform/opacity only */
+      opacity: 0; transform: translateY(16px) scale(.9);
+      transition: transform .45s cubic-bezier(.3,1.45,.45,1) var(--d, 0s),
+                  opacity .3s ease-out var(--d, 0s),
+                  background .15s ease-out;
+    }
+    .w3d__menu.is-on .w3d-spot { opacity: 1; transform: translateY(0) scale(1); }
+    .w3d__menu.is-on .w3d-spot:hover { background: #fff; transform: translateY(-2px) scale(1.02); transition-delay: 0s; }
+    .w3d__menu.is-on .w3d-spot:active { transform: translateY(0) scale(.97); transition-delay: 0s; }
+    .w3d-spot:focus-visible { outline: 3px solid var(--teal-dark); outline-offset: 2px; }
+    .w3d-spot .icon { flex-shrink: 0; }
     .w3d-spot-dot {
-      width: 17px; height: 17px; border-radius: 50%; flex-shrink: 0;
-      background: var(--teal-bright); border: 3px solid #fff;
-      box-shadow: 0 0 0 5px rgba(33,161,168,.35), 0 2px 8px rgba(0,0,0,.4);
-      animation: w3d-pulse 2s ease-in-out infinite;
+      position: relative;
+      width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0;
+      background: var(--teal-bright); border: 2px solid #fff;
+      box-shadow: 0 0 0 1px rgba(33,161,168,.35);
+    }
+    /* pulse ring — transform/opacity only (perf rule: never animate box-shadow) */
+    .w3d-spot-dot::after {
+      content: ''; position: absolute; inset: -5px; border-radius: 50%;
+      border: 2px solid rgba(33,161,168,.5);
+      animation: w3d-pulse 2s ease-out infinite;
     }
     @keyframes w3d-pulse {
-      0%,100% { box-shadow: 0 0 0 5px rgba(33,161,168,.35), 0 2px 8px rgba(0,0,0,.4); }
-      50%     { box-shadow: 0 0 0 11px rgba(33,161,168,.12), 0 2px 8px rgba(0,0,0,.4); }
+      0%      { transform: scale(.6); opacity: .9; }
+      70%,100%{ transform: scale(1.35); opacity: 0; }
     }
-    .w3d-spot-label {
-      position: relative;
-      background: #fff; color: var(--teal-dark);
-      font-size: .8rem; font-weight: 700; line-height: 1.25;
-      padding: .45rem .8rem; border-radius: 13px;
-      border: 1.5px solid var(--border);
-      white-space: nowrap;
-      box-shadow: 0 3px 14px rgba(0,0,0,.28);
-      transition: background .15s;
+    @media (prefers-reduced-motion: reduce) { .w3d-spot-dot::after { animation: none; opacity: 0; } }
+    .w3d-spot-label { overflow: hidden; text-overflow: ellipsis; }
+    @media (prefers-reduced-motion: reduce) {
+      .w3d-spot { transition: none; }
+      .w3d-spot-dot, .w3d__hint { animation: none; }
     }
-    .w3d-spot-label::before,
-    .w3d-spot-label::after { content: ''; position: absolute; top: 50%; width: 0; height: 0; border-style: solid; }
-    .w3d-spot .w3d-spot-label::before { left: -8px; margin-top: -7px; border-width: 7px 8px 7px 0; border-color: transparent var(--border) transparent transparent; }
-    .w3d-spot .w3d-spot-label::after  { left: -6px; margin-top: -5.5px; border-width: 5.5px 6.5px 5.5px 0; border-color: transparent #fff transparent transparent; }
-    .w3d-spot--flip .w3d-spot-label::before { left: auto; right: -8px; border-width: 7px 0 7px 8px; border-color: transparent transparent transparent var(--border); }
-    .w3d-spot--flip .w3d-spot-label::after  { left: auto; right: -6px; border-width: 5.5px 0 5.5px 6.5px; border-color: transparent transparent transparent #fff; }
-    .w3d-spot:hover .w3d-spot-label,
-    .w3d-spot:focus-visible .w3d-spot-label { background: var(--teal-ice); }
-    .w3d-spot:hover .w3d-spot-label::after,
-    .w3d-spot:focus-visible .w3d-spot-label::after { border-right-color: var(--teal-ice); }
-    .w3d-spot--flip:hover .w3d-spot-label::after,
-    .w3d-spot--flip:focus-visible .w3d-spot-label::after { border-right-color: transparent; border-left-color: var(--teal-ice); }
-    .w3d-spot:focus-visible .w3d-spot-dot { outline: 3px solid var(--teal-dark); outline-offset: 2px; }
     @media (max-width: 768px) {
       .w3d__track { height: 330vh; }
-      .w3d-spot-label { font-size: .7rem; padding: .32rem .55rem; }
-      .w3d__skip { bottom: 3vh; right: 4vw; font-size: .72rem; }
+      .w3d__skip { bottom: 12vh; right: 4vw; font-size: .72rem; }
+      .w3d__menu { transform: translate(-50%, -50%); }
+      .w3d__menu-grid { grid-template-columns: 1fr; gap: .4rem; }
+      .w3d-spot { font-size: .78rem; padding: .45rem .75rem; justify-content: flex-start; }
     }
   </style>
 </head>
@@ -3255,25 +3310,33 @@
          .welcome__text carry these same prompts for everyone else. ── -->
     <div class="w3d" id="store-walkin3d" role="region" aria-label="Scroll-through 3D tour: step inside our pharmacy">
       <div class="w3d__lead">
-        <p class="w3d__lead-q">What brings you in today?</p>
-        <p class="w3d__lead-sub">Step inside our pharmacy — tap a bubble to get what you need.</p>
+        <p class="w3d__lead-q">Step inside our pharmacy</p>
+        <p class="w3d__lead-sub">Scroll to walk in — at the counter, tap what you need help with today.</p>
       </div>
       <div class="w3d__track" id="w3d-track">
         <div class="w3d__stage" id="w3d-stage">
           <canvas id="w3d-canvas" aria-hidden="true"></canvas>
           <img id="w3d-fallback-img" class="w3d__fallback-img" src="storefront_exterior.webp" width="1227" height="1281" alt="St. Clair Drug Mart storefront at 1203 St. Clair Ave W, Toronto" loading="lazy" decoding="async" />
-          <a class="w3d-spot" data-pos="-2.1,1.55,-3.0" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-droplet"></use></svg> Better blood sugar control</span></a>
-          <a class="w3d-spot w3d-spot--flip" data-pos="3.05,1.6,-3.4" href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-thermometer"></use></svg> I'm feeling ill</span></a>
-          <a class="w3d-spot" data-pos="-3.1,1.6,-5.5" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-pill"></use></svg> Medication side effects</span></a>
-          <a class="w3d-spot w3d-spot--flip" data-pos="3.05,1.9,-5.9" href="#services" onclick="setTimeout(function(){openAcc('acc-poct');document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},200)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-baby"></use></svg> I might be pregnant!</span></a>
-          <a class="w3d-spot" data-pos="-3.1,1.65,-8.0" href="#services" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-bandage"></use></svg> Running out of medication</span></a>
-          <a class="w3d-spot w3d-spot--flip" data-pos="3.05,1.5,-8.3" href="#services" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-lifebuoy"></use></svg> I need a free naloxone kit</span></a>
-          <a class="w3d-spot" data-pos="-2.3,1.6,-10.5" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-leaf"></use></svg> Natural health advice</span></a>
-          <a class="w3d-spot w3d-spot--flip" data-pos="3.05,1.9,-10.9" href="#services" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-no-smoking"></use></svg> I want to quit smoking!</span></a>
-          <a class="w3d-spot w3d-spot--flip" data-pos="-0.6,1.8,-12.6" href="#services" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg> Travel &amp; vaccines</span></a>
-          <a class="w3d-spot js-pa-select" data-pos="2.15,1.55,-12.75" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand."><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-virus"></use></svg> COVID-19 test &amp; certificate</span></a>
+          <!-- End-of-walk consultation menu: every bubble appears together,
+               organized over the back wall (walkin3d.js toggles .is-on). -->
+          <div class="w3d__menu" id="w3d-menu">
+            <p class="w3d__menu-title">What brings you in today?</p>
+            <div class="w3d__menu-grid">
+              <a class="w3d-spot" style="--d:.02s" href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-thermometer"></use></svg> I'm feeling ill</span></a>
+              <a class="w3d-spot" style="--d:.06s" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-pill"></use></svg> Medication side effects</span></a>
+              <a class="w3d-spot" style="--d:.1s" href="#services" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-bandage"></use></svg> Running out of medication</span></a>
+              <a class="w3d-spot" style="--d:.14s" href="#services" onclick="setTimeout(function(){openAcc('acc-vaccines');document.getElementById('acc-vaccines').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg> Travel &amp; vaccines</span></a>
+              <a class="w3d-spot" style="--d:.18s" href="#services" onclick="setTimeout(function(){openAcc('acc-cessation');document.getElementById('acc-cessation').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-no-smoking"></use></svg> I want to quit smoking!</span></a>
+              <a class="w3d-spot" style="--d:.22s" href="#services" onclick="setTimeout(function(){openAcc('acc-naloxone');document.getElementById('acc-naloxone').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-lifebuoy"></use></svg> I need a free naloxone kit</span></a>
+              <a class="w3d-spot" style="--d:.26s" href="#services" onclick="setTimeout(function(){openAcc('acc-poct');document.getElementById('acc-poct').scrollIntoView({behavior:'smooth',block:'start'})},200)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-baby"></use></svg> I might be pregnant!</span></a>
+              <a class="w3d-spot js-pa-select" style="--d:.3s" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-iframeheight="1350" data-label="Point-of-Care Testing" data-hint="Select <strong>Point-of-care Testing</strong> under TYPE OF APPOINTMENT, then choose your test under TYPE OF TEST and your preferred brand."><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-virus"></use></svg> COVID-19 test &amp; certificate</span></a>
+              <a class="w3d-spot" style="--d:.34s" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-droplet"></use></svg> Better blood sugar control</span></a>
+              <a class="w3d-spot" style="--d:.38s" href="#services" onclick="setTimeout(function(){openAcc('acc-med-reviews');document.getElementById('acc-med-reviews').scrollIntoView({behavior:'smooth',block:'start'})},120)"><span class="w3d-spot-dot"></span><span class="w3d-spot-label"><svg class="icon" aria-hidden="true"><use href="#i-leaf"></use></svg> Natural health advice</span></a>
+            </div>
+          </div>
           <div class="w3d__hint" id="w3d-hint">Scroll to walk in<br>&#9660;</div>
           <button class="w3d__skip" id="w3d-skip" type="button">Skip &darr;</button>
+          <div class="w3d__progress" id="w3d-progress" aria-hidden="true"></div>
         </div>
       </div>
     </div>
