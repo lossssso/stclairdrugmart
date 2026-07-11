@@ -178,6 +178,8 @@
       --sec-pad-sm: 3.25rem 1.5rem;
       --sec-pad-md: 5rem 1.5rem;
       --sec-pad-lg: 7rem 1.5rem;
+      /* Keyboard focus ring — used by the global :focus-visible block */
+      --focus-ring: 2px solid var(--teal-dark);
     }
     html { scroll-behavior: smooth; }
     html {
@@ -689,6 +691,19 @@
       .reviews-stars-fill { transform: translateX(-2%); }
       .reviews-stars-fill__inner { transform: translateX(2%); }
     }
+    /* ── Focus-visible ring system ─────────────────────────────────
+       One tokenized keyboard-focus treatment for every interactive element.
+       :focus-visible only — mouse/touch focus stays ringless, keyboard
+       (and other modality-appropriate) focus gets a clear brand ring.
+       outline follows border-radius, so pills/cards get rounded rings. */
+    a:focus-visible, button:focus-visible, [tabindex]:focus-visible,
+    input:focus-visible, select:focus-visible, textarea:focus-visible,
+    summary:focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: 2px;
+    }
+    a:focus:not(:focus-visible), button:focus:not(:focus-visible),
+    [tabindex]:focus:not(:focus-visible) { outline: none; }
     /* Signature reveals (motion identity): masked headline rise + clip-path photo
        entrance. JS adds .t-mask/.img-reveal only when motion is allowed; no-JS and
        reduced-motion render the static state. */
@@ -2909,7 +2924,7 @@
     .w3d__menu.is-on .w3d-spot { opacity: 1; transform: translateY(0) scale(1); }
     .w3d__menu.is-on .w3d-spot:hover { background: #fff; transform: translateY(-2px) scale(1.02); transition-delay: 0s; }
     .w3d__menu.is-on .w3d-spot:active { transform: translateY(0) scale(.97); transition-delay: 0s; }
-    .w3d-spot:focus-visible { outline: 3px solid var(--teal-dark); outline-offset: 2px; }
+    .w3d-spot:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
     .w3d-spot .icon { flex-shrink: 0; }
     .w3d-spot-dot {
       position: relative;
