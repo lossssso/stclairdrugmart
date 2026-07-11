@@ -94,6 +94,9 @@ This site must NOT look AI-generated. Before writing any CSS, commit to a clear 
 - Every screen needs one single strong visual anchor — never fill every inch with content
 ## Performance Rules (non-negotiable)
 - Only animate transform and opacity — never top, left, width, margin, height, or box-shadow
+  - Single accepted exception: the FAQ accordion body animates `grid-template-rows 0fr→1fr`
+    (click-triggered, one bounded reflow — the cleanest no-JS auto-height reveal). Do not
+    add further height-animation exceptions.
 - prefers-reduced-motion fallback on every animation — show static state immediately
 - will-change: transform only on actively animating elements, removed after via onLeave callback
 - No animation on off-screen elements
