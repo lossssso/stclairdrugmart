@@ -189,11 +189,19 @@ Guardrails (all in `walkin3d.js`, markup/CSS in `index.html` `#w3d-styles` — f
 
 ## About-Section Photo Sequence (`#abt-seq` — live on dev)
 Apple-style scroll-scrubbed 2D-canvas crossfade through the six real gallery photos
-(street → storefront → inside), vanilla JS inline near the end of `<body>`, styles in
-`#abtseq-styles`. Activates `html.abtseq-on` (which hides the static `.gallery`); the static
-gallery is the reduced-motion / no-JS / pre-activation state. It observes `#about` (not its
-own hidden block — `display:none` elements never intersect). No WebGL, no library; DPR
-capped at 2; draws only on scroll-progress change.
+(street → storefront → inside) with crossfading caption pills, vanilla JS inline near the
+end of `<body>` (beside the walkin3d loader), styles in `#abtseq-styles`. Full-bleed track
+(100vw escape from `.section__inner`), 300vh desktop / 250vh mobile. Activates
+`html.abtseq-on` (which hides the static `.gallery`); the static gallery is the
+reduced-motion / no-JS / gated-off / pre-activation state. Boot gate: reduced-motion,
+`lite-clouds` (checked BOTH at parse and again when the IO fires — the measured-FPS
+downgrade lands ~1.6s after load), no IntersectionObserver, no 2D context; tier-2 devices
+run at DPR 1 (tier-1 capped at 2). It observes `#about` (not its own hidden block —
+`display:none` elements never intersect), decodes all six photos with one retry per image
+before activating (any hard failure leaves the gallery). Stage pinning is hand-rolled
+(absolute↔fixed, same pattern as walkin3d) — `body{overflow-x:hidden}` makes body a scroll
+container and silently breaks `position:sticky` here. No WebGL, no library; draws only on
+quantized scroll-progress change (two `drawImage` calls per redraw).
 ## Accessibility
 - Descriptive alt text on all images
 - All interactive elements keyboard accessible

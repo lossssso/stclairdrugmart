@@ -3083,6 +3083,59 @@
       .w3d-spot { font-size: .78rem; padding: .45rem .75rem; justify-content: flex-start; }
     }
   </style>
+  <!-- ── About photo sequence — scoped styles (feature lives here + the inline
+       script near the walkin3d loader; fully swappable). Apple-style scroll-
+       scrubbed 2D-canvas crossfade through the six real store photos. Hidden
+       unless JS activates it (html.abtseq-on); the static .gallery is the
+       no-JS / reduced-motion / gated-off state. ── -->
+  <style id="abtseq-styles">
+    .abtseq { display: none; }
+    html.abtseq-on .abtseq { display: block; margin-top: 2rem; }
+    html.abtseq-on #about .gallery { display: none; }
+    /* full-bleed like the 3D walk-in: escape the 1100px column */
+    .abtseq__track {
+      position: relative; height: 300vh;
+      width: 100vw; margin-left: calc(50% - 50vw);
+    }
+    /* Stage pinning is hand-rolled in JS (position absolute<->fixed), the
+       same pattern as the 3D walk-in: body{overflow-x:hidden} makes body a
+       scroll container and silently breaks position:sticky here. */
+    .abtseq__stage {
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 100vh; height: 100dvh;
+      overflow: hidden;
+      background: #0d2d2e;
+    }
+    .abtseq__stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .abtseq__cap {
+      position: absolute; left: 50%; bottom: 8vh;
+      transform: translate(-50%, 14px);
+      opacity: 0;
+      margin: 0; padding: .55rem 1.25rem;
+      background: rgba(255,255,255,.85);
+      border: 1px solid rgba(23,148,160,.25);
+      border-radius: 999px;
+      -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+      font-family: var(--font-display); font-weight: 800;
+      font-size: clamp(.95rem, 1.8vw, 1.25rem);
+      color: var(--teal-deeper); white-space: nowrap;
+      box-shadow: 0 1px 2px rgba(5,44,49,.08), 0 12px 32px rgba(5,44,49,.18);
+      transition: transform .45s var(--ease-out), opacity .35s var(--ease-out);
+      pointer-events: none;
+    }
+    .abtseq__cap.is-on { transform: translate(-50%, 0); opacity: 1; }
+    .abtseq__progress {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+      background: var(--teal-bright);
+      transform: scaleX(0); transform-origin: left center;
+      will-change: transform; pointer-events: none;
+    }
+    @media (max-width: 768px) {
+      .abtseq__track { height: 250vh; }
+      .abtseq__cap { bottom: 12vh; font-size: .9rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { .abtseq__cap { transition: none; } }
+  </style>
 </head>
 <body>
 <!-- WP8 shared icon sprite — stroked-teal line icons (currentColor, ~1.6 stroke) replacing
@@ -4836,6 +4889,26 @@
         As an independent pharmacy, every decision we make is guided by what's best for our community,
         not a corporate bottom line. Come in and experience the difference.
       </p>
+    </div>
+
+    <!-- ── About photo sequence: Apple-style scroll-scrubbed canvas crossfade
+         through the six real photos (street → storefront → inside). Activated
+         by the inline script near the walkin3d loader (html.abtseq-on hides
+         the static .gallery below, which remains the fallback state). ── -->
+    <div class="abtseq" id="abt-seq" role="img"
+         aria-label="A visual tour: Corso Italia streetscape, the St. Clair Drug Mart storefront at 1203 St. Clair Avenue West, and the pharmacy interior with its counter, shelves and counselling room.">
+      <div class="abtseq__track" id="abtseq-track">
+        <div class="abtseq__stage">
+          <canvas id="abtseq-canvas"></canvas>
+          <p class="abtseq__cap" data-i="0">Corso Italia — our neighbourhood</p>
+          <p class="abtseq__cap" data-i="1">1203 St. Clair Ave W</p>
+          <p class="abtseq__cap" data-i="2">Your neighbourhood pharmacy</p>
+          <p class="abtseq__cap" data-i="3">Step inside</p>
+          <p class="abtseq__cap" data-i="4">Everything under one roof</p>
+          <p class="abtseq__cap" data-i="5">Real care, in person</p>
+          <div class="abtseq__progress" id="abtseq-progress" aria-hidden="true"></div>
+        </div>
+      </div>
     </div>
 
     <div class="gallery">
@@ -8107,5 +8180,152 @@ window.SmartMatch = (function(){
 })();
 </script>
 <script src="walkin3d.js" defer></script>
+<script>
+/* ── About photo sequence (#abt-seq) — Apple-style scroll-scrubbed 2D-canvas
+   crossfade through the six real gallery photos. No WebGL, no library: a
+   progress read + two drawImage calls per change. The static .gallery is the
+   no-JS / reduced-motion / gated-off / pre-activation state (html.abtseq-on
+   swaps them). Gating mirrors the site's perf probe: bail on reduced motion
+   or a measured-weak device (lite-clouds); tier-2 devices still run, capped
+   at 1x DPR — a 2D crossfade is cheap. */
+(function () {
+  'use strict';
+  var about = document.getElementById('about');
+  var track = document.getElementById('abtseq-track');
+  var canvas = document.getElementById('abtseq-canvas');
+  if (!about || !track || !canvas) return;
+  try {
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (document.documentElement.classList.contains('lite-clouds')) return;
+    if (!('IntersectionObserver' in window)) return;
+  } catch (e) { return; }
+  var ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  var root = document.documentElement;
+  var tier2 = root.getAttribute('data-perf-tier') === '2';
+  var DPR = Math.min(window.devicePixelRatio || 1, tier2 ? 1 : 2);
+
+  /* street → storefront → inside, matching the static gallery's photos */
+  var SRCS = ['neighbourhood.webp', 'storefront_studio.webp', 'storefront_angle.webp',
+              'interior_wide.webp', 'interior_shelves.webp', 'interior_aisle.webp'];
+  var caps = [].slice.call(track.querySelectorAll('.abtseq__cap'));
+  var progressBar = document.getElementById('abtseq-progress');
+  var stage = track.querySelector('.abtseq__stage');
+  var imgs = null;
+
+  /* hand-rolled stage pin (same pattern as walkin3d — position:sticky is
+     broken here by body{overflow-x:hidden} making body a scroll container) */
+  var pinState = -1;
+  function pin(rect, force) {
+    var vh = window.innerHeight;
+    var want = rect.top > 0 ? 0 : (rect.bottom < vh ? 2 : 1);
+    if (want === pinState && !force) return;
+    pinState = want;
+    if (want === 1) {
+      stage.style.position = 'fixed';
+      stage.style.top = '0'; stage.style.bottom = 'auto';
+      stage.style.left = rect.left + 'px'; stage.style.right = 'auto';
+      stage.style.width = rect.width + 'px';
+    } else {
+      stage.style.position = 'absolute';
+      stage.style.left = '0'; stage.style.right = '0'; stage.style.width = '';
+      if (want === 0) { stage.style.top = '0'; stage.style.bottom = 'auto'; }
+      else { stage.style.top = 'auto'; stage.style.bottom = '0'; }
+    }
+  }
+
+  /* lazy: decode only when #about approaches (the hidden block itself never
+     intersects — display:none). Any decode failure → stay on the gallery. */
+  var booted = false;
+  var io = new IntersectionObserver(function (entries) {
+    if (!entries[0].isIntersecting || booted) return;
+    /* re-check the perf signal at boot time: the measured-FPS downgrade
+       lands ~1.6s after load, well after the parse-time gate above ran */
+    if (root.classList.contains('lite-clouds')) { io.disconnect(); return; }
+    booted = true;
+    io.disconnect();
+    /* one retry per image: a single transient network blip shouldn't
+       permanently kill the sequence when the other five decoded fine */
+    function loadOne(s, attempt) {
+      return new Promise(function (res, rej) {
+        var im = new Image();
+        im.onload = function () { res(im); };
+        im.onerror = function () {
+          if (attempt < 1) setTimeout(function () { loadOne(s, attempt + 1).then(res, rej); }, 700);
+          else rej();
+        };
+        im.src = s;
+      });
+    }
+    Promise.all(SRCS.map(function (s) { return loadOne(s, 0); }))
+      .then(function (list) { imgs = list; activate(); })
+      .catch(function () { /* gallery stays */ });
+  }, { rootMargin: '100% 0%' });
+  io.observe(about);
+
+  var lastQ = -1, ticking = false;
+
+  function resize() {
+    var w = track.clientWidth, h = window.innerHeight;
+    canvas.width = Math.round(w * DPR);
+    canvas.height = Math.round(h * DPR);
+    lastQ = -1;
+    onScroll();
+  }
+
+  function cover(img) {
+    /* cover-fit source rect for the current canvas */
+    var cw = canvas.width, ch = canvas.height;
+    var s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
+    var sw = cw / s, sh = ch / s;
+    return [ (img.naturalWidth - sw) / 2, (img.naturalHeight - sh) / 2, sw, sh, 0, 0, cw, ch ];
+  }
+
+  function draw(p) {
+    var n = imgs.length - 1;
+    var idx = p * n;
+    var i = Math.min(Math.floor(idx), n - 1);
+    var f = Math.min(Math.max(idx - i, 0), 1);
+    var a = cover(imgs[i]);
+    ctx.globalAlpha = 1;
+    ctx.drawImage(imgs[i], a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7]);
+    if (f > 0.001) {
+      var b = cover(imgs[i + 1]);
+      ctx.globalAlpha = f;
+      ctx.drawImage(imgs[i + 1], b[0], b[1], b[2], b[3], b[4], b[5], b[6], b[7]);
+      ctx.globalAlpha = 1;
+    }
+    var active = Math.round(idx);
+    for (var c = 0; c < caps.length; c++) caps[c].classList.toggle('is-on', c === active);
+    if (progressBar) progressBar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+  }
+
+  function onScroll() {
+    if (ticking || !imgs) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      ticking = false;
+      var r = track.getBoundingClientRect();
+      var vh = window.innerHeight;
+      pin(r, false);
+      if (r.bottom < -vh || r.top > vh * 2) return;      /* far off-screen: skip */
+      var p = Math.min(Math.max(-r.top / (r.height - vh), 0), 1);
+      var q = Math.round(p * 600);                        /* redraw only on real change */
+      if (q === lastQ) return;
+      lastQ = q;
+      draw(p);
+    });
+  }
+
+  function activate() {
+    root.classList.add('abtseq-on');
+    pin(track.getBoundingClientRect(), true);
+    resize();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function () { pin(track.getBoundingClientRect(), true); resize(); });
+  }
+})();
+</script>
 </body>
 </html>
