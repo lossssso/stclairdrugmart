@@ -2333,7 +2333,11 @@
     }
     .flags-viewport {
       overflow: hidden; position: relative;
+      /* draggable marquee: horizontal pans are ours, vertical stays the page's */
+      touch-action: pan-y;
+      cursor: grab;
     }
+    .flags-viewport:active { cursor: grabbing; }
     .flags-viewport::before,
     .flags-viewport::after {
       content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2;
@@ -5964,6 +5968,62 @@ window.SmartMatch = (function(){
       ticking = true;
       requestAnimationFrame(update);
     }, { passive: true });
+  })();
+
+  // Flags marquee: pointer drag with momentum. The pure-CSS marquee is the
+  // default (zero JS until first touch). On first pointerdown we read the
+  // current transform, kill the CSS animation, and take over with a rAF
+  // loop — 1:1 finger tracking, velocity handoff into momentum on release,
+  // easing back to the original drift speed. Position wraps modulo half the
+  // track width (the CSS loop point) so the loop stays seamless.
+  // Reduced-motion: never engages (the marquee is already frozen by CSS).
+  (() => {
+    const vp = document.querySelector('.flags-viewport');
+    const tr = document.querySelector('.flags-track');
+    if (!vp || !tr) return;
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let taken = false, dragging = false;
+    let x = 0, vx = 0, half = 0;
+    let lastX = 0, lastMoveT = 0, loopPrev = 0, raf = null;
+    function wrap(v) { v = v % half; if (v > 0) v -= half; return v; }
+    function takeOver() {
+      if (taken) return;
+      taken = true;
+      half = tr.scrollWidth / 2;
+      try { x = new DOMMatrixReadOnly(getComputedStyle(tr).transform).m41; } catch (e) { x = 0; }
+      tr.style.animation = 'none';
+      tr.style.transform = 'translateX(' + x + 'px)';
+    }
+    function loop(now) {
+      raf = requestAnimationFrame(loop);
+      const dt = Math.min(now - (loopPrev || now), 64);
+      loopPrev = now;
+      if (dragging || dt <= 0) return;
+      const drift = -half / 22000;               /* px/ms — matches the 22s CSS loop */
+      vx += (drift - vx) * Math.min(1, dt / 650); /* momentum decays into the drift */
+      x = wrap(x + vx * dt);
+      tr.style.transform = 'translateX(' + x + 'px)';
+    }
+    vp.addEventListener('pointerdown', (e) => {
+      takeOver();
+      dragging = true; vx = 0;
+      lastX = e.clientX; lastMoveT = performance.now();
+      try { vp.setPointerCapture(e.pointerId); } catch (err) {}
+      if (!raf) { loopPrev = 0; raf = requestAnimationFrame(loop); }
+    });
+    vp.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const now = performance.now();
+      const dx = e.clientX - lastX;
+      const dt = Math.max(1, now - lastMoveT);
+      vx = Math.max(-3, Math.min(3, dx / dt));   /* velocity handoff, clamped */
+      x = wrap(x + dx);
+      tr.style.transform = 'translateX(' + x + 'px)';
+      lastX = e.clientX; lastMoveT = now;
+    });
+    const release = () => { dragging = false; };
+    vp.addEventListener('pointerup', release);
+    vp.addEventListener('pointercancel', release);
   })();
 
   // PharmAssess tab switching
