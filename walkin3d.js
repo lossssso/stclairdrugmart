@@ -314,6 +314,57 @@
       return g;
     }
 
+    /* ── street tree — trunk with branches forking up into a leafy canopy
+       (each branch ends in a leaf cluster so the foliage reads as attached
+       to wood, not floating blobs). Planted well LEFT of the facade and
+       taller than before so neither the sign nor the camera's approach
+       path is ever blocked. ── */
+    function tree(x, z, s) {
+      var g = new THREE.Group();
+      var trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.2, 3.2, 8), lam(COL.wood));
+      trunk.position.y = 1.6;
+      g.add(trunk);
+
+      /* branches fork off the upper trunk; [baseY, azimuth, tilt, length] */
+      var up = new THREE.Vector3(0, 1, 0);
+      var branchSpecs = [
+        [2.5, 0.5, 0.95, 1.5], [2.7, 2.5, 0.85, 1.6], [2.9, 4.3, 0.9, 1.4],
+        [3.0, 5.7, 0.75, 1.3], [3.2, 1.5, 0.5, 1.15], [3.3, 3.6, 0.45, 1.05]
+      ];
+      var tips = [];
+      branchSpecs.forEach(function (bs) {
+        var baseY = bs[0], az = bs[1], tilt = bs[2], len = bs[3];
+        var dir = new THREE.Vector3(
+          Math.sin(tilt) * Math.cos(az), Math.cos(tilt), Math.sin(tilt) * Math.sin(az)
+        ).normalize();
+        var branch = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.07, len, 6), lam(COL.wood));
+        branch.quaternion.setFromUnitVectors(up, dir);
+        branch.position.set(dir.x * len / 2, baseY + dir.y * len / 2, dir.z * len / 2);
+        g.add(branch);
+        tips.push(new THREE.Vector3(dir.x * len, baseY + dir.y * len, dir.z * len));
+      });
+
+      /* leaf clusters: one at each branch tip + a few filling the crown.
+         Each cluster is overlapping spheres so it looks full, not spherical. */
+      var centers = tips.concat([
+        new THREE.Vector3(0, 3.95, 0), new THREE.Vector3(0.35, 3.5, 0.25),
+        new THREE.Vector3(-0.4, 3.6, -0.15)
+      ]);
+      var clusterBlobs = [[0, 0, 0, 0.68], [0.34, 0.12, 0.1, 0.5], [-0.3, 0.1, -0.14, 0.48], [0.06, 0.36, 0.05, 0.44]];
+      centers.forEach(function (c, i) {
+        clusterBlobs.forEach(function (cb, j) {
+          var leaf = new THREE.Mesh(new THREE.SphereGeometry(cb[3], 10, 8), lam(GREENS[(i + j) % 3]));
+          leaf.position.set(c.x + cb[0], c.y + cb[1], c.z + cb[2]);
+          g.add(leaf);
+        });
+      });
+
+      g.position.set(x, 0, z);
+      g.scale.setScalar(s || 1);
+      scene.add(g);
+      return g;
+    }
+
     /* ── outdoors ── */
     var ground = new THREE.Mesh(new THREE.PlaneGeometry(30, 15), lam(COL.sidewalk));
     ground.rotation.x = -Math.PI / 2;
@@ -400,9 +451,18 @@
     box(1.36, 0.1, 0.14, 0xcfd6d8, -0.95, 2.55, 0.05);         /* jamb top */
     box(1.5, 0.06, 0.55, 0xd6dddd, -0.95, 0.03, 0.42);         /* entry step */
 
-    /* greenery out front — kept low so nothing blocks the storefront
-       (the old street tree is gone: it sat right in the camera's way).
-       One tall planter flanks the door; bushes line the window planter. */
+    /* greenery out front — the street tree sits in its own sidewalk planter
+       past the LEFT edge of the facade (taller than before), so its canopy
+       rises beside/above the sign without ever covering the lettering or
+       the camera's walk-in path. One tall planter flanks the door; bushes
+       line the window planter. */
+    tree(-5.9, 2.3, 1.2);                                      /* street tree, left of the facade */
+    box(1.5, 0.28, 1.0, COL.wood, -5.9, 0.14, 2.3);            /* tree planter */
+    [[-6.35, 2.4], [-5.5, 2.5], [-6.05, 2.0]].forEach(function (p, i) {
+      var b = new THREE.Mesh(new THREE.SphereGeometry(0.22, 10, 8), lam(GREENS[i % 3]));
+      b.position.set(p[0], 0.36, p[1]);
+      scene.add(b);
+    });
     plant(0.2, 0.55, 1.05, true, 0x9a8f83);                    /* tall planter right of door */
     box(3.15, 0.26, 0.34, COL.wood, 1.6, 0.13, 0.52);          /* window planter */
     for (var pb = 0; pb < 4; pb++) {
