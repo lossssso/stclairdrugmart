@@ -182,6 +182,9 @@
       --focus-ring: 2px solid var(--teal-dark);
     }
     html { scroll-behavior: smooth; }
+    /* mobile sheets (nav / booking) lock page scroll via a class on <html> —
+       never body{position:fixed}, which breaks walkin3d's fixed pinning */
+    html.nav-locked, html.pa-locked { overflow: hidden; }
     html {
       -webkit-text-size-adjust: 100%;
       overflow-x: hidden;
@@ -1529,13 +1532,56 @@
       .gallery { margin-left: 0; margin-right: 0; }
     }
     @media (max-width: 768px) {
-      .nav__links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e9f4f5; box-shadow: 0 8px 20px rgba(0,60,66,.08); flex-direction: column; align-items: stretch; padding: .5rem 1rem 1rem; gap: .1rem; margin-left: 0; }
-      .nav__links.open { display: flex; }
-      .nav__links > li { display: block; }
+      /* Frosted sheet: stays in the DOM (no display:none) so it can spring
+         open/closed — transform/opacity only, visibility gates interaction. */
+      .nav__links {
+        display: flex; position: fixed; top: 64px; left: 0; right: 0;
+        background: rgba(215,251,252,.78);
+        -webkit-backdrop-filter: blur(18px) saturate(1.15);
+        backdrop-filter: blur(18px) saturate(1.15);
+        border-bottom: 1px solid rgba(23,148,160,.2);
+        box-shadow: 0 24px 48px -16px rgba(0,60,66,.22);
+        flex-direction: column; align-items: stretch;
+        padding: .5rem 1rem 1rem; gap: .1rem; margin-left: 0;
+        max-height: calc(100dvh - 64px); overflow-y: auto; overscroll-behavior: contain;
+        transform: translateY(-10px); opacity: 0; visibility: hidden; pointer-events: none;
+        transition: transform .45s var(--ease-spring), opacity .28s var(--ease-out), visibility 0s linear .28s;
+        z-index: 99;
+      }
+      .nav__links.open {
+        transform: translateY(0); opacity: 1; visibility: visible; pointer-events: auto;
+        transition: transform .45s var(--ease-spring), opacity .28s var(--ease-out);
+      }
+      /* links rise in with a soft cascade once the sheet opens */
+      .nav__links > li {
+        display: block;
+        transform: translateY(14px); opacity: 0;
+        transition: transform .4s var(--ease-out), opacity .3s var(--ease-out);
+      }
+      .nav__links.open > li { transform: translateY(0); opacity: 1; }
+      .nav__links.open > li:nth-child(1) { transition-delay: .04s; }
+      .nav__links.open > li:nth-child(2) { transition-delay: .08s; }
+      .nav__links.open > li:nth-child(3) { transition-delay: .12s; }
+      .nav__links.open > li:nth-child(4) { transition-delay: .16s; }
+      .nav__links.open > li:nth-child(5) { transition-delay: .2s; }
+      .nav__links.open > li:nth-child(6) { transition-delay: .24s; }
+      .nav__links.open > li:nth-child(7) { transition-delay: .28s; }
+      .nav__links.open > li:nth-child(8) { transition-delay: .32s; }
       .nav__links a { display: flex; width: 100%; min-height: 44px; }
       .nav__toggle { display: block; margin-left: auto; }
+      /* dimmed scrim behind the sheet, tap to close */
+      .nav-scrim {
+        position: fixed; inset: 0; z-index: 98;
+        background: rgba(13,45,46,.34);
+        opacity: 0; pointer-events: none;
+        transition: opacity .3s var(--ease-out);
+      }
+      html.nav-locked .nav-scrim { opacity: 1; pointer-events: auto; }
+      @media (prefers-reduced-motion: reduce) {
+        .nav__links, .nav__links > li, .nav-scrim { transition: none; }
+      }
       .nav__has-dropdown::after { display: none; }
-      .nav__dropdown { position: static; border: none; box-shadow: none; border-radius: 0; padding: 0; background: #f3fafb; margin: .2rem 0 .2rem .75rem; min-width: 0; }
+      .nav__dropdown { position: static; border: none; box-shadow: none; border-radius: 0; padding: 0; background: rgba(255,255,255,.55); margin: .2rem 0 .2rem .75rem; min-width: 0; }
       .nav__has-dropdown .nav__dropdown,
       .nav__has-dropdown:hover .nav__dropdown { display: none; } /* kill hover on iOS */
       .nav__has-dropdown.open .nav__dropdown { display: block; }
@@ -3093,7 +3139,7 @@
       <img width="940" height="922" src="logo.png" alt="St. Clair Drug Mart Pharmacy" class="nav__brand__logo" />
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
-    <button class="nav__toggle" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
+    <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav__links" id="navLinks">
@@ -3136,6 +3182,8 @@
     </button>
   </div>
 </nav>
+<!-- dimmed backdrop behind the mobile nav sheet (styled only ≤768px) -->
+<div class="nav-scrim" id="navScrim" aria-hidden="true"></div>
 
 <!-- ── Site Search Overlay ──────────────────────────────── -->
 <div class="site-search-overlay" id="siteSearch" role="dialog" aria-modal="true" aria-label="Search">
@@ -5633,6 +5681,27 @@ window.SmartMatch = (function(){
 </div>
 
 <script>
+  // Mobile nav sheet: one open/close path shared by the hamburger, links,
+  // scrim, outside taps and Escape. Locks page scroll while open
+  // (html.nav-locked) and keeps aria-expanded in sync.
+  const navToggleBtn = document.querySelector('.nav__toggle');
+  const navLinksEl = document.getElementById('navLinks');
+  const navScrimEl = document.getElementById('navScrim');
+  function setNavOpen(open) {
+    navToggleBtn.classList.toggle('open', open);
+    navLinksEl.classList.toggle('open', open);
+    document.documentElement.classList.toggle('nav-locked', open);
+    navToggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (!open) document.querySelectorAll('.nav__has-dropdown').forEach(d => d.classList.remove('open'));
+  }
+  navToggleBtn.addEventListener('click', () => setNavOpen(!navLinksEl.classList.contains('open')));
+  navScrimEl.addEventListener('click', () => setNavOpen(false));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navLinksEl.classList.contains('open')) {
+      setNavOpen(false);
+      navToggleBtn.focus();
+    }
+  });
   // Close mobile menu on any link click (except the Services dropdown toggle)
   document.querySelectorAll('.nav__links a').forEach(link => {
     link.addEventListener('click', (e) => {
@@ -5643,19 +5712,13 @@ window.SmartMatch = (function(){
         parent.classList.toggle('open');
         return;
       }
-      document.querySelector('.nav__links').classList.remove('open');
-      document.querySelector('.nav__toggle').classList.remove('open');
-      document.querySelectorAll('.nav__has-dropdown').forEach(d => d.classList.remove('open'));
+      setNavOpen(false);
     });
   });
   // Close mobile nav on tap outside
   document.addEventListener('click', (e) => {
     const nav = document.querySelector('nav');
-    if (!nav.contains(e.target)) {
-      document.querySelector('.nav__links').classList.remove('open');
-      document.querySelector('.nav__toggle').classList.remove('open');
-      document.querySelectorAll('.nav__has-dropdown').forEach(d => d.classList.remove('open'));
-    }
+    if (!nav.contains(e.target) && navLinksEl.classList.contains('open')) setNavOpen(false);
   });
   // Contact float: tap to expand Email/Call options, close on outside tap or Escape.
   (() => {
