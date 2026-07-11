@@ -2585,6 +2585,45 @@
     .contact-float__option:hover .contact-float__option-icon { background: rgba(255,255,255,.25); color: #fff; }
     .contact-float__option-icon svg { width: 17px; height: 17px; }
 
+    /* ── Mobile quick-action bar (Book / Call / Refill) ──────────────
+       One-tap conversion bar within thumb reach, ≤768px only. Frosted
+       like the nav sheet; hides on scroll-down together with the contact
+       float (shared handler) and while any sheet locks the page. */
+    .quick-bar { display: none; }
+    @media (max-width: 768px) {
+      :root { --qbar-h: 62px; }
+      .quick-bar {
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 8998;
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        gap: .5rem; padding: .5rem .75rem calc(.5rem + env(safe-area-inset-bottom));
+        background: rgba(215,251,252,.82);
+        -webkit-backdrop-filter: blur(18px) saturate(1.15);
+        backdrop-filter: blur(18px) saturate(1.15);
+        border-top: 1px solid rgba(23,148,160,.22);
+        transform: translateY(0);
+        transition: transform .35s var(--ease-out);
+      }
+      .quick-bar__btn {
+        display: flex; align-items: center; justify-content: center; gap: .4rem;
+        min-height: 44px; border-radius: 999px;
+        background: #fff; border: 1px solid rgba(23,148,160,.28);
+        color: var(--teal-dark); font-weight: 700; font-size: .85rem;
+        font-family: var(--font-body); text-decoration: none;
+        transition: transform .15s ease-out;
+      }
+      .quick-bar__btn:active { transform: scale(.96); }
+      .quick-bar__btn .icon { width: 17px; height: 17px; }
+      .quick-bar__btn--primary { background: var(--teal-bright); color: #fff; border-color: transparent; }
+      .quick-bar.quick-bar--hide,
+      html.nav-locked .quick-bar,
+      html.pa-locked .quick-bar { transform: translateY(calc(100% + 4px)); }
+      /* lift the contact float clear of the bar (wins the earlier 768px rule by source order) */
+      .contact-float { bottom: calc(var(--qbar-h) + env(safe-area-inset-bottom) + .75rem); }
+      /* content never hides behind the fixed bar */
+      body { padding-bottom: calc(var(--qbar-h) + env(safe-area-inset-bottom)); }
+      @media (prefers-reduced-motion: reduce) { .quick-bar { transition: none; } }
+    }
+
     /* ── Service Tabs ────────────────────────────────── */
     .svc-tabs { margin-top: 2.75rem; }
     .svc-tabs__nav {
@@ -5680,6 +5719,14 @@ window.SmartMatch = (function(){
   </button>
 </div>
 
+<!-- ── Mobile quick-action bar: one-tap Book / Call / Refill (≤768px only;
+     coordinated with the contact float's scroll hide — see TODO follow-up). ── -->
+<nav class="quick-bar" id="quickBar" aria-label="Quick actions">
+  <a href="#booking" class="quick-bar__btn quick-bar__btn--primary"><svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg><span>Book</span></a>
+  <a href="tel:+14166548181" class="quick-bar__btn"><svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg><span>Call</span></a>
+  <a href="#booking" class="quick-bar__btn js-pa-select" data-url="https://app.pharmassess.ca/refill/306667" data-iframeheight="1300" data-label="New Prescription &amp; Refill Requests"><svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg><span>Refill</span></a>
+</nav>
+
 <script>
   // Mobile nav sheet: one open/close path shared by the hamburger, links,
   // scrim, outside taps and Escape. Locks page scroll while open
@@ -5742,29 +5789,37 @@ window.SmartMatch = (function(){
       }
     });
   })();
-  // On mobile, hide the contact float while scrolling down (reading) so it
-  // never sits on top of text; reveal it again on scroll-up or once idle near the top.
+  // On mobile, hide the contact float AND the quick-action bar while
+  // scrolling down (reading) so they never sit on top of text; reveal them
+  // again on scroll-up or once idle near the top. One shared handler so
+  // the two never collide. Reduced-motion keeps both permanently visible.
   (() => {
     const contactFloat = document.getElementById('contactFloat');
+    const quickBar = document.getElementById('quickBar');
     if (!contactFloat) return;
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let lastY = window.scrollY;
     let idleTimer;
     let ticking = false;
     const mobileMq = window.matchMedia('(max-width: 768px)');
+    function setHidden(hidden) {
+      contactFloat.classList.toggle('contact-float--hide', hidden);
+      if (quickBar) quickBar.classList.toggle('quick-bar--hide', hidden);
+    }
     function update() {
       ticking = false;
       if (!mobileMq.matches || contactFloat.classList.contains('open')) return;
       const y = window.scrollY;
       if (y < 80) {
-        contactFloat.classList.remove('contact-float--hide');
+        setHidden(false);
       } else if (y > lastY + 4) {
-        contactFloat.classList.add('contact-float--hide');
+        setHidden(true);
       } else if (y < lastY - 4) {
-        contactFloat.classList.remove('contact-float--hide');
+        setHidden(false);
       }
       lastY = y;
       clearTimeout(idleTimer);
-      idleTimer = setTimeout(() => contactFloat.classList.remove('contact-float--hide'), 2500);
+      idleTimer = setTimeout(() => setHidden(false), 2500);
     }
     window.addEventListener('scroll', () => {
       if (ticking) return;
