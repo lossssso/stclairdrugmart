@@ -259,6 +259,18 @@
       .portal-header { padding: calc(1.5rem + 64px) 1rem 1.5rem; }
       .portal-frame, .portal-frame iframe { min-height: 1200px; }
     }
+  
+    /* ── Shared motion layer (matches index.html's motion identity):
+       easing tokens, keyboard focus ring, tactile press, one scroll
+       reveal per page (motion.js applies .reveal-ready/[data-reveal]). ── */
+    :root { --ease-out: cubic-bezier(.22,1,.36,1); --ease-spring: cubic-bezier(.175,.885,.32,1.275); --focus-ring: 2px solid var(--teal-dark); }
+    a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+    a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
+    .btn:active, .nav__cta a:active { transform: scale(.97); }
+    .reveal-ready > * { opacity: 0; transform: translateY(22px); }
+    .reveal-ready.is-revealed > * { animation: rvSlideIn .5s var(--ease-out) forwards; }
+    @keyframes rvSlideIn { to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .reveal-ready > *, .reveal-ready.is-revealed > * { opacity: 1; transform: none; animation: none; } }
   </style>
 </head>
 <body>
@@ -329,7 +341,7 @@
   </div>
 </nav>
 
-<div class="portal-header">
+<div class="portal-header" data-reveal>
   <h1>Patient Portal</h1>
   <p>Book appointments, request refills, get assessed for minor ailments, transfer your prescription, and more — all in one place, with the same patient-centred care you'd get in-store.</p>
 </div>
@@ -422,5 +434,6 @@
     }
   });
 </script>
+<script src="/motion.js" defer></script>
 </body>
 </html>

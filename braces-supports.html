@@ -375,6 +375,18 @@
       .brace-cat__hd { flex-direction: column; align-items: flex-start; gap: .15rem; }
     }
     @media (max-width: 420px) { .nav__brand span { display: none; } }
+  
+    /* ── Shared motion layer (matches index.html's motion identity):
+       easing tokens, keyboard focus ring, tactile press, one scroll
+       reveal per page (motion.js applies .reveal-ready/[data-reveal]). ── */
+    :root { --ease-out: cubic-bezier(.22,1,.36,1); --ease-spring: cubic-bezier(.175,.885,.32,1.275); --focus-ring: 2px solid var(--teal-dark); }
+    a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+    a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
+    .btn:active, .brace-card:active { transform: scale(.97); }
+    .reveal-ready > * { opacity: 0; transform: translateY(22px); }
+    .reveal-ready.is-revealed > * { animation: rvSlideIn .5s var(--ease-out) forwards; }
+    @keyframes rvSlideIn { to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .reveal-ready > *, .reveal-ready.is-revealed > * { opacity: 1; transform: none; animation: none; } }
   </style>
 </head>
 <body>
@@ -470,7 +482,7 @@
       <h2>🩹 Back &amp; Lumbar Supports</h2>
       <span class="brace-cat__brands">Champion · OTC Professional</span>
     </div>
-    <div class="brace-grid">
+    <div class="brace-grid" data-reveal>
       <div class="brace-card">
         <div class="brace-card__icon">🦺</div>
         <div class="brace-card__body">
@@ -495,7 +507,7 @@
       <h2>🦵 Knee Supports &amp; Braces</h2>
       <span class="brace-cat__brands">Champion · OTC Professional · Ortho</span>
     </div>
-    <div class="brace-grid">
+    <div class="brace-grid" data-reveal>
       <div class="brace-card">
         <div class="brace-card__icon">🩹</div>
         <div class="brace-card__body">
@@ -520,7 +532,7 @@
       <h2>✋ Wrist &amp; Elbow Supports</h2>
       <span class="brace-cat__brands">Champion</span>
     </div>
-    <div class="brace-grid">
+    <div class="brace-grid" data-reveal>
       <div class="brace-card">
         <div class="brace-card__icon">🖐️</div>
         <div class="brace-card__body">
@@ -545,7 +557,7 @@
       <h2>🦶 Ankle &amp; Foot Supports</h2>
       <span class="brace-cat__brands">Champion</span>
     </div>
-    <div class="brace-grid">
+    <div class="brace-grid" data-reveal>
       <div class="brace-card">
         <div class="brace-card__icon">🦶</div>
         <div class="brace-card__body">
@@ -562,7 +574,7 @@
       <h2>🎗️ Abdominal Binders</h2>
       <span class="brace-cat__brands">OTC Professional · Ortho</span>
     </div>
-    <div class="brace-grid">
+    <div class="brace-grid" data-reveal>
       <div class="brace-card">
         <div class="brace-card__icon">🩺</div>
         <div class="brace-card__body">
@@ -579,7 +591,7 @@
       <h2>🧦 Medical Compression Stockings &amp; Socks</h2>
       <span class="brace-cat__brands">Truform</span>
     </div>
-    <div class="brace-grid">
+    <div class="brace-grid" data-reveal>
       <div class="brace-card">
         <div class="brace-card__icon">🧦</div>
         <div class="brace-card__body">
@@ -837,5 +849,6 @@
     if (e.key === 'Escape') document.getElementById('pp-overlay').classList.remove('open');
   });
 </script>
+<script src="/motion.js" defer></script>
 </body>
 </html>

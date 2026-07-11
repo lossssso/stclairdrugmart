@@ -370,3 +370,55 @@ push per WP (never batch); verify at 375px + 1280px before the next.
   grid). Substituted a lighter per-group reveal (3 groups, not per-accordion-item), consistent
   with the site audit's explicit "services: lean still, at most a per-group fade-in" guidance —
   not a scope expansion, a correction to match what's actually in the DOM.
+
+---
+
+# Premium Motion + Mobile Optimization pass (July 2026, dev)
+
+Ten phases, one commit each, from the full visual/motion audit
+(plan: premium/Apple styling + interactive elements + mobile optimization).
+
+- **P0 perf/CLS hygiene** — deleted orphan `team/staff-4.png` (2.38MB); `cloud2.webp`
+  202KB→105KB @1600px (same filename, ~12 uses/page site-wide); `uber_top_store_v2.png`
+  328KB→46KB @480px + width/height; width/height on the 3 top gallery imgs; CLAUDE.md now
+  names the FAQ `grid-template-rows` accordion as the single accepted height-animation
+  exception. Load CLS measured 0.003.
+- **P1 focus rings** — `--focus-ring` token + global `:focus-visible` block (after the
+  line-~665 reveal recipe); mouse focus ringless; `.w3d-spot` rule aligned.
+- **P2 mobile nav sheet** — frosted spring sheet + staggered links + scrim + scroll lock
+  (`html.nav-locked`); single `setNavOpen()` path (aria-expanded, Escape, focus return);
+  inline onclick removed. Desktop untouched.
+- **P3 quick-action bar** — `#quickBar` Book/Call/Refill ≤768px; Refill via existing
+  `js-pa-select`; shared scroll-hide handler with the contact float; hidden while sheets lock.
+- **P4 booking bottom sheet** — `pa-sheet-mode` on ≤768px in `paOpen()`; guards on the
+  postMessage height writer / expand bar / all 3 `scrollIntoView` sites; grid re-parenting
+  untouched; desktop byte-identical; focus to close btn, restore to trigger.
+- **P5 About photo sequence (#abt-seq)** — built the flagship CLAUDE.md described but never
+  had: canvas scroll-scrub crossfade, 6 photos, captions, full-bleed. Gate: reduced-motion /
+  lite-clouds (checked at parse AND at IO-fire — the FPS downgrade lands ~1.6s in) / no IO /
+  no 2D ctx; tier-2 → DPR 1. Decode retry (1x/image). **position:sticky is broken here by
+  body{overflow-x:hidden}** (body becomes a scroll container) — stage pin is hand-rolled
+  absolute↔fixed, walkin3d's pattern. Confirmed live before switching.
+- **P6 services grid rhythm** — CSS-only: flu-shot focal card (2-col, teal-ice gradient,
+  brand border), diagonal tint on ailments/naloxone/cessation, insurance column stripes,
+  airier vaccine padding. No new motion (inherits `.svc-acc` staggerReveal).
+- **P7 flags drag** — pointer drag w/ momentum takes over the CSS marquee on first
+  pointerdown; wraps modulo half-track (loop point); velocity handoff clamped; eases back to
+  22s drift. `touch-action:pan-y`; zero JS until touched; reduced-motion never engages.
+- **P8 hero orchestration** — one ≤700ms sequence keyed off `html.hero-anim` (pre-paint
+  head gate). `backwards` fill ONLY — forwards fill would own `transform` forever and kill
+  the hover states (WP6 bug class). No-JS/reduced-motion paint finished hero instantly.
+- **P9 secondary pages** — easing tokens + focus ring + `:active` press ported to portal /
+  404 / braces / blog listing / post.css; ONE reveal per page via `[data-reveal]` + shared
+  `motion.js` (defer, absolute `/motion.js` path). Blog posts: tokens/press only (no reveal
+  on long-form text). TODO quick-bar item checked off; CLAUDE.md gained the Mobile
+  Interaction Layer section + corrected `#abt-seq` section.
+
+## Verification gotchas discovered this pass
+- The local `http-server` dies when its shell session resets — start it with
+  `setsid nohup ... < /dev/null & disown` or activation tests flake with
+  ERR_CONNECTION_REFUSED / truncated loads.
+- Under swiftshader, IO callbacks + image decode can lag several seconds after a
+  programmatic jump-scroll; wait 6-8s before declaring a lazy-boot feature dead.
+- The reviews/vaccines area sometimes screenshots blank on swiftshader right after an
+  instant `scrollTo` — force paint with `mouse.wheel` steps before capturing.

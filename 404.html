@@ -325,6 +325,18 @@
     @media (max-width: 500px) {
       .card { padding: 2.25rem 1.5rem 2rem; border-radius: 20px; }
     }
+  
+    /* ── Shared motion layer (matches index.html's motion identity):
+       easing tokens, keyboard focus ring, tactile press, one scroll
+       reveal per page (motion.js applies .reveal-ready/[data-reveal]). ── */
+    :root { --ease-out: cubic-bezier(.22,1,.36,1); --ease-spring: cubic-bezier(.175,.885,.32,1.275); --focus-ring: 2px solid var(--teal-dark); }
+    a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+    a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
+    .btn:active, .chip:active { transform: scale(.97); }
+    .reveal-ready > * { opacity: 0; transform: translateY(22px); }
+    .reveal-ready.is-revealed > * { animation: rvSlideIn .5s var(--ease-out) forwards; }
+    @keyframes rvSlideIn { to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .reveal-ready > *, .reveal-ready.is-revealed > * { opacity: 1; transform: none; animation: none; } }
   </style>
 </head>
 <body>
@@ -387,7 +399,7 @@
   </div>
 </nav>
 
-<div class="card">
+<div class="card" data-reveal>
   <img src="/logo.png" alt="St. Clair Drug Mart Pharmacy" class="card__logo" />
   <p class="card__eyebrow">St. Clair Drug Mart · Toronto</p>
   <div class="code">404</div>
@@ -476,5 +488,6 @@
     }
   });
 </script>
+<script src="/motion.js" defer></script>
 </body>
 </html>

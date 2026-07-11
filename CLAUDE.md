@@ -202,6 +202,25 @@ before activating (any hard failure leaves the gallery). Stage pinning is hand-r
 (absolute↔fixed, same pattern as walkin3d) — `body{overflow-x:hidden}` makes body a scroll
 container and silently breaks `position:sticky` here. No WebGL, no library; draws only on
 quantized scroll-progress change (two `drawImage` calls per redraw).
+## Mobile Interaction Layer (live on dev)
+- **Nav sheet**: ≤768px the nav opens as a frosted spring sheet (`.nav__links` stays in the
+  DOM; transform/opacity + visibility; staggered link rise) over a shared `.nav-scrim`;
+  page scroll locks via `html.nav-locked{overflow:hidden}` — never `body{position:fixed}`
+  (breaks walkin3d's pin). One `setNavOpen()` path handles toggle/scrim/Escape/links + aria.
+- **Quick-action bar** (`#quickBar`): fixed frosted Book / Call / Refill bar, ≤768px only;
+  Refill routes through the existing `js-pa-select` engine. Hides on scroll-down together
+  with the contact float (one shared rAF handler) and while any sheet locks the page.
+- **Booking bottom sheet**: on ≤768px `paOpen()` adds `pa-sheet-mode` — the PharmAssess
+  panel becomes a fixed slide-up sheet (scrim, `html.pa-locked`, iframe fills the sheet).
+  In sheet mode the postMessage height writer, expand bar, and `scrollIntoView` calls are
+  all skipped. Desktop keeps the inline dropdown unchanged.
+- **Focus rings**: one tokenized `:focus-visible` system (`--focus-ring`); mouse focus stays
+  ringless. Ported to all secondary pages.
+- **Secondary pages** (`portal`, `404`, `braces-supports`, `blog/`) share the motion
+  identity: easing tokens + focus ring + `:active` press in each page's CSS, and ONE scroll
+  reveal per page via `[data-reveal]` + the shared `motion.js` (defer; blog posts get
+  tokens/press only — long-form text never hides itself).
+
 ## Accessibility
 - Descriptive alt text on all images
 - All interactive elements keyboard accessible

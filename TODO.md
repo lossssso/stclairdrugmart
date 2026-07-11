@@ -147,8 +147,10 @@ next-actions list.
   eligibility (valid OHIP card / criteria), never a blanket "free."
 
 ### Site/dev follow-ups (I can do these — just say when)
-- Add a **site chatbot** (wrap the existing FAQ + smart search) and a mobile
-  **Book/Refill bubble or bottom bar** for one-tap conversion.
+- Add a **site chatbot** (wrap the existing FAQ + smart search).
+  ~~Mobile **Book/Refill bubble or bottom bar** for one-tap conversion~~ — ✅ done
+  (fixed frosted quick-action bar with Book / Call / Refill on ≤768px; hides on
+  scroll-down together with the contact float).
 - Extend the Monday blog bot to also draft a **GBP post, IG/FB caption, and
   email** from the same article (one generation, four placements).
 - Optionally upgrade the blog bot model and add seasonal topic weighting.
