@@ -1131,6 +1131,46 @@
       overflow: hidden;
       overscroll-behavior: contain;
     }
+    /* ── Mobile: the booking panel becomes a slide-up bottom sheet ──────
+       The inline 1100px+ iframe was awkward in page flow on phones. On
+       ≤768px paOpen() adds .pa-sheet-mode: a fixed, spring-in sheet over
+       the shared scrim, page scroll locked (html.pa-locked), iframe fills
+       and scrolls internally. Desktop keeps the inline flow untouched. */
+    @media (max-width: 768px) {
+      .pa-iframe-wrap.pa-sheet-mode {
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 9000;
+        height: min(92dvh, 100%);
+        margin: 0; border: none; border-radius: 20px 20px 0 0;
+        display: flex; flex-direction: column;
+        transform: translateY(103%);
+        transition: transform .5s var(--ease-spring);
+        box-shadow: 0 -18px 60px rgba(0,60,66,.35);
+      }
+      .pa-iframe-wrap.pa-sheet-mode.pa-sheet-open { transform: translateY(0); }
+      .pa-iframe-wrap.pa-sheet-mode.dropping { animation: none; }
+      .pa-iframe-wrap.pa-sheet-mode iframe {
+        height: auto !important; flex: 1; min-height: 0;
+        transition: none;
+      }
+      .pa-iframe-wrap.pa-sheet-mode .pa-iframe-expand { display: none; }
+      .pa-iframe-wrap.pa-sheet-mode .pa-iframe-label {
+        position: relative; padding-top: 1.05rem;
+        border-radius: 20px 20px 0 0;
+      }
+      /* grab handle */
+      .pa-iframe-wrap.pa-sheet-mode .pa-iframe-label::before {
+        content: ''; position: absolute; top: .4rem; left: 50%;
+        transform: translateX(-50%);
+        width: 42px; height: 4px; border-radius: 999px;
+        background: rgba(255,255,255,.45);
+      }
+      .pa-iframe-wrap.pa-sheet-mode .pa-iframe-label__close {
+        font-size: 1.35rem; padding: .2rem .4rem; min-width: 44px; min-height: 34px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .pa-iframe-wrap.pa-sheet-mode { transition: none; }
+      }
+    }
     .booking__note {
       margin-top: 1rem;
       font-size: .82rem;
@@ -1577,6 +1617,8 @@
         transition: opacity .3s var(--ease-out);
       }
       html.nav-locked .nav-scrim { opacity: 1; pointer-events: auto; }
+      /* the booking bottom sheet reuses the same scrim, above the quick bar */
+      html.pa-locked .nav-scrim { opacity: 1; pointer-events: auto; z-index: 8999; }
       @media (prefers-reduced-motion: reduce) {
         .nav__links, .nav__links > li, .nav-scrim { transition: none; }
       }
@@ -5859,12 +5901,37 @@ window.SmartMatch = (function(){
 
   // Collapse/expand the iframe panel
   var paCloseBtn = document.getElementById('pa-iframe-close');
+  // ── Mobile bottom-sheet mode ──────────────────────────────────────
+  // On ≤768px the panel opens as a fixed slide-up sheet over the scrim
+  // instead of dropping into page flow. paSheetActive() gates the height
+  // writer / expand bar / scrollIntoView paths below.
+  var paMobileMq = window.matchMedia('(max-width: 768px)');
+  var paSheetTrigger = null;   /* element to restore focus to on close */
+  function paSheetActive() { return paWrap.classList.contains('pa-sheet-mode'); }
+  function paSheetDismiss() {
+    if (!paSheetActive()) return;
+    paWrap.classList.remove('pa-sheet-mode', 'pa-sheet-open');
+    document.documentElement.classList.remove('pa-locked');
+    if (paSheetTrigger && paSheetTrigger.focus) { try { paSheetTrigger.focus(); } catch (_) {} }
+    paSheetTrigger = null;
+  }
   function paOpen() {
     paWrap.style.display = '';
     paWrap.classList.remove('collapsed');
     paWrap.classList.remove('dropping');
-    void paWrap.offsetWidth;
-    paWrap.classList.add('dropping');
+    if (paMobileMq.matches) {
+      if (!paSheetActive()) {
+        paSheetTrigger = document.activeElement;
+        paWrap.classList.add('pa-sheet-mode');
+        document.documentElement.classList.add('pa-locked');
+        void paWrap.offsetWidth;               /* commit hidden state, then spring in */
+        paWrap.classList.add('pa-sheet-open');
+        setTimeout(function () { try { paCloseBtn.focus(); } catch (_) {} }, 60);
+      }
+    } else {
+      void paWrap.offsetWidth;
+      paWrap.classList.add('dropping');
+    }
     paCloseBtn.textContent = '✕';
   }
   function paClose() {
@@ -5872,14 +5939,26 @@ window.SmartMatch = (function(){
     paCloseBtn.textContent = '▼';
   }
   paCloseBtn.addEventListener('click', function() {
+    paSheetDismiss();
     paWrap.style.display = 'none';
     paWrap.classList.remove('collapsed');
     document.querySelectorAll('.pa-card').forEach(c => c.classList.remove('active'));
   });
+  // scrim tap / Escape close the sheet through the same close path
+  (function () {
+    var scrim = document.getElementById('navScrim');
+    if (scrim) scrim.addEventListener('click', function () {
+      if (paSheetActive()) paCloseBtn.click();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && paSheetActive()) paCloseBtn.click();
+    });
+  })();
 
   // Expand bar (safety valve for very long forms)
   var paExpanded = false;
   document.getElementById('pa-iframe-expand').addEventListener('click', function() {
+    if (paSheetActive()) return;              /* sheet fills the screen already */
     var active = document.querySelector('.pa-card.active');
     var base = parseInt(active ? active.dataset.iframeheight : 1350);
     if (!paExpanded) {
@@ -5932,7 +6011,7 @@ window.SmartMatch = (function(){
     // Only auto-scroll when triggered from elsewhere on the page (e.g. a jump
     // button). When the user clicks a portal card directly, leave them where
     // they are and let them scroll to the assessment themselves.
-    if (doScroll) {
+    if (doScroll && !paSheetActive()) {
       setTimeout(function() {
         paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 80);
@@ -5943,6 +6022,7 @@ window.SmartMatch = (function(){
   const conditionsPanel = document.getElementById('conditions-panel');
 
   function closeAllPanels() {
+    paSheetDismiss();
     paWrap.style.display = 'none';
     paWrap.classList.remove('collapsed');
     conditionsPanel.classList.remove('open');
@@ -6002,7 +6082,7 @@ window.SmartMatch = (function(){
       }
       paWrap.style.gridColumn = '';
       paOpen(); // always show the panel, even if previously closed
-      setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+      if (!paSheetActive()) setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
     });
   });
 
@@ -6025,6 +6105,7 @@ window.SmartMatch = (function(){
             (d.size && typeof d.size === 'number' ? d.size : null) || null;
       }
       if (h && +h > 50) {
+        if (paSheetActive()) { paHeightReceived = true; return; }  /* sheet sizes itself */
         paIframe.style.height = (Math.round(+h) + 32) + 'px'; // +32px keeps submit button clear
         paHeightReceived = true;
         // If content shrunk back, reset expand state
@@ -6050,7 +6131,7 @@ window.SmartMatch = (function(){
     });
     // Hard fallback: if PharmAssess never responds, use data-iframeheight
     setTimeout(function() {
-      if (!paHeightReceived) paIframe.style.height = fallback + 'px';
+      if (!paHeightReceived && !paSheetActive()) paIframe.style.height = fallback + 'px';
     }, 3200);
   });
 
@@ -6078,7 +6159,7 @@ window.SmartMatch = (function(){
         if (labelOverride && paLabelText) paLabelText.textContent = labelOverride;
         setPaHint(hintOverride || '');
         paOpen();
-        if (doScroll) {
+        if (doScroll && !paSheetActive()) {
           setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
         }
       }
