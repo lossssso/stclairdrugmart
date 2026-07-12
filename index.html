@@ -381,6 +381,25 @@
     .hero__cloud:nth-child(11) { width:1050px; height:500px; top:78%; animation-duration:102s; animation-delay: -90s;  opacity:.90; }
     .hero__cloud:nth-child(12) { width: 800px; height:205px; top:84%; animation-duration: 79s; animation-delay: -70s;  opacity:.72; }
     @media (prefers-reduced-motion: reduce) { .hero__cloud, .sky-bg-cloud { animation: none; } .sky-bg, .hero__clouds { animation: none; opacity: 1; } }
+    /* ── Hero entrance ─────────────────────────────────
+       Logo, name, address, socials and status board rise in sequence.
+       Runs only under html.hero-go — added by JS either immediately
+       (welcome popup snoozed) or when the popup is dismissed, so the
+       entrance is never wasted behind the modal. Without the class the
+       hero is fully visible and static (safe with JS off). */
+    @keyframes hero-rise {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-go .hero__logo    { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) backwards; }
+    .hero-go .hero__name    { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) .12s backwards; }
+    .hero-go .hero__sub     { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) .24s backwards; }
+    .hero-go .hero__socials { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) .36s backwards; }
+    .hero-go .hero__status  { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) .48s backwards; }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-go .hero__logo, .hero-go .hero__name, .hero-go .hero__sub,
+      .hero-go .hero__socials, .hero-go .hero__status { animation: none; }
+    }
     /* On mobile: fewer clouds for performance */
     @media (max-width: 768px) {
       .hero__cloud:nth-child(n+7) { display: none; }
@@ -622,14 +641,59 @@
     }
     .tw-enabled .reveal-up.tw-in { opacity: 1; transform: none; }
 
+    /* Card grids whose children settle in one after another. JS stamps
+       --tw-i on each child and adds .tw-in to the container on entry.
+       The stagger delay lives on the .tw-in state (transitions read the
+       delay from the destination state). Once the reveal has finished JS
+       adds .tw-done, at which point every rule here stops matching — the
+       cards return to their own transitions, so hover lifts/shadows keep
+       working exactly as before. */
+    .tw-enabled .reveal-group:not(.tw-done) > * {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .6s cubic-bezier(.2,.7,.2,1),
+                  transform .6s cubic-bezier(.2,.7,.2,1);
+    }
+    .tw-enabled .reveal-group--photo:not(.tw-done) > * {
+      transform: translateY(24px) scale(.96);
+    }
+    .tw-enabled .reveal-group.tw-in:not(.tw-done) > * {
+      opacity: 1;
+      transform: none;
+      transition-delay: calc(var(--tw-i, 0) * 70ms);
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .tw-enabled .section__title .tw-char,
       .tw-enabled .section__title.tw-ready::after,
-      .tw-enabled .reveal-up {
+      .tw-enabled .reveal-up,
+      .tw-enabled .reveal-group > * {
         opacity: 1 !important;
         transform: none !important;
         transition: none !important;
       }
+    }
+
+    /* ── Hover micro-polish (desktop pointers only) ──────
+       One shared lift feel across every card so the whole page responds
+       the same way. Touch devices skip all of it. */
+    @media (hover: hover) and (pointer: fine) {
+      .welcome-box, .step--clickable, .shop__card, .pa-card {
+        transition-duration: .25s;
+        transition-timing-function: cubic-bezier(.2,.7,.2,1);
+      }
+      .blog-card {
+        transition: transform .25s cubic-bezier(.2,.7,.2,1),
+                    box-shadow .25s cubic-bezier(.2,.7,.2,1);
+      }
+      .blog-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgba(0,80,90,.13);
+      }
+      .staff-card {
+        transition: transform .25s cubic-bezier(.2,.7,.2,1);
+      }
+      .staff-card:hover { transform: translateY(-4px); }
     }
 
     /* ── Welcome ──────────────────────────────────────── */
@@ -2770,6 +2834,19 @@
 </div>
 
 <!-- ── Hero ─────────────────────────────────────────────── -->
+<script>
+/* Hero entrance trigger — runs before the hero paints. If the welcome popup
+   is snoozed (won't show this visit), start the hero entrance right away.
+   Otherwise leave the hero static; closeWelcome() adds .hero-go on dismissal
+   so the entrance plays as the popup fades. Skipped under reduced motion. */
+(function(){
+  try {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var until = parseInt(localStorage.getItem('welcomeModalDismissedUntil_v2'), 10) || 0;
+    if (Date.now() <= until) document.documentElement.classList.add('hero-go');
+  } catch(e){}
+})();
+</script>
 <header class="hero" id="home">
   <div class="hero__clouds" aria-hidden="true">
     <img src="cloud2.webp" class="hero__cloud" data-dur="116" data-delay="-20" style="transform:translateX(-29vw)" alt="" aria-hidden="true">
@@ -6825,6 +6902,10 @@ window.SmartMatch = (function(){
     function closeWelcome() {
       overlay.classList.remove('open');
       try { localStorage.setItem(WELCOME_KEY, String(Date.now() + SNOOZE_MS)); } catch (e) {}
+      // Kick off the hero entrance + release the gated scroll reveals now
+      // that the popup no longer covers the page (see hero-go CSS & tw script).
+      document.documentElement.classList.add('hero-go');
+      try { document.dispatchEvent(new CustomEvent('welcome:dismissed')); } catch (e) {}
     }
     var snoozedUntil = 0;
     try { snoozedUntil = parseInt(localStorage.getItem(WELCOME_KEY), 10) || 0; } catch (e) {}
@@ -7336,40 +7417,128 @@ window.SmartMatch = (function(){
   titles.forEach(splitHeading);
   leads.forEach(function(el){ el.classList.add('reveal-up'); });
 
-  var watched = titles.concat(leads);
+  // ── Staggered card/photo groups ─────────────────────────
+  // Each container's element children settle in one after another. The
+  // team-stat and reviews metrics are deliberately absent — they already
+  // have their own IntersectionObserver reveals.
+  var GROUPS = [
+    '#welcome .welcome__boxes',
+    '#new-patients .steps',
+    '#booking .pa-cards--top',
+    '#drug-checker .dc-layout',
+    '#team .staff-grid',
+    '#shop .shop__cards',
+    '#blog .blog-grid'
+  ];
+  var groups = [];
+  GROUPS.forEach(function(sel){
+    var el = document.querySelector(sel);
+    if (el) groups.push(el);
+  });
+  // About gallery rows get the photo variant (adds a slight scale settle).
+  Array.prototype.slice.call(document.querySelectorAll('#about .gallery__row')).forEach(function(el){
+    el.classList.add('reveal-group--photo');
+    groups.push(el);
+  });
+
+  function stampGroup(el){
+    var kids = el.children;
+    for (var i = 0; i < kids.length; i++) kids[i].style.setProperty('--tw-i', i);
+    el.classList.add('reveal-group');
+  }
+  groups.forEach(stampGroup);
+
+  // After a group's stagger has played out, mark it done: the reveal CSS
+  // stops matching and each card's own hover transitions take over again.
+  function finishGroup(el){
+    var ms = el.children.length * 70 + 700;
+    setTimeout(function(){ el.classList.add('tw-done'); }, ms);
+  }
+  function revealNow(el){
+    el.classList.add('tw-in');
+    if (el.classList.contains('reveal-group')) finishGroup(el);
+  }
+
+  // Blog cards are re-rendered from a fetch of posts.json — re-stamp the
+  // stagger indices whenever its children change, until it has revealed.
+  var blogGrid = document.querySelector('#blog .blog-grid');
+  if (blogGrid && 'MutationObserver' in window){
+    var mo = new MutationObserver(function(){
+      if (blogGrid.classList.contains('tw-in')){ mo.disconnect(); return; }
+      stampGroup(blogGrid);
+    });
+    mo.observe(blogGrid, { childList: true });
+  }
+
+  var watched = titles.concat(leads).concat(groups);
 
   // Reduced motion or no IntersectionObserver → reveal everything at once.
   if (reduce || !('IntersectionObserver' in window)){
-    watched.forEach(function(el){ el.classList.add('tw-in'); });
+    watched.forEach(function(el){
+      el.classList.add('tw-in');
+      if (el.classList.contains('reveal-group')) el.classList.add('tw-done');
+    });
     return;
   }
 
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
       if (entry.isIntersecting){
-        entry.target.classList.add('tw-in');
+        revealNow(entry.target);
         io.unobserve(entry.target); // one-shot
       }
     });
   }, { threshold: 0.25, rootMargin: '0px 0px -8% 0px' });
 
-  watched.forEach(function(el){ io.observe(el); });
-
-  // Safety net for the rare case where the observer never fires for an element
-  // that is already on screen (e.g. it loaded scrolled part-way down). Only
-  // rescues elements currently in the viewport so headings further down the
-  // page still animate when the user reaches them.
-  setTimeout(function(){
-    var vh = window.innerHeight || docEl.clientHeight;
-    watched.forEach(function(el){
-      if (el.classList.contains('tw-in')) return;
-      var r = el.getBoundingClientRect();
-      if (r.top < vh && r.bottom > 0){
-        el.classList.add('tw-in');
-        io.unobserve(el);
+  // Card grids can be very tall (esp. single-column on phones), so they use
+  // a near-zero threshold — reveal as soon as the grid's top edge is in.
+  var ioGroup = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        revealNow(entry.target);
+        ioGroup.unobserve(entry.target);
       }
     });
-  }, 1200);
+  }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
+
+  function startObserving(){
+    titles.concat(leads).forEach(function(el){ io.observe(el); });
+    groups.forEach(function(el){ ioGroup.observe(el); });
+
+    // Safety net for the rare case where the observer never fires for an
+    // element that is already on screen (e.g. it loaded scrolled part-way
+    // down). Only rescues elements currently in the viewport so content
+    // further down the page still animates when the user reaches it.
+    setTimeout(function(){
+      var vh = window.innerHeight || docEl.clientHeight;
+      watched.forEach(function(el){
+        if (el.classList.contains('tw-in')) return;
+        var r = el.getBoundingClientRect();
+        if (r.top < vh && r.bottom > 0){
+          revealNow(el);
+          io.unobserve(el); ioGroup.unobserve(el);
+        }
+      });
+    }, 1200);
+  }
+
+  // If the welcome popup is due to show, hold the reveals until it's
+  // dismissed (closeWelcome dispatches 'welcome:dismissed') so the first
+  // screen's animation isn't wasted behind the overlay. Scrolling also
+  // releases the gate, in case the user scrolls with the popup open.
+  var modalDue = false;
+  try {
+    modalDue = !!document.getElementById('welcomeModal') &&
+      Date.now() > (parseInt(localStorage.getItem('welcomeModalDismissedUntil_v2'), 10) || 0);
+  } catch(e){}
+  if (modalDue){
+    var started = false;
+    var go = function(){ if (started) return; started = true; startObserving(); };
+    document.addEventListener('welcome:dismissed', go, { once: true });
+    window.addEventListener('scroll', go, { once: true, passive: true });
+  } else {
+    startObserving();
+  }
 })();
 </script>
 </body>
