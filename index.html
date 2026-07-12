@@ -210,6 +210,9 @@
        hidden underneath it. */
     section[id] { scroll-margin-top: 80px; }
     .svc-acc-item[id] { scroll-margin-top: 80px; }
+    /* keep the blue instruction bar visible below the fixed nav when
+       scripts scroll the booking iframe / conditions panel into view */
+    #pa-wrap, .conditions-panel { scroll-margin-top: 80px; }
 
     /* ── Nav ──────────────────────────────────────────── */
     .nav {
@@ -1812,8 +1815,8 @@
     .svc-acc__chev { flex-shrink: 0; color: var(--teal-bright); font-size: 1.4rem; line-height: 1; font-weight: 400; transition: transform .22s; }
     .svc-acc-item.open .svc-acc__chev { transform: rotate(45deg); }
     .svc-acc__body { display: none; padding: 0 1.25rem 1.2rem 3.65rem; }
-    .svc-acc-item.open .svc-acc__body { display: block; animation: svcFade .22s ease; }
-    @keyframes svcFade { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+    .svc-acc-item.open .svc-acc__body { display: block; animation: svcFade .32s ease; }
+    @keyframes svcFade { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
     .svc-acc__body p { font-size: .9rem; color: var(--text-muted); line-height: 1.7; margin: 0 0 .85rem; }
     .svc-acc__link { display: inline-block; font-size: .82rem; font-weight: 700; color: var(--teal-dark); letter-spacing: .02em; text-decoration: none; }
     .svc-acc__link:hover { color: var(--teal-bright); }
@@ -2832,6 +2835,73 @@
       .step--clickable:hover .step__btn,
       .blog-card:hover .blog-card__link { transform: translateX(3px); }
     }
+    /* ── Panel-open card cascade ─────────────────────────
+       When an accordion or the booking conditions panel opens, the cards
+       inside tumble into place one after another. The body is display:none
+       while closed, so the animation replays on every open. Indices are
+       stamped as --tw-i by the reveal script (capped, so long grids don't
+       drag). Works identically for tap and click. */
+    @keyframes card-fall {
+      from { opacity: 0; transform: translateY(18px) scale(.97); }
+    }
+    .svc-acc-item.open .ailments-grid > *,
+    .svc-acc-item.open .medscheck-grid > *,
+    .svc-acc-item.open .vaccine-grid > *,
+    .svc-acc-item.open .insurance-grid > *,
+    .svc-acc-item.open .poct-cards > *,
+    .conditions-panel.open .ailments-grid > * {
+      animation: card-fall .45s cubic-bezier(.2,.7,.2,1) backwards;
+      animation-delay: calc(var(--tw-i, 0) * 45ms);
+    }
+
+    /* ── Tap press-in (touch devices) ────────────────────
+       Touch has no hover, so cards, pills and buttons press down under
+       the finger like native app controls. */
+    @media (hover: none) {
+      .welcome-box, .pa-card, .step--clickable, .info-strip__card, .blog-card,
+      .rx-ext, .shop__card, .staff-card, .ailment-card, .medscheck-card,
+      .vaccine-card, .insurance-card, .poct-card, .welcome__pill, .btn {
+        transition: transform .15s ease;
+      }
+      .welcome-box:active, .pa-card:active, .step--clickable:active, .info-strip__card:active,
+      .blog-card:active, .rx-ext:active, .shop__card:active, .staff-card:active,
+      .ailment-card:active, .medscheck-card:active, .vaccine-card:active,
+      .insurance-card:active, .poct-card:active, .welcome__pill:active, .btn:active {
+        transform: scale(.965);
+      }
+    }
+
+    /* ── Dropdown open animations ────────────────────────
+       display flips from none, so these replay on every open. */
+    @keyframes drop-in {
+      from { opacity: 0; transform: translateY(-6px); }
+    }
+    .nav__has-dropdown:hover .nav__dropdown,
+    .nav__has-dropdown.open .nav__dropdown,
+    .nav__links.open {
+      animation: drop-in .2s ease backwards;
+    }
+    .conditions-panel.open { animation: svcFade .32s ease; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .svc-acc-item.open .ailments-grid > *,
+      .svc-acc-item.open .medscheck-grid > *,
+      .svc-acc-item.open .vaccine-grid > *,
+      .svc-acc-item.open .insurance-grid > *,
+      .svc-acc-item.open .poct-cards > *,
+      .conditions-panel.open .ailments-grid > *,
+      .nav__has-dropdown:hover .nav__dropdown,
+      .nav__has-dropdown.open .nav__dropdown,
+      .nav__links.open,
+      .conditions-panel.open { animation: none; }
+      .welcome-box:active, .pa-card:active, .step--clickable:active, .info-strip__card:active,
+      .blog-card:active, .rx-ext:active, .shop__card:active, .staff-card:active,
+      .ailment-card:active, .medscheck-card:active, .vaccine-card:active,
+      .insurance-card:active, .poct-card:active, .welcome__pill:active, .btn:active {
+        transform: none;
+      }
+    }
+
     /* ── 3D tilt-out hover ───────────────────────────────
        Cards lift out of the page toward the cursor: a perspective tilt
        (--rx/--ry are steered by a tiny JS handler; they stay 0 without
@@ -5162,8 +5232,10 @@ window.SmartMatch = (function(){
           paWrap.classList.remove('collapsed');
           document.querySelectorAll('.pa-card').forEach(function(c){ c.classList.remove('active'); });
         }
-        var bookingEl = document.getElementById('booking');
-        if (bookingEl) bookingEl.scrollIntoView({ behavior:'smooth', block:'start' });
+        // Land on the iframe wrapper so the blue instruction bar is visible
+        // (falls back to the section top if the wrapper wasn't populated).
+        var scrollTarget = (paWrap && paIframe && url) ? paWrap : document.getElementById('booking');
+        if (scrollTarget) scrollTarget.scrollIntoView({ behavior:'smooth', block:'start' });
       });
     });
   }
@@ -5730,7 +5802,15 @@ window.SmartMatch = (function(){
       }
       paWrap.style.gridColumn = '';
       paOpen(); // always show the panel, even if previously closed
-      setTimeout(function() { paWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+      // From another section: one smooth scroll to the iframe (its
+      // scroll-margin keeps the blue instruction bar visible). From inside
+      // the portal: the tall conditions panel just collapsed, so snap
+      // instantly to the iframe — no travel, the view simply stays anchored
+      // on the assessment instead of drifting into whatever slid up.
+      var fromInsideBooking = !!this.closest('#booking');
+      setTimeout(function() {
+        paWrap.scrollIntoView({ behavior: fromInsideBooking ? 'instant' : 'smooth', block: 'start' });
+      }, 80);
     });
   });
 
@@ -5794,7 +5874,9 @@ window.SmartMatch = (function(){
       var labelOverride = this.dataset.label || null;
       var hintOverride = this.dataset.hint || null;
       var target = document.querySelector('.pa-card[data-url="' + url + '"]');
-      var doScroll = true;
+      // Only scroll when arriving from another section — clicks made inside
+      // the booking portal keep the viewport where it is.
+      var doScroll = !this.closest('#booking');
       if (target) {
         switchPaTab(target, doScroll, labelOverride, hintOverride);
       } else {
@@ -7640,6 +7722,17 @@ window.SmartMatch = (function(){
   }
   groups.forEach(stampGroup);
 
+  // Panel-open cascade: stamp stagger indices on the card grids that live
+  // inside the service accordions / booking conditions panel. The card-fall
+  // CSS replays whenever their panel opens; index capped so long grids
+  // don't drag the tail out.
+  Array.prototype.slice.call(document.querySelectorAll(
+    '.ailments-grid, .medscheck-grid, .vaccine-grid, .insurance-grid, .poct-cards'
+  )).forEach(function(grid){
+    var kids = grid.children;
+    for (var i = 0; i < kids.length; i++) kids[i].style.setProperty('--tw-i', Math.min(i, 12));
+  });
+
   // After a group's stagger has played out, mark it done: the reveal CSS
   // stops matching and each card's own hover transitions take over again.
   function finishGroup(el){
@@ -7741,6 +7834,9 @@ window.SmartMatch = (function(){
    this script cards still pop straight out via the CSS fallback (vars = 0).
    Desktop pointers only; skipped under reduced motion. */
 (function(){
+  // No-op touchstart listener: makes iOS Safari honour :active on
+  // non-button elements (the tap press-in effect).
+  document.addEventListener('touchstart', function(){}, { passive: true });
   if (!(window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches)) return;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var SEL = '.welcome-box, .pa-card, .step--clickable, .info-strip__card, .blog-card,' +
