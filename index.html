@@ -348,12 +348,46 @@
     /* ── Hero ─────────────────────────────────────────── */
     .hero {
       background: linear-gradient(180deg, #b6ecef 0%, #cdf5f6 45%, #e4fbfc 100%);
-      padding: calc(5rem + 64px) 1.5rem 5.5rem;
+      padding: calc(3.5rem + 64px) 1.5rem 2rem;
       text-align: center;
       color: var(--teal-deeper);
       position: relative;
       overflow: hidden;
+      /* Fill the first screen: content stays vertically centered, the
+         scroll cue sits at the bottom (margin-top:auto). svh keeps this
+         honest on phones where the URL bar changes vh. */
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
+    .hero > * { width: 100%; }
+    /* ── Hero scroll cue ───────────────────────────────── */
+    .hero__scroll-cue {
+      position: absolute;
+      left: 50%; bottom: .9rem;
+      transform: translateX(-50%);
+      width: auto;
+      padding: .7rem .9rem .5rem;
+      display: inline-flex;
+      color: var(--teal-dark);
+      opacity: .55;
+      z-index: 1;
+      transition: opacity .4s ease;
+    }
+    .hero__scroll-cue:hover { opacity: 1; }
+    .hero__scroll-cue svg {
+      width: 26px; height: 26px; display: block;
+      animation: cue-bob 2.4s ease-in-out infinite;
+    }
+    .hero__scroll-cue--hide { opacity: 0 !important; pointer-events: none; }
+    @keyframes cue-bob {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(7px); }
+    }
+    @media (prefers-reduced-motion: reduce) { .hero__scroll-cue svg { animation: none; } }
     /* ── Cloud keyframes ─────────────────────────────── */
     @keyframes cloud-drift   { from { transform: translateX(-60vw);           } to { transform: translateX(120vw);           } }
     @keyframes cloud-drift-r { from { transform: translateX(-60vw) scaleX(-1);} to { transform: translateX(120vw) scaleX(-1);} }
@@ -396,9 +430,13 @@
     .hero-go .hero__sub     { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) .24s backwards; }
     .hero-go .hero__socials { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) .36s backwards; }
     .hero-go .hero__status  { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) .48s backwards; }
+    /* Scroll cue joins last, opacity-only (its transform centers it). */
+    @keyframes cue-fade { from { opacity: 0; } }
+    .hero-go .hero__scroll-cue { animation: cue-fade .8s ease .8s backwards; }
     @media (prefers-reduced-motion: reduce) {
       .hero-go .hero__logo, .hero-go .hero__name, .hero-go .hero__sub,
-      .hero-go .hero__socials, .hero-go .hero__status { animation: none; }
+      .hero-go .hero__socials, .hero-go .hero__status,
+      .hero-go .hero__scroll-cue { animation: none; }
     }
     /* On mobile: fewer clouds for performance */
     @media (max-width: 768px) {
@@ -657,10 +695,21 @@
     .tw-enabled .reveal-group--photo:not(.tw-done) > * {
       transform: translateY(24px) scale(.96);
     }
+    /* Chat-bubble variant: pills pop up from their tail edge with a springy
+       overshoot, one after another — like incoming iMessage bubbles. */
+    .tw-enabled .reveal-group--chat:not(.tw-done) > * {
+      transform: translateY(12px) scale(.55);
+      transform-origin: bottom center;
+      transition: opacity .3s ease,
+                  transform .45s cubic-bezier(.34,1.56,.64,1);
+    }
     .tw-enabled .reveal-group.tw-in:not(.tw-done) > * {
       opacity: 1;
       transform: none;
       transition-delay: calc(var(--tw-i, 0) * 70ms);
+    }
+    .tw-enabled .reveal-group--chat.tw-in:not(.tw-done) > * {
+      transition-delay: calc(var(--tw-i, 0) * 90ms);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -737,7 +786,7 @@
     .welcome__pill:hover::before { border-top-color: var(--teal-bright); }
     .welcome__pill:hover::after { border-top-color: var(--teal-bright); }
     .welcome__boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-top: 2.25rem; }
-    .welcome-box { background: rgba(255,255,255,0.9); border: 1.5px solid rgba(255,255,255,0.55); border-top: 3.5px solid var(--teal-bright); border-radius: 14px; padding: 1.4rem 1.25rem 1.3rem; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: .35rem; transition: box-shadow .2s, transform .15s, border-color .15s; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+    .welcome-box { background: rgba(255,255,255,0.9); border-radius: 14px; padding: 1.4rem 1.25rem 1.3rem; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: .35rem; transition: box-shadow .2s, transform .15s, border-color .15s; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
     .welcome-box:hover { box-shadow: 0 8px 28px rgba(0,115,124,.14); transform: translateY(-3px); border-color: var(--teal-bright); }
     .welcome-box__icon { font-size: 1.9rem; margin-bottom: .3rem; }
     .welcome-box__title { font-size: 1rem; font-weight: 800; color: var(--text); }
@@ -749,7 +798,6 @@
     /* ── Medication Extensions & Adaptations callout ──────────── */
     .rx-ext { margin-top: 2.25rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
       background: linear-gradient(135deg, var(--teal-ice), #fff);
-      border: 1.5px solid var(--border); border-left: 5px solid var(--teal-bright);
       border-radius: 16px; padding: 1.5rem 1.75rem; box-shadow: 0 4px 18px rgba(0,80,90,.07); }
     .rx-ext__icon { font-size: 2.6rem; line-height: 1; flex-shrink: 0; }
     .rx-ext__body { flex: 1 1 320px; }
@@ -1032,18 +1080,15 @@
       padding: 1.25rem 1rem;
       text-align: center;
       box-shadow: var(--shadow);
-      border-top: 3px solid var(--teal-bright);
       display: flex;
       flex-direction: column;
       transition: transform .15s, box-shadow .15s, background .15s;
       cursor: pointer;
       font: inherit;
-      border-left: none; border-right: none; border-bottom: none;
       width: 100%;
     }
     .pa-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(30,107,99,.18); }
     .pa-card.active {
-      border-top-color: var(--teal-dark);
       background: var(--teal-ice);
       box-shadow: 0 0 0 2px var(--teal-bright), 0 4px 16px rgba(30,107,99,.15);
     }
@@ -1330,8 +1375,6 @@
     .info-strip__card {
       background: #fff;
       border-radius: 14px; padding: 1.25rem 1.2rem 1.25rem;
-      border: 1.5px solid var(--border);
-      border-top: 3.5px solid var(--teal-bright);
       box-shadow: 0 6px 22px rgba(0,0,0,.16);
       display: flex; flex-direction: column;
       transition: box-shadow .2s, transform .15s;
@@ -1450,7 +1493,6 @@
       border-radius: var(--radius);
       padding: 1.5rem;
       box-shadow: var(--shadow);
-      border-top: 3px solid var(--teal-bright);
       display: flex;
       flex-direction: column;
       gap: .55rem;
@@ -1626,7 +1668,6 @@
       border-radius: var(--radius);
       padding: 2rem 1.5rem;
       box-shadow: var(--shadow);
-      border-top: 4px solid var(--teal-bright);
     }
     .step__num {
       width: 44px; height: 44px; border-radius: 50%;
@@ -2709,6 +2750,94 @@
     }
     .pp-close:hover { color: #111; }
     .pp-link { color: rgba(255,255,255,.55); font-size: .7rem; text-decoration: underline; cursor: pointer; background: none; border: none; }
+
+    /* ── Card chrome ─────────────────────────────────────
+       One shared card language replacing the old solid teal bar:
+       a gradient hairline border that runs teal → air → teal around
+       the whole card, plus a soft teal glow tucked into the top-left
+       corner for depth. Each card keeps its own fill via --card-bg
+       (two identical stops so it stacks as a background layer).
+       Placed at the end of the stylesheet so it wins the cascade
+       over the per-card base rules. */
+    .welcome-box, .pa-card, .info-strip__card, .blog-card, .step, .rx-ext {
+      --card-bg: linear-gradient(#fff, #fff);
+      border: 1.5px solid transparent;
+      background:
+        radial-gradient(130% 95% at 0% 0%, rgba(33,161,168,.09), transparent 52%) padding-box,
+        var(--card-bg) padding-box,
+        linear-gradient(150deg, rgba(33,161,168,.50), rgba(33,161,168,.10) 40%, rgba(184,232,234,.55) 72%, rgba(33,161,168,.38)) border-box;
+      position: relative;
+      overflow: hidden;
+    }
+    .welcome-box { --card-bg: linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,.9)); }
+    .pa-card     { --card-bg: linear-gradient(rgba(255,255,255,.92), rgba(255,255,255,.92)); }
+    .blog-card   { --card-bg: linear-gradient(rgba(215,251,252,.92), rgba(215,251,252,.92)); }
+    .rx-ext      { --card-bg: linear-gradient(135deg, var(--teal-ice), #fff); }
+    .pa-card.active {
+      --card-bg: linear-gradient(var(--teal-ice), var(--teal-ice));
+      background:
+        var(--card-bg) padding-box,
+        linear-gradient(150deg, rgba(0,115,124,.55), rgba(33,161,168,.25) 45%, rgba(0,115,124,.45)) border-box;
+    }
+
+    /* Icon chips: give the bare emoji a tinted rounded home, and let it
+       spring-tilt when the card is hovered. */
+    .welcome-box__icon {
+      width: 52px; height: 52px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, rgba(33,161,168,.16), rgba(33,161,168,.05));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.65rem;
+      margin-bottom: .55rem;
+    }
+    .pa-card__icon {
+      width: 46px; height: 46px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, rgba(33,161,168,.16), rgba(33,161,168,.05));
+      margin: 0 auto .5rem;
+      font-size: 1.5rem;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      /* sheen: one diagonal light streak sweeps across on hover */
+      .welcome-box::after, .pa-card::after, .info-strip__card::after,
+      .blog-card::after, .step--clickable::after, .rx-ext::after {
+        content: '';
+        position: absolute; top: 0; bottom: 0; left: -60%;
+        width: 55%;
+        background: linear-gradient(105deg, rgba(255,255,255,0), rgba(255,255,255,.5), rgba(255,255,255,0));
+        transform: translateX(0) skewX(-18deg);
+        opacity: 0;
+        pointer-events: none;
+      }
+      .welcome-box:hover::after, .pa-card:hover::after, .info-strip__card:hover::after,
+      .blog-card:hover::after, .step--clickable:hover::after, .rx-ext:hover::after {
+        animation: card-sheen .8s ease;
+      }
+      /* icon / number / CTA micro-motion */
+      .welcome-box__icon, .pa-card__icon, .step__num, .rx-ext__icon {
+        transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+      }
+      .welcome-box:hover .welcome-box__icon,
+      .pa-card:hover .pa-card__icon,
+      .step--clickable:hover .step__num,
+      .rx-ext:hover .rx-ext__icon { transform: scale(1.12) rotate(-6deg); }
+      .welcome-box__cta, .step__btn, .blog-card__link {
+        display: inline-block;
+        transition: transform .25s cubic-bezier(.2,.7,.2,1), color .15s;
+      }
+      .welcome-box:hover .welcome-box__cta,
+      .step--clickable:hover .step__btn,
+      .blog-card:hover .blog-card__link { transform: translateX(3px); }
+    }
+    @keyframes card-sheen {
+      from { transform: translateX(0) skewX(-18deg); opacity: 1; }
+      to   { transform: translateX(320%) skewX(-18deg); opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .welcome-box:hover::after, .pa-card:hover::after, .info-strip__card:hover::after,
+      .blog-card:hover::after, .step--clickable:hover::after, .rx-ext:hover::after { animation: none; }
+    }
   </style>
 </head>
 <body>
@@ -2845,6 +2974,11 @@
     var until = parseInt(localStorage.getItem('welcomeModalDismissedUntil_v2'), 10) || 0;
     if (Date.now() <= until) document.documentElement.classList.add('hero-go');
   } catch(e){}
+  // The scroll cue has done its job once the user scrolls — fade it out.
+  window.addEventListener('scroll', function(){
+    var cue = document.getElementById('heroScrollCue');
+    if (cue) cue.classList.add('hero__scroll-cue--hide');
+  }, { once: true, passive: true });
 })();
 </script>
 <header class="hero" id="home">
@@ -2904,6 +3038,9 @@
       </a>
     </div>
   </div>
+  <a href="#welcome" class="hero__scroll-cue" id="heroScrollCue" aria-label="Scroll to explore">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9l8 7 8-7"/></svg>
+  </a>
 </header>
 
 <!-- Welcome / news modal -->
@@ -7423,12 +7560,14 @@ window.SmartMatch = (function(){
   // have their own IntersectionObserver reveals.
   var GROUPS = [
     '#welcome .welcome__boxes',
+    '#welcome .welcome__photo-col',
     '#new-patients .steps',
     '#booking .pa-cards--top',
     '#drug-checker .dc-layout',
     '#team .staff-grid',
     '#shop .shop__cards',
-    '#blog .blog-grid'
+    '#blog .blog-grid',
+    '#contact .contact__info-strip'
   ];
   var groups = [];
   GROUPS.forEach(function(sel){
@@ -7439,6 +7578,17 @@ window.SmartMatch = (function(){
   Array.prototype.slice.call(document.querySelectorAll('#about .gallery__row')).forEach(function(el){
     el.classList.add('reveal-group--photo');
     groups.push(el);
+  });
+  // Welcome question pills pop in like chat bubbles (springy scale-up).
+  var pills = document.querySelector('#welcome .welcome__pills');
+  if (pills){
+    pills.classList.add('reveal-group--chat');
+    groups.push(pills);
+  }
+  // Welcome intro paragraphs ride the per-element reveal like section leads.
+  Array.prototype.slice.call(document.querySelectorAll('#welcome .welcome__text > p')).forEach(function(el){
+    el.classList.add('reveal-up');
+    leads.push(el);
   });
 
   function stampGroup(el){
@@ -7451,7 +7601,7 @@ window.SmartMatch = (function(){
   // After a group's stagger has played out, mark it done: the reveal CSS
   // stops matching and each card's own hover transitions take over again.
   function finishGroup(el){
-    var ms = el.children.length * 70 + 700;
+    var ms = el.children.length * 90 + 700; // covers the slowest (chat) stagger
     setTimeout(function(){ el.classList.add('tw-done'); }, ms);
   }
   function revealNow(el){
