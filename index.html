@@ -585,6 +585,53 @@
       margin-top: .75rem;
     }
 
+    /* ── Scroll reveal: section headings "write" in ───────
+       Progressive enhancement: the hidden start-states below are
+       scoped under html.tw-enabled, which JS only adds when it can
+       run the effect. With JS off/broken, every heading stays fully
+       visible. Uses opacity + transform only (GPU-cheap), fires once
+       per section via IntersectionObserver, and is disabled entirely
+       under prefers-reduced-motion. */
+    .tw-enabled .section__title .tw-char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(0.42em) scale(.97);
+      transition: opacity .5s cubic-bezier(.2,.7,.2,1),
+                  transform .5s cubic-bezier(.2,.7,.2,1);
+      transition-delay: calc(var(--tw-i, 0) * 26ms);
+    }
+    .tw-enabled .section__title.tw-in .tw-char {
+      opacity: 1;
+      transform: none;
+    }
+    /* the underline bar draws itself in just after the last letter */
+    .tw-enabled .section__title.tw-ready::after {
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform .55s cubic-bezier(.2,.7,.2,1);
+      transition-delay: calc(var(--tw-n, 6) * 26ms + 90ms);
+    }
+    .tw-enabled .section__title.tw-in::after { transform: scaleX(1); }
+
+    /* Text blocks / cards that "settle" up into place on entry */
+    .tw-enabled .reveal-up {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .6s cubic-bezier(.2,.7,.2,1),
+                  transform .6s cubic-bezier(.2,.7,.2,1);
+    }
+    .tw-enabled .reveal-up.tw-in { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tw-enabled .section__title .tw-char,
+      .tw-enabled .section__title.tw-ready::after,
+      .tw-enabled .reveal-up {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
+
     /* ── Welcome ──────────────────────────────────────── */
     #welcome { background: var(--white); padding-bottom: 2rem; }
     .welcome__grid {
@@ -7231,6 +7278,98 @@ window.SmartMatch = (function(){
       if (iconEl) iconEl.innerHTML = pick(d.current.weather_code);
     })
     .catch(function(){});
+})();
+</script>
+
+<script>
+/* Scroll-reveal for section headings + leads.
+   Splits each .section__title into per-character spans and reveals them
+   left-to-right (a "writing" sweep) the first time the heading scrolls into
+   view. Section leads settle up at the same time. Everything is one-shot,
+   GPU-cheap (opacity/transform only), and guarded for reduced motion and for
+   browsers without IntersectionObserver. Kept out of the critical path — if
+   this script never runs, headings stay fully visible (see html.tw-enabled). */
+(function(){
+  var docEl = document.documentElement;
+  var titles = Array.prototype.slice.call(document.querySelectorAll('.section__title'));
+  var leads  = Array.prototype.slice.call(document.querySelectorAll('.section__lead'));
+  if (!titles.length && !leads.length) return;
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Enable the effect's hidden start-states. Without this class the CSS above
+  // never hides anything, so a JS failure can't leave text invisible.
+  docEl.classList.add('tw-enabled');
+
+  // Wrap the text of a heading into per-character spans, preserving any child
+  // markup (e.g. the FAQ heading's nested styled span) and natural word wrap.
+  function splitHeading(el){
+    var idx = 0;
+    (function walk(node){
+      Array.prototype.slice.call(node.childNodes).forEach(function(kid){
+        if (kid.nodeType === 3){ // text node
+          var text = kid.nodeValue;
+          if (!text) return;
+          var frag = document.createDocumentFragment();
+          for (var i = 0; i < text.length; i++){
+            var ch = text[i];
+            if (ch === ' ' || ch === '\n' || ch === '\t'){
+              frag.appendChild(document.createTextNode(' ')); // keep spaces as real spaces so wrapping works
+              continue;
+            }
+            var span = document.createElement('span');
+            span.className = 'tw-char';
+            span.textContent = ch;
+            span.style.setProperty('--tw-i', idx++);
+            frag.appendChild(span);
+          }
+          node.replaceChild(frag, kid);
+        } else if (kid.nodeType === 1){
+          walk(kid);
+        }
+      });
+    })(el);
+    el.style.setProperty('--tw-n', idx); // last index → underline delay
+    el.classList.add('tw-ready');
+  }
+
+  titles.forEach(splitHeading);
+  leads.forEach(function(el){ el.classList.add('reveal-up'); });
+
+  var watched = titles.concat(leads);
+
+  // Reduced motion or no IntersectionObserver → reveal everything at once.
+  if (reduce || !('IntersectionObserver' in window)){
+    watched.forEach(function(el){ el.classList.add('tw-in'); });
+    return;
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        entry.target.classList.add('tw-in');
+        io.unobserve(entry.target); // one-shot
+      }
+    });
+  }, { threshold: 0.25, rootMargin: '0px 0px -8% 0px' });
+
+  watched.forEach(function(el){ io.observe(el); });
+
+  // Safety net for the rare case where the observer never fires for an element
+  // that is already on screen (e.g. it loaded scrolled part-way down). Only
+  // rescues elements currently in the viewport so headings further down the
+  // page still animate when the user reaches them.
+  setTimeout(function(){
+    var vh = window.innerHeight || docEl.clientHeight;
+    watched.forEach(function(el){
+      if (el.classList.contains('tw-in')) return;
+      var r = el.getBoundingClientRect();
+      if (r.top < vh && r.bottom > 0){
+        el.classList.add('tw-in');
+        io.unobserve(el);
+      }
+    });
+  }, 1200);
 })();
 </script>
 </body>
