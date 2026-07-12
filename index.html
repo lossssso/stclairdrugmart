@@ -1838,7 +1838,8 @@
       border-radius: 100px; padding: .1rem .5rem; line-height: 1.4;
     }
     .svc-acc__group-sub { font-size: .85rem; color: var(--text-muted); line-height: 1.55; margin: 0 0 .9rem .4rem; }
-    .svc-acc__group .svc-acc-item { border-left: 3px solid var(--cat-color); }
+    /* (category colour treatment for .svc-acc-item lives in the Card chrome
+       section at the end of this stylesheet) */
     .svc-tabs__section-hd { display: flex; align-items: center; gap: 1rem; margin: 2.5rem 0 1.5rem; }
     .svc-tabs__section-hd::before, .svc-tabs__section-hd::after { content: ''; flex: 1; height: 1.5px; background: var(--border); }
     .svc-tabs__section-hd span { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--teal-bright); white-space: nowrap; }
@@ -2383,8 +2384,11 @@
     .dc-loading { font-size: .9rem; color: var(--text-muted); }
     .dc-disclaimer {
       margin-top: 1.25rem; font-size: .8rem; color: var(--text-muted);
-      background: var(--teal-ice); border-left: 3px solid var(--teal-bright);
-      padding: .65rem .85rem; border-radius: 0 6px 6px 0; line-height: 1.55;
+      border: 1.5px solid transparent;
+      background:
+        linear-gradient(var(--teal-ice), var(--teal-ice)) padding-box,
+        linear-gradient(135deg, rgba(33,161,168,.5), rgba(184,232,234,.45) 60%, rgba(33,161,168,.3)) border-box;
+      padding: .65rem .85rem; border-radius: 10px; line-height: 1.55;
     }
     .dc-credit {
       display: flex; align-items: center; flex-wrap: wrap; gap: .4rem;
@@ -2521,14 +2525,22 @@
     .faq .section__lead { color: rgba(255,255,255,.65); }
     .faq-list { display: grid; grid-template-columns: 1fr; gap: .85rem; margin-top: 2rem; border: none; align-items: start; }
     .faq-item {
-      background: #fff;
+      border: 1.5px solid transparent;
+      background:
+        radial-gradient(120% 150% at 0% 0%, rgba(33,161,168,.10), transparent 46%) padding-box,
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(140deg, rgba(33,161,168,.5), rgba(184,232,234,.35) 45%, rgba(33,161,168,.28)) border-box;
       border-radius: 14px; overflow: hidden;
       box-shadow: 0 4px 22px rgba(0,0,0,.18);
-      border-left: 4px solid var(--teal-mid);
-      transition: box-shadow .25s, transform .25s, border-color .2s;
+      transition: box-shadow .25s, transform .25s;
     }
     .faq-item:hover { box-shadow: 0 10px 32px rgba(0,0,0,.28); transform: translateY(-2px); }
-    .faq-item.open { border-left-color: var(--teal-bright); }
+    .faq-item.open {
+      background:
+        radial-gradient(120% 150% at 0% 0%, rgba(33,161,168,.12), transparent 46%) padding-box,
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(140deg, var(--teal-bright), var(--teal-mid)) border-box;
+    }
     .faq-item__q {
       width: 100%; text-align: left; background: none; border: none;
       cursor: pointer; padding: 1.1rem 1.2rem;
@@ -2576,7 +2588,12 @@
     .faq-search__status strong { color: #fff; }
     .faq-item__q-text mark, .faq-item__a mark, .ailments-smartsearch__hit-name mark { background: rgba(33,161,168,.22); color: var(--teal-deeper); border-radius: 3px; padding: 0 .1em; }
     .faq-item.faq-hidden { display: none; }
-    .faq-item.faq-best-match { border-left-color: var(--teal-bright); }
+    .faq-item.faq-best-match {
+      background:
+        radial-gradient(120% 150% at 0% 0%, rgba(33,161,168,.12), transparent 46%) padding-box,
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(140deg, var(--teal-bright), var(--teal-mid)) border-box;
+    }
     .faq-empty { background: rgba(255,255,255,.92); border-radius: 14px; padding: 1.4rem 1.3rem; text-align: center; }
     .faq-empty p { color: var(--text-muted); font-size: .88rem; margin: 0 0 .85rem; line-height: 1.55; }
     .faq-empty a.btn { display: inline-block; }
@@ -2837,6 +2854,28 @@
     @media (prefers-reduced-motion: reduce) {
       .welcome-box:hover::after, .pa-card:hover::after, .info-strip__card:hover::after,
       .blog-card:hover::after, .step--clickable:hover::after, .rx-ext:hover::after { animation: none; }
+    }
+
+    /* Service accordion rows: the category colour now "dips" the top-left
+       corner (border gradient + soft tint glow) instead of a flat left bar.
+       Open rows get a full ring in their category colour. */
+    .svc-acc__group .svc-acc-item {
+      border: 1.5px solid transparent;
+      background:
+        radial-gradient(130% 150% at 0% 0%, var(--cat-tint), transparent 42%) padding-box,
+        linear-gradient(var(--white), var(--white)) padding-box,
+        linear-gradient(135deg, var(--cat-color) 0%, var(--border) 32%, var(--border) 78%, var(--cat-color)) border-box;
+    }
+    .svc-acc__group .svc-acc-item.open {
+      border-color: transparent;
+      background:
+        radial-gradient(130% 150% at 0% 0%, var(--cat-tint), transparent 42%) padding-box,
+        linear-gradient(var(--white), var(--white)) padding-box,
+        linear-gradient(135deg, var(--cat-color), var(--cat-color)) border-box;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .svc-acc__icon { transition: transform .35s cubic-bezier(.34,1.56,.64,1); }
+      .svc-acc__head:hover .svc-acc__icon { transform: scale(1.15) rotate(-6deg); }
     }
   </style>
 </head>
