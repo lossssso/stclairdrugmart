@@ -2816,21 +2816,6 @@
     }
 
     @media (hover: hover) and (pointer: fine) {
-      /* sheen: one diagonal light streak sweeps across on hover */
-      .welcome-box::after, .pa-card::after, .info-strip__card::after,
-      .blog-card::after, .step--clickable::after, .rx-ext::after {
-        content: '';
-        position: absolute; top: 0; bottom: 0; left: -60%;
-        width: 55%;
-        background: linear-gradient(105deg, rgba(255,255,255,0), rgba(255,255,255,.5), rgba(255,255,255,0));
-        transform: translateX(0) skewX(-18deg);
-        opacity: 0;
-        pointer-events: none;
-      }
-      .welcome-box:hover::after, .pa-card:hover::after, .info-strip__card:hover::after,
-      .blog-card:hover::after, .step--clickable:hover::after, .rx-ext:hover::after {
-        animation: card-sheen .8s ease;
-      }
       /* icon / number / CTA micro-motion */
       .welcome-box__icon, .pa-card__icon, .step__num, .rx-ext__icon {
         transition: transform .35s cubic-bezier(.34,1.56,.64,1);
@@ -2847,13 +2832,31 @@
       .step--clickable:hover .step__btn,
       .blog-card:hover .blog-card__link { transform: translateX(3px); }
     }
-    @keyframes card-sheen {
-      from { transform: translateX(0) skewX(-18deg); opacity: 1; }
-      to   { transform: translateX(320%) skewX(-18deg); opacity: 1; }
+    /* ── 3D tilt-out hover ───────────────────────────────
+       Cards lift out of the page toward the cursor: a perspective tilt
+       (--rx/--ry are steered by a tiny JS handler; they stay 0 without
+       JS, leaving a straight pop-out) plus a deep two-layer shadow.
+       Desktop pointers only; reduced-motion gets shadow only. */
+    @media (hover: hover) and (pointer: fine) {
+      .welcome-box, .pa-card, .step--clickable, .info-strip__card, .blog-card,
+      .rx-ext, .shop__card, .staff-card, .ailment-card, .medscheck-card,
+      .vaccine-card, .insurance-card, .poct-card {
+        transition: transform .2s ease-out, box-shadow .3s ease;
+      }
+      .welcome-box:hover, .pa-card:hover, .step--clickable:hover, .info-strip__card:hover,
+      .blog-card:hover, .rx-ext:hover, .shop__card:hover, .staff-card:hover,
+      .ailment-card:hover, .medscheck-card:hover, .vaccine-card:hover,
+      .insurance-card:hover, .poct-card:hover {
+        transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-6px) scale(1.02);
+        box-shadow: 0 18px 40px rgba(0,80,90,.18), 0 6px 14px rgba(0,80,90,.10);
+        z-index: 2;
+      }
     }
     @media (prefers-reduced-motion: reduce) {
-      .welcome-box:hover::after, .pa-card:hover::after, .info-strip__card:hover::after,
-      .blog-card:hover::after, .step--clickable:hover::after, .rx-ext:hover::after { animation: none; }
+      .welcome-box:hover, .pa-card:hover, .step--clickable:hover, .info-strip__card:hover,
+      .blog-card:hover, .rx-ext:hover, .shop__card:hover, .staff-card:hover,
+      .ailment-card:hover, .medscheck-card:hover, .vaccine-card:hover,
+      .insurance-card:hover, .poct-card:hover { transform: none; }
     }
 
     /* Service accordion rows: the category colour now "dips" the top-left
@@ -7728,6 +7731,50 @@ window.SmartMatch = (function(){
   } else {
     startObserving();
   }
+})();
+</script>
+
+<script>
+/* 3D tilt steering — feeds --rx/--ry to the hover transform above so cards
+   tilt toward the cursor. Event delegation (one mouseover listener) means
+   dynamically re-rendered cards (e.g. blog grid) work automatically. Without
+   this script cards still pop straight out via the CSS fallback (vars = 0).
+   Desktop pointers only; skipped under reduced motion. */
+(function(){
+  if (!(window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches)) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var SEL = '.welcome-box, .pa-card, .step--clickable, .info-strip__card, .blog-card,' +
+            ' .rx-ext, .shop__card, .staff-card, .ailment-card, .medscheck-card,' +
+            ' .vaccine-card, .insurance-card, .poct-card';
+  var MAX = 5; // degrees
+  document.addEventListener('mouseover', function(e){
+    var card = e.target.closest && e.target.closest(SEL);
+    if (!card || card.__tilting) return;
+    card.__tilting = true;
+    var raf = 0;
+    function onMove(ev){
+      if (raf) return;
+      raf = requestAnimationFrame(function(){
+        raf = 0;
+        var r = card.getBoundingClientRect();
+        var dx = (ev.clientX - r.left) / r.width  - .5; // -0.5 … 0.5
+        var dy = (ev.clientY - r.top)  / r.height - .5;
+        card.style.setProperty('--ry', (dx *  2 * MAX).toFixed(2) + 'deg');
+        card.style.setProperty('--rx', (dy * -2 * MAX).toFixed(2) + 'deg');
+      });
+    }
+    function onLeave(){
+      card.removeEventListener('mousemove', onMove);
+      card.removeEventListener('mouseleave', onLeave);
+      if (raf) cancelAnimationFrame(raf);
+      card.style.setProperty('--rx', '0deg');
+      card.style.setProperty('--ry', '0deg');
+      card.__tilting = false;
+    }
+    card.addEventListener('mousemove', onMove);
+    card.addEventListener('mouseleave', onLeave);
+    onMove(e);
+  });
 })();
 </script>
 </body>
