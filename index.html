@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
   <title>St. Clair Drug Mart Pharmacy | Top-Rated Clinical Pharmacy in Toronto</title>
-  <meta name="description" content="St. Clair Drug Mart — 4.9★ pharmacy on St. Clair West, Toronto. Assessments, prescriptions & vaccines — walk in or book by phone. (416) 654-8181." />
+  <meta name="description" content="St. Clair Drug Mart — 4.9★ pharmacy on St. Clair West, Toronto. Assessments, prescriptions & vaccines — walk in or book by phone. 416 654 8181." />
   <meta name="author" content="St. Clair Drug Mart Pharmacy" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="theme-color" content="#b6ecef" />
@@ -742,10 +742,6 @@
         transform: translateY(-4px);
         box-shadow: 0 12px 28px rgba(0,80,90,.13);
       }
-      .staff-card {
-        transition: transform .25s cubic-bezier(.2,.7,.2,1);
-      }
-      .staff-card:hover { transform: translateY(-4px); }
     }
 
     /* ── Welcome ──────────────────────────────────────── */
@@ -2859,12 +2855,12 @@
        the finger like native app controls. */
     @media (hover: none) {
       .welcome-box, .pa-card, .step--clickable, .info-strip__card, .blog-card,
-      .rx-ext, .shop__card, .staff-card, .ailment-card, .medscheck-card,
+      .rx-ext, .shop__card, .ailment-card, .medscheck-card,
       .vaccine-card, .insurance-card, .poct-card, .welcome__pill, .btn {
         transition: transform .15s ease;
       }
       .welcome-box:active, .pa-card:active, .step--clickable:active, .info-strip__card:active,
-      .blog-card:active, .rx-ext:active, .shop__card:active, .staff-card:active,
+      .blog-card:active, .rx-ext:active, .shop__card:active,
       .ailment-card:active, .medscheck-card:active, .vaccine-card:active,
       .insurance-card:active, .poct-card:active, .welcome__pill:active, .btn:active {
         transform: scale(.965);
@@ -2895,7 +2891,7 @@
       .nav__links.open,
       .conditions-panel.open { animation: none; }
       .welcome-box:active, .pa-card:active, .step--clickable:active, .info-strip__card:active,
-      .blog-card:active, .rx-ext:active, .shop__card:active, .staff-card:active,
+      .blog-card:active, .rx-ext:active, .shop__card:active,
       .ailment-card:active, .medscheck-card:active, .vaccine-card:active,
       .insurance-card:active, .poct-card:active, .welcome__pill:active, .btn:active {
         transform: none;
@@ -2909,12 +2905,12 @@
        Desktop pointers only; reduced-motion gets shadow only. */
     @media (hover: hover) and (pointer: fine) {
       .welcome-box, .pa-card, .step--clickable, .info-strip__card, .blog-card,
-      .rx-ext, .shop__card, .staff-card, .ailment-card, .medscheck-card,
+      .rx-ext, .shop__card, .ailment-card, .medscheck-card,
       .vaccine-card, .insurance-card, .poct-card {
         transition: transform .2s ease-out, box-shadow .3s ease;
       }
       .welcome-box:hover, .pa-card:hover, .step--clickable:hover, .info-strip__card:hover,
-      .blog-card:hover, .rx-ext:hover, .shop__card:hover, .staff-card:hover,
+      .blog-card:hover, .rx-ext:hover, .shop__card:hover,
       .ailment-card:hover, .medscheck-card:hover, .vaccine-card:hover,
       .insurance-card:hover, .poct-card:hover {
         transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-6px) scale(1.02);
@@ -2924,7 +2920,7 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .welcome-box:hover, .pa-card:hover, .step--clickable:hover, .info-strip__card:hover,
-      .blog-card:hover, .rx-ext:hover, .shop__card:hover, .staff-card:hover,
+      .blog-card:hover, .rx-ext:hover, .shop__card:hover,
       .ailment-card:hover, .medscheck-card:hover, .vaccine-card:hover,
       .insurance-card:hover, .poct-card:hover { transform: none; }
     }
@@ -7840,7 +7836,7 @@ window.SmartMatch = (function(){
   if (!(window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches)) return;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var SEL = '.welcome-box, .pa-card, .step--clickable, .info-strip__card, .blog-card,' +
-            ' .rx-ext, .shop__card, .staff-card, .ailment-card, .medscheck-card,' +
+            ' .rx-ext, .shop__card, .ailment-card, .medscheck-card,' +
             ' .vaccine-card, .insurance-card, .poct-card';
   var MAX = 5; // degrees
   document.addEventListener('mouseover', function(e){
