@@ -2927,6 +2927,97 @@
       .insurance-card:hover, .poct-card:hover { transform: none; }
     }
 
+    /* ── Instant-answers chat panel ──────────────────────
+       Client-side Q&A over the site's own FAQ / services / conditions
+       data (see the sdm-chat script) — no backend, nothing leaves the
+       page. Bubbles echo the welcome section's chat-pill look. */
+    .sdm-chat {
+      position: fixed; right: 1.5rem; bottom: 6.5rem; z-index: 9000;
+      width: 370px; max-width: calc(100vw - 1.5rem);
+      max-height: min(70vh, 560px);
+      display: flex; flex-direction: column;
+      background: #fff; border-radius: 18px;
+      box-shadow: 0 24px 60px rgba(0,60,70,.28), 0 6px 18px rgba(0,60,70,.14);
+      overflow: hidden;
+      transform-origin: bottom right;
+      animation: sdm-chat-in .3s cubic-bezier(.34,1.56,.64,1) backwards;
+    }
+    .sdm-chat[hidden] { display: none; }
+    @keyframes sdm-chat-in { from { opacity: 0; transform: translateY(14px) scale(.92); } }
+    .sdm-chat__head {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: .6rem;
+      background: var(--teal-deeper); color: #fff; padding: .85rem 1rem .8rem;
+    }
+    .sdm-chat__title { font-weight: 800; font-size: .95rem; }
+    .sdm-chat__sub { font-size: .67rem; opacity: .78; margin-top: .15rem; line-height: 1.4; }
+    .sdm-chat__close {
+      background: none; border: none; color: #fff; font-size: 1.5rem; line-height: 1;
+      cursor: pointer; padding: .1rem .3rem; opacity: .85; flex: none;
+    }
+    .sdm-chat__close:hover { opacity: 1; }
+    .sdm-chat__log {
+      flex: 1; overflow-y: auto; overscroll-behavior: contain;
+      padding: .9rem .9rem .4rem; display: flex; flex-direction: column; gap: .55rem;
+      background: linear-gradient(180deg, #f4fbfc, #fff);
+      min-height: 180px;
+    }
+    .sdm-msg {
+      max-width: 88%; padding: .6rem .85rem; border-radius: 15px;
+      font-size: .85rem; line-height: 1.55;
+      animation: sdm-msg-in .35s cubic-bezier(.34,1.56,.64,1) backwards;
+    }
+    @keyframes sdm-msg-in { from { opacity: 0; transform: translateY(8px) scale(.85); } }
+    .sdm-msg--bot {
+      align-self: flex-start; background: #fff; color: var(--text);
+      border: 1.5px solid var(--border); border-bottom-left-radius: 5px;
+      transform-origin: bottom left;
+    }
+    .sdm-msg--bot a { color: var(--teal-dark); font-weight: 700; }
+    .sdm-msg--user {
+      align-self: flex-end; background: var(--teal-bright); color: #fff;
+      border-bottom-right-radius: 5px; transform-origin: bottom right;
+    }
+    .sdm-typing { display: inline-flex; gap: 4px; padding: .3rem 0; }
+    .sdm-typing span {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--teal-mid);
+      animation: sdm-dot 1s ease-in-out infinite;
+    }
+    .sdm-typing span:nth-child(2) { animation-delay: .15s; }
+    .sdm-typing span:nth-child(3) { animation-delay: .3s; }
+    @keyframes sdm-dot { 0%, 60%, 100% { transform: translateY(0); opacity: .5; } 30% { transform: translateY(-4px); opacity: 1; } }
+    .sdm-chat__chips { display: flex; flex-wrap: wrap; gap: .35rem; padding: .35rem .9rem .55rem; }
+    .sdm-chip {
+      background: var(--teal-ice); border: 1px solid var(--border); border-radius: 100px;
+      font-size: .72rem; font-weight: 700; color: var(--teal-dark);
+      padding: .3rem .7rem; cursor: pointer;
+      transition: background .15s, color .15s, transform .12s;
+    }
+    .sdm-chip:hover { background: var(--teal-bright); color: #fff; transform: translateY(-1px); }
+    .sdm-chat__inputrow {
+      display: flex; gap: .5rem; padding: .6rem .75rem .7rem;
+      border-top: 1.5px solid var(--border); background: #fff;
+    }
+    .sdm-chat__input {
+      flex: 1; border: 1.5px solid var(--border); border-radius: 100px;
+      padding: .55rem .95rem; font: inherit; font-size: .85rem; color: var(--text);
+      outline: none; min-width: 0;
+    }
+    .sdm-chat__input:focus { border-color: var(--teal-bright); }
+    .sdm-chat__send {
+      width: 40px; height: 40px; border-radius: 50%; border: none; flex: none;
+      background: var(--teal-bright); color: #fff; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s, transform .12s;
+    }
+    .sdm-chat__send:hover { background: var(--teal-dark); transform: scale(1.06); }
+    @media (max-width: 480px) {
+      .sdm-chat { right: .6rem; left: .6rem; width: auto; bottom: 6rem; max-height: 62vh; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sdm-chat, .sdm-msg { animation: none; }
+      .sdm-typing span { animation: none; opacity: .7; }
+    }
+
     /* Service accordion rows: the category colour now "dips" the top-left
        corner (border gradient + soft tint glow) instead of a flat left bar.
        Open rows get a full ring in their category colour. */
@@ -5548,10 +5639,35 @@ window.SmartMatch = (function(){
     </span>
     <span class="contact-float__option-label">Call Us</span>
   </a>
+  <button class="contact-float__option" id="sdmChatOpen" type="button" aria-label="Ask a question">
+    <span class="contact-float__option-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 4.6 16.7L21 21l-1.1-4A9 9 0 0 0 12 3z"/><path d="M9.3 9.5a2.7 2.7 0 0 1 5.4.3c0 1.8-2.7 2.2-2.7 3.7"/><circle cx="12" cy="17" r=".4" fill="currentColor"/></svg>
+    </span>
+    <span class="contact-float__option-label">Ask a Question</span>
+  </button>
   <button class="contact-float__toggle" id="contactFloatToggle" aria-label="Contact us" aria-expanded="false">
     <svg class="contact-float__icon-open" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M4 4h16a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H8l-4.5 3.6a.6.6 0 0 1-.97-.47V5a1 1 0 0 1 1-1z"/><circle cx="8.5" cy="11" r="1.3"/><circle cx="12" cy="11" r="1.3"/><circle cx="15.5" cy="11" r="1.3"/></svg>
     <svg class="contact-float__icon-close" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
   </button>
+</div>
+
+<!-- ── Instant-answers chat panel ───────────────────────── -->
+<div class="sdm-chat" id="sdmChat" role="dialog" aria-modal="false" aria-label="Instant answers" hidden>
+  <div class="sdm-chat__head">
+    <div>
+      <div class="sdm-chat__title">💬 Instant Answers</div>
+      <div class="sdm-chat__sub">Answers from our site — not a live person. For medical advice, call us.</div>
+    </div>
+    <button class="sdm-chat__close" id="sdmChatClose" aria-label="Close chat">&times;</button>
+  </div>
+  <div class="sdm-chat__log" id="sdmChatLog" aria-live="polite"></div>
+  <div class="sdm-chat__chips" id="sdmChatChips"></div>
+  <form class="sdm-chat__inputrow" id="sdmChatForm">
+    <input class="sdm-chat__input" id="sdmChatInput" type="text" placeholder="Type a question… e.g. 'do you deliver?'" autocomplete="off" maxlength="200" aria-label="Your question" />
+    <button class="sdm-chat__send" type="submit" aria-label="Send">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3.4 20.4 20.8 12 3.4 3.6l-.01 6.6L14 12 3.39 13.8z"/></svg>
+    </button>
+  </form>
 </div>
 
 <script>
@@ -7904,6 +8020,161 @@ window.SmartMatch = (function(){
     card.addEventListener('mousemove', onMove);
     card.addEventListener('mouseleave', onLeave);
     onMove(e);
+  });
+})();
+</script>
+
+<script>
+/* Instant-answers chat — a client-side Q&A assistant over the site's own
+   content. Reuses the global search machinery (window.SmartMatch scoring,
+   window.FAQS answers, window.AILMENT_DB conditions, window.SITE_INDEX
+   pages/services). No backend and no external requests: everything is
+   matched and answered in the browser. */
+(function(){
+  var panel = document.getElementById('sdmChat'),
+      openBtn = document.getElementById('sdmChatOpen'),
+      closeBtn = document.getElementById('sdmChatClose'),
+      log = document.getElementById('sdmChatLog'),
+      chipsEl = document.getElementById('sdmChatChips'),
+      form = document.getElementById('sdmChatForm'),
+      input = document.getElementById('sdmChatInput');
+  if (!panel || !openBtn || !log) return;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var TEL = '<a href="tel:+14166548181">(416) 654-8181</a>';
+
+  var CHIPS = [
+    ['🕐 Hours today', 'are you open right now'],
+    ['🚚 Free delivery', 'do you deliver'],
+    ['🔁 Transfer my Rx', 'how do I transfer my prescriptions'],
+    ['💉 Vaccines', 'what vaccines do you offer'],
+    ['💳 Insurance', 'do you accept insurance'],
+    ['🩺 I feel unwell', 'what conditions can the pharmacist assess']
+  ];
+
+  function esc(s){ var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function stripHtml(s){ var d = document.createElement('div'); d.innerHTML = s; return d.textContent || ''; }
+
+  function addMsg(html, who){
+    var m = document.createElement('div');
+    m.className = 'sdm-msg sdm-msg--' + who;
+    m.innerHTML = html;
+    log.appendChild(m);
+    log.scrollTop = log.scrollHeight;
+    return m;
+  }
+
+  function renderChips(){
+    chipsEl.innerHTML = '';
+    CHIPS.forEach(function(c){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'sdm-chip'; b.textContent = c[0];
+      b.addEventListener('click', function(){ ask(c[1]); });
+      chipsEl.appendChild(b);
+    });
+  }
+
+  function hoursAnswer(){
+    var val = document.querySelector('[data-sb-val="pharmacy"]');
+    var txt = val && val.textContent && val.textContent.indexOf('Loading') === -1 ? val.textContent.trim() : null;
+    return (txt ? 'Right now: <strong>' + esc(txt) + '</strong>.<br><br>' : '') +
+      'Live hours are on the <a href="#contact">Find Us &amp; Contact section</a>, or call us at ' + TEL + '.';
+  }
+
+  function answer(q){
+    var ql = q.toLowerCase();
+    // Direct intents first — cheap and unambiguous.
+    if (/\b(open|closed?|closing|hours?|holiday)\b/.test(ql)) return hoursAnswer();
+    if (/\b(phone|call you|your number|telephone)\b/.test(ql)) return 'You can reach us at ' + TEL + ' — we\'re happy to help.';
+    if (/\b(where|address|located|location|directions|map)\b/.test(ql)) return 'We\'re at <strong>1203 St. Clair Ave W, Toronto</strong> — St. Clair &amp; Dufferin, in Corso Italia. <a href="https://www.google.com/maps/dir/?api=1&destination=St.+Clair+Drug+Mart+Pharmacy+1203+St+Clair+Ave+W+Toronto+ON" target="_blank" rel="noopener">Get directions →</a>';
+    if (!(window.SmartMatch && window.FAQS)) return null;
+    var S = window.SmartMatch;
+
+    var bestFaq = null, faqScore = 0, faqSecond = 0;
+    window.FAQS.forEach(function(f){
+      var s = S.score({ title: f.q, desc: stripHtml(f.a) }, q);
+      if (s > faqScore){ faqSecond = faqScore; faqScore = s; bestFaq = f; }
+      else if (s > faqSecond){ faqSecond = s; }
+    });
+    // Accept a modest score when it clearly beats the runner-up — catches
+    // queries whose key word only appears in the answer body (low weight).
+    var faqOk = faqScore >= 4 || (faqScore >= 2.5 && faqScore >= faqSecond * 1.8);
+    var bestAil = null, ailScore = 0;
+    (window.AILMENT_DB || []).forEach(function(a){
+      var s = S.score({ title: a.name, kw: (a.kw || []).join(' ') }, q);
+      if (s > ailScore){ ailScore = s; bestAil = a; }
+    });
+    var hits = (window.SITE_INDEX || []).map(function(it){
+      return { it: it, s: S.score({ title: it.title, kw: it.kw || '', desc: it.desc || '' }, q) };
+    }).filter(function(h){ return h.s > 0 && !h.it.isFaq; })
+      .sort(function(a, b){ return b.s - a.s; }).slice(0, 2);
+
+    var parts = [];
+    if (bestAil && ailScore >= 5 && ailScore >= faqScore){
+      if (bestAil.call){
+        parts.push(bestAil.icon + ' <strong>' + esc(bestAil.name) + '</strong> is best handled directly with our pharmacist — call ' + TEL + ' or walk in.');
+      } else {
+        parts.push(bestAil.icon + ' Our pharmacist can assess and prescribe for <strong>' + esc(bestAil.name) + '</strong> — no doctor\'s appointment needed. <a href="' + (window.PHARMA_BASE || '') + bestAil.id + '" target="_blank" rel="noopener">Start your online assessment →</a>');
+      }
+    } else if (bestFaq && faqOk){
+      parts.push((bestFaq.icon ? bestFaq.icon + ' ' : '') + bestFaq.a);
+    }
+    var links = hits.map(function(h){
+      var it = h.it;
+      var href = it.url ? it.url : (it.anchor || '#services');
+      var ext = it.url ? ' target="_blank" rel="noopener"' : '';
+      return '<a href="' + href + '"' + ext + '>' + (it.icon ? it.icon + ' ' : '') + esc(it.title) + '</a>';
+    });
+    if (parts.length){
+      if (links.length) parts.push('<span style="font-size:.78em;opacity:.85">Related: ' + links.join(' · ') + '</span>');
+      return parts.join('<br><br>');
+    }
+    if (links.length) return 'These pages might help: ' + links.join(' · ');
+    return null;
+  }
+
+  var FALLBACK = 'I\'m not sure about that one — but a real person is! 😊 Call us at ' + TEL +
+    ' or come by <strong>1203 St. Clair Ave W</strong> and ask our pharmacist directly. You can also try a topic below. 👇';
+
+  var busy = false;
+  function ask(q){
+    q = (q || '').trim();
+    if (!q || busy) return;
+    addMsg(esc(q), 'user');
+    input.value = '';
+    busy = true;
+    var t = addMsg('<span class="sdm-typing"><span></span><span></span><span></span></span>', 'bot');
+    setTimeout(function(){
+      var html = null;
+      try { html = answer(q); } catch(e){}
+      t.innerHTML = html || FALLBACK;
+      log.scrollTop = log.scrollHeight;
+      busy = false;
+    }, reduce ? 0 : 450);
+  }
+
+  function openChat(){
+    panel.hidden = false;
+    var float_ = document.getElementById('contactFloat');
+    if (float_) float_.classList.remove('open');
+    if (!log.children.length){
+      addMsg('Hi! 👋 I can answer questions about our pharmacy — hours, free delivery, services, and the 28 conditions our pharmacist can assess. Ask away, or tap a topic below.', 'bot');
+      renderChips();
+    }
+    if (matchMedia('(hover: hover)').matches) input.focus();
+  }
+  function closeChat(){ panel.hidden = true; }
+
+  openBtn.addEventListener('click', openChat);
+  closeBtn.addEventListener('click', closeChat);
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !panel.hidden) closeChat(); });
+  form.addEventListener('submit', function(e){ e.preventDefault(); ask(input.value); });
+  // In-page links inside answers should reveal their destination — close the
+  // panel so it isn't covering the section the user just navigated to.
+  // (Portal deep-links in FAQ answers fall back to their plain #booking href
+  // here; re-binding the js-pa-select behaviour is a possible refinement.)
+  log.addEventListener('click', function(e){
+    var a = e.target.closest('a');
+    if (a && (a.getAttribute('href') || '').charAt(0) === '#') closeChat();
   });
 })();
 </script>
