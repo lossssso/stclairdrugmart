@@ -1886,6 +1886,8 @@
     .badge--funded { background: #d1fae5; color: #065f46; }
     .badge--private { background: #fef3c7; color: #92400e; }
     .badge--new { background: var(--teal-bright); color: #fff; }
+    .badge--stock { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+    .badge--seasonal { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
     .vaccines__new-note {
       font-size: .82rem; color: var(--text-muted); line-height: 1.55;
       background: #eef9fa; border: 1.5px solid var(--border);
@@ -6630,6 +6632,15 @@ window.SmartMatch = (function(){
     };
   })();
 
+  // Vaccine availability badges. EDIT HERE to change stock status:
+  // key = lowercase text that appears in the vaccine's name; value = status.
+  // Any vaccine not listed shows "✓ In Stock". 'seasonal' shows
+  // "Seasonal — call for availability".
+  var VACCINE_STOCK = {
+    'influenza': 'seasonal',
+    'covid': 'seasonal'
+  };
+
   // Make vaccine cards clickable — scroll to booking
   document.querySelectorAll('.vaccine-card').forEach(function(card) {
     card.addEventListener('click', function(e) {
@@ -6641,6 +6652,33 @@ window.SmartMatch = (function(){
     rx.className = 'vaccine-card__rx';
     rx.textContent = '✓ No prescription required';
     card.appendChild(rx);
+
+    // availability badge
+    var nameEl = card.querySelector('.vaccine-card__name');
+    var badges = card.querySelector('.vaccine-card__badges');
+    if (nameEl && !badges) {
+      // travel/private cards have no badge row — create one
+      var header = card.querySelector('.vaccine-card__header') || card;
+      badges = document.createElement('div');
+      badges.className = 'vaccine-card__badges';
+      header.appendChild(badges);
+    }
+    if (nameEl && badges) {
+      var name = nameEl.textContent.toLowerCase();
+      var status = 'in';
+      for (var key in VACCINE_STOCK) {
+        if (name.indexOf(key) !== -1) { status = VACCINE_STOCK[key]; break; }
+      }
+      var b = document.createElement('span');
+      if (status === 'seasonal') {
+        b.className = 'vaccine-card__badge badge--seasonal';
+        b.textContent = 'Seasonal — call for availability';
+      } else {
+        b.className = 'vaccine-card__badge badge--stock';
+        b.textContent = '✓ In Stock';
+      }
+      badges.appendChild(b);
+    }
   });
 
 
