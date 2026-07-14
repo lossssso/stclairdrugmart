@@ -1,4 +1,4 @@
-/* Shared styles for blog posts — St. Clair Drug Mart */
+/* Shared styles for blog posts, St. Clair Drug Mart */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --teal-bright:#21a1a8; --teal-mid:#5cb9bc; --teal-dark:#00737c; --teal-deeper:#00737c;
@@ -11,7 +11,7 @@ body { font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif; backgr
 a { color:var(--teal-dark); }
 img { display:block; max-width:100%; }
 
-/* Fixed sky background — same drifting clouds as the main site */
+/* Fixed sky background, same drifting clouds as the main site */
 .sky-bg { position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; background:linear-gradient(180deg, #b6ecef 0%, #cdf5f6 45%, #e4fbfc 100%); animation:cloud-layer-in 3s ease both; }
 .sky-bg-cloud { position:absolute; left:0; animation:cloud-drift linear infinite; will-change:transform; display:block; pointer-events:none; max-width:none; }
 .sky-bg-cloud--flip { animation-name:cloud-drift-r; }
@@ -88,7 +88,7 @@ img { display:block; max-width:100%; }
 /* Reading-progress bar (injected by post.js) */
 .reading-progress { position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg, var(--teal-bright), var(--teal-dark)); z-index:300; transition:width .12s ease-out; }
 
-/* Post body — a white "sheet" floating over the sky so text is always legible */
+/* Post body, a white "sheet" floating over the sky so text is always legible */
 .post {
   max-width:760px; margin:calc(64px + 2.25rem) auto 3rem;
   background:var(--white); border:1px solid rgba(255,255,255,.7);
@@ -133,7 +133,7 @@ img { display:block; max-width:100%; }
 .post li { margin-bottom:.45rem; }
 .post strong { color:var(--text); }
 
-/* CTA box — bold teal gradient so it pops off the white sheet */
+/* CTA box, bold teal gradient so it pops off the white sheet */
 .post__cta { background:linear-gradient(135deg, var(--teal-dark) 0%, var(--teal-bright) 100%); color:#fff; border:none; border-radius:16px; padding:1.9rem; text-align:center; margin:2.5rem 0 1.5rem; box-shadow:0 8px 24px rgba(0,115,124,.25); }
 .post__cta h3 { margin-top:0; color:#fff; }
 .post__cta p { color:rgba(255,255,255,.88); margin-bottom:1.25rem; }

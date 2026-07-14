@@ -12,7 +12,7 @@
   </script>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,viewport-fit=cover"/>
   <title>Health &amp; Wellness Hub | St. Clair Drug Mart Clinical Pharmacy, Toronto</title>
-  <meta name="description" content="Health tips, pharmacy news, and wellness advice from the team at St. Clair Drug Mart — a top-rated clinical pharmacy in Toronto, Ontario built around patient-centred care. Minor ailments, vaccines, medication guides, and more."/>
+  <meta name="description" content="Health tips, pharmacy news, and wellness advice from the team at St. Clair Drug Mart, a top-rated clinical pharmacy in Toronto, Ontario built around patient-centred care. Minor ailments, vaccines, medication guides, and more."/>
   <meta name="author" content="St. Clair Drug Mart Pharmacy"/>
   <meta name="geo.region" content="CA-ON"/>
   <meta name="geo.placename" content="Corso Italia, St. Clair West, Toronto"/>
@@ -72,7 +72,7 @@
     a { color:var(--teal-dark); text-decoration:none; }
     img { display:block; max-width:100%; }
 
-    /* ── Fixed sky background — same drifting clouds as the main site ── */
+    /* ── Fixed sky background, same drifting clouds as the main site ── */
     .sky-bg {
       position:fixed; inset:0; z-index:-1;
       overflow:hidden; pointer-events:none;
@@ -163,7 +163,7 @@
     }
     @media (max-width:420px) { .nav__brand span { display:none; } }
 
-    /* ── Page header — no separate hero, just a frosted card floating on the
+    /* ── Page header, with no separate hero, just a frosted card floating on the
        single full-page cloud layer (.sky-bg), same pattern as braces-supports.html ── */
     .page-header { background: transparent; padding: calc(2.5rem + 64px) 1.5rem 1rem; text-align: center; }
     .page-header__card {
@@ -527,7 +527,7 @@
 <!-- ── CTA Band ─────────────────────────────────────────────── -->
 <div class="blog-cta">
   <h2>Skip the waiting room</h2>
-  <p>For 28 common conditions, your pharmacist can assess and prescribe — walk in or start online in minutes.</p>
+  <p>For 28 common conditions, your pharmacist can assess and prescribe, walk in or start online in minutes.</p>
   <div class="blog-cta__btns">
     <a class="blog-cta__btn blog-cta__btn--primary" href="https://app.pharmassess.ca/self-assessment/306667" target="_blank" rel="noopener">Start Online Assessment →</a>
     <a class="blog-cta__btn blog-cta__btn--outline" href="/#booking">Patient Portal</a>
@@ -565,11 +565,11 @@
         <span class="trust-badge__caption">OCP Accreditation<br>No. 306667</span>
       </div>
       <div class="trust-badge">
-        <div class="trust-badge__disc"><img src="../logos/pharmassess.png" alt="PharmAssess — Online Pharmacy Booking" class="trust-badge__logo"></div>
+        <div class="trust-badge__disc"><img src="../logos/pharmassess.png" alt="PharmAssess, Online Pharmacy Booking" class="trust-badge__logo"></div>
         <span class="trust-badge__caption">PharmAssess<br>Online Booking</span>
       </div>
       <div class="trust-badge trust-badge--wordmark">
-        <div class="trust-badge__disc"><img src="../logos/medsask.png" alt="MedSask — Your Medication Information Service" class="trust-badge__logo"></div>
+        <div class="trust-badge__disc"><img src="../logos/medsask.png" alt="MedSask, Your Medication Information Service" class="trust-badge__logo"></div>
         <span class="trust-badge__caption">Medication<br>Information Partner</span>
       </div>
     </div>
@@ -687,7 +687,7 @@
     .then(function(r){ return r.json(); })
     .then(function(posts){
       if (!posts || !posts.length){
-        document.getElementById('postsGrid').innerHTML = '<p class="blog-empty">Our first posts are coming soon — check back next week!</p>';
+        document.getElementById('postsGrid').innerHTML = '<p class="blog-empty">Our first posts are coming soon, check back next week!</p>';
         document.getElementById('featuredWrap').style.display = 'none';
         return;
       }
@@ -699,9 +699,9 @@
     .catch(function(){
       // Fallback: render known posts statically
       var fallback = [
-        {slug:'pharmacist-prescribe-uti-ontario',title:'Can a Pharmacist Prescribe Antibiotics for a UTI in Ontario?',date:'2026-06-15',dateLabel:'June 15, 2026',excerpt:'Yes — Ontario pharmacists can assess and prescribe antibiotics for an uncomplicated UTI, no doctor\'s appointment needed.',tags:['Minor Ailments'],readTime:'5 min read'},
-        {slug:'pharmacy-vaccines-toronto-2026',title:'What Vaccines Can You Get at a Toronto Pharmacy in 2026?',date:'2026-06-10',dateLabel:'June 10, 2026',excerpt:'Flu, COVID-19, shingles, pneumococcal, RSV, Tdap and travel vaccines — the full 2026 list, who\'s eligible, and which are free with your health card.',tags:['Vaccines'],readTime:'6 min read'},
-        {slug:'transfer-prescription-toronto',title:'How to Transfer Your Prescription to a New Pharmacy in Toronto',date:'2026-06-05',dateLabel:'June 5, 2026',excerpt:'Switching pharmacies is easier than you think. We contact your old pharmacy for you — most transfers take about 15 minutes.',tags:['Getting Started'],readTime:'4 min read'}
+        {slug:'pharmacist-prescribe-uti-ontario',title:'Can a Pharmacist Prescribe Antibiotics for a UTI in Ontario?',date:'2026-06-15',dateLabel:'June 15, 2026',excerpt:'Yes. Ontario pharmacists can assess and prescribe antibiotics for an uncomplicated UTI, no doctor\'s appointment needed.',tags:['Minor Ailments'],readTime:'5 min read'},
+        {slug:'pharmacy-vaccines-toronto-2026',title:'What Vaccines Can You Get at a Toronto Pharmacy in 2026?',date:'2026-06-10',dateLabel:'June 10, 2026',excerpt:'Flu, COVID-19, shingles, pneumococcal, RSV, Tdap and travel vaccines, the full 2026 list, who\'s eligible, and which are free with your health card.',tags:['Vaccines'],readTime:'6 min read'},
+        {slug:'transfer-prescription-toronto',title:'How to Transfer Your Prescription to a New Pharmacy in Toronto',date:'2026-06-05',dateLabel:'June 5, 2026',excerpt:'Switching pharmacies is easier than you think. We contact your old pharmacy for you, most transfers take about 15 minutes.',tags:['Getting Started'],readTime:'4 min read'}
       ];
       fallback.sort(function(a,b){ return new Date(b.date) - new Date(a.date); });
       allPosts = fallback;
