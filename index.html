@@ -8056,7 +8056,7 @@ window.SmartMatch = (function(){
     ['🩺 I feel unwell', 'what conditions can the pharmacist assess']
   ];
 
-  function esc(s){ var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]; }); }
   function stripHtml(s){ var d = document.createElement('div'); d.innerHTML = s; return d.textContent || ''; }
 
   function addMsg(html, who){
@@ -8079,7 +8079,10 @@ window.SmartMatch = (function(){
   }
 
   function hoursAnswer(){
-    var val = document.querySelector('[data-sb-val="pharmacy"]');
+    // The live status board publishes the pharmacy's open/closed text under
+    // the "store" key (see the status-board render() calls); read it so the
+    // bot can prefix the current status.
+    var val = document.querySelector('[data-sb-val="store"]');
     var txt = val && val.textContent && val.textContent.indexOf('Loading') === -1 ? val.textContent.trim() : null;
     return (txt ? 'Right now: <strong>' + esc(txt) + '</strong>.<br><br>' : '') +
       'Live hours are on the <a href="#contact">Find Us &amp; Contact section</a>, or call us at ' + TEL + '.';
