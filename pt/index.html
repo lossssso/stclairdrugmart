@@ -10,6 +10,7 @@
   <link rel="alternate" hreflang="es" href="https://www.stclairdrugmart.ca/es/" />
   <link rel="alternate" hreflang="pt" href="https://www.stclairdrugmart.ca/pt/" />
   <link rel="alternate" hreflang="it" href="https://www.stclairdrugmart.ca/it/" />
+  <link rel="alternate" hreflang="tr" href="https://www.stclairdrugmart.ca/tr/" />
   <link rel="alternate" hreflang="x-default" href="https://www.stclairdrugmart.ca/" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2YQ9FDLMCV"></script>
@@ -43,6 +44,10 @@
     .btn:hover { transform:translateY(-2px); }
     .langs { font-size:.8rem; color:var(--muted); text-align:center; margin-top:1.4rem; line-height:1.5; }
     .fullsite { display:block; text-align:center; margin-top:1.1rem; font-size:.86rem; color:var(--teal-dark); font-weight:700; }
+    .langswitch { display:flex; flex-wrap:wrap; justify-content:center; gap:.4rem; margin-top:1.2rem; }
+    .langswitch a { font-size:.8rem; font-weight:700; color:var(--teal-dark); text-decoration:none;
+      border:1px solid var(--border); border-radius:100px; padding:.4rem .7rem; min-height:38px; display:inline-flex; align-items:center; }
+    .langswitch a:hover { background:var(--teal-ice); }
     footer { text-align:center; font-size:.72rem; color:var(--muted); margin-top:1.6rem; }
   </style>
 </head>
@@ -71,6 +76,7 @@
     </div>
     <p class="langs">Também atendemos em inglês, espanhol, italiano, turco e mais.</p>
     <a class="fullsite" href="/">Site completo em inglês →</a>
+    <div class="langswitch"><a href="/">🇨🇦 EN</a><a href="/es/">🇪🇸 ES</a><a href="/pt/">🇵🇹 PT</a><a href="/it/">🇮🇹 IT</a><a href="/tr/">🇹🇷 TR</a></div>
     <footer>St. Clair Drug Mart Pharmacy · 1203 St. Clair Ave W, Toronto</footer>
   </div>
 </body>

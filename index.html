@@ -21,6 +21,7 @@
   <link rel="alternate" hreflang="es" href="https://www.stclairdrugmart.ca/es/" />
   <link rel="alternate" hreflang="pt" href="https://www.stclairdrugmart.ca/pt/" />
   <link rel="alternate" hreflang="it" href="https://www.stclairdrugmart.ca/it/" />
+  <link rel="alternate" hreflang="tr" href="https://www.stclairdrugmart.ca/tr/" />
   <link rel="alternate" hreflang="x-default" href="https://www.stclairdrugmart.ca/" />
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2YQ9FDLMCV"></script>
@@ -352,6 +353,11 @@
       white-space: nowrap;
     }
     .nav__dropdown a:hover { background: #eef9fa; color: var(--teal-deeper); }
+    /* Language menu: right-aligned, compact, with a globe trigger */
+    .nav__langs > a { gap: .3rem; }
+    .nav__langs-code { font-weight: 700; letter-spacing: .02em; }
+    .nav__dropdown--langs { left: auto; right: 0; min-width: 150px; }
+    .nav__dropdown--langs a { font-size: .9rem; }
 
     /* ── Hero ─────────────────────────────────────────── */
     .hero {
@@ -3147,6 +3153,16 @@
           <li><a href="#about">About Us</a></li>
           <li><a href="#reviews">Ratings (4.9 ⭐)</a></li>
           <li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
+        </ul>
+      </li>
+      <li class="nav__has-dropdown nav__langs">
+        <a href="#" onclick="event.preventDefault()" aria-label="Choose language"><span aria-hidden="true">🌐</span> <span class="nav__langs-code">EN</span></a>
+        <ul class="nav__dropdown nav__dropdown--langs">
+          <li><a href="/" aria-current="page">🇨🇦 English</a></li>
+          <li><a href="/es/">🇪🇸 Español</a></li>
+          <li><a href="/pt/">🇵🇹 Português</a></li>
+          <li><a href="/it/">🇮🇹 Italiano</a></li>
+          <li><a href="/tr/">🇹🇷 Türkçe</a></li>
         </ul>
       </li>
       <li class="nav__cta"><a href="#booking">Book Now</a></li>
