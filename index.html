@@ -809,13 +809,14 @@
     .welcome__photo img { width: 100%; height: auto; display: block; transition: transform .35s ease; }
     .welcome__question { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--teal-bright); margin: 1.6rem 0 .7rem; }
     .welcome__pills { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem .6rem; }
-    .welcome__pill { position: relative; display: flex; align-items: center; justify-content: center; text-align: center; gap: .4rem; background: var(--teal-ice); border: 1.5px solid var(--border); border-radius: 14px; padding: .6rem 1rem; min-height: 44px; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; line-height: 1.3; transition: background .15s, color .15s, transform .12s, box-shadow .15s; }
-    .welcome__pill::before,
-    .welcome__pill::after { content: ''; position: absolute; top: 100%; width: 0; height: 0; border-style: solid; transition: border-color .15s; }
-    .welcome__pill::before { left: 26px; margin-top: -1px; border-width: 18px 12px 0 12px; border-color: var(--border) transparent transparent transparent; }
-    .welcome__pill::after { left: 27.5px; margin-top: -2.5px; border-width: 15px 10.5px 0 10.5px; border-color: var(--teal-ice) transparent transparent transparent; }
-    .welcome__pill:hover { background: var(--teal-bright); color: #fff; border-color: var(--teal-bright); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(33,161,168,.25); }
-    .welcome__pill:hover::before { border-top-color: var(--teal-bright); }
+    /* Borderless chat bubble: the tail is a single triangle that overlaps up
+       into the body so fill is continuous, and a drop-shadow filter wraps the
+       body AND tail as one shape. So the whole pill reads as one cohesive
+       object and highlights together on hover, with no seam between bubble and
+       tail. */
+    .welcome__pill { position: relative; display: flex; align-items: center; justify-content: center; text-align: center; gap: .4rem; background: var(--teal-ice); border-radius: 14px; padding: .6rem 1rem; min-height: 44px; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; line-height: 1.3; filter: drop-shadow(0 1px 1.5px rgba(17,94,89,.20)); transition: background .15s, color .15s, transform .12s, filter .15s; }
+    .welcome__pill::after { content: ''; position: absolute; top: 100%; left: 26px; margin-top: -3px; width: 0; height: 0; border-style: solid; border-width: 15px 11px 0 11px; border-color: var(--teal-ice) transparent transparent transparent; transition: border-color .15s; }
+    .welcome__pill:hover { background: var(--teal-bright); color: #fff; filter: drop-shadow(0 4px 10px rgba(33,161,168,.32)); }
     .welcome__pill:hover::after { border-top-color: var(--teal-bright); }
     .welcome__boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-top: 2.25rem; }
     .welcome-box { background: rgba(255,255,255,0.9); border-radius: 14px; padding: 1.4rem 1.25rem 1.3rem; text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: .35rem; transition: box-shadow .2s, transform .15s, border-color .15s; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
@@ -2942,7 +2943,7 @@
       .welcome-box, .pa-card, .step--clickable, .info-strip__card, .blog-card,
       .rx-ext, .shop__card, .ailment-card, .medscheck-card,
       .vaccine-card, .insurance-card, .poct-card, .welcome__pill {
-        transition: transform .2s ease-out, box-shadow .3s ease;
+        transition: transform .2s ease-out, box-shadow .3s ease, filter .2s ease;
       }
       .welcome-box:hover, .pa-card:hover, .step--clickable:hover, .info-strip__card:hover,
       .blog-card:hover, .rx-ext:hover, .shop__card:hover,
