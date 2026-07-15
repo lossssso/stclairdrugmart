@@ -6687,7 +6687,11 @@ window.SmartMatch = (function(){
     }
 
     function update() {
-      d = new Date();
+      // Our hours are Toronto hours, so read the Toronto wall clock, not the visitor's. Reading
+      // new Date() directly told anyone outside Eastern the wrong thing: a customer in Vancouver at
+      // 9:30am Toronto saw "Closed" while this page's schema said Open. Round-tripping through
+      // toLocaleString yields a Date whose local fields ARE Toronto's, and it handles DST for free.
+      d = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Toronto' }));
       day = d.getDay(); // 0=Sun, 1-5=Mon-Fri, 6=Sat
       mins = d.getHours() * 60 + d.getMinutes();
 

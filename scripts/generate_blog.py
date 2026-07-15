@@ -172,7 +172,6 @@ ROOT      = Path(__file__).parent.parent
 BLOG_DIR  = ROOT / "blog"
 POSTS_DIR = BLOG_DIR / "posts"
 MANIFEST  = BLOG_DIR / "posts.json"
-MAIN_HTML = ROOT / "index.html"
 
 # ── Data helpers ───────────────────────────────────────────────
 
@@ -453,31 +452,17 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
 
 # ── Update main site "latest posts" section ────────────────────
 
-def latest_cards_html(posts: list) -> str:
-    ordered = sorted(posts, key=lambda p: p["date"], reverse=True)[:3]
-    if not ordered:
-        return '      <p style="color:var(--text-muted);grid-column:1/-1;text-align:center;">Check back soon for our first posts!</p>'
-    return "\n".join(
-        f'      <article class="blog-card">\n'
-        f'        <span class="blog-card__date">📅 {fmt_date(p["date"])}</span>\n'
-        f'        <h3 class="blog-card__title"><a href="blog/posts/{p["slug"]}">{p["title"]}</a></h3>\n'
-        f'        <p class="blog-card__excerpt">{p["excerpt"]}</p>\n'
-        f'        <a href="blog/posts/{p["slug"]}" class="blog-card__link">Read more →</a>\n'
-        f'      </article>'
-        for p in ordered
-    )
-
-
-def update_main_site(posts: list):
-    html = MAIN_HTML.read_text()
-    pattern = re.compile(r"(<!-- BLOG_LATEST_START -->).*?(<!-- BLOG_LATEST_END -->)", re.DOTALL)
-    if not pattern.search(html):
-        print("Warning: BLOG_LATEST markers not found in index.html — skipping.")
-        return
-    MAIN_HTML.write_text(
-        pattern.sub(r"\1\n" + latest_cards_html(posts) + r"\n      \2", html)
-    )
-    print("Updated main site blog section.")
+# The homepage's blog cards are deliberately STATIC and hand-maintained (see "SEO hardening: static
+# blog cards"), so this script does not touch index.html.
+#
+# There used to be an update_main_site()/latest_cards_html() pair here that rewrote the homepage between
+# <!-- BLOG_LATEST_START/END --> markers. Those markers have never existed in index.html, so it warned
+# and returned every run: a silent no-op that made the workflow look green while doing nothing. Removed.
+#
+# Do NOT "fix" it by adding the markers without also fixing the card count: it emitted only the newest
+# THREE cards, while index.html currently lists all SEVEN posts. Wiring it up as-was would have deleted
+# four posts from the homepage on the first successful run. If you want the homepage to auto-update,
+# make it render every post, not a top-3 slice.
 
 
 # ── Sitemap ────────────────────────────────────────────────────
@@ -485,11 +470,27 @@ def update_main_site(posts: list):
 def build_sitemap(posts: list) -> str:
     today = datetime.date.today().isoformat()
 
+    # EVERY indexable page belongs here, not just the blog. This list previously held only "/" and
+    # "/blog/", which meant the first successful bot run would have quietly deleted seven live pages
+    # from the sitemap: the three locale landing pages, the three neighbourhood pages, and the portal.
+    #
+    # URLs are extensionless on purpose. The host serves /portal (200) and 308-redirects /portal.html,
+    # so listing the .html form would fill the sitemap with redirects. Keep this list in step with the
+    # pages that actually exist; if you add a landing page, add it here in the same breath.
     static_pages = [
-        (f"{SITE_URL}/",           today,  "1.0",  "weekly"),
-        (f"{SITE_URL}/blog/",      today,  "0.9",  "weekly"),
+        (f"{SITE_URL}/",                          today, "1.0", "weekly"),
+        (f"{SITE_URL}/blog/",                     today, "0.9", "weekly"),
+        (f"{SITE_URL}/es/",                       today, "0.8", "monthly"),
+        (f"{SITE_URL}/pt/",                       today, "0.8", "monthly"),
+        (f"{SITE_URL}/it/",                       today, "0.8", "monthly"),
+        (f"{SITE_URL}/pharmacy-corso-italia/",    today, "0.8", "monthly"),
+        (f"{SITE_URL}/pharmacy-oakwood-village/", today, "0.8", "monthly"),
+        (f"{SITE_URL}/pharmacy-regal-heights/",   today, "0.8", "monthly"),
+        (f"{SITE_URL}/braces-supports",           today, "0.7", "monthly"),
+        (f"{SITE_URL}/portal",                    today, "0.7", "monthly"),
     ]
 
+    # slug is stored WITHOUT the .html extension (see main()), so this yields the 200 form directly.
     post_entries = [
         (f"{SITE_URL}/blog/posts/{p['slug']}", p["date"], "0.8", "monthly")
         for p in sorted(posts, key=lambda p: p["date"], reverse=True)
@@ -533,6 +534,10 @@ def main():
 
     date_str = datetime.date.today().isoformat()
     filename = f"{date_str}-{slugify(post_data['title'])}.html"
+    # slug is the filename WITHOUT .html. Every consumer expects that form: blog/index.html builds its
+    # link as "posts/" + slug + ".html", so storing the extension here produced posts/<name>.html.html
+    # and a 404 on every generated post. The seven hand-written entries in posts.json already omit it.
+    slug = filename[: -len(".html")]
 
     POSTS_DIR.mkdir(parents=True, exist_ok=True)
     post_file = POSTS_DIR / filename
@@ -543,7 +548,7 @@ def main():
         "title":           post_data["title"],
         "excerpt":         post_data["excerpt"],
         "date":            date_str,
-        "slug":            filename,
+        "slug":            slug,
         "tags":            post_data.get("tags", []),
         "reading_minutes": post_data.get("reading_minutes", 3),
         "primary_keyword": primary_kw,
@@ -551,7 +556,6 @@ def main():
     })
     save_posts(posts)
 
-    update_main_site(posts)
     update_sitemap(posts)
     print("Done!")
 
