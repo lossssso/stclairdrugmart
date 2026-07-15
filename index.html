@@ -353,11 +353,30 @@
       white-space: nowrap;
     }
     .nav__dropdown a:hover { background: #eef9fa; color: var(--teal-deeper); }
-    /* Language menu: right-aligned, compact, with a globe trigger */
-    .nav__langs > a { gap: .3rem; }
-    .nav__langs-code { font-weight: 700; letter-spacing: .02em; }
-    .nav__dropdown--langs { left: auto; right: 0; min-width: 150px; }
-    .nav__dropdown--langs a { font-size: .9rem; }
+    /* Language menu: a globe icon button (matches the search icon) with a
+       flag popover. Lives beside the search button at the nav's right edge. */
+    .nav__lang { position: relative; display: flex; align-items: center; }
+    .nav__lang-btn {
+      background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%;
+      transition: background .15s; flex-shrink: 0; margin-left: .5rem;
+    }
+    .nav__lang-btn:hover, .nav__lang.open .nav__lang-btn { background: rgba(0,80,90,.1); }
+    .nav__lang-btn svg { width: 19px; height: 19px; stroke: var(--teal-deeper); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .nav__lang-menu {
+      display: none; position: absolute; top: calc(100% + 9px); right: 0;
+      background: #fff; border: 1px solid #e9f4f5; border-radius: 10px;
+      box-shadow: 0 12px 32px rgba(0,60,66,.14); padding: .4rem; min-width: 160px;
+      list-style: none; margin: 0; z-index: 200;
+    }
+    .nav__lang.open .nav__lang-menu { display: block; }
+    .nav__lang-menu a {
+      display: block; padding: .55rem .85rem; font-size: .9rem; font-weight: 500;
+      color: #2c5457; border-radius: 7px; white-space: nowrap; text-decoration: none;
+    }
+    .nav__lang-menu a:hover { background: #eef9fa; color: var(--teal-deeper); }
+    .nav__lang-menu a[aria-current] { font-weight: 700; color: var(--teal-deeper); }
 
     /* ── Hero ─────────────────────────────────────────── */
     .hero {
@@ -3155,18 +3174,20 @@
           <li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
         </ul>
       </li>
-      <li class="nav__has-dropdown nav__langs">
-        <a href="#" onclick="event.preventDefault()" aria-label="Choose language"><span aria-hidden="true">🌐</span> <span class="nav__langs-code">EN</span></a>
-        <ul class="nav__dropdown nav__dropdown--langs">
-          <li><a href="/" aria-current="page">🇨🇦 English</a></li>
-          <li><a href="/es/">🇪🇸 Español</a></li>
-          <li><a href="/pt/">🇵🇹 Português</a></li>
-          <li><a href="/it/">🇮🇹 Italiano</a></li>
-          <li><a href="/tr/">🇹🇷 Türkçe</a></li>
-        </ul>
-      </li>
       <li class="nav__cta"><a href="#booking">Book Now</a></li>
     </ul>
+    <div class="nav__lang" id="navLang">
+      <button class="nav__lang-btn" id="navLangBtn" aria-label="Choose language" aria-haspopup="true" aria-expanded="false">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 3.8 5.7 3.8 9S14.5 18.5 12 21c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z"/></svg>
+      </button>
+      <ul class="nav__lang-menu" id="navLangMenu" role="menu">
+        <li role="none"><a role="menuitem" href="/" aria-current="page">🇨🇦 English</a></li>
+        <li role="none"><a role="menuitem" href="/es/">🇪🇸 Español</a></li>
+        <li role="none"><a role="menuitem" href="/pt/">🇵🇹 Português</a></li>
+        <li role="none"><a role="menuitem" href="/it/">🇮🇹 Italiano</a></li>
+        <li role="none"><a role="menuitem" href="/tr/">🇹🇷 Türkçe</a></li>
+      </ul>
+    </div>
     <button class="nav__search-btn" id="navSearchBtn" aria-label="Search site">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
     </button>
@@ -7371,6 +7392,22 @@ window.SmartMatch = (function(){
   })();
 
   document.getElementById('navSearchBtn').addEventListener('click', openSiteSearch);
+
+  // Language globe: toggle the flag popover (works on desktop click + mobile tap)
+  (function(){
+    var wrap = document.getElementById('navLang'),
+        btn = document.getElementById('navLangBtn');
+    if (!wrap || !btn) return;
+    function close(){ wrap.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var open = wrap.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', function(e){ if (!wrap.contains(e.target)) close(); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  })();
+
   document.getElementById('siteSearchClose').addEventListener('click', closeSiteSearch);
   siteOverlay.addEventListener('click', function(e) { if (e.target === siteOverlay) closeSiteSearch(); });
   siteInput.addEventListener('input', function() {
@@ -8217,6 +8254,83 @@ window.SmartMatch = (function(){
     var a = e.target.closest('a');
     if (a && (a.getAttribute('href') || '').charAt(0) === '#') closeChat();
   });
+})();
+</script>
+
+<script>
+/* ── Google Analytics: custom event tracking ─────────────────
+   GA4 already auto-tracks page views, scroll depth, outbound clicks and
+   site search (Enhanced Measurement). This adds the pharmacy-specific
+   actions that matter — bookings, assessments, calls, directions, tool
+   use, language choice, and which sections visitors actually reach.
+
+   NOTE: the GA4 measurement ID (G-2YQ9FDLMCV) is set in the two tags at
+   the top of <head>. If GA verification shows a different/newer ID,
+   replace it in those two spots — nothing here needs changing. */
+(function(){
+  function ev(name, params){
+    if (typeof gtag === 'function') gtag('event', name, params || {});
+  }
+  function txt(el){ return (el && el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 80); }
+
+  // One delegated click listener covers every link/button on the page.
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a, button');
+    if (!a) return;
+    var href = a.getAttribute && a.getAttribute('href') || '';
+
+    // Booking / assessment intent
+    if (a.classList.contains('js-condition')) {
+      var card = a.closest('.ailment-card');
+      ev('assessment_start', { condition: txt(card && card.querySelector('.ailment-card__name')) || txt(a) });
+      return;
+    }
+    if (a.classList.contains('js-pa-select') || a.closest('.pa-card') ||
+        (a.classList.contains('nav__cta') || a.parentElement && a.parentElement.classList.contains('nav__cta')) ||
+        href === '#booking') {
+      ev('book_click', { label: a.dataset && a.dataset.label ? a.dataset.label : txt(a) });
+      return;
+    }
+    // Contact actions
+    if (href.indexOf('tel:') === 0)      { ev('phone_click',      { location: txt(a) }); return; }
+    if (href.indexOf('mailto:') === 0)   { ev('email_click',      {}); return; }
+    if (href.indexOf('google.com/maps') !== -1) { ev('directions_click', {}); return; }
+    if (href.indexOf('ubereats.com') !== -1)    { ev('uber_click', {}); return; }
+    if (href.indexOf('facebook.com') !== -1)  { ev('social_click', { network: 'facebook' }); return; }
+    if (href.indexOf('instagram.com') !== -1) { ev('social_click', { network: 'instagram' }); return; }
+    if (href.indexOf('linkedin.com') !== -1)  { ev('social_click', { network: 'linkedin' }); return; }
+    // Language
+    if (a.closest('.nav__lang-menu')) {
+      ev('language_select', { language: (href.match(/\/(es|pt|it|tr)\//) || [,'en'])[1] });
+      return;
+    }
+  }, true);
+
+  // Tool usage
+  var dcCheck = document.getElementById('dc-check');
+  if (dcCheck) dcCheck.addEventListener('click', function(){ if (!dcCheck.disabled) ev('drug_checker_check', {}); });
+  var chatOpen = document.getElementById('sdmChatOpen');
+  if (chatOpen) chatOpen.addEventListener('click', function(){ ev('chat_open', {}); });
+  var chatForm = document.getElementById('sdmChatForm');
+  if (chatForm) chatForm.addEventListener('submit', function(){ ev('chat_question', {}); });
+
+  // Section reach — which parts of the page visitors actually see. Hash
+  // navigation (#services etc.) is NOT a pageview in GA4, so this fills the
+  // gap: one event per section per pageload.
+  if ('IntersectionObserver' in window) {
+    // Fire when a section crosses the middle of the viewport, so it works
+    // for tall sections too (a 40%-visible threshold never triggers on
+    // sections taller than the screen).
+    var secIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting){
+          ev('section_view', { section_id: en.target.id });
+          secIO.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0, rootMargin: '-45% 0px -45% 0px' });
+    document.querySelectorAll('section[id]').forEach(function(s){ secIO.observe(s); });
+  }
 })();
 </script>
 </body>
