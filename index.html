@@ -657,6 +657,9 @@
        visible. Uses opacity + transform only (GPU-cheap), fires once
        per section via IntersectionObserver, and is disabled entirely
        under prefers-reduced-motion. */
+    /* Each word's letters live in a nowrap wrapper so a word never breaks
+       across two lines (the per-letter inline-blocks otherwise would). */
+    .tw-enabled .section__title .tw-word { display: inline-block; white-space: nowrap; }
     .tw-enabled .section__title .tw-char {
       display: inline-block;
       opacity: 0;
@@ -4295,7 +4298,7 @@
           <button type="button" id="dc-clear" class="btn btn--outline">Clear</button>
         </div>
         <div id="dc-results" class="dc-results"></div>
-        <p class="dc-disclaimer">⚠️ This tool is for general information only and may not capture every interaction. Always confirm with our pharmacists before starting, stopping, or combining medications. Medication names are sent anonymously to the U.S. National Library of Medicine (NLM RxNav API), with no personal health information is collected or stored by this website.</p>
+        <p class="dc-disclaimer">⚠️ This tool is for general information only and may not capture every interaction. Always confirm with our pharmacists before starting, stopping, or combining medications. Medication names are sent anonymously to the U.S. National Library of Medicine (NLM RxNav API). No personal health information is collected or stored by this website.</p>
         <div class="dc-credit"><span>For a complete report, visit</span><a href="https://www.drugs.com/drug_interactions.html" target="_blank" rel="noopener" class="dc-credit__logo">Drugs<span>.com</span></a><span class="dc-credit__data">· Data: NLM RxNav · DrugBank · Health Canada</span></div>
       </div>
       <div class="dc-summary" id="dc-summary">
@@ -7808,17 +7811,27 @@ window.SmartMatch = (function(){
           var text = kid.nodeValue;
           if (!text) return;
           var frag = document.createDocumentFragment();
+          // Group each word's letters inside a nowrap wrapper so lines only
+          // break between words — the per-letter inline-block spans would
+          // otherwise let a word split across two lines (e.g. "PHARM/ACY").
+          var word = null;
           for (var i = 0; i < text.length; i++){
             var ch = text[i];
             if (ch === ' ' || ch === '\n' || ch === '\t'){
-              frag.appendChild(document.createTextNode(' ')); // keep spaces as real spaces so wrapping works
+              word = null;
+              frag.appendChild(document.createTextNode(' ')); // real space keeps natural word wrapping
               continue;
+            }
+            if (!word){
+              word = document.createElement('span');
+              word.className = 'tw-word';
+              frag.appendChild(word);
             }
             var span = document.createElement('span');
             span.className = 'tw-char';
             span.textContent = ch;
             span.style.setProperty('--tw-i', idx++);
-            frag.appendChild(span);
+            word.appendChild(span);
           }
           node.replaceChild(frag, kid);
         } else if (kid.nodeType === 1){
