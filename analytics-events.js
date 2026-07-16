@@ -48,7 +48,7 @@
     if (href.indexOf('linkedin.com') !== -1)  { ev('social_click', { network: 'linkedin' }); return; }
     // Language
     if (a.closest('.nav__lang-menu')) {
-      ev('language_select', { language: (href.match(/\/(es|pt|it|tr)\//) || [,'en'])[1] });
+      ev('language_select', { language: (href.match(/\/(fr|es|pt|it|tr)\//) || [,'en'])[1] });
       return;
     }
   }, true);

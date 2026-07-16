@@ -31,10 +31,18 @@
       '/tick-bites':'cond-49'
     };
     var p=location.pathname.replace(/\/+$/,'');
-    if(map[p]){location.replace(map[p]);}
+    // Language pages use the same clean URLs under their own prefix
+    // (/es/services, /fr/uti, ...): peel the prefix off, look the rest up,
+    // and send the visitor back into the SAME language's homepage.
+    var base='';
+    var lm=p.match(/^\/(fr|es|pt|it|tr)(\/.*)?$/);
+    if(lm&&lm[2]){base='/'+lm[1];p=lm[2].replace(/\/+$/,'');}
+    // Only homepage-section targets (/#...) belong under the language
+    // prefix; real subpaths like /blog/ exist in English only.
+    if(map[p]){location.replace(map[p].charAt(1)==='#'?base+map[p]:map[p]);}
     else if(dl[p]){
-      try{sessionStorage.setItem('__dlA',dl[p]);sessionStorage.setItem('__dlP',p);}catch(e){}
-      location.replace('/#booking');
+      try{sessionStorage.setItem('__dlA',dl[p]);sessionStorage.setItem('__dlP',base+p);}catch(e){}
+      location.replace(base+'/#booking');
     }
   })();
   </script>

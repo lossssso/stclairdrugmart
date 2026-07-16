@@ -2012,7 +2012,9 @@ window.SmartMatch = (function(){
       .concat(Object.keys(byTag).filter(function(t){ return TAG_ORDER.indexOf(t) === -1; }));
     var html = '';
     tagsOrdered.forEach(function(tag) {
-      var catLabel = tag === 'FAQ' ? 'Frequently Asked Questions (FAQ)' : (tag === 'Condition' ? 'Conditions' : (tag === 'Service' ? 'Services' : tag));
+      var TAGH = (window.I18N && window.I18N.tagHeads) || {};
+      var TAGC = (window.I18N && window.I18N.tagChips) || {};
+      var catLabel = TAGH[tag] || (tag === 'FAQ' ? 'Frequently Asked Questions (FAQ)' : (tag === 'Condition' ? 'Conditions' : (tag === 'Service' ? 'Services' : tag)));
       html += '<div class="site-search__category">' + catLabel + '</div>';
       byTag[tag].forEach(function(item) {
         html += '<button class="site-search__result js-site-result" data-anchor="' + (item.anchor||'') + '" data-url="' + (item.url||'') + '" data-open="' + (item.open||'') + '" data-ailment-url="' + (item.ailmentUrl||'') + '" data-faq="' + (item.isFaq ? '1' : '') + '" data-title="' + item.title + '">'
@@ -2021,7 +2023,7 @@ window.SmartMatch = (function(){
           + '<span class="site-search__result-title">' + highlightMatch(item.title, query) + '</span>'
           + '<span class="site-search__result-desc">' + item.desc + '</span>'
           + '</span>'
-          + '<span class="site-search__result-tag">' + tag + '</span>'
+          + '<span class="site-search__result-tag">' + (TAGC[tag] || tag) + '</span>'
           + '</button>';
       });
     });
