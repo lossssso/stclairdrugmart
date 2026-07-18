@@ -222,13 +222,13 @@
       <img src="/logo.png" alt="St. Clair Drug Mart Pharmacy" class="nav__brand__logo" />
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
-    <button class="nav__toggle" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
+    <button class="nav__toggle" aria-label="Abrir o menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav__links" id="navLinks">
       <li><a href="#welcome">Início</a></li>
       <li class="nav__has-dropdown">
-        <a href="#services">Services</a>
+        <a href="#services">Serviços</a>
         <ul class="nav__dropdown">
           <li style="display:flex;align-items:center;gap:.35rem;padding:0 .85rem;"><a href="#booking" style="display:inline;padding:.55rem 0;">Portal do paciente</a><span aria-hidden="true" style="opacity:.5;">·</span><a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/login/306667" data-label="Patient Login, PharmAssess Portal" data-iframeheight="660" style="display:inline;padding:.55rem 0;">Entrar</a></li>
           <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},200)">Avaliação de doenças</a></li>
@@ -2150,7 +2150,7 @@ window.FAQS = [
 <footer>
   <div class="footer__links">
     <a href="#welcome">Início</a>
-    <a href="#booking">Services</a>
+    <a href="#booking">Serviços</a>
     <a href="#booking">Portal do paciente</a>
     <a href="#team">A nossa equipa</a>
     <a href="#faq">FAQ</a>
