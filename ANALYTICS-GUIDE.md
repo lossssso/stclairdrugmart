@@ -7,6 +7,29 @@ Your GA4 Measurement ID: **G-2YQ9FDLMCV** (installed on all 21 pages).
 
 ---
 
+## ⬜ Your one-time setup checklist (do this once, ~10 min, in the GA4 website)
+
+The tracking code is already live and collecting from day one — **no setup needed to
+get the raw counts.** But a few things can only be switched on by *you*, logged into
+your own Google account at **analytics.google.com** (I can't reach your GA account
+from the website code). Do these once and every report gets richer:
+
+- [ ] **Register the detail fields as custom dimensions** so you can split events by
+  their detail (e.g. `book_click` by *which service*). Fields: `label`, `condition`,
+  `search_term`, `results`, `section_id`, `network`, `language`, `location`.
+  → steps in **section 4**. *(Until you do this you still get every event count — you
+  just can't break them down yet.)*
+- [ ] **Mark your money actions as "Key events"** (conversions): `book_click`,
+  `phone_click`, `assessment_start`. → steps in **section 6**.
+- [ ] *(Optional)* Build a live **Looker Studio dashboard** or pipe monthly numbers
+  into your own notes / "second brain." → options in **section 11**.
+
+Everything above is a GA-dashboard task, not a code change. The code side (clean,
+separated events) is done. See **section 9** for the Patient Portal page vs. booking
+section vs. Book-button split specifically.
+
+---
+
 ## 1. The two sources of your data
 
 Your analytics come from two places working together:
@@ -220,6 +243,28 @@ Portal-page reach is measured the clean way instead: its own `page_view` on `/po
    a stronger hook or to move higher.
 4. **Language & neighbourhood pages**: getting page views? Driving any calls/bookings?
    If one is dead, the SEO for that area may need work.
+
+---
+
+## 11. Getting the numbers into a dashboard or your "second brain"
+
+The GA4 data does **not** flow anywhere automatically — GA is where it lives. Three
+ways to see it elsewhere, simplest first:
+
+1. **Manual (zero setup).** Once a month, open GA and copy the handful of numbers from
+   the routine in section 10 into your notes / Notion / spreadsheet. Best if you just
+   want a monthly pulse.
+2. **Live dashboard — Looker Studio (free, no code).** At **lookerstudio.google.com**,
+   create a report, "Add data" → **Google Analytics** → your property. Add charts for
+   the key events (`book_click`, `phone_click`, `assessment_start`), a table of
+   **Pages and screens** (to watch `/portal/`), and a `book_click`-by-`label` bar
+   chart. You get a live, shareable/bookmarkable dashboard that always reflects GA.
+3. **Raw data export — BigQuery.** GA4 → **Admin → BigQuery links** streams every raw
+   event to a database you can query yourself. Powerful but overkill unless you want
+   custom analysis. Only worth it later.
+
+*(These all read from GA; none of them change the site. I can write you a precise
+"what to add" spec for the Looker Studio dashboard whenever you want to build it.)*
 
 ---
 

@@ -85,6 +85,28 @@ next-actions list.
   PHIPA expects disclosed processors. Booking/patient data flows through
   `app.pharmassess.ca`.
 
+### Google Analytics — one-time dashboard setup (owner, ~10 min)
+_Full step-by-step lives in **`ANALYTICS-GUIDE.md`** (checklist at the top). These can
+only be done by you, logged into analytics.google.com — they're not code changes, and
+the tracking is already live and collecting regardless._
+- [ ] **Register custom dimensions** so events can be split by their detail
+  (`label`, `condition`, `search_term`, `results`, `section_id`, `network`,
+  `language`, `location`). → ANALYTICS-GUIDE.md §4.
+- [ ] **Mark key events (conversions):** `book_click`, `phone_click`,
+  `assessment_start`. → ANALYTICS-GUIDE.md §6.
+- [ ] *(Optional)* **Live dashboard / second brain** — Looker Studio, or copy monthly
+  numbers into your notes. → ANALYTICS-GUIDE.md §11. (Ask me for a build spec.)
+
+### SEO — after the Patient Portal / sitelinks work (owner, in Search Console)
+- [ ] In **Google Search Console**, resubmit `sitemap.xml` and "Request indexing" for
+  `/portal/` and `/blog/` (renamed to The Health Hub) to speed re-crawl.
+- [ ] Run `/portal/` through Google's **Rich Results Test** to confirm the new
+  WebPage/Breadcrumb/FAQ schema parses.
+- [ ] **Confirm the Organization-schema `sameAs` links.** Facebook, Instagram,
+  LinkedIn and UberEats are already wired in; give me your **Google Business Profile
+  URL** to add (it's the important missing one), and confirm the four socials are the
+  right handles.
+
 ### Marketing / front-of-store (owner + staff)
 - **Launch a Google review drive** — a QR counter card linking straight to your
   Google review page; ask every satisfied patient at pickup; aim for 2–3 new
