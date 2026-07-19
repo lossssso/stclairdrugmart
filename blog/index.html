@@ -264,6 +264,10 @@
 
     /* ── Posts grid ───────────────────────────────── */
     .posts-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
+    /* Static crawlable article links, shown until the JS cards render (and to no-JS visitors) */
+    .posts-static { grid-column:1 / -1; list-style:none; margin:0; padding:0; display:grid; gap:.6rem; }
+    .posts-static a { color:var(--teal-dark); font-weight:600; text-decoration:none; }
+    .posts-static a:hover { text-decoration:underline; }
     .post-card {
       border:1.5px solid transparent;
       background:
@@ -519,7 +523,19 @@
   <!-- All posts -->
   <div class="section-hd">All Articles</div>
   <div class="posts-grid" id="postsGrid">
-    <p class="blog-empty">Loading articles…</p>
+    <!-- Static, crawlable links to every article (progressive enhancement): search
+         engines and no-JS visitors get real <a href> links; the script replaces
+         this with the interactive cards once posts.json loads. Keep in sync with
+         blog/posts.json. -->
+    <ul class="posts-static">
+      <li><a href="posts/what-pharmacist-can-prescribe-ontario-2026.html">What Can a Pharmacist Prescribe in Ontario? 2026 Minor Ailments Guide</a></li>
+      <li><a href="posts/natural-health-products-guide.html">Vitamins, Probiotics &amp; Herbal Supplements: A Pharmacist's Guide to Natural Health Products</a></li>
+      <li><a href="posts/pink-eye-vs-allergies.html">Pink Eye vs. Allergies: How to Tell the Difference</a></li>
+      <li><a href="posts/pharmacy-vaccines-toronto-2026.html">What Vaccines Can You Get at a Toronto Pharmacy in 2026?</a></li>
+      <li><a href="posts/pharmacist-prescribe-uti-ontario.html">Can a Pharmacist Prescribe Antibiotics for a UTI in Ontario?</a></li>
+      <li><a href="posts/medication-review-what-to-expect.html">What Happens During a Medication Review at a Pharmacy?</a></li>
+      <li><a href="posts/transfer-prescription-toronto.html">How to Transfer Your Prescription to a New Pharmacy in Toronto</a></li>
+    </ul>
   </div>
 
 </main>

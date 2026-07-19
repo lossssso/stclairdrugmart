@@ -920,11 +920,19 @@
       margin-top: .75rem;
       margin-bottom: 0;
     }
+    /* 5 booking cards: centered flex-wrap so every row stays symmetrical at any
+       width (5 across, then 4+1 / 3+2 centered, not a lonely left-aligned card).
+       switchPaTab() finds a card's row by offsetTop, which works in flex too. */
     .pa-cards--book {
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: stretch;
       margin-top: 1.25rem;
       margin-bottom: 0;
     }
+    .pa-cards--book > .pa-card { flex: 0 1 210px; }
+    .pa-cards--book > .pa-iframe-wrap { flex: 1 1 100%; }
     .pa-cards--util {
       grid-template-columns: repeat(3, 1fr);
       margin-top: .75rem;
@@ -1414,7 +1422,10 @@
     @media (min-width: 769px) and (max-width: 1040px) {
       html:not(:lang(en)) .nav__links a { font-size: .76rem; padding: .4rem .45rem; }
     }
-    @media (max-width: 860px) and (min-width: 769px) {
+    /* Below ~1040px the full brand wordmark and the nav links don't both fit on
+       one row (they visually collide, worst in the longer-label languages), so
+       show the logo mark only until there's genuine room for the wordmark. */
+    @media (max-width: 1040px) and (min-width: 769px) {
       .nav__brand span { display: none; }
     }
     @media (max-width: 900px) {
