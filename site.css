@@ -1442,9 +1442,12 @@
       .nav__links.open { display: flex; }
       .nav__links > li { display: block; }
       .nav__links a { display: flex; width: 100%; min-height: 44px; }
-      /* Right cluster on mobile: push search + burger together to the far right
-         (away from the brand name), search on the left, burger on the very right. */
-      .nav__search-btn { order: 2; margin-left: auto; }
+      /* Tighter, symmetric side margins on mobile so the brand name has room. */
+      .nav__inner { padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right)); }
+      /* Right cluster: search + burger flush to the right margin (mirrors the
+         logo's left margin), search on the left, burger on the very right.
+         Higher specificity than the base .nav__search-btn margin so auto wins. */
+      .nav__inner .nav__search-btn { order: 2; margin-left: auto; }
       .nav__toggle { display: block; order: 3; margin-left: .4rem; }
       .nav__has-dropdown::after { display: none; }
       .nav__dropdown { position: static; border: none; box-shadow: none; border-radius: 0; padding: 0; background: #f3fafb; margin: .2rem 0 .2rem .75rem; min-width: 0; }
@@ -1456,7 +1459,14 @@
       .nav__has-dropdown.open > a::after { transform: rotate(180deg); }
       /* Keep the brand name visible on mobile; scale it so it always fits next
          to the logo, hamburger and search, even on the narrowest phones. */
-      .nav__brand span { font-size: clamp(.56rem, 2.7vw, .82rem); letter-spacing: .01em; }
+      .nav__brand span { font-size: clamp(.72rem, 3.3vw, .84rem); letter-spacing: .01em; }
+      /* Trim the logo, gaps and icons on mobile so the full-size name always
+         has room beside them without shrinking the name itself. */
+      .nav__brand { gap: .4rem; }
+      .nav__brand__logo { height: 28px; }
+      .nav__inner .nav__search-btn { width: 32px; height: 32px; }
+      .nav__search-btn svg { width: 16px; height: 16px; }
+      .nav__toggle { min-width: 40px; min-height: 40px; padding: .3rem; }
       /* Language lives inside the hamburger on mobile (globe button hidden). */
       .nav__lang { display: none; }
       .nav__links > .nav__links-lang { display: block; border-top: 1px solid #e9f4f5; margin-top: .35rem; padding-top: .5rem; }
