@@ -313,19 +313,25 @@
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+    .hero__tagline { font-size: .92rem; font-weight: 600; letter-spacing: .02em;
+      color: var(--teal-dark); opacity: .85; text-align: center; margin: .35rem 0 .55rem; }
+    /* While the welcome popup is due/open (html.hero-hold, added by JS just
+       before the popup timer starts), the hero logo stays hidden; dismissing
+       the popup adds hero-go, which reveals it via the rise animation below.
+       JS off → neither class → logo always visible. */
+    html.hero-hold:not(.hero-go) .hero__logo { opacity: 0; }
     .hero-go .hero__logo    { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) backwards; }
     .hero-go .hero__name    { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) .12s backwards; }
-    .hero-go .hero__tagline { font-size: .92rem; font-weight: 600; letter-spacing: .02em;
-      color: var(--teal-dark); opacity: .85; text-align: center; margin: .35rem 0 .55rem; }
-    .hero__sub     { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) .24s backwards; }
+    .hero-go .hero__tagline { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) .18s backwards; }
+    .hero-go .hero__sub     { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) .24s backwards; }
     .hero-go .hero__socials { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) .36s backwards; }
     .hero-go .hero__status  { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) .48s backwards; }
     /* Scroll cue joins last, opacity-only (its transform centers it). */
     @keyframes cue-fade { from { opacity: 0; } }
     .hero-go .hero__scroll-cue { animation: cue-fade .8s ease .8s backwards; }
     @media (prefers-reduced-motion: reduce) {
-      .hero-go .hero__logo, .hero-go .hero__name, .hero-go .hero__sub,
-      .hero-go .hero__socials, .hero-go .hero__status,
+      .hero-go .hero__logo, .hero-go .hero__name, .hero-go .hero__tagline,
+      .hero-go .hero__sub, .hero-go .hero__socials, .hero-go .hero__status,
       .hero-go .hero__scroll-cue { animation: none; }
     }
     /* On mobile: fewer clouds for performance */

@@ -2091,6 +2091,9 @@ window.SmartMatch = (function(){
     var snoozedUntil = 0;
     try { snoozedUntil = parseInt(localStorage.getItem(WELCOME_KEY), 10) || 0; } catch (e) {}
     if (Date.now() > snoozedUntil) {
+      // Hold the hero logo back while the popup is due; it enters with the
+      // hero-go sequence once the popup is dismissed (see hero-hold CSS).
+      document.documentElement.classList.add('hero-hold');
       setTimeout(function() { overlay.classList.add('open'); }, 1400);
     }
     closeBtn.addEventListener('click', closeWelcome);
