@@ -152,6 +152,7 @@
       line-height: 1;
       padding: .5rem .8rem;
       border-radius: 7px;
+      white-space: nowrap;
       transition: background .15s, color .15s;
     }
     .nav__links a:hover {
@@ -1402,6 +1403,16 @@
     @media (max-width: 1000px) and (min-width: 769px) {
       .nav__links a { font-size: .8rem; padding: .35rem .55rem; }
       .nav__links { gap: 0; }
+    }
+    /* Non-English nav labels run longer; keep the bar on one line at every desktop
+       width (.nav__inner is capped at 1100px, so wide viewports share the same tight
+       inner). English is left untouched. Pairs with white-space:nowrap above. */
+    @media (min-width: 769px) {
+      html:not(:lang(en)) .nav__links a { font-size: .82rem; padding: .45rem .6rem; }
+      html:not(:lang(en)) .nav__links   { gap: .12rem; }
+    }
+    @media (min-width: 769px) and (max-width: 1040px) {
+      html:not(:lang(en)) .nav__links a { font-size: .76rem; padding: .4rem .45rem; }
     }
     @media (max-width: 860px) and (min-width: 769px) {
       .nav__brand span { display: none; }
