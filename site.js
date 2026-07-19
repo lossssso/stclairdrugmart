@@ -7,6 +7,18 @@
    ({ search:{stop,clusters}, chat:{...}, ui:{...} }). English defaults
    are baked in below, so a page with no I18N works exactly as before. */
 
+/* Standalone pages (e.g. /portal/) carry the booking section but not the
+   other homepage sections/accordions. When a search hit targets a section
+   that isn't on this page, return the homepage URL to navigate to instead
+   of silently doing nothing. Returns null when the target exists here. */
+window.paOffPageHref = function(anchor, openId){
+  var ACC = {'acc-ailments':'/conditions','acc-vaccines':'/vaccines','acc-med-reviews':'/medication-reviews','acc-rx-renewal':'/#services','acc-cessation':'/smoking-cessation','acc-naloxone':'/naloxone','acc-transfer':'/transfer','acc-poct':'/testing','acc-insurance':'/insurance','acc-referrals':'/referrals'};
+  var base = document.documentElement.getAttribute('data-base') || '';
+  if (openId && !document.getElementById(openId)) return base + (ACC[openId] || '/#services');
+  if (!openId && anchor && !document.querySelector(anchor)) return base + '/' + anchor;
+  return null;
+};
+
 (function(){
   var svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
   var list = document.getElementById('faq-list');
@@ -383,6 +395,8 @@ window.SmartMatch = (function(){
         var openId = this.dataset.open;
         var url = this.dataset.url;
         if (url) { window.location.href = url; return; }
+        var off = window.paOffPageHref(anchor, openId);
+        if (off) { window.location.href = off; return; }
         if (openId && window.openAcc) {
           window.openAcc(openId);
           setTimeout(function(){ var el = document.getElementById(openId); if (el) el.scrollIntoView({ behavior:'smooth', block:'start' }); }, 120);
@@ -1452,12 +1466,15 @@ window.SmartMatch = (function(){
     }
   })();
 
-  document.getElementById('pp-overlay').addEventListener('click', function(e) {
-    if (e.target === this) this.classList.remove('open');
-  });
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') document.getElementById('pp-overlay').classList.remove('open');
-  });
+  var ppOverlay = document.getElementById('pp-overlay');
+  if (ppOverlay) {
+    ppOverlay.addEventListener('click', function(e) {
+      if (e.target === this) this.classList.remove('open');
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') ppOverlay.classList.remove('open');
+    });
+  }
 
   // ── Live Status Board ───────────────────────────────────
   // Recomputes on an interval (not just once at page load) so "Closing in
@@ -1871,6 +1888,8 @@ window.SmartMatch = (function(){
         var openId = this.dataset.open;
         var url = this.dataset.url;
         if (url) { window.location.href = url; return; }
+        var off = window.paOffPageHref(anchor, openId);
+        if (off) { window.location.href = off; return; }
         if (openId && window.openAcc) {
           window.openAcc(openId);
           setTimeout(function() { var el = document.getElementById(openId); if (el) el.scrollIntoView({ behavior:'smooth', block:'start' }); }, 120);
@@ -2038,6 +2057,11 @@ window.SmartMatch = (function(){
         var title = this.dataset.title;
         closeSiteSearch();
         if (url) { window.location.href = url; return; }
+        if (isFaq && !document.getElementById('faq')) { window.location.href = (document.documentElement.getAttribute('data-base') || '') + '/faq'; return; }
+        if (!isFaq && !ailmentUrl) {
+          var off = window.paOffPageHref(anchor, openId);
+          if (off) { window.location.href = off; return; }
+        }
         if (isFaq) {
           var faqSection = document.getElementById('faq');
           if (faqSection) faqSection.scrollIntoView({ behavior:'smooth', block:'start' });
@@ -2317,6 +2341,9 @@ window.SmartMatch = (function(){
   // ── Clean section URLs: hash → clean path conversion + scrollspy ─────
   // ── Section URLs, deep links & sub-section accordion tracking ───────
   (function(){
+    // Standalone pages (data-page attr, e.g. /portal/) own their URL: the
+    // homepage scrollspy would rewrite it to /booking and break the page.
+    if (document.documentElement.hasAttribute('data-page')) return;
     var SEC_PATH={
       'home':'/','welcome':'/welcome','booking':'/booking','services':'/services',
       'drug-checker':'/drug-checker','team':'/team','reviews':'/reviews',

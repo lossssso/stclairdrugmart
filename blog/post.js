@@ -171,7 +171,7 @@
       '<div class="post__author-body">' +
       '<h4>About St. Clair Drug Mart Pharmacy</h4>' +
       '<p>We’re an independent, OCP-accredited pharmacy at 1203 St. Clair Ave W in Toronto’s St. Clair West neighbourhood. Our pharmacists assess and prescribe for common conditions, give vaccines, and review medications — walk in any time during store hours.</p>' +
-      '<div class="post__author-links"><a href="../index.html">← More from The Health Wire</a><a href="../../index.html#contact">Find &amp; visit us →</a></div>' +
+      '<div class="post__author-links"><a href="../index.html">← More from The Health Hub</a><a href="../../index.html#contact">Find &amp; visit us →</a></div>' +
       '</div>';
     var disclaimer = post.querySelector('.post__disclaimer');
     if (disclaimer) disclaimer.insertAdjacentElement('beforebegin', card);
