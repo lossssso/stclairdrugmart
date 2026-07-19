@@ -2083,18 +2083,20 @@ window.SmartMatch = (function(){
     function closeWelcome() {
       overlay.classList.remove('open');
       try { localStorage.setItem(WELCOME_KEY, String(Date.now() + SNOOZE_MS)); } catch (e) {}
-      // Kick off the hero entrance + release the gated scroll reveals now
-      // that the popup no longer covers the page (see hero-go CSS & tw script).
+      // Release the gated scroll reveals now that the popup no longer covers
+      // the page (tw script). hero-go is normally set before the popup opens;
+      // adding it here is a safety net for any other open path.
       document.documentElement.classList.add('hero-go');
       try { document.dispatchEvent(new CustomEvent('welcome:dismissed')); } catch (e) {}
     }
     var snoozedUntil = 0;
     try { snoozedUntil = parseInt(localStorage.getItem(WELCOME_KEY), 10) || 0; } catch (e) {}
     if (Date.now() > snoozedUntil) {
-      // Hold the hero logo back while the popup is due; it enters with the
-      // hero-go sequence once the popup is dismissed (see hero-hold CSS).
-      document.documentElement.classList.add('hero-hold');
-      setTimeout(function() { overlay.classList.add('open'); }, 1400);
+      // Play the full hero entrance first (logo, name, tagline, address,
+      // socials, status float in over ~1.2s), then bring the popup up after
+      // a beat so the entrance is never hidden behind the overlay.
+      document.documentElement.classList.add('hero-go');
+      setTimeout(function() { overlay.classList.add('open'); }, 2300);
     }
     closeBtn.addEventListener('click', closeWelcome);
     if (laterBtn) laterBtn.addEventListener('click', closeWelcome);

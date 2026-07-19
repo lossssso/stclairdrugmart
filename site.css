@@ -315,11 +315,6 @@
     }
     .hero__tagline { font-size: .92rem; font-weight: 600; letter-spacing: .02em;
       color: var(--teal-dark); opacity: .85; text-align: center; margin: .35rem 0 .55rem; }
-    /* While the welcome popup is due/open (html.hero-hold, added by JS just
-       before the popup timer starts), the hero logo stays hidden; dismissing
-       the popup adds hero-go, which reveals it via the rise animation below.
-       JS off → neither class → logo always visible. */
-    html.hero-hold:not(.hero-go) .hero__logo { opacity: 0; }
     .hero-go .hero__logo    { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) backwards; }
     .hero-go .hero__name    { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) .12s backwards; }
     .hero-go .hero__tagline { animation: hero-rise .7s cubic-bezier(.2,.7,.2,1) .18s backwards; }
