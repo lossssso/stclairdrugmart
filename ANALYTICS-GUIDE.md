@@ -95,7 +95,7 @@ which parts people reach. `section_view` fills that gap.
 |---|---|
 | `welcome` | Opening "how can we help you" area |
 | `new-patients` | New patient / transfer-your-prescription |
-| `booking` | Appointment booking |
+| `booking` | Appointment booking (homepage only — see section 9 for how the standalone Patient Portal page is tracked separately) |
 | `services` | What We Offer (services grid) |
 | `drug-checker` | Drug-interaction checker tool |
 | `team` | Meet the pharmacists |
@@ -181,7 +181,36 @@ which traffic sources drive them, etc.
 
 ---
 
-## 8. A simple monthly routine
+## 9. Booking Button clicks vs. Patient Portal page use — the exact split
+
+Since the standalone **Patient Portal page** (`/portal/`) was added, this is the
+question people ask most, so here's the precise, no-jargon answer. Three different
+things sound similar but mean different numbers:
+
+| What you want to know | Where to look | Setup needed |
+|---|---|---|
+| **"How many people used the Patient Portal as its own page?"** (arrived via the nav menu, footer, blog, a neighbourhood page, Google, or a shared link) | **Reports → Engagement → Pages and screens** → find `/portal/` in the list. That row's **Views** = page loads, **Active users** = people, **Average engagement time** = how long they stayed. | None — automatic. |
+| **"How many times did someone click a Book / appointment button?"** (anywhere on the site — homepage cards, the portal page's identical cards, or the nav "Book Now") | **Reports → Engagement → Events** → `book_click` row = total count. Click into it and look at the `label` breakdown (once registered, see section 4) to see *which* button — "Vaccinations," "Medication Review," "Book Now," etc. | `label` breakdown needs one-time custom-dimension registration (section 4). The raw count needs nothing. |
+| **"Of those Book clicks, how many happened on the dedicated Portal page vs. the homepage's booking section?"** | Same `book_click` report → click the **pencil icon** (top right of the table) → **Add secondary dimension** → choose **Page path and screen class**. The table now splits every row by `/` vs `/portal/` vs any other page. | None — "Page path" is a built-in dimension, no registration or waiting period. |
+
+**Why this works cleanly:** the Book buttons on `/portal/` and on the homepage's
+booking section fire the exact same `book_click` event with the exact same `label` —
+they're the same action, just reachable two ways. GA4 already tags every event with
+the page it happened on, so you never lose that detail; you just ask for it with the
+secondary-dimension step above instead of it cluttering the default view.
+
+**One thing that used to be confusing and is now fixed:** loading `/portal/` briefly
+also triggered a `section_view: booking` event — the *exact same* event GA4 fires
+when a homepage visitor scrolls down to the booking section. That made "people who
+scrolled to booking on the homepage" and "people who loaded the separate Portal page"
+look like the same number. `/portal/` no longer fires `section_view` at all (it isn't
+a section of a long scrolled page, it's its own destination) — so `section_view:
+booking` now means only one thing: *a homepage visitor scrolled to that section*.
+Portal-page reach is measured the clean way instead: its own `page_view` on `/portal/`.
+
+---
+
+## 10. A simple monthly routine
 
 1. **Reports → Engagement → Events**: note `book_click`, `phone_click`,
    `assessment_start` vs. last month. Up or down?
