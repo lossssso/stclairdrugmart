@@ -1,5 +1,10 @@
 # St. Clair Drug Mart — To-Do
 
+> This file holds detailed **build-specs** that live with the site code (the two below). The
+> prioritized, owner-facing task list for this site is tracked in the Microbiome brain's
+> `TASKS.md` under the `website` tag — that is the single source of truth. See the pointer
+> lower down before adding a new owner/marketing/SEO task here.
+
 ## Prescription Extensions & Adaptations — custom intake form (deferred)
 
 The "Out of refills? Can't reach your doctor?" callout (Welcome section, anchor
@@ -64,26 +69,23 @@ Point-of-Care Testing under Book an Appointment. To-do:
   travel and issue a negative-result clearance certificate — so this is offerable
   once the test type, kit supply, and certificate template are finalized.
 
-## From the overnight site audit (June 23, 2026) — action items left for you
+## Prioritized action list -> tracked in the brain
 
-These need your hands (account access, a business decision, or an in-store
-process) and can't be done from the code. Pulled from the audit's prioritized
-next-actions list.
+The audited, prioritized to-do list for this site (owner credential actions, SEO and
+marketing, and the dated dev fix list) lives in the Microbiome brain's `TASKS.md` under the
+`website` tag. That is the single source of truth for actionable items (brain Rule 5). This
+file keeps only the two detailed build-specs above plus the small dev and compliance backlog
+below, which are code specs a site-only session needs on hand.
 
-### Needs you in an account / dashboard
-- **GitHub → Settings → Secrets → confirm `ANTHROPIC_API_KEY` is set.** The
-  weekly blog bot (`.github/workflows/blog.yml`, Mondays 9 AM ET) needs this
-  secret to generate posts. If it's missing, Mondays silently produce nothing
-  (likely how the earlier desynced/phantom posts crept in). *(This is the "go
-  into secrets" item.)*
-- **Upload blog hero images.** Posts currently have no hero image (cards show a
-  teal placeholder). Either upload a relevant photo per post or have the
-  workflow attach/generate one — lifts click-through on the blog and on social
-  shares. *(This is the "upload the thing for the blog" item.)*
-- **Confirm the privacy policy names PharmAssess** (and any analytics) as a
-  third-party processor, and that a data-sharing/vendor agreement is in place —
-  PHIPA expects disclosed processors. Booking/patient data flows through
-  `app.pharmassess.ca`.
+Owner and marketing items moved to the brain: GitHub `ANTHROPIC_API_KEY` secret, blog hero
+images, privacy-policy processor disclosure, Google review drive, respond-to-reviews within
+48h, complete the GBP, GA4 turn-on, and Search Console verify. To see them, ask the brain
+"what website tasks are open?" or open the dashboard Tasks tab and look for the `website` chip.
+
+### Still in this file — pending migration to the brain
+
+These owner tasks were added directly to the site repo and are not yet in the brain's `TASKS.md`.
+Keep them here until migrated; do not add NEW owner/marketing tasks here — put those in the brain.
 
 ### Google Analytics — one-time dashboard setup (owner, ~10 min)
 _Full step-by-step lives in **`ANALYTICS-GUIDE.md`** (checklist at the top). These can
@@ -107,33 +109,15 @@ the tracking is already live and collecting regardless._
   URL** to add (it's the important missing one), and confirm the four socials are the
   right handles.
 
-### Marketing / front-of-store (owner + staff)
-- **Launch a Google review drive** — a QR counter card linking straight to your
-  Google review page; ask every satisfied patient at pickup; aim for 2–3 new
-  reviews/week. Highest-ROI growth lever; you already have the 4.9★.
-- **Respond to every Google review within 48 h** (even the 5★ ones) — it's a
-  ranking and trust signal. (An AI draft-reply assistant can make this seconds.)
-- **Complete the Google Business Profile** — every field, ≥20 photos (the
-  optimized ones are ready), and post weekly (blog posts can feed this).
-- **Keep "4.9 ★ / 59 reviews" accurate.** It's hardcoded ~18 places; if the real
-  Google figure changes, the site is technically inaccurate advertising (OCP).
-  Update it manually (or we make it pull live).
-- **Verify hardcoded hours/holidays** are current (Closed Sunday, Sat 9–2, etc.).
+## Site-dev polish backlog (low priority, not yet promoted to the brain)
 
-### Professionalism / compliance polish (small)
-- Consider naming the **Designated Manager** in the footer. (OCP accreditation
-  No. 306667 is already shown in the footer trust badge.)
-- Do a pass on "free / no cost" wording (50+ uses) so each is clearly tied to
-  eligibility (valid OHIP card / criteria), never a blanket "free."
-
-### Site/dev follow-ups (I can do these — just say when)
-- Add a **site chatbot** (wrap the existing FAQ + smart search) and a mobile
-  **Book/Refill bubble or bottom bar** for one-tap conversion.
-- Extend the Monday blog bot to also draft a **GBP post, IG/FB caption, and
-  email** from the same article (one generation, four placements).
-- Optionally upgrade the blog bot model and add seasonal topic weighting.
-- Bump small inline **touch targets to ≥24 px** (footer phone/email, inline CTAs).
-- Optimize remaining storefront JPEGs to WebP (~150 K each). Low priority.
+- Extend the Monday blog bot to also draft a GBP post, IG/FB caption, and email from the same
+  article (one generation, four placements); optionally upgrade the blog-bot model and add
+  seasonal topic weighting.
+- Bump small inline touch targets to >=24px (footer phone/email, inline CTAs).
+- Optimize remaining storefront JPEGs to WebP (~150K each). Low priority.
+- Verify the site chatbot and mobile Book/Refill bubble are live before scheduling them: chat
+  events already fire in analytics, so this looks shipped. Confirm and delete this line if so.
 
 ## Deferred performance work (from the July 2026 SEO/perf audit)
 
@@ -161,11 +145,13 @@ post.css / fonts.css); and the seven storefront/gallery photos have 480px
   critical CSS") — a stale block only affects the brief pre-load paint, the
   final rendered page always follows site.css.
 
-### Already done this session (for reference)
-- ✅ Deleted ~6 MB of unused images (`delivery_uber.jpeg`, `delivery_bag.jpeg`,
-  `interior_counter.png`, `interior_entrance.webp`).
-- ✅ Cloud animation now JS-driven (fixes "clouds not moving" in Comet/Chrome);
-  nav clouds slowed.
-- ✅ FAQ smart-search now surfaces conditions/minor-ailment assessments.
-- ✅ Bike Share section: second nearby station added; parking vs. bike-share now
-  highlight independently from the Find-Us logos.
+## Professionalism / compliance polish (small)
+
+- Consider naming the Designated Manager in the footer. (OCP accreditation No. 306667 is
+  already shown in the footer trust badge.)
+- Do a pass on "free / no cost" wording (50+ uses) so each is clearly tied to eligibility
+  (valid OHIP card / criteria), never a blanket "free."
+- Keep the Google rating and review count accurate everywhere it is hardcoded (currently
+  4.9 stars / 60 reviews, in ~18 places). A stale figure is technically inaccurate advertising
+  (OCP); update it manually or make it pull live.
+- Verify hardcoded hours/holidays stay current (Closed Sunday, Sat 9-2, etc.).
