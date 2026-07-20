@@ -137,26 +137,29 @@ the tracking is already live and collecting regardless._
 
 ## Deferred performance work (from the July 2026 SEO/perf audit)
 
-Larger-effort items intentionally NOT done in the quick-win pass. Each is a real
-win but carries risk or needs owner input; ask me when you want one done.
+Status update (July 20): the big three are DONE — critical CSS is now inlined
+with `site.css` loading async on all six homepages + portal; the two Google
+Fonts are self-hosted (14 woff2 files in `/fonts/`, declared in site.css /
+post.css / fonts.css); and the seven storefront/gallery photos have 480px
+`srcset` variants for phones. Still open:
 
-- **Inline critical CSS / async-load `site.css`.** The 158 KB stylesheet is
-  render-blocking on every page — the single biggest paint-time lever left.
-  Riskiest change on the list (touches all pages + the v=N rule), do it alone
-  in its own PR.
 - **De-duplicate the FAQ payload.** Each homepage ships the ~38 KB FAQ content
   twice (visible `window.FAQS` block + static `#faq-schema-static` JSON-LD).
-  Generating one from the other at commit time would cut ~38 KB per page.
-- **Responsive images (`srcset`/AVIF)** for the storefront/gallery WebPs
-  (100–255 KB each) so phones download smaller variants.
-- **Self-host the two Google Fonts** to remove the render-blocking third-party
-  round-trip (preconnect already in place, this is the last step).
+  Decision: NOT doing it for now. The static schema block is deliberate (serves
+  no-JS crawlers and AI engines), gzip shrinks the duplication to ~8 KB on the
+  wire, and deriving one copy from the other adds fragility to a 6-language
+  sync process. Revisit only if page weight becomes a problem again.
 - **Clean-URL slugs return HTTP 404 first.** `/vaccines`, `/uti`, etc. work via
   the 404.html JS router, but crawlers/no-JS clients see a 404 status. Fine
   today (they're not in the sitemap); if you ever print them on flyers or use
   them in ads, we need host-level 301 redirects instead.
 - **Google Business Profile URL for `sameAs`** — still the important missing
   brand link (also listed in the Search Console section above).
+- Note for future CSS edits: the inline `<style id="critical-css">` block on
+  the six homepages + portal is GENERATED from site.css (above-the-fold rules).
+  After meaningful site.css changes, regenerate it (ask Claude: "regenerate the
+  critical CSS") — a stale block only affects the brief pre-load paint, the
+  final rendered page always follows site.css.
 
 ### Already done this session (for reference)
 - ✅ Deleted ~6 MB of unused images (`delivery_uber.jpeg`, `delivery_bag.jpeg`,

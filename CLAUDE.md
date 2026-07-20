@@ -11,6 +11,7 @@
 - All CSS lives in `/site.css`, all behaviour in `/site.js`; pages reference them with a `?v=N` cache-buster. Bump `N` on every site.css/site.js change, on **all six homepages** in the same commit.
 - Per-page inline data blocks (`window.FAQS`, `window.AILMENT_DB`, `window.SITE_INDEX_CORE`, `window.I18N`) carry each language's translations; site.js falls back to English when `window.I18N` is absent.
 - After editing a page's `window.FAQS`, regenerate its `#faq-schema-static` JSON-LD block from the translated data.
+- The six homepages + portal inline a `<style id="critical-css">` block (above-the-fold rules extracted from site.css) and load site.css async via preload/onload. After meaningful site.css changes, regenerate that block on all seven pages (headless extraction harness; keep the block byte-identical across the six homepages so the skeleton diff passes). Fonts are self-hosted in `/fonts/` (declared in site.css, blog/post.css, and /fonts.css); never re-add Google Fonts links.
 
 ## Duplicated content blocks (STANDING RULE)
 The 28-condition minor-ailment cards exist **twice on every homepage, on purpose** (owner decision, July 2026):
