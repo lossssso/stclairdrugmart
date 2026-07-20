@@ -7,6 +7,29 @@ Your GA4 Measurement ID: **G-2YQ9FDLMCV** (installed on all 21 pages).
 
 ---
 
+## ⬜ Your one-time setup checklist (do this once, ~10 min, in the GA4 website)
+
+The tracking code is already live and collecting from day one — **no setup needed to
+get the raw counts.** But a few things can only be switched on by *you*, logged into
+your own Google account at **analytics.google.com** (I can't reach your GA account
+from the website code). Do these once and every report gets richer:
+
+- [ ] **Register the detail fields as custom dimensions** so you can split events by
+  their detail (e.g. `book_click` by *which service*). Fields: `label`, `condition`,
+  `search_term`, `results`, `section_id`, `network`, `language`, `location`.
+  → steps in **section 4**. *(Until you do this you still get every event count — you
+  just can't break them down yet.)*
+- [ ] **Mark your money actions as "Key events"** (conversions): `book_click`,
+  `phone_click`, `assessment_start`. → steps in **section 6**.
+- [ ] *(Optional)* Build a live **Looker Studio dashboard** or pipe monthly numbers
+  into your own notes / "second brain." → options in **section 11**.
+
+Everything above is a GA-dashboard task, not a code change. The code side (clean,
+separated events) is done. See **section 9** for the Patient Portal page vs. booking
+section vs. Book-button split specifically.
+
+---
+
 ## 1. The two sources of your data
 
 Your analytics come from two places working together:
@@ -95,7 +118,7 @@ which parts people reach. `section_view` fills that gap.
 |---|---|
 | `welcome` | Opening "how can we help you" area |
 | `new-patients` | New patient / transfer-your-prescription |
-| `booking` | Appointment booking |
+| `booking` | Appointment booking (homepage only — see section 9 for how the standalone Patient Portal page is tracked separately) |
 | `services` | What We Offer (services grid) |
 | `drug-checker` | Drug-interaction checker tool |
 | `team` | Meet the pharmacists |
@@ -181,7 +204,36 @@ which traffic sources drive them, etc.
 
 ---
 
-## 8. A simple monthly routine
+## 9. Booking Button clicks vs. Patient Portal page use — the exact split
+
+Since the standalone **Patient Portal page** (`/portal/`) was added, this is the
+question people ask most, so here's the precise, no-jargon answer. Three different
+things sound similar but mean different numbers:
+
+| What you want to know | Where to look | Setup needed |
+|---|---|---|
+| **"How many people used the Patient Portal as its own page?"** (arrived via the nav menu, footer, blog, a neighbourhood page, Google, or a shared link) | **Reports → Engagement → Pages and screens** → find `/portal/` in the list. That row's **Views** = page loads, **Active users** = people, **Average engagement time** = how long they stayed. | None — automatic. |
+| **"How many times did someone click a Book / appointment button?"** (anywhere on the site — homepage cards, the portal page's identical cards, or the nav "Book Now") | **Reports → Engagement → Events** → `book_click` row = total count. Click into it and look at the `label` breakdown (once registered, see section 4) to see *which* button — "Vaccinations," "Medication Review," "Book Now," etc. | `label` breakdown needs one-time custom-dimension registration (section 4). The raw count needs nothing. |
+| **"Of those Book clicks, how many happened on the dedicated Portal page vs. the homepage's booking section?"** | Same `book_click` report → click the **pencil icon** (top right of the table) → **Add secondary dimension** → choose **Page path and screen class**. The table now splits every row by `/` vs `/portal/` vs any other page. | None — "Page path" is a built-in dimension, no registration or waiting period. |
+
+**Why this works cleanly:** the Book buttons on `/portal/` and on the homepage's
+booking section fire the exact same `book_click` event with the exact same `label` —
+they're the same action, just reachable two ways. GA4 already tags every event with
+the page it happened on, so you never lose that detail; you just ask for it with the
+secondary-dimension step above instead of it cluttering the default view.
+
+**One thing that used to be confusing and is now fixed:** loading `/portal/` briefly
+also triggered a `section_view: booking` event — the *exact same* event GA4 fires
+when a homepage visitor scrolls down to the booking section. That made "people who
+scrolled to booking on the homepage" and "people who loaded the separate Portal page"
+look like the same number. `/portal/` no longer fires `section_view` at all (it isn't
+a section of a long scrolled page, it's its own destination) — so `section_view:
+booking` now means only one thing: *a homepage visitor scrolled to that section*.
+Portal-page reach is measured the clean way instead: its own `page_view` on `/portal/`.
+
+---
+
+## 10. A simple monthly routine
 
 1. **Reports → Engagement → Events**: note `book_click`, `phone_click`,
    `assessment_start` vs. last month. Up or down?
@@ -191,6 +243,28 @@ which traffic sources drive them, etc.
    a stronger hook or to move higher.
 4. **Language & neighbourhood pages**: getting page views? Driving any calls/bookings?
    If one is dead, the SEO for that area may need work.
+
+---
+
+## 11. Getting the numbers into a dashboard or your "second brain"
+
+The GA4 data does **not** flow anywhere automatically — GA is where it lives. Three
+ways to see it elsewhere, simplest first:
+
+1. **Manual (zero setup).** Once a month, open GA and copy the handful of numbers from
+   the routine in section 10 into your notes / Notion / spreadsheet. Best if you just
+   want a monthly pulse.
+2. **Live dashboard — Looker Studio (free, no code).** At **lookerstudio.google.com**,
+   create a report, "Add data" → **Google Analytics** → your property. Add charts for
+   the key events (`book_click`, `phone_click`, `assessment_start`), a table of
+   **Pages and screens** (to watch `/portal/`), and a `book_click`-by-`label` bar
+   chart. You get a live, shareable/bookmarkable dashboard that always reflects GA.
+3. **Raw data export — BigQuery.** GA4 → **Admin → BigQuery links** streams every raw
+   event to a database you can query yourself. Powerful but overkill unless you want
+   custom analysis. Only worth it later.
+
+*(These all read from GA; none of them change the site. I can write you a precise
+"what to add" spec for the Looker Studio dashboard whenever you want to build it.)*
 
 ---
 

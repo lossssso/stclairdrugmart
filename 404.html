@@ -60,7 +60,7 @@
   <meta name="robots" content="noindex" />
   <link rel="icon" type="image/png" href="/logo.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/fonts.css?v=1" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     a { text-decoration: none; }
@@ -329,20 +329,20 @@
 <body>
 
 <div class="sky-bg" aria-hidden="true">
-  <img src="/cloud2.webp" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="">
-  <img src="/cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="102" data-delay="-60" style="transform:translateX(45.9vw) scaleX(-1)" alt="">
-  <img src="/cloud2.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="122" data-delay="-85" style="transform:translateX(65.4vw) scaleX(-1)" alt="">
-  <img src="/cloud.png"  class="sky-bg-cloud" data-dur="96" data-delay="-12" style="transform:translateX(-37.5vw)" alt="">
-  <img src="/cloud2.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="116" data-delay="-40" style="transform:translateX(2.1vw) scaleX(-1)" alt="">
-  <img src="/cloud.png"  class="sky-bg-cloud" data-dur="128" data-delay="-18" style="transform:translateX(-34.7vw)" alt="">
-  <img src="/cloud2.webp" class="sky-bg-cloud" data-dur="110" data-delay="-72" style="transform:translateX(57.8vw)" alt="">
-  <img src="/cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="94" data-delay="-95" style="transform:translateX(-58.1vw) scaleX(-1)" alt="">
+  <img decoding="async" src="/cloud2b.webp" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="">
+  <img decoding="async" src="/cloudb.webp"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="102" data-delay="-60" style="transform:translateX(45.9vw) scaleX(-1)" alt="">
+  <img decoding="async" src="/cloud2b.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="122" data-delay="-85" style="transform:translateX(65.4vw) scaleX(-1)" alt="">
+  <img decoding="async" src="/cloudb.webp"  class="sky-bg-cloud" data-dur="96" data-delay="-12" style="transform:translateX(-37.5vw)" alt="">
+  <img decoding="async" src="/cloud2b.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="116" data-delay="-40" style="transform:translateX(2.1vw) scaleX(-1)" alt="">
+  <img decoding="async" src="/cloudb.webp"  class="sky-bg-cloud" data-dur="128" data-delay="-18" style="transform:translateX(-34.7vw)" alt="">
+  <img decoding="async" src="/cloud2b.webp" class="sky-bg-cloud" data-dur="110" data-delay="-72" style="transform:translateX(57.8vw)" alt="">
+  <img decoding="async" src="/cloudb.webp"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="94" data-delay="-95" style="transform:translateX(-58.1vw) scaleX(-1)" alt="">
 </div>
 
 <nav class="nav" id="nav">
   <div class="nav__inner">
     <a href="/" class="nav__brand">
-      <img src="/logo.png" alt="St. Clair Drug Mart Pharmacy" class="nav__brand__logo" />
+      <img src="/logo-340.webp" alt="St. Clair Drug Mart Pharmacy" class="nav__brand__logo" />
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
     <button class="nav__toggle" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
@@ -353,7 +353,7 @@
       <li class="nav__has-dropdown">
         <a href="/#services">Services</a>
         <ul class="nav__dropdown">
-          <li><a href="/portal.html">Patient Portal</a></li>
+          <li><a href="/portal/">Patient Portal</a></li>
           <li><a href="/#services">Ailment Assessment</a></li>
           <li><a href="/#services">Medication Reviews</a></li>
           <li><a href="/#services">Vaccinations</a></li>
@@ -387,7 +387,7 @@
 </nav>
 
 <div class="card">
-  <img src="/logo.png" alt="St. Clair Drug Mart Pharmacy" class="card__logo" />
+  <img src="/logo-340.webp" alt="St. Clair Drug Mart Pharmacy" class="card__logo" />
   <p class="card__eyebrow">St. Clair Drug Mart · Toronto</p>
   <div class="code">404</div>
   <h1>Page Not Found</h1>

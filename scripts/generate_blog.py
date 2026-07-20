@@ -363,8 +363,9 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
 
     schema = json.dumps({
         "@context": "https://schema.org",
-        "@type": "BlogPosting",
+        "@type": "Article",
         "headline": post["title"],
+        "image": post.get("image", f"{SITE_URL}/storefront_studio.webp"),
         "description": post["meta_description"],
         "datePublished": date_str,
         "dateModified": date_str,
@@ -388,7 +389,7 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
         "@type": "BreadcrumbList",
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{SITE_URL}/"},
-            {"@type": "ListItem", "position": 2, "name": "Blog", "item": f"{SITE_URL}/blog/index.html"},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": f"{SITE_URL}/blog/"},
             {"@type": "ListItem", "position": 3, "name": post["title"]},
         ],
     }, indent=2)

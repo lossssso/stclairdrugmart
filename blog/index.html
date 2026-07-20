@@ -12,7 +12,7 @@
   </script>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,viewport-fit=cover"/>
   <title>The Health Hub | St. Clair Drug Mart Pharmacy Blog, Toronto</title>
-  <meta name="description" content="Health tips, pharmacy news, and wellness advice from the team at St. Clair Drug Mart, a top-rated clinical pharmacy in Toronto, Ontario built around patient-centred care. Minor ailments, vaccines, medication guides, and more."/>
+  <meta name="description" content="Health tips and wellness advice from the pharmacists at St. Clair Drug Mart, Toronto: minor ailments, vaccines, medication guides and more."/>
   <meta name="author" content="St. Clair Drug Mart Pharmacy"/>
   <meta name="geo.region" content="CA-ON"/>
   <meta name="geo.placename" content="Corso Italia, St. Clair West, Toronto"/>
@@ -25,11 +25,11 @@
   <meta property="og:title" content="The Health Hub | St. Clair Drug Mart Pharmacy Blog, Toronto"/>
   <meta property="og:description" content="Health tips, pharmacy news, and wellness advice from a top-rated clinical pharmacy in Toronto, Ontario."/>
   <meta property="og:url" content="https://www.stclairdrugmart.ca/blog/"/>
-  <meta property="og:image" content="https://www.stclairdrugmart.ca/storefront_exterior.webp"/>
+  <meta property="og:image" content="https://www.stclairdrugmart.ca/storefront_studio.webp"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="The Health Hub | St. Clair Drug Mart Pharmacy Blog, Toronto"/>
   <meta name="twitter:description" content="Health tips, pharmacy news, and wellness advice from a top-rated clinical pharmacy in Toronto, Ontario."/>
-  <meta name="twitter:image" content="https://www.stclairdrugmart.ca/storefront_exterior.webp"/>
+  <meta name="twitter:image" content="https://www.stclairdrugmart.ca/storefront_studio.webp"/>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -57,9 +57,7 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"/>
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/fonts.css?v=1" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -264,6 +262,10 @@
 
     /* ── Posts grid ───────────────────────────────── */
     .posts-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
+    /* Static crawlable article links, shown until the JS cards render (and to no-JS visitors) */
+    .posts-static { grid-column:1 / -1; list-style:none; margin:0; padding:0; display:grid; gap:.6rem; }
+    .posts-static a { color:var(--teal-dark); font-weight:600; text-decoration:none; }
+    .posts-static a:hover { text-decoration:underline; }
     .post-card {
       border:1.5px solid transparent;
       background:
@@ -379,29 +381,29 @@
 <body>
 
 <div class="sky-bg" aria-hidden="true">
-  <img src="../cloud2.webp" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="">
-  <img src="../cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="102" data-delay="-60" style="transform:translateX(45.9vw) scaleX(-1)" alt="">
-  <img src="../cloud2.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="122" data-delay="-85" style="transform:translateX(65.4vw) scaleX(-1)" alt="">
-  <img src="../cloud.png"  class="sky-bg-cloud" data-dur="96" data-delay="-12" style="transform:translateX(-37.5vw)" alt="">
-  <img src="../cloud2.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="116" data-delay="-40" style="transform:translateX(2.1vw) scaleX(-1)" alt="">
-  <img src="../cloud.png"  class="sky-bg-cloud" data-dur="128" data-delay="-18" style="transform:translateX(-34.7vw)" alt="">
-  <img src="../cloud2.webp" class="sky-bg-cloud" data-dur="110" data-delay="-72" style="transform:translateX(57.8vw)" alt="">
-  <img src="../cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="94" data-delay="-95" style="transform:translateX(-58.1vw) scaleX(-1)" alt="">
+  <img decoding="async" src="../cloud2b.webp" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="">
+  <img decoding="async" src="../cloudb.webp"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="102" data-delay="-60" style="transform:translateX(45.9vw) scaleX(-1)" alt="">
+  <img decoding="async" src="../cloud2b.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="122" data-delay="-85" style="transform:translateX(65.4vw) scaleX(-1)" alt="">
+  <img decoding="async" src="../cloudb.webp"  class="sky-bg-cloud" data-dur="96" data-delay="-12" style="transform:translateX(-37.5vw)" alt="">
+  <img decoding="async" src="../cloud2b.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="116" data-delay="-40" style="transform:translateX(2.1vw) scaleX(-1)" alt="">
+  <img decoding="async" src="../cloudb.webp"  class="sky-bg-cloud" data-dur="128" data-delay="-18" style="transform:translateX(-34.7vw)" alt="">
+  <img decoding="async" src="../cloud2b.webp" class="sky-bg-cloud" data-dur="110" data-delay="-72" style="transform:translateX(57.8vw)" alt="">
+  <img decoding="async" src="../cloudb.webp"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="94" data-delay="-95" style="transform:translateX(-58.1vw) scaleX(-1)" alt="">
 </div>
 
 <!-- ── Navigation ──────────────────────────────────────────── -->
 <nav class="nav" id="nav">
   <div class="nav__clouds" aria-hidden="true">
-    <img src="../cloud2.webp" class="nav__cloud" data-dur="175" data-delay="-29" style="transform:translateX(-30.6vw)" alt="">
-    <img src="../cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="140" data-delay="-81" style="transform:translateX(44.7vw) scaleX(-1)" alt="">
-    <img src="../cloud2.webp" class="nav__cloud nav__cloud--flip" data-dur="165" data-delay="-126" style="transform:translateX(77.6vw) scaleX(-1)" alt="">
-    <img src="../cloud.png"  class="nav__cloud" data-dur="125" data-delay="-51" style="transform:translateX(13.8vw)" alt="">
-    <img src="../cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="150" data-delay="-102" style="transform:translateX(-8vw) scaleX(-1)" alt="">
-    <img src="../cloud2.webp" class="nav__cloud" data-dur="130" data-delay="0" style="transform:translateX(-60vw)" alt="">
+    <img decoding="async" src="../cloud2b.webp" class="nav__cloud" data-dur="175" data-delay="-29" style="transform:translateX(-30.6vw)" alt="">
+    <img decoding="async" src="../cloudb.webp"  class="nav__cloud nav__cloud--flip" data-dur="140" data-delay="-81" style="transform:translateX(44.7vw) scaleX(-1)" alt="">
+    <img decoding="async" src="../cloud2b.webp" class="nav__cloud nav__cloud--flip" data-dur="165" data-delay="-126" style="transform:translateX(77.6vw) scaleX(-1)" alt="">
+    <img decoding="async" src="../cloudb.webp"  class="nav__cloud" data-dur="125" data-delay="-51" style="transform:translateX(13.8vw)" alt="">
+    <img decoding="async" src="../cloudb.webp"  class="nav__cloud nav__cloud--flip" data-dur="150" data-delay="-102" style="transform:translateX(-8vw) scaleX(-1)" alt="">
+    <img decoding="async" src="../cloud2b.webp" class="nav__cloud" data-dur="130" data-delay="0" style="transform:translateX(-60vw)" alt="">
   </div>
   <div class="nav__inner">
     <a href="/#welcome" class="nav__brand">
-      <img src="../logo.png" alt="St. Clair Drug Mart Pharmacy" class="nav__brand__logo"/>
+      <img src="../logo-340.webp" alt="St. Clair Drug Mart Pharmacy" class="nav__brand__logo"/>
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
     <button class="nav__toggle" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
@@ -519,7 +521,19 @@
   <!-- All posts -->
   <div class="section-hd">All Articles</div>
   <div class="posts-grid" id="postsGrid">
-    <p class="blog-empty">Loading articles…</p>
+    <!-- Static, crawlable links to every article (progressive enhancement): search
+         engines and no-JS visitors get real <a href> links; the script replaces
+         this with the interactive cards once posts.json loads. Keep in sync with
+         blog/posts.json. -->
+    <ul class="posts-static">
+      <li><a href="posts/what-pharmacist-can-prescribe-ontario-2026.html">What Can a Pharmacist Prescribe in Ontario? 2026 Minor Ailments Guide</a></li>
+      <li><a href="posts/natural-health-products-guide.html">Vitamins, Probiotics &amp; Herbal Supplements: A Pharmacist's Guide to Natural Health Products</a></li>
+      <li><a href="posts/pink-eye-vs-allergies.html">Pink Eye vs. Allergies: How to Tell the Difference</a></li>
+      <li><a href="posts/pharmacy-vaccines-toronto-2026.html">What Vaccines Can You Get at a Toronto Pharmacy in 2026?</a></li>
+      <li><a href="posts/pharmacist-prescribe-uti-ontario.html">Can a Pharmacist Prescribe Antibiotics for a UTI in Ontario?</a></li>
+      <li><a href="posts/medication-review-what-to-expect.html">What Happens During a Medication Review at a Pharmacy?</a></li>
+      <li><a href="posts/transfer-prescription-toronto.html">How to Transfer Your Prescription to a New Pharmacy in Toronto</a></li>
+    </ul>
   </div>
 
 </main>

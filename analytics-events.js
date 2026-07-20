@@ -61,10 +61,19 @@
   var chatForm = document.getElementById('sdmChatForm');
   if (chatForm) chatForm.addEventListener('submit', function(){ ev('chat_question', {}); });
 
-  // Section reach — which parts of the page visitors actually see. Hash
-  // navigation (#services etc.) is NOT a pageview in GA4, so this fills the
-  // gap: one event per section per pageload.
-  if ('IntersectionObserver' in window) {
+  // Section reach — which parts of the ONE-PAGE HOMEPAGE visitors actually
+  // scroll to. Hash navigation (#services etc.) is NOT a pageview in GA4, so
+  // this fills the gap: one event per section per pageload.
+  //
+  // Standalone pages (data-page attr, e.g. /portal/) reuse homepage section
+  // markup/ids (id="booking") so their booking cards work, but they are NOT
+  // a scrolled-to section of a long page — they're their own destination,
+  // already measured cleanly by GA4's automatic page_view on /portal/. If we
+  // didn't skip this here, loading /portal/ would fire the exact same
+  // section_view:booking event as scrolling to #booking on the homepage,
+  // conflating "visited the Patient Portal page" with "scrolled through the
+  // homepage" in every report. See ANALYTICS-GUIDE.md.
+  if ('IntersectionObserver' in window && !document.documentElement.hasAttribute('data-page')) {
     // Fire when a section crosses the middle of the viewport, so it works
     // for tall sections too (a 40%-visible threshold never triggers on
     // sections taller than the screen).

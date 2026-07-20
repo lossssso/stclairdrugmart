@@ -85,6 +85,28 @@ next-actions list.
   PHIPA expects disclosed processors. Booking/patient data flows through
   `app.pharmassess.ca`.
 
+### Google Analytics — one-time dashboard setup (owner, ~10 min)
+_Full step-by-step lives in **`ANALYTICS-GUIDE.md`** (checklist at the top). These can
+only be done by you, logged into analytics.google.com — they're not code changes, and
+the tracking is already live and collecting regardless._
+- [ ] **Register custom dimensions** so events can be split by their detail
+  (`label`, `condition`, `search_term`, `results`, `section_id`, `network`,
+  `language`, `location`). → ANALYTICS-GUIDE.md §4.
+- [ ] **Mark key events (conversions):** `book_click`, `phone_click`,
+  `assessment_start`. → ANALYTICS-GUIDE.md §6.
+- [ ] *(Optional)* **Live dashboard / second brain** — Looker Studio, or copy monthly
+  numbers into your notes. → ANALYTICS-GUIDE.md §11. (Ask me for a build spec.)
+
+### SEO — after the Patient Portal / sitelinks work (owner, in Search Console)
+- [ ] In **Google Search Console**, resubmit `sitemap.xml` and "Request indexing" for
+  `/portal/` and `/blog/` (renamed to The Health Hub) to speed re-crawl.
+- [ ] Run `/portal/` through Google's **Rich Results Test** to confirm the new
+  WebPage/Breadcrumb/FAQ schema parses.
+- [ ] **Confirm the Organization-schema `sameAs` links.** Facebook, Instagram,
+  LinkedIn and UberEats are already wired in; give me your **Google Business Profile
+  URL** to add (it's the important missing one), and confirm the four socials are the
+  right handles.
+
 ### Marketing / front-of-store (owner + staff)
 - **Launch a Google review drive** — a QR counter card linking straight to your
   Google review page; ask every satisfied patient at pickup; aim for 2–3 new
@@ -112,6 +134,32 @@ next-actions list.
 - Optionally upgrade the blog bot model and add seasonal topic weighting.
 - Bump small inline **touch targets to ≥24 px** (footer phone/email, inline CTAs).
 - Optimize remaining storefront JPEGs to WebP (~150 K each). Low priority.
+
+## Deferred performance work (from the July 2026 SEO/perf audit)
+
+Status update (July 20): the big three are DONE — critical CSS is now inlined
+with `site.css` loading async on all six homepages + portal; the two Google
+Fonts are self-hosted (14 woff2 files in `/fonts/`, declared in site.css /
+post.css / fonts.css); and the seven storefront/gallery photos have 480px
+`srcset` variants for phones. Still open:
+
+- **De-duplicate the FAQ payload.** Each homepage ships the ~38 KB FAQ content
+  twice (visible `window.FAQS` block + static `#faq-schema-static` JSON-LD).
+  Decision: NOT doing it for now. The static schema block is deliberate (serves
+  no-JS crawlers and AI engines), gzip shrinks the duplication to ~8 KB on the
+  wire, and deriving one copy from the other adds fragility to a 6-language
+  sync process. Revisit only if page weight becomes a problem again.
+- **Clean-URL slugs return HTTP 404 first.** `/vaccines`, `/uti`, etc. work via
+  the 404.html JS router, but crawlers/no-JS clients see a 404 status. Fine
+  today (they're not in the sitemap); if you ever print them on flyers or use
+  them in ads, we need host-level 301 redirects instead.
+- **Google Business Profile URL for `sameAs`** — still the important missing
+  brand link (also listed in the Search Console section above).
+- Note for future CSS edits: the inline `<style id="critical-css">` block on
+  the six homepages + portal is GENERATED from site.css (above-the-fold rules).
+  After meaningful site.css changes, regenerate it (ask Claude: "regenerate the
+  critical CSS") — a stale block only affects the brief pre-load paint, the
+  final rendered page always follows site.css.
 
 ### Already done this session (for reference)
 - ✅ Deleted ~6 MB of unused images (`delivery_uber.jpeg`, `delivery_bag.jpeg`,
