@@ -77,37 +77,13 @@ marketing, and the dated dev fix list) lives in the Microbiome brain's `TASKS.md
 file keeps only the two detailed build-specs above plus the small dev and compliance backlog
 below, which are code specs a site-only session needs on hand.
 
-Owner and marketing items moved to the brain: GitHub `ANTHROPIC_API_KEY` secret, blog hero
-images, privacy-policy processor disclosure, Google review drive, respond-to-reviews within
-48h, complete the GBP, GA4 turn-on, and Search Console verify. To see them, ask the brain
-"what website tasks are open?" or open the dashboard Tasks tab and look for the `website` chip.
-
-### Still in this file — pending migration to the brain
-
-These owner tasks were added directly to the site repo and are not yet in the brain's `TASKS.md`.
-Keep them here until migrated; do not add NEW owner/marketing tasks here — put those in the brain.
-
-### Google Analytics — one-time dashboard setup (owner, ~10 min)
-_Full step-by-step lives in **`ANALYTICS-GUIDE.md`** (checklist at the top). These can
-only be done by you, logged into analytics.google.com — they're not code changes, and
-the tracking is already live and collecting regardless._
-- [ ] **Register custom dimensions** so events can be split by their detail
-  (`label`, `condition`, `search_term`, `results`, `section_id`, `network`,
-  `language`, `location`). → ANALYTICS-GUIDE.md §4.
-- [ ] **Mark key events (conversions):** `book_click`, `phone_click`,
-  `assessment_start`. → ANALYTICS-GUIDE.md §6.
-- [ ] *(Optional)* **Live dashboard / second brain** — Looker Studio, or copy monthly
-  numbers into your notes. → ANALYTICS-GUIDE.md §11. (Ask me for a build spec.)
-
-### SEO — after the Patient Portal / sitelinks work (owner, in Search Console)
-- [ ] In **Google Search Console**, resubmit `sitemap.xml` and "Request indexing" for
-  `/portal/` and `/blog/` (renamed to The Health Hub) to speed re-crawl.
-- [ ] Run `/portal/` through Google's **Rich Results Test** to confirm the new
-  WebPage/Breadcrumb/FAQ schema parses.
-- [ ] **Confirm the Organization-schema `sameAs` links.** Facebook, Instagram,
-  LinkedIn and UberEats are already wired in; give me your **Google Business Profile
-  URL** to add (it's the important missing one), and confirm the four socials are the
-  right handles.
+Owner and marketing items now live in the brain under the `website` tag: GitHub `ANTHROPIC_API_KEY`
+secret, blog hero images, privacy-policy processor disclosure, Google review drive, respond-to-reviews
+within 48h, complete the GBP, GA4 turn-on, GA4 custom dimensions + key events, Search Console verify +
+re-crawl (sitemap resubmit, request-indexing for `/portal/` & `/blog/`, Rich Results Test), and the
+Organization-schema `sameAs` / GBP-URL item. To see them, ask the brain "what website tasks are open?"
+or open the dashboard Tasks tab and look for the `website` chip. Do not add NEW owner/marketing/SEO tasks
+here — put them in the brain. (Full GA4 how-to still lives in `ANALYTICS-GUIDE.md`.)
 
 ## Site-dev polish backlog (low priority, not yet promoted to the brain)
 
@@ -138,7 +114,7 @@ post.css / fonts.css); and the seven storefront/gallery photos have 480px
   today (they're not in the sitemap); if you ever print them on flyers or use
   them in ads, we need host-level 301 redirects instead.
 - **Google Business Profile URL for `sameAs`** — still the important missing
-  brand link (also listed in the Search Console section above).
+  brand link (now tracked in the brain's `TASKS.md` under the `website` tag).
 - Note for future CSS edits: the inline `<style id="critical-css">` block on
   the six homepages + portal is GENERATED from site.css (above-the-fold rules).
   After meaningful site.css changes, regenerate it (ask Claude: "regenerate the
