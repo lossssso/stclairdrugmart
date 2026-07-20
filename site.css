@@ -1323,8 +1323,8 @@
     /* ── About + Gallery ──────────────────────────────── */
     #about {
       background:
-        url('cloud.png') no-repeat center top / contain,
-        url('cloud.png') no-repeat center bottom / contain,
+        url('cloudb.webp') no-repeat center top / contain,
+        url('cloudb.webp') no-repeat center bottom / contain,
         var(--teal-ice);
     }
     .about__text { max-width: 760px; }
@@ -1593,7 +1593,7 @@
     .alert-banner__close:hover { background: rgba(255,255,255,.15); color: var(--white); }
 
     /* ── New patients / Steps ─────────────────────── */
-    #new-patients { background: var(--teal-ice) url('cloud.png') no-repeat center bottom / contain; }
+    #new-patients { background: var(--teal-ice) url('cloudb.webp') no-repeat center bottom / contain; }
     .steps {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1876,7 +1876,7 @@
 
     /* ── Meet the Team ────────────────────────────── */
     #team {
-      background: var(--teal-ice) url('cloud.png') no-repeat center top / contain;
+      background: var(--teal-ice) url('cloudb.webp') no-repeat center top / contain;
       position: relative;
     }
     /* ── Team grid ── */
