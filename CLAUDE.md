@@ -12,6 +12,13 @@
 - Per-page inline data blocks (`window.FAQS`, `window.AILMENT_DB`, `window.SITE_INDEX_CORE`, `window.I18N`) carry each language's translations; site.js falls back to English when `window.I18N` is absent.
 - After editing a page's `window.FAQS`, regenerate its `#faq-schema-static` JSON-LD block from the translated data.
 
+## Duplicated content blocks (STANDING RULE)
+The 28-condition minor-ailment cards exist **twice on every homepage, on purpose** (owner decision, July 2026):
+1. Booking section: inside `#conditions-panel` (`data-triage-scope="portal"`, sections classed `portal-cat`).
+2. Services accordion: inside `#acc-ailments` (`data-triage-scope="main"`, sections classed `main-cat`).
+
+**Any add/edit/removal of an ailment card must be applied to BOTH copies**, and (per the mirror rule above) on index.html AND all five language pages: 12 copies total. The two copies deliberately differ slightly in description length (accordion versions are longer); keep each copy's style. The same cards also live on `portal/index.html` (English only), which is a copy of the booking section: update it too when the booking-section copy changes.
+
 ## Copy rules
 - No em-dashes anywhere in site copy.
 - Spanish/Portuguese/Turkish use formal address; Italian informal; French is fr-CA idiom (sans rendez-vous, feux sauvages, zona).
