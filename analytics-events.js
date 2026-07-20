@@ -41,7 +41,15 @@
     // Contact actions
     if (href.indexOf('tel:') === 0)      { ev('phone_click',      { location: txt(a) }); return; }
     if (href.indexOf('mailto:') === 0)   { ev('email_click',      {}); return; }
-    if (href.indexOf('google.com/maps') !== -1) { ev('directions_click', {}); return; }
+    // Reviews — separate "write a review" intent (the g.page/review or writereview
+    // links, and the badge) from directions. action:'write' is the one that matters
+    // for a review drive; action:'view' is opening our listing to read reviews.
+    if (href.indexOf('g.page') !== -1 || href.indexOf('writereview') !== -1 ||
+        (a.classList && a.classList.contains('reviews-google-badge'))) {
+      ev('review_click', { action: (href.indexOf('review') !== -1 || href.indexOf('g.page') !== -1) ? 'write' : 'view' });
+      return;
+    }
+    if (href.indexOf('google.com/maps') !== -1 || href.indexOf('maps.google.com') !== -1) { ev('directions_click', {}); return; }
     if (href.indexOf('ubereats.com') !== -1)    { ev('uber_click', {}); return; }
     if (href.indexOf('facebook.com') !== -1)  { ev('social_click', { network: 'facebook' }); return; }
     if (href.indexOf('instagram.com') !== -1) { ev('social_click', { network: 'instagram' }); return; }
