@@ -1606,6 +1606,11 @@
       .welcome__boxes { grid-template-columns: repeat(3, 1fr); }
       /* pa-card description, slightly smaller on mobile */
       .pa-card__desc { font-size: .75rem; }
+      /* Row 1 (Medication Review + Common Condition): reserve 3 lines of
+         description so the two cards stay equal height on mobile. Their copy
+         wraps to a different line count in the ~400px band (many Android
+         phones), which otherwise leaves one box taller than the other. */
+      .pa-cards--top .pa-card__desc { min-height: 4.2em; }
       .pa-cards--top { grid-template-columns: 1fr; }
       /* Medication Extensions & Adaptations gets its own full-width row
          (like the Row 1 cards) instead of sitting alone next to an empty
