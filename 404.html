@@ -40,12 +40,19 @@
   </script>
   <meta charset="UTF-8" />
   <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2YQ9FDLMCV"></script>
   <script>
+    /* GA4 — production host ONLY, so dev/preview traffic never pollutes the live property (2026-07-23). */
     window.dataLayer=window.dataLayer||[];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js',new Date());
-    gtag('config','G-2YQ9FDLMCV');
+    window.gtag=function(){dataLayer.push(arguments);};
+    if(location.hostname==='stclairdrugmart.ca'||location.hostname==='www.stclairdrugmart.ca'){
+      var _ga=document.createElement('script');_ga.async=true;
+      _ga.src='https://www.googletagmanager.com/gtag/js?id=G-2YQ9FDLMCV';
+      document.head.appendChild(_ga);
+      gtag('js',new Date());
+      gtag('config','G-2YQ9FDLMCV');
+    }else{
+      window.gtag=function(){};/* dev/preview: swallow every event, load nothing */
+    }
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Page Not Found — St. Clair Drug Mart Pharmacy</title>
