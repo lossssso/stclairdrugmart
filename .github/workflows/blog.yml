@@ -22,12 +22,10 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
-        run: pip install anthropic
-
       - name: Generate blog post
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Free Gemini key (owner: no paid API). Add it once as a repo secret named GEMINI_API_KEY.
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python scripts/generate_blog.py
 
       - name: Commit and push

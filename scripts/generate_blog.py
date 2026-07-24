@@ -6,16 +6,23 @@ Each topic targets real search queries patients type into Google.
 Posts are structured to rank for local pharmacy searches in Toronto.
 
 Usage:
-    ANTHROPIC_API_KEY=sk-... python scripts/generate_blog.py
+    GEMINI_API_KEY=AIza... python scripts/generate_blog.py
+
+Uses Google Gemini (free tier) — no paid API. Owner decision 2026-07-24: the
+weekly post rides the free Gemini key, not the metered Anthropic API. Pure
+stdlib (urllib) so the workflow needs no pip install.
 """
 
-import anthropic
 import datetime
 import json
 import os
 import re
 import random
+import urllib.request
 from pathlib import Path
+
+# Free-tier Gemini model; override with GEMINI_MODEL if needed.
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
 
 # ── Pharmacy details ───────────────────────────────────────────
 
@@ -198,7 +205,9 @@ def fmt_date(date_str: str) -> str:
 # ── Claude API call ────────────────────────────────────────────
 
 def generate_post(topic_desc: str, primary_kw: str, secondary_kws: list) -> dict:
-    client = anthropic.Anthropic()
+    api_key = os.environ.get("GEMINI_API_KEY", "").strip()
+    if not api_key:
+        raise RuntimeError("GEMINI_API_KEY is not set")
 
     secondary_list = ", ".join(f'"{kw}"' for kw in secondary_kws)
 
@@ -235,15 +244,37 @@ Return a single JSON object (no markdown fences) with these exact fields:
 - "reading_minutes": integer
 - "tags": 3–5 short tag strings"""
 
+    # Gemini's OpenAI-incompatible REST endpoint (same one Microbiome's tools/lib/gemini.mjs uses).
+    # responseMimeType=application/json asks for a bare JSON object; the fence-strip below is a backstop.
+    # maxOutputTokens is 4096 (not the old 2048) so a full ~580-word article + JSON can't truncate — a
+    # cut-off response is invalid JSON and would fail every run.
+    url = (
+        "https://generativelanguage.googleapis.com/v1beta/models/"
+        + GEMINI_MODEL + ":generateContent?key=" + api_key
+    )
+    payload = json.dumps({
+        "system_instruction": {"parts": [{"text": system}]},
+        "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+        "generationConfig": {
+            "maxOutputTokens": 4096,
+            "temperature": 0.7,
+            "responseMimeType": "application/json",
+        },
+    }).encode("utf-8")
+
     for attempt in range(2):
         try:
-            resp = client.messages.create(
-                model="claude-sonnet-4-6",
-                max_tokens=2048,
-                system=system,
-                messages=[{"role": "user", "content": prompt}],
+            req = urllib.request.Request(
+                url, data=payload, headers={"Content-Type": "application/json"}, method="POST"
             )
-            raw = resp.content[0].text.strip()
+            with urllib.request.urlopen(req, timeout=90) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+            cand = (data.get("candidates") or [{}])[0]
+            parts = ((cand.get("content") or {}).get("parts")) or []
+            raw = "".join(p.get("text", "") for p in parts).strip()
+            if not raw:
+                reason = cand.get("finishReason") or (data.get("promptFeedback") or {}).get("blockReason") or "empty response"
+                raise RuntimeError(f"Gemini returned no text ({reason})")
             raw = re.sub(r"^```[a-z]*\s*", "", raw)
             raw = re.sub(r"\s*```$", "", raw)
             return json.loads(raw)
