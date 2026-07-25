@@ -2580,8 +2580,15 @@ window.SmartMatch = (function(){
   fetch('https://api.open-meteo.com/v1/forecast?latitude=43.6532&longitude=-79.3832&current=temperature_2m,weather_code&timezone=America/Toronto')
     .then(function(r){ return r.json(); })
     .then(function(d){
-      tempEl.textContent = Math.round(d.current.temperature_2m) + '°C';
+      var t = d && d.current && d.current.temperature_2m;
+      if (typeof t !== 'number' || isNaN(t)) return;   // don't reveal a bad reading
+      tempEl.textContent = Math.round(t) + '°C';
       if (iconEl) iconEl.innerHTML = pick(d.current.weather_code);
+      // Only now is the chip worth showing: CSS keeps .hero__weather hidden
+      // until this class lands, so a failed or slow fetch shows nothing at all
+      // rather than a dangling "--°C".
+      var btn = document.getElementById('weather-btn');
+      if (btn) btn.classList.add('is-loaded');
     })
     .catch(function(){});
 })();

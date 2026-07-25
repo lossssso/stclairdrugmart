@@ -488,6 +488,15 @@
     }
     .hero__sub-phone { white-space: nowrap; }
     .hero__sub-phone::before { content: '·'; margin-right: .5rem; opacity: .6; }
+    /* Touch targets. Both links render ~25px tall from line-height alone, and the
+       phone number is a primary conversion path on a phone, so give them the 44px
+       minimum without changing the text size or the centred layout. */
+    @media (max-width: 768px) {
+      .hero__sub-addr, .hero__sub-phone {
+        display: inline-flex; align-items: center; justify-content: center;
+        min-height: 44px; padding: 0 .25rem;
+      }
+    }
     @media (max-width: 480px) {
       .hero__sub-phone { flex-basis: 100%; text-align: center; }
       .hero__sub-phone::before { content: none; }
@@ -507,7 +516,15 @@
     .hero__socials a:hover { background: rgba(0,115,124,.18); transform: translateY(-2px); }
     .hero__socials svg { width: 20px; height: 20px; fill: var(--teal-deeper); color: var(--teal-deeper); }
     .hero__socials .uber-word { width: 30px; height: auto; object-fit: contain; }
+    /* Hidden until site.js confirms a real reading. The markup ships a "--°C"
+       placeholder and the open-meteo fetch can fail (offline, blocked, slow),
+       which otherwise leaves a chip permanently reading "--°C". Absent JS the
+       chip simply never appears, which is the right degradation for decoration. */
     .hero__weather { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; width: auto !important; height: 42px; padding: 0 1rem; border-radius: 42px !important; background: rgba(0,115,124,.09); border: 1.5px solid rgba(0,115,124,.24); font-size: .82rem; font-weight: 600; color: var(--teal-deeper); text-decoration: none; transition: background .15s, transform .15s; white-space: nowrap; flex-shrink: 0; }
+    /* :not() rather than a plain .hero__weather rule: the chip is an <a> inside
+       .hero__socials, so `.hero__socials a { display: flex }` (0,1,1) outranks a
+       bare `.hero__weather` (0,1,0) and the chip would never hide. */
+    .hero__weather:not(.is-loaded) { display: none; }
     .hero__weather:hover { background: rgba(0,115,124,.18); transform: translateY(-2px); }
     #weather-icon { display: inline-flex; align-items: center; line-height: 0; }
     #weather-temp { font-size: .82rem; font-weight: 700; }
@@ -765,8 +782,11 @@
        body AND tail as one shape. So the whole pill reads as one cohesive
        object and highlights together on hover, with no seam between bubble and
        tail. */
-    .welcome__pill { position: relative; display: flex; align-items: center; justify-content: center; text-align: center; gap: .4rem; background: var(--teal-ice); border-radius: 14px; padding: .6rem 1rem; min-height: 44px; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; line-height: 1.3; filter: drop-shadow(0 1px 1.5px rgba(17,94,89,.20)); transition: background .15s, color .15s, transform .12s, filter .15s; }
-    .welcome__pill::after { content: ''; position: absolute; top: 100%; left: 26px; margin-top: -3px; width: 0; height: 0; border-style: solid; border-width: 15px 11px 0 11px; border-color: var(--teal-ice) transparent transparent transparent; transition: border-color .15s; }
+    .welcome__pill { position: relative; display: flex; align-items: center; justify-content: center; text-align: center; gap: .4rem; background: var(--teal-ice); border-radius: 14px; padding: .6rem 1rem; min-height: 44px; font-size: .84rem; font-weight: 700; color: var(--teal-dark); text-decoration: none; line-height: 1.3; filter: drop-shadow(0 1px 1.5px rgba(17,94,89,.20)); transition: background .2s ease-out, color .2s ease-out, transform .2s ease-out, filter .2s ease-out; }
+    /* left:30px keeps the tail's 22px base (19px-41px) clear of the 14px corner
+       radius, so it meets the straight part of the bottom edge; -5px pulls it up
+       into the body so the two fills overlap and never show a hairline seam. */
+    .welcome__pill::after { content: ''; position: absolute; top: 100%; left: 30px; margin-top: -5px; width: 0; height: 0; border-style: solid; border-width: 15px 11px 0 11px; border-color: var(--teal-ice) transparent transparent transparent; transition: border-color .2s ease-out; }
     .welcome__pill:hover { background: var(--teal-bright); color: #fff; filter: drop-shadow(0 4px 10px rgba(33,161,168,.32)); }
     .welcome__pill:hover::after { border-top-color: var(--teal-bright); }
     .welcome__boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-top: 2.25rem; }
@@ -1612,10 +1632,17 @@
          phones), which otherwise leaves one box taller than the other. */
       .pa-cards--top .pa-card__desc { min-height: 4.2em; }
       .pa-cards--top { grid-template-columns: 1fr; }
-      /* Medication Extensions & Adaptations gets its own full-width row
-         (like the Row 1 cards) instead of sitting alone next to an empty
-         cell after Smoking Cessation/Naloxone wrap to a 5th, odd row. */
-      #pa-card-medext { grid-column: 1 / -1; }
+      /* Booking row on phones: flex with `flex: 0 1 210px` never grows, so the
+         five cards rendered as centred ~210px squares while the utility row
+         below them (a real grid at 1fr) went full width. Switch to a grid so the
+         cards actually fill the column. Vaccinations + Point of Care Testing
+         pair up on row 1; Medication Extensions, Smoking Cessation and Naloxone
+         each take a full-width row. DOM order already matches this.
+         NOTE: this supersedes a `#pa-card-medext { grid-column: 1/-1 }` rule
+         that used to sit here and never did anything, because grid-column is
+         inert in a flex container. */
+      .pa-cards--book { display: grid; grid-template-columns: 1fr 1fr; }
+      #pa-card-medext, #pa-card-cessation, #pa-card-naloxone { grid-column: 1 / -1; }
     }
     @media (max-width: 480px) {
       .find-us__partner-logos img { height: 46px; width: 46px; }
@@ -2405,6 +2432,14 @@
     .dc-chip button:hover { background: var(--teal-dark); }
     .dc-actions { display: flex; gap: .6rem; margin-top: 1.25rem; flex-wrap: wrap; }
     .dc-actions .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+    /* On phones these wrap to their own lines and sat at three different widths
+       (Add 320px, Check Interactions 257px, Clear 119px), all left-aligned, which
+       read as a ragged stack. Make them fill the column like the Add button. */
+    @media (max-width: 480px) {
+      .dc-actions { flex-direction: column; }
+      /* min-height because the shared .btn lands at 43px, 1px under the touch minimum */
+      .dc-actions .btn { width: 100%; min-height: 44px; justify-content: center; text-align: center; }
+    }
     .dc-results { margin-top: 1.5rem; display: none; }
     .dc-results.open { display: block; }
     .dc-result {
@@ -2641,6 +2676,11 @@
     }
     .faq-cat-pill:hover { background: rgba(255,255,255,.16); }
     .faq-cat-pill.active { background: var(--teal-bright); border-color: var(--teal-bright); color: #00282c; }
+    /* 31px from padding alone; raise to the 44px touch minimum on phones only, so
+       the desktop filter bar keeps its slimmer proportions. */
+    @media (max-width: 768px) {
+      .faq-cat-pill { display: inline-flex; align-items: center; min-height: 44px; }
+    }
     .faq-cat__hd {
       font-size: .76rem; font-weight: 900; color: rgba(255,255,255,.88); text-transform: uppercase;
       letter-spacing: .06em; padding: .35rem .7rem; background: rgba(255,255,255,.1); border-radius: 6px;
@@ -2943,17 +2983,41 @@
     @media (hover: hover) and (pointer: fine) {
       .welcome-box, .pa-card, .step--clickable, .info-strip__card, .blog-card,
       .rx-ext, .shop__card, .ailment-card, .medscheck-card,
-      .vaccine-card, .insurance-card, .poct-card, .welcome__pill {
+      .vaccine-card, .insurance-card, .poct-card {
         transition: transform .2s ease-out, box-shadow .3s ease, filter .2s ease;
       }
       .welcome-box:hover, .pa-card:hover, .step--clickable:hover, .info-strip__card:hover,
       .blog-card:hover, .rx-ext:hover, .shop__card:hover,
       .ailment-card:hover, .medscheck-card:hover, .vaccine-card:hover,
-      .insurance-card:hover, .poct-card:hover, .welcome__pill:hover {
+      .insurance-card:hover, .poct-card:hover {
         transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-6px) scale(1.02);
         box-shadow: 0 18px 40px rgba(0,80,90,.18), 0 6px 14px rgba(0,80,90,.10);
         z-index: 2;
       }
+      /* The chat pill is deliberately NOT in the lists above. A box-shadow
+         traces the border box only, so on a bubble it draws a hard rounded-rect
+         edge across the tail's base and the pill reads as a triangle glued to a
+         box. The pill lifts with the same motion but keeps ONE shadow system,
+         filter: drop-shadow(), which wraps element + ::after tail as a single
+         silhouette. Fill, text and shadow share one duration so body and tail
+         highlight together instead of the tail lagging behind. */
+      /* Plain class specificity on purpose. While the pills are still staggering
+         in, `.tw-enabled .reveal-group--chat:not(.tw-done) > *` (0,3,0) owns their
+         transition and hands it back when JS adds .tw-done (~1.8s) -- see
+         finishGroup() in site.js. Out-specifying that rule to control hover timing
+         during the reveal also steals `opacity` and the springy pop curve from the
+         reveal itself, which flattens the animation. The reveal owning the first
+         ~1.8s is deliberate and applies to every card on the site, so leave it. */
+      .welcome__pill {
+        transition: background .2s ease-out, color .2s ease-out,
+                    filter .2s ease-out, transform .2s ease-out;
+      }
+      .welcome__pill:hover {
+        transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-6px) scale(1.02);
+        filter: drop-shadow(0 10px 18px rgba(33,161,168,.30)) drop-shadow(0 3px 6px rgba(17,94,89,.16));
+        z-index: 2;
+      }
+      .welcome__pill::after { transition: border-color .2s ease-out; }
     }
     @media (prefers-reduced-motion: reduce) {
       .welcome-box:hover, .pa-card:hover, .step--clickable:hover, .info-strip__card:hover,
