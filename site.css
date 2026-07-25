@@ -1762,6 +1762,9 @@
       border: 1.5px solid var(--border);
       padding: 1.25rem 1.1rem;
       display: flex; flex-direction: column; gap: .4rem;
+      /* The whole card opens the booking CTA (see "Clickable naloxone cards" in
+         site.js), matching how .ailment-card and .medscheck-card behave. */
+      cursor: pointer;
     }
     .naloxone-card__icon { font-size: 1.45rem; line-height: 1; }
     .naloxone-card__title {
@@ -2933,13 +2936,13 @@
     @media (hover: none) {
       .welcome-box, .pa-card, .step--clickable, .info-strip__card, .blog-card,
       .rx-ext, .shop__card, .ailment-card, .medscheck-card,
-      .vaccine-card, .insurance-card, .poct-card, .welcome__pill, .btn {
+      .vaccine-card, .insurance-card, .poct-card, .naloxone-card, .welcome__pill, .btn {
         transition: transform .15s ease;
       }
       .welcome-box:active, .pa-card:active, .step--clickable:active, .info-strip__card:active,
       .blog-card:active, .rx-ext:active, .shop__card:active,
       .ailment-card:active, .medscheck-card:active, .vaccine-card:active,
-      .insurance-card:active, .poct-card:active, .welcome__pill:active, .btn:active {
+      .insurance-card:active, .poct-card:active, .naloxone-card:active, .welcome__pill:active, .btn:active {
         transform: scale(.965);
       }
     }
@@ -2970,7 +2973,7 @@
       .welcome-box:active, .pa-card:active, .step--clickable:active, .info-strip__card:active,
       .blog-card:active, .rx-ext:active, .shop__card:active,
       .ailment-card:active, .medscheck-card:active, .vaccine-card:active,
-      .insurance-card:active, .poct-card:active, .welcome__pill:active, .btn:active {
+      .insurance-card:active, .poct-card:active, .naloxone-card:active, .welcome__pill:active, .btn:active {
         transform: none;
       }
     }
@@ -2983,13 +2986,13 @@
     @media (hover: hover) and (pointer: fine) {
       .welcome-box, .pa-card, .step--clickable, .info-strip__card, .blog-card,
       .rx-ext, .shop__card, .ailment-card, .medscheck-card,
-      .vaccine-card, .insurance-card, .poct-card {
+      .vaccine-card, .insurance-card, .poct-card, .naloxone-card {
         transition: transform .2s ease-out, box-shadow .3s ease, filter .2s ease;
       }
       .welcome-box:hover, .pa-card:hover, .step--clickable:hover, .info-strip__card:hover,
       .blog-card:hover, .rx-ext:hover, .shop__card:hover,
       .ailment-card:hover, .medscheck-card:hover, .vaccine-card:hover,
-      .insurance-card:hover, .poct-card:hover {
+      .insurance-card:hover, .poct-card:hover, .naloxone-card:hover {
         transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-6px) scale(1.02);
         box-shadow: 0 18px 40px rgba(0,80,90,.18), 0 6px 14px rgba(0,80,90,.10);
         z-index: 2;
@@ -3023,7 +3026,7 @@
       .welcome-box:hover, .pa-card:hover, .step--clickable:hover, .info-strip__card:hover,
       .blog-card:hover, .rx-ext:hover, .shop__card:hover,
       .ailment-card:hover, .medscheck-card:hover, .vaccine-card:hover,
-      .insurance-card:hover, .poct-card:hover, .welcome__pill:hover { transform: none; }
+      .insurance-card:hover, .poct-card:hover, .naloxone-card:hover, .welcome__pill:hover { transform: none; }
     }
 
     /* ── Instant-answers chat panel ──────────────────────

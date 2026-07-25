@@ -2532,6 +2532,19 @@ window.SmartMatch = (function(){
     });
   });
 
+  // ── Clickable naloxone cards ──────────────────────────────
+  // These three cards carry no booking link of their own (only card 3 has a
+  // tel: link), so forward to the accordion's own booking CTA instead of an
+  // inner link. The closest('a') guard keeps that phone number working.
+  document.querySelectorAll('.naloxone-card').forEach(function(card) {
+    card.addEventListener('click', function(e) {
+      if (e.target.closest('a')) return;
+      var body = card.closest('.svc-acc__body');
+      var cta = body && body.querySelector('.js-pa-select');
+      if (cta) cta.click();
+    });
+  });
+
 (function(){
   if (!window.FAQS || !window.FAQS.length) return;
   var entities = window.FAQS.map(function(faq){
