@@ -300,14 +300,14 @@ Return a single JSON object (no markdown fences) with these exact fields:
 def sky_bg_html(depth: int) -> str:
     p = "../" * depth
     return f"""<div class="sky-bg" aria-hidden="true">
-  <img src="{p}cloud2.webp" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="">
-  <img src="{p}cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="102" data-delay="-60" style="transform:translateX(45.9vw) scaleX(-1)" alt="">
-  <img src="{p}cloud2.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="122" data-delay="-85" style="transform:translateX(65.4vw) scaleX(-1)" alt="">
-  <img src="{p}cloud.png"  class="sky-bg-cloud" data-dur="96" data-delay="-12" style="transform:translateX(-37.5vw)" alt="">
-  <img src="{p}cloud2.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="116" data-delay="-40" style="transform:translateX(2.1vw) scaleX(-1)" alt="">
-  <img src="{p}cloud.png"  class="sky-bg-cloud" data-dur="128" data-delay="-18" style="transform:translateX(-34.7vw)" alt="">
-  <img src="{p}cloud2.webp" class="sky-bg-cloud" data-dur="110" data-delay="-72" style="transform:translateX(57.8vw)" alt="">
-  <img src="{p}cloud.png"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="94" data-delay="-95" style="transform:translateX(-58.1vw) scaleX(-1)" alt="">
+  <img src="{p}cloud2b.webp" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="">
+  <img src="{p}cloudb.webp"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="102" data-delay="-60" style="transform:translateX(45.9vw) scaleX(-1)" alt="">
+  <img src="{p}cloud2b.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="122" data-delay="-85" style="transform:translateX(65.4vw) scaleX(-1)" alt="">
+  <img src="{p}cloudb.webp"  class="sky-bg-cloud" data-dur="96" data-delay="-12" style="transform:translateX(-37.5vw)" alt="">
+  <img src="{p}cloud2b.webp" class="sky-bg-cloud sky-bg-cloud--flip" data-dur="116" data-delay="-40" style="transform:translateX(2.1vw) scaleX(-1)" alt="">
+  <img src="{p}cloudb.webp"  class="sky-bg-cloud" data-dur="128" data-delay="-18" style="transform:translateX(-34.7vw)" alt="">
+  <img src="{p}cloud2b.webp" class="sky-bg-cloud" data-dur="110" data-delay="-72" style="transform:translateX(57.8vw)" alt="">
+  <img src="{p}cloudb.webp"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="94" data-delay="-95" style="transform:translateX(-58.1vw) scaleX(-1)" alt="">
 </div>"""
 
 
@@ -316,12 +316,12 @@ def nav_html(depth: int = 1) -> str:
     blog_href = "index.html" if depth == 1 else "../index.html"
     return f"""<nav class="nav" id="nav">
   <div class="nav__clouds" aria-hidden="true">
-    <img src="{p}cloud2.webp" class="nav__cloud" data-dur="175" data-delay="-29" style="transform:translateX(-30.6vw)" alt="">
-    <img src="{p}cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="140" data-delay="-81" style="transform:translateX(44.7vw) scaleX(-1)" alt="">
-    <img src="{p}cloud2.webp" class="nav__cloud nav__cloud--flip" data-dur="165" data-delay="-126" style="transform:translateX(77.6vw) scaleX(-1)" alt="">
-    <img src="{p}cloud.png"  class="nav__cloud" data-dur="125" data-delay="-51" style="transform:translateX(13.8vw)" alt="">
-    <img src="{p}cloud.png"  class="nav__cloud nav__cloud--flip" data-dur="150" data-delay="-102" style="transform:translateX(-8vw) scaleX(-1)" alt="">
-    <img src="{p}cloud2.webp" class="nav__cloud" data-dur="130" data-delay="0" style="transform:translateX(-60vw)" alt="">
+    <img src="{p}cloud2b.webp" class="nav__cloud" data-dur="175" data-delay="-29" style="transform:translateX(-30.6vw)" alt="">
+    <img src="{p}cloudb.webp"  class="nav__cloud nav__cloud--flip" data-dur="140" data-delay="-81" style="transform:translateX(44.7vw) scaleX(-1)" alt="">
+    <img src="{p}cloud2b.webp" class="nav__cloud nav__cloud--flip" data-dur="165" data-delay="-126" style="transform:translateX(77.6vw) scaleX(-1)" alt="">
+    <img src="{p}cloudb.webp"  class="nav__cloud" data-dur="125" data-delay="-51" style="transform:translateX(13.8vw)" alt="">
+    <img src="{p}cloudb.webp"  class="nav__cloud nav__cloud--flip" data-dur="150" data-delay="-102" style="transform:translateX(-8vw) scaleX(-1)" alt="">
+    <img src="{p}cloud2b.webp" class="nav__cloud" data-dur="130" data-delay="0" style="transform:translateX(-60vw)" alt="">
   </div>
   <div class="nav__inner">
     <a href="{p}index.html#welcome" class="nav__brand">
@@ -582,7 +582,23 @@ def main():
 
     POSTS_DIR.mkdir(parents=True, exist_ok=True)
     post_file = POSTS_DIR / filename
-    post_file.write_text(build_post_page(post_data, date_str, primary_kw, filename))
+    html = build_post_page(post_data, date_str, primary_kw, filename)
+
+    # The sky-bg / cloud-nav markup above is a HAND-COPY of the site's, so a site-wide asset rename
+    # silently leaves this generator pointing at deleted files. That happened: cloud.png / cloud2.webp
+    # became cloudb.webp / cloud2b.webp everywhere else, every hand-written page got swept, and this
+    # script did not — so the 2026-08-03 post shipped with all 14 clouds 404ing. Nothing caught it,
+    # because a broken <img> still lays out its box: the page reads "glitched", not obviously broken.
+    # Verify every relative asset the page references actually resolves, and fail the run rather than
+    # publish rubble. Fragments/queries stripped; only local relative refs are checked.
+    missing = sorted({
+        ref for ref in re.findall(r'(?:src|href)="((?:\.\./)+[^"]+)"', html)
+        if not (POSTS_DIR / re.sub(r'[?#].*$', '', ref)).exists()
+    })
+    if missing:
+        raise RuntimeError("post references files that do not exist: " + ", ".join(missing))
+
+    post_file.write_text(html)
     print(f"Written         : {post_file.relative_to(ROOT)}")
 
     posts.append({
