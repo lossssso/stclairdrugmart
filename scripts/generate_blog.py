@@ -21,8 +21,16 @@ import random
 import urllib.request
 from pathlib import Path
 
-# Free-tier Gemini model; override with GEMINI_MODEL if needed.
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+# Google retires pinned model ids out from under keys that already worked — gemini-2.5-flash started
+# returning 404 "no longer available to new users" and every weekly run since 2026-07-06 died on it.
+# So try a CHAIN, not one id: a 404 rolls to the next model instead of retrying the corpse. Lite first
+# is not a compromise — 500 req/day vs 20 on the free tier, and no thinking tokens to eat the JSON
+# budget. Same order Microbiome's tools/lib/gemini.mjs settled on. GEMINI_MODEL still pins one.
+GEMINI_MODELS = [os.environ["GEMINI_MODEL"]] if os.environ.get("GEMINI_MODEL") else [
+    "gemini-3.5-flash-lite",
+    "gemini-flash-lite-latest",
+    "gemini-flash-latest",
+]
 
 # ── Pharmacy details ───────────────────────────────────────────
 
@@ -248,10 +256,6 @@ Return a single JSON object (no markdown fences) with these exact fields:
     # responseMimeType=application/json asks for a bare JSON object; the fence-strip below is a backstop.
     # maxOutputTokens is 4096 (not the old 2048) so a full ~580-word article + JSON can't truncate — a
     # cut-off response is invalid JSON and would fail every run.
-    url = (
-        "https://generativelanguage.googleapis.com/v1beta/models/"
-        + GEMINI_MODEL + ":generateContent?key=" + api_key
-    )
     payload = json.dumps({
         "system_instruction": {"parts": [{"text": system}]},
         "contents": [{"role": "user", "parts": [{"text": prompt}]}],
@@ -262,7 +266,12 @@ Return a single JSON object (no markdown fences) with these exact fields:
         },
     }).encode("utf-8")
 
-    for attempt in range(2):
+    last = len(GEMINI_MODELS) - 1
+    for attempt, model in enumerate(GEMINI_MODELS):
+        url = (
+            "https://generativelanguage.googleapis.com/v1beta/models/"
+            + model + ":generateContent?key=" + api_key
+        )
         try:
             req = urllib.request.Request(
                 url, data=payload, headers={"Content-Type": "application/json"}, method="POST"
@@ -279,9 +288,9 @@ Return a single JSON object (no markdown fences) with these exact fields:
             raw = re.sub(r"\s*```$", "", raw)
             return json.loads(raw)
         except Exception as exc:
-            if attempt == 1:
-                raise RuntimeError(f"Failed after 2 attempts: {exc}") from exc
-            print(f"Attempt {attempt + 1} failed ({exc}), retrying…")
+            if attempt == last:
+                raise RuntimeError(f"All {len(GEMINI_MODELS)} models failed, last {model}: {exc}") from exc
+            print(f"{model} failed ({exc}), trying {GEMINI_MODELS[attempt + 1]}…")
 
 # ── Shared sky-bg / cloud-nav fragments (same base as the rest of the site) ──
 # `depth` is how many directories below the site root the page lives in:
