@@ -5,7 +5,9 @@
     "date": "2026-06-15",
     "dateLabel": "June 15, 2026",
     "excerpt": "Yes, Ontario pharmacists can assess and prescribe antibiotics for an uncomplicated UTI, no doctor's appointment needed. Here's how it works and when to see a physician instead.",
-    "tags": ["Minor Ailments"],
+    "tags": [
+      "Minor Ailments"
+    ],
     "readTime": "5 min read"
   },
   {
@@ -14,7 +16,9 @@
     "date": "2026-06-10",
     "dateLabel": "June 10, 2026",
     "excerpt": "Flu, COVID-19, shingles, pneumococcal, RSV, Tdap and travel vaccines: the full 2026 list, who's eligible, and which are free with your Ontario health card.",
-    "tags": ["Vaccines"],
+    "tags": [
+      "Vaccines"
+    ],
     "readTime": "6 min read"
   },
   {
@@ -23,7 +27,9 @@
     "date": "2026-06-05",
     "dateLabel": "June 5, 2026",
     "excerpt": "Switching pharmacies is easier than you think. We contact your old pharmacy for you, most transfers take about 15 minutes. No paperwork, no hassle.",
-    "tags": ["Getting Started"],
+    "tags": [
+      "Getting Started"
+    ],
     "readTime": "4 min read"
   },
   {
@@ -32,7 +38,9 @@
     "date": "2026-06-18",
     "dateLabel": "June 18, 2026",
     "excerpt": "Both cause red, watery eyes, but the treatment is completely different. Our pharmacist breaks down the key signs so you don't end up with the wrong drops.",
-    "tags": ["Minor Ailments"],
+    "tags": [
+      "Minor Ailments"
+    ],
     "readTime": "4 min read"
   },
   {
@@ -41,7 +49,9 @@
     "date": "2026-06-20",
     "dateLabel": "June 20, 2026",
     "excerpt": "Ontario pharmacists can now assess and treat 28 common conditions, from UTIs and yeast infections to pink eye and tick bites, without a doctor's referral. Here's the full list.",
-    "tags": ["Minor Ailments"],
+    "tags": [
+      "Minor Ailments"
+    ],
     "readTime": "7 min read"
   },
   {
@@ -50,7 +60,9 @@
     "date": "2026-06-01",
     "dateLabel": "June 1, 2026",
     "excerpt": "If you take 3 or more medications, a MedsCheck review can uncover interactions, reduce side effects, and simplify your routine, covered by OHIP at most Ontario pharmacies.",
-    "tags": ["Medication"],
+    "tags": [
+      "Medication"
+    ],
     "readTime": "5 min read"
   },
   {
@@ -59,7 +71,25 @@
     "date": "2026-06-26",
     "dateLabel": "June 26, 2026",
     "excerpt": "Vitamins, minerals, probiotics, and herbal remedies can interact with your prescriptions more than you'd think. Here's what to check before you start one.",
-    "tags": ["Natural Health Products"],
+    "tags": [
+      "Natural Health Products"
+    ],
     "readTime": "6 min read"
+  },
+  {
+    "title": "Seniors Pharmacy Toronto Medication Safety: Protect Loved Ones",
+    "excerpt": "Discover essential tips for seniors pharmacy Toronto medication safety, including blister packs, medication reviews, and fall prevention strategies.",
+    "date": "2026-08-03",
+    "slug": "2026-08-03-seniors-pharmacy-toronto-medication-safety-protect-love",
+    "tags": [
+      "medication safety",
+      "seniors health",
+      "blister packs",
+      "fall prevention",
+      "Toronto pharmacy"
+    ],
+    "reading_minutes": 3,
+    "primary_keyword": "seniors pharmacy Toronto medication safety",
+    "topic": "medication safety for seniors in Toronto \u2014 blister packs, reviews, and fall prevention"
   }
 ]
