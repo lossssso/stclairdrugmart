@@ -27,3 +27,14 @@
 /home / 301
 /book-appointment /portal/ 301
 /book-appointment/* /portal/ 301
+
+# Legacy URL catchers, previously tiny noindexed HTML stub pages that
+# JS-redirected. Now proper 301s (and the stub files are deleted).
+# /portal without the trailing slash used to serve the stale portal.html
+# stub; the explicit rule sends it to the real portal page.
+/contact /#contact 301
+/contact/* /#contact 301
+/find-us /#contact 301
+/find-us/* /#contact 301
+/portal.html /portal/ 301
+/portal /portal/ 301
