@@ -428,7 +428,7 @@
         <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
         <ul class="nav__dropdown">
           <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Order on Uber</a></li>
-          <li><a href="../braces-supports.html">Braces &amp; Supports</a></li>
+          <li><a href="/braces-supports">Braces &amp; Supports</a></li>
         </ul>
       </li>
       <li><a href="/blog/" class="active" aria-current="page">Blog</a></li>
@@ -526,13 +526,13 @@
          this with the interactive cards once posts.json loads. Keep in sync with
          blog/posts.json. -->
     <ul class="posts-static">
-      <li><a href="posts/what-pharmacist-can-prescribe-ontario-2026.html">What Can a Pharmacist Prescribe in Ontario? 2026 Minor Ailments Guide</a></li>
-      <li><a href="posts/natural-health-products-guide.html">Vitamins, Probiotics &amp; Herbal Supplements: A Pharmacist's Guide to Natural Health Products</a></li>
-      <li><a href="posts/pink-eye-vs-allergies.html">Pink Eye vs. Allergies: How to Tell the Difference</a></li>
-      <li><a href="posts/pharmacy-vaccines-toronto-2026.html">What Vaccines Can You Get at a Toronto Pharmacy in 2026?</a></li>
-      <li><a href="posts/pharmacist-prescribe-uti-ontario.html">Can a Pharmacist Prescribe Antibiotics for a UTI in Ontario?</a></li>
-      <li><a href="posts/medication-review-what-to-expect.html">What Happens During a Medication Review at a Pharmacy?</a></li>
-      <li><a href="posts/transfer-prescription-toronto.html">How to Transfer Your Prescription to a New Pharmacy in Toronto</a></li>
+      <li><a href="posts/what-pharmacist-can-prescribe-ontario-2026">What Can a Pharmacist Prescribe in Ontario? 2026 Minor Ailments Guide</a></li>
+      <li><a href="posts/natural-health-products-guide">Vitamins, Probiotics &amp; Herbal Supplements: A Pharmacist's Guide to Natural Health Products</a></li>
+      <li><a href="posts/pink-eye-vs-allergies">Pink Eye vs. Allergies: How to Tell the Difference</a></li>
+      <li><a href="posts/pharmacy-vaccines-toronto-2026">What Vaccines Can You Get at a Toronto Pharmacy in 2026?</a></li>
+      <li><a href="posts/pharmacist-prescribe-uti-ontario">Can a Pharmacist Prescribe Antibiotics for a UTI in Ontario?</a></li>
+      <li><a href="posts/medication-review-what-to-expect">What Happens During a Medication Review at a Pharmacy?</a></li>
+      <li><a href="posts/transfer-prescription-toronto">How to Transfer Your Prescription to a New Pharmacy in Toronto</a></li>
     </ul>
   </div>
 
@@ -608,7 +608,7 @@
   }
 
   function renderFeatured(post){
-    var url = 'posts/' + post.slug + '.html';
+    var url = 'posts/' + post.slug;
     var tags = (post.tags||[]).map(function(t){ return '<span class="ptag">'+t+'</span>'; }).join('');
     document.getElementById('featuredPost').innerHTML =
       '<a class="post-featured" href="'+url+'">'
@@ -629,7 +629,7 @@
       return;
     }
     grid.innerHTML = posts.map(function(p){
-      var url = 'posts/' + p.slug + '.html';
+      var url = 'posts/' + p.slug;
       var tags = (p.tags||[]).map(function(t){ return '<span class="ptag">'+t+'</span>'; }).join('');
       return '<article class="post-card">'
         +'<div class="post-card__icon">'+icon(p.tags||[])+'</div>'

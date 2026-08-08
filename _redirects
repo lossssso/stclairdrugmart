@@ -1,0 +1,19 @@
+# Cloudflare Pages redirects
+# 301s for the 7 neighbourhood pages removed in July 2026 (thin/doorway
+# cleanup). Sends visitors and link equity to the homepage and lets
+# Google clear the "Not found (404)" rows faster than waiting for the
+# URLs to age out. The two-line pairs cover slash and no-slash forms.
+/pharmacy-corso-italia / 301
+/pharmacy-corso-italia/* / 301
+/pharmacy-davenport / 301
+/pharmacy-davenport/* / 301
+/pharmacy-dupont / 301
+/pharmacy-dupont/* / 301
+/pharmacy-hillcrest-humewood / 301
+/pharmacy-hillcrest-humewood/* / 301
+/pharmacy-oakwood-village / 301
+/pharmacy-oakwood-village/* / 301
+/pharmacy-regal-heights / 301
+/pharmacy-regal-heights/* / 301
+/pharmacy-wychwood / 301
+/pharmacy-wychwood/* / 301

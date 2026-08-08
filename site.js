@@ -562,7 +562,7 @@ window.SmartMatch = (function(){
           if (!posts || !posts.length) return;
           posts.sort(function(a,b){ return new Date(b.date) - new Date(a.date); });
           grid.innerHTML = posts.slice(0,3).map(function(p){
-            var url = '/blog/posts/' + p.slug + '.html';
+            var url = '/blog/posts/' + p.slug;
             return '<article class="blog-card">'
               + '<span class="blog-card__date">'+(p.dateLabel||p.date)+'</span>'
               + '<h3 class="blog-card__title"><a href="'+url+'">'+p.title+'</a></h3>'

@@ -313,7 +313,7 @@ def sky_bg_html(depth: int) -> str:
 
 def nav_html(depth: int = 1) -> str:
     p = "../" * depth
-    blog_href = "index.html" if depth == 1 else "../index.html"
+    blog_href = "/blog/"
     return f"""<nav class="nav" id="nav">
   <div class="nav__clouds" aria-hidden="true">
     <img src="{p}cloud2b.webp" class="nav__cloud" data-dur="175" data-delay="-29" style="transform:translateX(-30.6vw)" alt="">
@@ -324,7 +324,7 @@ def nav_html(depth: int = 1) -> str:
     <img src="{p}cloud2b.webp" class="nav__cloud" data-dur="130" data-delay="0" style="transform:translateX(-60vw)" alt="">
   </div>
   <div class="nav__inner">
-    <a href="{p}index.html#welcome" class="nav__brand">
+    <a href="/#welcome" class="nav__brand">
       <img src="{p}logo.png" alt="" class="nav__brand__logo"/>
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
@@ -332,36 +332,36 @@ def nav_html(depth: int = 1) -> str:
       <span></span><span></span><span></span>
     </button>
     <ul class="nav__links" id="navLinks">
-      <li><a href="{p}index.html#welcome">Home</a></li>
+      <li><a href="/#welcome">Home</a></li>
       <li class="nav__has-dropdown">
-        <a href="{p}index.html#services">Services</a>
+        <a href="/#services">Services</a>
         <ul class="nav__dropdown">
           <li><a href="/portal/">Patient Portal</a></li>
-          <li><a href="{p}index.html#services">Ailment Assessment</a></li>
-          <li><a href="{p}index.html#services">Medication Reviews</a></li>
-          <li><a href="{p}index.html#services">Vaccinations</a></li>
-          <li><a href="{p}index.html#services">Smoking Cessation</a></li>
-          <li><a href="{p}index.html#services">Free Naloxone Kits</a></li>
-          <li><a href="{p}index.html#drug-checker">Drug Checker</a></li>
-          <li><a href="{p}index.html#services">Insurance</a></li>
+          <li><a href="/#services">Ailment Assessment</a></li>
+          <li><a href="/#services">Medication Reviews</a></li>
+          <li><a href="/#services">Vaccinations</a></li>
+          <li><a href="/#services">Smoking Cessation</a></li>
+          <li><a href="/#services">Free Naloxone Kits</a></li>
+          <li><a href="/#drug-checker">Drug Checker</a></li>
+          <li><a href="/#services">Insurance</a></li>
         </ul>
       </li>
       <li class="nav__has-dropdown">
         <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
         <ul class="nav__dropdown">
           <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Order on Uber</a></li>
-          <li><a href="{p}braces-supports.html">Braces &amp; Supports</a></li>
+          <li><a href="/braces-supports">Braces &amp; Supports</a></li>
         </ul>
       </li>
       <li><a href="{blog_href}" class="active" aria-current="page">Blog</a></li>
       <li class="nav__has-dropdown">
-        <a href="{p}index.html#faq">Got Questions?</a>
+        <a href="/#faq">Got Questions?</a>
         <ul class="nav__dropdown">
-          <li><a href="{p}index.html#about">About Us</a></li>
-          <li><a href="{p}index.html#team">Meet the Team</a></li>
-          <li><a href="{p}index.html#faq">FAQ</a></li>
-          <li><a href="{p}index.html#reviews">Ratings (4.9 ⭐)</a></li>
-          <li><a href="{p}index.html#contact">Find Us</a></li>
+          <li><a href="/#about">About Us</a></li>
+          <li><a href="/#team">Meet the Team</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+          <li><a href="/#reviews">Ratings (4.9 ⭐)</a></li>
+          <li><a href="/#contact">Find Us</a></li>
         </ul>
       </li>
       <li class="nav__cta"><a href="{PHARMACY['booking']}" target="_blank" rel="noopener">Book Now</a></li>
@@ -455,7 +455,7 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../post.css"/>
+  <link rel="stylesheet" href="../post.css?v=1"/>
   <script type="application/ld+json">
 {schema}
   </script>
@@ -469,7 +469,7 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
 {nav_html(depth=2)}
 
 <article class="post">
-  <p class="post__breadcrumb"><a href="../../index.html">Home</a> › <a href="../index.html">Blog</a> › {breadcrumb_label}</p>
+  <p class="post__breadcrumb"><a href="/">Home</a> › <a href="/blog/">Blog</a> › {breadcrumb_label}</p>
   <h1>{post['title']}</h1>
   <p class="post__meta">Updated {pretty_date} · {post['reading_minutes']} min read · {breadcrumb_label}</p>
 
@@ -486,7 +486,7 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
 </article>
 
 {footer_html()}
-<script src="../post.js" defer></script>
+<script src="../post.js?v=2" defer></script>
 </body>
 </html>"""
 
@@ -511,24 +511,25 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
 def build_sitemap(posts: list) -> str:
     today = datetime.date.today().isoformat()
 
-    # EVERY indexable page belongs here, not just the blog. This list previously held only "/" and
-    # "/blog/", which meant the first successful bot run would have quietly deleted seven live pages
-    # from the sitemap: the three locale landing pages, the three neighbourhood pages, and the portal.
+    # EVERY indexable page belongs here, not just the blog: this function overwrites sitemap.xml on
+    # each bot run, so anything missing from this list silently disappears from the sitemap.
     #
-    # URLs are extensionless on purpose. The host serves /portal (200) and 308-redirects /portal.html,
-    # so listing the .html form would fill the sitemap with redirects. Keep this list in step with the
-    # pages that actually exist; if you add a landing page, add it here in the same breath.
+    # URLs are extensionless on purpose. The host 308-redirects every .html URL to its extensionless
+    # form, so listing the .html form would fill the sitemap with redirects. Two footguns to avoid:
+    # the portal MUST keep its trailing slash (/portal without the slash serves the old noindex
+    # redirect stub portal.html, not the real page), and the seven pharmacy-<neighbourhood> pages
+    # were deleted in July 2026 (now 301s via _redirects) and must NOT come back here.
+    # All five locale pages (fr/es/pt/it/tr) are live and belong in the list.
     static_pages = [
-        (f"{SITE_URL}/",                          today, "1.0", "weekly"),
-        (f"{SITE_URL}/blog/",                     today, "0.9", "weekly"),
-        (f"{SITE_URL}/es/",                       today, "0.8", "monthly"),
-        (f"{SITE_URL}/pt/",                       today, "0.8", "monthly"),
-        (f"{SITE_URL}/it/",                       today, "0.8", "monthly"),
-        (f"{SITE_URL}/pharmacy-corso-italia/",    today, "0.8", "monthly"),
-        (f"{SITE_URL}/pharmacy-oakwood-village/", today, "0.8", "monthly"),
-        (f"{SITE_URL}/pharmacy-regal-heights/",   today, "0.8", "monthly"),
-        (f"{SITE_URL}/braces-supports",           today, "0.7", "monthly"),
-        (f"{SITE_URL}/portal",                    today, "0.7", "monthly"),
+        (f"{SITE_URL}/",                today, "1.0", "weekly"),
+        (f"{SITE_URL}/blog/",           today, "0.9", "weekly"),
+        (f"{SITE_URL}/fr/",             today, "0.8", "monthly"),
+        (f"{SITE_URL}/es/",             today, "0.8", "monthly"),
+        (f"{SITE_URL}/pt/",             today, "0.8", "monthly"),
+        (f"{SITE_URL}/it/",             today, "0.8", "monthly"),
+        (f"{SITE_URL}/tr/",             today, "0.8", "monthly"),
+        (f"{SITE_URL}/portal/",         today, "0.8", "monthly"),
+        (f"{SITE_URL}/braces-supports", today, "0.7", "monthly"),
     ]
 
     # slug is stored WITHOUT the .html extension (see main()), so this yields the 200 form directly.
@@ -559,7 +560,7 @@ def build_sitemap(posts: list) -> str:
 def update_sitemap(posts: list):
     sitemap_path = ROOT / "sitemap.xml"
     sitemap_path.write_text(build_sitemap(posts))
-    print(f"Updated sitemap.xml ({len(posts) + 2} URLs)")
+    print(f"Updated sitemap.xml ({len(posts) + 9} URLs)")
 
 
 # ── Entry point ────────────────────────────────────────────────
