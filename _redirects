@@ -17,3 +17,13 @@
 /pharmacy-regal-heights/* / 301
 /pharmacy-wychwood / 301
 /pharmacy-wychwood/* / 301
+
+# 301s for ghost URLs Google keeps crawling (GSC "Not found (404)" and
+# "Crawled - currently not indexed", Aug 2026). Never pages on this site's
+# current build; likely legacy links. Ailment names go to the portal
+# (assessment entry), everything else to the homepage.
+/head-lice /portal/ 301
+/impetigo /portal/ 301
+/home / 301
+/book-appointment /portal/ 301
+/book-appointment/* /portal/ 301
