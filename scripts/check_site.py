@@ -80,7 +80,9 @@ for loc in locs:
     path = loc[len(SITE):] or "/"
     if path.endswith(".html"):
         fail(f"sitemap.xml: {loc} is a .html URL (the host 308s these)")
-    if "pharmacy-" in path:
+    # the seven deleted neighbourhood pages were all top-level /pharmacy-<name>;
+    # blog posts legitimately contain "pharmacy-" deeper in the path
+    if path.startswith("/pharmacy-"):
         fail(f"sitemap.xml: {loc} looks like a deleted neighbourhood page")
     if path == "/portal":
         fail("sitemap.xml: /portal must keep its trailing slash (/portal serves the noindex stub)")
