@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write   # needed to push the new post commit
+      issues: write     # needed to open an issue when the run fails
 
     steps:
       - name: Checkout repository
@@ -48,4 +49,23 @@ jobs:
           ")
             git commit -m "Blog: ${TITLE}"
             git push
+          fi
+
+      # The bot failed silently every Monday from Jun 22 to Aug 3, 2026 (retired
+      # Gemini model) and nobody noticed until a Search Console audit. Never
+      # again: a failed run opens/refreshes a GitHub issue the owner will see.
+      - name: Open an issue on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Blog bot failed: $(date -u +%Y-%m-%d)"
+          BODY="The weekly blog workflow failed. Log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+          If this is the Gemini model chain 404ing again, update GEMINI_MODELS in scripts/generate_blog.py."
+          EXISTING=$(gh issue list --state open --search "Blog bot failed in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY" --label bug || gh issue create --title "$TITLE" --body "$BODY"
           fi
