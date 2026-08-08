@@ -28,6 +28,11 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python scripts/generate_blog.py
 
+      # Refuse to publish a broken state: .html internal links, an orphaned
+      # post, or a rotten sitemap fail the run here, before anything deploys.
+      - name: Verify site integrity
+        run: python scripts/check_site.py
+
       - name: Commit and push
         run: |
           git config user.name  "St. Clair Blog Bot"
