@@ -563,6 +563,31 @@ def update_sitemap(posts: list):
     print(f"Updated sitemap.xml ({len(posts) + 9} URLs)")
 
 
+# ── Update the static blog list ────────────────────────────────
+
+def update_blog_index(post: dict):
+    """Prepend the new post to blog/index.html's <ul class="posts-static">.
+
+    That list is what crawlers and no-JS visitors see (the JS cards replace it
+    after posts.json loads). It used to be hand-maintained, which is exactly
+    how the 2026-08-03 post shipped with zero internal links and sat in
+    Search Console as "Discovered - currently not indexed". Unlike the old
+    homepage top-3 trap (see the note above build_sitemap's section), this is
+    an insert, not a rewrite: existing entries are never touched.
+    """
+    index_path = ROOT / "blog" / "index.html"
+    html = index_path.read_text()
+    marker = '<ul class="posts-static">'
+    if marker not in html:
+        raise RuntimeError('blog/index.html: <ul class="posts-static"> marker not found')
+    title = post["title"].replace("&", "&amp;").replace("<", "&lt;")
+    entry = f'\n      <li><a href="posts/{post["slug"]}">{title}</a></li>'
+    if f'href="posts/{post["slug"]}"' in html:
+        return  # already listed (manual add or re-run)
+    index_path.write_text(html.replace(marker, marker + entry, 1))
+    print(f"Linked          : blog/index.html static list <- {post['slug']}")
+
+
 # ── Entry point ────────────────────────────────────────────────
 
 def main():
@@ -615,6 +640,7 @@ def main():
     save_posts(posts)
 
     update_sitemap(posts)
+    update_blog_index(posts[-1])
     print("Done!")
 
 
