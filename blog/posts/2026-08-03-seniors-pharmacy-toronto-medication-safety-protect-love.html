@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../post.css"/>
+  <link rel="stylesheet" href="../post.css?v=2"/>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -77,6 +77,7 @@
   </script>
 </head>
 <body>
+<a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Skip to main content</a>
 <div class="sky-bg" aria-hidden="true">
   <img src="../../cloud2b.webp" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="">
   <img src="../../cloudb.webp"  class="sky-bg-cloud sky-bg-cloud--flip" data-dur="102" data-delay="-60" style="transform:translateX(45.9vw) scaleX(-1)" alt="">
@@ -102,13 +103,13 @@
       <img src="../../logo.png" alt="" class="nav__brand__logo"/>
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
-    <button class="nav__toggle" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
+    <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks" onclick="this.classList.toggle('open'); this.setAttribute('aria-expanded', this.classList.contains('open')); document.querySelector('.nav__links').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav__links" id="navLinks">
       <li><a href="/#welcome">Home</a></li>
       <li class="nav__has-dropdown">
-        <a href="/#services">Services</a>
+        <a aria-haspopup="true" href="/#services">Services</a>
         <ul class="nav__dropdown">
           <li><a href="/portal/">Patient Portal</a></li>
           <li><a href="/#services">Ailment Assessment</a></li>
@@ -121,7 +122,7 @@
         </ul>
       </li>
       <li class="nav__has-dropdown">
-        <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
+        <a aria-haspopup="true" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
         <ul class="nav__dropdown">
           <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Order on Uber</a></li>
           <li><a href="/braces-supports">Braces &amp; Supports</a></li>
@@ -129,7 +130,7 @@
       </li>
       <li><a href="/blog/" class="active" aria-current="page">Health Hub</a></li>
       <li class="nav__has-dropdown">
-        <a href="/#faq">Questions?</a>
+        <a aria-haspopup="true" href="/#faq">Questions?</a>
         <ul class="nav__dropdown">
           <li><a href="/#about">About Us</a></li>
           <li><a href="/#team">Meet the Team</a></li>
@@ -143,7 +144,7 @@
   </div>
 </nav>
 
-<article class="post">
+<article class="post" id="main">
   <p class="post__breadcrumb"><a href="/">Home</a> › <a href="/blog/">Health Hub</a> › medication safety</p>
   <h1>Seniors Pharmacy Toronto Medication Safety: Protect Loved Ones</h1>
   <p class="post__meta">Updated August 3, 2026 · 3 min read · medication safety</p>

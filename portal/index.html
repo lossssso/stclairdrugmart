@@ -559,10 +559,11 @@ section { padding: 2rem 0.875rem; }
 @keyframes drop-in { 
   0% { opacity: 0; transform: translateY(-6px); }
 }</style>
-  <link rel="preload" href="/site.css?v=14" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/site.css?v=14"></noscript>
+  <link rel="preload" href="/site.css?v=15" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/site.css?v=15"></noscript>
 </head>
 <body>
+<a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Skip to main content</a>
 <script>
 /* Cloud performance guard, decides up-front whether this device should run
    the full drifting-cloud effect or a thinned-out "lite" version. Runs before
@@ -624,13 +625,13 @@ section { padding: 2rem 0.875rem; }
       <img src="/logo-340.webp" alt="St. Clair Drug Mart Pharmacy" class="nav__brand__logo" />
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
-    <button class="nav__toggle" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
+    <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks" onclick="this.classList.toggle('open'); this.setAttribute('aria-expanded', this.classList.contains('open')); document.querySelector('.nav__links').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav__links" id="navLinks">
       <li><a href="/#welcome">Home</a></li>
       <li class="nav__has-dropdown">
-        <a href="/#services">Services</a>
+        <a aria-haspopup="true" href="/#services">Services</a>
         <ul class="nav__dropdown">
           <li style="display:flex;align-items:center;gap:.35rem;padding:0 .85rem;"><a href="/portal/" aria-current="page" style="display:inline;padding:.55rem 0;">Patient Portal</a><span aria-hidden="true" style="opacity:.5;">·</span><a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/login/306667" data-label="Patient Login, PharmAssess Portal" data-iframeheight="660" style="display:inline;padding:.55rem 0;">Sign In</a></li>
           <li><a href="/#services">Condition Assessments</a></li>
@@ -643,7 +644,7 @@ section { padding: 2rem 0.875rem; }
         </ul>
       </li>
       <li class="nav__has-dropdown">
-        <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
+        <a aria-haspopup="true" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
         <ul class="nav__dropdown">
           <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Order on Uber</a></li>
           <li><a href="/braces-supports">Braces &amp; Supports</a></li>
@@ -651,7 +652,7 @@ section { padding: 2rem 0.875rem; }
       </li>
       <li><a href="/blog/">Health Hub</a></li>
       <li class="nav__has-dropdown">
-        <a href="/#faq">Questions?</a>
+        <a aria-haspopup="true" href="/#faq">Questions?</a>
         <ul class="nav__dropdown">
           <li><a href="/#team">Meet the Team</a></li>
           <li><a href="/#contact">Find Us &amp; Contact</a></li>
@@ -662,12 +663,12 @@ section { padding: 2rem 0.875rem; }
       </li>
       <li class="nav__links-lang" aria-label="Language">
         <span class="nav__links-lang__label">🌐 Language</span>
-        <a href="/" aria-current="page" hreflang="en"><img src="/flags/ca.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> English</a>
-        <a href="/fr/" hreflang="fr"><img src="/flags/ca.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Français</a>
-        <a href="/es/" hreflang="es"><img src="/flags/es.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Español</a>
-        <a href="/pt/" hreflang="pt"><img src="/flags/pt.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Português</a>
-        <a href="/it/" hreflang="it"><img src="/flags/it.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Italiano</a>
-        <a href="/tr/" hreflang="tr"><img src="/flags/tr.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Türkçe</a>
+        <a href="/" aria-current="page" hreflang="en" lang="en"><img src="/flags/ca.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> English</a>
+        <a href="/fr/" hreflang="fr" lang="fr"><img src="/flags/ca.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Français</a>
+        <a href="/es/" hreflang="es" lang="es"><img src="/flags/es.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Español</a>
+        <a href="/pt/" hreflang="pt" lang="pt"><img src="/flags/pt.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Português</a>
+        <a href="/it/" hreflang="it" lang="it"><img src="/flags/it.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Italiano</a>
+        <a href="/tr/" hreflang="tr" lang="tr"><img src="/flags/tr.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Türkçe</a>
       </li>
       <li class="nav__cta"><a href="#booking">Book Now</a></li>
     </ul>
@@ -676,12 +677,12 @@ section { padding: 2rem 0.875rem; }
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 3.8 5.7 3.8 9S14.5 18.5 12 21c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z"/></svg>
       </button>
       <ul class="nav__lang-menu" id="navLangMenu" role="menu">
-        <li role="none"><a role="menuitem" href="/" aria-current="page"><img src="/flags/ca.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> English</a></li>
-        <li role="none"><a role="menuitem" href="/fr/"><img src="/flags/ca.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Français</a></li>
-        <li role="none"><a role="menuitem" href="/es/"><img src="/flags/es.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Español</a></li>
-        <li role="none"><a role="menuitem" href="/pt/"><img src="/flags/pt.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Português</a></li>
-        <li role="none"><a role="menuitem" href="/it/"><img src="/flags/it.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Italiano</a></li>
-        <li role="none"><a role="menuitem" href="/tr/"><img src="/flags/tr.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Türkçe</a></li>
+        <li role="none"><a role="menuitem" href="/" aria-current="page" lang="en"><img src="/flags/ca.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> English</a></li>
+        <li role="none"><a role="menuitem" href="/fr/" lang="fr"><img src="/flags/ca.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Français</a></li>
+        <li role="none"><a role="menuitem" href="/es/" lang="es"><img src="/flags/es.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Español</a></li>
+        <li role="none"><a role="menuitem" href="/pt/" lang="pt"><img src="/flags/pt.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Português</a></li>
+        <li role="none"><a role="menuitem" href="/it/" lang="it"><img src="/flags/it.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Italiano</a></li>
+        <li role="none"><a role="menuitem" href="/tr/" lang="tr"><img src="/flags/tr.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Türkçe</a></li>
       </ul>
     </div>
     <button class="nav__search-btn" id="navSearchBtn" aria-label="Search site">
@@ -695,7 +696,7 @@ section { padding: 2rem 0.875rem; }
   <div class="site-search__box">
     <div class="site-search__bar">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
-      <input class="site-search__input" id="siteSearchInput" type="text" placeholder="Search conditions, services, FAQ…" autocomplete="off" spellcheck="false"/>
+      <input aria-label="Search conditions, services, FAQ" class="site-search__input" id="siteSearchInput" type="text" placeholder="Search conditions, services, FAQ…" autocomplete="off" spellcheck="false"/>
       <button class="site-search__close" id="siteSearchClose" aria-label="Close search">&times;</button>
     </div>
     <div class="site-search__results" id="siteSearchResults">
@@ -705,7 +706,7 @@ section { padding: 2rem 0.875rem; }
 </div>
 
 
-<main>
+<main id="main">
 <section id="booking">
   <div class="section__inner">
     <img src="/cloudb.webp" alt="" aria-hidden="true" class="booking__logo-cloud" loading="lazy" decoding="async" />
@@ -745,7 +746,7 @@ section { padding: 2rem 0.875rem; }
       <div class="ailments-smartsearch" id="smartsearch-portal">
         <div class="ailments-smartsearch__wrap">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
-          <input class="ailments-smartsearch__input" data-scope="portal" type="text" placeholder="Tell us how you feel… e.g. 'itchy rash', 'burning when I pee', 'eye discharge'" autocomplete="off" spellcheck="false"/>
+          <input aria-label="Tell us how you feel… e.g. 'itchy rash', 'burning when I pee', 'eye discharge'" class="ailments-smartsearch__input" data-scope="portal" type="text" placeholder="Tell us how you feel… e.g. 'itchy rash', 'burning when I pee', 'eye discharge'" autocomplete="off" spellcheck="false"/>
           <button class="ailments-smartsearch__clear" aria-label="Clear search">✕</button>
         </div>
         <div class="ailments-smartsearch__results" id="smartsearch-results-portal"></div>
@@ -1146,7 +1147,7 @@ window.SITE_INDEX_CORE = [
 ];
 </script>
 
-<script src="/site.js?v=14" defer></script>
+<script src="/site.js?v=15" defer></script>
 <script src="/analytics-events.js?v=1" defer></script>
 </body>
 </html>

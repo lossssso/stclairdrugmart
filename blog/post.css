@@ -288,3 +288,6 @@ footer a:hover { color:#fff; }
   .post__author { flex-direction:column; gap:.75rem; padding:1.25rem; }
   .post__hero-img { height:190px; border-radius:10px; margin-bottom:1.25rem; }
 }
+
+/* a11y: skip link reveals on focus */
+.skip-link:focus { left:12px !important; top:12px; background:#fff; color:#00505a; padding:.6rem 1rem; border-radius:8px; box-shadow:0 4px 18px rgba(0,0,0,.25); outline:2px solid #21a1a8; }
