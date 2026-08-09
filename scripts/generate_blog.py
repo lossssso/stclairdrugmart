@@ -355,7 +355,7 @@ def nav_html(depth: int = 1) -> str:
       </li>
       <li><a href="{blog_href}" class="active" aria-current="page">Health Hub</a></li>
       <li class="nav__has-dropdown">
-        <a href="/#faq">Questions</a>
+        <a href="/#faq">Questions?</a>
         <ul class="nav__dropdown">
           <li><a href="/#about">About Us</a></li>
           <li><a href="/#team">Meet the Team</a></li>
