@@ -353,7 +353,7 @@ def nav_html(depth: int = 1) -> str:
           <li><a href="/braces-supports">Braces &amp; Supports</a></li>
         </ul>
       </li>
-      <li><a href="{blog_href}" class="active" aria-current="page">Blog</a></li>
+      <li><a href="{blog_href}" class="active" aria-current="page">Health Hub</a></li>
       <li class="nav__has-dropdown">
         <a href="/#faq">Got Questions?</a>
         <ul class="nav__dropdown">
@@ -429,7 +429,7 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
         "@type": "BreadcrumbList",
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{SITE_URL}/"},
-            {"@type": "ListItem", "position": 2, "name": "Blog", "item": f"{SITE_URL}/blog/"},
+            {"@type": "ListItem", "position": 2, "name": "Health Hub", "item": f"{SITE_URL}/blog/"},
             {"@type": "ListItem", "position": 3, "name": post["title"]},
         ],
     }, indent=2)
@@ -469,7 +469,7 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
 {nav_html(depth=2)}
 
 <article class="post">
-  <p class="post__breadcrumb"><a href="/">Home</a> › <a href="/blog/">Blog</a> › {breadcrumb_label}</p>
+  <p class="post__breadcrumb"><a href="/">Home</a> › <a href="/blog/">Health Hub</a> › {breadcrumb_label}</p>
   <h1>{post['title']}</h1>
   <p class="post__meta">Updated {pretty_date} · {post['reading_minutes']} min read · {breadcrumb_label}</p>
 
