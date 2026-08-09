@@ -7,6 +7,44 @@
    ({ search:{stop,clusters}, chat:{...}, ui:{...} }). English defaults
    are baked in below, so a page with no I18N works exactly as before. */
 
+/* ── a11y helpers ──────────────────────────────────────────────
+   announce(): one shared visually-hidden polite live region, debounced so
+   type-ahead result counts don't spam screen readers.
+   dlgOpen()/dlgClose(): dialog focus management — saves the opener, moves
+   focus in, cycles Tab inside (unless noTrap), and restores focus on close. */
+var _annEl, _annT;
+function announce(msg, delay){
+  if (!_annEl){
+    _annEl = document.createElement('div');
+    _annEl.setAttribute('aria-live','polite');
+    _annEl.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)';
+    document.body.appendChild(_annEl);
+  }
+  clearTimeout(_annT);
+  _annT = setTimeout(function(){ _annEl.textContent = msg; }, delay == null ? 400 : delay);
+}
+var _FOCUSABLE = 'a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])';
+function dlgOpen(el, initial, noTrap){
+  el._prevFocus = document.activeElement;
+  var f = initial || el.querySelector(_FOCUSABLE);
+  if (f) setTimeout(function(){ f.focus(); }, 60);
+  if (noTrap) return;
+  el._trap = function(e){
+    if (e.key !== 'Tab') return;
+    var items = Array.prototype.filter.call(el.querySelectorAll(_FOCUSABLE), function(n){ return n.offsetParent !== null; });
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  };
+  el.addEventListener('keydown', el._trap);
+}
+function dlgClose(el){
+  if (el._trap){ el.removeEventListener('keydown', el._trap); el._trap = null; }
+  if (el._prevFocus && el._prevFocus.focus) el._prevFocus.focus();
+  el._prevFocus = null;
+}
+
 /* Standalone pages (e.g. /portal/) carry the booking section but not the
    other homepage sections/accordions. When a search hit targets a section
    that isn't on this page, return the homepage URL to navigate to instead
@@ -47,6 +85,8 @@ window.paOffPageHref = function(anchor, openId){
     btn.innerHTML = '<span class="faq-item__q-icon">' + (faq.icon || '💬') + '</span><span class="faq-item__q-text">' + faq.q + '</span>' + svg;
     var ans = document.createElement('div');
     ans.className = 'faq-item__a';
+    ans.id = 'faq-a-' + list.children.length;
+    btn.setAttribute('aria-controls', ans.id);
     ans.innerHTML = faq.a;
     btn.addEventListener('click', function(){
       var isOpen = item.classList.contains('open');
@@ -61,12 +101,17 @@ window.paOffPageHref = function(anchor, openId){
     list.appendChild(item);
   });
   if (catBar) {
-    var pillsHtml = '<button type="button" class="faq-cat-pill active" data-cat="all">All Questions</button>';
+    var pillsHtml = '<button type="button" class="faq-cat-pill active" aria-pressed="true" data-cat="all">All Questions</button>';
     (window.FAQ_CAT_META || []).forEach(function(c){
       if (!window.FAQS.some(function(f){ return f.cat === c.id; })) return;
-      pillsHtml += '<button type="button" class="faq-cat-pill" data-cat="' + c.id + '">' + c.icon + ' ' + c.label + '</button>';
+      pillsHtml += '<button type="button" class="faq-cat-pill" aria-pressed="false" data-cat="' + c.id + '">' + c.icon + ' ' + c.label + '</button>';
     });
     catBar.innerHTML = pillsHtml;
+    catBar.addEventListener('click', function(e){
+      var b = e.target.closest('.faq-cat-pill');
+      if (!b) return;
+      catBar.querySelectorAll('.faq-cat-pill').forEach(function(p){ p.setAttribute('aria-pressed', p === b ? 'true' : 'false'); });
+    });
   }
 })();
 
@@ -586,6 +631,7 @@ window.SmartMatch = (function(){
       }
       document.querySelector('.nav__links').classList.remove('open');
       document.querySelector('.nav__toggle').classList.remove('open');
+      document.querySelector('.nav__toggle').setAttribute('aria-expanded','false');
       document.querySelectorAll('.nav__has-dropdown').forEach(d => d.classList.remove('open'));
     });
   });
@@ -595,6 +641,7 @@ window.SmartMatch = (function(){
     if (!nav.contains(e.target)) {
       document.querySelector('.nav__links').classList.remove('open');
       document.querySelector('.nav__toggle').classList.remove('open');
+      document.querySelector('.nav__toggle').setAttribute('aria-expanded','false');
       document.querySelectorAll('.nav__has-dropdown').forEach(d => d.classList.remove('open'));
     }
   });
@@ -1184,7 +1231,7 @@ window.SmartMatch = (function(){
       if (meds.some(m => m.name.toLowerCase() === name.toLowerCase())) { input.value=''; return; }
       meds.push({ name, cui: null });
       input.value = '';
-      sugg.classList.remove('open'); sugg.innerHTML = ''; activeIdx = -1;
+      (sugg.classList.remove('open'), input.setAttribute('aria-expanded','false'), input.removeAttribute('aria-activedescendant')); sugg.innerHTML = ''; activeIdx = -1;
       renderChips(); input.focus();
     }
 
@@ -1192,7 +1239,7 @@ window.SmartMatch = (function(){
     input.addEventListener('input', () => {
       clearTimeout(debounce);
       const q = input.value.trim();
-      if (q.length < 2) { sugg.classList.remove('open'); sugg.innerHTML=''; return; }
+      if (q.length < 2) { (sugg.classList.remove('open'), input.setAttribute('aria-expanded','false'), input.removeAttribute('aria-activedescendant')); sugg.innerHTML=''; return; }
       debounce = setTimeout(() => fetchSugg(q), 200);
     });
     input.addEventListener('keydown', e => {
@@ -1200,25 +1247,26 @@ window.SmartMatch = (function(){
       if      (e.key==='ArrowDown') { e.preventDefault(); activeIdx=Math.min(activeIdx+1,items.length-1); hilite(items); }
       else if (e.key==='ArrowUp')   { e.preventDefault(); activeIdx=Math.max(activeIdx-1,0); hilite(items); }
       else if (e.key==='Enter')     { e.preventDefault(); if(activeIdx>=0&&items[activeIdx]) addMed(items[activeIdx].textContent); else addMed(input.value); }
-      else if (e.key==='Escape')    { sugg.classList.remove('open'); }
+      else if (e.key==='Escape')    { (sugg.classList.remove('open'), input.setAttribute('aria-expanded','false'), input.removeAttribute('aria-activedescendant')); }
     });
-    function hilite(items) { items.forEach((it,i)=>it.classList.toggle('active',i===activeIdx)); }
-    document.addEventListener('click', e => { if(!e.target.closest('.dc-autocomplete')) sugg.classList.remove('open'); });
+    function hilite(items) { items.forEach((it,i)=>{ it.classList.toggle('active',i===activeIdx); it.setAttribute('aria-selected', i===activeIdx?'true':'false'); }); if (activeIdx>=0 && items[activeIdx] && items[activeIdx].id) input.setAttribute('aria-activedescendant', items[activeIdx].id); else input.removeAttribute('aria-activedescendant'); }
+    document.addEventListener('click', e => { if(!e.target.closest('.dc-autocomplete')) (sugg.classList.remove('open'), input.setAttribute('aria-expanded','false'), input.removeAttribute('aria-activedescendant')); });
 
     function fetchSugg(q) {
       fetch('https://clinicaltables.nlm.nih.gov/api/rxterms/v3/search?terms='+encodeURIComponent(q)+'&maxList=8')
         .then(r=>r.json()).then(data => {
           const names = (data[3]||[]).map(r=>Array.isArray(r)?r[0]:r);
           sugg.innerHTML = '';
-          if (!names.length) { sugg.classList.remove('open'); return; }
-          names.forEach(n => {
+          if (!names.length) { (sugg.classList.remove('open'), input.setAttribute('aria-expanded','false'), input.removeAttribute('aria-activedescendant')); return; }
+          names.forEach((n, i) => {
             const li = document.createElement('li');
+            li.id = 'dc-opt-' + i;
             li.setAttribute('role','option'); li.textContent = n;
             li.addEventListener('click', ()=>addMed(n));
             sugg.appendChild(li);
           });
-          activeIdx = -1; sugg.classList.add('open');
-        }).catch(()=>sugg.classList.remove('open'));
+          activeIdx = -1; (sugg.classList.add('open'), input.setAttribute('aria-expanded','true'));
+        }).catch(()=>(sugg.classList.remove('open'), input.setAttribute('aria-expanded','false'), input.removeAttribute('aria-activedescendant')));
     }
 
     clearBtn.addEventListener('click', () => {
@@ -1468,15 +1516,22 @@ window.SmartMatch = (function(){
 
   var ppOverlay = document.getElementById('pp-overlay');
   if (ppOverlay) {
+    // a11y: the footer .pp-link buttons open this via inline onclick; hook the
+    // same click to move focus in and trap Tab, and restore focus on close.
+    document.querySelectorAll('.pp-link').forEach(function(b){
+      b.addEventListener('click', function(){ dlgOpen(ppOverlay); });
+    });
     ppOverlay.addEventListener('click', function(e) {
-      if (e.target === this) this.classList.remove('open');
+      if (e.target === this) { this.classList.remove('open'); dlgClose(ppOverlay); }
     });
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') ppOverlay.classList.remove('open');
+      if (e.key === 'Escape' && ppOverlay.classList.contains('open')) { ppOverlay.classList.remove('open'); dlgClose(ppOverlay); }
     });
   }
 
   // ── Live Status Board ───────────────────────────────────
+  // a11y: deliberately NOT aria-live — it recomputes on a timer and a live
+  // region here would chatter at screen readers every few minutes.
   // Recomputes on an interval (not just once at page load) so "Closing in
   // X min" actually counts down live for anyone who leaves the tab open.
   (function(){
@@ -1575,13 +1630,33 @@ window.SmartMatch = (function(){
   (function(){
     var nav = document.querySelector('.svc-tabs__nav');
     if (!nav) return;
+    // a11y: real tabs semantics + arrow-key traversal (roving tabindex)
+    nav.setAttribute('role','tablist');
+    document.querySelectorAll('.svc-tab__btn').forEach(function(b){
+      b.setAttribute('role','tab');
+      if (!b.id) b.id = 'tab-' + b.dataset.tab;
+      b.setAttribute('tabindex', b.classList.contains('active') ? '0' : '-1');
+    });
+    document.querySelectorAll('.svc-tab__panel').forEach(function(p){
+      p.setAttribute('role','tabpanel');
+      p.setAttribute('aria-labelledby', 'tab-' + p.dataset.panel);
+    });
+    nav.addEventListener('keydown', function(e){
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('.svc-tab__btn'));
+      var i = tabs.indexOf(document.activeElement);
+      if (i < 0) return;
+      e.preventDefault();
+      var j = e.key === 'ArrowRight' ? (i + 1) % tabs.length : (i - 1 + tabs.length) % tabs.length;
+      tabs[j].focus(); tabs[j].click();
+    });
     nav.addEventListener('click', function(e){
       var btn = e.target.closest('.svc-tab__btn');
       if (!btn) return;
       var target = btn.dataset.tab;
-      document.querySelectorAll('.svc-tab__btn').forEach(function(b){ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+      document.querySelectorAll('.svc-tab__btn').forEach(function(b){ b.classList.remove('active'); b.setAttribute('aria-selected','false'); b.setAttribute('tabindex','-1'); });
       document.querySelectorAll('.svc-tab__panel').forEach(function(p){ p.classList.remove('active'); });
-      btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+      btn.classList.add('active'); btn.setAttribute('aria-selected','true'); btn.setAttribute('tabindex','0');
       var panel = document.querySelector('[data-panel="'+target+'"]');
       if (panel) panel.classList.add('active');
       if (target === 'drug-check') { var inp = document.getElementById('dc-input'); if (inp) setTimeout(function(){ inp.focus(); }, 50); }
@@ -1596,6 +1671,14 @@ window.SmartMatch = (function(){
         var isOpen = item.classList.toggle('open');
         head.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       });
+    });
+    document.querySelectorAll('.svc-acc-item').forEach(function(item, i){
+      var body = item.querySelector('.svc-acc__body'), head = item.querySelector('.svc-acc__head');
+      if (!body || !head) return;
+      if (!body.id) body.id = (item.id || ('svc-item-' + i)) + '-body';
+      head.setAttribute('aria-controls', body.id);
+      var chev = head.querySelector('.svc-acc__chev');
+      if (chev) chev.setAttribute('aria-hidden','true');
     });
     window.openAcc = function(id) {
       var el = document.getElementById(id);
@@ -1651,6 +1734,7 @@ window.SmartMatch = (function(){
         b.className = 'vaccine-card__badge badge--stock';
         b.textContent = (window.I18N && window.I18N.ui || {}).vacStock || '✓ In Stock';
       }
+      b.setAttribute('aria-label', (((window.I18N && window.I18N.ui) || {}).vacAvail || 'Availability') + ': ' + b.textContent);
       badges.appendChild(b);
     }
   });
@@ -1859,6 +1943,7 @@ window.SmartMatch = (function(){
     }
     resultsEl.innerHTML = html;
     resultsEl.classList.add('has-results');
+    announce(resultsEl.querySelectorAll('button').length + ' ' + (((window.I18N && window.I18N.ui) || {}).resultsWord || 'results'));
     // Wire up condition hit buttons
     resultsEl.querySelectorAll('.js-smart-hit').forEach(function(btn) {
       btn.addEventListener('click', function() {
@@ -1973,9 +2058,16 @@ window.SmartMatch = (function(){
   var siteResults = document.getElementById('siteSearchResults');
   var siteDebounce;
   var siteActiveIdx = -1;
+  // a11y: the overlay input drives a listbox of results
+  siteInput.setAttribute('role','combobox');
+  siteInput.setAttribute('aria-expanded','false');
+  siteInput.setAttribute('aria-controls','siteSearchResults');
+  siteInput.setAttribute('aria-autocomplete','list');
+  siteResults.setAttribute('role','listbox');
   function siteHilite(){
     var items = siteResults.querySelectorAll('.site-search__result');
-    items.forEach(function(it, i){ it.classList.toggle('active', i === siteActiveIdx); });
+    items.forEach(function(it, i){ it.classList.toggle('active', i === siteActiveIdx); it.setAttribute('aria-selected', i === siteActiveIdx ? 'true' : 'false'); });
+    if (siteActiveIdx >= 0 && items[siteActiveIdx] && items[siteActiveIdx].id) siteInput.setAttribute('aria-activedescendant', items[siteActiveIdx].id); else siteInput.removeAttribute('aria-activedescendant');
     if (siteActiveIdx >= 0 && items[siteActiveIdx]) items[siteActiveIdx].scrollIntoView({ block: 'nearest' });
   }
 
@@ -1984,12 +2076,13 @@ window.SmartMatch = (function(){
     siteInput.value = '';
     siteActiveIdx = -1;
     siteResults.innerHTML = '<div class="site-search__tip">' + ((window.I18N && window.I18N.ui && window.I18N.ui.searchTip) || 'Type to search conditions, services, vaccines, FAQ and more.') + '</div>';
-    setTimeout(function() { siteInput.focus(); }, 60);
+    dlgOpen(siteOverlay, siteInput);
     document.body.style.overflow = 'hidden';
   }
   function closeSiteSearch() {
     siteOverlay.classList.remove('open');
     document.body.style.overflow = '';
+    dlgClose(siteOverlay);
   }
 
   function highlightMatch(text, query) {
@@ -2013,6 +2106,8 @@ window.SmartMatch = (function(){
       .sort(function(a,b) { return b.score - a.score; })
       .slice(0, 12);
     if (!scored.length) {
+      siteInput.setAttribute('aria-expanded','false');
+      announce('0 ' + (((window.I18N && window.I18N.ui) || {}).resultsWord || 'results'));
       siteResults.innerHTML = '<div class="site-search__empty">' + ((window.I18N && window.I18N.ui || {}).searchEmpty || 'No results for "<strong>{Q}</strong>". Try different keywords.').replace('{Q}', query) + '</div>';
       return;
     }
@@ -2047,7 +2142,11 @@ window.SmartMatch = (function(){
       });
     });
     siteResults.innerHTML = html;
-    siteResults.querySelectorAll('.js-site-result').forEach(function(btn) {
+    siteInput.setAttribute('aria-expanded','true');
+    announce(scored.length + ' ' + (((window.I18N && window.I18N.ui) || {}).resultsWord || 'results'));
+    siteResults.querySelectorAll('.js-site-result').forEach(function(btn, i) {
+      btn.id = 'ss-opt-' + i;
+      btn.setAttribute('role','option');
       btn.addEventListener('click', function() {
         var anchor = this.dataset.anchor;
         var url = this.dataset.url;
@@ -2106,6 +2205,8 @@ window.SmartMatch = (function(){
     if (!overlay) return;
     function closeWelcome() {
       overlay.classList.remove('open');
+      document.body.style.overflow = '';
+      dlgClose(overlay);
       try { localStorage.setItem(WELCOME_KEY, String(Date.now() + SNOOZE_MS)); } catch (e) {}
       // Release the gated scroll reveals now that the popup no longer covers
       // the page (tw script). hero-go is normally set before the popup opens;
@@ -2120,7 +2221,11 @@ window.SmartMatch = (function(){
       // socials, status float in over ~1.2s), then bring the popup up after
       // a beat so the entrance is never hidden behind the overlay.
       document.documentElement.classList.add('hero-go');
-      setTimeout(function() { overlay.classList.add('open'); }, 2300);
+      setTimeout(function() {
+        overlay.classList.add('open');
+        dlgOpen(overlay, closeBtn);
+        document.body.style.overflow = 'hidden';
+      }, matchMedia('(prefers-reduced-motion: reduce)').matches ? 300 : 2300);
     }
     closeBtn.addEventListener('click', closeWelcome);
     if (laterBtn) laterBtn.addEventListener('click', closeWelcome);
@@ -2207,9 +2312,10 @@ window.SmartMatch = (function(){
     }
   });
 
-  // ── Cloud drift, driven by JS (not CSS @keyframes) so it can't be silently
-  //    disabled by a browser's animation engine, reduced-motion override, or
-  //    power-saving mode, these clouds are purely decorative (aria-hidden).
+  // ── Cloud drift, driven by JS (not CSS @keyframes) so the browser's
+  //    animation engine and power-saving quirks can't silently break it.
+  //    prefers-reduced-motion IS honoured explicitly below, user preference
+  //    beats the aesthetic. Clouds are purely decorative (aria-hidden).
   //    Self-throttling: caps to ~24fps (plenty for a 77-175s drift) and, if it
   //    detects even a handful of real frame drops (a genuinely slow/older
   //    machine, not just a one-off hiccup), quickly drops to showing only a
@@ -2218,6 +2324,7 @@ window.SmartMatch = (function(){
   //    Fully paused while the tab isn't visible so it costs nothing in the
   //    background.
   (function() {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; // a11y: static clouds under reduced motion
     var els = document.querySelectorAll('.nav__cloud, .hero__cloud, .sky-bg-cloud');
     var items = [];
     els.forEach(function(el) {
@@ -2484,11 +2591,13 @@ window.SmartMatch = (function(){
   }
 
   // ── Ailment Triage Filter ─────────────────────────────────
+  document.querySelectorAll('.ailments-triage__btn').forEach(function(b){ b.setAttribute('aria-pressed', b.classList.contains('active') ? 'true' : 'false'); });
   document.querySelectorAll('.ailments-triage__btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       var scope = this.dataset.triage;
       var cat = this.dataset.cat;
-      document.querySelectorAll('.ailments-triage__btn[data-triage="' + scope + '"]').forEach(function(b) { b.classList.remove('active'); });
+      var pressed = this;
+      document.querySelectorAll('.ailments-triage__btn[data-triage="' + scope + '"]').forEach(function(b) { b.classList.remove('active'); b.setAttribute('aria-pressed', b === pressed ? 'true' : 'false'); });
       this.classList.add('active');
       var sections = document.querySelectorAll('.ailments-cat-section[data-triage-scope="' + scope + '"]');
       sections.forEach(function(s) {
@@ -2628,6 +2737,7 @@ window.SmartMatch = (function(){
   // Wrap the text of a heading into per-character spans, preserving any child
   // markup (e.g. the FAQ heading's nested styled span) and natural word wrap.
   function splitHeading(el){
+    if (!el.getAttribute('aria-label')) el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim()); // a11y: SRs read one intact string, not per-word spans
     var idx = 0;
     (function walk(node){
       Array.prototype.slice.call(node.childNodes).forEach(function(kid){
@@ -3001,9 +3111,11 @@ window.SmartMatch = (function(){
       addMsg(LC.greeting || 'Hi! 👋 I can answer questions about our pharmacy, hours, free delivery, services, and the 28 conditions our pharmacist can assess. Ask away, or tap a topic below.', 'bot');
       renderChips();
     }
+    panel._prevFocus = document.activeElement;
     if (matchMedia('(hover: hover)').matches) input.focus();
+    else if (closeBtn && closeBtn.focus) closeBtn.focus();
   }
-  function closeChat(){ panel.hidden = true; }
+  function closeChat(){ panel.hidden = true; if (panel._prevFocus && panel._prevFocus.focus) panel._prevFocus.focus(); panel._prevFocus = null; }
 
   openBtn.addEventListener('click', openChat);
   closeBtn.addEventListener('click', closeChat);
