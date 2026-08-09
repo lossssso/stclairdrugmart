@@ -516,9 +516,9 @@ def build_sitemap(posts: list) -> str:
     #
     # URLs are extensionless on purpose. The host 308-redirects every .html URL to its extensionless
     # form, so listing the .html form would fill the sitemap with redirects. Two footguns to avoid:
-    # the portal MUST keep its trailing slash (/portal without the slash serves the old noindex
-    # redirect stub portal.html, not the real page), and the seven pharmacy-<neighbourhood> pages
-    # were deleted in July 2026 (now 301s via _redirects) and must NOT come back here.
+    # the portal MUST keep its trailing slash (/portal without the slash is a 301 in _redirects,
+    # only /portal/ serves the page), and the seven pharmacy-<neighbourhood> pages were deleted in
+    # July 2026 (now 301s via _redirects) and must NOT come back here.
     # All five locale pages (fr/es/pt/it/tr) are live and belong in the list.
     static_pages = [
         (f"{SITE_URL}/",                today, "1.0", "weekly"),
