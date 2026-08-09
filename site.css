@@ -3151,3 +3151,7 @@
 /* a11y: divs promoted to real headings; cancel UA heading margins/size the class rules don't already override */
 h3.svc-acc__group-hd { margin-top: 0; font-size: 1rem; }
 h2.welcome-modal__title { margin-top: 0; }
+
+/* Language pickers: flex-center the flag image with its label on every row */
+.nav__lang-menu a, .nav__links-lang a { display:flex; align-items:center; gap:.4em; }
+.nav__lang-menu a img, .nav__links-lang a img { vertical-align:baseline; flex-shrink:0; }
