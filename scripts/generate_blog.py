@@ -334,7 +334,7 @@ def nav_html(depth: int = 1) -> str:
     <ul class="nav__links" id="navLinks">
       <li><a href="/#welcome">Home</a></li>
       <li class="nav__has-dropdown">
-        <a aria-haspopup="true" href="/#services">Services</a>
+        <a href="/#services">Services</a>
         <ul class="nav__dropdown">
           <li><a href="/portal/">Patient Portal</a></li>
           <li><a href="/#services">Ailment Assessment</a></li>
@@ -347,7 +347,7 @@ def nav_html(depth: int = 1) -> str:
         </ul>
       </li>
       <li class="nav__has-dropdown">
-        <a aria-haspopup="true" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
+        <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
         <ul class="nav__dropdown">
           <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Order on Uber</a></li>
           <li><a href="/braces-supports">Braces &amp; Supports</a></li>
@@ -355,7 +355,7 @@ def nav_html(depth: int = 1) -> str:
       </li>
       <li><a href="{blog_href}" class="active" aria-current="page">Health Hub</a></li>
       <li class="nav__has-dropdown">
-        <a aria-haspopup="true" href="/#faq">Questions?</a>
+        <a href="/#faq">Questions?</a>
         <ul class="nav__dropdown">
           <li><a href="/#about">About Us</a></li>
           <li><a href="/#team">Meet the Team</a></li>
@@ -469,7 +469,7 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
 
 {nav_html(depth=2)}
 
-<article class="post" id="main">
+<article class="post" id="main" tabindex="-1" role="main">
   <p class="post__breadcrumb"><a href="/">Home</a> › <a href="/blog/">Health Hub</a> › {breadcrumb_label}</p>
   <h1>{post['title']}</h1>
   <p class="post__meta">Updated {pretty_date} · {post['reading_minutes']} min read · {breadcrumb_label}</p>

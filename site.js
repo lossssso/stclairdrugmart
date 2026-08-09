@@ -13,6 +13,7 @@
    dlgOpen()/dlgClose(): dialog focus management — saves the opener, moves
    focus in, cycles Tab inside (unless noTrap), and restores focus on close. */
 var _annEl, _annT;
+document.addEventListener('DOMContentLoaded', function(){ announce('', 0); });
 function announce(msg, delay){
   if (!_annEl){
     _annEl = document.createElement('div');
@@ -26,6 +27,13 @@ function announce(msg, delay){
 var _FOCUSABLE = 'a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])';
 function dlgOpen(el, initial, noTrap){
   el._prevFocus = document.activeElement;
+  // modal dialogs: hide the rest of the page from AT browse mode, not just Tab
+  if (el.getAttribute('aria-modal') === 'true' && el.parentElement === document.body) {
+    el._inerted = [];
+    Array.prototype.forEach.call(document.body.children, function(c){
+      if (c !== el && !/^(SCRIPT|STYLE|LINK)$/.test(c.tagName) && !c.inert) { try { c.inert = true; el._inerted.push(c); } catch (e) {} }
+    });
+  }
   var f = initial || el.querySelector(_FOCUSABLE);
   if (f) setTimeout(function(){ f.focus(); }, 60);
   if (noTrap) return;
@@ -41,6 +49,7 @@ function dlgOpen(el, initial, noTrap){
 }
 function dlgClose(el){
   if (el._trap){ el.removeEventListener('keydown', el._trap); el._trap = null; }
+  if (el._inerted){ el._inerted.forEach(function(c){ try { c.inert = false; } catch (e) {} }); el._inerted = null; }
   if (el._prevFocus && el._prevFocus.focus) el._prevFocus.focus();
   el._prevFocus = null;
 }
@@ -721,8 +730,16 @@ window.SmartMatch = (function(){
 
   // Collapse/expand the iframe panel
   var paCloseBtn = document.getElementById('pa-iframe-close');
+  function paFocusPanel(){
+    var wrap = document.getElementById('pa-wrap');
+    if (!wrap) return;
+    wrap.setAttribute('tabindex','-1');
+    setTimeout(function(){ wrap.focus({ preventScroll: true }); }, 400);
+    announce((((window.I18N && window.I18N.ui) || {}).bookingOpened || 'Booking panel opened'));
+  }
   function paOpen() {
     paWrap.style.display = '';
+    paFocusPanel();
     paWrap.classList.remove('collapsed');
     paWrap.classList.remove('dropping');
     void paWrap.offsetWidth;
@@ -1266,6 +1283,7 @@ window.SmartMatch = (function(){
             sugg.appendChild(li);
           });
           activeIdx = -1; (sugg.classList.add('open'), input.setAttribute('aria-expanded','true'));
+          announce(names.length + ' ' + (((window.I18N && window.I18N.ui) || {}).resultsWord || 'results'));
         }).catch(()=>(sugg.classList.remove('open'), input.setAttribute('aria-expanded','false'), input.removeAttribute('aria-activedescendant')));
     }
 
@@ -2058,16 +2076,9 @@ window.SmartMatch = (function(){
   var siteResults = document.getElementById('siteSearchResults');
   var siteDebounce;
   var siteActiveIdx = -1;
-  // a11y: the overlay input drives a listbox of results
-  siteInput.setAttribute('role','combobox');
-  siteInput.setAttribute('aria-expanded','false');
-  siteInput.setAttribute('aria-controls','siteSearchResults');
-  siteInput.setAttribute('aria-autocomplete','list');
-  siteResults.setAttribute('role','listbox');
   function siteHilite(){
     var items = siteResults.querySelectorAll('.site-search__result');
-    items.forEach(function(it, i){ it.classList.toggle('active', i === siteActiveIdx); it.setAttribute('aria-selected', i === siteActiveIdx ? 'true' : 'false'); });
-    if (siteActiveIdx >= 0 && items[siteActiveIdx] && items[siteActiveIdx].id) siteInput.setAttribute('aria-activedescendant', items[siteActiveIdx].id); else siteInput.removeAttribute('aria-activedescendant');
+    items.forEach(function(it, i){ it.classList.toggle('active', i === siteActiveIdx); });
     if (siteActiveIdx >= 0 && items[siteActiveIdx]) items[siteActiveIdx].scrollIntoView({ block: 'nearest' });
   }
 
@@ -2106,7 +2117,6 @@ window.SmartMatch = (function(){
       .sort(function(a,b) { return b.score - a.score; })
       .slice(0, 12);
     if (!scored.length) {
-      siteInput.setAttribute('aria-expanded','false');
       announce('0 ' + (((window.I18N && window.I18N.ui) || {}).resultsWord || 'results'));
       siteResults.innerHTML = '<div class="site-search__empty">' + ((window.I18N && window.I18N.ui || {}).searchEmpty || 'No results for "<strong>{Q}</strong>". Try different keywords.').replace('{Q}', query) + '</div>';
       return;
@@ -2142,11 +2152,8 @@ window.SmartMatch = (function(){
       });
     });
     siteResults.innerHTML = html;
-    siteInput.setAttribute('aria-expanded','true');
     announce(scored.length + ' ' + (((window.I18N && window.I18N.ui) || {}).resultsWord || 'results'));
     siteResults.querySelectorAll('.js-site-result').forEach(function(btn, i) {
-      btn.id = 'ss-opt-' + i;
-      btn.setAttribute('role','option');
       btn.addEventListener('click', function() {
         var anchor = this.dataset.anchor;
         var url = this.dataset.url;

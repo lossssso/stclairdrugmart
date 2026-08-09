@@ -648,11 +648,11 @@ section { padding: 2rem 0.875rem; }
 @keyframes drop-in { 
   0% { opacity: 0; transform: translateY(-6px); }
 }</style>
-  <link rel="preload" href="/site.css?v=17" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/site.css?v=17"></noscript>
+  <link rel="preload" href="/site.css?v=18" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/site.css?v=18"></noscript>
 </head>
 <body>
-<a href="#home" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Ana içeriğe atla</a>
+<a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Ana içeriğe atla</a>
 <script>
 /* Cloud performance guard, decides up-front whether this device should run
    the full drifting-cloud effect or a thinned-out "lite" version. Runs before
@@ -713,7 +713,7 @@ section { padding: 2rem 0.875rem; }
   </div>
   <div class="nav__inner">
     <a href="#home" class="nav__brand">
-      <img src="/logo-340.webp" alt="St. Clair Drug Mart Pharmacy" class="nav__brand__logo" />
+      <img src="/logo-340.webp" alt="" class="nav__brand__logo" />
       <span lang="en">St. Clair Drug Mart Pharmacy</span>
     </a>
     <button class="nav__toggle" aria-label="Menüyü aç" aria-expanded="false" aria-controls="navLinks" onclick="this.classList.toggle('open'); this.setAttribute('aria-expanded', this.classList.contains('open')); document.querySelector('.nav__links').classList.toggle('open')">
@@ -722,7 +722,7 @@ section { padding: 2rem 0.875rem; }
     <ul class="nav__links" id="navLinks">
       <li><a href="#welcome">Ana Sayfa</a></li>
       <li class="nav__has-dropdown">
-        <a aria-haspopup="true" href="#services">Hizmetler</a>
+        <a href="#services">Hizmetler</a>
         <ul class="nav__dropdown">
           <li style="display:flex;align-items:center;gap:.35rem;padding:0 .85rem;"><a href="/portal/" style="display:inline;padding:.55rem 0;">Hasta Portalı</a><span aria-hidden="true" style="opacity:.5;">·</span><a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/login/306667" data-label="Patient Login, PharmAssess Portal" data-iframeheight="660" style="display:inline;padding:.55rem 0;">Giriş</a></li>
           <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},200)">Rahatsızlık değerlendirmeleri</a></li>
@@ -735,7 +735,7 @@ section { padding: 2rem 0.875rem; }
         </ul>
       </li>
       <li class="nav__has-dropdown">
-        <a aria-haspopup="true" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Mağaza</a>
+        <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Mağaza</a>
         <ul class="nav__dropdown">
           <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Uber'den sipariş ver</a></li>
           <li><a href="/braces-supports">Ortezler ve destekler</a></li>
@@ -743,7 +743,7 @@ section { padding: 2rem 0.875rem; }
       </li>
       <li><a href="/blog/">Health Hub</a></li>
       <li class="nav__has-dropdown">
-        <a aria-haspopup="true" href="#faq">Sorularınız?</a>
+        <a href="#faq">Sorularınız?</a>
         <ul class="nav__dropdown">
           <li><a href="#team">Ekibimiz</a></li>
           <li><a href="#contact">Bize ulaşın ve iletişim</a></li>
@@ -752,7 +752,7 @@ section { padding: 2rem 0.875rem; }
           <li><a href="#faq">Sıkça sorulan sorular (SSS)</a></li>
         </ul>
       </li>
-      <li class="nav__links-lang" aria-label="Language">
+      <li class="nav__links-lang">
         <span class="nav__links-lang__label">🌐 Dil</span>
         <a href="/" hreflang="en" lang="en"><img src="/flags/ca.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> English</a>
         <a href="/fr/" hreflang="fr" lang="fr"><img src="/flags/ca.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Français</a>
@@ -764,7 +764,7 @@ section { padding: 2rem 0.875rem; }
       <li class="nav__cta"><a href="#booking">Randevu al</a></li>
     </ul>
     <div class="nav__lang" id="navLang">
-      <button class="nav__lang-btn" id="navLangBtn" aria-label="Dil seçin" aria-haspopup="true" aria-expanded="false">
+      <button class="nav__lang-btn" id="navLangBtn" aria-label="Dil seçin" aria-expanded="false">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 3.8 5.7 3.8 9S14.5 18.5 12 21c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z"/></svg>
       </button>
       <ul class="nav__lang-menu" id="navLangMenu" role="menu">
@@ -877,6 +877,7 @@ section { padding: 2rem 0.875rem; }
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9l8 7 8-7"/></svg>
   </a>
 </header>
+<main id="main" tabindex="-1">
 
 <!-- Welcome / news modal -->
 <div class="welcome-modal-overlay" id="welcomeModal" role="dialog" aria-modal="true" aria-labelledby="welcomeModalTitle">
@@ -994,7 +995,7 @@ section { padding: 2rem 0.875rem; }
       <div class="rx-ext__body">
         <div class="rx-ext__title">Yenilemeniz bitti mi? Doktorunuza ulaşamıyor musunuz?</div>
         <p class="rx-ext__text">Reçeteyi yazana ulaşamadan ilacınız mı bitti? Eczacılarımız <strong>reçetenizi uzatabilir, yenileyebilir veya uyarlayabilir</strong>, böylece ilaçsız kalmazsınız. Yalnızca orijinal reçetenizin bir kopyası ya da referansına ihtiyacımız var: hastamızsanız muhtemelen kayıtlıdır; değilse <strong>kutucuğunuzu getirin veya etiketin net bir fotoğrafını gönderin</strong>. Yenileyip yenileyemeyeceğimiz ve bunun telefonla yapılıp yapılmayacağı her zaman <strong>eczacının takdirindedir</strong>.</p>
-        <span class="rx-ext__learn" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},120)">Daha fazla bilgi →</span>
+        <span class="rx-ext__learn" role="button" tabindex="0" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},120)">Daha fazla bilgi →</span>
       </div>
       <div class="rx-ext__actions">
         <a class="rx-ext__btn js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Medication Extension or Adaptation" data-hint="Select <strong>Medication Extension or Adaptation</strong> under TYPE OF APPOINTMENT.">📅 Uzatma / uyarlama talep et</a>
@@ -1054,19 +1055,19 @@ section { padding: 2rem 0.875rem; }
     <h2 class="section__title">Eczanemizde yeni misiniz?</h2>
     <p class="section__lead">Başka bir eczaneden veya zincirden geçmek düşündüğünüzden kolay. Her şeyle biz ilgileniriz.</p>
     <div class="steps">
-      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Reçete transferini başlat">
+      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Reçete transferini başlat: Reçetenizi transfer edin">
         <div class="step__num">1</div>
         <h3>Reçetenizi transfer edin</h3>
         <p>Mevcut eczanenizle sizin adınıza biz iletişime geçeriz, hiçbir şey yapmanıza gerek yok. Bizi arayın, kutunuzu getirin veya çevrimiçi formu kullanın.</p>
         <span class="step__btn">Transferi başlat →</span>
       </div>
-      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Reçete transferini başlat">
+      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Reçete transferini başlat: Dosyanızı oluştururuz">
         <div class="step__num">2</div>
         <h3>Dosyanızı oluştururuz</h3>
         <p>Eczacımız ilaç listenizin tamamını inceler, etkileşimleri kontrol eder ve profilinizi oluşturur. Transferlerin çoğu aynı gün hazır olur.</p>
         <span class="step__btn">Başlayın →</span>
       </div>
-      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Reçete transferini başlat">
+      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Reçete transferini başlat: Alın ve bizimle tanışın">
         <div class="step__num">3</div>
         <h3>Alın ve bizimle tanışın</h3>
         <p>Gelip eczacınızla yüz yüze tanışın veya Toronto bölgesinin tamamında ücretsiz teslimatı seçin. Evrak yok, ek maliyet yok.</p>
@@ -1925,7 +1926,7 @@ section { padding: 2rem 0.875rem; }
           <button type="button" id="dc-check" class="btn" disabled>Etkileşimleri Kontrol Et →</button>
           <button type="button" id="dc-clear" class="btn btn--outline">Temizle</button>
         </div>
-        <div id="dc-results" role="alert" class="dc-results"></div>
+        <div id="dc-results" aria-live="polite" class="dc-results"></div>
         <p class="lang-note" style="font-size:.8rem;opacity:.75;margin:.4rem 0">Etkileşim ayrıntıları İngilizce gösterilir. Türkçe açıklama isterseniz bize sorun.</p>
         <p class="dc-disclaimer">⚠️ Bu araç yalnızca genel bilgi amaçlıdır ve her etkileşimi yakalayamayabilir. İlaçlara başlamadan, bırakmadan veya birlikte kullanmadan önce her zaman eczacılarımıza danışın. İlaç adları ABD Ulusal Tıp Kütüphanesi'ne (NLM RxNav API) anonim olarak gönderilir. Bu web sitesi hiçbir kişisel sağlık bilgisi toplamaz veya saklamaz.</p>
         <div class="dc-credit"><span>Tam bir rapor için ziyaret edin:</span><a href="https://www.drugs.com/drug_interactions.html" target="_blank" rel="noopener" class="dc-credit__logo">Drugs<span>.com</span></a><span class="dc-credit__data">· Veriler: NLM RxNav · DrugBank · Health Canada</span></div>
@@ -2018,7 +2019,7 @@ section { padding: 2rem 0.875rem; }
             </svg>
             <span class="reviews-google-badge__text">Google Yorumları</span>
           </a>
-          <div class="reviews-stars-wrap" aria-label="5 üzerinden 4,9 yıldız">
+          <div class="reviews-stars-wrap" role="img" aria-label="5 üzerinden 4,9 yıldız">
             <span class="reviews-stars-bg" aria-hidden="true">★★★★★</span>
             <span class="reviews-stars-fill" aria-hidden="true">★★★★★</span>
           </div>
@@ -2035,7 +2036,7 @@ section { padding: 2rem 0.875rem; }
               <img src="/logos/uber.png" alt="Uber" class="reviews-uber-badge__icon">
               <span class="reviews-uber-badge__text">Uber Siparişleri</span>
             </a>
-            <div class="reviews-stars-wrap" aria-label="5 üzerinden 4,9 yıldız">
+            <div class="reviews-stars-wrap" role="img" aria-label="5 üzerinden 4,9 yıldız">
               <span class="reviews-stars-bg" aria-hidden="true">★★★★★</span>
               <span class="reviews-stars-fill" aria-hidden="true">★★★★★</span>
             </div>
@@ -2652,6 +2653,7 @@ window.FAQS = [
 </section>
 
 <!-- ── Footer ─────────────────────────────────────────────── -->
+</main>
 <footer>
   <div class="footer__links">
     <a href="#welcome">Ana Sayfa</a>
@@ -2759,7 +2761,7 @@ window.FAQS = [
 <!-- ── Privacy Policy Modal ──────────────────────────── -->
 <div class="pp-overlay" id="pp-overlay" role="dialog" aria-modal="true" aria-labelledby="pp-title">
   <div class="pp-modal">
-    <button class="pp-close" onclick="document.getElementById('pp-overlay').classList.remove('open')" aria-label="Kapat">&times;</button>
+    <button class="pp-close" onclick="var o=document.getElementById('pp-overlay');o.classList.remove('open');if(window.dlgClose)dlgClose(o)" aria-label="Kapat">&times;</button>
     <h2 id="pp-title">Gizlilik Politikası</h2>
     <p><strong>Yürürlük Tarihi:</strong> 1 Temmuz 2026 &nbsp;·&nbsp; <strong>Son Güncelleme:</strong> Temmuz 2026</p>
 
@@ -2920,7 +2922,7 @@ window.I18N = {
 
 
 
-<script src="/site.js?v=17" defer></script>
+<script src="/site.js?v=18" defer></script>
 <script src="/analytics-events.js?v=1" defer></script>
 </body>
 </html>

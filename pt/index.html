@@ -648,11 +648,11 @@ section { padding: 2rem 0.875rem; }
 @keyframes drop-in { 
   0% { opacity: 0; transform: translateY(-6px); }
 }</style>
-  <link rel="preload" href="/site.css?v=17" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/site.css?v=17"></noscript>
+  <link rel="preload" href="/site.css?v=18" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/site.css?v=18"></noscript>
 </head>
 <body>
-<a href="#home" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Ir para o conteúdo principal</a>
+<a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Ir para o conteúdo principal</a>
 <script>
 /* Cloud performance guard, decides up-front whether this device should run
    the full drifting-cloud effect or a thinned-out "lite" version. Runs before
@@ -713,7 +713,7 @@ section { padding: 2rem 0.875rem; }
   </div>
   <div class="nav__inner">
     <a href="#home" class="nav__brand">
-      <img src="/logo-340.webp" alt="St. Clair Drug Mart Pharmacy" class="nav__brand__logo" />
+      <img src="/logo-340.webp" alt="" class="nav__brand__logo" />
       <span lang="en">St. Clair Drug Mart Pharmacy</span>
     </a>
     <button class="nav__toggle" aria-label="Abrir o menu" aria-expanded="false" aria-controls="navLinks" onclick="this.classList.toggle('open'); this.setAttribute('aria-expanded', this.classList.contains('open')); document.querySelector('.nav__links').classList.toggle('open')">
@@ -722,7 +722,7 @@ section { padding: 2rem 0.875rem; }
     <ul class="nav__links" id="navLinks">
       <li><a href="#welcome">Início</a></li>
       <li class="nav__has-dropdown">
-        <a aria-haspopup="true" href="#services">Serviços</a>
+        <a href="#services">Serviços</a>
         <ul class="nav__dropdown">
           <li style="display:flex;align-items:center;gap:.35rem;padding:0 .85rem;"><a href="/portal/" style="display:inline;padding:.55rem 0;">Portal do paciente</a><span aria-hidden="true" style="opacity:.5;">·</span><a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/login/306667" data-label="Patient Login, PharmAssess Portal" data-iframeheight="660" style="display:inline;padding:.55rem 0;">Entrar</a></li>
           <li><a href="#services" onclick="setTimeout(function(){openAcc('acc-ailments');document.getElementById('acc-ailments').scrollIntoView({behavior:'smooth',block:'start'})},200)">Avaliação de doenças</a></li>
@@ -735,7 +735,7 @@ section { padding: 2rem 0.875rem; }
         </ul>
       </li>
       <li class="nav__has-dropdown">
-        <a aria-haspopup="true" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Loja</a>
+        <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Loja</a>
         <ul class="nav__dropdown">
           <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Encomendar na Uber</a></li>
           <li><a href="/braces-supports">Ortóteses e suportes</a></li>
@@ -743,7 +743,7 @@ section { padding: 2rem 0.875rem; }
       </li>
       <li><a href="/blog/">Health Hub</a></li>
       <li class="nav__has-dropdown">
-        <a aria-haspopup="true" href="#faq">Perguntas?</a>
+        <a href="#faq">Perguntas?</a>
         <ul class="nav__dropdown">
           <li><a href="#team">A nossa equipa</a></li>
           <li><a href="#contact">Encontrar-nos e contacto</a></li>
@@ -752,7 +752,7 @@ section { padding: 2rem 0.875rem; }
           <li><a href="#faq">Perguntas frequentes (FAQ)</a></li>
         </ul>
       </li>
-      <li class="nav__links-lang" aria-label="Language">
+      <li class="nav__links-lang">
         <span class="nav__links-lang__label">🌐 Idioma</span>
         <a href="/" hreflang="en" lang="en"><img src="/flags/ca.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> English</a>
         <a href="/fr/" hreflang="fr" lang="fr"><img src="/flags/ca.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Français</a>
@@ -764,7 +764,7 @@ section { padding: 2rem 0.875rem; }
       <li class="nav__cta"><a href="#booking">Marcar agora</a></li>
     </ul>
     <div class="nav__lang" id="navLang">
-      <button class="nav__lang-btn" id="navLangBtn" aria-label="Escolher idioma" aria-haspopup="true" aria-expanded="false">
+      <button class="nav__lang-btn" id="navLangBtn" aria-label="Escolher idioma" aria-expanded="false">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 3.8 5.7 3.8 9S14.5 18.5 12 21c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z"/></svg>
       </button>
       <ul class="nav__lang-menu" id="navLangMenu" role="menu">
@@ -877,6 +877,7 @@ section { padding: 2rem 0.875rem; }
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9l8 7 8-7"/></svg>
   </a>
 </header>
+<main id="main" tabindex="-1">
 
 <!-- Welcome / news modal -->
 <div class="welcome-modal-overlay" id="welcomeModal" role="dialog" aria-modal="true" aria-labelledby="welcomeModalTitle">
@@ -994,7 +995,7 @@ section { padding: 2rem 0.875rem; }
       <div class="rx-ext__body">
         <div class="rx-ext__title">Sem renovações? Não consegue contactar o médico?</div>
         <p class="rx-ext__text">Ficou sem medicação antes de conseguir contactar o prescritor? Os nossos farmacêuticos podem <strong>prolongar, renovar ou adaptar a sua receita</strong> para que não fique sem. Só precisamos de uma cópia ou referência da sua receita original: se é nosso paciente, provavelmente está no ficheiro; se não, <strong>traga o frasco ou envie uma foto nítida do rótulo</strong>. Poder renovar, e fazê-lo por telefone, fica sempre <strong>ao critério do farmacêutico</strong>.</p>
-        <span class="rx-ext__learn" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},120)">Saber mais →</span>
+        <span class="rx-ext__learn" role="button" tabindex="0" onclick="setTimeout(function(){openAcc('acc-rx-renewal');document.getElementById('acc-rx-renewal').scrollIntoView({behavior:'smooth',block:'start'})},120)">Saber mais →</span>
       </div>
       <div class="rx-ext__actions">
         <a class="rx-ext__btn js-pa-select" href="#booking" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Medication Extension or Adaptation" data-hint="Select <strong>Medication Extension or Adaptation</strong> under TYPE OF APPOINTMENT.">📅 Pedir prolongamento / adaptação</a>
@@ -1054,19 +1055,19 @@ section { padding: 2rem 0.875rem; }
     <h2 class="section__title">Novo na nossa farmácia?</h2>
     <p class="section__lead">Mudar de outra farmácia ou cadeia é mais fácil do que pensa. Tratamos de tudo.</p>
     <div class="steps">
-      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Iniciar transferência de receita">
+      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Iniciar transferência de receita: Transfira a sua receita">
         <div class="step__num">1</div>
         <h3>Transfira a sua receita</h3>
         <p>Contactamos a sua farmácia atual por si, não tem de fazer nada. Ligue-nos, traga o frasco ou use o formulário online.</p>
         <span class="step__btn">Iniciar transferência →</span>
       </div>
-      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Iniciar transferência de receita">
+      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Iniciar transferência de receita: Criamos o seu ficheiro">
         <div class="step__num">2</div>
         <h3>Criamos o seu ficheiro</h3>
         <p>O nosso farmacêutico revê a sua lista completa de medicamentos, verifica interações e cria o seu perfil. A maioria das transferências fica pronta no mesmo dia.</p>
         <span class="step__btn">Começar →</span>
       </div>
-      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Iniciar transferência de receita">
+      <div class="step step--clickable js-pa-select" data-url="https://app.pharmassess.ca/transfer-rx/306667" role="button" tabindex="0" style="cursor:pointer;" aria-label="Iniciar transferência de receita: Venha buscar e conheça-nos">
         <div class="step__num">3</div>
         <h3>Venha buscar e conheça-nos</h3>
         <p>Venha conhecer o seu farmacêutico pessoalmente, ou escolha a entrega gratuita em toda a região de Toronto. Sem papelada, sem custos extra.</p>
@@ -1925,7 +1926,7 @@ section { padding: 2rem 0.875rem; }
           <button type="button" id="dc-check" class="btn" disabled>Verificar interações →</button>
           <button type="button" id="dc-clear" class="btn btn--outline">Limpar</button>
         </div>
-        <div id="dc-results" role="alert" class="dc-results"></div>
+        <div id="dc-results" aria-live="polite" class="dc-results"></div>
         <p class="lang-note" style="font-size:.8rem;opacity:.75;margin:.4rem 0">Os detalhes das interações aparecem em inglês. Pergunte-nos se quiser uma explicação em português.</p>
         <p class="dc-disclaimer">⚠️ Esta ferramenta é apenas informativa e pode não detetar todas as interações. Confirme sempre com os nossos farmacêuticos antes de iniciar, parar ou combinar medicamentos. Os nomes dos medicamentos são enviados anonimamente para a National Library of Medicine dos EUA (API NLM RxNav). Este site não recolhe nem guarda qualquer informação de saúde pessoal.</p>
         <div class="dc-credit"><span>Para um relatório completo, visite</span><a href="https://www.drugs.com/drug_interactions.html" target="_blank" rel="noopener" class="dc-credit__logo">Drugs<span>.com</span></a><span class="dc-credit__data">· Dados: NLM RxNav · DrugBank · Health Canada</span></div>
@@ -2018,7 +2019,7 @@ section { padding: 2rem 0.875rem; }
             </svg>
             <span class="reviews-google-badge__text">Avaliações Google</span>
           </a>
-          <div class="reviews-stars-wrap" aria-label="4,9 em 5 estrelas">
+          <div class="reviews-stars-wrap" role="img" aria-label="4,9 em 5 estrelas">
             <span class="reviews-stars-bg" aria-hidden="true">★★★★★</span>
             <span class="reviews-stars-fill" aria-hidden="true">★★★★★</span>
           </div>
@@ -2035,7 +2036,7 @@ section { padding: 2rem 0.875rem; }
               <img src="/logos/uber.png" alt="Uber" class="reviews-uber-badge__icon">
               <span class="reviews-uber-badge__text">Encomendas Uber</span>
             </a>
-            <div class="reviews-stars-wrap" aria-label="4,9 em 5 estrelas">
+            <div class="reviews-stars-wrap" role="img" aria-label="4,9 em 5 estrelas">
               <span class="reviews-stars-bg" aria-hidden="true">★★★★★</span>
               <span class="reviews-stars-fill" aria-hidden="true">★★★★★</span>
             </div>
@@ -2651,6 +2652,7 @@ window.FAQS = [
 </section>
 
 <!-- ── Footer ─────────────────────────────────────────────── -->
+</main>
 <footer>
   <div class="footer__links">
     <a href="#welcome">Início</a>
@@ -2758,7 +2760,7 @@ window.FAQS = [
 <!-- ── Privacy Policy Modal ──────────────────────────── -->
 <div class="pp-overlay" id="pp-overlay" role="dialog" aria-modal="true" aria-labelledby="pp-title">
   <div class="pp-modal">
-    <button class="pp-close" onclick="document.getElementById('pp-overlay').classList.remove('open')" aria-label="Fechar">&times;</button>
+    <button class="pp-close" onclick="var o=document.getElementById('pp-overlay');o.classList.remove('open');if(window.dlgClose)dlgClose(o)" aria-label="Fechar">&times;</button>
     <h2 id="pp-title">Política de privacidade</h2>
     <p><strong>Data de entrada em vigor:</strong> 1 de julho de 2026 &nbsp;·&nbsp; <strong>Última atualização:</strong> julho de 2026</p>
 
@@ -2919,7 +2921,7 @@ window.I18N = {
 
 
 
-<script src="/site.js?v=17" defer></script>
+<script src="/site.js?v=18" defer></script>
 <script src="/analytics-events.js?v=1" defer></script>
 </body>
 </html>

@@ -559,8 +559,8 @@ section { padding: 2rem 0.875rem; }
 @keyframes drop-in { 
   0% { opacity: 0; transform: translateY(-6px); }
 }</style>
-  <link rel="preload" href="/site.css?v=17" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/site.css?v=17"></noscript>
+  <link rel="preload" href="/site.css?v=18" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/site.css?v=18"></noscript>
 </head>
 <body>
 <a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Skip to main content</a>
@@ -622,7 +622,7 @@ section { padding: 2rem 0.875rem; }
   </div>
   <div class="nav__inner">
     <a href="/#home" class="nav__brand">
-      <img src="/logo-340.webp" alt="St. Clair Drug Mart Pharmacy" class="nav__brand__logo" />
+      <img src="/logo-340.webp" alt="" class="nav__brand__logo" />
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
     <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks" onclick="this.classList.toggle('open'); this.setAttribute('aria-expanded', this.classList.contains('open')); document.querySelector('.nav__links').classList.toggle('open')">
@@ -631,7 +631,7 @@ section { padding: 2rem 0.875rem; }
     <ul class="nav__links" id="navLinks">
       <li><a href="/#welcome">Home</a></li>
       <li class="nav__has-dropdown">
-        <a aria-haspopup="true" href="/#services">Services</a>
+        <a href="/#services">Services</a>
         <ul class="nav__dropdown">
           <li style="display:flex;align-items:center;gap:.35rem;padding:0 .85rem;"><a href="/portal/" aria-current="page" style="display:inline;padding:.55rem 0;">Patient Portal</a><span aria-hidden="true" style="opacity:.5;">·</span><a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/login/306667" data-label="Patient Login, PharmAssess Portal" data-iframeheight="660" style="display:inline;padding:.55rem 0;">Sign In</a></li>
           <li><a href="/#services">Condition Assessments</a></li>
@@ -644,7 +644,7 @@ section { padding: 2rem 0.875rem; }
         </ul>
       </li>
       <li class="nav__has-dropdown">
-        <a aria-haspopup="true" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
+        <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
         <ul class="nav__dropdown">
           <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Order on Uber</a></li>
           <li><a href="/braces-supports">Braces &amp; Supports</a></li>
@@ -652,7 +652,7 @@ section { padding: 2rem 0.875rem; }
       </li>
       <li><a href="/blog/">Health Hub</a></li>
       <li class="nav__has-dropdown">
-        <a aria-haspopup="true" href="/#faq">Questions?</a>
+        <a href="/#faq">Questions?</a>
         <ul class="nav__dropdown">
           <li><a href="/#team">Meet the Team</a></li>
           <li><a href="/#contact">Find Us &amp; Contact</a></li>
@@ -661,7 +661,7 @@ section { padding: 2rem 0.875rem; }
           <li><a href="/#faq">Frequently Asked Questions (FAQ)</a></li>
         </ul>
       </li>
-      <li class="nav__links-lang" aria-label="Language">
+      <li class="nav__links-lang">
         <span class="nav__links-lang__label">🌐 Language</span>
         <a href="/" aria-current="page" hreflang="en" lang="en"><img src="/flags/ca.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> English</a>
         <a href="/fr/" hreflang="fr" lang="fr"><img src="/flags/ca.svg" alt="" style="width:18px;height:13.5px;vertical-align:-1.5px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,.3)"> Français</a>
@@ -673,7 +673,7 @@ section { padding: 2rem 0.875rem; }
       <li class="nav__cta"><a href="#booking">Book Now</a></li>
     </ul>
     <div class="nav__lang" id="navLang">
-      <button class="nav__lang-btn" id="navLangBtn" aria-label="Choose language" aria-haspopup="true" aria-expanded="false">
+      <button class="nav__lang-btn" id="navLangBtn" aria-label="Choose language" aria-expanded="false">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 3.8 5.7 3.8 9S14.5 18.5 12 21c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z"/></svg>
       </button>
       <ul class="nav__lang-menu" id="navLangMenu" role="menu">
@@ -706,7 +706,7 @@ section { padding: 2rem 0.875rem; }
 </div>
 
 
-<main id="main">
+<main id="main" tabindex="-1">
 <section id="booking">
   <div class="section__inner">
     <img src="/cloudb.webp" alt="" aria-hidden="true" class="booking__logo-cloud" loading="lazy" decoding="async" />
@@ -1009,7 +1009,7 @@ section { padding: 2rem 0.875rem; }
 <!-- Privacy Policy overlay (opened from the footer link) -->
 <div class="pp-overlay" id="pp-overlay" role="dialog" aria-modal="true" aria-labelledby="pp-title">
   <div class="pp-modal">
-    <button class="pp-close" onclick="document.getElementById('pp-overlay').classList.remove('open')" aria-label="Close">&times;</button>
+    <button class="pp-close" onclick="var o=document.getElementById('pp-overlay');o.classList.remove('open');if(window.dlgClose)dlgClose(o)" aria-label="Close">&times;</button>
     <h2 id="pp-title">Privacy Policy</h2>
     <p><strong>Effective Date:</strong> July 1, 2026 &nbsp;·&nbsp; <strong>Last Updated:</strong> July 2026</p>
 
@@ -1147,7 +1147,7 @@ window.SITE_INDEX_CORE = [
 ];
 </script>
 
-<script src="/site.js?v=17" defer></script>
+<script src="/site.js?v=18" defer></script>
 <script src="/analytics-events.js?v=1" defer></script>
 </body>
 </html>
