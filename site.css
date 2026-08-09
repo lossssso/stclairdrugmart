@@ -3147,3 +3147,7 @@
 /* ── a11y: keyboard users can open the CSS-hover nav dropdowns ── */
 .nav__has-dropdown:focus-within .nav__dropdown { display:block; }
 .nav__has-dropdown:focus-within > a::after { transform: rotate(180deg); }
+
+/* a11y: divs promoted to real headings; cancel UA heading margins/size the class rules don't already override */
+h3.svc-acc__group-hd { margin-top: 0; font-size: 1rem; }
+h2.welcome-modal__title { margin-top: 0; }

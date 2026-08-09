@@ -67,7 +67,7 @@ window.paOffPageHref = function(anchor, openId){
   var lastCat = null;
   window.FAQS.forEach(function(faq, idx){
     if (faq.cat && faq.cat !== lastCat) {
-      var hd = document.createElement('div');
+      var hd = document.createElement('h3');
       hd.className = 'faq-cat__hd';
       hd.dataset.cat = faq.cat;
       var meta = catMeta[faq.cat];

@@ -649,8 +649,8 @@ section { padding: 2rem 0.875rem; }
 @keyframes drop-in { 
   0% { opacity: 0; transform: translateY(-6px); }
 }</style>
-  <link rel="preload" href="/site.css?v=16" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/site.css?v=16"></noscript>
+  <link rel="preload" href="/site.css?v=17" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/site.css?v=17"></noscript>
 </head>
 <body>
 <script>
@@ -879,13 +879,13 @@ section { padding: 2rem 0.875rem; }
 </header>
 
 <!-- Welcome / news modal -->
-<div class="welcome-modal-overlay" id="welcomeModal" role="dialog" aria-modal="true" aria-label="Bem-vindo">
+<div class="welcome-modal-overlay" id="welcomeModal" role="dialog" aria-modal="true" aria-labelledby="welcomeModalTitle">
   <div class="welcome-modal">
     <button class="welcome-modal__close" id="welcomeModalClose" aria-label="Fechar">&times;</button>
     <div class="welcome-modal__top">
       <div class="welcome-modal__icon"><img src="/logo-340.webp" alt="" /></div>
       <span class="welcome-modal__badge">✅ Já disponível</span>
-      <div class="welcome-modal__title">Bem-vindo à farmácia St. Clair Drug Mart</div>
+      <h2 class="welcome-modal__title" id="welcomeModalTitle">Bem-vindo à farmácia St. Clair Drug Mart</h2>
       <div class="welcome-modal__text">Não se sente bem? Os nossos farmacêuticos podem agora avaliar e prescrever para <strong>28 doenças comuns</strong>, sem necessidade de consulta médica.</div>
     </div>
     <div class="welcome-modal__body">
@@ -1329,7 +1329,7 @@ section { padding: 2rem 0.875rem; }
     <div class="svc-acc">
 
       <div class="svc-acc__group" data-cat="clinical">
-      <div class="svc-acc__group-hd"><span class="svc-acc__group-hd__icon">🏥</span><span class="svc-acc__group-hd__text">Serviços clínicos</span><span class="svc-acc__group-hd__count">7</span></div>
+      <h3 class="svc-acc__group-hd"><span class="svc-acc__group-hd__icon">🏥</span><span class="svc-acc__group-hd__text">Serviços clínicos</span><span class="svc-acc__group-hd__count">7</span></h3>
       <p class="svc-acc__group-sub">Cuidados diretos do seu farmacêutico: avaliações, prescrição, vacinas e testes, sem consulta médica na maioria dos casos.</p>
 
       <div class="svc-acc-item" id="acc-ailments">
@@ -1476,7 +1476,7 @@ section { padding: 2rem 0.875rem; }
         <div class="svc-acc__body svc-acc__body--wide">
           <p class="section__lead" style="margin-bottom:1.5rem;">Sim. No Ontário pode ser vacinado numa farmácia sem médico. Na St. Clair Drug Mart, em Toronto, o nosso farmacêutico administra vacinas contra a gripe, COVID-19, zona, pneumocócica, VSR, Tdap e vacinas de viagem na própria farmácia, sem consulta médica. Sem marcação; recomenda-se marcar em períodos de maior movimento.</p>
 
-          <div class="vaccines__sub-heading" style="margin-bottom:.75rem;">Financiadas pelo Estado, gratuitas com um cartão de saúde do Ontário válido</div>
+          <h4 class="vaccines__sub-heading" style="margin-bottom:.75rem;">Financiadas pelo Estado, gratuitas com um cartão de saúde do Ontário válido</h4>
           <p class="vaccines__new-note">🆕 <strong>Novidade desde 1 de julho de 2026:</strong> os farmacêuticos do Ontário podem agora administrar as vacinas financiadas <strong>Tdap, zona, pneumocócica e VSR</strong>. Receba-as aqui na farmácia, sem consulta médica.</p>
           <div class="vaccine-grid" style="margin-bottom:1.75rem;">
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Influenza (vacina da gripe)</div><span class="vaccine-card__badges"><span class="vaccine-card__badge badge--funded">GRÁTIS</span></span></div><div class="vaccine-card__who">Todos os residentes do Ontário com 6 meses ou mais, anual</div><p class="vaccine-card__desc">Atualizada todos os outonos. Recomendada para idosos, crianças, grávidas e pessoas com doenças crónicas.</p></div>
@@ -1489,7 +1489,7 @@ section { padding: 2rem 0.875rem; }
           <p style="text-align:center;margin-bottom:.75rem;"><a href="#booking" class="svc-acc__link js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT, then choose your vaccine under TYPE OF SERVICE and your preferred brand.">Marcar agora →</a></p>
           <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-bottom:2rem;">As vacinas financiadas exigem um cartão de saúde do Ontário válido. Aplicam-se critérios de elegibilidade. Ligue (416) 654-8181 para saber o stock atual.</p>
 
-          <div class="vaccines__sub-heading" style="margin-bottom:.75rem;">✈️ Vacinas de viagem e privadas</div>
+          <h4 class="vaccines__sub-heading" style="margin-bottom:.75rem;">✈️ Vacinas de viagem e privadas</h4>
           <p style="margin-bottom:1rem;">Vai viajar para o estrangeiro? Analisamos os seus destinos, recomendamos as vacinas e medicamentos certos e deixamo-lo pronto para viajar, tudo numa só visita.</p>
           <div class="vaccine-grid" style="margin-bottom:1.5rem;">
             <div class="vaccine-card"><div class="vaccine-card__header"><div class="vaccine-card__name">Hepatitis A &amp; B (Twinrix)</div><span class="vaccine-card__badge badge--private">PRIVADO / SEGURO</span></div><div class="vaccine-card__who">Viajantes · Pessoas de risco</div><p class="vaccine-card__desc">Recomendada para viagens à Ásia, África, América Latina e Médio Oriente. Muitos planos de saúde cobrem vacinas de viagem.</p></div>
@@ -1722,7 +1722,7 @@ section { padding: 2rem 0.875rem; }
       </div>
 
       <div class="svc-acc__group" data-cat="pharmacy">
-      <div class="svc-acc__group-hd"><span class="svc-acc__group-hd__icon">💊</span><span class="svc-acc__group-hd__text">Serviços de farmácia</span><span class="svc-acc__group-hd__count">7</span></div>
+      <h3 class="svc-acc__group-hd"><span class="svc-acc__group-hd__icon">💊</span><span class="svc-acc__group-hd__text">Serviços de farmácia</span><span class="svc-acc__group-hd__count">7</span></h3>
       <p class="svc-acc__group-sub">Obter os seus medicamentos: aviamento, embalagem, transferências, entrega e produtos de farmácia do dia a dia.</p>
 
       <div class="svc-acc-item">
@@ -1829,7 +1829,7 @@ section { padding: 2rem 0.875rem; }
       </div>
 
       <div class="svc-acc__group" data-cat="tools">
-      <div class="svc-acc__group-hd"><span class="svc-acc__group-hd__icon">🛠️</span><span class="svc-acc__group-hd__text">Ferramentas e apoio</span><span class="svc-acc__group-hd__count">5</span></div>
+      <h3 class="svc-acc__group-hd"><span class="svc-acc__group-hd__icon">🛠️</span><span class="svc-acc__group-hd__text">Ferramentas e apoio</span><span class="svc-acc__group-hd__count">5</span></h3>
       <p class="svc-acc__group-sub">Ferramentas gratuitas, programas e extras úteis, sem marcação nem inscrição.</p>
 
       <div class="svc-acc-item">
@@ -2919,7 +2919,7 @@ window.I18N = {
 
 
 
-<script src="/site.js?v=16" defer></script>
+<script src="/site.js?v=17" defer></script>
 <script src="/analytics-events.js?v=1" defer></script>
 </body>
 </html>
