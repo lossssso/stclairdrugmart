@@ -376,9 +376,11 @@
       .trust-badge__logo { max-width:52px; max-height:44px; }
       .trust-badge--wordmark .trust-badge__logo { max-width:58px; max-height:48px; }
     }
-  </style>
+  .skip-link:focus { left:12px !important; top:12px; background:#fff; color:#00505a; padding:.6rem 1rem; border-radius:8px; box-shadow:0 4px 18px rgba(0,0,0,.25); outline:2px solid #21a1a8; }
+</style>
 </head>
 <body>
+<a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Skip to main content</a>
 
 <div class="sky-bg" aria-hidden="true">
   <img decoding="async" src="../cloud2b.webp" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="">
@@ -406,13 +408,13 @@
       <img src="../logo-340.webp" alt="St. Clair Drug Mart Pharmacy" class="nav__brand__logo"/>
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
-    <button class="nav__toggle" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
+    <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks" onclick="this.classList.toggle('open'); this.setAttribute('aria-expanded', this.classList.contains('open')); document.querySelector('.nav__links').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav__links" id="navLinks">
       <li><a href="/#welcome">Home</a></li>
       <li class="nav__has-dropdown">
-        <a href="/#services">Services</a>
+        <a aria-haspopup="true" href="/#services">Services</a>
         <ul class="nav__dropdown">
           <li><a href="/portal/">Patient Portal</a></li>
           <li><a href="/#services">Ailment Assessment</a></li>
@@ -425,7 +427,7 @@
         </ul>
       </li>
       <li class="nav__has-dropdown">
-        <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
+        <a aria-haspopup="true" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
         <ul class="nav__dropdown">
           <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Order on Uber</a></li>
           <li><a href="/braces-supports">Braces &amp; Supports</a></li>
@@ -433,7 +435,7 @@
       </li>
       <li><a href="/blog/" class="active" aria-current="page">Health Hub</a></li>
       <li class="nav__has-dropdown">
-        <a href="/#faq">Questions?</a>
+        <a aria-haspopup="true" href="/#faq">Questions?</a>
         <ul class="nav__dropdown">
           <li><a href="/#about">About Us</a></li>
           <li><a href="/#team">Meet the Team</a></li>
@@ -454,7 +456,7 @@
     <h1>The Health Hub</h1>
     <p class="page-header__sub">Plain-language health news, pharmacy updates, and wellness guides from the patient-centred clinical pharmacists at St. Clair Drug Mart.</p>
     <div class="page-header__search">
-      <input type="text" id="searchInput" placeholder="Search articles…" autocomplete="off"/>
+      <input aria-label="Search articles" type="text" id="searchInput" placeholder="Search articles…" autocomplete="off"/>
       <button type="button" id="searchBtn">Search</button>
     </div>
     <div class="page-header__stats">
@@ -510,7 +512,7 @@
 </div>
 
 <!-- ── Main Content ─────────────────────────────────────────── -->
-<main class="blog-main">
+<main class="blog-main" id="main">
 
   <!-- Featured post slot -->
   <div class="featured-wrap" id="featuredWrap">

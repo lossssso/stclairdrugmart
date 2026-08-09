@@ -3141,3 +3141,9 @@
       .svc-acc__icon { transition: transform .35s cubic-bezier(.34,1.56,.64,1); }
       .svc-acc__head:hover .svc-acc__icon { transform: scale(1.15) rotate(-6deg); }
     }
+
+/* ── a11y: skip link reveals on focus (hidden state is inline on the anchor) ── */
+.skip-link:focus { left:12px !important; top:12px; background:var(--white,#fff); color:var(--teal-deeper); padding:.6rem 1rem; border-radius:8px; box-shadow:0 4px 18px rgba(0,0,0,.25); outline:2px solid var(--teal-bright); }
+/* ── a11y: keyboard users can open the CSS-hover nav dropdowns ── */
+.nav__has-dropdown:focus-within .nav__dropdown { display:block; }
+.nav__has-dropdown:focus-within > a::after { transform: rotate(180deg); }

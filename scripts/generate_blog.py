@@ -328,13 +328,13 @@ def nav_html(depth: int = 1) -> str:
       <img src="{p}logo.png" alt="" class="nav__brand__logo"/>
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
-    <button class="nav__toggle" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav__links').classList.toggle('open')">
+    <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks" onclick="this.classList.toggle('open'); this.setAttribute('aria-expanded', this.classList.contains('open')); document.querySelector('.nav__links').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav__links" id="navLinks">
       <li><a href="/#welcome">Home</a></li>
       <li class="nav__has-dropdown">
-        <a href="/#services">Services</a>
+        <a aria-haspopup="true" href="/#services">Services</a>
         <ul class="nav__dropdown">
           <li><a href="/portal/">Patient Portal</a></li>
           <li><a href="/#services">Ailment Assessment</a></li>
@@ -347,7 +347,7 @@ def nav_html(depth: int = 1) -> str:
         </ul>
       </li>
       <li class="nav__has-dropdown">
-        <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
+        <a aria-haspopup="true" href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
         <ul class="nav__dropdown">
           <li><a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Order on Uber</a></li>
           <li><a href="/braces-supports">Braces &amp; Supports</a></li>
@@ -355,7 +355,7 @@ def nav_html(depth: int = 1) -> str:
       </li>
       <li><a href="{blog_href}" class="active" aria-current="page">Health Hub</a></li>
       <li class="nav__has-dropdown">
-        <a href="/#faq">Questions?</a>
+        <a aria-haspopup="true" href="/#faq">Questions?</a>
         <ul class="nav__dropdown">
           <li><a href="/#about">About Us</a></li>
           <li><a href="/#team">Meet the Team</a></li>
@@ -455,7 +455,7 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../post.css?v=1"/>
+  <link rel="stylesheet" href="../post.css?v=2"/>
   <script type="application/ld+json">
 {schema}
   </script>
@@ -464,11 +464,12 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
   </script>
 </head>
 <body>
+<a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Skip to main content</a>
 {sky_bg_html(depth=2)}
 
 {nav_html(depth=2)}
 
-<article class="post">
+<article class="post" id="main">
   <p class="post__breadcrumb"><a href="/">Home</a> › <a href="/blog/">Health Hub</a> › {breadcrumb_label}</p>
   <h1>{post['title']}</h1>
   <p class="post__meta">Updated {pretty_date} · {post['reading_minutes']} min read · {breadcrumb_label}</p>
