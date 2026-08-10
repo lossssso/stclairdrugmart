@@ -405,6 +405,18 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
     pretty_date = fmt_date(date_str)
     breadcrumb_label = post.get("tags", [primary_kw])[0] if post.get("tags") else primary_kw
 
+    # Title/description/tags come from the model, and a single " or & in them lands inside a
+    # double-quoted attribute: one stray character silently corrupts the whole <head>. Escape the
+    # four that matter (not ', which is legal here and reads badly in a <title>). content_html is
+    # deliberately NOT escaped — it is markup by design.
+    def esc(s: str) -> str:
+        return (str(s).replace("&", "&amp;").replace("<", "&lt;")
+                      .replace(">", "&gt;").replace('"', "&quot;"))
+
+    title_esc = esc(post["title"])
+    desc_esc  = esc(post["meta_description"])
+    crumb_esc = esc(breadcrumb_label)
+
     schema = json.dumps({
         "@context": "https://schema.org",
         "@type": "Article",
@@ -443,13 +455,13 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,viewport-fit=cover"/>
-  <title>{post['title']} | St. Clair Drug Mart Pharmacy Toronto</title>
-  <meta name="description" content="{post['meta_description']}"/>
+  <title>{title_esc} | St. Clair Drug Mart Pharmacy Toronto</title>
+  <meta name="description" content="{desc_esc}"/>
   <link rel="canonical" href="{post_url}"/>
   <meta name="robots" content="index, follow, max-image-preview:large"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:title" content="{post['title']}"/>
-  <meta property="og:description" content="{post['meta_description']}"/>
+  <meta property="og:title" content="{title_esc}"/>
+  <meta property="og:description" content="{desc_esc}"/>
   <meta property="og:url" content="{post_url}"/>
   <meta property="og:site_name" content="St. Clair Drug Mart Pharmacy"/>
   <meta property="article:published_time" content="{date_str}"/>
@@ -474,9 +486,9 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
 {nav_html(depth=2)}
 
 <article class="post" id="main" tabindex="-1" role="main">
-  <p class="post__breadcrumb"><a href="/">Home</a> › <a href="/blog/">Health Hub</a> › {breadcrumb_label}</p>
-  <h1>{post['title']}</h1>
-  <p class="post__meta">Updated {pretty_date} · {post['reading_minutes']} min read · {breadcrumb_label}</p>
+  <p class="post__breadcrumb"><a href="/">Home</a> › <a href="/blog/">Health Hub</a> › {crumb_esc}</p>
+  <h1>{title_esc}</h1>
+  <p class="post__meta">Updated {pretty_date} · {post['reading_minutes']} min read · {crumb_esc}</p>
 
   {post['content_html']}
 
