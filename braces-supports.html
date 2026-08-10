@@ -329,26 +329,34 @@
     .brace-card__body { min-width: 0; }
     .brace-card__title { font-size: .92rem; font-weight: 700; color: var(--text); margin-bottom: .25rem; }
     .brace-card__desc { font-size: .8rem; color: var(--text-muted); line-height: 1.5; }
-    .brace-card__photo-note { font-size: .68rem; color: var(--teal-mid); font-style: italic; margin-top: .4rem; }
 
-    /* Product photos. Cards with a photo stack: image strip on top, then the
-       existing icon + text row. object-fit:contain because these are product
-       shots on white, cropping would cut the product in half. The optional
-       second image is the retail box, so the customer recognises the package
-       on the shelf. */
-    .brace-card--photo { flex-direction: column; align-items: stretch; gap: 1rem; }
-    .brace-card__photos { display: flex; gap: .5rem; }
+    /* One product per card: photo on top, then the icon + text row, then the
+       price. object-fit:contain because these are product shots on white, so
+       cropping would cut the product in half. Cards without a photo yet get a
+       same-sized placeholder so every card in a row is the same height. */
+    .brace-card--photo { flex-direction: column; align-items: stretch; gap: .9rem; }
+    .brace-card__photos { display: flex; }
     .brace-card__photo {
-      flex: 2; aspect-ratio: 1 / 1; background: var(--white);
+      flex: 1; aspect-ratio: 4 / 3; background: var(--white);
       border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
     }
-    .brace-card__photo--box { flex: 1; }
     .brace-card__photo img {
       width: 100%; height: 100%; object-fit: contain; display: block;
       transition: transform .35s;
     }
     .brace-card--photo:hover .brace-card__photo img { transform: scale(1.04); }
+    .brace-card__photo--empty {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: .35rem; background: var(--teal-ice); border-style: dashed;
+    }
+    .brace-card__photo-icon { font-size: 2rem; opacity: .55; }
+    .brace-card__photo-soon { font-size: .68rem; color: var(--teal-dark); font-style: italic; }
     .brace-card__row { display: flex; gap: .9rem; align-items: flex-start; }
+    .brace-card__price {
+      font-family: var(--font-display); font-size: 1.05rem; font-weight: 800;
+      color: var(--teal-deeper); margin-top: .45rem;
+    }
+    .brace-card__price--ask { font-size: .82rem; font-weight: 700; color: var(--text-muted); }
 
     .brace-cta {
       background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius);
@@ -585,28 +593,34 @@
       <span class="brace-cat__brands">Champion · OTC Professional</span>
     </div>
     <div class="brace-grid">
-      <div class="brace-card">
-        <div class="brace-card__icon">🦺</div>
-        <div class="brace-card__body">
-          <div class="brace-card__title">Lightweight Industrial Back Support</div>
-          <p class="brace-card__desc">Adjustable, breathable belt for everyday lifting and lower-back strain, worn over or under clothing.</p>
-          <p class="brace-card__photo-note">Photo coming soon</p>
+      <div class="brace-card brace-card--photo">
+        <div class="brace-card__photos">
+        <div class="brace-card__photo brace-card__photo--empty">
+          <span class="brace-card__photo-icon" aria-hidden="true">🦺</span>
+          <span class="brace-card__photo-soon">Photo coming soon</span>
+        </div>
+        </div>
+        <div class="brace-card__row">
+          <div class="brace-card__icon">🦺</div>
+          <div class="brace-card__body">
+            <div class="brace-card__title">Lightweight Industrial Back Support</div>
+            <p class="brace-card__desc">Adjustable, breathable belt for everyday lifting and lower-back strain, worn over or under clothing.</p>
+            <p class="brace-card__price">$31.50</p>
+          </div>
         </div>
       </div>
       <div class="brace-card brace-card--photo">
-      <div class="brace-card__photos">
+        <div class="brace-card__photos">
         <div class="brace-card__photo">
           <img src="/products/otc-2893-lumbosacral.webp" srcset="/products/otc-2893-lumbosacral-480.webp 480w, /products/otc-2893-lumbosacral.webp 600w" sizes="(max-width: 768px) 92vw, 400px" alt="OTC lumbosacral back support with abdominal uplift worn on the lower back" width="600" height="599" loading="lazy" decoding="async" />
         </div>
-        <div class="brace-card__photo brace-card__photo--box">
-          <img src="/products/champion-0407-sacro.webp" srcset="/products/champion-0407-sacro-480.webp 480w, /products/champion-0407-sacro.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion lightweight adjustable sacro brace retail box" width="800" height="800" loading="lazy" decoding="async" />
         </div>
-      </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🔧</div>
           <div class="brace-card__body">
             <div class="brace-card__title">Lumbar-Sacral Back Belt</div>
             <p class="brace-card__desc">Firmer support with adjustable straps for moderate low-back pain or post-strain support.</p>
+            <p class="brace-card__price">$59.99 &ndash; $125.61</p>
           </div>
         </div>
       </div>
@@ -620,28 +634,33 @@
     </div>
     <div class="brace-grid">
       <div class="brace-card brace-card--photo">
-      <div class="brace-card__photos">
+        <div class="brace-card__photos">
         <div class="brace-card__photo">
           <img src="/products/champion-0435-knee.webp" srcset="/products/champion-0435-knee-480.webp 480w, /products/champion-0435-knee.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion elastic knee support with flexible stays worn on a knee" width="800" height="800" loading="lazy" decoding="async" />
         </div>
-        <div class="brace-card__photo brace-card__photo--box">
-          <img src="/products/otc-2435-knee.webp" srcset="/products/otc-2435-knee-480.webp 480w, /products/otc-2435-knee.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="OTC knee support with viscoelastic insert retail package" width="800" height="800" loading="lazy" decoding="async" />
         </div>
-      </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🩹</div>
           <div class="brace-card__body">
             <div class="brace-card__title">Compression Knee Sleeve</div>
             <p class="brace-card__desc">Slip-on support for mild swelling, arthritis discomfort, or everyday activity.</p>
+            <p class="brace-card__price">$34.47</p>
           </div>
         </div>
       </div>
-      <div class="brace-card">
-        <div class="brace-card__icon">🔵</div>
-        <div class="brace-card__body">
-          <div class="brace-card__title">Close Knee / Hinged Support</div>
-          <p class="brace-card__desc">Open-patella design with side stabilizers for sprains, instability, or recovery support.</p>
-          <p class="brace-card__photo-note">Photo coming soon</p>
+      <div class="brace-card brace-card--photo">
+        <div class="brace-card__photos">
+        <div class="brace-card__photo">
+          <img src="/products/otc-2435-knee.webp" srcset="/products/otc-2435-knee-480.webp 480w, /products/otc-2435-knee.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="OTC knee support with viscoelastic insert and flexible side stays" width="800" height="800" loading="lazy" decoding="async" />
+        </div>
+        </div>
+        <div class="brace-card__row">
+          <div class="brace-card__icon">🔵</div>
+          <div class="brace-card__body">
+            <div class="brace-card__title">Close Knee / Hinged Support</div>
+            <p class="brace-card__desc">Open-patella design with side stabilizers for sprains, instability, or recovery support.</p>
+            <p class="brace-card__price">$42.00</p>
+          </div>
         </div>
       </div>
     </div>
@@ -654,33 +673,32 @@
     </div>
     <div class="brace-grid">
       <div class="brace-card brace-card--photo">
-      <div class="brace-card__photos">
+        <div class="brace-card__photos">
         <div class="brace-card__photo">
           <img src="/products/champion-50-33r-wrist.webp" srcset="/products/champion-50-33r-wrist-480.webp 480w, /products/champion-50-33r-wrist.webp 750w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion elastic wrist splint worn on a right hand and wrist" width="750" height="756" loading="lazy" decoding="async" />
         </div>
-        <div class="brace-card__photo brace-card__photo--box">
-          <img src="/products/champion-c50-33-wrist-box.webp" srcset="/products/champion-c50-33-wrist-box-480.webp 480w, /products/champion-c50-33-wrist-box.webp 334w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion elastic wrist splint retail box" width="334" height="800" loading="lazy" decoding="async" />
         </div>
-      </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🖐️</div>
           <div class="brace-card__body">
             <div class="brace-card__title">Wrist Splint / Support</div>
             <p class="brace-card__desc">Stabilizes the wrist for sprains, strains, or repetitive-use pain like carpal tunnel discomfort.</p>
+            <p class="brace-card__price">$30.99</p>
           </div>
         </div>
       </div>
       <div class="brace-card brace-card--photo">
-      <div class="brace-card__photos">
+        <div class="brace-card__photos">
         <div class="brace-card__photo">
-          <img src="/products/champion-0439-elbow.webp" srcset="/products/champion-0439-elbow-480.webp 480w, /products/champion-0439-elbow.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion elastic elbow support shown on an arm, retail package" width="800" height="512" loading="lazy" decoding="async" />
+          <img src="/products/champion-0439-elbow.webp" srcset="/products/champion-0439-elbow-480.webp 480w, /products/champion-0439-elbow.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion elastic elbow support" width="800" height="512" loading="lazy" decoding="async" />
         </div>
-      </div>
+        </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">💪</div>
           <div class="brace-card__body">
             <div class="brace-card__title">Tennis Elbow Strap</div>
             <p class="brace-card__desc">Targeted compression band that relieves forearm and elbow strain from repetitive motion.</p>
+            <p class="brace-card__price">$29.99</p>
           </div>
         </div>
       </div>
@@ -694,16 +712,17 @@
     </div>
     <div class="brace-grid">
       <div class="brace-card brace-card--photo">
-      <div class="brace-card__photos">
+        <div class="brace-card__photos">
         <div class="brace-card__photo">
           <img src="/products/champion-c63-ankle.webp" srcset="/products/champion-c63-ankle-480.webp 480w, /products/champion-c63-ankle.webp 600w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion ankle brace with flexible stays worn on an ankle" width="600" height="600" loading="lazy" decoding="async" />
         </div>
-      </div>
+        </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🦶</div>
           <div class="brace-card__body">
             <div class="brace-card__title">Ankle Support / Brace</div>
             <p class="brace-card__desc">Lightweight compression or lace-up support for sprains, instability, or recovery.</p>
+            <p class="brace-card__price">$12.99 &ndash; $41.61</p>
           </div>
         </div>
       </div>
@@ -717,16 +736,17 @@
     </div>
     <div class="brace-grid">
       <div class="brace-card brace-card--photo">
-      <div class="brace-card__photos">
+        <div class="brace-card__photos">
         <div class="brace-card__photo">
           <img src="/products/abdominal-binder.webp" srcset="/products/abdominal-binder-480.webp 480w, /products/abdominal-binder.webp 518w" sizes="(max-width: 768px) 92vw, 400px" alt="Adjustable abdominal support binder worn around the waist" width="518" height="550" loading="lazy" decoding="async" />
         </div>
-      </div>
+        </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🩺</div>
           <div class="brace-card__body">
             <div class="brace-card__title">Abdominal Support Binder</div>
             <p class="brace-card__desc">Adjustable wrap for post-surgical support, core stabilization, or general abdominal support.</p>
+            <p class="brace-card__price">$19.99</p>
           </div>
         </div>
       </div>
@@ -739,25 +759,34 @@
       <span class="brace-cat__brands">Truform</span>
     </div>
     <div class="brace-grid">
-      <div class="brace-card">
-        <div class="brace-card__icon">🧦</div>
-        <div class="brace-card__body">
-          <div class="brace-card__title">Graduated Compression Stockings</div>
-          <p class="brace-card__desc">Knee-high and thigh-high medical compression hosiery, for circulation, swelling, varicose veins, and travel.</p>
-          <p class="brace-card__photo-note">Photo coming soon</p>
+      <div class="brace-card brace-card--photo">
+        <div class="brace-card__photos">
+        <div class="brace-card__photo brace-card__photo--empty">
+          <span class="brace-card__photo-icon" aria-hidden="true">🧦</span>
+          <span class="brace-card__photo-soon">Photo coming soon</span>
+        </div>
+        </div>
+        <div class="brace-card__row">
+          <div class="brace-card__icon">🧦</div>
+          <div class="brace-card__body">
+            <div class="brace-card__title">Graduated Compression Stockings</div>
+            <p class="brace-card__desc">Knee-high and thigh-high medical compression hosiery, for circulation, swelling, varicose veins, and travel.</p>
+            <p class="brace-card__price brace-card__price--ask">Ask in store</p>
+          </div>
         </div>
       </div>
       <div class="brace-card brace-card--photo">
-      <div class="brace-card__photos">
+        <div class="brace-card__photos">
         <div class="brace-card__photo">
-          <img src="/products/truform-socks.webp" srcset="/products/truform-socks-480.webp 480w, /products/truform-socks.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Truform women's knee-high compression socks, 15 to 20 mmHg, shown in several colours" width="800" height="800" loading="lazy" decoding="async" />
+          <img src="/products/truform-socks.webp" srcset="/products/truform-socks-480.webp 480w, /products/truform-socks.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Truform women's knee-high compression socks, 15 to 20 mmHg" width="800" height="800" loading="lazy" decoding="async" />
         </div>
-      </div>
+        </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🦵</div>
           <div class="brace-card__body">
             <div class="brace-card__title">Compression Socks</div>
             <p class="brace-card__desc">Everyday graduated-compression socks for standing all day, travel, or mild swelling.</p>
+            <p class="brace-card__price">$48.65</p>
           </div>
         </div>
       </div>
