@@ -491,7 +491,7 @@
 </style>
 </head>
 <body>
-<a href="#page-header" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Skip to main content</a>
+<a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Skip to main content</a>
 
 <div class="sky-bg" aria-hidden="true">
   <img decoding="async" src="cloud2b.webp" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="">
@@ -516,7 +516,7 @@
   </div>
   <div class="nav__inner">
     <a href="/#welcome" class="nav__brand">
-      <img src="logo-340.webp" alt="St. Clair Drug Mart Pharmacy" class="nav__brand__logo" />
+      <img src="logo-340.webp" alt="" class="nav__brand__logo" />
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
     <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks" onclick="this.classList.toggle('open'); this.setAttribute('aria-expanded', this.classList.contains('open')); document.querySelector('.nav__links').classList.toggle('open')">
@@ -574,7 +574,7 @@
   </div>
 </header>
 
-<div class="page-wrap">
+<main class="page-wrap" id="main" tabindex="-1">
   <div class="page-note">
     <strong>Not sure which size or style is right for you?</strong> Ask our pharmacist on your next visit, we can help you find the right fit and explain how to wear it correctly. Walk in any time during store hours.
   </div>
@@ -821,7 +821,7 @@
     </div>
     <p class="footer__reg">Regulated by the Ontario College of Pharmacists &nbsp;·&nbsp; Designated Manager: Elizabeth Da Silva, BScPharm, RPh &nbsp;·&nbsp; Pharmacist on duty during all operating hours</p>
     <button class="pp-link" onclick="document.getElementById('pp-overlay').classList.add('open')">Privacy Policy</button>
-  </div>
+  </main>
 
   <p style="margin-top:.75rem;opacity:.45;">&copy; 2026 St. Clair Drug Mart Pharmacy. All rights reserved.</p>
 </footer>
