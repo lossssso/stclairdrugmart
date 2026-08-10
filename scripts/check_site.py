@@ -51,6 +51,17 @@ for page in ROOT.rglob("*.html"):
             continue
         fail(f"{page.relative_to(ROOT)}: internal .html link -> {href}")
 
+# ── 1b. No Google Fonts anywhere ───────────────────────────────
+# Fonts are self-hosted in /fonts/ (site.css, blog/post.css, /fonts.css). The bot's hand-copied
+# <head> kept the Google links for weeks after every hand-written page was swept off them: same
+# silent drift as the cloud rename, invisible because the page still renders.
+for page in ROOT.rglob("*.html"):
+    if any(p in (".git", "node_modules") for p in page.parts):
+        continue
+    if re.search(r"fonts\.(googleapis|gstatic)\.com", page.read_text(encoding="utf-8")):
+        fail(f"{page.relative_to(ROOT)}: Google Fonts link (fonts are self-hosted in /fonts/)")
+
+
 # ── 2. Every post is linked from the static blog list ──────────
 posts = json.loads((ROOT / "blog" / "posts.json").read_text(encoding="utf-8"))
 blog_index = (ROOT / "blog" / "index.html").read_text(encoding="utf-8")

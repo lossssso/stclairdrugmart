@@ -397,6 +397,10 @@ def footer_html() -> str:
 # ── Individual post page ───────────────────────────────────────
 
 def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> str:
+    # The call site has handed `filename` in here before. Fail at the source rather than let a bad
+    # canonical travel 40 lines to the integrity gate, where it reads like a mysterious content bug.
+    if slug.endswith(".html"):
+        raise ValueError(f"build_post_page wants the extensionless slug, got a filename: {slug}")
     post_url  = f"{SITE_URL}/blog/posts/{slug}"
     pretty_date = fmt_date(date_str)
     breadcrumb_label = post.get("tags", [primary_kw])[0] if post.get("tags") else primary_kw
@@ -452,9 +456,9 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
   <link rel="icon" type="image/x-icon" href="../../favicon.ico" />
   <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <!-- Inter is self-hosted: ../post.css declares every @font-face from /fonts/. The Google Fonts
+       links that used to sit here were the same drift as the cloud rename below — the rest of the
+       site moved off them and this hand-copied <head> did not. Never re-add them. -->
   <link rel="stylesheet" href="../post.css?v=2"/>
   <script type="application/ld+json">
 {schema}
@@ -609,7 +613,10 @@ def main():
 
     POSTS_DIR.mkdir(parents=True, exist_ok=True)
     post_file = POSTS_DIR / filename
-    html = build_post_page(post_data, date_str, primary_kw, filename)
+    # Pass the SLUG, not the filename. build_post_page builds the canonical and og:url from this, and
+    # the host 308-redirects .html to the extensionless form: handing it `filename` published a post
+    # whose canonical pointed at a redirect, which is exactly what check_site.py fails the run on.
+    html = build_post_page(post_data, date_str, primary_kw, slug)
 
     # The sky-bg / cloud-nav markup above is a HAND-COPY of the site's, so a site-wide asset rename
     # silently leaves this generator pointing at deleted files. That happened: cloud.png / cloud2.webp
