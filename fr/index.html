@@ -24,13 +24,32 @@
   <link rel="alternate" hreflang="it" href="https://www.stclairdrugmart.ca/it/" />
   <link rel="alternate" hreflang="tr" href="https://www.stclairdrugmart.ca/tr/" />
   <link rel="alternate" hreflang="x-default" href="https://www.stclairdrugmart.ca/" />
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2YQ9FDLMCV"></script>
+  <!-- Google Analytics. The 163KB gtag bundle used to load async in the head,
+       where it cost ~230ms of main-thread time and two long tasks while the
+       page was still painting. It now loads on the first real interaction, or
+       at idle just after window load, whichever comes first: gtag() calls made
+       before then queue in dataLayer and flush when the tag arrives, so the
+       pageview is still recorded and no events are lost. -->
   <script>
     window.dataLayer=window.dataLayer||[];
     function gtag(){dataLayer.push(arguments);}
     gtag('js',new Date());
     gtag('config','G-2YQ9FDLMCV');
+    (function(){
+      var done=false, EV=['pointerdown','keydown','touchstart','scroll'];
+      function load(){
+        if(done)return; done=true;
+        EV.forEach(function(e){ window.removeEventListener(e,load); });
+        var s=document.createElement('script');
+        s.async=true; s.src='https://www.googletagmanager.com/gtag/js?id=G-2YQ9FDLMCV';
+        document.head.appendChild(s);
+      }
+      EV.forEach(function(e){ window.addEventListener(e,load,{passive:true}); });
+      window.addEventListener('load',function(){
+        if(window.requestIdleCallback) requestIdleCallback(load,{timeout:2500});
+        else setTimeout(load,1200);
+      });
+    })();
   </script>
   <link rel="preload" as="image" href="/logo-340.webp" type="image/webp" fetchpriority="high" />
   <meta property="og:type"        content="business.business" />
@@ -648,8 +667,8 @@ section { padding: 2rem 0.875rem; }
 @keyframes drop-in { 
   0% { opacity: 0; transform: translateY(-6px); }
 }</style>
-  <link rel="preload" href="/site.css?v=19" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/site.css?v=19"></noscript>
+  <link rel="preload" href="/site.css?v=20" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/site.css?v=20"></noscript>
 </head>
 <body>
 <a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Aller au contenu principal</a>
@@ -2979,7 +2998,7 @@ window.I18N = {
 
 
 
-<script src="/site.js?v=19" defer></script>
+<script src="/site.js?v=20" defer></script>
 <script src="/analytics-events.js?v=1" defer></script>
 </body>
 </html>
