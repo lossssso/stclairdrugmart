@@ -3155,3 +3155,17 @@ h2.welcome-modal__title { margin-top: 0; }
 /* Language pickers: flex-center the flag image with its label on every row */
 .nav__lang-menu a, .nav__links-lang a { display:flex; align-items:center; gap:.4em; }
 .nav__lang-menu a img, .nav__links-lang a img { vertical-align:baseline; flex-shrink:0; }
+
+/* ── Perf: skip layout/paint for far-below-fold sections until they scroll
+   near the viewport. Measured heights are passed as "auto <px>" so the
+   browser uses them only until it has rendered the section once, then
+   remembers the real size, which keeps the scrollbar stable. Sections that
+   JS measures or scrolls into on demand (#booking's iframe panel, #services'
+   accordions, #contact's map) are deliberately left out. ── */
+#team, #reviews, #shop, #about, #blog, #faq { content-visibility: auto; }
+#team    { contain-intrinsic-size: auto 1120px; }
+#reviews { contain-intrinsic-size: auto 1185px; }
+#shop    { contain-intrinsic-size: auto  807px; }
+#about   { contain-intrinsic-size: auto 1077px; }
+#blog    { contain-intrinsic-size: auto  724px; }
+#faq     { contain-intrinsic-size: auto 3652px; }
