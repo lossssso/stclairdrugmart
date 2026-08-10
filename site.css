@@ -1479,6 +1479,8 @@
     footer a { color: rgba(255,255,255,.65); }
     footer a:hover { color: var(--white); }
     .footer__links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: .75rem; flex-wrap: wrap; }
+    /* WCAG 2.5.8 target size: flex items, so min-height sizes the hit area directly */
+    .footer__links a { display: flex; align-items: center; min-height: 30px; }
     .footer__socials { display: flex; justify-content: center; gap: .75rem; margin-top: 1rem; }
     .footer__socials a {
       display: flex; align-items: center; justify-content: center;
@@ -2845,7 +2847,7 @@
       color: #6B7280; line-height: 1;
     }
     .pp-close:hover { color: #111; }
-    .pp-link { color: rgba(255,255,255,.55); font-size: .7rem; text-decoration: underline; cursor: pointer; background: none; border: none; }
+    .pp-link { color: rgba(255,255,255,.55); font-size: .7rem; text-decoration: underline; cursor: pointer; background: none; border: none; padding: .5rem .75rem; }
 
     /* ── Card chrome ─────────────────────────────────────
        One shared card language replacing the old solid teal bar:

@@ -288,7 +288,8 @@
       padding: 1.9rem 2rem; box-shadow: 0 12px 40px rgba(0,80,90,.15);
     }
     .page-header__crumbs { font-size: .78rem; color: var(--text-muted); margin-bottom: .9rem; }
-    .page-header__crumbs a { color: var(--teal-dark); text-decoration: none; }
+    /* inline padding grows the hit area without touching the line box, so nothing moves */
+    .page-header__crumbs a { color: var(--teal-dark); text-decoration: none; padding: .4rem .25rem; margin: -.4rem -.25rem; }
     .page-header__crumbs a:hover { text-decoration: underline; }
     .page-header__eyebrow {
       display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .12em;
@@ -376,7 +377,7 @@
     footer a { color: rgba(255,255,255,.65); }
     footer a:hover { color: var(--white); }
     .footer__links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: .75rem; flex-wrap: wrap; }
-    .footer__links a { font-size: .82rem; }
+    .footer__links a { font-size: .82rem; display: flex; align-items: center; min-height: 30px; }
     .footer__socials { display: flex; justify-content: center; gap: .75rem; margin-top: 1rem; }
     .footer__socials a {
       display: flex; align-items: center; justify-content: center;
@@ -457,7 +458,7 @@
     .pp-modal ul { padding-left: 1.25rem; margin-bottom: .5rem; }
     .pp-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #6B7280; line-height: 1; }
     .pp-close:hover { color: #111; }
-    .pp-link { color: rgba(255,255,255,.55); font-size: .7rem; text-decoration: underline; cursor: pointer; background: none; border: none; }
+    .pp-link { color: rgba(255,255,255,.55); font-size: .7rem; text-decoration: underline; cursor: pointer; background: none; border: none; padding: .5rem .75rem; }
 
     /* ── Responsive (matches index.html breakpoints) ────── */
     @media (max-width: 1000px) and (min-width: 769px) {
