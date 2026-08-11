@@ -55,6 +55,16 @@ SITE_URL = "https://www.stclairdrugmart.ca"
 
 TOPICS = [
     (
+        "where to buy compression stockings in Toronto, what mmHg means and how to get properly fitted",
+        "compression stockings Toronto",
+        ["compression socks Toronto pharmacy", "20-30 mmHg compression stockings", "compression stockings near me", "where to buy compression socks St. Clair West", "compression stocking fitting Toronto"],
+    ),
+    (
+        "choosing a knee brace or back support, what a pharmacist checks before you buy",
+        "knee brace Toronto",
+        ["back support belt Toronto", "where to buy a knee brace Toronto", "lumbar support pharmacy Toronto", "ankle brace near me Toronto", "braces and supports St. Clair West"],
+    ),
+    (
         "where to get a flu shot in Toronto — walk-in flu vaccines at a local pharmacy",
         "flu shot Toronto",
         ["flu vaccine pharmacy Toronto", "flu shot near me Toronto", "flu vaccination St. Clair West", "influenza vaccine Toronto pharmacy", "get flu shot without appointment Toronto"],
