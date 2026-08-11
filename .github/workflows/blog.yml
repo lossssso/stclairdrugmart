@@ -23,6 +23,11 @@ jobs:
         with:
           python-version: '3.12'
 
+      # Cheap, no-network, runs before we spend a Gemini call: pins the link normaliser that stops
+      # the model's ".html" prose links failing check_site at the very last step (the 2026-08 outage).
+      - name: Link-normaliser self-check
+        run: python scripts/generate_blog.py --selftest
+
       - name: Generate blog post
         env:
           # Free Gemini key (owner: no paid API). Add it once as a repo secret named GEMINI_API_KEY.
