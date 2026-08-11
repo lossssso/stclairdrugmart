@@ -60,7 +60,8 @@
             "name": "St. Clair Drug Mart Pharmacy"
           },
           "highPrice": "125.61"
-        }
+        },
+        "image": "https://www.stclairdrugmart.ca/products/otc-2893-lumbosacral.webp"
       },
       {
         "@type": "Product",
@@ -77,7 +78,8 @@
             "name": "St. Clair Drug Mart Pharmacy"
           },
           "highPrice": "42.00"
-        }
+        },
+        "image": "https://www.stclairdrugmart.ca/products/champion-0435-knee.webp"
       },
       {
         "@type": "Product",
@@ -94,7 +96,8 @@
             "name": "St. Clair Drug Mart Pharmacy"
           },
           "highPrice": "30.99"
-        }
+        },
+        "image": "https://www.stclairdrugmart.ca/products/champion-50-33r-wrist.webp"
       },
       {
         "@type": "Product",
@@ -110,8 +113,9 @@
             "@type": "Pharmacy",
             "name": "St. Clair Drug Mart Pharmacy"
           },
-          "highPrice": "41.61"
-        }
+          "highPrice": "39.99"
+        },
+        "image": "https://www.stclairdrugmart.ca/products/champion-c63-ankle-brace-worn.webp"
       },
       {
         "@type": "Product",
@@ -127,7 +131,8 @@
             "@type": "Pharmacy",
             "name": "St. Clair Drug Mart Pharmacy"
           }
-        }
+        },
+        "image": "https://www.stclairdrugmart.ca/products/abdominal-binder.webp"
       },
       {
         "@type": "Product",
@@ -143,7 +148,8 @@
             "@type": "Pharmacy",
             "name": "St. Clair Drug Mart Pharmacy"
           }
-        }
+        },
+        "image": "https://www.stclairdrugmart.ca/products/truform-socks.webp"
       }
     ]
   }</script>
@@ -282,7 +288,8 @@
       padding: 1.9rem 2rem; box-shadow: 0 12px 40px rgba(0,80,90,.15);
     }
     .page-header__crumbs { font-size: .78rem; color: var(--text-muted); margin-bottom: .9rem; }
-    .page-header__crumbs a { color: var(--teal-dark); text-decoration: none; }
+    /* inline padding grows the hit area without touching the line box, so nothing moves */
+    .page-header__crumbs a { color: var(--teal-dark); text-decoration: none; padding: .4rem .25rem; margin: -.4rem -.25rem; }
     .page-header__crumbs a:hover { text-decoration: underline; }
     .page-header__eyebrow {
       display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .12em;
@@ -323,7 +330,30 @@
     .brace-card__body { min-width: 0; }
     .brace-card__title { font-size: .92rem; font-weight: 700; color: var(--text); margin-bottom: .25rem; }
     .brace-card__desc { font-size: .8rem; color: var(--text-muted); line-height: 1.5; }
-    .brace-card__photo-note { font-size: .68rem; color: var(--teal-mid); font-style: italic; margin-top: .4rem; }
+
+    /* One product per card: photo on top, then the icon + text row, then the
+       price. object-fit:contain because these are product shots on white, so
+       cropping would cut the product in half. Cards without a photo yet get a
+       same-sized placeholder so every card in a row is the same height. */
+    .brace-card--photo { flex-direction: column; align-items: stretch; gap: .9rem; }
+    .brace-card__photos { display: flex; }
+    .brace-card__photo {
+      flex: 1; aspect-ratio: 4 / 3; background: var(--white);
+      border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+    }
+    .brace-card__photo img {
+      width: 100%; height: 100%; object-fit: contain; display: block;
+      transition: transform .35s;
+    }
+    .brace-card--photo:hover .brace-card__photo img { transform: scale(1.04); }
+    .brace-card__row { display: flex; gap: .9rem; align-items: flex-start; }
+    .brace-card__price {
+      font-family: var(--font-display); font-size: 1.05rem; font-weight: 800;
+      color: var(--teal-deeper); margin-top: .45rem;
+    }
+    .brace-card__price--ask { font-size: .82rem; font-weight: 700; color: var(--text-muted); }
+    .brace-card__sku { font-size: .7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: .3rem; }
+    .brace-card__photo--box { flex: 1; }
 
     .brace-cta {
       background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius);
@@ -347,7 +377,7 @@
     footer a { color: rgba(255,255,255,.65); }
     footer a:hover { color: var(--white); }
     .footer__links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: .75rem; flex-wrap: wrap; }
-    .footer__links a { font-size: .82rem; }
+    .footer__links a { font-size: .82rem; display: flex; align-items: center; min-height: 30px; }
     .footer__socials { display: flex; justify-content: center; gap: .75rem; margin-top: 1rem; }
     .footer__socials a {
       display: flex; align-items: center; justify-content: center;
@@ -428,7 +458,7 @@
     .pp-modal ul { padding-left: 1.25rem; margin-bottom: .5rem; }
     .pp-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #6B7280; line-height: 1; }
     .pp-close:hover { color: #111; }
-    .pp-link { color: rgba(255,255,255,.55); font-size: .7rem; text-decoration: underline; cursor: pointer; background: none; border: none; }
+    .pp-link { color: rgba(255,255,255,.55); font-size: .7rem; text-decoration: underline; cursor: pointer; background: none; border: none; padding: .5rem .75rem; }
 
     /* ── Responsive (matches index.html breakpoints) ────── */
     @media (max-width: 1000px) and (min-width: 769px) {
@@ -466,7 +496,7 @@
 </style>
 </head>
 <body>
-<a href="#page-header" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Skip to main content</a>
+<a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Skip to main content</a>
 
 <div class="sky-bg" aria-hidden="true">
   <img decoding="async" src="cloud2b.webp" class="sky-bg-cloud" data-dur="132" data-delay="-25" style="transform:translateX(-25.9vw)" alt="">
@@ -490,8 +520,8 @@
     <img decoding="async" src="cloud2b.webp" class="nav__cloud" data-dur="130" data-delay="0" style="transform:translateX(-60vw)" alt="">
   </div>
   <div class="nav__inner">
-    <a href="/#welcome" class="nav__brand">
-      <img src="logo-340.webp" alt="St. Clair Drug Mart Pharmacy" class="nav__brand__logo" />
+    <a href="/#welcome" class="nav__brand" aria-label="St. Clair Drug Mart Pharmacy, home">
+      <img src="logo-340.webp" alt="" class="nav__brand__logo" />
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
     <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks" onclick="this.classList.toggle('open'); this.setAttribute('aria-expanded', this.classList.contains('open')); document.querySelector('.nav__links').classList.toggle('open')">
@@ -502,7 +532,7 @@
       <li class="nav__has-dropdown">
         <a href="/#services">Services</a>
         <ul class="nav__dropdown">
-          <li><a href="/#booking">Patient Portal</a></li>
+          <li><a href="/portal/">Patient Portal</a></li>
           <li><a href="/#services">Ailment Assessment</a></li>
           <li><a href="/#services">Medication Reviews</a></li>
           <li><a href="/#services">Vaccinations</a></li>
@@ -549,7 +579,7 @@
   </div>
 </header>
 
-<div class="page-wrap">
+<main class="page-wrap" id="main" tabindex="-1">
   <div class="page-note">
     <strong>Not sure which size or style is right for you?</strong> Ask our pharmacist on your next visit, we can help you find the right fit and explain how to wear it correctly. Walk in any time during store hours.
   </div>
@@ -560,20 +590,61 @@
       <span class="brace-cat__brands">Champion · OTC Professional</span>
     </div>
     <div class="brace-grid">
-      <div class="brace-card">
-        <div class="brace-card__icon">🦺</div>
-        <div class="brace-card__body">
-          <div class="brace-card__title">Lightweight Industrial Back Support</div>
-          <p class="brace-card__desc">Adjustable, breathable belt for everyday lifting and lower-back strain, worn over or under clothing.</p>
-          <p class="brace-card__photo-note">Photo coming soon</p>
+      <div class="brace-card brace-card--photo">
+      <div class="brace-card__photos">
+        <div class="brace-card__photo">
+          <img src="/products/champion-c205-belt-worn.webp" srcset="/products/champion-c205-belt-worn-480.webp 480w, /products/champion-c205-belt-worn.webp 600w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Industrial Back Support Belt, worn" width="600" height="600" loading="lazy" decoding="async" />
+        </div>
+        <div class="brace-card__photo brace-card__photo--box">
+          <img src="/products/champion-c205-belt-box.webp" srcset="/products/champion-c205-belt-box-480.webp 480w, /products/champion-c205-belt-box.webp 500w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Industrial Back Support Belt retail packaging" width="500" height="1000" loading="lazy" decoding="async" />
         </div>
       </div>
-      <div class="brace-card">
-        <div class="brace-card__icon">🔧</div>
-        <div class="brace-card__body">
-          <div class="brace-card__title">Lumbar-Sacral Back Belt</div>
-          <p class="brace-card__desc">Firmer support with adjustable straps for moderate low-back pain or post-strain support.</p>
-          <p class="brace-card__photo-note">Photo coming soon</p>
+        <div class="brace-card__row">
+          <div class="brace-card__icon">🦺</div>
+          <div class="brace-card__body">
+            <div class="brace-card__title">Industrial Back Support Belt</div>
+            <p class="brace-card__sku">Champion · C-205</p>
+            <p class="brace-card__desc">Wide elastic lifting belt with detachable shoulder straps, worn over clothing for heavy lifting and long days on your feet.</p>
+            <p class="brace-card__price">$31.50</p>
+          </div>
+        </div>
+      </div>
+      <div class="brace-card brace-card--photo">
+      <div class="brace-card__photos">
+        <div class="brace-card__photo">
+          <img src="/products/champion-0407-sacro-worn.webp" srcset="/products/champion-0407-sacro-worn-480.webp 480w, /products/champion-0407-sacro-worn.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Adjustable Sacro Brace, worn" width="800" height="800" loading="lazy" decoding="async" />
+        </div>
+        <div class="brace-card__photo brace-card__photo--box">
+          <img src="/products/champion-0407-sacro.webp" srcset="/products/champion-0407-sacro-480.webp 480w, /products/champion-0407-sacro.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Adjustable Sacro Brace retail packaging" width="800" height="800" loading="lazy" decoding="async" />
+        </div>
+      </div>
+        <div class="brace-card__row">
+          <div class="brace-card__icon">🔧</div>
+          <div class="brace-card__body">
+            <div class="brace-card__title">Adjustable Sacro Brace</div>
+            <p class="brace-card__sku">Champion · C-407</p>
+            <p class="brace-card__desc">Contoured foam and nylon brace with dual pull straps, shaped to support the sacrum and lower spine and adjustable to most adult builds.</p>
+            <p class="brace-card__price">$59.99</p>
+          </div>
+        </div>
+      </div>
+      <div class="brace-card brace-card--photo">
+      <div class="brace-card__photos">
+        <div class="brace-card__photo">
+          <img src="/products/otc-2893-lumbosacral.webp" srcset="/products/otc-2893-lumbosacral-480.webp 480w, /products/otc-2893-lumbosacral.webp 600w" sizes="(max-width: 768px) 92vw, 400px" alt="OTC Professional Orthopaedic Lumbosacral Support with Abdominal Uplift, worn" width="600" height="599" loading="lazy" decoding="async" />
+        </div>
+        <div class="brace-card__photo brace-card__photo--box">
+          <img src="/products/otc-2893-lumbosacral-box.webp" srcset="/products/otc-2893-lumbosacral-box-480.webp 480w, /products/otc-2893-lumbosacral-box.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="OTC Professional Orthopaedic Lumbosacral Support with Abdominal Uplift retail packaging" width="800" height="800" loading="lazy" decoding="async" />
+        </div>
+      </div>
+        <div class="brace-card__row">
+          <div class="brace-card__icon">🩹</div>
+          <div class="brace-card__body">
+            <div class="brace-card__title">Lumbosacral Support with Abdominal Uplift</div>
+            <p class="brace-card__sku">OTC Professional Orthopaedic · OTC 2893</p>
+            <p class="brace-card__desc">Ribbed elastic support with a separate abdominal uplift belt, tapered at the front so it stays comfortable when you sit.</p>
+            <p class="brace-card__price">$125.61</p>
+          </div>
         </div>
       </div>
     </div>
@@ -582,23 +653,45 @@
   <div class="brace-cat">
     <div class="brace-cat__hd">
       <h2>🦵 Knee Supports &amp; Braces</h2>
-      <span class="brace-cat__brands">Champion · OTC Professional · Ortho</span>
+      <span class="brace-cat__brands">Champion · OTC Professional</span>
     </div>
     <div class="brace-grid">
-      <div class="brace-card">
-        <div class="brace-card__icon">🩹</div>
-        <div class="brace-card__body">
-          <div class="brace-card__title">Compression Knee Sleeve</div>
-          <p class="brace-card__desc">Slip-on support for mild swelling, arthritis discomfort, or everyday activity.</p>
-          <p class="brace-card__photo-note">Photo coming soon</p>
+      <div class="brace-card brace-card--photo">
+      <div class="brace-card__photos">
+        <div class="brace-card__photo">
+          <img src="/products/champion-0435-knee.webp" srcset="/products/champion-0435-knee-480.webp 480w, /products/champion-0435-knee.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Elastic Knee Support with Flexible Stays, worn" width="800" height="800" loading="lazy" decoding="async" />
+        </div>
+        <div class="brace-card__photo brace-card__photo--box">
+          <img src="/products/champion-0435-knee-box.webp" srcset="/products/champion-0435-knee-box-480.webp 480w, /products/champion-0435-knee-box.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Elastic Knee Support with Flexible Stays retail packaging" width="800" height="800" loading="lazy" decoding="async" />
         </div>
       </div>
-      <div class="brace-card">
-        <div class="brace-card__icon">🔵</div>
-        <div class="brace-card__body">
-          <div class="brace-card__title">Close Knee / Hinged Support</div>
-          <p class="brace-card__desc">Open-patella design with side stabilizers for sprains, instability, or recovery support.</p>
-          <p class="brace-card__photo-note">Photo coming soon</p>
+        <div class="brace-card__row">
+          <div class="brace-card__icon">🦵</div>
+          <div class="brace-card__body">
+            <div class="brace-card__title">Elastic Knee Support with Flexible Stays</div>
+            <p class="brace-card__sku">Champion · C-435</p>
+            <p class="brace-card__desc">Slip-on knee sleeve with spiral side stays that bend as you walk, for mild swelling, arthritis ache, or everyday activity.</p>
+            <p class="brace-card__price">$34.47</p>
+          </div>
+        </div>
+      </div>
+      <div class="brace-card brace-card--photo">
+      <div class="brace-card__photos">
+        <div class="brace-card__photo">
+          <img src="/products/otc-2435-knee-worn.webp" srcset="/products/otc-2435-knee-worn-480.webp 480w, /products/otc-2435-knee-worn.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="OTC Professional Orthopaedic Knee Support with Gel Insert, worn" width="800" height="800" loading="lazy" decoding="async" />
+        </div>
+        <div class="brace-card__photo brace-card__photo--box">
+          <img src="/products/otc-2435-knee.webp" srcset="/products/otc-2435-knee-480.webp 480w, /products/otc-2435-knee.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="OTC Professional Orthopaedic Knee Support with Gel Insert retail packaging" width="800" height="800" loading="lazy" decoding="async" />
+        </div>
+      </div>
+        <div class="brace-card__row">
+          <div class="brace-card__icon">🔵</div>
+          <div class="brace-card__body">
+            <div class="brace-card__title">Knee Support with Gel Insert</div>
+            <p class="brace-card__sku">OTC Professional Orthopaedic · OTC 2435</p>
+            <p class="brace-card__desc">Firmer support with a sculpted gel pad over the kneecap and flexible side stays, for sprains, instability, or recovery.</p>
+            <p class="brace-card__price">$42.00</p>
+          </div>
         </div>
       </div>
     </div>
@@ -610,20 +703,42 @@
       <span class="brace-cat__brands">Champion</span>
     </div>
     <div class="brace-grid">
-      <div class="brace-card">
-        <div class="brace-card__icon">🖐️</div>
-        <div class="brace-card__body">
-          <div class="brace-card__title">Wrist Splint / Support</div>
-          <p class="brace-card__desc">Stabilizes the wrist for sprains, strains, or repetitive-use pain like carpal tunnel discomfort.</p>
-          <p class="brace-card__photo-note">Photo coming soon</p>
+      <div class="brace-card brace-card--photo">
+      <div class="brace-card__photos">
+        <div class="brace-card__photo">
+          <img src="/products/champion-50-33r-wrist.webp" srcset="/products/champion-50-33r-wrist-480.webp 480w, /products/champion-50-33r-wrist.webp 750w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Elastic Wrist Splint, worn" width="750" height="756" loading="lazy" decoding="async" />
+        </div>
+        <div class="brace-card__photo brace-card__photo--box">
+          <img src="/products/champion-c50-33-wrist-box.webp" srcset="/products/champion-c50-33-wrist-box-480.webp 480w, /products/champion-c50-33-wrist-box.webp 334w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Elastic Wrist Splint retail packaging" width="334" height="800" loading="lazy" decoding="async" />
         </div>
       </div>
-      <div class="brace-card">
-        <div class="brace-card__icon">💪</div>
-        <div class="brace-card__body">
-          <div class="brace-card__title">Tennis Elbow Strap</div>
-          <p class="brace-card__desc">Targeted compression band that relieves forearm and elbow strain from repetitive motion.</p>
-          <p class="brace-card__photo-note">Photo coming soon</p>
+        <div class="brace-card__row">
+          <div class="brace-card__icon">🖐️</div>
+          <div class="brace-card__body">
+            <div class="brace-card__title">Elastic Wrist Splint</div>
+            <p class="brace-card__sku">Champion · C-50/33</p>
+            <p class="brace-card__desc">Shaped aluminium splint that holds the wrist at 32 degrees, the angle clinicians recommend for healing sprains, strains and carpal tunnel discomfort.</p>
+            <p class="brace-card__price">$30.99</p>
+          </div>
+        </div>
+      </div>
+      <div class="brace-card brace-card--photo">
+      <div class="brace-card__photos">
+        <div class="brace-card__photo">
+          <img src="/products/champion-0439-elbow-worn.webp" srcset="/products/champion-0439-elbow-worn-480.webp 480w, /products/champion-0439-elbow-worn.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Elastic Elbow Support, worn" width="800" height="800" loading="lazy" decoding="async" />
+        </div>
+        <div class="brace-card__photo brace-card__photo--box">
+          <img src="/products/champion-0439-elbow.webp" srcset="/products/champion-0439-elbow-480.webp 480w, /products/champion-0439-elbow.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Elastic Elbow Support retail packaging" width="800" height="512" loading="lazy" decoding="async" />
+        </div>
+      </div>
+        <div class="brace-card__row">
+          <div class="brace-card__icon">💪</div>
+          <div class="brace-card__body">
+            <div class="brace-card__title">Elastic Elbow Support</div>
+            <p class="brace-card__sku">Champion · C-439</p>
+            <p class="brace-card__desc">Breathable knit sleeve that compresses the whole elbow, for mild strain, tennis elbow, or weakness after an old injury.</p>
+            <p class="brace-card__price">$29.99</p>
+          </div>
         </div>
       </div>
     </div>
@@ -635,12 +750,42 @@
       <span class="brace-cat__brands">Champion</span>
     </div>
     <div class="brace-grid">
-      <div class="brace-card">
-        <div class="brace-card__icon">🦶</div>
-        <div class="brace-card__body">
-          <div class="brace-card__title">Ankle Support / Brace</div>
-          <p class="brace-card__desc">Lightweight compression or lace-up support for sprains, instability, or recovery.</p>
-          <p class="brace-card__photo-note">Photo coming soon</p>
+      <div class="brace-card brace-card--photo">
+      <div class="brace-card__photos">
+        <div class="brace-card__photo">
+          <img src="/products/champion-ankle-support-worn.webp" srcset="/products/champion-ankle-support-worn-480.webp 480w, /products/champion-ankle-support-worn.webp 600w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Airmesh Ankle Support, worn" width="600" height="600" loading="lazy" decoding="async" />
+        </div>
+        <div class="brace-card__photo brace-card__photo--box">
+          <img src="/products/champion-ankle-support-box.webp" srcset="/products/champion-ankle-support-box-480.webp 480w, /products/champion-ankle-support-box.webp 500w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Airmesh Ankle Support retail packaging" width="500" height="800" loading="lazy" decoding="async" />
+        </div>
+      </div>
+        <div class="brace-card__row">
+          <div class="brace-card__icon">🦶</div>
+          <div class="brace-card__body">
+            <div class="brace-card__title">Airmesh Ankle Support</div>
+            <p class="brace-card__sku">Champion · C-463</p>
+            <p class="brace-card__desc">Lightweight breathable sleeve in grey and blue airmesh, with side stays for everyday support and a heel opening that stops it bunching in a shoe.</p>
+            <p class="brace-card__price">$12.99</p>
+          </div>
+        </div>
+      </div>
+      <div class="brace-card brace-card--photo">
+      <div class="brace-card__photos">
+        <div class="brace-card__photo">
+          <img src="/products/champion-c63-ankle-brace-worn.webp" srcset="/products/champion-c63-ankle-brace-worn-480.webp 480w, /products/champion-c63-ankle-brace-worn.webp 700w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Ankle Brace with Flexible Stays, worn" width="700" height="700" loading="lazy" decoding="async" />
+        </div>
+        <div class="brace-card__photo brace-card__photo--box">
+          <img src="/products/champion-c63-ankle-brace-box.webp" srcset="/products/champion-c63-ankle-brace-box-480.webp 480w, /products/champion-c63-ankle-brace-box.webp 690w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Ankle Brace with Flexible Stays retail packaging" width="690" height="800" loading="lazy" decoding="async" />
+        </div>
+      </div>
+        <div class="brace-card__row">
+          <div class="brace-card__icon">🩼</div>
+          <div class="brace-card__body">
+            <div class="brace-card__title">Ankle Brace with Flexible Stays</div>
+            <p class="brace-card__sku">Champion · C-63</p>
+            <p class="brace-card__desc">Firmer beige elastic brace for minor sprains and strains, or as support for a weakened ankle after a cast comes off.</p>
+            <p class="brace-card__price">$39.99</p>
+          </div>
         </div>
       </div>
     </div>
@@ -652,12 +797,19 @@
       <span class="brace-cat__brands">OTC Professional · Ortho</span>
     </div>
     <div class="brace-grid">
-      <div class="brace-card">
-        <div class="brace-card__icon">🩺</div>
-        <div class="brace-card__body">
-          <div class="brace-card__title">Abdominal Support Binder</div>
-          <p class="brace-card__desc">Adjustable wrap for post-surgical support, core stabilization, or general abdominal support.</p>
-          <p class="brace-card__photo-note">Photo coming soon</p>
+      <div class="brace-card brace-card--photo">
+      <div class="brace-card__photos">
+        <div class="brace-card__photo">
+          <img src="/products/abdominal-binder.webp" srcset="/products/abdominal-binder-480.webp 480w, /products/abdominal-binder.webp 518w" sizes="(max-width: 768px) 92vw, 400px" alt="Abdominal Support Binder, worn" width="518" height="550" loading="lazy" decoding="async" />
+        </div>
+      </div>
+        <div class="brace-card__row">
+          <div class="brace-card__icon">🩺</div>
+          <div class="brace-card__body">
+            <div class="brace-card__title">Abdominal Support Binder</div>
+            <p class="brace-card__desc">Adjustable elastic wrap for post-surgical support, core stabilisation, or general abdominal support. Ask our pharmacist for sizing.</p>
+            <p class="brace-card__price">$19.99</p>
+          </div>
         </div>
       </div>
     </div>
@@ -669,20 +821,42 @@
       <span class="brace-cat__brands">Truform</span>
     </div>
     <div class="brace-grid">
-      <div class="brace-card">
-        <div class="brace-card__icon">🧦</div>
-        <div class="brace-card__body">
-          <div class="brace-card__title">Graduated Compression Stockings</div>
-          <p class="brace-card__desc">Knee-high and thigh-high medical compression hosiery, for circulation, swelling, varicose veins, and travel.</p>
-          <p class="brace-card__photo-note">Photo coming soon</p>
+      <div class="brace-card brace-card--photo">
+      <div class="brace-card__photos">
+        <div class="brace-card__photo">
+          <img src="/products/truform-0865-worn.webp" srcset="/products/truform-0865-worn-480.webp 480w, /products/truform-0865-worn.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Truform Medical Compression Stockings, 20-30 mmHg, worn" width="800" height="800" loading="lazy" decoding="async" />
+        </div>
+        <div class="brace-card__photo brace-card__photo--box">
+          <img src="/products/truform-0865-box.webp" srcset="/products/truform-0865-box-480.webp 480w, /products/truform-0865-box.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Truform Medical Compression Stockings, 20-30 mmHg retail packaging" width="800" height="800" loading="lazy" decoding="async" />
         </div>
       </div>
-      <div class="brace-card">
-        <div class="brace-card__icon">🦵</div>
-        <div class="brace-card__body">
-          <div class="brace-card__title">Compression Socks</div>
-          <p class="brace-card__desc">Everyday graduated-compression socks for standing all day, travel, or mild swelling.</p>
-          <p class="brace-card__photo-note">Photo coming soon</p>
+        <div class="brace-card__row">
+          <div class="brace-card__icon">🧦</div>
+          <div class="brace-card__body">
+            <div class="brace-card__title">Medical Compression Stockings, 20-30 mmHg</div>
+            <p class="brace-card__sku">Truform · Truform 0865</p>
+            <p class="brace-card__desc">Firm therapeutic compression in an open-toe below-knee stocking, the class usually recommended for moderate varicose veins and persistent swelling.</p>
+            <p class="brace-card__price brace-card__price--ask">Ask in store</p>
+          </div>
+        </div>
+      </div>
+      <div class="brace-card brace-card--photo">
+      <div class="brace-card__photos">
+        <div class="brace-card__photo">
+          <img src="/products/truform-socks.webp" srcset="/products/truform-socks-480.webp 480w, /products/truform-socks.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Truform Ladies' Compression Socks, 15-20 mmHg, worn" width="800" height="800" loading="lazy" decoding="async" />
+        </div>
+        <div class="brace-card__photo brace-card__photo--box">
+          <img src="/products/truform-socks-box.webp" srcset="/products/truform-socks-box-480.webp 480w, /products/truform-socks-box.webp 600w" sizes="(max-width: 768px) 92vw, 400px" alt="Truform Ladies' Compression Socks, 15-20 mmHg retail packaging" width="600" height="800" loading="lazy" decoding="async" />
+        </div>
+      </div>
+        <div class="brace-card__row">
+          <div class="brace-card__icon">🦵</div>
+          <div class="brace-card__body">
+            <div class="brace-card__title">Ladies' Compression Socks, 15-20 mmHg</div>
+            <p class="brace-card__sku">Truform · Truform 1973</p>
+            <p class="brace-card__desc">Everyday knee-high compression in a ribbed dress-sock pattern, for standing all day, long flights, or tired aching legs.</p>
+            <p class="brace-card__price">$48.65</p>
+          </div>
         </div>
       </div>
     </div>
@@ -693,15 +867,17 @@
     <p>Stock and sizes vary, call ahead to check availability, or visit us and our pharmacist will help you find the right fit.</p>
     <a href="tel:+14166548181" class="btn">📞 Call (416) 654-8181</a>
     <a href="/#contact" class="btn btn--outline">📍 Get Directions</a>
+
   </div>
-</div>
+</main>
+
 
 <!-- ── Footer ─────────────────────────────────────────────── -->
 <footer>
   <div class="footer__links">
     <a href="/#welcome">Home</a>
     <a href="/#services">Services</a>
-    <a href="/#booking">Patient Portal</a>
+    <a href="/portal/">Patient Portal</a>
     <a href="/#team">Our Team</a>
     <a href="/#faq">FAQ</a>
     <a href="/#drug-checker">Drug Checker</a>
@@ -751,6 +927,7 @@
 </footer>
 
 <!-- ── WhatsApp floating button ──────────────────────────── -->
+<div role="complementary" aria-label="Chat with us">
 <a class="wa-float"
    href="https://wa.me/14166548181?text=Hi%20St.%20Clair%20Drug%20Mart!%20I%20have%20a%20question%20about%20"
    target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
@@ -759,6 +936,7 @@
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
   </svg>
 </a>
+</div>
 
 <!-- ── Privacy Policy modal ──────────────────────────────── -->
 <div class="pp-overlay" id="pp-overlay" role="dialog" aria-modal="true" aria-labelledby="pp-title">
@@ -927,5 +1105,229 @@
   });
 </script>
 <script src="/analytics-events.js?v=1" defer></script>
+<script>
+/* Product data for this page, consumed by nothing yet: this is the source the
+   Uber Eats catalogue will be built from. Same inline-blob convention as
+   window.AILMENT_DB on index.html. onUberEats is false for every item because
+   the braces range is not listed on Uber yet (tracked in TASKS.md).
+   sizingSource is where the official size chart lives, for building charts later. */
+window.PRODUCTS = [
+  {
+    "sku": "C-205",
+    "brand": "Champion",
+    "name": "Industrial Back Support Belt",
+    "category": "Back & Lumbar Supports",
+    "price": "$31.50",
+    "description": "Wide elastic lifting belt with detachable shoulder straps, worn over clothing for heavy lifting and long days on your feet.",
+    "features": [
+      "Detachable shoulder straps",
+      "Hook-and-loop closure adjusts in front",
+      "Lightweight elastic, worn over clothing",
+      "Encourages proper lifting technique"
+    ],
+    "image": "https://www.stclairdrugmart.ca/products/champion-c205-belt-worn.webp",
+    "packaging": "https://www.stclairdrugmart.ca/products/champion-c205-belt-box.webp",
+    "sizingSource": "https://www.championsupports.com/collections/back-abdominal",
+    "onUberEats": false
+  },
+  {
+    "sku": "C-407",
+    "brand": "Champion",
+    "name": "Adjustable Sacro Brace",
+    "category": "Back & Lumbar Supports",
+    "price": "$59.99",
+    "description": "Contoured foam and nylon brace with dual pull straps, shaped to support the sacrum and lower spine and adjustable to most adult builds.",
+    "features": [
+      "Dual elastic pull straps tighten at the front",
+      "Moisture-wicking mesh panel",
+      "Soft nylon over foam core",
+      "Hook-and-loop front closure"
+    ],
+    "image": "https://www.stclairdrugmart.ca/products/champion-0407-sacro-worn.webp",
+    "packaging": "https://www.stclairdrugmart.ca/products/champion-0407-sacro.webp",
+    "sizingSource": "https://championsupports.ca/products/c-407-lightweight-adjustable-sacro-brace",
+    "onUberEats": false
+  },
+  {
+    "sku": "OTC 2893",
+    "brand": "OTC Professional Orthopaedic",
+    "name": "Lumbosacral Support with Abdominal Uplift",
+    "category": "Back & Lumbar Supports",
+    "price": "$125.61",
+    "description": "Ribbed elastic support with a separate abdominal uplift belt, tapered at the front so it stays comfortable when you sit.",
+    "features": [
+      "11 inch back panel covers the whole low back",
+      "Second elastic belt adds adjustable abdominal uplift",
+      "Tapered front for comfort when seated",
+      "Optional rigid stays available (2893S)"
+    ],
+    "image": "https://www.stclairdrugmart.ca/products/otc-2893-lumbosacral.webp",
+    "packaging": "https://www.stclairdrugmart.ca/products/otc-2893-lumbosacral-box.webp",
+    "sizingSource": "https://otcbrace.com/",
+    "onUberEats": false
+  },
+  {
+    "sku": "C-435",
+    "brand": "Champion",
+    "name": "Elastic Knee Support with Flexible Stays",
+    "category": "Knee Supports & Braces",
+    "price": "$34.47",
+    "description": "Slip-on knee sleeve with spiral side stays that bend as you walk, for mild swelling, arthritis ache, or everyday activity.",
+    "features": [
+      "Bilateral spiral stays flex with the knee",
+      "Four-way stretch elastic",
+      "Keeps its shape through the day",
+      "Latex free"
+    ],
+    "image": "https://www.stclairdrugmart.ca/products/champion-0435-knee.webp",
+    "packaging": "https://www.stclairdrugmart.ca/products/champion-0435-knee-box.webp",
+    "sizingSource": "https://www.championsupports.com/collections/knee",
+    "onUberEats": false
+  },
+  {
+    "sku": "OTC 2435",
+    "brand": "OTC Professional Orthopaedic",
+    "name": "Knee Support with Gel Insert",
+    "category": "Knee Supports & Braces",
+    "price": "$42.00",
+    "description": "Firmer support with a sculpted gel pad over the kneecap and flexible side stays, for sprains, instability, or recovery.",
+    "features": [
+      "Anatomically sculpted compression gel insert",
+      "Flexible side stays for medial and lateral support",
+      "Four-way stretch moulds around the joint",
+      "Anti-microbial treatment, latex free"
+    ],
+    "image": "https://www.stclairdrugmart.ca/products/otc-2435-knee-worn.webp",
+    "packaging": "https://www.stclairdrugmart.ca/products/otc-2435-knee.webp",
+    "sizingSource": "https://otcbrace.com/products/2435-knee-support-with-compression-gel-insert-and-flexible-stays",
+    "onUberEats": false
+  },
+  {
+    "sku": "C-50/33",
+    "brand": "Champion",
+    "name": "Elastic Wrist Splint",
+    "category": "Wrist & Elbow Supports",
+    "price": "$30.99",
+    "description": "Shaped aluminium splint that holds the wrist at 32 degrees, the angle clinicians recommend for healing sprains, strains and carpal tunnel discomfort.",
+    "features": [
+      "Removable aluminium stay set at 32 degrees",
+      "Opens flat for easy self-fitting",
+      "Padded thumb closure",
+      "Left and right versions, five sizes"
+    ],
+    "image": "https://www.stclairdrugmart.ca/products/champion-50-33r-wrist.webp",
+    "packaging": "https://www.stclairdrugmart.ca/products/champion-c50-33-wrist-box.webp",
+    "sizingSource": "https://championsupports.ca/products/c-33-elastic-wrist-splint",
+    "onUberEats": false
+  },
+  {
+    "sku": "C-439",
+    "brand": "Champion",
+    "name": "Elastic Elbow Support",
+    "category": "Wrist & Elbow Supports",
+    "price": "$29.99",
+    "description": "Breathable knit sleeve that compresses the whole elbow, for mild strain, tennis elbow, or weakness after an old injury.",
+    "features": [
+      "Four-way stretch knit",
+      "Even compression across the joint",
+      "Breathable for all-day wear",
+      "Pull-on, no straps to adjust"
+    ],
+    "image": "https://www.stclairdrugmart.ca/products/champion-0439-elbow-worn.webp",
+    "packaging": "https://www.stclairdrugmart.ca/products/champion-0439-elbow.webp",
+    "sizingSource": "https://championsupports.ca/collections/wrist-hand-and-elbow",
+    "onUberEats": false
+  },
+  {
+    "sku": "C-463",
+    "brand": "Champion",
+    "name": "Airmesh Ankle Support",
+    "category": "Ankle & Foot Supports",
+    "price": "$12.99",
+    "description": "Lightweight breathable sleeve in grey and blue airmesh, with side stays for everyday support and a heel opening that stops it bunching in a shoe.",
+    "features": [
+      "Breathable airmesh knit",
+      "Flexible stays either side of the ankle",
+      "Open heel sits comfortably in shoes",
+      "Anatomically shaped fit"
+    ],
+    "image": "https://www.stclairdrugmart.ca/products/champion-ankle-support-worn.webp",
+    "packaging": "https://www.stclairdrugmart.ca/products/champion-ankle-support-box.webp",
+    "sizingSource": "https://championsupports.ca/collections/ankle-foot",
+    "onUberEats": false
+  },
+  {
+    "sku": "C-63",
+    "brand": "Champion",
+    "name": "Ankle Brace with Flexible Stays",
+    "category": "Ankle & Foot Supports",
+    "price": "$39.99",
+    "description": "Firmer beige elastic brace for minor sprains and strains, or as support for a weakened ankle after a cast comes off.",
+    "features": [
+      "Stronger elastic sleeve than the airmesh version",
+      "Flexible stays give medial and lateral support",
+      "Helps reduce swelling and prevent re-injury",
+      "Open heel, fits into shoes without bunching"
+    ],
+    "image": "https://www.stclairdrugmart.ca/products/champion-c63-ankle-brace-worn.webp",
+    "packaging": "https://www.stclairdrugmart.ca/products/champion-c63-ankle-brace-box.webp",
+    "sizingSource": "https://championsupports.ca/products/c-63-ankle-brace-flexible-stays",
+    "onUberEats": false
+  },
+  {
+    "sku": null,
+    "brand": null,
+    "name": "Abdominal Support Binder",
+    "category": "Abdominal Binders",
+    "price": "$19.99",
+    "description": "Adjustable elastic wrap for post-surgical support, core stabilisation, or general abdominal support. Ask our pharmacist for sizing.",
+    "features": [
+      "Hook-and-loop closure adjusts to fit",
+      "Even compression across the abdomen",
+      "Breathable elastic panel"
+    ],
+    "image": "https://www.stclairdrugmart.ca/products/abdominal-binder.webp",
+    "packaging": null,
+    "sizingSource": null,
+    "onUberEats": false
+  },
+  {
+    "sku": "Truform 0865",
+    "brand": "Truform",
+    "name": "Medical Compression Stockings, 20-30 mmHg",
+    "category": "Medical Compression Stockings & Socks",
+    "price": null,
+    "description": "Firm therapeutic compression in an open-toe below-knee stocking, the class usually recommended for moderate varicose veins and persistent swelling.",
+    "features": [
+      "20-30 mmHg firm graduated compression",
+      "Open toe, below knee, for men and women",
+      "Smooth opaque fabric",
+      "Fitted by measuring the fullest part of the calf"
+    ],
+    "image": "https://www.stclairdrugmart.ca/products/truform-0865-worn.webp",
+    "packaging": "https://www.stclairdrugmart.ca/products/truform-0865-box.webp",
+    "sizingSource": "https://compressionsupportstore.com/Tru_Measuring_Guide.pdf",
+    "onUberEats": false
+  },
+  {
+    "sku": "Truform 1973",
+    "brand": "Truform",
+    "name": "Ladies' Compression Socks, 15-20 mmHg",
+    "category": "Medical Compression Stockings & Socks",
+    "price": "$48.65",
+    "description": "Everyday knee-high compression in a ribbed dress-sock pattern, for standing all day, long flights, or tired aching legs.",
+    "features": [
+      "15-20 mmHg moderate graduated compression",
+      "Rib-knit, looks like a regular trouser sock",
+      "Helps tired legs and minor swelling",
+      "Several colours and sizes"
+    ],
+    "image": "https://www.stclairdrugmart.ca/products/truform-socks.webp",
+    "packaging": "https://www.stclairdrugmart.ca/products/truform-socks-box.webp",
+    "sizingSource": "https://compressionsupportstore.com/Tru_Measuring_Guide.pdf",
+    "onUberEats": false
+  }
+];
+</script>
 </body>
 </html>

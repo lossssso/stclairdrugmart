@@ -549,7 +549,7 @@
       transition: transform .6s cubic-bezier(.2,.9,.3,1.2);
     }
     .welcome-modal-overlay.open .welcome-modal { transform: scale(1) translateY(0); }
-    .welcome-modal__close { position:absolute; top:.6rem; right:.6rem; background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:1.2rem; line-height:1; padding:.4rem; z-index:2; }
+    .welcome-modal__close { position:absolute; top:.6rem; right:.6rem; background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:1.2rem; line-height:1; padding:.4rem; z-index:2; min-width:30px; min-height:30px; }
     .welcome-modal__top { background: rgba(196,238,240,.4); padding: 1.6rem 1.75rem 1rem; border-bottom: 1px solid rgba(255,255,255,.5); }
     .welcome-modal__icon { width:56px; height:56px; border-radius:50%; background:rgba(255,255,255,.85); border:1.5px solid var(--border); box-shadow:0 6px 16px rgba(0,90,95,.12); display:flex; align-items:center; justify-content:center; margin:0 auto .75rem; overflow:hidden; }
     .welcome-modal__icon img { width:38px; height:auto; display:block; }
@@ -565,7 +565,7 @@
     .welcome-modal__rating { font-size:.78rem; font-weight:700; color:var(--text-muted); margin-bottom:1.15rem; }
     .welcome-modal__cta { display:inline-block; background:var(--teal-bright); color:#fff; font-weight:700; font-size:.88rem; text-decoration:none; padding:.7rem 1.6rem; border-radius:30px; transition:background .15s, transform .15s; box-shadow:0 8px 20px rgba(33,161,168,.3); }
     .welcome-modal__cta:hover { background:var(--teal-dark); transform:translateY(-1px); }
-    .welcome-modal__later { display:block; margin:.75rem auto 0; background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:.78rem; font-weight:600; text-decoration:underline; padding:.3rem; }
+    .welcome-modal__later { display:block; margin:.55rem auto 0; background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:.78rem; font-weight:600; text-decoration:underline; padding:.5rem; }
     .welcome-modal__later:hover { color:var(--teal-dark); }
     .hero__status {
       position: relative; z-index: 1;
@@ -1479,6 +1479,8 @@
     footer a { color: rgba(255,255,255,.65); }
     footer a:hover { color: var(--white); }
     .footer__links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: .75rem; flex-wrap: wrap; }
+    /* WCAG 2.5.8 target size: flex items, so min-height sizes the hit area directly */
+    .footer__links a { display: flex; align-items: center; min-height: 30px; }
     .footer__socials { display: flex; justify-content: center; gap: .75rem; margin-top: 1rem; }
     .footer__socials a {
       display: flex; align-items: center; justify-content: center;
@@ -1514,7 +1516,7 @@
     .blog-card__title a { color: var(--teal-deeper); transition: color .15s; }
     .blog-card__title a:hover { color: var(--teal-bright); }
     .blog-card__excerpt { font-size: .855rem; color: var(--text-muted); flex: 1; line-height: 1.55; }
-    .blog-card__link { font-size: .82rem; font-weight: 600; color: var(--teal-dark); transition: color .15s; margin-top: auto; }
+    .blog-card__link { font-size: .82rem; font-weight: 600; color: var(--teal-dark); transition: color .15s; margin-top: auto; padding: .35rem 0; margin-bottom: -.35rem; }
     .blog-card__link:hover { color: var(--teal-bright); }
     .blog__footer { text-align: center; margin-top: 2rem; }
 
@@ -2845,7 +2847,7 @@
       color: #6B7280; line-height: 1;
     }
     .pp-close:hover { color: #111; }
-    .pp-link { color: rgba(255,255,255,.55); font-size: .7rem; text-decoration: underline; cursor: pointer; background: none; border: none; }
+    .pp-link { color: rgba(255,255,255,.55); font-size: .7rem; text-decoration: underline; cursor: pointer; background: none; border: none; padding: .5rem .75rem; }
 
     /* ── Card chrome ─────────────────────────────────────
        One shared card language replacing the old solid teal bar:
