@@ -202,6 +202,55 @@ def pick_topic(posts: list) -> tuple:
     fresh = [t for t in TOPICS if t[1] not in recent_primaries]
     return random.choice(fresh or TOPICS)
 
+# The model writes prose links, and since the 2026-08-01 move to extensionless URLs any ".html"
+# it emits fails check_site — which runs AFTER generation, so a perfectly good post is generated
+# and then thrown away at the very last step. That is what killed every scheduled run from
+# 2026-08-03 to 2026-08-10 (the earlier failures were the separate Gemini-key problem). Prompting
+# a model to never write ".html" is not a fix; normalising once, here, is.
+# The predicate deliberately MIRRORS check_site.py's rule — internal only, external .html is
+# someone else's problem — so the two can never disagree about what is legal.
+_HREF_RE = re.compile(r'href="([^"]+)"')
+
+def strip_html_ext(html: str) -> str:
+    def repl(m):
+        href = m.group(1)
+        cut = min([i for i in (href.find("#"), href.find("?")) if i >= 0], default=len(href))
+        bare, tail = href[:cut], href[cut:]
+        if not bare.endswith(".html"):
+            return m.group(0)
+        if bare.startswith(("http://", "https://")) and "stclairdrugmart.ca" not in bare:
+            return m.group(0)
+        # "…/index.html" collapses to the directory, not to "…/index", which 404s
+        bare = bare[: -len("index.html")] if bare.endswith("/index.html") else bare[: -len(".html")]
+        return f'href="{bare}{tail}"'
+    return _HREF_RE.sub(repl, html)
+
+
+def _selftest():
+    """python scripts/generate_blog.py --selftest — no network, run it after touching strip_html_ext."""
+    cases = [
+        # the exact link that failed the 2026-08-10 run
+        ('<a href="https://www.stclairdrugmart.ca/blog/posts/a-post.html">x</a>',
+         '<a href="https://www.stclairdrugmart.ca/blog/posts/a-post">x</a>'),
+        ('<a href="/blog/posts/b.html">x</a>', '<a href="/blog/posts/b">x</a>'),
+        ('<a href="../index.html">x</a>', '<a href="../">x</a>'),
+        ('<a href="/blog/index.html#faq">x</a>', '<a href="/blog/#faq">x</a>'),
+        ('<a href="/c.html?utm_source=ig">x</a>', '<a href="/c?utm_source=ig">x</a>'),
+        # external .html must be left exactly alone — check_site permits it
+        ('<a href="https://example.com/d.html">x</a>', '<a href="https://example.com/d.html">x</a>'),
+        # nothing to do
+        ('<a href="/braces-supports">x</a>', '<a href="/braces-supports">x</a>'),
+    ]
+    bad = 0
+    for src, want in cases:
+        got = strip_html_ext(src)
+        if got != want:
+            bad += 1
+            print(f"FAIL {src}\n  got  {got}\n  want {want}")
+    print("generate_blog selftest FAILED" if bad else "generate_blog selftest OK")
+    return 1 if bad else 0
+
+
 def slugify(text: str) -> str:
     s = re.sub(r"[^\w\s-]", "", text.lower())
     s = re.sub(r"[\s_]+", "-", s)
@@ -286,7 +335,10 @@ Return a single JSON object (no markdown fences) with these exact fields:
                 raise RuntimeError(f"Gemini returned no text ({reason})")
             raw = re.sub(r"^```[a-z]*\s*", "", raw)
             raw = re.sub(r"\s*```$", "", raw)
-            return json.loads(raw)
+            post = json.loads(raw)
+            if isinstance(post, dict) and post.get("content_html"):
+                post["content_html"] = strip_html_ext(post["content_html"])
+            return post
         except Exception as exc:
             if attempt == last:
                 raise RuntimeError(f"All {len(GEMINI_MODELS)} models failed, last {model}: {exc}") from exc
@@ -665,4 +717,7 @@ def main():
 
 
 if __name__ == "__main__":
+    import sys
+    if "--selftest" in sys.argv:
+        sys.exit(_selftest())
     main()
