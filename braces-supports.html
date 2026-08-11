@@ -332,6 +332,17 @@
     .brace-card__sku { font-size: .7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: .3rem; }
     .brace-card__photo--box { flex: 1; }
 
+    /* FAQ. Native details/summary: this page loads no site.js, and the
+       shared accordion lives there. No FAQPage schema, Google retired the
+       FAQ rich result in May 2026 and the markup now renders nothing. */
+    .brace-faq { margin: 2.5rem 0 1.5rem; }
+    .brace-faq > h2 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; text-transform: uppercase; letter-spacing: .015em; color: var(--teal-deeper); margin-bottom: .9rem; }
+    .brace-faq details { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: .6rem; }
+    .brace-faq summary { cursor: pointer; padding: .95rem 1.15rem; font-weight: 700; font-size: .9rem; color: var(--teal-deeper); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: .75rem; }
+    .brace-faq summary::-webkit-details-marker { display: none; }
+    .brace-faq summary::after { content: "+"; font-size: 1.25rem; line-height: 1; color: var(--teal-bright); flex-shrink: 0; }
+    .brace-faq details[open] summary::after { content: "−"; }
+    .brace-faq details p { padding: 0 1.15rem 1.05rem; font-size: .85rem; color: var(--text-muted); line-height: 1.65; }
     .brace-cta {
       background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius);
       box-shadow: var(--shadow); padding: 1.75rem; text-align: center; margin: 1.5rem 0 2.5rem;
@@ -558,7 +569,7 @@
 
 <main class="page-wrap" id="main" tabindex="-1">
   <div class="page-note">
-    <strong>Not sure which size or style is right for you?</strong> Ask our pharmacist on your next visit, we can help you find the right fit and explain how to wear it correctly. Walk in any time during store hours.
+    <strong>Not sure which size or style is right for you?</strong> Ask our pharmacist on your next visit, we can help you find the right fit and explain how to wear it correctly. Walk in any time during store hours, no appointment needed, at our St. Clair West pharmacy in Corso Italia, Toronto.
   </div>
 
   <div class="brace-cat">
@@ -839,9 +850,38 @@
     </div>
   </div>
 
+  <section class="brace-faq" id="faq" aria-labelledby="braces-faq-hd">
+    <h2 id="braces-faq-hd">Questions we get asked at the counter</h2>
+
+    <details>
+      <summary>Will my insurance cover a brace or compression stockings?</summary>
+      <p>Many extended health plans cover braces, supports and compression hosiery, but most ask for two things: a prescription from your doctor or nurse practitioner naming the item, and an itemised receipt showing the product name, model and price. Many plans want the prescription dated before the purchase, so it is worth getting it first. Ask us at the counter for an itemised receipt. Coverage varies a lot between plans, so check yours before you buy.</p>
+    </details>
+
+    <details>
+      <summary>Do I need a prescription for compression stockings in Ontario?</summary>
+      <p>Not to buy them. Every compression level we carry, including 20-30 mmHg, is available over the counter, so you can walk in and take them home the same day. A prescription matters for your insurance claim, not for the purchase itself. If you intend to claim it, get the prescription first.</p>
+    </details>
+
+    <details>
+      <summary>What is the difference between 15-20 and 20-30 mmHg?</summary>
+      <p>15-20 mmHg is mild support, the usual choice for tired or aching legs, long flights, standing all day, and mild swelling. 20-30 mmHg is firm therapeutic compression, generally used for more pronounced varicose veins and more persistent swelling. Compression is not right for everyone: if you have reduced circulation in your legs, diabetes affecting the nerves or feet, or a known arterial condition, speak to our pharmacist before wearing any compression garment.</p>
+    </details>
+
+    <details>
+      <summary>How do I know what size I need?</summary>
+      <p>Sizes are measured, not guessed, and each category measures a different landmark: the widest part of the hips for a lumbosacral support, around the knee for a knee brace, the ankle and calf for compression stockings. Measure for compression in the morning, before swelling builds through the day. Bring your measurements, or come in and our pharmacist will measure you and check the fit in person.</p>
+    </details>
+
+    <details>
+      <summary>Do you have my size in stock?</summary>
+      <p>Stock and sizes move, so it is worth calling <a href="tel:+14166548181">(416) 654-8181</a> before making a trip for one specific model or size. If it is not on the shelf we can often order it in or suggest a comparable alternative.</p>
+    </details>
+  </section>
+
   <div class="brace-cta">
     <h2>Available now, in-store</h2>
-    <p>Stock and sizes vary, call ahead to check availability, or visit us and our pharmacist will help you find the right fit.</p>
+    <p>Stock and sizes vary, call ahead to check availability, or visit us at 1203 St. Clair Avenue West in Toronto and our pharmacist will help you find the right fit.</p>
     <a href="tel:+14166548181" class="btn">📞 Call (416) 654-8181</a>
     <a href="/#contact" class="btn btn--outline">📍 Get Directions</a>
 
