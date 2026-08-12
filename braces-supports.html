@@ -332,6 +332,22 @@
     .brace-card__sku { font-size: .7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: .3rem; }
     .brace-card__photo--box { flex: 1; }
 
+    /* Sizing tables. Our own markup rather than the manufacturers' chart
+       images: screen readers and Google can read a real table, and it
+       reflows on a phone instead of forcing a pinch-zoom. */
+    .brace-sizing { margin: 2.5rem 0 1.5rem; }
+    .brace-sizing > h2 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; text-transform: uppercase; letter-spacing: .015em; color: var(--teal-deeper); margin-bottom: .6rem; }
+    .brace-sizing__lead { font-size: .87rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.6rem; }
+    .brace-sizing h3 { font-size: .95rem; font-weight: 800; color: var(--text); margin: 1.6rem 0 .4rem; }
+    .brace-sizing p { font-size: .85rem; color: var(--text-muted); line-height: 1.65; margin-bottom: .7rem; }
+    .size-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: .5rem; }
+    table.size-table { border-collapse: collapse; width: 100%; font-size: .8rem; background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .size-table caption { caption-side: top; text-align: left; font-size: .76rem; font-weight: 800; color: var(--teal-deeper); padding-bottom: .35rem; }
+    .size-table th, .size-table td { padding: .5rem .55rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .size-table thead th { background: var(--teal-ice); color: var(--teal-deeper); font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+    .size-table tbody th { font-weight: 700; color: var(--text); white-space: nowrap; }
+    .size-table tbody tr:last-child th, .size-table tbody tr:last-child td { border-bottom: 0; }
+    .size-note { font-size: .78rem; color: var(--text-muted); line-height: 1.6; margin: .3rem 0 1.2rem; }
     /* FAQ. Native details/summary: this page loads no site.js, and the
        shared accordion lives there. No FAQPage schema, Google retired the
        FAQ rich result in May 2026 and the markup now renders nothing. */
@@ -849,6 +865,160 @@
       </div>
     </div>
   </div>
+
+  <section class="brace-sizing" id="sizing" aria-labelledby="sizing-hd">
+    <h2 id="sizing-hd">How to find your size</h2>
+    <p class="brace-sizing__lead">Sizes here are measured, not guessed, and every category measures a different landmark. Use a soft tape, pull it snug but not tight, and measure the limb you actually need the support for. <strong>If you fall between two sizes, ask our pharmacist before you buy</strong> rather than rounding up by habit: the right answer depends on whether you need firm support or all-day comfort, and it is not the same for every product. Bring your measurements in, or come by and we will measure you at the counter.</p>
+
+    <h3>How to measure for a back or lumbar support</h3>
+    <p>Two different landmarks here, so check which product you are buying. The industrial lifting belt is sized on the <strong>waist</strong>. The sacro and lumbosacral supports are sized on the <strong>widest part of the hips</strong>, not the waist, which is the single most common sizing mistake on this category.</p>
+    <div class="size-table-wrap">
+      <table class="size-table">
+        <caption>Champion C-205 industrial back support belt &nbsp;·&nbsp; measure around the waist</caption>
+        <thead><tr><th scope="col">Size</th><th scope="col">Waist</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">X-Small</th><td>26" – 36" (66 – 91.4 cm)</td></tr>
+          <tr><th scope="row">Regular</th><td>34" – 44" (86.4 – 111.8 cm)</td></tr>
+          <tr><th scope="row">X-Large</th><td>42" – 52" (106.7 – 132.1 cm)</td></tr>
+          <tr><th scope="row">2X-Large</th><td>50" – 60" (127 – 152.4 cm)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="size-table-wrap">
+      <table class="size-table">
+        <caption>Champion C-407 adjustable sacro brace &nbsp;·&nbsp; measure around the widest part of the hips</caption>
+        <thead><tr><th scope="col">Size</th><th scope="col">Hips</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Regular</th><td>29" – 38" (73.6 – 96.5 cm)</td></tr>
+          <tr><th scope="row">Large</th><td>39" – 48" (99 – 121.9 cm)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="size-table-wrap">
+      <table class="size-table">
+        <caption>OTC 2893 lumbosacral support with abdominal uplift &nbsp;·&nbsp; measure around the widest part of the hips</caption>
+        <thead><tr><th scope="col">Size</th><th scope="col">Hips</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Small</th><td>29" – 32" (73.6 – 81.3 cm)</td></tr>
+          <tr><th scope="row">Medium</th><td>33" – 36" (83.8 – 91.4 cm)</td></tr>
+          <tr><th scope="row">Large</th><td>37" – 40" (94 – 101.6 cm)</td></tr>
+          <tr><th scope="row">X-Large</th><td>41" – 44" (104.1 – 111.8 cm)</td></tr>
+          <tr><th scope="row">Universal</th><td>29" – 44" (73.6 – 111.8 cm)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>How to measure for a knee brace</h3>
+    <p>Measure around the bend of the knee, standing, with the leg straight. Both knee supports we carry use the same scale, so a size that fits one will fit the other.</p>
+    <div class="size-table-wrap">
+      <table class="size-table">
+        <caption>Champion C-435 and OTC 2435 knee supports &nbsp;·&nbsp; measure around the bend of the knee</caption>
+        <thead><tr><th scope="col">Size</th><th scope="col">Knee</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">X-Small</th><td>12" – 13.5" (30.5 – 34.3 cm)</td></tr>
+          <tr><th scope="row">Small</th><td>13.5" – 15" (34.3 – 38.1 cm)</td></tr>
+          <tr><th scope="row">Medium</th><td>15" – 16.5" (38.1 – 41.9 cm)</td></tr>
+          <tr><th scope="row">Large</th><td>16.5" – 18" (41.9 – 45.7 cm)</td></tr>
+          <tr><th scope="row">X-Large</th><td>18" – 19" (45.7 – 48.2 cm)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>How to measure for a wrist splint</h3>
+    <p>Measure around the break of the wrist, just below the hand. The wrist splint is handed, so tell us whether you need <strong>left or right</strong> when you come in.</p>
+    <div class="size-table-wrap">
+      <table class="size-table">
+        <caption>Champion C-50/33 elastic wrist splint &nbsp;·&nbsp; measure around the break of the wrist</caption>
+        <thead><tr><th scope="col">Size</th><th scope="col">Wrist</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">X-Small</th><td>under 5.5" (under 14 cm)</td></tr>
+          <tr><th scope="row">Small</th><td>5.5" – 6.5" (14 – 16.5 cm)</td></tr>
+          <tr><th scope="row">Medium</th><td>6.75" – 7.5" (17.1 – 19 cm)</td></tr>
+          <tr><th scope="row">Large</th><td>7.75" – 8.5" (19.7 – 21.6 cm)</td></tr>
+          <tr><th scope="row">X-Large</th><td>8.75" and up (22.2 cm and up)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>How to measure for an elbow support</h3>
+    <p>Measure around the bend of the elbow with the arm relaxed and slightly bent.</p>
+    <div class="size-table-wrap">
+      <table class="size-table">
+        <caption>Champion C-439 elastic elbow support &nbsp;·&nbsp; measure around the bend of the elbow</caption>
+        <thead><tr><th scope="col">Size</th><th scope="col">Elbow</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">X-Small</th><td>8" – 9" (20.3 – 22.8 cm)</td></tr>
+          <tr><th scope="row">Small</th><td>9" – 10.25" (22.8 – 26 cm)</td></tr>
+          <tr><th scope="row">Medium</th><td>10.25" – 11.5" (26 – 29.2 cm)</td></tr>
+          <tr><th scope="row">Large</th><td>11.5" – 12.5" (29.2 – 31.7 cm)</td></tr>
+          <tr><th scope="row">X-Large</th><td>12.5" – 13.75" (31.7 – 35 cm)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>How to measure for an ankle support or brace</h3>
+    <p>Every ankle product here is measured the same way, around the <strong>smallest part of the ankle</strong>, just above the ankle bone. The catch is that they do not all use the same scale.</p>
+    <div class="size-table-wrap">
+      <table class="size-table">
+        <caption>Airmesh ankle support, and the C-63 ankle brace with flexible stays &nbsp;·&nbsp; measure around the smallest part of the ankle</caption>
+        <thead><tr><th scope="col">Size</th><th scope="col">Ankle</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Small</th><td>6.75" – 7.75" (17.1 – 19.7 cm)</td></tr>
+          <tr><th scope="row">Medium</th><td>7.75" – 8.75" (19.7 – 22.2 cm)</td></tr>
+          <tr><th scope="row">Large</th><td>8.75" – 9.75" (22.2 – 24.8 cm)</td></tr>
+          <tr><th scope="row">X-Large</th><td>9.75" – 10.75" (24.8 – 27.3 cm)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="size-table-wrap">
+      <table class="size-table">
+        <caption>C-63 ankle support with spiral stays &nbsp;·&nbsp; measure around the smallest part of the ankle</caption>
+        <thead><tr><th scope="col">Size</th><th scope="col">Ankle</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Small</th><td>8.25" – 10.25" (21 – 26 cm)</td></tr>
+          <tr><th scope="row">Medium</th><td>10.25" – 12.25" (26 – 31 cm)</td></tr>
+          <tr><th scope="row">Large</th><td>12.25" – 14.5" (31 – 36.8 cm)</td></tr>
+          <tr><th scope="row">X-Large</th><td>14.5" – 17" (36.8 – 43 cm)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="size-note">The C-63 has been made in two versions: an older beige brace with <strong>flexible</strong> stays and an open heel, and a newer grey and blue support with <strong>spiral</strong> stays. They share a model number but not a size scale, and the difference is large, so a size in one is not a size in the other. Check which one is on the box, or bring it in and we will match it for you.</p>
+
+    <h3>How to measure for an abdominal binder</h3>
+    <p>Measure around the fullest part of the abdomen, standing and relaxed rather than holding your stomach in. We fit this one in store from the sizing printed on its own package, because binders vary a lot between makers and a chart from a different brand will put you in the wrong size. Ask at the counter and we will size it with you.</p>
+
+    <h3>How to measure for compression stockings</h3>
+    <p>This is the one worth getting exactly right, and the one people most often get wrong. Measure <strong>first thing in the morning</strong>, before any swelling builds through the day, or the stocking will be too loose by the time you actually need it. You need three numbers: the <strong>ankle</strong> at its narrowest point, the <strong>calf</strong> at its fullest, and the <strong>length</strong> from the floor to the bend of the knee.</p>
+    <div class="size-table-wrap">
+      <table class="size-table">
+        <caption>Truform 0865, 20-30 mmHg below-knee open toe</caption>
+        <thead><tr><th scope="col">Size</th><th scope="col">Ankle</th><th scope="col">Calf</th><th scope="col">Length to knee</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Small</th><td>7" – 8¼"</td><td>11" – 14"</td><td>16" – 17½"</td></tr>
+          <tr><th scope="row">Medium</th><td>8⅜" – 9⅝"</td><td>13½" – 16"</td><td>17½" – 19"</td></tr>
+          <tr><th scope="row">Large</th><td>9¾" – 11"</td><td>15½" – 18"</td><td>19" – 20½"</td></tr>
+          <tr><th scope="row">X-Large</th><td>11⅛" – 12⅜"</td><td>17½" – 20"</td><td>20½" – 22"</td></tr>
+          <tr><th scope="row">2X-Large</th><td>12½" – 13¾"</td><td>19½" – 22"</td><td>22" – 24"</td></tr>
+          <tr><th scope="row">3X-Large</th><td>12½" – 13¾"</td><td>21½" – 24"</td><td>22" – 24"</td></tr>
+          <tr><th scope="row">4X-Large</th><td>13" – 14¼"</td><td>23½" – 26"</td><td>22" – 24"</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="size-note">4X-Large, and the short length under 16", are made in black and beige only. Ask us to check availability before you make a trip for one.</p>
+    <div class="size-table-wrap">
+      <table class="size-table">
+        <caption>Truform 1973, ladies' 15-20 mmHg knee-high socks &nbsp;·&nbsp; sized by shoe size as well</caption>
+        <thead><tr><th scope="col">Size</th><th scope="col">Women's shoe</th><th scope="col">Ankle</th><th scope="col">Calf</th><th scope="col">Length to knee</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Small</th><td>8½ and under</td><td>7" – 8¼"</td><td>11" – 14"</td><td>15" – 16½"</td></tr>
+          <tr><th scope="row">Medium</th><td>9 – 11½</td><td>8¼" – 9¾"</td><td>13½" – 16"</td><td>16½" – 18"</td></tr>
+          <tr><th scope="row">Large</th><td>12 – 13½</td><td>9¾" – 11"</td><td>15½" – 18"</td><td>18" – 19½"</td></tr>
+          <tr><th scope="row">X-Large</th><td>12½ and over</td><td>11" – 12½"</td><td>17½" – 20"</td><td>19½" – 21"</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="size-note">Choosing a compression level is a separate question from choosing a size. 15-20 mmHg is mild support for tired legs, travel and standing all day; 20-30 mmHg is firm therapeutic compression. Compression is not suitable for everyone, so if you have reduced circulation in your legs, diabetes affecting the feet, or a known arterial condition, speak to our pharmacist before wearing any compression garment.</p>
+  </section>
 
   <section class="brace-faq" id="faq" aria-labelledby="braces-faq-hd">
     <h2 id="braces-faq-hd">Questions we get asked at the counter</h2>
