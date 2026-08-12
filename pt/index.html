@@ -144,7 +144,8 @@
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Kits de naloxona gratuitos (Programa de Naloxona do Ontário)" } },
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Apoio e prescrição para deixar de fumar (TSN, Champix, Zyban)" } },
         { "@type": "Offer", "itemOffered": { "@type": "MedicalProcedure", "name": "Testes no local (COVID-19, gravidez, glicemia)" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ortóteses, suportes e meias de compressão (Champion, OTC Professional, Truform)", "url": "https://www.stclairdrugmart.ca/braces-supports" } }
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ortóteses, suportes e meias de compressão (Champion, OTC Professional, Truform)", "url": "https://www.stclairdrugmart.ca/braces-supports" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Entrega de encomendas Purolator e devoluções Amazon", "url": "https://www.stclairdrugmart.ca/parcel-drop-off" } }
       ]
     },
     "sameAs": [
@@ -667,8 +668,8 @@ section { padding: 2rem 0.875rem; }
 @keyframes drop-in { 
   0% { opacity: 0; transform: translateY(-6px); }
 }</style>
-  <link rel="preload" href="/site.css?v=25" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/site.css?v=25"></noscript>
+  <link rel="preload" href="/site.css?v=26" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/site.css?v=26"></noscript>
 </head>
 <body>
 <a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Ir para o conteúdo principal</a>
@@ -2640,6 +2641,24 @@ window.FAQS = [
 
 
 <!-- ── Blog ──────────────────────────────────────────────── -->
+<section id="parcel">
+  <div class="section__inner">
+    <h2 class="section__title">Entrega de encomendas e devolu&ccedil;&otilde;es Amazon</h2>
+    <p class="section__lead">Somos um ponto oficial Purolator Smarthub. Deixe as suas encomendas e devolu&ccedil;&otilde;es da Amazon gratuitamente durante o nosso hor&aacute;rio, e se tiver apenas um c&oacute;digo QR, imprimimos a etiqueta para si.</p>
+    <div class="parcel-strip">
+      <a class="parcel-strip__logo" href="https://www.purolator.com/en/shipping/find-shipping-centre/QS4521" target="_blank" rel="noopener">
+        <img src="/logos/purolator.webp" alt="Purolator" width="320" height="45" loading="lazy" decoding="async" />
+        <span>A nossa localiza&ccedil;&atilde;o na Purolator &rarr;</span>
+      </a>
+      <a class="parcel-strip__logo" href="https://www.amazon.ca/gp/help/customer/display.html?nodeId=GZTXM2L3YLZFSQ6W" target="_blank" rel="noopener">
+        <img src="/logos/amazon.webp" alt="Amazon" width="320" height="97" loading="lazy" decoding="async" />
+        <span>Como funcionam as devolu&ccedil;&otilde;es Amazon &rarr;</span>
+      </a>
+    </div>
+    <a href="/parcel-drop-off" class="btn">Detalhes da entrega de encomendas</a>
+  </div>
+</section>
+
 <section id="blog">
   <div class="section__inner">
     <h2 class="section__title">Do nosso blogue</h2>
@@ -2683,6 +2702,7 @@ window.FAQS = [
     <a href="#services">Seguros</a>
     <a href="#shop">Loja</a>
     <a href="/braces-supports">Ortóteses e suportes</a>
+    <a href="/parcel-drop-off">Entrega de encomendas</a>
     <a href="#contact">Contact</a>
     <a href="#about">Sobre</a>
   </div>

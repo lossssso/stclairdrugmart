@@ -55,6 +55,11 @@ SITE_URL = "https://www.stclairdrugmart.ca"
 
 TOPICS = [
     (
+        "where to drop off a Purolator parcel or an Amazon return in Toronto, and what to bring",
+        "Purolator drop off Toronto",
+        ["Amazon returns Toronto", "parcel drop off St. Clair West", "print return label Toronto pharmacy", "Purolator Smarthub Toronto", "where to return Amazon package Toronto"],
+    ),
+    (
         "where to buy compression stockings in Toronto, what mmHg means and how to get properly fitted",
         "compression stockings Toronto",
         ["compression socks Toronto pharmacy", "20-30 mmHg compression stockings", "compression stockings near me", "where to buy compression socks St. Clair West", "compression stocking fitting Toronto"],
@@ -609,6 +614,7 @@ def build_sitemap(posts: list) -> str:
         (f"{SITE_URL}/tr/",             today, "0.8", "monthly"),
         (f"{SITE_URL}/portal/",         today, "0.8", "monthly"),
         (f"{SITE_URL}/braces-supports", today, "0.7", "monthly"),
+        (f"{SITE_URL}/parcel-drop-off", today, "0.7", "monthly"),
     ]
 
     # slug is stored WITHOUT the .html extension (see main()), so this yields the 200 form directly.
@@ -638,8 +644,11 @@ def build_sitemap(posts: list) -> str:
 
 def update_sitemap(posts: list):
     sitemap_path = ROOT / "sitemap.xml"
-    sitemap_path.write_text(build_sitemap(posts))
-    print(f"Updated sitemap.xml ({len(posts) + 9} URLs)")
+    # Count the <loc> entries we actually wrote. The old "len(posts) + 9" was a
+    # hardcoded static-page count that lied silently whenever a page was added.
+    xml = build_sitemap(posts)
+    sitemap_path.write_text(xml)
+    print(f"Updated sitemap.xml ({xml.count('<loc>')} URLs)")
 
 
 # ── Update the static blog list ────────────────────────────────

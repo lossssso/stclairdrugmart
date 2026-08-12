@@ -144,7 +144,8 @@
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Trousses de naloxone gratuites (Programme ontarien de naloxone)" } },
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Aide pour arrêter de fumer et prescription (TRN, Champix, Zyban)" } },
         { "@type": "Offer", "itemOffered": { "@type": "MedicalProcedure", "name": "Tests au point de service (COVID-19, grossesse, glycémie)" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Orthèses, supports et bas de compression (Champion, OTC Professional, Truform)", "url": "https://www.stclairdrugmart.ca/braces-supports" } }
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Orthèses, supports et bas de compression (Champion, OTC Professional, Truform)", "url": "https://www.stclairdrugmart.ca/braces-supports" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Dépôt de colis Purolator et retours Amazon", "url": "https://www.stclairdrugmart.ca/parcel-drop-off" } }
       ]
     },
     "sameAs": [
@@ -667,8 +668,8 @@ section { padding: 2rem 0.875rem; }
 @keyframes drop-in { 
   0% { opacity: 0; transform: translateY(-6px); }
 }</style>
-  <link rel="preload" href="/site.css?v=25" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/site.css?v=25"></noscript>
+  <link rel="preload" href="/site.css?v=26" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/site.css?v=26"></noscript>
 </head>
 <body>
 <a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Aller au contenu principal</a>
@@ -2641,6 +2642,24 @@ window.FAQS = [
 
 
 <!-- ── Blog ──────────────────────────────────────────────── -->
+<section id="parcel">
+  <div class="section__inner">
+    <h2 class="section__title">D&eacute;p&ocirc;t de colis et retours Amazon</h2>
+    <p class="section__lead">Nous sommes un point Purolator Smarthub officiel. D&eacute;posez vos colis et vos retours Amazon gratuitement pendant nos heures d'ouverture, et si vous n'avez qu'un code QR, nous imprimons l'&eacute;tiquette pour vous.</p>
+    <div class="parcel-strip">
+      <a class="parcel-strip__logo" href="https://www.purolator.com/en/shipping/find-shipping-centre/QS4521" target="_blank" rel="noopener">
+        <img src="/logos/purolator.webp" alt="Purolator" width="320" height="45" loading="lazy" decoding="async" />
+        <span>Notre emplacement sur Purolator &rarr;</span>
+      </a>
+      <a class="parcel-strip__logo" href="https://www.amazon.ca/gp/help/customer/display.html?nodeId=GZTXM2L3YLZFSQ6W" target="_blank" rel="noopener">
+        <img src="/logos/amazon.webp" alt="Amazon" width="320" height="97" loading="lazy" decoding="async" />
+        <span>Comment fonctionnent les retours Amazon &rarr;</span>
+      </a>
+    </div>
+    <a href="/parcel-drop-off" class="btn">D&eacute;tails du d&eacute;p&ocirc;t de colis</a>
+  </div>
+</section>
+
 <section id="blog">
   <div class="section__inner">
     <h2 class="section__title">De notre blogue</h2>
@@ -2684,6 +2703,7 @@ window.FAQS = [
     <a href="#services">Assurances</a>
     <a href="#shop">Boutique</a>
     <a href="/braces-supports">Orthèses et supports</a>
+    <a href="/parcel-drop-off">D&eacute;p&ocirc;t de colis</a>
     <a href="#contact">Contact</a>
     <a href="#about">À propos</a>
   </div>
