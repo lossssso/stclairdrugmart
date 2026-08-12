@@ -1480,6 +1480,12 @@
     }
     footer a { color: rgba(255,255,255,.65); }
     footer a:hover { color: var(--white); }
+    /* Parcel carrier strip. Logos link to the carriers' own pages. */
+    .parcel-strip { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin: 1.4rem 0 1.6rem; }
+    .parcel-strip__logo { display: flex; flex-direction: column; align-items: center; gap: .6rem; flex: 1 1 220px; max-width: 300px; background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.2rem; text-decoration: none; min-height: 44px; transition: border-color .15s, transform .15s; }
+    .parcel-strip__logo:hover { border-color: var(--teal-bright); transform: translateY(-2px); }
+    .parcel-strip__logo img { height: 30px; width: auto; object-fit: contain; }
+    .parcel-strip__logo span { font-size: .8rem; font-weight: 700; color: var(--teal-deeper); text-align: center; }
     .footer__links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: .75rem; flex-wrap: wrap; }
     /* WCAG 2.5.8 target size: flex items, so min-height sizes the hit area directly */
     .footer__links a { display: flex; align-items: center; min-height: 30px; }

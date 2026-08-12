@@ -55,6 +55,12 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://www.stclairdrugmart.ca/parcel-drop-off</loc>
+    <lastmod>2026-08-12</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://www.stclairdrugmart.ca/blog/posts/2026-08-03-seniors-pharmacy-toronto-medication-safety-protect-love</loc>
     <lastmod>2026-08-03</lastmod>
     <priority>0.8</priority>
