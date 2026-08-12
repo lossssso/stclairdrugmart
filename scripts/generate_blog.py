@@ -533,7 +533,7 @@ def build_post_page(post: dict, date_str: str, primary_kw: str, slug: str) -> st
   <!-- Inter is self-hosted: ../post.css declares every @font-face from /fonts/. The Google Fonts
        links that used to sit here were the same drift as the cloud rename below — the rest of the
        site moved off them and this hand-copied <head> did not. Never re-add them. -->
-  <link rel="stylesheet" href="../post.css?v=2"/>
+  <link rel="stylesheet" href="../post.css?v=3"/>
   <script type="application/ld+json">
 {schema}
   </script>
