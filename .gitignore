@@ -1,3 +1,10 @@
 # Python bytecode (from local syntax checks; never belongs in the repo)
 __pycache__/
 *.pyc
+
+# Manufacturer size charts, downloaded as reference only (products/_sizing/).
+# These are Champion / OTC / Truform copyrighted artwork, not ours to republish,
+# and this repo is public. The MEASUREMENTS in them are facts and are free to
+# transcribe into our own wording; the chart images are not. Kept local so the
+# sizing guide can be written from them without hotlinking or re-hosting.
+products/_sizing/
