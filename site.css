@@ -549,7 +549,7 @@
       transition: transform .6s cubic-bezier(.2,.9,.3,1.2);
     }
     .welcome-modal-overlay.open .welcome-modal { transform: scale(1) translateY(0); }
-    .welcome-modal__close { position:absolute; top:.6rem; right:.6rem; background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:1.2rem; line-height:1; padding:.4rem; z-index:2; min-width:30px; min-height:30px; }
+    .welcome-modal__close { position:absolute; top:.6rem; right:.6rem; background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:1.2rem; line-height:1; padding:.4rem; z-index:2; min-width:44px; min-height:44px; }
     .welcome-modal__top { background: rgba(196,238,240,.4); padding: 1.6rem 1.75rem 1rem; border-bottom: 1px solid rgba(255,255,255,.5); }
     .welcome-modal__icon { width:56px; height:56px; border-radius:50%; background:rgba(255,255,255,.85); border:1.5px solid var(--border); box-shadow:0 6px 16px rgba(0,90,95,.12); display:flex; align-items:center; justify-content:center; margin:0 auto .75rem; overflow:hidden; }
     .welcome-modal__icon img { width:38px; height:auto; display:block; }
@@ -1230,8 +1230,10 @@
     #contact .section__title::after { background: var(--teal-bright); }
     #contact .section__lead { color: rgba(255,255,255,.75); }
     /* ── Find Us section ───────────────────────────────── */
-    .find-us__section-hd { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.1rem; }
-    .find-us__partner-logos { display: flex; align-items: center; gap: .75rem; }
+    .find-us__section-hd { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.1rem; flex-wrap: wrap; gap: .6rem; }
+    /* flex: none, or a longer translated section heading shrinks these below the
+       24px minimum. Measured FR/ES 21px, PT 23px before this. */
+    .find-us__partner-logos { display: flex; align-items: center; gap: .75rem; flex: none; }
     .find-us__partner-logos img { height: 64px; width: 64px; object-fit: contain; border-radius: 50%; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.18); transition: transform .15s, box-shadow .15s; }
     .find-us__logo-btn { background: none; border: none; cursor: pointer; padding: 0; display: block; border-radius: 50%; }
     .find-us__logo-btn:hover img { transform: scale(1.1); box-shadow: 0 4px 20px rgba(0,115,124,.35); }
@@ -2656,7 +2658,9 @@
     }
     .faq-search__bar:focus-within { border-color: var(--teal-bright); box-shadow: 0 8px 26px rgba(0,0,0,.22), 0 0 0 3px rgba(33,161,168,.25); }
     .faq-search__bar svg { width: 19px; height: 19px; stroke: var(--teal-bright); flex-shrink: 0; }
-    .faq-search__input { flex: 1; border: none; outline: none; font-size: .92rem; font-family: inherit; color: var(--text); background: none; min-width: 0; }
+    /* stretch + padding gives the input the full bar height as a tap target;
+       the negative margin cancels it so the bar itself does not grow. */
+    .faq-search__input { flex: 1; border: none; outline: none; font-size: .92rem; font-family: inherit; color: var(--text); background: none; min-width: 0; align-self: stretch; padding: .8rem 0; margin: -.8rem 0; }
     .faq-search__input::placeholder { color: var(--text-muted); }
     .faq-search__clear { background: var(--teal-ice); border: none; cursor: pointer; color: var(--teal-dark); font-size: 1rem; line-height: 1; width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; }
     @media (max-width: 600px) { .faq-search__input { font-size: 16px; } }
@@ -2844,7 +2848,7 @@
     .pp-close {
       position: absolute; top: 1rem; right: 1rem;
       background: none; border: none; font-size: 1.5rem; cursor: pointer;
-      color: #6B7280; line-height: 1;
+      color: #6B7280; line-height: 1; width: 44px; height: 44px;
     }
     .pp-close:hover { color: #111; }
     .pp-link { color: rgba(255,255,255,.55); font-size: .7rem; text-decoration: underline; cursor: pointer; background: none; border: none; padding: .5rem .75rem; }

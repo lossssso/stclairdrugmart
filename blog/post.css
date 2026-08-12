@@ -252,7 +252,7 @@ img { display:block; max-width:100%; }
 .post__author-body h4 { font-size:1rem; color:var(--teal-deeper); margin-bottom:.35rem; }
 .post__author-body p { font-size:.85rem; color:var(--text-muted); margin:0 0 .7rem; line-height:1.6; }
 .post__author-links { display:flex; gap:1.1rem; flex-wrap:wrap; }
-.post__author-links a { font-size:.82rem; font-weight:700; color:var(--teal-dark); text-decoration:none; }
+.post__author-links a { font-size:.82rem; font-weight:700; color:var(--teal-dark); text-decoration:none; display:inline-flex; align-items:center; min-height:44px; }
 .post__author-links a:hover { color:var(--teal-bright); }
 
 .post__disclaimer { font-size:.78rem; color:var(--text-muted); font-style:italic; border-top:1px solid var(--border); padding-top:1rem; margin-top:1.5rem; }
