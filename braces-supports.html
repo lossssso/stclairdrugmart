@@ -332,6 +332,25 @@
     .brace-card__sku { font-size: .7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: .3rem; }
     .brace-card__photo--box { flex: 1; }
 
+    /* Photo buttons + lightbox. Chart images are referenced by data-full and
+       only fetched when someone actually opens one, so they cost nothing on load. */
+    button.brace-card__photo { padding: 0; font: inherit; cursor: zoom-in; display: block; width: 100%; }
+    button.brace-card__photo:focus-visible { outline: 3px solid var(--teal-bright); outline-offset: 2px; }
+    .brace-card__chart { margin-top: .5rem; background: var(--teal-ice); color: var(--teal-deeper); border: 1px solid var(--border); border-radius: 999px; padding: .4rem .8rem; font: inherit; font-size: .74rem; font-weight: 800; cursor: pointer; min-height: 30px; }
+    .brace-card__chart:hover { background: var(--white); }
+    .brace-card__chart::before { content: "\1F4CF"; margin-right: .35rem; }
+    .lb[hidden] { display: none; }
+    .lb { position: fixed; inset: 0; z-index: 200; background: rgba(4,32,34,.92); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; }
+    .lb__img { max-width: min(92vw, 900px); max-height: 78vh; object-fit: contain; background: #fff; border-radius: 10px; }
+    .lb__cap { color: #fff; font-size: .82rem; margin-top: .75rem; text-align: center; max-width: 90vw; }
+    .lb__count { color: rgba(255,255,255,.65); font-size: .74rem; margin-top: .2rem; }
+    .lb button { position: absolute; background: rgba(255,255,255,.14); color: #fff; border: 0; border-radius: 999px; cursor: pointer; font: inherit; line-height: 1; }
+    .lb button:hover { background: rgba(255,255,255,.28); }
+    .lb button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .lb__close { top: 1rem; right: 1rem; width: 44px; height: 44px; font-size: 1.5rem; }
+    .lb__prev, .lb__next { top: 50%; transform: translateY(-50%); width: 44px; height: 44px; font-size: 1.75rem; }
+    .lb__prev { left: 1rem; } .lb__next { right: 1rem; }
+    @media (max-width: 600px) { .lb__prev { left: .35rem; } .lb__next { right: .35rem; } .lb__img { max-height: 68vh; } }
     /* Sizing tables. Our own markup rather than the manufacturers' chart
        images: screen readers and Google can read a real table, and it
        reflows on a phone instead of forcing a pinch-zoom. */
@@ -596,12 +615,12 @@
     <div class="brace-grid">
       <div class="brace-card brace-card--photo">
       <div class="brace-card__photos">
-        <div class="brace-card__photo">
+        <button type="button" class="brace-card__photo" data-full="/products/champion-c205-belt-worn.webp" data-cap="Champion Industrial Back Support Belt, worn" aria-label="Enlarge: Champion Industrial Back Support Belt, worn">
           <img src="/products/champion-c205-belt-worn.webp" srcset="/products/champion-c205-belt-worn-480.webp 480w, /products/champion-c205-belt-worn.webp 600w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Industrial Back Support Belt, worn" width="600" height="600" loading="lazy" decoding="async" />
-        </div>
-        <div class="brace-card__photo brace-card__photo--box">
+        </button>
+        <button type="button" class="brace-card__photo brace-card__photo--box" data-full="/products/champion-c205-belt-box.webp" data-cap="Champion Industrial Back Support Belt retail packaging" aria-label="Enlarge: Champion Industrial Back Support Belt retail packaging">
           <img src="/products/champion-c205-belt-box.webp" srcset="/products/champion-c205-belt-box-480.webp 480w, /products/champion-c205-belt-box.webp 500w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Industrial Back Support Belt retail packaging" width="500" height="1000" loading="lazy" decoding="async" />
-        </div>
+        </button>
       </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🦺</div>
@@ -610,17 +629,18 @@
             <p class="brace-card__sku">Champion · C-205</p>
             <p class="brace-card__desc">Wide elastic lifting belt with detachable shoulder straps, worn over clothing for heavy lifting and long days on your feet.</p>
             <p class="brace-card__price">$31.50</p>
+            <button type="button" class="brace-card__chart" data-full="/products/champion-c205-belt-sizechart.webp" data-cap="Manufacturer size chart">Size chart</button>
           </div>
         </div>
       </div>
       <div class="brace-card brace-card--photo">
       <div class="brace-card__photos">
-        <div class="brace-card__photo">
+        <button type="button" class="brace-card__photo" data-full="/products/champion-0407-sacro-worn.webp" data-cap="Champion Adjustable Sacro Brace, worn" aria-label="Enlarge: Champion Adjustable Sacro Brace, worn">
           <img src="/products/champion-0407-sacro-worn.webp" srcset="/products/champion-0407-sacro-worn-480.webp 480w, /products/champion-0407-sacro-worn.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Adjustable Sacro Brace, worn" width="800" height="800" loading="lazy" decoding="async" />
-        </div>
-        <div class="brace-card__photo brace-card__photo--box">
+        </button>
+        <button type="button" class="brace-card__photo brace-card__photo--box" data-full="/products/champion-0407-sacro.webp" data-cap="Champion Adjustable Sacro Brace retail packaging" aria-label="Enlarge: Champion Adjustable Sacro Brace retail packaging">
           <img src="/products/champion-0407-sacro.webp" srcset="/products/champion-0407-sacro-480.webp 480w, /products/champion-0407-sacro.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Adjustable Sacro Brace retail packaging" width="800" height="800" loading="lazy" decoding="async" />
-        </div>
+        </button>
       </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🔧</div>
@@ -629,17 +649,18 @@
             <p class="brace-card__sku">Champion · C-407</p>
             <p class="brace-card__desc">Contoured foam and nylon brace with dual pull straps, shaped to support the sacrum and lower spine and adjustable to most adult builds.</p>
             <p class="brace-card__price">$59.99</p>
+            <button type="button" class="brace-card__chart" data-full="/products/champion-0407-sacro-sizechart.webp" data-cap="Manufacturer size chart">Size chart</button>
           </div>
         </div>
       </div>
       <div class="brace-card brace-card--photo">
       <div class="brace-card__photos">
-        <div class="brace-card__photo">
+        <button type="button" class="brace-card__photo" data-full="/products/otc-2893-lumbosacral.webp" data-cap="OTC Professional Orthopaedic Lumbosacral Support with Abdominal Uplift, worn" aria-label="Enlarge: OTC Professional Orthopaedic Lumbosacral Support with Abdominal Uplift, worn">
           <img src="/products/otc-2893-lumbosacral.webp" srcset="/products/otc-2893-lumbosacral-480.webp 480w, /products/otc-2893-lumbosacral.webp 600w" sizes="(max-width: 768px) 92vw, 400px" alt="OTC Professional Orthopaedic Lumbosacral Support with Abdominal Uplift, worn" width="600" height="599" loading="lazy" decoding="async" />
-        </div>
-        <div class="brace-card__photo brace-card__photo--box">
+        </button>
+        <button type="button" class="brace-card__photo brace-card__photo--box" data-full="/products/otc-2893-lumbosacral-box.webp" data-cap="OTC Professional Orthopaedic Lumbosacral Support with Abdominal Uplift retail packaging" aria-label="Enlarge: OTC Professional Orthopaedic Lumbosacral Support with Abdominal Uplift retail packaging">
           <img src="/products/otc-2893-lumbosacral-box.webp" srcset="/products/otc-2893-lumbosacral-box-480.webp 480w, /products/otc-2893-lumbosacral-box.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="OTC Professional Orthopaedic Lumbosacral Support with Abdominal Uplift retail packaging" width="800" height="800" loading="lazy" decoding="async" />
-        </div>
+        </button>
       </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🩹</div>
@@ -648,6 +669,7 @@
             <p class="brace-card__sku">OTC Professional Orthopaedic · OTC 2893</p>
             <p class="brace-card__desc">Ribbed elastic support with a separate abdominal uplift belt, tapered at the front so it stays comfortable when you sit.</p>
             <p class="brace-card__price">$125.61</p>
+            <button type="button" class="brace-card__chart" data-full="/products/otc-2893-lumbosacral-sizechart.webp" data-cap="Manufacturer size chart">Size chart</button>
           </div>
         </div>
       </div>
@@ -662,12 +684,12 @@
     <div class="brace-grid">
       <div class="brace-card brace-card--photo">
       <div class="brace-card__photos">
-        <div class="brace-card__photo">
+        <button type="button" class="brace-card__photo" data-full="/products/champion-0435-knee.webp" data-cap="Champion Elastic Knee Support with Flexible Stays, worn" aria-label="Enlarge: Champion Elastic Knee Support with Flexible Stays, worn">
           <img src="/products/champion-0435-knee.webp" srcset="/products/champion-0435-knee-480.webp 480w, /products/champion-0435-knee.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Elastic Knee Support with Flexible Stays, worn" width="800" height="800" loading="lazy" decoding="async" />
-        </div>
-        <div class="brace-card__photo brace-card__photo--box">
+        </button>
+        <button type="button" class="brace-card__photo brace-card__photo--box" data-full="/products/champion-0435-knee-box.webp" data-cap="Champion Elastic Knee Support with Flexible Stays retail packaging" aria-label="Enlarge: Champion Elastic Knee Support with Flexible Stays retail packaging">
           <img src="/products/champion-0435-knee-box.webp" srcset="/products/champion-0435-knee-box-480.webp 480w, /products/champion-0435-knee-box.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Elastic Knee Support with Flexible Stays retail packaging" width="800" height="800" loading="lazy" decoding="async" />
-        </div>
+        </button>
       </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🦵</div>
@@ -676,17 +698,18 @@
             <p class="brace-card__sku">Champion · C-435</p>
             <p class="brace-card__desc">Slip-on knee sleeve with spiral side stays that bend as you walk, for mild swelling, arthritis ache, or everyday activity.</p>
             <p class="brace-card__price">$34.47</p>
+            <button type="button" class="brace-card__chart" data-full="/products/champion-0435-knee-sizechart.webp" data-cap="Manufacturer size chart">Size chart</button>
           </div>
         </div>
       </div>
       <div class="brace-card brace-card--photo">
       <div class="brace-card__photos">
-        <div class="brace-card__photo">
+        <button type="button" class="brace-card__photo" data-full="/products/otc-2435-knee-worn.webp" data-cap="OTC Professional Orthopaedic Knee Support with Gel Insert, worn" aria-label="Enlarge: OTC Professional Orthopaedic Knee Support with Gel Insert, worn">
           <img src="/products/otc-2435-knee-worn.webp" srcset="/products/otc-2435-knee-worn-480.webp 480w, /products/otc-2435-knee-worn.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="OTC Professional Orthopaedic Knee Support with Gel Insert, worn" width="800" height="800" loading="lazy" decoding="async" />
-        </div>
-        <div class="brace-card__photo brace-card__photo--box">
+        </button>
+        <button type="button" class="brace-card__photo brace-card__photo--box" data-full="/products/otc-2435-knee.webp" data-cap="OTC Professional Orthopaedic Knee Support with Gel Insert retail packaging" aria-label="Enlarge: OTC Professional Orthopaedic Knee Support with Gel Insert retail packaging">
           <img src="/products/otc-2435-knee.webp" srcset="/products/otc-2435-knee-480.webp 480w, /products/otc-2435-knee.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="OTC Professional Orthopaedic Knee Support with Gel Insert retail packaging" width="800" height="800" loading="lazy" decoding="async" />
-        </div>
+        </button>
       </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🔵</div>
@@ -695,6 +718,7 @@
             <p class="brace-card__sku">OTC Professional Orthopaedic · OTC 2435</p>
             <p class="brace-card__desc">Firmer support with a sculpted gel pad over the kneecap and flexible side stays, for sprains, instability, or recovery.</p>
             <p class="brace-card__price">$42.00</p>
+            <button type="button" class="brace-card__chart" data-full="/products/otc-2435-knee-sizechart.webp" data-cap="Manufacturer size chart">Size chart</button>
           </div>
         </div>
       </div>
@@ -709,12 +733,12 @@
     <div class="brace-grid">
       <div class="brace-card brace-card--photo">
       <div class="brace-card__photos">
-        <div class="brace-card__photo">
+        <button type="button" class="brace-card__photo" data-full="/products/champion-50-33r-wrist.webp" data-cap="Champion Elastic Wrist Splint, worn" aria-label="Enlarge: Champion Elastic Wrist Splint, worn">
           <img src="/products/champion-50-33r-wrist.webp" srcset="/products/champion-50-33r-wrist-480.webp 480w, /products/champion-50-33r-wrist.webp 750w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Elastic Wrist Splint, worn" width="750" height="756" loading="lazy" decoding="async" />
-        </div>
-        <div class="brace-card__photo brace-card__photo--box">
+        </button>
+        <button type="button" class="brace-card__photo brace-card__photo--box" data-full="/products/champion-c50-33-wrist-box.webp" data-cap="Champion Elastic Wrist Splint retail packaging" aria-label="Enlarge: Champion Elastic Wrist Splint retail packaging">
           <img src="/products/champion-c50-33-wrist-box.webp" srcset="/products/champion-c50-33-wrist-box-480.webp 480w, /products/champion-c50-33-wrist-box.webp 334w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Elastic Wrist Splint retail packaging" width="334" height="800" loading="lazy" decoding="async" />
-        </div>
+        </button>
       </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🖐️</div>
@@ -723,17 +747,18 @@
             <p class="brace-card__sku">Champion · C-50/33</p>
             <p class="brace-card__desc">Shaped aluminium splint that holds the wrist at 32 degrees, the angle clinicians recommend for healing sprains, strains and carpal tunnel discomfort.</p>
             <p class="brace-card__price">$30.99</p>
+            <button type="button" class="brace-card__chart" data-full="/products/champion-c50-33-wrist-sizechart.webp" data-cap="Manufacturer size chart">Size chart</button>
           </div>
         </div>
       </div>
       <div class="brace-card brace-card--photo">
       <div class="brace-card__photos">
-        <div class="brace-card__photo">
+        <button type="button" class="brace-card__photo" data-full="/products/champion-0439-elbow-worn.webp" data-cap="Champion Elastic Elbow Support, worn" aria-label="Enlarge: Champion Elastic Elbow Support, worn">
           <img src="/products/champion-0439-elbow-worn.webp" srcset="/products/champion-0439-elbow-worn-480.webp 480w, /products/champion-0439-elbow-worn.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Elastic Elbow Support, worn" width="800" height="800" loading="lazy" decoding="async" />
-        </div>
-        <div class="brace-card__photo brace-card__photo--box">
+        </button>
+        <button type="button" class="brace-card__photo brace-card__photo--box" data-full="/products/champion-0439-elbow.webp" data-cap="Champion Elastic Elbow Support retail packaging" aria-label="Enlarge: Champion Elastic Elbow Support retail packaging">
           <img src="/products/champion-0439-elbow.webp" srcset="/products/champion-0439-elbow-480.webp 480w, /products/champion-0439-elbow.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Elastic Elbow Support retail packaging" width="800" height="512" loading="lazy" decoding="async" />
-        </div>
+        </button>
       </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">💪</div>
@@ -742,6 +767,7 @@
             <p class="brace-card__sku">Champion · C-439</p>
             <p class="brace-card__desc">Breathable knit sleeve that compresses the whole elbow, for mild strain, tennis elbow, or weakness after an old injury.</p>
             <p class="brace-card__price">$29.99</p>
+            <button type="button" class="brace-card__chart" data-full="/products/champion-0439-elbow-sizechart.webp" data-cap="Manufacturer size chart">Size chart</button>
           </div>
         </div>
       </div>
@@ -756,12 +782,12 @@
     <div class="brace-grid">
       <div class="brace-card brace-card--photo">
       <div class="brace-card__photos">
-        <div class="brace-card__photo">
+        <button type="button" class="brace-card__photo" data-full="/products/champion-ankle-support-worn.webp" data-cap="Champion Airmesh Ankle Support, worn" aria-label="Enlarge: Champion Airmesh Ankle Support, worn">
           <img src="/products/champion-ankle-support-worn.webp" srcset="/products/champion-ankle-support-worn-480.webp 480w, /products/champion-ankle-support-worn.webp 600w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Airmesh Ankle Support, worn" width="600" height="600" loading="lazy" decoding="async" />
-        </div>
-        <div class="brace-card__photo brace-card__photo--box">
+        </button>
+        <button type="button" class="brace-card__photo brace-card__photo--box" data-full="/products/champion-ankle-support-box.webp" data-cap="Champion Airmesh Ankle Support retail packaging" aria-label="Enlarge: Champion Airmesh Ankle Support retail packaging">
           <img src="/products/champion-ankle-support-box.webp" srcset="/products/champion-ankle-support-box-480.webp 480w, /products/champion-ankle-support-box.webp 500w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Airmesh Ankle Support retail packaging" width="500" height="800" loading="lazy" decoding="async" />
-        </div>
+        </button>
       </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🦶</div>
@@ -770,17 +796,18 @@
             <p class="brace-card__sku">Champion · C-463</p>
             <p class="brace-card__desc">Lightweight breathable sleeve in grey and blue airmesh, with side stays for everyday support and a heel opening that stops it bunching in a shoe.</p>
             <p class="brace-card__price">$12.99</p>
+            <button type="button" class="brace-card__chart" data-full="/products/champion-ankle-support-sizechart.webp" data-cap="Manufacturer size chart">Size chart</button>
           </div>
         </div>
       </div>
       <div class="brace-card brace-card--photo">
       <div class="brace-card__photos">
-        <div class="brace-card__photo">
+        <button type="button" class="brace-card__photo" data-full="/products/champion-c63-ankle-brace-worn.webp" data-cap="Champion Ankle Brace with Flexible Stays, worn" aria-label="Enlarge: Champion Ankle Brace with Flexible Stays, worn">
           <img src="/products/champion-c63-ankle-brace-worn.webp" srcset="/products/champion-c63-ankle-brace-worn-480.webp 480w, /products/champion-c63-ankle-brace-worn.webp 700w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Ankle Brace with Flexible Stays, worn" width="700" height="700" loading="lazy" decoding="async" />
-        </div>
-        <div class="brace-card__photo brace-card__photo--box">
+        </button>
+        <button type="button" class="brace-card__photo brace-card__photo--box" data-full="/products/champion-c63-ankle-brace-box.webp" data-cap="Champion Ankle Brace with Flexible Stays retail packaging" aria-label="Enlarge: Champion Ankle Brace with Flexible Stays retail packaging">
           <img src="/products/champion-c63-ankle-brace-box.webp" srcset="/products/champion-c63-ankle-brace-box-480.webp 480w, /products/champion-c63-ankle-brace-box.webp 690w" sizes="(max-width: 768px) 92vw, 400px" alt="Champion Ankle Brace with Flexible Stays retail packaging" width="690" height="800" loading="lazy" decoding="async" />
-        </div>
+        </button>
       </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🩼</div>
@@ -803,9 +830,9 @@
     <div class="brace-grid">
       <div class="brace-card brace-card--photo">
       <div class="brace-card__photos">
-        <div class="brace-card__photo">
+        <button type="button" class="brace-card__photo" data-full="/products/abdominal-binder.webp" data-cap="Abdominal Support Binder, worn" aria-label="Enlarge: Abdominal Support Binder, worn">
           <img src="/products/abdominal-binder.webp" srcset="/products/abdominal-binder-480.webp 480w, /products/abdominal-binder.webp 518w" sizes="(max-width: 768px) 92vw, 400px" alt="Abdominal Support Binder, worn" width="518" height="550" loading="lazy" decoding="async" />
-        </div>
+        </button>
       </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🩺</div>
@@ -827,12 +854,12 @@
     <div class="brace-grid">
       <div class="brace-card brace-card--photo">
       <div class="brace-card__photos">
-        <div class="brace-card__photo">
+        <button type="button" class="brace-card__photo" data-full="/products/truform-0865-worn.webp" data-cap="Truform Medical Compression Stockings, 20-30 mmHg, worn" aria-label="Enlarge: Truform Medical Compression Stockings, 20-30 mmHg, worn">
           <img src="/products/truform-0865-worn.webp" srcset="/products/truform-0865-worn-480.webp 480w, /products/truform-0865-worn.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Truform Medical Compression Stockings, 20-30 mmHg, worn" width="800" height="800" loading="lazy" decoding="async" />
-        </div>
-        <div class="brace-card__photo brace-card__photo--box">
+        </button>
+        <button type="button" class="brace-card__photo brace-card__photo--box" data-full="/products/truform-0865-box.webp" data-cap="Truform Medical Compression Stockings, 20-30 mmHg retail packaging" aria-label="Enlarge: Truform Medical Compression Stockings, 20-30 mmHg retail packaging">
           <img src="/products/truform-0865-box.webp" srcset="/products/truform-0865-box-480.webp 480w, /products/truform-0865-box.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Truform Medical Compression Stockings, 20-30 mmHg retail packaging" width="800" height="800" loading="lazy" decoding="async" />
-        </div>
+        </button>
       </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🧦</div>
@@ -841,17 +868,18 @@
             <p class="brace-card__sku">Truform · Truform 0865</p>
             <p class="brace-card__desc">Firm therapeutic compression in an open-toe below-knee stocking, the class usually recommended for moderate varicose veins and persistent swelling.</p>
             <p class="brace-card__price">$48.65</p>
+            <button type="button" class="brace-card__chart" data-full="/products/truform-0865-sizechart.webp" data-cap="Manufacturer size chart">Size chart</button>
           </div>
         </div>
       </div>
       <div class="brace-card brace-card--photo">
       <div class="brace-card__photos">
-        <div class="brace-card__photo">
+        <button type="button" class="brace-card__photo" data-full="/products/truform-socks.webp" data-cap="Truform Ladies' Compression Socks, 15-20 mmHg, worn" aria-label="Enlarge: Truform Ladies' Compression Socks, 15-20 mmHg, worn">
           <img src="/products/truform-socks.webp" srcset="/products/truform-socks-480.webp 480w, /products/truform-socks.webp 800w" sizes="(max-width: 768px) 92vw, 400px" alt="Truform Ladies' Compression Socks, 15-20 mmHg, worn" width="800" height="800" loading="lazy" decoding="async" />
-        </div>
-        <div class="brace-card__photo brace-card__photo--box">
+        </button>
+        <button type="button" class="brace-card__photo brace-card__photo--box" data-full="/products/truform-socks-box.webp" data-cap="Truform Ladies' Compression Socks, 15-20 mmHg retail packaging" aria-label="Enlarge: Truform Ladies' Compression Socks, 15-20 mmHg retail packaging">
           <img src="/products/truform-socks-box.webp" srcset="/products/truform-socks-box-480.webp 480w, /products/truform-socks-box.webp 600w" sizes="(max-width: 768px) 92vw, 400px" alt="Truform Ladies' Compression Socks, 15-20 mmHg retail packaging" width="600" height="800" loading="lazy" decoding="async" />
-        </div>
+        </button>
       </div>
         <div class="brace-card__row">
           <div class="brace-card__icon">🦵</div>
@@ -860,6 +888,7 @@
             <p class="brace-card__sku">Truform · Truform 1973</p>
             <p class="brace-card__desc">Everyday knee-high compression in a ribbed dress-sock pattern, for standing all day, long flights, or tired aching legs.</p>
             <p class="brace-card__price">$48.65</p>
+            <button type="button" class="brace-card__chart" data-full="/products/truform-socks-sizechart.webp" data-cap="Manufacturer size chart">Size chart</button>
           </div>
         </div>
       </div>
@@ -1516,5 +1545,79 @@ window.PRODUCTS = [
   }
 ];
 </script>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Product image viewer" hidden>
+  <button type="button" class="lb__close" id="lbClose" aria-label="Close image viewer">&times;</button>
+  <button type="button" class="lb__prev" id="lbPrev" aria-label="Previous image">&lsaquo;</button>
+  <img class="lb__img" id="lbImg" src="" alt="" />
+  <button type="button" class="lb__next" id="lbNext" aria-label="Next image">&rsaquo;</button>
+  <p class="lb__cap" id="lbCap"></p>
+  <p class="lb__count" id="lbCount" aria-live="polite"></p>
+</div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'), img=document.getElementById('lbImg'),
+      cap=document.getElementById('lbCap'), cnt=document.getElementById('lbCount'),
+      prev=document.getElementById('lbPrev'), next=document.getElementById('lbNext'),
+      close=document.getElementById('lbClose');
+  var frames=[], at=0, opener=null;
+
+  // every card owns a gallery: its photos, then its size chart if it has one
+  function galleryFor(card){
+    var g=[];
+    card.querySelectorAll('button.brace-card__photo').forEach(function(b){
+      g.push({src:b.dataset.full, cap:b.dataset.cap});
+    });
+    var c=card.querySelector('.brace-card__chart');
+    if(c) g.push({src:c.dataset.full, cap:c.dataset.cap});
+    return g;
+  }
+  function show(i){
+    if(!frames.length) return;
+    at=(i+frames.length)%frames.length;
+    img.src=frames[at].src; img.alt=frames[at].cap;
+    cap.textContent=frames[at].cap;
+    cnt.textContent=(at+1)+' of '+frames.length;
+    var many=frames.length>1;
+    prev.hidden=!many; next.hidden=!many;
+  }
+  function open(card, startSrc){
+    frames=galleryFor(card);
+    opener=document.activeElement;
+    var i=frames.findIndex(function(f){return f.src===startSrc;});
+    lb.hidden=false;
+    document.body.style.overflow='hidden';
+    show(i<0?0:i);
+    close.focus();
+  }
+  function shut(){
+    lb.hidden=true;
+    document.body.style.overflow='';
+    img.src='';
+    if(opener && opener.focus) opener.focus();
+    opener=null;
+  }
+  document.addEventListener('click', function(e){
+    var p=e.target.closest('button.brace-card__photo, .brace-card__chart');
+    if(p){ open(p.closest('.brace-card'), p.dataset.full); return; }
+    if(e.target===lb) shut();
+  });
+  close.addEventListener('click', shut);
+  prev.addEventListener('click', function(){ show(at-1); });
+  next.addEventListener('click', function(){ show(at+1); });
+  document.addEventListener('keydown', function(e){
+    if(lb.hidden) return;
+    if(e.key==='Escape'){ shut(); return; }
+    if(e.key==='ArrowLeft'){ show(at-1); return; }
+    if(e.key==='ArrowRight'){ show(at+1); return; }
+    if(e.key!=='Tab') return;
+    // keep focus inside the dialog
+    var f=[close,prev,next].filter(function(x){return !x.hidden;});
+    var i=f.indexOf(document.activeElement);
+    e.preventDefault();
+    f[(i + (e.shiftKey?-1:1) + f.length) % f.length].focus();
+  });
+})();
+</script>
+
 </body>
 </html>
