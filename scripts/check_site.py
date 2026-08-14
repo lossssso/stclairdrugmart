@@ -104,9 +104,70 @@ for post in posts:
     if f"{SITE}/blog/posts/{post['slug']}" not in locs:
         fail(f"sitemap.xml: missing post {post['slug']}")
 
+# ── 4. Every indexable page must link to the money pages ───────
+# The nav is hand-copied into 20 files (7 rich homepage/portal copies, 12
+# standalone, 1 generator template) and NOTHING compared them, so a page added
+# to one variant silently missed the other. Structural diffing is wrong here
+# (the variants differ by design); presence of the link is what matters.
+MONEY_PAGES = ["/portal/", "/blog/", "/braces-supports", "/parcel-drop-off"]
+
+for page in ROOT.rglob("*.html"):
+    if any(p in (".git", "node_modules") for p in page.parts):
+        continue
+    html = page.read_text(encoding="utf-8")
+    if NOINDEX.search(html):
+        continue
+    hrefs = {h.split("#")[0].split("?")[0] for h in HREF.findall(html)}
+    for target in MONEY_PAGES:
+        if target in hrefs:
+            continue
+        # a page does not have to link to itself
+        if page.name == "index.html" and f"/{page.parent.name}/" == target:
+            continue
+        if f"/{page.stem}" == target:
+            continue
+        fail(f"{page.relative_to(ROOT)}: nav is missing a link to {target}")
+
+# ── 5. aria-current="page" must not point at an unrelated page ─
+# parcel-drop-off.html shipped with the braces footer link still marked
+# aria-current="page", so it told assistive tech it was the braces page.
+# Two legitimate patterns are allowed and must not be flagged:
+#   - the language switcher, which marks the current locale (carries lang=)
+#   - a section ancestor, e.g. /blog/ marked current on /blog/posts/<slug>
+# Bare "/" is not treated as an ancestor: it is a prefix of everything.
+CURRENT = re.compile(r'<a\s[^>]*aria-current="page"[^>]*>')
+A_HREF = re.compile(r'href="([^"]+)"')
+
+for page in ROOT.rglob("*.html"):
+    if any(p in (".git", "node_modules") for p in page.parts):
+        continue
+    html = page.read_text(encoding="utf-8")
+    rel = page.relative_to(ROOT).as_posix()
+    if rel == "index.html":
+        own = "/"
+    elif rel.endswith("/index.html"):
+        own = "/" + rel[: -len("/index.html")] + "/"
+    else:
+        own = "/" + rel[: -len(".html")]
+
+    for tag in CURRENT.findall(html):
+        # language switchers mark the current locale, not the current page
+        if "lang=" in tag:
+            continue
+        m = A_HREF.search(tag)
+        if not m:
+            continue
+        bare = m.group(1).split("#")[0].split("?")[0]
+        if bare == own:
+            continue
+        # a section ancestor may mark itself current on its children
+        if bare != "/" and bare.endswith("/") and own.startswith(bare):
+            continue
+        fail(f"{page.relative_to(ROOT)}: aria-current=\"page\" points at {bare}, but this page is {own}")
+
 if errors:
     print(f"check_site: {len(errors)} problem(s):")
     for e in errors:
         print(f"  FAIL {e}")
     sys.exit(1)
-print(f"check_site: OK ({len(locs)} sitemap URLs, {len(posts)} posts, no internal .html links)")
+print(f"check_site: OK ({len(locs)} sitemap URLs, {len(posts)} posts, no internal .html links, nav + aria-current consistent)")

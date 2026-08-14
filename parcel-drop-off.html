@@ -58,6 +58,7 @@
   <link rel="stylesheet" href="/site.css?v=26" />
   <style>
     /* Page-specific only. Everything else comes from site.css. */
+    .nav__links a[aria-current="page"] { color: var(--teal-deeper); font-weight: 700; }
     .parcel-wrap { max-width: 820px; margin: calc(64px + 2rem) auto 3rem; padding: 0 1.1rem; }
     .parcel-hd { margin-bottom: 1.4rem; }
     .parcel-hd h1 { font-family: var(--font-display); font-size: clamp(1.8rem, 4.2vw, 2.7rem); line-height: 1.1; color: var(--teal-deeper); margin-bottom: .6rem; }
@@ -132,6 +133,7 @@
           <li><a href="/#services">Free Naloxone Kits</a></li>
           <li><a href="/#drug-checker">Drug Checker</a></li>
           <li><a href="/#services">Insurance</a></li>
+          <li><a href="/parcel-drop-off" class="active" aria-current="page">Purolator Drop-Off</a></li>
         </ul>
       </li>
       <li class="nav__has-dropdown">
@@ -246,7 +248,8 @@
     <a href="/#drug-checker">Drug Checker</a>
     <a href="/#services">Insurance</a>
     <a href="https://www.ubereats.com/ca/store/st-clair-drug-mart-pharmacy/UQdOJOPyU7SiPZNSGikbhQ" target="_blank" rel="noopener">Shop</a>
-    <a href="/braces-supports" class="active" aria-current="page">Braces &amp; Supports</a>
+    <a href="/braces-supports">Braces &amp; Supports</a>
+    <a href="/parcel-drop-off">Parcel Drop-Off</a>
     <a href="/#contact">Contact</a>
     <a href="/#about">About</a>
   </div>
@@ -289,5 +292,6 @@
   <p style="margin-top:.75rem;opacity:.45;">&copy; 2026 St. Clair Drug Mart Pharmacy. All rights reserved.</p>
 </footer>
 
+<script src="/analytics-events.js?v=1" defer></script>
 </body>
 </html>
