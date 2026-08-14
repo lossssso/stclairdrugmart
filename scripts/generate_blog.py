@@ -411,6 +411,7 @@ def nav_html(depth: int = 1) -> str:
           <li><a href="/#services">Free Naloxone Kits</a></li>
           <li><a href="/#drug-checker">Drug Checker</a></li>
           <li><a href="/#services">Insurance</a></li>
+          <li><a href="/parcel-drop-off">Purolator Drop-Off</a></li>
         </ul>
       </li>
       <li class="nav__has-dropdown">
