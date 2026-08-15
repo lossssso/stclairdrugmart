@@ -11,7 +11,7 @@
     gtag('config','G-2YQ9FDLMCV');
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Purolator Drop-Off &amp; Amazon Returns, St. Clair West Toronto | St. Clair Drug Mart</title>
+  <title>Purolator Drop-Off &amp; Amazon Returns | St. Clair Drug Mart</title>
   <meta name="description" content="Free Purolator drop-off and Amazon returns at our St. Clair West pharmacy in Toronto. Bring a QR code, we print the label. Last pickup 5pm." />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="author" content="St. Clair Drug Mart Pharmacy" />
@@ -54,6 +54,20 @@
       { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "14:00" }
     ]
   }</script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Is parcel drop-off free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. There is no fee and no purchase needed. Bring the parcel in during store hours and we will take it." } },
+      { "@type": "Question", "name": "I only have a QR code. Do I need to print a label first?", "acceptedAnswer": { "@type": "Answer", "text": "No. Show us the QR code on your phone, we scan it, print the label at the counter and bag the item for you. You do not need a printer, a box or tape at home." } },
+      { "@type": "Question", "name": "What time is the last Purolator pickup?", "acceptedAnswer": { "@type": "Answer", "text": "5:00 pm, for every service. We are open until 6:00 pm Monday to Friday and until 2:00 pm on Saturday, so you can still drop off after five, it simply goes out on the next business day." } },
+      { "@type": "Question", "name": "Do you take Amazon returns?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Amazon returns run as label-free QR returns and travel with Purolator. The code on your QR is the tracking number, so you can follow the parcel from your own Amazon return confirmation." } },
+      { "@type": "Question", "name": "How big or heavy a parcel can you take?", "acceptedAnswer": { "@type": "Answer", "text": "Up to 50 lb per piece, and up to 36 by 32 by 32 inches. Those limits are set by Purolator for this location." } },
+      { "@type": "Question", "name": "Can I buy a shipping label or postage here?", "acceptedAnswer": { "@type": "Answer", "text": "No. We handle prepaid outbound parcels and QR-code returns only, so the label has to be paid for already." } },
+      { "@type": "Question", "name": "Can I have a parcel delivered here to collect?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. This location offers hold for pick-up, so a Purolator parcel can be sent here and collected during store hours." } }
+    ]
+  }</script>
   <link rel="stylesheet" href="/fonts.css?v=1" />
   <link rel="stylesheet" href="/site.css?v=26" />
   <style>
@@ -84,6 +98,19 @@
     .parcel-carrier:hover { border-color: var(--teal-bright); }
     .parcel-carrier img { height: 30px; width: auto; object-fit: contain; }
     .parcel-carrier span { font-size: .8rem; color: var(--teal-deeper); font-weight: 700; text-align: center; }
+    .parcel-call { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin: 0 0 1.6rem; }
+    .parcel-call span { font-size: .82rem; color: var(--text-muted); }
+    .parcel-steps { margin: 0 0 1rem 1.15rem; padding: 0; }
+    .parcel-steps li { font-size: .9rem; color: var(--text-muted); line-height: 1.7; margin-bottom: .45rem; }
+    .parcel-steps strong { color: var(--text); }
+    .parcel-photo { width: 100%; max-width: 320px; height: auto; border-radius: var(--radius); border: 1.5px solid var(--border); }
+    .parcel-faq details { border-top: 1px solid var(--border); }
+    .parcel-faq details:first-of-type { border-top: 0; }
+    .parcel-faq summary { cursor: pointer; padding: .85rem 0; font-weight: 700; font-size: .9rem; color: var(--teal-deeper); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: .75rem; }
+    .parcel-faq summary::-webkit-details-marker { display: none; }
+    .parcel-faq summary::after { content: "+"; font-size: 1.25rem; line-height: 1; color: var(--teal-bright); flex-shrink: 0; }
+    .parcel-faq details[open] summary::after { content: "−"; }
+    .parcel-faq details p { padding: 0 0 .9rem; font-size: .87rem; }
     .parcel-next { display: flex; flex-wrap: wrap; gap: .6rem; }
     .parcel-next a { flex: 1 1 200px; text-align: center; }
   </style>
@@ -174,6 +201,10 @@
       <span>Bag provided</span>
       <span>Last pickup 5:00 pm</span>
     </div>
+    <p class="parcel-call">
+      <a href="tel:+14166548181" class="btn">&#128222; Call about a package</a>
+      <span>Not sure we can take it? Ask us before you make the trip.</span>
+    </p>
   </header>
 
   <section class="parcel-card">
@@ -184,6 +215,17 @@
       <li><strong>An already-labelled parcel</strong>, sealed and ready. Hand it over and you are done.</li>
     </ul>
     <p>You do not need to bring your own box or packing tape for a QR-code return, and you do not need a printer at home. That is the part most drop-off points cannot do for you.</p>
+  </section>
+
+  <section class="parcel-card">
+    <h2>How it works at the counter</h2>
+    <ol class="parcel-steps">
+      <li><strong>Bring your QR code</strong> on your phone, or your already-labelled parcel.</li>
+      <li><strong>We scan the code</strong> at the pharmacy counter.</li>
+      <li><strong>We print the label, bag it and seal it.</strong> No box, tape or printer needed at home.</li>
+      <li><strong>Track it with the code you already have.</strong> The number on your QR is the same one on the Purolator label, so you follow it from your own return confirmation.</li>
+    </ol>
+    <img src="/storefront_studio-480.webp" alt="St. Clair Drug Mart Pharmacy storefront at 1203 St. Clair Avenue West" width="480" height="672" loading="lazy" decoding="async" class="parcel-photo" />
   </section>
 
   <section class="parcel-card">
@@ -203,12 +245,24 @@
   <section class="parcel-card">
     <h2>What we can handle</h2>
     <ul>
-      <li><strong>Label-free / QR code returns</strong>, including Amazon returns. These travel with Purolator, so your return is tracked from the moment we hand you the receipt.</li>
+      <li><strong>Label-free / QR code returns</strong>, including Amazon returns. These travel with Purolator, and the code on your QR is the tracking number, so you can follow it from your own return confirmation.</li>
       <li><strong>Package-free returns</strong>, where the item does not need boxing</li>
       <li><strong>Prepaid outbound shipping</strong>, if your label is already paid</li>
       <li><strong>Hold for pick-up</strong>, if you are having a parcel sent here to collect</li>
     </ul>
     <p>Size and weight limits are set by Purolator: up to <strong>50 lb per piece</strong>, and up to <strong>36" x 32" x 32"</strong>. The counter has street-level and wheelchair access.</p>
+  </section>
+
+  <section class="parcel-card">
+    <h2>What we cannot take</h2>
+    <p>Worth checking before you make the trip:</p>
+    <ul>
+      <li><strong>Purolator only.</strong> We are a Purolator drop-off point, so we cannot accept Canada Post, UPS or FedEx parcels. Amazon returns are fine, because they travel with Purolator.</li>
+      <li><strong>Nothing unlabelled that has no QR code.</strong> We do not sell postage, so we can only print a label your retailer or Purolator account has already paid for.</li>
+      <li><strong>Over 50 lb, or bigger than 36" x 32" x 32".</strong> Those are Purolator's limits for this location, not ours.</li>
+      <li><strong>No dangerous goods</strong>, which Purolator does not carry through a retail counter.</li>
+    </ul>
+    <p>If you are unsure, <a href="tel:+14166548181">call us on (416) 654-8181</a> and describe it. It takes twenty seconds and saves you the walk.</p>
   </section>
 
   <section class="parcel-card">
@@ -226,12 +280,52 @@
     </div>
   </section>
 
+  <section class="parcel-card parcel-faq">
+    <h2>Common questions</h2>
+
+    <details>
+      <summary>Is parcel drop-off free?</summary>
+      <p>Yes. There is no fee and no purchase needed. Bring the parcel in during store hours and we will take it.</p>
+    </details>
+
+    <details>
+      <summary>I only have a QR code. Do I need to print a label first?</summary>
+      <p>No, and this is the part most drop-off points cannot do. Show us the QR code on your phone, we scan it, print the label at the counter and bag the item for you. You do not need a printer, a box or tape at home.</p>
+    </details>
+
+    <details>
+      <summary>What time is the last Purolator pickup?</summary>
+      <p>5:00 pm, for every service. We are open until 6:00 pm Monday to Friday and until 2:00 pm on Saturday, so you can still drop off after five, it simply goes out on the next business day.</p>
+    </details>
+
+    <details>
+      <summary>Do you take Amazon returns?</summary>
+      <p>Yes. Amazon returns run as label-free QR returns and travel with Purolator. The code on your QR is the tracking number, so you can follow the parcel from your own Amazon return confirmation.</p>
+    </details>
+
+    <details>
+      <summary>How big or heavy a parcel can you take?</summary>
+      <p>Up to 50 lb per piece, and up to 36" x 32" x 32". Those limits are set by Purolator for this location. The counter has street-level and wheelchair access.</p>
+    </details>
+
+    <details>
+      <summary>Can I buy a shipping label or postage here?</summary>
+      <p>No. We handle prepaid outbound parcels and QR-code returns only, so the label has to be paid for already, either by the retailer you are returning to or through your own Purolator account.</p>
+    </details>
+
+    <details>
+      <summary>Can I have a parcel delivered here to collect?</summary>
+      <p>Yes. This location offers hold for pick-up, so a Purolator parcel can be sent here and collected during store hours. Bring photo ID matching the name on the parcel.</p>
+    </details>
+  </section>
+
   <section class="parcel-card">
     <h2>Finding us</h2>
-    <p>1203 St. Clair Avenue West, at Dufferin, on the 512 St. Clair streetcar line. There is street parking outside and a Green P nearby. Call <a href="tel:+14166548181">(416) 654-8181</a> if you are not sure whether we can take something.</p>
+    <p>Our Purolator depot is inside the pharmacy at <a href="https://www.google.com/maps/dir/?api=1&amp;destination=1203+St+Clair+Ave+W+Toronto+ON+M6E+1B5" target="_blank" rel="noopener">1203 St. Clair Avenue West</a>, at Dufferin, on the 512 St. Clair streetcar line. That puts the drop-off point a short walk from most of Corso Italia and Earlscourt. There is street parking outside and a Green P nearby.</p>
     <p>While you are here, our pharmacist can also help with a flu shot, a prescription transfer, or fitting a brace or compression stocking. No appointment needed for any of them.</p>
     <div class="parcel-next">
-      <a href="/#booking" class="btn">Book with the pharmacist</a>
+      <a href="tel:+14166548181" class="btn">&#128222; Call (416) 654-8181</a>
+      <a href="/#booking" class="btn btn--outline">Book with the pharmacist</a>
       <a href="/braces-supports" class="btn btn--outline">Braces &amp; supports</a>
       <a href="/#contact" class="btn btn--outline">Find us</a>
     </div>
