@@ -2,62 +2,68 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.stclairdrugmart.ca/</loc>
-    <lastmod>2026-08-08</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://www.stclairdrugmart.ca/blog/</loc>
-    <lastmod>2026-08-08</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://www.stclairdrugmart.ca/fr/</loc>
-    <lastmod>2026-08-08</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://www.stclairdrugmart.ca/es/</loc>
-    <lastmod>2026-08-08</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://www.stclairdrugmart.ca/pt/</loc>
-    <lastmod>2026-08-08</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://www.stclairdrugmart.ca/it/</loc>
-    <lastmod>2026-08-08</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://www.stclairdrugmart.ca/tr/</loc>
-    <lastmod>2026-08-08</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://www.stclairdrugmart.ca/portal/</loc>
-    <lastmod>2026-08-08</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://www.stclairdrugmart.ca/braces-supports</loc>
-    <lastmod>2026-08-08</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://www.stclairdrugmart.ca/parcel-drop-off</loc>
-    <lastmod>2026-08-12</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.stclairdrugmart.ca/blog/posts/2026-08-17-your-guide-to-getting-a-travel-vaccine-toronto</loc>
+    <lastmod>2026-08-17</lastmod>
+    <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
