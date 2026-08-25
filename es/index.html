@@ -668,8 +668,8 @@ section { padding: 2rem 0.875rem; }
 @keyframes drop-in { 
   0% { opacity: 0; transform: translateY(-6px); }
 }</style>
-  <link rel="preload" href="/site.css?v=26" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/site.css?v=26"></noscript>
+  <link rel="preload" href="/site.css?v=27" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/site.css?v=27"></noscript>
 </head>
 <body>
 <a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Saltar al contenido principal</a>
@@ -1497,6 +1497,8 @@ section { padding: 2rem 0.875rem; }
         </button>
         <div class="svc-acc__body svc-acc__body--wide">
           <p class="section__lead" style="margin-bottom:1.5rem;">Sí. En Ontario puede vacunarse en una farmacia sin pasar por el médico. En St. Clair Drug Mart, en Toronto, nuestro farmacéutico aplica las vacunas contra la gripe, la COVID-19, la culebrilla, el neumococo, el VRS, la Tdap y las vacunas de viaje aquí mismo en la farmacia, sin necesidad de visita médica. Puede venir sin cita; se recomienda reservar en épocas de mayor demanda.</p>
+
+          <p class="vaccines__new-note vaccines__stock-note">📦 <strong>Actualización de existencias:</strong> por ahora no tenemos vacunas en existencia, ni las financiadas con fondos públicos ni las de viaje. Esperamos recibir el nuevo suministro a tiempo para el otoño. <a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT, then choose your vaccine under TYPE OF SERVICE and your preferred brand.">Reserve una cita para unirse a la lista de espera &rarr;</a> y le avisaremos en cuanto llegue su vacuna, o llame al (416) 654-8181.</p>
 
           <h4 class="vaccines__sub-heading" style="margin-bottom:.75rem;">Financiadas con fondos públicos, gratis con una tarjeta de salud de Ontario válida</h4>
           <p class="vaccines__new-note">🆕 <strong>Nuevo desde el 1 de julio de 2026:</strong> los farmacéuticos de Ontario ya pueden aplicar las vacunas financiadas públicamente contra <strong>Tdap, culebrilla, neumococo y VRS</strong>; recíbalas aquí mismo en la farmacia, sin visita al médico.</p>
@@ -3005,7 +3007,8 @@ window.I18N = {
     dcModerate: '🟡 Interacción(es) moderada(s) encontrada(s)',
     vacNoRx: '✓ No se requiere receta',
     vacSeasonal: 'Estacional (llame para consultar)',
-    vacStock: '✓ En existencia'
+    vacStock: '✓ En existencia',
+    vacPending: 'Sin existencias'
   },
   sev: {
     contraindicated: { label:'⛔ Contraindicado', cls:'sev-contra',  result:'dc-result--contra' },
@@ -3026,7 +3029,7 @@ window.I18N = {
 
 
 
-<script src="/site.js?v=21" defer></script>
+<script src="/site.js?v=22" defer></script>
 <script src="/analytics-events.js?v=1" defer></script>
 </body>
 </html>

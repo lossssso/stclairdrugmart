@@ -668,8 +668,8 @@ section { padding: 2rem 0.875rem; }
 @keyframes drop-in { 
   0% { opacity: 0; transform: translateY(-6px); }
 }</style>
-  <link rel="preload" href="/site.css?v=26" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/site.css?v=26"></noscript>
+  <link rel="preload" href="/site.css?v=27" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/site.css?v=27"></noscript>
 </head>
 <body>
 <a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Vai al contenuto principale</a>
@@ -1497,6 +1497,8 @@ section { padding: 2rem 0.875rem; }
         </button>
         <div class="svc-acc__body svc-acc__body--wide">
           <p class="section__lead" style="margin-bottom:1.5rem;">Sì. In Ontario puoi vaccinarti in farmacia senza medico. Da St. Clair Drug Mart, a Toronto, il nostro farmacista somministra i vaccini contro influenza, COVID-19, herpes zoster, pneumococco, VRS, Tdap e i vaccini da viaggio direttamente in farmacia, senza visita medica. Senza appuntamento; consigliata la prenotazione nei periodi di maggior afflusso.</p>
+
+          <p class="vaccines__new-note vaccines__stock-note">📦 <strong>Aggiornamento scorte:</strong> al momento siamo senza scorte di vaccini, sia quelli finanziati dal sistema pubblico sia quelli da viaggio. Le nuove forniture sono attese in tempo per l’autunno. <a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT, then choose your vaccine under TYPE OF SERVICE and your preferred brand.">Prenota un appuntamento per iscriverti alla lista d’attesa &rarr;</a> e ti contatteremo appena arriva il tuo vaccino, oppure chiama il (416) 654-8181.</p>
 
           <h4 class="vaccines__sub-heading" style="margin-bottom:.75rem;">Finanziati dallo Stato, gratuiti con una tessera sanitaria dell'Ontario valida</h4>
           <p class="vaccines__new-note">🆕 <strong>Novità dal 1° luglio 2026:</strong> i farmacisti dell'Ontario possono ora somministrare i vaccini finanziati <strong>Tdap, herpes zoster, pneumococco e VRS</strong>. Ricevili qui in farmacia, senza visita medica.</p>
@@ -2941,7 +2943,7 @@ window.I18N = {
     dcSumOk:'✅ Nessuna interazione trovata',
     dcSumOkBody:'NLM RxNav e il nostro riferimento non hanno trovato interazioni note tra <strong>{DRUGS}</strong>.<br><br>Conferma sempre con i nostri farmacisti prima di modificare la terapia.',
     dcContra:'⛔ Combinazione controindicata', dcMajor:'🔴 Interazione/i maggiore/i trovata/e', dcModerate:'🟡 Interazione/i moderata/e trovata/e',
-    vacNoRx:'✓ Senza ricetta', vacSeasonal:'Stagionale (chiama per verificare)', vacStock:'✓ Disponibile'
+    vacNoRx:'✓ Senza ricetta', vacSeasonal:'Stagionale (chiama per verificare)', vacStock:'✓ Disponibile', vacPending:'Non disponibile'
   },
   sev: {
     contraindicated:{ label:'⛔ Controindicato', cls:'sev-contra', result:'dc-result--contra' },
@@ -2962,7 +2964,7 @@ window.I18N = {
 
 
 
-<script src="/site.js?v=21" defer></script>
+<script src="/site.js?v=22" defer></script>
 <script src="/analytics-events.js?v=1" defer></script>
 </body>
 </html>

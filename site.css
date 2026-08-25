@@ -1946,8 +1946,12 @@
     }
     .vaccine-card { cursor: pointer; }
     .vaccine-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); border-color: var(--teal-bright); }
-    .vaccine-card__header { display: flex; align-items: flex-start; justify-content: space-between; gap: .5rem; }
+    /* wrap: the badge row is wider than "✓ In Stock" once a card carries a
+       status like "Stock pending", and flex-shrink:0 below would otherwise
+       push it past the card edge on narrow screens. */
+    .vaccine-card__header { display: flex; align-items: flex-start; justify-content: space-between; gap: .5rem; flex-wrap: wrap; }
     .vaccine-card__name {
+      min-width: 0;
       font-family: var(--font-display);
       font-size: .95rem; font-weight: 900;
       color: var(--teal-deeper); text-transform: uppercase; letter-spacing: .04em;
@@ -1963,12 +1967,16 @@
     .badge--new { background: var(--teal-bright); color: #fff; }
     .badge--stock { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
     .badge--seasonal { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+    .badge--pending { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
     .vaccines__new-note {
       font-size: .82rem; color: var(--text-muted); line-height: 1.55;
       background: #eef9fa; border: 1.5px solid var(--border);
       border-radius: 10px; padding: .7rem .95rem; margin-bottom: 1.25rem;
     }
     .vaccines__new-note strong { color: var(--teal-deeper); }
+    /* Stock outage notice, amber so it does not read as the teal "good news" box. */
+    .vaccines__stock-note { background: #fffbeb; border-color: #fde68a; }
+    .vaccines__stock-note strong { color: #92400e; }
     .vaccine-card__who { font-size: .81rem; color: var(--text); font-weight: 600; line-height: 1.4; }
     .vaccine-card__desc { font-size: .79rem; color: var(--text-muted); line-height: 1.55; }
     .vaccine-card__rx { font-size: .72rem; color: #16a34a; font-weight: 600; margin-top: .5rem; margin-bottom: 0; }

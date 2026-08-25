@@ -1709,11 +1709,18 @@ window.SmartMatch = (function(){
 
   // Vaccine availability badges. EDIT HERE to change stock status:
   // key = lowercase text that appears in the vaccine's name; value = status.
-  // Any vaccine not listed shows "✓ In Stock". 'seasonal' shows
-  // "Seasonal (call to check)".
+  // Any vaccine not listed falls back to VACCINE_STOCK_DEFAULT. Statuses:
+  //   'in'       -> "✓ In Stock"
+  //   'seasonal' -> "Seasonal (call to check)"
+  //   'pending'  -> "Stock pending" (out of stock, new supply on order)
+  // Aug 2026: we have no vaccine stock at all, publicly funded or travel, and
+  // new supply is expected in time for the fall. So the default is 'pending'
+  // and the per-vaccine map is empty. To go back to normal, set the default
+  // back to 'in' and restore the two seasonal entries below.
+  var VACCINE_STOCK_DEFAULT = 'pending';
   var VACCINE_STOCK = {
-    'influenza': 'seasonal',
-    'covid': 'seasonal'
+    // 'influenza': 'seasonal',
+    // 'covid': 'seasonal'
   };
 
   // Make vaccine cards clickable, scroll to booking
@@ -1740,7 +1747,7 @@ window.SmartMatch = (function(){
     }
     if (nameEl && badges) {
       var name = nameEl.textContent.toLowerCase();
-      var status = 'in';
+      var status = VACCINE_STOCK_DEFAULT;
       for (var key in VACCINE_STOCK) {
         if (name.indexOf(key) !== -1) { status = VACCINE_STOCK[key]; break; }
       }
@@ -1748,6 +1755,9 @@ window.SmartMatch = (function(){
       if (status === 'seasonal') {
         b.className = 'vaccine-card__badge badge--seasonal';
         b.textContent = (window.I18N && window.I18N.ui || {}).vacSeasonal || 'Seasonal (call to check)';
+      } else if (status === 'pending') {
+        b.className = 'vaccine-card__badge badge--pending';
+        b.textContent = (window.I18N && window.I18N.ui || {}).vacPending || 'Stock pending';
       } else {
         b.className = 'vaccine-card__badge badge--stock';
         b.textContent = (window.I18N && window.I18N.ui || {}).vacStock || '✓ In Stock';
