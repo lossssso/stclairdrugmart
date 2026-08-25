@@ -668,8 +668,8 @@ section { padding: 2rem 0.875rem; }
 @keyframes drop-in { 
   0% { opacity: 0; transform: translateY(-6px); }
 }</style>
-  <link rel="preload" href="/site.css?v=26" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/site.css?v=26"></noscript>
+  <link rel="preload" href="/site.css?v=27" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/site.css?v=27"></noscript>
 </head>
 <body>
 <a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Aller au contenu principal</a>
@@ -1497,6 +1497,8 @@ section { padding: 2rem 0.875rem; }
         </button>
         <div class="svc-acc__body svc-acc__body--wide">
           <p class="section__lead" style="margin-bottom:1.5rem;">Oui. En Ontario, on peut se faire vacciner à la pharmacie sans médecin. Chez St. Clair Drug Mart à Toronto, notre pharmacien administre les vaccins contre la grippe, la COVID-19, le zona, le pneumocoque, le VRS, le dcaT et les vaccins de voyage directement à la pharmacie, sans visite médicale. Sans rendez-vous; rendez-vous recommandé en période achalandée.</p>
+
+          <p class="vaccines__new-note vaccines__stock-note">📦 <strong>Mise à jour des stocks :</strong> nous sommes présentement en rupture de stock de vaccins, autant ceux financés par le régime public que ceux de voyage. Le nouvel approvisionnement est attendu à temps pour l’automne. <a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT, then choose your vaccine under TYPE OF SERVICE and your preferred brand.">Prenez rendez-vous pour vous inscrire à la liste d’attente &rarr;</a> et nous vous contacterons dès l’arrivée de votre vaccin, ou appelez le (416) 654-8181.</p>
 
           <h4 class="vaccines__sub-heading" style="margin-bottom:.75rem;">Financés par l'État, gratuits avec une carte Santé de l'Ontario valide</h4>
           <p class="vaccines__new-note">🆕 <strong>Nouveau depuis le 1er juillet 2026 :</strong> les pharmaciens de l'Ontario peuvent maintenant administrer les vaccins financés <strong>dcaT, zona, pneumocoque et VRS</strong>. Recevez-les ici même à la pharmacie, sans visite chez le médecin.</p>
@@ -2999,7 +3001,8 @@ window.I18N = {
     dcModerate: '🟡 Interaction(s) modérée(s) trouvée(s)',
     vacNoRx: '✓ Sans ordonnance',
     vacSeasonal: 'Saisonnier (appelez pour vérifier)',
-    vacStock: '✓ En stock'
+    vacStock: '✓ En stock',
+    vacPending: 'En rupture de stock'
   },
   sev: {
     contraindicated: { label:'⛔ Contre-indiqué', cls:'sev-contra',  result:'dc-result--contra' },
@@ -3020,7 +3023,7 @@ window.I18N = {
 
 
 
-<script src="/site.js?v=21" defer></script>
+<script src="/site.js?v=22" defer></script>
 <script src="/analytics-events.js?v=1" defer></script>
 </body>
 </html>

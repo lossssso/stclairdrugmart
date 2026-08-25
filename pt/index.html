@@ -668,8 +668,8 @@ section { padding: 2rem 0.875rem; }
 @keyframes drop-in { 
   0% { opacity: 0; transform: translateY(-6px); }
 }</style>
-  <link rel="preload" href="/site.css?v=26" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/site.css?v=26"></noscript>
+  <link rel="preload" href="/site.css?v=27" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/site.css?v=27"></noscript>
 </head>
 <body>
 <a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Ir para o conteúdo principal</a>
@@ -1497,6 +1497,8 @@ section { padding: 2rem 0.875rem; }
         </button>
         <div class="svc-acc__body svc-acc__body--wide">
           <p class="section__lead" style="margin-bottom:1.5rem;">Sim. No Ontário pode ser vacinado numa farmácia sem médico. Na St. Clair Drug Mart, em Toronto, o nosso farmacêutico administra vacinas contra a gripe, COVID-19, zona, pneumocócica, VSR, Tdap e vacinas de viagem na própria farmácia, sem consulta médica. Sem marcação; recomenda-se marcar em períodos de maior movimento.</p>
+
+          <p class="vaccines__new-note vaccines__stock-note">📦 <strong>Atualização de estoque:</strong> no momento estamos sem estoque de vacinas, tanto as financiadas com fundos públicos quanto as de viagem. O novo fornecimento é esperado a tempo para o outono. <a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT, then choose your vaccine under TYPE OF SERVICE and your preferred brand.">Marque uma consulta para entrar na lista de espera &rarr;</a> e entraremos em contato assim que a sua vacina chegar, ou ligue para (416) 654-8181.</p>
 
           <h4 class="vaccines__sub-heading" style="margin-bottom:.75rem;">Financiadas pelo Estado, gratuitas com um cartão de saúde do Ontário válido</h4>
           <p class="vaccines__new-note">🆕 <strong>Novidade desde 1 de julho de 2026:</strong> os farmacêuticos do Ontário podem agora administrar as vacinas financiadas <strong>Tdap, zona, pneumocócica e VSR</strong>. Receba-as aqui na farmácia, sem consulta médica.</p>
@@ -2941,7 +2943,7 @@ window.I18N = {
     dcSumOk:'✅ Nenhuma interação encontrada',
     dcSumOkBody:'A NLM RxNav e a nossa referência não encontraram interações conhecidas entre <strong>{DRUGS}</strong>.<br><br>Confirme sempre com os nossos farmacêuticos antes de alterar a sua medicação.',
     dcContra:'⛔ Combinação contraindicada', dcMajor:'🔴 Interação(ões) grave(s) encontrada(s)', dcModerate:'🟡 Interação(ões) moderada(s) encontrada(s)',
-    vacNoRx:'✓ Sem receita', vacSeasonal:'Sazonal (ligue para confirmar)', vacStock:'✓ Em stock'
+    vacNoRx:'✓ Sem receita', vacSeasonal:'Sazonal (ligue para confirmar)', vacStock:'✓ Em stock', vacPending:'Sem stock'
   },
   sev: {
     contraindicated:{ label:'⛔ Contraindicado', cls:'sev-contra', result:'dc-result--contra' },
@@ -2962,7 +2964,7 @@ window.I18N = {
 
 
 
-<script src="/site.js?v=21" defer></script>
+<script src="/site.js?v=22" defer></script>
 <script src="/analytics-events.js?v=1" defer></script>
 </body>
 </html>

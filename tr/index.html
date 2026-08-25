@@ -668,8 +668,8 @@ section { padding: 2rem 0.875rem; }
 @keyframes drop-in { 
   0% { opacity: 0; transform: translateY(-6px); }
 }</style>
-  <link rel="preload" href="/site.css?v=26" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/site.css?v=26"></noscript>
+  <link rel="preload" href="/site.css?v=27" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/site.css?v=27"></noscript>
 </head>
 <body>
 <a href="#main" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:1000;">Ana içeriğe atla</a>
@@ -1497,6 +1497,8 @@ section { padding: 2rem 0.875rem; }
         </button>
         <div class="svc-acc__body svc-acc__body--wide">
           <p class="section__lead" style="margin-bottom:1.5rem;">Evet. Ontario'da bir eczanede doktor olmadan aşı olabilirsiniz. Toronto'daki St. Clair Drug Mart'ta eczacımız grip, COVID-19, zona, pnömokok, RSV, Tdap ve seyahat aşılarını doğrudan eczanede uygular; doktor ziyareti gerekmez. Randevusuz kabul edilir; yoğun dönemlerde randevu önerilir.</p>
+
+          <p class="vaccines__new-note vaccines__stock-note">📦 <strong>Stok güncellemesi:</strong> şu anda hem kamu tarafından finanse edilen hem de seyahat aşılarımız stokta yok. Yeni tedarikin sonbahara yetişmesi bekleniyor. <a href="#booking" class="js-pa-select" data-url="https://app.pharmassess.ca/appointment/306667" data-label="Vaccinations" data-hint="Select <strong>Immunization</strong> under TYPE OF APPOINTMENT, then choose your vaccine under TYPE OF SERVICE and your preferred brand.">Bekleme listesine katılmak için randevu alın &rarr;</a> aşınız geldiği anda sizinle iletişime geçeceğiz veya (416) 654-8181 numaralı telefonu arayın.</p>
 
           <h4 class="vaccines__sub-heading" style="margin-bottom:.75rem;">Kamu tarafından finanse edilir, geçerli bir Ontario sağlık kartıyla ücretsiz</h4>
           <p class="vaccines__new-note">🆕 <strong>1 Temmuz 2026'dan itibaren yeni:</strong> Ontario eczacıları artık kamu tarafından finanse edilen <strong>Tdap, zona, pnömokok ve RSV</strong> aşılarını uygulayabilir. Bunları burada, eczanede olun, doktor ziyareti gerekmez.</p>
@@ -2942,7 +2944,7 @@ window.I18N = {
     dcSumOk:'✅ Etkileşim bulunamadı',
     dcSumOkBody:'NLM RxNav ve kendi kaynağımız <strong>{DRUGS}</strong> arasında bilinen bir etkileşim bulmadı.<br><br>Tedavinizi değiştirmeden önce her zaman eczacılarımıza danışın.',
     dcContra:'⛔ Kontrendike kombinasyon', dcMajor:'🔴 Majör etkileşim bulundu', dcModerate:'🟡 Orta düzey etkileşim bulundu',
-    vacNoRx:'✓ Reçetesiz', vacSeasonal:'Mevsimsel (stok için arayın)', vacStock:'✓ Stokta'
+    vacNoRx:'✓ Reçetesiz', vacSeasonal:'Mevsimsel (stok için arayın)', vacStock:'✓ Stokta', vacPending:'Stokta yok'
   },
   sev: {
     contraindicated:{ label:'⛔ Kontrendike', cls:'sev-contra', result:'dc-result--contra' },
@@ -2963,7 +2965,7 @@ window.I18N = {
 
 
 
-<script src="/site.js?v=21" defer></script>
+<script src="/site.js?v=22" defer></script>
 <script src="/analytics-events.js?v=1" defer></script>
 </body>
 </html>
