@@ -874,6 +874,9 @@
       display: none; margin-top: 1.25rem;
       background: var(--white); border-radius: var(--radius);
       border: 1.5px solid var(--border); padding: 1.5rem 1.25rem;
+      /* grid item: default min-width:auto lets its min-content push the .pa-cards--top
+         track wider than the container, overflowing the page by 13px at 320px. */
+      min-width: 0;
     }
     .conditions-panel.open { display: block; }
     .conditions-panel__hd {
@@ -1956,7 +1959,11 @@
       font-size: .95rem; font-weight: 900;
       color: var(--teal-deeper); text-transform: uppercase; letter-spacing: .04em;
     }
-    .vaccine-card__badges { display: flex; gap: .3rem; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+    /* The row must be allowed to shrink, otherwise its own flex-wrap never engages:
+       three badges in French ("NOUVEAU 1er JUIL" + "GRATUIT" + "En rupture de stock")
+       measure 325px inside a 249px card at 320px wide. Individual badges keep
+       flex-shrink:0 + nowrap below, so they wrap as whole pills rather than squashing. */
+    .vaccine-card__badges { display: flex; gap: .3rem; flex-wrap: wrap; justify-content: flex-end; min-width: 0; max-width: 100%; }
     .vaccine-card__badge {
       flex-shrink: 0; font-size: .67rem; font-weight: 800;
       padding: .18rem .5rem; border-radius: 20px; white-space: nowrap;
@@ -2360,6 +2367,13 @@
     .medscheck-card { cursor: pointer; }
     @media (max-width: 1100px) { .ailments-grid { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 700px)  { .ailments-grid { grid-template-columns: repeat(2, 1fr); } }
+    /* .ailments-grid is declared twice in this file (see also the block near the
+       28-condition accordion). This later copy used to stop at 2 columns, which
+       overrode the earlier 440px single-column rule by source order and left the
+       grid 2-wide at 320px, overflowing the page by 15-55px depending on how long
+       the condition names are in that language. Hidden by html/body overflow-x.
+       Keep this rule last. */
+    @media (max-width: 440px)  { .ailments-grid { grid-template-columns: 1fr; } }
 
     /* ── Drug Interaction Checker ─────────────────── */
     #drug-checker { background: #fff; padding-top: 2.5rem; }
