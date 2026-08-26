@@ -1716,7 +1716,10 @@ window.SmartMatch = (function(){
   // Aug 2026: we have no vaccine stock at all, publicly funded or travel, and
   // new supply is expected in time for the fall. So the default is 'pending'
   // and the per-vaccine map is empty. To go back to normal, set the default
-  // back to 'in' and restore the two seasonal entries below.
+  // back to 'in' and restore the two seasonal entries below. Per-vaccine
+  // entries beat the default, so partial stock works too: default
+  // 'pending' plus 'influenza': 'in' means only the flu shot is available.
+  // Full notes in TODO.md, "Vaccines ON HOLD".
   var VACCINE_STOCK_DEFAULT = 'pending';
   var VACCINE_STOCK = {
     // 'influenza': 'seasonal',
