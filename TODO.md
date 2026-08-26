@@ -49,6 +49,53 @@ enough to get started — we may call your previous pharmacy to confirm").
 own pharmacist judgment/SOPs) whether a photo alone is ever sufficient without
 a verification call, and document that policy for staff.**
 
+## Vaccines ON HOLD (Aug 2026) — how to turn them back on
+
+We have no vaccine stock at all right now, publicly funded or travel, and new
+supply is expected in time for the fall. Rather than hide the section, the site
+keeps every card and adds a stock notice plus a red "Stock pending" badge on
+each card. Booking stays live on purpose: the notice frames a booking as
+joining the waitlist.
+
+**This state is designed to be reversed in two edits.** Verified by dry-run on
+2026-08-26: undoing these two puts the rendered section back to exactly what it
+looked like before, seasonal badges and all.
+
+1. `site.js`, in the "Vaccine availability badges" block (~line 1710):
+   set `VACCINE_STOCK_DEFAULT` back to `'in'` and uncomment the two
+   `'influenza'` / `'covid'` seasonal entries left in place directly below it.
+2. Delete the one `<p class="vaccines__new-note vaccines__stock-note">`
+   paragraph from each of the six homepages. It sits in `#acc-vaccines`,
+   between the `section__lead` and the first `vaccines__sub-heading`.
+
+Then bump the `site.css` / `site.js` `?v=` cache-busters on all seven pages and
+re-run the DOM-skeleton diff.
+
+**Leave the machinery in place** when reverting, so the next outage is a
+one-line change. All of it is inert while the default is `'in'`:
+
+- the `'pending'` branch and `VACCINE_STOCK_DEFAULT` in site.js;
+- `vacPending` in each mirror's `window.I18N.ui` (English falls back to the
+  inline string in site.js, so index.html has no key, by design);
+- `.badge--pending` and `.vaccines__stock-note` in site.css.
+
+The `.vaccine-card__header { flex-wrap: wrap }` + `.vaccine-card__name
+{ min-width: 0 }` change is a real bug fix, not part of the hold. Keep it. The
+badge row used to overflow the card edge on narrow screens, which was already
+clipping travel-card text at 390px before any of this.
+
+**Partial stock is supported too.** `VACCINE_STOCK` maps a lowercase substring
+of a vaccine's name to a status, and per-vaccine entries beat the default. So
+if only the flu shot lands, set the default to `'pending'` and add
+`'influenza': 'in'`. Statuses are `'in'`, `'seasonal'`, `'pending'`.
+
+If the outage runs past the fall, the claims deliberately left untouched start
+to look stale and should get a pass: the section's lead paragraph (present
+tense "our pharmacist administers…"), the meta/og/twitter descriptions, the
+`MedicalBusiness` schema `knowsAbout` + `availableService`, the "What vaccines
+do you offer?" FAQ in `window.FAQS` and `#faq-schema-static`, and the two
+vaccine blog posts.
+
 ## COVID-19 test certificate (to set up / confirm)
 
 The site already surfaces a "I need a COVID-19 test and certificate!" pill and
