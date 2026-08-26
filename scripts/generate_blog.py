@@ -392,7 +392,7 @@ def nav_html(depth: int = 1) -> str:
   </div>
   <div class="nav__inner">
     <a href="/#welcome" class="nav__brand">
-      <img src="{p}logo.png" alt="" class="nav__brand__logo"/>
+      <img src="{p}logo-340.webp" alt="" class="nav__brand__logo"/>
       <span>St. Clair Drug Mart Pharmacy</span>
     </a>
     <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks" onclick="this.classList.toggle('open'); this.setAttribute('aria-expanded', this.classList.contains('open')); document.querySelector('.nav__links').classList.toggle('open')">
