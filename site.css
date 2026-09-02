@@ -988,6 +988,13 @@
       animation: booking-cloud-float-3 8.5s ease-in-out infinite;
       animation-delay: -2s;
     }
+    /* The cloud cluster below sits at z-index 1 and its white glow at 2, so at
+       1024px and wider they painted over the heading and intro copy: the word
+       "below" in the lead was visibly bleached by the 92%-white glow. Lift the
+       text above the art. The clouds keep their look, they just stop washing it out. */
+    #booking .section__title,
+    #booking .pa-row-heading,
+    #booking .section__lead { position: relative; z-index: 3; }
     .booking__logo-glow {
       position: absolute; top: -34px; right: -44px;
       width: clamp(170px, 21vw, 310px); height: clamp(170px, 21vw, 310px);
@@ -1949,25 +1956,25 @@
     }
     .vaccine-card { cursor: pointer; }
     .vaccine-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); border-color: var(--teal-bright); }
-    /* wrap: the badge row is wider than "✓ In Stock" once a card carries a
-       status like "Stock pending", and flex-shrink:0 below would otherwise
-       push it past the card edge on narrow screens. */
-    .vaccine-card__header { display: flex; align-items: flex-start; justify-content: space-between; gap: .5rem; flex-wrap: wrap; }
+    /* Name on its own line, status pills on the next one, always left-aligned.
+       As a flex row the pills sat beside short names (COVID-19, RSV) but wrapped
+       under long ones, so the row jumped around from card to card. Stacking also
+       removes every overflow case: the pills never compete with the name for width. */
+    .vaccine-card__header { display: block; }
     .vaccine-card__name {
-      min-width: 0;
       font-family: var(--font-display);
       font-size: .95rem; font-weight: 900;
       color: var(--teal-deeper); text-transform: uppercase; letter-spacing: .04em;
     }
-    /* The row must be allowed to shrink, otherwise its own flex-wrap never engages:
-       three badges in French ("NOUVEAU 1er JUIL" + "GRATUIT" + "En rupture de stock")
-       measure 325px inside a 249px card at 320px wide. Individual badges keep
-       flex-shrink:0 + nowrap below, so they wrap as whole pills rather than squashing. */
-    .vaccine-card__badges { display: flex; gap: .3rem; flex-wrap: wrap; justify-content: flex-end; min-width: 0; max-width: 100%; }
+    .vaccine-card__badges { display: flex; gap: .35rem; flex-wrap: wrap; justify-content: flex-start; margin-top: .5rem; max-width: 100%; }
+    /* uppercase here, not in the strings: the funding and 'new' pills are written uppercase in
+       the HTML while the availability pill is injected by site.js in sentence case, and
+       side by side they read as two different systems. Individual pills keep
+       flex-shrink:0 + nowrap so a tight card wraps whole pills instead of squashing them. */
     .vaccine-card__badge {
-      flex-shrink: 0; font-size: .67rem; font-weight: 800;
-      padding: .18rem .5rem; border-radius: 20px; white-space: nowrap;
-      letter-spacing: .04em;
+      flex-shrink: 0; font-size: .66rem; font-weight: 800;
+      padding: .2rem .55rem; border-radius: 20px; white-space: nowrap;
+      letter-spacing: .05em; text-transform: uppercase; line-height: 1.55;
     }
     .badge--funded { background: #d1fae5; color: #065f46; }
     .badge--private { background: #fef3c7; color: #92400e; }
